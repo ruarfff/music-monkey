@@ -1,8 +1,8 @@
-import http from '../http'
+import client from 'music-monkey-client'
 import IUser from '../user/IUser'
 
 export const fetchUsersPlaylists = async (user: IUser) => {
-  const response = await http.get('/users/' + user.userId + '/playlists', {
+  const response = await client.get('/users/' + user.userId + '/playlists', {
     withCredentials: true
   })
   return response.data

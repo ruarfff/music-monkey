@@ -43,6 +43,7 @@
     "sweetalert2": "^7.29.2",
     "sweetalert2-react-content": "^1.0.1",
     "uuid": "3.3.2",
-    "yup": "^0.26.5"
+    "yup": "^0.26.5",
+    "music-monkey-client": "^0.0.1"
   }
 }

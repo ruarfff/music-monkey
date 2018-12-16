@@ -1,7 +1,7 @@
-import http from '../http'
+import client from 'music-monkey-client'
 
 export const loginWithCookie = async () => {
-  const response = await http.get('/auth/verify', {
+  const response = await client.get('/auth/verify', {
     withCredentials: true,
     cache: false
   } as any)
@@ -9,7 +9,7 @@ export const loginWithCookie = async () => {
 }
 
 export const logout = async () => {
-  await http.get('/auth/logout', {
+  await client.get('/auth/logout', {
     withCredentials: true,
     cache: false
   } as any)

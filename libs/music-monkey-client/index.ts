@@ -8,10 +8,10 @@ const serviceUrl = process.env.REACT_APP_MM_API_URL
 //   axios.defaults.adapter || ({} as AxiosAdapter)
 
 // enhance the original axios adapter with throttle and cache enhancer
-const http = axios.create({
+const client = axios.create({
   baseURL: serviceUrl,
-  headers: { 'Cache-Control': 'no-cache' },
+  headers: { 'Cache-Control': 'no-cache' }
   // adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(defaultAdapter))
 })
 
-export default http
+export default client

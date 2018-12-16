@@ -1,8 +1,8 @@
-import http from '../http'
+import client from 'music-monkey-client'
 import IRsvp from './IRsvp'
 
 export const fetchRsvpByInviteAndUser = (inviteId: string, userId: string) => {
-  return http.get('/users/' + userId + '/rsvp?inviteId=' + inviteId, {
+  return client.get('/users/' + userId + '/rsvp?inviteId=' + inviteId, {
     withCredentials: true
   })
 }
@@ -12,7 +12,7 @@ export const rsvpInvite = async (
   userId: string,
   eventId: string
 ) => {
-  const response = await http.post(
+  const response = await client.post(
     '/rsvp',
     { inviteId, userId, eventId },
     {
@@ -23,7 +23,8 @@ export const rsvpInvite = async (
 }
 
 export const updateRsvp = (rsvp: IRsvp) => {
-  return http.put('/rsvp/' + rsvp.rsvpId,
+  return client.put(
+    '/rsvp/' + rsvp.rsvpId,
     { ...rsvp },
     { withCredentials: true }
   )

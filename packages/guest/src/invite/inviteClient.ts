@@ -1,9 +1,9 @@
 import moment from 'moment'
-import http from '../http'
+import client from 'music-monkey-client'
 import IInvite from './IInvite'
 
 export const getInviteById = (inviteId: string): Promise<IInvite> => {
-  return http
+  return client
     .get('/invites/' + inviteId, {
       withCredentials: true
     })

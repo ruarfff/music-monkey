@@ -1,7 +1,7 @@
-import http from '../http'
+import client from 'music-monkey-client'
 
 export const search = async (searchTerm: string) => {
-  const response = await http.get(
+  const response = await client.get(
     '/search?q=' + encodeURIComponent(searchTerm) + '&type=track',
     {
       withCredentials: true

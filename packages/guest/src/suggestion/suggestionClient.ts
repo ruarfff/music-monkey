@@ -1,15 +1,15 @@
-import http from '../http'
+import client from 'music-monkey-client'
 import ISuggestion from './ISuggestion'
 
 export const getSuggestions = async (eventId: string) => {
-  const response = await http.get('/users/suggestions?eventId=' + eventId, {
+  const response = await client.get('/users/suggestions?eventId=' + eventId, {
     withCredentials: true
   })
   return response.data
 }
 
 export const getUsersSuggestions = async () => {
-  const response = await http.get('/users/suggestions', {
+  const response = await client.get('/users/suggestions', {
     withCredentials: true
   })
   try {
@@ -24,19 +24,19 @@ export const getUsersSuggestions = async () => {
 }
 
 export const saveSuggestion = (suggestion: ISuggestion) => {
-  return http.post('/suggestions', suggestion, {
+  return client.post('/suggestions', suggestion, {
     withCredentials: true
   })
 }
 
 export const bulkSaveSuggestions = (suggestions: ISuggestion[]) => {
-  return http.post('/suggestions', suggestions, {
+  return client.post('/suggestions', suggestions, {
     withCredentials: true
   })
 }
 
 export const deleteSuggestion = (suggestion: ISuggestion) => {
-  return http.delete('/suggestions/' + suggestion.suggestionId, {
+  return client.delete('/suggestions/' + suggestion.suggestionId, {
     withCredentials: true
   })
 }
