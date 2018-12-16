@@ -47,7 +47,7 @@
     "@types/redux-auth-wrapper": "^2.0.9",
     "@types/redux-immutable-state-invariant": "^2.1.0",
     "@types/redux-logger": "^3.0.6",
-    "@types/sinon": "^5.0.7",
+    "@types/sinon": "^7.0.0",
     "@types/uuid": "^3.4.4",
     "@types/yup": "^0.26.2",
     "enzyme": "^3.4.4",
