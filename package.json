@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "start": "lerna run start --parallel"
+    "start": "lerna run start --parallel",
+    "build": "lerna run build --parallel"
   },
   "devDependencies": {
     "lerna": "^3.6.0"
