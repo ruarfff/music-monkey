@@ -3,6 +3,7 @@
 This is the MonoRepo for MusicMonkey.
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+[ ![Codeship Status for ruairitobrien/music-monkey](https://app.codeship.com/projects/ec9a37b0-e2fc-0136-3953-4aa39d41b3db/status?branch=master)](https://app.codeship.com/projects/318925)
 
 This project uses [lerna](https://lernajs.io/) and [yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) to manage dependencies and executing tasks in the workspace.
 
