@@ -1,0 +1,83 @@
+body {
+  background: #f6f6f6!important;
+  font-family: 'Roboto', 'sans-serif';
+}
+
+a {
+  text-decoration: none!important;
+}
+
+.swal2-popup .swal2-styled.swal2-confirm {
+  &:focus {
+    box-shadow: none;
+  }
+  background: #FFB000!important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 0.25em solid #AF00FF!important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #AF00FF!important;
+}
+
+.Home-root {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+  z-index: 1;
+  background: #f6f6f6;
+}
+
+.Home-error-message {
+  margin-top: 6em;
+  padding: 2em;
+}
+
+.Home-content {
+  height: 100%;
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.Home-toolbar {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 8px;
+}
+
+.Home-left-menu-wrapper {
+  width: 300px;
+}
+
+.Home-left-menu {
+  width: 300px;
+  position: fixed;
+  background-color: #AF00FF;
+  height: 100%;
+  z-index: 10;
+  box-shadow:
+    0px 2px 4px -1px rgba(0, 0, 0, 0.12),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.Home-right-side {
+  width: calc(100% - 300px);
+  min-height: 100vh;
+}
+
+.Home-logo-container {
+  height: 166px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Home-create-event-link {
+  text-decoration: none;
+}

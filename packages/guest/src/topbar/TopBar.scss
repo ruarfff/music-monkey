@@ -1,0 +1,12 @@
+@import '../theme/colours';
+
+.top-appBar {
+  background-color: $main !important;
+  box-shadow: none !important;
+
+  .top-appBar-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+  }
+}

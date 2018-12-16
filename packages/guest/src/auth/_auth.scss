@@ -1,0 +1,29 @@
+.Auth-sign-in-spotify-button {
+  background-color: #1bb954;
+  margin: 5px 0;
+  font-size: 13px;
+  width: 210px;
+  height: 20px;
+  border-radius: 0;
+
+  .spotify-img {
+    width: auto;
+    margin-right: 10px;
+  }
+}
+
+.Auth-input {
+  width: 100%;
+  border: 1px solid;
+  border-radius: 5px;
+  height: 40px;
+  padding: 10px 20px 10px 10px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.Auth-input::before,
+.Auth-input::after {
+  display: none;
+}

@@ -1,0 +1,30 @@
+.notificationWrapper {
+  position: absolute;
+  //background: white;
+  //padding: 10px 0;
+  //border-radius: 5px;
+  //margin-top: -100px;
+
+  .notificationItemWrapperHighlighted {
+    background: #e2e2e2;
+  }
+
+  .notificationItemWrapper {
+    border-bottom: 1px solid #C7C7C7;
+    padding: 8px 16px;
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .notificationItemText {
+      margin-right: 5px;
+    }
+
+    .notificationItemLink {
+      color: #3AABD1;
+      margin-right: 5px;
+    }
+  }
+}

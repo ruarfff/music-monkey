@@ -1,0 +1,74 @@
+@import '../theme/colours';
+
+.stepper-menu {
+  background-color: $main !important;
+  border-top: 1px solid #ffffff24;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  .dot-white-active {
+    background-color: white !important;
+  }
+
+  .dot-white div {
+    background-color: #ffffff59;
+  }
+
+  .dot-white {
+    z-index: 2;
+  }
+
+  .button-skip-stepper {
+    color: white;
+  }
+}
+
+.stepper-menu.blue {
+  background-color: $secondary-light!important;
+}
+
+.stepper-menu.yellow {
+  background-color: $secondary-main !important;
+}
+
+.stepper {
+  height: 100%;
+}
+
+.stepper-container {
+  height: 100vh;
+  background-color: $main !important;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .img-success {
+    margin-top: 20px;
+  }
+
+  .stepper-container-text {
+    margin-top: 25px;
+    line-height: 1.4;
+    font-size: 15px;
+    font-weight: 500;
+    width: 240px;
+    color: white;
+    text-align: left;
+  }
+}
+
+.stepper-container.blue {
+  background-color: $secondary-light !important;
+}
+
+.stepper-container.yellow {
+  background-color: $secondary-main !important;
+}
+
+.content-stepper {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}

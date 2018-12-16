@@ -1,0 +1,16 @@
+@import '../theme/colours';
+
+.FinderButton-root {
+  position: fixed;
+  bottom: 23px;
+
+  .FinderButton-link {
+    display: flex;
+    box-sizing: content-box;
+    border-radius: 50%;
+    height: 50px;
+    align-items: center;
+    padding: 7px;
+    background-color: $secondary-main;
+  }
+}

@@ -1,0 +1,46 @@
+.EventSuggestions-root {
+  width: 100%;
+  text-align: right;
+  padding: 10px;
+}
+
+.EventSuggestions-trackImage {
+  border-radius: 4px;
+  max-width: 4.5em;
+  max-height: 4.5em;
+}
+
+.EventSuggestions-leftIcon {
+  margin-right: 0.2em;
+}
+
+.EventSuggestions-rightIcon {
+  margin-left: 0.2em;
+}
+
+.EventSuggestions-iconSmall {
+  font-size: 20px;
+}
+
+.EventSuggestions-acceptedTracks {
+  border: 2px solid #dadada;
+  border-radius: 7px;
+}
+
+[data-react-beautiful-dnd-drag-handle="0"]:last-child div {
+  border-bottom: none!important;
+}
+
+.EventSuggestions-audio {
+  margin-right: 10em;
+}
+
+.EventSuggestions-avatar {
+  margin-right: 8em;
+  right: 1.3em;
+  margin-left: .81em;
+}
+.EventSuggestions-avatar-small {
+  margin-right: 8em;
+  font-size: 2em;
+}

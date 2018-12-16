@@ -1,0 +1,66 @@
+@import '../theme/colours';
+
+.playList-button-favorite {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+    .playList-favorite-count {
+        color: white;
+        z-index: 2;
+        font-size: 10px;
+        position: absolute;
+    }
+}
+
+.event-list-name {
+    padding-left: 17px;
+    width: 100%;
+}
+
+.event-list-span-name {
+    color: $secondary-light
+}
+
+.playList-favorite {
+    display: flex;
+    align-items: center;
+}
+
+.cover-avatar {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.playList-button-menu {
+    width: 20px;
+}
+
+.playList-button-add {
+    color: #737373;
+}
+
+.playList-favorite-icon {
+    color: grey;
+    font-size: 27px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+
+}
+
+.playList-favorite-icon.secondary {
+    color: $secondary-light !important;
+}
+
+.playList-name-group {
+    padding-left: 15px;
+    padding-top: 5px;
+    color: $main;
+    font-size: 13px;
+}
+
+.img-cover, .img-cover-avatar {
+    width: 100%;
+}

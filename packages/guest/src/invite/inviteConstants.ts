@@ -1,0 +1,1 @@
+export const inviteIdKey = 'invite_id'

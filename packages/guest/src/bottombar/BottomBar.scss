@@ -1,0 +1,53 @@
+@import '../theme/colours';
+
+.BottomBar-navigation {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  height: 55px;
+  display: flex;
+  justify-content: space-between;
+
+  .highlighted a {
+    color: white !important;
+  }
+
+  .BottomBar-finder-button {
+    background: url('../assets/bottom-menu-bg.svg') center center no-repeat;
+    width: 88px;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 50px;
+      height: 30px;
+    }
+  }
+
+  .BottomBar-navigation-item {
+    width: 50%;
+
+    a {
+      color: #dfc9e5;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  .BottomBar-navigation-left,
+  .BottomBar-navigation-right {
+    background: $main;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

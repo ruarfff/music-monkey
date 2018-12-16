@@ -1,0 +1,51 @@
+@import '../theme/colours';
+
+.player-container {
+    height: 140px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: $secondary-light;
+    display: flex;
+
+    .player-track-img {
+        width: 85px;
+        height: 85px;  
+
+        img {
+            height: 100%;
+        }
+    }
+
+    .player-control-container{
+        width: 100%;
+
+        .player-control-duration {
+            div div {
+                background-color: $secondary-main;
+            }
+        }
+        .player-control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 10px 0;
+
+            .player-control-name {
+
+                div span, p {
+                    color: #fff;
+                }
+            }
+            .player-control-play {
+                span span span {
+                    color: #fff;
+                    font-size: 32px;    
+                }
+            }
+        }
+    }
+
+
+}

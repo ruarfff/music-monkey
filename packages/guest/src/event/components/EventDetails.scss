@@ -1,0 +1,40 @@
+@import '../../theme/colours';
+
+.EventDetails-root {
+  padding: 15px;
+
+  .EventContainer-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    div {
+      display: flex;
+      align-items: flex-end;
+
+      .Event-img-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .Event-img-info-title {
+          color: $main;
+          font-weight: 500;
+          padding-bottom: 5px;
+        }
+      }
+
+      .Event-organiser-desc-container {
+        padding-left: 12px;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+
+        .Event-organiser-title {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

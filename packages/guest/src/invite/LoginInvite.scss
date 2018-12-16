@@ -1,0 +1,21 @@
+@import '../auth/auth';
+@import '../theme/colours';
+
+.main-page-content-container.invite {
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  overflow-y: scroll;
+  background: $main url('../assets/background-marshmallow.png') no-repeat center
+    center;
+}
+
+.invite-page-mail-content-container {
+  display: flex;
+  flex-direction: column;
+  -ms-flex-pack: start;
+  justify-content: start;
+  background-color: white;
+  padding: 5px 25px 60px 25px;
+  border-radius: 5px;
+}
