@@ -2,8 +2,6 @@ import * as AWS from 'aws-sdk'
 import * as React from 'react'
 import { DropzoneComponent } from 'react-dropzone-component'
 import uuidv1 from 'uuid/v1'
-import '../../node_modules/dropzone/dist/min/dropzone.min.css'
-import '../../node_modules/react-dropzone-component/styles/filepicker.css'
 import Action from '../IAction'
 
 const bucket = 'musicmonkey-uploads'
@@ -46,7 +44,7 @@ function upload(file: any) {
           reject(err)
         } else {
           resolve({
-            imgUrl:`https://${bucket}.s3.amazonaws.com/${key}${fileName}`,
+            imgUrl: `https://${bucket}.s3.amazonaws.com/${key}${fileName}`,
             dataUrl: file.dataURL
           })
         }
@@ -56,7 +54,7 @@ function upload(file: any) {
 }
 
 const componentConfig = {
-  postUrl: 'upload',
+  postUrl: 'upload'
 }
 
 interface IFileUploadProps {

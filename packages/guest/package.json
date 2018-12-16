@@ -1,6 +1,6 @@
 {
-  "name": "music-monkey-guest",
-  "version": "0.1.0",
+  "name": "guest",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "NODE_ENV='development' REACT_APP_AUTH_SUFFIX='-local' react-scripts start",
@@ -13,7 +13,6 @@
   "dependencies": {
     "@material-ui/core": "^3.6.1",
     "@material-ui/icons": "^3.0.1",
-    "@types/react-avatar-editor": "^10.3.2",
     "axios": "^0.18.0",
     "axios-extensions": "^3.0.4",
     "connected-react-router": "^6.0.0",
@@ -45,57 +44,5 @@
     "sweetalert2-react-content": "^1.0.1",
     "uuid": "3.3.2",
     "yup": "^0.26.5"
-  },
-  "devDependencies": {
-    "@types/classnames": "^2.2.3",
-    "@types/enzyme": "^3.1.15",
-    "@types/enzyme-adapter-react-16": "^1.0.2",
-    "@types/googlemaps": "^3.30.16",
-    "@types/history": "^4.7.2",
-    "@types/jest": "^23.3.10",
-    "@types/jss": "^9.5.7",
-    "@types/lodash": "^4.14.119",
-    "@types/node": "10.12.12",
-    "@types/prop-types": "^15.5.2",
-    "@types/pusher-js": "^4.2.0",
-    "@types/query-string": "^6.1.0",
-    "@types/react": "^16.7.17",
-    "@types/react-autosuggest": "^9.3.4",
-    "@types/react-copy-to-clipboard": "^4.2.5",
-    "@types/react-dom": "^16.0.11",
-    "@types/react-jss": "^8.6.0",
-    "@types/react-redux": "^6.0.10",
-    "@types/react-router": "^4.4.1",
-    "@types/react-router-dom": "^4.3.1",
-    "@types/react-swipeable-views": "^0.12.1",
-    "@types/react-test-renderer": "^16.0.3",
-    "@types/redux-auth-wrapper": "^2.0.7",
-    "@types/redux-immutable-state-invariant": "^2.1.0",
-    "@types/redux-logger": "^3.0.6",
-    "@types/sinon": "^5.0.7",
-    "@types/uuid": "^3.4.4",
-    "@types/yup": "^0.26.2",
-    "enzyme": "^3.4.4",
-    "enzyme-adapter-react-16": "^1.7.0",
-    "husky": "^1.2.0",
-    "node-sass": "^4.11.0",
-    "react-scripts": "2.1.1",
-    "redux-immutable-state-invariant": "^2.1.0",
-    "sinon": "^7.1.1",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "tslint-react": "^3.6.0",
-    "typescript": "3.2.2"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
   }
 }
