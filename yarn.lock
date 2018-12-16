@@ -1818,10 +1818,10 @@
     "@types/theming" "*"
     csstype "^2.0.0"
 
-"@types/react-places-autocomplete@^6.1.1":
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/@types/react-places-autocomplete/-/react-places-autocomplete-6.1.3.tgz#181d77f3b0be23a8962738d60bfa8de7299356bf"
-  integrity sha512-sQj5x9pBG7mFkwsWZ6oVm5VOnW6C+gW8VMXkXdsGjJngBJD06tZBDpCk0U8nTfUbUz/2w9Hb8idK/d+DDdbMpA==
+"@types/react-places-autocomplete@^7.2.1":
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@types/react-places-autocomplete/-/react-places-autocomplete-7.2.1.tgz#875e0cda5811aa20a36cf24a4e9cab8af678258a"
+  integrity sha512-lFwiXpCnOzETS2trMwmRyTH3RFXRN7NiNnoQyzCsS0YYZ0s4CMVTnKRB+IIJTMkyxG8Q+TT7rD7XaDLXBS71iA==
   dependencies:
     "@types/googlemaps" "*"
     "@types/react" "*"
