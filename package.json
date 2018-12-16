@@ -4,7 +4,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "start": "lerna run start --parallel",
-    "build": "lerna run build --parallel"
+    "build": "lerna run build --parallel",
+    "test": "lerna run test --parallel"
   },
   "devDependencies": {
     "lerna": "^3.6.0"
