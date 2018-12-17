@@ -2,8 +2,8 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
-import { createPlaylist } from '../playlist/playlistClient'
 import { FETCH_PLAYLISTS } from '../playlist/playlistActions'
+import { createPlaylist } from '../playlist/playlistClient'
 import {
 EVENT_CONTENT_UPDATED,
 EVENT_CREATE_PLAYLIST_INITIATED,
