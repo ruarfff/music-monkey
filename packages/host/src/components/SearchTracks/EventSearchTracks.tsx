@@ -62,6 +62,12 @@ class EventSearchTracks extends React.PureComponent<
     }
   }
 
+  public componentWillReceiveProps(newProps: IEventSearchTracksProps) {
+    if (newProps.notification !== this.props.notification) {
+      this.handleShowNotification()
+    }
+  }
+
   public handleShowNotification = () => {
     this.setState({isOpen: true})
   }
@@ -80,7 +86,6 @@ class EventSearchTracks extends React.PureComponent<
       filteredSearch = searchResult.items
         .filter((searchedTrack) => playlistTracks.indexOf(searchedTrack.uri) === -1)
     }
-
     return (
       <div>
         <Snackbar
@@ -125,7 +130,7 @@ class EventSearchTracks extends React.PureComponent<
             {filteredSearch && filteredSearch.map((track, index) => (
               <TrackItem
                 handleClearSearch={this.handleClearSearch}
-                showNotification={this.handleShowNotification}
+                // showNotification={this.handleShowNotification}
                 playlistId={playlist.id} addTrack={addTrack}
                 track={track}
                 key={index}
