@@ -6,6 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import * as React from 'react'
 import IPlaylist from '../playlist/IPlaylist'
+import { formatDuration } from '../util/formatDuration'
 
 const decorate = withStyles((theme: Theme) => ({
   card: {
@@ -83,7 +84,7 @@ class PlaylistCard extends React.Component<
               {playlist.tracks.total + ' Tracks'}
             </Typography>
             <Typography>
-              {this.formatDuration(durationSeconds)}
+              {formatDuration(durationSeconds)}
             </Typography>
           </div>
           <div>
@@ -99,12 +100,6 @@ class PlaylistCard extends React.Component<
         </Grid>
       </Card>
     )
-  }
-  private formatDuration = (durationSeconds: number) => {
-    const hours = Math.floor(durationSeconds / 3600)
-    const minutes = Math.floor((durationSeconds - hours * 3600) / 60)
-
-    return hours + 'h ' + minutes + 'm '
   }
 }
 

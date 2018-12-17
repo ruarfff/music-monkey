@@ -7,8 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
-import * as moment from 'moment'
 import * as React from 'react'
+import { formatDuration } from '../util/formatDuration'
 import ITrack from './ITrack'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import './TrackListItem.scss'
@@ -91,14 +91,6 @@ const TrackListItem = ({
         </Badge>
       </IconButton>
     )
-  }
-
-  const formatDuration = (durationSeconds: number) => {
-    const tempTime = moment.duration(durationSeconds);
-    let duration = tempTime.hours() < 10 ? '0' + tempTime.hours()+ ':' : tempTime.hours() + ':'
-    duration += tempTime.minutes() < 10 ? '0' + tempTime.minutes()+ ':' : tempTime.minutes() + ':'
-    duration += tempTime.seconds() < 10 ? '0' + tempTime.seconds() : tempTime.seconds()
-    return duration
   }
 
   return (

@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import * as React from 'react'
 import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
+import { formatDuration } from '../../../util/formatDuration'
 import './Styles/EventSummaryPlaylist.scss'
 
 const decorated = withStyle(() => ({
@@ -68,10 +69,10 @@ class EventSummaryPlaylist extends React.PureComponent<
       numTracks > 0
         ? playlist.tracks.items
             .map(item => item.track.duration_ms)
-            .reduce((acc, dur) => acc + dur) / 1000
+            .reduce((acc, dur) => acc + dur)
         : 0
 
-    const formattedDuration = this.formatDuration(durationSeconds)
+    const formattedDuration = formatDuration(durationSeconds)
 
     let image = eventImg && eventImg
 
@@ -162,13 +163,6 @@ class EventSummaryPlaylist extends React.PureComponent<
         </Grid>
       </Grid>
     )
-  }
-
-  private formatDuration = (durationSeconds: number) => {
-    const hours = Math.floor(durationSeconds / 3600)
-    const minutes = Math.floor((durationSeconds - hours * 3600) / 60)
-
-    return hours + 'h ' + minutes + 'm '
   }
 }
 
