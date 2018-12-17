@@ -103,7 +103,7 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
                   </ListItem>
                 </Link>
                 <li>
-                  <Divider inset={true} />
+                  <Divider variant='inset' />
                 </li>
               </div>
             ))}

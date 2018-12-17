@@ -93,7 +93,7 @@ class Requests extends React.Component<IRequestsProps> {
           {!isEmpty(event) &&
             <SelectedEvent event={event} deselectEvent={deselectEvent}/>
           }
-          <Divider inset={true} className="divider-account-search-block" />
+          <Divider variant='inset' className="divider-account-search-block" />
           <AppBar position="static" color="default">
             <Tabs
               value={value}

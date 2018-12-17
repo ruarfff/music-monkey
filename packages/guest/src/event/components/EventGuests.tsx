@@ -24,7 +24,7 @@ const EventGuests = ({ event }: IEventGuestsProps) => {
               <ListItemText primary={user.rsvp.status} />
               {user.user.userId === event.userId && <ListItemText primary='Host'/>}
             </ListItem>
-            <Divider inset={true} />
+            <Divider variant='inset' />
           </div>
         )
       })}

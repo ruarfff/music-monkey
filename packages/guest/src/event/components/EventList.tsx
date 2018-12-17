@@ -100,7 +100,7 @@ export default class EventList extends React.PureComponent<IEventListProps> {
               />}
             </ListItem>
             <li>
-              <Divider inset={true} className="EventList-item-divider" />
+              <Divider variant='inset' className="EventList-item-divider" />
             </li>
           </div>
         ))}

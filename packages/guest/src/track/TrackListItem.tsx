@@ -116,7 +116,7 @@ const TrackListItem = ({
           <MenuItem>{'test'}</MenuItem>
         </Menu> */}
       </ListItem>
-      <Divider inset={true} />
+      <Divider variant='inset' />
     </div>
   )
 }

@@ -86,7 +86,7 @@ export default class SuggestView extends React.PureComponent<
               playlist_add{' '}
             </Icon>
           </ListItem>
-          <Divider inset={true} />
+          <Divider variant='inset' />
         </div>
       )
     })

@@ -38,7 +38,7 @@ const EventList = ({ events, onSelectEvent }: IEventListProps) => (
           />
         </ListItem>
         <li>
-          <Divider inset={true} className="EventPicker-item-divider" />
+          <Divider variant='inset' className="EventPicker-item-divider" />
         </li>
       </div>
     ))}

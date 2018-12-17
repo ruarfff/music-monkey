@@ -60,7 +60,7 @@ const Finder = ({
     if (!isEmpty(user) && isEmpty(userPlaylists)) {
       fetchPlaylists(user)
     }
-  })
+  }, [])
 
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
@@ -98,11 +98,11 @@ const Finder = ({
       {!searching &&
         isEmpty(filteredSearch) && (
           <div>
-            <Divider inset={true} className="Finder-divider" />
+            <Divider variant={'inset'} className="Finder-divider" />
             {!isEmpty(selectedEvent) &&
               <SelectedEvent event={selectedEvent} deselectEvent={deselectEvent}/>
             }
-            <Divider inset={true} className="Finder-divider" />
+            <Divider variant={'inset'} className="Finder-divider" />
             <AppBar position="static" color="default">
               <Tabs
                 value={tabIndex}
