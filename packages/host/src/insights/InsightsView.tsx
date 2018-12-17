@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography/Typography'
 import * as React from 'react'
-import LineChartWidget from '../components/Charts/LineChartWidget'
+// import LineChartWidget from '../components/Charts/LineChartWidget'
 import PieChartWidget from '../components/Charts/PieChart'
 import MostPopularTracks from '../components/TraksStatistic/MostPopularTracks'
 import MostVotedTracks from '../components/TraksStatistic/MostVotedTracks'
@@ -50,17 +50,6 @@ class InsightsView extends React.Component<IInsightsViewProps> {
     return (
       <div className="insightsContainer">
         <Typography>
-          Guests Statistic
-        </Typography>
-        <Grid container={true} spacing={24}>
-          <Grid item={true} md={6}>
-            <PieChartWidget filterByEventPick={filterByEventPick} pickedEvent={pickedEvent} events={events} />
-          </Grid>
-          <Grid item={true} md={6}>
-            <LineChartWidget />
-          </Grid>
-        </Grid>
-        <Typography>
           Tracks Statistic
         </Typography>
         <Grid container={true} spacing={24}>
@@ -75,6 +64,17 @@ class InsightsView extends React.Component<IInsightsViewProps> {
               fetchEventVotes={fetchEventVotes}
               playlist={playlist}
             />
+          </Grid>
+        </Grid>
+        <Typography>
+          Guests Statistic
+        </Typography>
+        <Grid container={true} spacing={24}>
+          <Grid item={true} md={6}>
+            <PieChartWidget filterByEventPick={filterByEventPick} pickedEvent={pickedEvent} events={events} />
+          </Grid>
+          <Grid item={true} md={6}>
+            {/*<LineChartWidget />*/}
           </Grid>
         </Grid>
       </div>
