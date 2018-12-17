@@ -1,3 +1,4 @@
+import IEvent from '../../src/event/IEvent'
 import IAction from '../IAction'
 
 export const SHARE_EMAIL_REQUEST = 'SHARE_EMAIL_REQUEST'
@@ -12,10 +13,13 @@ export const clearMessage = (): IAction => {
   }
 }
 
-export const shareByEmails = (emails: string[]): IAction => {
+export const shareByEmails = (emails: string[], event: IEvent): IAction => {
   return {
     type: SHARE_EMAIL_REQUEST,
-    payload: emails
+    payload: {
+      emails,
+      event,
+    },
   }
 }
 

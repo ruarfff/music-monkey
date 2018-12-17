@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Snackbar from '@material-ui/core/Snackbar'
 import CloseIcon from '@material-ui/icons/Close'
 import * as React from 'react'
+import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
 import InviteLink from '../InviteLink/InviteLink'
 import ShareEventByEmail from './ShareEventByEmailContainer'
@@ -11,6 +12,7 @@ import './SharePopup.scss'
 interface ISharePopupProps {
   message: string
   inviteId: string
+  event: IEvent
   onCopyEventInvite(): void
   clearMessage(): IAction
 }
@@ -26,7 +28,7 @@ class SharePopup extends React.PureComponent<ISharePopupProps> {
   }
 
   public render() {
-    const { inviteId, onCopyEventInvite } = this.props
+    const { inviteId, event, onCopyEventInvite } = this.props
     const { showPopup, showMessage } = this.state
     return (
       <React.Fragment>
@@ -58,7 +60,10 @@ class SharePopup extends React.PureComponent<ISharePopupProps> {
         {showPopup &&
           <div className='SharePopupWrapper' onClick={this.closePopup}>
             <div className='SharePopupContainer'>
-              <ShareEventByEmail togglePopup={this.togglePopup}/>
+              <ShareEventByEmail
+                event={event}
+                togglePopup={this.togglePopup}
+              />
               <InviteLink
                 togglePopup={this.togglePopup}
                 inviteId={inviteId}

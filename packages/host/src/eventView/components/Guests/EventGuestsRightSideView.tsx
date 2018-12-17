@@ -53,6 +53,7 @@ class EventGuestsRightSideView extends React.PureComponent<
         <Grid container={true} justify={'center'} spacing={24}>
           <Grid className={classes.inviteLink} item={true}>
             <SharePopup
+              event={event}
               clearMessage={this.props.clearMessage}
               message={this.props.message}
               inviteId={inviteId}
@@ -71,6 +72,7 @@ class EventGuestsRightSideView extends React.PureComponent<
         <Grid container={true} justify={'center'} spacing={24}>
           <Grid className={classes.inviteLink} item={true}>
             <SharePopup
+              event={event}
               clearMessage={this.props.clearMessage}
               message={this.props.message}
               inviteId={inviteId}

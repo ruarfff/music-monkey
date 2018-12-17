@@ -1,10 +1,12 @@
 import Button from '@material-ui/core/Button'
 import * as React from 'react'
+import IEvent from '../../event/IEvent'
 import EventInput from '../EventInput/EventInput'
 import './SharePopup.scss'
 
 interface IShareEventByEmailProps {
-  shareByEmails(emails: string[]): void
+  event: IEvent
+  shareByEmails(emails: string[], event: IEvent): void
   togglePopup(): void
 }
 
@@ -58,7 +60,7 @@ class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
   }
 
   private handleSubmit = () => {
-    this.props.shareByEmails(this.state.emails.replace(' ', '').split(','))
+    this.props.shareByEmails(this.state.emails.replace(' ', '').split(','), this.props.event)
     this.props.togglePopup()
   }
 }

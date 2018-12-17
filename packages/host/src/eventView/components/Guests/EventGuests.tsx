@@ -84,6 +84,7 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
         <Grid container={true} justify={'center'} direction={'column'}>
           <Grid container={true} justify={'center'}>
             <SharePopup
+              event={event}
               clearMessage={this.props.clearMessage}
               message={this.props.message}
               inviteId={inviteId}
@@ -132,6 +133,7 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
             <MenuItem onClick={this.handleClickMenuItem}>Maybe</MenuItem>
           </Menu>
           <SharePopup
+            event={event}
             clearMessage={this.props.clearMessage}
             message={this.props.message}
             inviteId={inviteId}
