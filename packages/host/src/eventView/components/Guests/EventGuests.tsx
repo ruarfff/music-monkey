@@ -81,11 +81,8 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
 
     if (!event || !event.guests || event.guests.length < 1) {
       return (
-        <Grid container={true} justify={'center'}>
-          <Typography align="center" variant="subtitle1">
-            No guests have opened their invite yet.
-          </Typography>
-          <Grid>
+        <Grid container={true} justify={'center'} direction={'column'}>
+          <Grid container={true} justify={'center'}>
             <SharePopup
               clearMessage={this.props.clearMessage}
               message={this.props.message}
@@ -93,6 +90,9 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
               onCopyEventInvite={copyEventInvite}
             />
           </Grid>
+          <Typography align="center" variant="subtitle1">
+            No guests have opened their invite yet.
+          </Typography>
         </Grid>
       )
     }
