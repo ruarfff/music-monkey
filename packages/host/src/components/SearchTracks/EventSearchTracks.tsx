@@ -130,7 +130,6 @@ class EventSearchTracks extends React.PureComponent<
             {filteredSearch && filteredSearch.map((track, index) => (
               <TrackItem
                 handleClearSearch={this.handleClearSearch}
-                // showNotification={this.handleShowNotification}
                 playlistId={playlist.id} addTrack={addTrack}
                 track={track}
                 key={index}
