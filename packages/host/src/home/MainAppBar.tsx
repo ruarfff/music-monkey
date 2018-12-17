@@ -180,7 +180,7 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
           <Badge
             className={classes.notification}
             badgeContent={unreadNotifications ? unreadNotifications.length : 0}
-            color="primary"
+            color="secondary"
           >
             <NotificationsIcon />
           </Badge>

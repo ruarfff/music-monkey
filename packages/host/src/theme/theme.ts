@@ -18,10 +18,10 @@ const theme = createMuiTheme({
     MuiBadge: {
       colorPrimary: {
         color: 'white',
-        backgroundColor: styles.secondaryLight,
       },
       colorSecondary: {
         color: 'white',
+        backgroundColor: styles.secondaryLight,
       },
     },
   },
