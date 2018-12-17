@@ -22,8 +22,8 @@ const decorated = withStyle(() => ({
   },
   imgRow: {
     display: 'flex',
-    fontSize: '18px',
-    marginBottom: '15px'
+    fontSize: '15px',
+    marginBottom: '10px'
   },
   img: {
     marginRight: '10px',
@@ -48,7 +48,8 @@ class EventDetails extends React.PureComponent<
   IEventDetailsProps & WithStyles
 > {
   public state = {
-    showMap: false
+    showMap: false,
+    showSettings: false,
   }
 
   public render() {
@@ -134,7 +135,7 @@ class EventDetails extends React.PureComponent<
 
           <Grid
             className="EventDetails-actions"
-            justify="flex-end"
+            justify="flex-start"
             direction="row"
             container={true}
             item={true}
@@ -142,38 +143,56 @@ class EventDetails extends React.PureComponent<
             xs={12}
           >
             <Grid item={true}>
-              <FormGroup row={true}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={event.settings.suggestingPlaylistsEnabled}
-                      onChange={this.suggestingPlaylistsToggled}
-                      value="suggestingPlaylistsEnabled"
-                    />
-                  }
-                  label="Allow Playlist Suggestions"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={event.settings.autoAcceptSuggestionsEnabled}
-                      onChange={this.autoAcceptSuggestionsToggled}
-                      value="autoAcceptSuggestionsEnabled"
-                    />
-                  }
-                  label="Auto Accept Suggestions"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={event.settings.dynamicVotingEnabled}
-                      onChange={this.handleDynamicVotingToggled}
-                      value="dynamicVotingEnabled"
-                    />
-                  }
-                  label="Dynamic Voting"
-                />
-              </FormGroup>
+              <span
+                className={classes.showOnMap}
+                onClick={this.toggleSettings}
+              >
+                Event's modes
+              </span>
+              {this.state.showSettings && (
+                <FormGroup row={true}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={event.settings.suggestingPlaylistsEnabled}
+                        onChange={this.suggestingPlaylistsToggled}
+                        value="suggestingPlaylistsEnabled"
+                      />
+                    }
+                    label="Allow Playlist Suggestions"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={event.settings.autoAcceptSuggestionsEnabled}
+                        onChange={this.autoAcceptSuggestionsToggled}
+                        value="autoAcceptSuggestionsEnabled"
+                      />
+                    }
+                    label="Auto Accept Suggestions"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={event.settings.dynamicVotingEnabled}
+                        onChange={this.handleDynamicVotingToggled}
+                        value="dynamicVotingEnabled"
+                      />
+                    }
+                    label="Dynamic Voting"
+                  />
+                </FormGroup>
+              )}
+            </Grid>
+            <Grid
+              className="EventDetails-actions"
+              justify="flex-start"
+              direction="row"
+              container={true}
+              item={true}
+              spacing={16}
+              xs={12}
+            >
               <LinkButton
                 variant="contained"
                 color="secondary"
@@ -193,6 +212,10 @@ class EventDetails extends React.PureComponent<
 
   private toggleMap = () => {
     this.setState({ showMap: !this.state.showMap })
+  }
+
+  private toggleSettings = () => {
+    this.setState({ showSettings: !this.state.showSettings })
   }
 
   private handleDynamicVotingToggled = () => {

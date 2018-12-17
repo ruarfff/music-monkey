@@ -34,8 +34,7 @@ const decorate = withStyles(({ transitions, zIndex }) => ({
     position: 'relative',
     boxShadow: 'none',
     backgroundColor: 'white',
-    color: 'black',
-    paddingTop: '30px'
+    color: 'black'
   },
   hide: {
     display: 'none'

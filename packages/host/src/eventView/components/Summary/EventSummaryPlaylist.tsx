@@ -11,7 +11,7 @@ import './Styles/EventSummaryPlaylist.scss'
 
 const decorated = withStyle(() => ({
   playlistWrapper: {
-    padding: '30px 30px 30px 30px',
+    padding: '15px 30px 30px 30px',
     height: '100%'
   },
   playlistView: {
