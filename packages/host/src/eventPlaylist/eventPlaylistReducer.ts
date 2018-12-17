@@ -27,7 +27,10 @@ export default function eventPlaylist(
         added_at: '',
         track: payload
       })
-      return { ...state, playlist: newPlaylist}
+      return {
+        ...state,
+        playlist: newPlaylist,
+      }
     case SAVE_EVENT_PLAYLIST:
       return { ...state, savingEventPlaylist: true }
     case SAVE_EVENT_PLAYLIST_SUCCESS:

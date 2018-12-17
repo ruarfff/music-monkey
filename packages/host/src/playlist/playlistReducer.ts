@@ -42,6 +42,7 @@ export default function playlists(
       return {
         ...state,
         notification: 'Track successfully added',
+        searchResult: {},
       }
     case ADD_TRACK_FAILURE:
       return {

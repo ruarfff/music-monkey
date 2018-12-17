@@ -1,15 +1,15 @@
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
 import Snackbar from '@material-ui/core/Snackbar'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
+import CloseIcon from '@material-ui/icons/Close'
 import Search from '@material-ui/icons/Search'
 import { debounce, isEmpty } from 'lodash'
 import * as React from 'react'
+import EventInput from '../EventInput/EventInput'
 import TrackItem from './TrackItem'
 import IAction from '../../IAction'
-import EventInput from '../EventInput/EventInput'
 import IPlaylist from '../../playlist/IPlaylist'
 import ISearch from '../../playlist/ISearch'
 import ITrack from '../../track/ITrack'
@@ -39,11 +39,34 @@ class EventSearchTracks extends React.PureComponent<
     isOpen: false
   }
 
+  public timer: any = debounce(() => this.triggerChange(), WAIT_INTERVAL)
+
+  public handleSearchSubmit = () => {
+    this.props.searchTrack(this.state.searchQuery)
+  }
+
+  public handleSearchChange = (searchQuery: string) => {
+    this.setState({ searchQuery })
+
+    this.timer()
+  }
+
+  public handleClearSearch = () => {
+    this.setState({searchQuery: ''})
+  }
+
+  public triggerChange = () => {
+    const { searchQuery } = this.state
+    if (searchQuery !== '') {
+      this.props.searchTrack(searchQuery)
+    }
+  }
+
   public handleShowNotification = () => {
     this.setState({isOpen: true})
   }
 
-  private handleClose = () => {
+  public handleClose = () => {
     this.setState({isOpen: false})
   }
 
@@ -101,34 +124,17 @@ class EventSearchTracks extends React.PureComponent<
           <List>
             {filteredSearch && filteredSearch.map((track, index) => (
               <TrackItem
+                handleClearSearch={this.handleClearSearch}
                 showNotification={this.handleShowNotification}
                 playlistId={playlist.id} addTrack={addTrack}
                 track={track}
-                key={index} />
+                key={index}
+              />
             ))}
           </List>
         </div>
       </div>
     )
-  }
-
-  private handleSearchSubmit = () => {
-    this.props.searchTrack(this.state.searchQuery)
-  }
-
-  private handleSearchChange = (searchQuery: string) => {
-    this.setState({ searchQuery })
-
-    this.timer()
-  }
-
-  private timer: any = debounce(() => this.triggerChange(), WAIT_INTERVAL)
-
-  private triggerChange = () => {
-    const { searchQuery } = this.state
-    if (searchQuery !== '') {
-      this.props.searchTrack(searchQuery)
-    }
   }
 }
 
