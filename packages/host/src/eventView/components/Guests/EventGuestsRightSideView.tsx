@@ -51,9 +51,6 @@ class EventGuestsRightSideView extends React.PureComponent<
     if (!event || !event.guests || event.guests.length < 1) {
       return (
         <Grid container={true} justify={'center'} spacing={24}>
-          <Typography align="center" variant="subtitle1">
-            No guests have opened their invite yet.
-          </Typography>
           <Grid className={classes.inviteLink} item={true}>
             <SharePopup
               clearMessage={this.props.clearMessage}
@@ -62,6 +59,9 @@ class EventGuestsRightSideView extends React.PureComponent<
               onCopyEventInvite={copyEventInvite}
             />
           </Grid>
+          <Typography align="center" variant="subtitle1">
+            No guests have opened their invite yet.
+          </Typography>
         </Grid>
       )
     }
@@ -69,6 +69,14 @@ class EventGuestsRightSideView extends React.PureComponent<
     return (
       <div className="EventSuggestions-root">
         <Grid container={true} justify={'center'} spacing={24}>
+          <Grid className={classes.inviteLink} item={true}>
+            <SharePopup
+              clearMessage={this.props.clearMessage}
+              message={this.props.message}
+              inviteId={inviteId}
+              onCopyEventInvite={copyEventInvite}
+            />
+          </Grid>
           <Grid item={true} sm={12}>
             <Typography
               className={classes.guestListTitle}
@@ -83,14 +91,7 @@ class EventGuestsRightSideView extends React.PureComponent<
               )}
             </Grid>
           </Grid>
-          <Grid className={classes.inviteLink} item={true}>
-            <SharePopup
-              clearMessage={this.props.clearMessage}
-              message={this.props.message}
-              inviteId={inviteId}
-              onCopyEventInvite={copyEventInvite}
-            />
-          </Grid>
+
         </Grid>
       </div>
     )
