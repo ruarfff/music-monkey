@@ -3,23 +3,24 @@ import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
 import { createPlaylist } from '../playlist/playlistClient'
+import { FETCH_PLAYLISTS } from '../playlist/playlistActions'
 import {
-  EVENT_CONTENT_UPDATED,
-  EVENT_CREATE_PLAYLIST_INITIATED,
-  EVENT_EDIT_FAILURE,
-  EVENT_EDIT_REQUEST,
-  EVENT_EDIT_SUCCESS,
-  EVENT_LOCATION_ERROR,
-  EVENT_LOCATION_POPULATED,
-  EVENT_LOCATION_SELECTED,
-  EVENT_PLAYLIST_CREATED,
-  EVENT_PLAYLIST_CREATION_ERROR,
-  EVENT_SAVE_ERROR,
-  EVENT_SAVE_INITIATED,
-  EVENT_SAVED,
-  EVENTS_FETCH_ERROR,
-  EVENTS_FETCH_INITIATED,
-  EVENTS_FETCHED
+EVENT_CONTENT_UPDATED,
+EVENT_CREATE_PLAYLIST_INITIATED,
+EVENT_EDIT_FAILURE,
+EVENT_EDIT_REQUEST,
+EVENT_EDIT_SUCCESS,
+EVENT_LOCATION_ERROR,
+EVENT_LOCATION_POPULATED,
+EVENT_LOCATION_SELECTED,
+EVENT_PLAYLIST_CREATED,
+EVENT_PLAYLIST_CREATION_ERROR,
+EVENT_SAVE_ERROR,
+EVENT_SAVE_INITIATED,
+EVENT_SAVED,
+EVENTS_FETCH_ERROR,
+EVENTS_FETCH_INITIATED,
+EVENTS_FETCHED
 } from './eventActions'
 import { createEvent, getEvents, updateEvent } from './eventClient'
 import IEvent from './IEvent'
@@ -40,6 +41,10 @@ function* createPlaylistFlow(action: IAction) {
       payload: playlist,
       type: EVENT_PLAYLIST_CREATED
     })
+    console.log(playlistDetails.user.userId)
+    yield put({type: FETCH_PLAYLISTS, payload: playlistDetails.user})
+
+
   } catch (error) {
     yield put({ type: EVENT_PLAYLIST_CREATION_ERROR, payload: error })
   }

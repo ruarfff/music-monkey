@@ -87,7 +87,7 @@ export default class CreatePlaylistDialog extends React.Component<
             disabled={!this.state.name}
             onClick={this.handlePlaylistSave({
               ...this.state,
-              userId: this.props.user.userId
+              user: this.props.user
             } as IPlaylistDetails)}
             color="primary"
             variant="contained"

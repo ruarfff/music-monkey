@@ -45,7 +45,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
   public handlePlaylistCreation = (playlistDetals: IPlaylistDetails) => {
     this.props.createEventPlaylist({
       ...playlistDetals,
-      userId: this.props.user.spotifyId
+      user: this.props.user,
     })
     this.props.closeCreatePlaylist()
   }
