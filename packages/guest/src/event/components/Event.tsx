@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
+import IRsvp from '../../rsvp/IRsvp'
 import IUser from '../../user/IUser'
 import LinkButton from '../../util/LinkButton'
 import IEvent from '../IEvent'
@@ -13,7 +14,6 @@ import './Event.scss'
 import EventDetails from './EventDetails'
 import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
-import IRsvp from '../../rsvp/IRsvp'
 
 const React = require('react')
 const { useEffect, useState } = React
@@ -24,6 +24,7 @@ interface IEventProps {
   inviteId: string
   inviteEvent: IEvent
   eventsLoading: boolean
+  eventLoading: boolean
   getEvent(eventId: string): IAction
   fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
   clearInvite(): IAction
@@ -38,6 +39,7 @@ const Event = ({
   match,
   eventsLoading,
   inviteEvent,
+  eventLoading,
   fetchOrCreateRsvp,
   clearInvite,
   updateRsvp
@@ -62,7 +64,7 @@ const Event = ({
 
   useEffect(() => {
     if (
-      !eventsLoading &&
+      !eventsLoading && !eventLoading &&
       (isEmpty(selectedEvent) || eventId !== selectedEvent.eventId)
     ) {
       getEvent(eventId)

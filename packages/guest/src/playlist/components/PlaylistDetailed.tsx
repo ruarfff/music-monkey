@@ -37,7 +37,7 @@ interface IPlayListProps extends RouteComponentProps<any> {
   userPlaylists: IPlaylist[]
   selectedPlaylist: IPlaylist
   votes: Map<string, ITrackVoteStatus>
-  selectedTrack: ITrack
+  selectedTrack?: ITrack
   suggestions: IDecoratedSuggestion[]
   fetchingSuggestions: boolean
   fetchingVotes: boolean
@@ -53,20 +53,14 @@ interface IPlayListProps extends RouteComponentProps<any> {
   getUsersSuggestions(eventId: string): IAction
 }
 
-export default class PlaylistDetailed extends React.Component<
-  IPlayListProps,
-  any
-> {
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      value: 0,
-      showPlaylist: false,
-      playlist: {},
-      showPlayer: false,
-      showPlayerPlaylist: false,
-      loading: false
-    }
+export default class PlaylistDetailed extends React.Component<IPlayListProps> {
+  public state = {
+    value: 0,
+    showPlaylist: false,
+    playlist: {},
+    showPlayer: false,
+    showPlayerPlaylist: false,
+    loading: false
   }
 
   public componentDidMount() {
