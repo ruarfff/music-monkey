@@ -1,5 +1,5 @@
 import * as React from 'react'
-import logo from '../assets/logo-home.svg'
+import logo from '../assets/logo-home.png'
 import IAction from '../IAction'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import ErrorNotification from '../util/ErrorNotification'
