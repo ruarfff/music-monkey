@@ -13,7 +13,6 @@ interface ISignUpProps {
   authError: any
   clearAuthError(): IAction
   signUp(email: string, password: string): IAction
-  showSpinner(value: boolean): IAction
 }
 
 interface ISignUpFormValues {
@@ -81,7 +80,6 @@ class SignUp extends React.Component<ISignUpProps, {}> {
             <Field name="repeatPassword" render={this.renderRepeatPassword} />
           </div>
           <div>
-            {/* {this.props.isAuthenticating ? showSpinner(true): showSpinner(false)} */}
             {!this.props.isAuthenticating && (
               <Button
                 variant="contained"
@@ -98,16 +96,15 @@ class SignUp extends React.Component<ISignUpProps, {}> {
             Login
           </LinkButton>
         </div>
-        {authError &&
-          authError.errorContext === 'signUp' && (
-            <ErrorNotification
-              message={
-                (authError.response && authError.response.data) ||
-                authError.message
-              }
-              onClose={this.handleErrorAcknowledged(setSubmitting)}
-            />
-          )}
+        {authError && authError.errorContext === 'signUp' && (
+          <ErrorNotification
+            message={
+              (authError.response && authError.response.data) ||
+              authError.message
+            }
+            onClose={this.handleErrorAcknowledged(setSubmitting)}
+          />
+        )}
       </Form>
     )
   }

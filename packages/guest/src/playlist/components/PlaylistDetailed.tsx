@@ -41,7 +41,6 @@ interface IPlayListProps extends RouteComponentProps<any> {
   suggestions: IDecoratedSuggestion[]
   fetchingSuggestions: boolean
   fetchingVotes: boolean
-  showSpinner(value: boolean): IAction
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
   selectTrack(track: ITrack): IAction
@@ -142,11 +141,10 @@ export default class PlaylistDetailed extends React.Component<
 
   public render() {
     const { showPlayer, value, showPlayerPlaylist } = this.state
-    const { showSpinner, selectedPlaylist } = this.props
+    const { selectedPlaylist } = this.props
 
     let PlaylistTabs = <div />
     if (!isEmpty(selectedPlaylist)) {
-      showSpinner(false)
       PlaylistTabs = (
         <div className="playlist-tabs">
           {showPlayerPlaylist ? (

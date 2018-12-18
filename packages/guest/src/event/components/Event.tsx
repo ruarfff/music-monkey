@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
+import IRsvp from '../../rsvp/IRsvp'
 import IUser from '../../user/IUser'
 import LinkButton from '../../util/LinkButton'
 import IEvent from '../IEvent'
@@ -13,7 +14,6 @@ import './Event.scss'
 import EventDetails from './EventDetails'
 import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
-import IRsvp from '../../rsvp/IRsvp'
 
 const React = require('react')
 const { useEffect, useState } = React
@@ -70,7 +70,7 @@ const Event = ({
   })
 
   if (isEmpty(selectedEvent)) {
-    return <LoadingSpinner showSpinner={true} />
+    return <LoadingSpinner />
   }
 
   return (
@@ -107,7 +107,8 @@ const Event = ({
             className="Event-button"
             disabled={selectedEvent.playlist.tracks.items.length === 0}
           >
-            <Icon className="Event-button-icon">queue_music</Icon> Event Playlist
+            <Icon className="Event-button-icon">queue_music</Icon> Event
+            Playlist
           </LinkButton>
         </div>
       </div>
