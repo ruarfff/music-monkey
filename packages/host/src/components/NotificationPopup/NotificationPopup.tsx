@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { sortBy } from 'lodash'
-import IAction from '../../IAction'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import { sortBy } from 'lodash'
+import * as React from 'react'
+import { Link } from 'react-router-dom'
+import IAction from '../../IAction'
 import { INotification } from '../../notification/notificationInitialState'
 import './NotificationPopupStyles.scss'
-import { Link } from 'react-router-dom'
 
 interface INotificationPopupProps {
   notificationAnchor: any
@@ -23,7 +23,7 @@ class NotificationPopup extends React.Component<INotificationPopupProps> {
     return (
       <Menu
         id='menu-notification'
-        anchorEl={notificationAnchor ? notificationAnchor : ''}
+        anchorEl={notificationAnchor ? notificationAnchor : null}
         aria-owns={showNotification ? 'menu-notification' : undefined}
         aria-haspopup="true"
         open={showNotification}
