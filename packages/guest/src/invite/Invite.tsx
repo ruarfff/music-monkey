@@ -37,7 +37,7 @@ const Invite = ({
       console.log('invited')
       fetchInvite(inviteIdFromUrl)
     }
-  })
+  }, [])
 
   if (loading) {
     return <LoadingSpinner />
