@@ -70,7 +70,6 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
       closeCreatePlaylist,
       fetchPlaylists
     } = this.props
-    console.log(value)
     return (
       <Grid container={true} spacing={8} alignItems="flex-end">
         <Grid item={true} md={3}>
