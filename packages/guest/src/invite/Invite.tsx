@@ -34,7 +34,6 @@ const Invite = ({
       storeInviteId(inviteIdFromUrl)
     }
     if ((isEmpty(event) || inviteIdFromUrl !== inviteId) && !loading) {
-      console.log('invited')
       fetchInvite(inviteIdFromUrl)
     }
   }, [])
