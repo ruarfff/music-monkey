@@ -29,18 +29,17 @@ const Invite = ({
   storeInviteId
 }: IInviteProps) => {
   const inviteIdFromUrl = match.params.inviteId
-  useEffect(() => {
-    if (isEmpty(user)) {
-      storeInviteId(inviteIdFromUrl)
-    }
-    if ((isEmpty(event) || inviteIdFromUrl !== inviteId) && !loading) {
-      fetchInvite(inviteIdFromUrl)
-    }
-  }, [])
-
-  if (loading) {
-    return <LoadingSpinner />
-  }
+  useEffect(
+    () => {
+      if (isEmpty(user)) {
+        storeInviteId(inviteIdFromUrl)
+      }
+      if ((isEmpty(event) || inviteIdFromUrl !== inviteId) && !loading) {
+        fetchInvite(inviteIdFromUrl)
+      }
+    },
+    [inviteIdFromUrl, user, loading]
+  )
 
   if (authError) {
     return <Redirect to="/about" />
