@@ -64,7 +64,7 @@ class PlaylistCard extends React.Component<
       playlist.tracks.items.length > 0
         ? playlist.tracks.items
         .map(item => item.track.duration_ms)
-        .reduce((acc, dur) => acc + dur) / 1000
+        .reduce((acc, dur) => acc + dur)
         : 0
 
     const image =
