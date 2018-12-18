@@ -23,8 +23,8 @@ import {
 } from '../eventView/eventViewActions'
 import { fetchPlaylists } from '../playlist/playlistActions'
 import IRootState from '../rootState'
-import CreateEvent from './CreateEvent'
 import { clearMessage } from '../shareEvent/shareActions'
+import CreateEvent from './CreateEvent'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
