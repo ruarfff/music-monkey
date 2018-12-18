@@ -28,6 +28,7 @@ import CreateEvent from './CreateEvent'
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.event.savingEvent,
+  errors: state.event.errors,
   playlistInput: state.event.playlistInput,
   playlists: state.playlist.data,
   copiedToClipboard: state.eventView.copiedToClipboard

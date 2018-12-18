@@ -12,6 +12,7 @@ import LocationAutoComplete from '../components/location/LocationAutoComplete'
 import MapComponent from '../components/MapComponent'
 import EventSearchTracks from '../components/SearchTracks/EventSearchTracksContainer'
 import IEvent from '../event/IEvent'
+import IEventErrors from '../event/IEventErrors'
 import IPlaylistInput from '../event/IPlaylistInput'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
@@ -66,6 +67,7 @@ const SweetAlert = withReactContent(Swal) as any
 interface ICreateEventProps {
   user: IUser
   event: IEvent
+  errors: IEventErrors
   playlistInput: IPlaylistInput
   playlists: IPlaylist[]
   copiedToClipboard: boolean
@@ -97,6 +99,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     showSaveDialog: true,
     showRequiredDialog: true,
     showFinishCreatingEventDialog: true,
+    showCreatePlaylistErrorDialog: true,
     name: '',
     description: '',
     organizer: '',
@@ -156,6 +159,15 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
         this.setState({ currentStep: currentStep + 1 })
       }
     }
+  }
+
+  public showCreatePlaylistErrorDialog = () => {
+    this.setState({ showCreatePlaylistErrorDialog: false })
+    SweetAlert.fire({
+      confirmButtonColor: '#8f0a00',
+      title: 'Playlist wasn`t created',
+      type: 'error'
+    }).then()
   }
 
   public showRequiredDialog = () => {
@@ -226,12 +238,14 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       closeCreatePlaylist,
       createEventPlaylist,
       event,
+      errors,
       classes
     } = this.props
 
     const { name, description, organizer, venue } = this.state
     return (
       <React.Fragment>
+        {errors.playlistCreation && this.showCreatePlaylistErrorDialog()}
         <Grid item={true} xs={12} sm={6}>
           <EventInput
             label={'Event Name'}

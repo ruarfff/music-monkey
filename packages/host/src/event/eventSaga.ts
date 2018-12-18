@@ -41,10 +41,7 @@ function* createPlaylistFlow(action: IAction) {
       payload: playlist,
       type: EVENT_PLAYLIST_CREATED
     })
-    console.log(playlistDetails.user.userId)
     yield put({type: FETCH_PLAYLISTS, payload: playlistDetails.user})
-
-
   } catch (error) {
     yield put({ type: EVENT_PLAYLIST_CREATION_ERROR, payload: error })
   }
