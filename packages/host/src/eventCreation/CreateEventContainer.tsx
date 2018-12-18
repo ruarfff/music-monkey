@@ -24,10 +24,12 @@ import {
 import { fetchPlaylists } from '../playlist/playlistActions'
 import IRootState from '../rootState'
 import CreateEvent from './CreateEvent'
+import { clearMessage } from '../shareEvent/shareActions'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.event.savingEvent,
+  message: state.event.shareEventMessage,
   errors: state.event.errors,
   playlistInput: state.event.playlistInput,
   playlists: state.playlist.data,
@@ -58,6 +60,7 @@ const mapDispatchToProps = (dispatch: any) => ({
       copyEventInvite,
       acknowledgeEventInviteCopied,
       editEventRequest,
+      clearMessage,
     },
     dispatch
   )

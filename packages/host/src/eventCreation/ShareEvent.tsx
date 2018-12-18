@@ -2,14 +2,13 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { Theme, WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
-// import AccountCircle from '@material-ui/icons/AccountCircle'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import dateIcon from '../assets/date-icon.svg'
 import locationIcon from '../assets/location-marker-icon.svg'
 import InviteCopyAlert from '../components/InviteLink/InviteCopyAlert'
-import InviteLink from '../components/InviteLink/InviteLink'
 import MapComponent from '../components/MapComponent'
+import SharePopup from '../components/ShareEvent/SharePopup'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import './CreateEvent.scss'
@@ -53,6 +52,8 @@ const decorate = withStyles((theme: Theme) => ({
 interface IShareEventProps {
   event: IEvent
   copiedToClipboard: boolean
+  message: string
+  clearMessage(): IAction
   copyEventInvite(): IAction
   acknowledgeEventInviteCopied(): IAction
 }
@@ -118,10 +119,6 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
               View on Map
             </span>
           </div>
-          {/*<div className={classes.descriptionItem}>*/}
-            {/*<span>Co-Hosts</span>*/}
-            {/*<AccountCircle/>*/}
-          {/*</div>*/}
         </Grid>
         <Grid item={true} md={4}>
           <Grid
@@ -130,7 +127,10 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
             justify={'space-between'}
             className={classes.navigationContainer}
           >
-            <InviteLink
+            <SharePopup
+              event={event}
+              clearMessage={this.props.clearMessage}
+              message={this.props.message}
               inviteId={event && event.invites ? event.invites[0] : ''}
               onCopyEventInvite={copyEventInvite}
             />

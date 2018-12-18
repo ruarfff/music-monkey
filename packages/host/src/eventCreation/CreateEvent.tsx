@@ -71,6 +71,8 @@ interface ICreateEventProps {
   playlistInput: IPlaylistInput
   playlists: IPlaylist[]
   copiedToClipboard: boolean
+  message: string
+  clearMessage(): IAction
   cancel(): void
   closeCreatePlaylist(): IAction
   closeExistingPlaylist(): IAction
@@ -429,7 +431,9 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       event,
       copyEventInvite,
       acknowledgeEventInviteCopied,
-      copiedToClipboard
+      copiedToClipboard,
+      message,
+      clearMessage
     } = this.props
 
     if (this.state.currentStep === 2 && this.state.showSaveDialog) {
@@ -438,6 +442,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     return (
       <React.Fragment>
         <ShareEvent
+          clearMessage={clearMessage}
+          message={message}
           copiedToClipboard={copiedToClipboard}
           acknowledgeEventInviteCopied={acknowledgeEventInviteCopied}
           copyEventInvite={copyEventInvite}
