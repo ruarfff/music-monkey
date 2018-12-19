@@ -78,7 +78,9 @@ class FileUpload extends React.Component<IFileUploadProps, {}> {
           config={componentConfig}
           eventHandlers={eventHandlers}
           djsConfig={djsConfig}
-        />
+        >
+          {({ getRootProps }: any) => <div {...getRootProps()} />}
+        </DropzoneComponent>
       </div>
     )
   }
