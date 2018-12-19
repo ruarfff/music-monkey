@@ -31,13 +31,16 @@ const MainLayout = ({
   fetchUsersEvents
 }: IMainLayoutProps) => {
   const [inviteId, setInviteId] = useState('')
-  useEffect(() => {
-    if (!isEmpty(localStorage.get(inviteIdKey))) {
-      setInviteId(localStorage.get(inviteIdKey))
-    } else if (inviteId !== '') {
-      setInviteId('')
-    }
-  })
+  useEffect(
+    () => {
+      if (!isEmpty(localStorage.get(inviteIdKey))) {
+        setInviteId(localStorage.get(inviteIdKey))
+      } else if (inviteId !== '') {
+        setInviteId('')
+      }
+    },
+    [inviteId]
+  )
 
   useEffect(
     () => {

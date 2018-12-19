@@ -49,16 +49,19 @@ const Event = ({
     setTabIndex(value)
   }
 
-  useEffect(() => {
-    if (
-      !isEmpty(inviteEvent) &&
-      !isEmpty(inviteId) &&
-      eventId === inviteEvent.eventId
-    ) {
-      fetchOrCreateRsvp(inviteId, user.userId, eventId)
-      clearInvite()
-    }
-  }, [])
+  useEffect(
+    () => {
+      if (
+        !isEmpty(inviteEvent) &&
+        !isEmpty(inviteId) &&
+        eventId === inviteEvent.eventId
+      ) {
+        fetchOrCreateRsvp(inviteId, user.userId, eventId)
+        clearInvite()
+      }
+    },
+    [eventId]
+  )
 
   useEffect(() => {
     if (
