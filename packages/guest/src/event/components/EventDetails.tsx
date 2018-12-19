@@ -1,23 +1,12 @@
-import { Button, Icon, Menu, MenuItem, withStyles, WithStyles } from '@material-ui/core'
-import { isEmpty, cloneDeep } from 'lodash'
+import { isEmpty } from 'lodash'
 import { Moment } from 'moment'
 import * as React from 'react'
-import IEvent from '../IEvent'
-import IUser from '../../user/IUser'
-import './EventDetails.scss'
-import IRsvp from '../../rsvp/IRsvp'
 import IAction from '../../IAction'
+import IRsvp from '../../rsvp/IRsvp'
 import { ProfileImage } from '../../topbar/ProfileImage'
-
-const decorate = withStyles((theme) => ({
-  eventButton: {
-    color: 'white',
-    backgroundColor: theme.palette.secondary.main,
-    borderRadius: '20px',
-    fontSize: '11px',
-    padding: '0px 12px',
-  },
-}))
+import IUser from '../../user/IUser'
+import IEvent from '../IEvent'
+import './EventDetails.scss'
 
 interface IEventDetailsProps {
   event: IEvent
@@ -25,66 +14,15 @@ interface IEventDetailsProps {
   updateRsvp(rsvp: IRsvp): IAction
 }
 
-const options = [
-  'I\'m Going',
-  'Maybe',
-  'I\'m not going'
-]
+class EventDetails extends React.PureComponent<IEventDetailsProps> {
 
-class EventDetails extends React.PureComponent<IEventDetailsProps & WithStyles> {
-  public state = {
-    isOpen: false,
-    selected: this.props.event.guests.map((guest: any) => {
-      if (guest.rsvp.userId === this.props.user.userId) {
-        return guest.rsvp.status
-      }
-    }),
-    anchorEl: undefined
-  }
-
-  // public componentDidMount() {
-  //   this.props.event.guests.map((guest: any) => {
-  //     if (guest.rsvp.userId === this.props.user.userId) {
-  //       this.setState({
-  //         selected: guest.rsvp.status
-  //       })
-  //     }
-  //   })
-  // }
-
-  render() {
-    const { event, classes, user } = this.props
-    const { selected, isOpen, anchorEl } = this.state
+  public render() {
+    const { event, user } = this.props
 
     const times = this.dateFormat(event)
     return (
       <div className="EventDetails-root">
         <div className="EventDetails-container">
-          <div className="EventDetails-select">
-            <Button
-              aria-haspopup="true"
-              onClick={this.handleToggleMenu}
-              className={classes.eventButton}
-            >
-              {selected}
-              <Icon> arrow_drop_down</Icon>
-            </Button>
-            <Menu
-              id="simple-menu"
-              open={isOpen}
-              anchorEl={anchorEl}
-              onClose={this.handleToggleMenu}
-            >
-              {options.map((option, i) =>
-                <MenuItem
-                  key={i}
-                  onClick={this.handleMenuItemClick(option)}
-                >
-                  {option}
-                </MenuItem>
-              )}
-            </Menu>
-          </div>
           <div>
             <div className="event-organiser-desc-container">
               <div className="event-description-container-column-desc">
@@ -120,33 +58,6 @@ class EventDetails extends React.PureComponent<IEventDetailsProps & WithStyles> 
     )
   }
 
-  private handleMenuItemClick = (option: string) => () => {
-    const { event, user } = this.props
-    const guests = cloneDeep(event.guests)
-    let rsvp = guests.map((guest) => {
-      if (guest.rsvp.userId === user.userId) {
-        guest.rsvp.status = option
-        return guest.rsvp
-      }
-      return guest.rsvp
-    })
-
-    this.props.updateRsvp(rsvp[0])
-
-    this.setState({
-      selected: option,
-      isOpen: false,
-      anchorEl: undefined
-    })
-  }
-
-  private handleToggleMenu = (e: any) => {
-    this.setState({
-      isOpen: !this.state.isOpen,
-      anchorEl: e.currentTarget,
-    })
-  }
-
   private getEndDateFormat = (startDate: Moment, endDate: Moment) => {
     const message = `${
       startDate.format('DD') === endDate.format('DD') ? 'h:mm a' : 'h:mm a, Do '
@@ -168,4 +79,4 @@ class EventDetails extends React.PureComponent<IEventDetailsProps & WithStyles> 
 
 
 
-export default decorate(EventDetails)
+export default EventDetails
