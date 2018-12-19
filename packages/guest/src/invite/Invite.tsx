@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash'
 import { Redirect, RouteComponentProps } from 'react-router'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
-import LoadingSpinner from '../loading/LoadingSpinnerContainer'
+import LoadingSpinner from '../loading/LoadingSpinner'
 import IUser from '../user/IUser'
 
 const React = require('react')
@@ -29,18 +29,17 @@ const Invite = ({
   storeInviteId
 }: IInviteProps) => {
   const inviteIdFromUrl = match.params.inviteId
-  useEffect(() => {
-    if (isEmpty(user)) {
-      storeInviteId(inviteIdFromUrl)
-    }
-    if ((isEmpty(event) || inviteIdFromUrl !== inviteId) && !loading) {
-      fetchInvite(inviteIdFromUrl)
-    }
-  }, [])
-
-  if (loading) {
-    return <LoadingSpinner />
-  }
+  useEffect(
+    () => {
+      if (isEmpty(user)) {
+        storeInviteId(inviteIdFromUrl)
+      }
+      if ((isEmpty(event) || inviteIdFromUrl !== inviteId) && !loading) {
+        fetchInvite(inviteIdFromUrl)
+      }
+    },
+    [inviteIdFromUrl, user, loading]
+  )
 
   if (authError) {
     return <Redirect to="/about" />

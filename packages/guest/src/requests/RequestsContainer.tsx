@@ -19,7 +19,7 @@ const mapDispatchToProps = {
   getSuggestions,
   getUsersSuggestions,
   selectEvent,
-  deselectEvent,
+  deselectEvent
 }
 
 const RequestsContainer = connect(

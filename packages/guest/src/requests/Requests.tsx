@@ -1,10 +1,4 @@
-import {
-  AppBar,
-  Divider,
-  Tab,
-  Tabs,
-  Typography
-} from '@material-ui/core'
+import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import * as React from 'react'
 import SwipeableViews from 'react-swipeable-views'
@@ -33,7 +27,7 @@ interface IRequestsProps {
 
 class Requests extends React.Component<IRequestsProps> {
   public state = {
-    value: 0,
+    value: 0
   }
 
   public componentDidMount() {
@@ -46,11 +40,18 @@ class Requests extends React.Component<IRequestsProps> {
   }
 
   public componentWillReceiveProps(newProps: IRequestsProps) {
-    if (!isEmpty(newProps.event) && newProps.event.eventId && isEmpty(this.props.event)) {
+    if (
+      !isEmpty(newProps.event) &&
+      newProps.event.eventId &&
+      isEmpty(this.props.event)
+    ) {
       this.props.getUsersSuggestions(newProps.event.eventId)
     }
-    if(!isEmpty(newProps.event)) {
-      subscribeToSuggestionsAccepted(newProps.event.eventId, this.handleSuggestionNotification)
+    if (!isEmpty(newProps.event)) {
+      subscribeToSuggestionsAccepted(
+        newProps.event.eventId,
+        this.handleSuggestionNotification
+      )
     }
   }
 
@@ -82,14 +83,13 @@ class Requests extends React.Component<IRequestsProps> {
     if (!suggestion.fetchingSuggestions) {
       tabs = (
         <div>
-          {isEmpty(event) &&
-          !isEmpty(events) && (
+          {isEmpty(event) && !isEmpty(events) && (
             <EventPicker events={events} onSelectEvent={selectEvent} />
           )}
-          {!isEmpty(event) &&
-            <SelectedEvent event={event} deselectEvent={deselectEvent}/>
-          }
-          <Divider variant='inset' className="divider-account-search-block" />
+          {!isEmpty(event) && (
+            <SelectedEvent event={event} deselectEvent={deselectEvent} />
+          )}
+          <Divider variant="inset" className="divider-account-search-block" />
           <AppBar position="static" color="default">
             <Tabs
               value={value}

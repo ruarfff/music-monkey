@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 import {
   selectEvent,
   selectPage,
-  selectPlaylist,
-  showSpinner } from '../../navigation/activeActions'
+  selectPlaylist
+} from '../../navigation/activeActions'
 import IRootState from '../../rootState'
 import { getEvent } from '../eventActions'
 import EventListView from './EventListView'
@@ -17,10 +17,9 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   selectPage,
-  showSpinner,
   getEvent,
   selectEvent,
-  selectPlaylist,
+  selectPlaylist
 }
 
 const EventListViewContainer = connect(

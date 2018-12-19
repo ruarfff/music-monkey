@@ -72,7 +72,7 @@ const Event = ({
   })
 
   if (isEmpty(selectedEvent)) {
-    return <LoadingSpinner showSpinner={true} />
+    return <LoadingSpinner />
   }
 
   return (
@@ -109,7 +109,8 @@ const Event = ({
             className="Event-button"
             disabled={selectedEvent.playlist.tracks.items.length === 0}
           >
-            <Icon className="Event-button-icon">queue_music</Icon> Event Playlist
+            <Icon className="Event-button-icon">queue_music</Icon> Event
+            Playlist
           </LinkButton>
         </div>
       </div>

@@ -9,5 +9,4 @@ export default interface IActiveActionsState {
   showFinderModalEvent: boolean
   showBars: boolean
   firstAuthenticated: boolean
-  showSpinner: boolean
 }

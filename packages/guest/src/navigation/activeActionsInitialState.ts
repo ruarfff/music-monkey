@@ -7,6 +7,5 @@ export default {
   selectedPlayList: {},
   showFinderModalEvent: true,
   showBars: false,
-  firstAuthenticated: true,
-  showSpinner: false
+  firstAuthenticated: true
 } as IActiveActionsState

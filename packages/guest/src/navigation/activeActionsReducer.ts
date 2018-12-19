@@ -4,8 +4,7 @@ import {
   SELECT_EVENT,
   SELECT_PAGE,
   SELECT_PLAYLIST,
-  SHOW_FINDER_MODAL_EVENT,
-  SHOW_SPINNER
+  SHOW_FINDER_MODAL_EVENT
 } from './activeActions'
 import initialState from './activeActionsInitialState'
 import IactiveActionsState from './IactiveActionsState'
@@ -39,11 +38,6 @@ export default function event(
       return {
         ...state,
         selectedPlayList: {}
-      } as IactiveActionsState
-    case SHOW_SPINNER:
-      return {
-        ...state,
-        showSpinner: payload
       } as IactiveActionsState
     default:
       return state
