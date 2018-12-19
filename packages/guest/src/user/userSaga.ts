@@ -12,7 +12,6 @@ function* updateUserFlow(action: IAction) {
   const user: IUser = action.payload
 
   try {
-    console.log(user)
     const editedUser = yield call(updateUserById, user)
     yield put({
       payload: editedUser.data,

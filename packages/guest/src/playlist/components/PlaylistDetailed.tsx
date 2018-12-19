@@ -107,7 +107,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
         ? userPlaylists.filter(playlist => playlist.eventId === eventId)[0] || {} as IPlaylist
         : undefined
 
-    console.log(isEmpty(this.props.selectedPlaylist), !isEmpty(selectedPlaylist))
     if (isEmpty(this.props.selectedPlaylist) && !isEmpty(selectedPlaylist)) {
       // this.props.onPlaylistSelected(selectedPlaylist)
     }
