@@ -1707,9 +1707,9 @@
   integrity sha512-DC8xTuW/6TYgvEg3HEXS7cu9OijFqprVDXXiOcdOKZCU/5PJNLZU37VVvmZHdtMiGOa8wAA/We+JzbdxFzQTRQ==
 
 "@types/jquery@*", "@types/jquery@^3.3.22":
-  version "3.3.27"
-  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.27.tgz#f27c3e793b743359d1ee2b926b4ef0d0c33e59f7"
-  integrity sha512-t0ONpsFoH6yXqsdB+OlL1YxckfoGrok9lqxni6aD40QPPMahe6t7knB4SxCh0Bk9Yvc20OfZzxRU9ccQZcBZGQ==
+  version "3.3.28"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.28.tgz#e4e4e1a72a890b9d5fce34019d961265dd1394c4"
+  integrity sha512-6+0asQBU38H5kdoKvxVGE7fY8JREBgQsxONw0na0noV9D3JLN2+odBPKkTvRcLW20xSNiP8BH0nyl+8PcIHYNw==
   dependencies:
     "@types/sizzle" "*"
 
