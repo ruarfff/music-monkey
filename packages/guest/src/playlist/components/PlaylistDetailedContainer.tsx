@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { getEvent } from '../../event/eventActions'
-import { showSpinner } from '../../navigation/activeActions'
 import IRootState from '../../rootState'
 import {
   getSuggestions,
@@ -14,7 +13,7 @@ import PlaylistDetailed from './PlaylistDetailed'
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.event.selectedEvent,
-  events: state.event.events,
+  eventLoading: state.event.eventLoading,
   userPlaylists: state.playlist.eventPlaylists,
   selectedPlaylist: state.playlist.selectedPlaylist,
   votes: state.vote.votes,
@@ -25,7 +24,6 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = {
-  showSpinner,
   createVote,
   deleteVote,
   selectTrack,

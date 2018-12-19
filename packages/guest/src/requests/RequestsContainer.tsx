@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { deselectEvent, selectEvent } from '../event/eventActions'
-import { showSpinner } from '../navigation/activeActions'
 import IRootState from '../rootState'
 import {
   getSuggestions,
@@ -19,7 +18,6 @@ const mapStateToProps = (state: IRootState) => ({
 const mapDispatchToProps = {
   getSuggestions,
   getUsersSuggestions,
-  showSpinner,
   selectEvent,
   deselectEvent,
 }

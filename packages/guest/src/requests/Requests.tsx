@@ -27,7 +27,6 @@ interface IRequestsProps {
   suggestion: ISuggestionState
   getSuggestions(eventId: string): IAction
   getUsersSuggestions(eventId: string): IAction
-  showSpinner(value: boolean): IAction
   selectEvent(event: IEvent): IAction
   deselectEvent(): IAction
 }
@@ -47,7 +46,6 @@ class Requests extends React.Component<IRequestsProps> {
   }
 
   public componentWillReceiveProps(newProps: IRequestsProps) {
-    this.props.showSpinner(true)
     if (!isEmpty(newProps.event) && newProps.event.eventId && isEmpty(this.props.event)) {
       this.props.getUsersSuggestions(newProps.event.eventId)
     }
@@ -77,13 +75,11 @@ class Requests extends React.Component<IRequestsProps> {
       suggestion,
       event,
       events,
-      showSpinner,
       selectEvent,
       deselectEvent
     } = this.props
     let tabs = <div />
     if (!suggestion.fetchingSuggestions) {
-      showSpinner(false)
       tabs = (
         <div>
           {isEmpty(event) &&

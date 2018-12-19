@@ -33,7 +33,6 @@ import './Playlist.scss'
 interface IPlayListProps extends RouteComponentProps<any> {
   user: IUser
   event: IEvent
-  events: IEvent[]
   userPlaylists: IPlaylist[]
   selectedPlaylist: IPlaylist
   votes: Map<string, ITrackVoteStatus>
@@ -41,7 +40,7 @@ interface IPlayListProps extends RouteComponentProps<any> {
   suggestions: IDecoratedSuggestion[]
   fetchingSuggestions: boolean
   fetchingVotes: boolean
-  showSpinner(value: boolean): IAction
+  eventLoading: boolean
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
   selectTrack(track: ITrack): IAction
@@ -68,6 +67,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
       event,
       votes,
       suggestions,
+      eventLoading,
       fetchEventVotes,
       getEvent,
       getSuggestions,
@@ -76,7 +76,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
 
     const eventId = this.props.match.params.eventId
 
-    if (isEmpty(event)) {
+    if (isEmpty(event) && !eventLoading) {
       getEvent(eventId)
     }
 
@@ -94,19 +94,22 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
   }
 
   public componentWillReceiveProps(newProps: IPlayListProps) {
-    const { userPlaylists } = newProps
-    let selectedPlaylist: any
 
     const eventId = this.props.match.params.eventId
+
+    const { userPlaylists } = newProps
+
+    let selectedPlaylist: any
 
     selectedPlaylist = !isEmpty(this.props.selectedPlaylist)
       ? this.props.selectedPlaylist
       : userPlaylists.length > 0
-      ? userPlaylists.filter(playlist => playlist.eventId === eventId)[0] || {}
-      : undefined
+        ? userPlaylists.filter(playlist => playlist.eventId === eventId)[0] || {} as IPlaylist
+        : undefined
 
-    if (isEmpty(this.props.selectedPlaylist)) {
-      this.props.onPlaylistSelected(selectedPlaylist)
+    console.log(isEmpty(this.props.selectedPlaylist), !isEmpty(selectedPlaylist))
+    if (isEmpty(this.props.selectedPlaylist) && !isEmpty(selectedPlaylist)) {
+      // this.props.onPlaylistSelected(selectedPlaylist)
     }
   }
 
@@ -136,11 +139,10 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
 
   public render() {
     const { showPlayer, value, showPlayerPlaylist } = this.state
-    const { showSpinner, selectedPlaylist } = this.props
+    const { selectedPlaylist } = this.props
 
     let PlaylistTabs = <div />
     if (!isEmpty(selectedPlaylist)) {
-      showSpinner(false)
       PlaylistTabs = (
         <div className="playlist-tabs">
           {showPlayerPlaylist ? (
