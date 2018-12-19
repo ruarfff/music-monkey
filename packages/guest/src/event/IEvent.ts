@@ -18,6 +18,7 @@ export default interface IEvent {
   startDateTime: any
   venue: string
   userId: string
+  genre: string
   invites: string[]
   guests: IEventGuest[]
   settings: IEventSettings

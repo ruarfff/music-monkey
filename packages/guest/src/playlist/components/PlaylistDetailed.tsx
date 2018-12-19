@@ -33,14 +33,14 @@ import './Playlist.scss'
 interface IPlayListProps extends RouteComponentProps<any> {
   user: IUser
   event: IEvent
-  events: IEvent[]
   userPlaylists: IPlaylist[]
   selectedPlaylist: IPlaylist
   votes: Map<string, ITrackVoteStatus>
-  selectedTrack: ITrack
+  selectedTrack?: ITrack
   suggestions: IDecoratedSuggestion[]
   fetchingSuggestions: boolean
   fetchingVotes: boolean
+  eventLoading: boolean
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
   selectTrack(track: ITrack): IAction
@@ -52,20 +52,14 @@ interface IPlayListProps extends RouteComponentProps<any> {
   getUsersSuggestions(eventId: string): IAction
 }
 
-export default class PlaylistDetailed extends React.Component<
-  IPlayListProps,
-  any
-> {
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      value: 0,
-      showPlaylist: false,
-      playlist: {},
-      showPlayer: false,
-      showPlayerPlaylist: false,
-      loading: false
-    }
+export default class PlaylistDetailed extends React.Component<IPlayListProps> {
+  public state = {
+    value: 0,
+    showPlaylist: false,
+    playlist: {},
+    showPlayer: false,
+    showPlayerPlaylist: false,
+    loading: false
   }
 
   public componentDidMount() {
@@ -73,6 +67,7 @@ export default class PlaylistDetailed extends React.Component<
       event,
       votes,
       suggestions,
+      eventLoading,
       fetchEventVotes,
       getEvent,
       getSuggestions,
@@ -81,7 +76,7 @@ export default class PlaylistDetailed extends React.Component<
 
     const eventId = this.props.match.params.eventId
 
-    if (isEmpty(event)) {
+    if (isEmpty(event) && !eventLoading) {
       getEvent(eventId)
     }
 
@@ -99,19 +94,21 @@ export default class PlaylistDetailed extends React.Component<
   }
 
   public componentWillReceiveProps(newProps: IPlayListProps) {
-    const { userPlaylists } = newProps
-    let selectedPlaylist: any
 
     const eventId = this.props.match.params.eventId
+
+    const { userPlaylists } = newProps
+
+    let selectedPlaylist: any
 
     selectedPlaylist = !isEmpty(this.props.selectedPlaylist)
       ? this.props.selectedPlaylist
       : userPlaylists.length > 0
-      ? userPlaylists.filter(playlist => playlist.eventId === eventId)[0] || {}
-      : undefined
+        ? userPlaylists.filter(playlist => playlist.eventId === eventId)[0] || {} as IPlaylist
+        : undefined
 
-    if (isEmpty(this.props.selectedPlaylist)) {
-      this.props.onPlaylistSelected(selectedPlaylist)
+    if (isEmpty(this.props.selectedPlaylist) && !isEmpty(selectedPlaylist)) {
+      // this.props.onPlaylistSelected(selectedPlaylist)
     }
   }
 

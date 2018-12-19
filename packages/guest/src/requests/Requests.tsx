@@ -72,7 +72,13 @@ class Requests extends React.Component<IRequestsProps> {
 
   public render() {
     const { value } = this.state
-    const { suggestion, event, events, selectEvent, deselectEvent } = this.props
+    const {
+      suggestion,
+      event,
+      events,
+      selectEvent,
+      deselectEvent
+    } = this.props
     let tabs = <div />
     if (!suggestion.fetchingSuggestions) {
       tabs = (

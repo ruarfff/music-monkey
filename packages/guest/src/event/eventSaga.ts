@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import IAction from '../IAction'
-import { EVENT_PLAYLISTS_LOADED } from '../playlist/playlistActions'
+import { EVENT_PLAYLISTS_LOADED, PLAYLIST_SELECTED } from '../playlist/playlistActions'
 import {
   EVENT_FETCH_BY_INVITE_ID_INITIATED,
   EVENT_FETCH_ERROR,
@@ -35,6 +35,7 @@ function* fetchEventFlow(action: IAction) {
   try {
     const event = yield call(getEventById, eventId)
     yield put({ type: EVENT_FETCHED, payload: event })
+    yield put({ type: PLAYLIST_SELECTED, payload: event.playlist})
   } catch (err) {
     yield put({ type: EVENT_FETCH_ERROR, payload: err })
   }

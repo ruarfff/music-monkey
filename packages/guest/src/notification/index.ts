@@ -20,8 +20,6 @@ export const subscribeToSuggestionsAccepted = (
 
     subscribedToSuggestions = true
   }
-
-  console.log('mm-suggestions', subscribedToSuggestions)
 }
 
 export const subscribeToVotesModified = (eventId: string, callback: any) => {

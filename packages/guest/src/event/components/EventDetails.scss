@@ -3,38 +3,30 @@
 .EventDetails-root {
   padding: 15px;
 
-  .EventContainer-container {
+
+  .EventDetails-playlist-description {
     display: flex;
-    align-items: center;
     justify-content: space-between;
 
-    div {
-      display: flex;
-      align-items: flex-end;
+    .EventDetails-playlist-info {
 
-      .Event-img-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .Event-img-info-title {
-          color: $main;
-          font-weight: 500;
-          padding-bottom: 5px;
-        }
+      .EventDetails-playlist-title {
+        font-size: 14px;
+        color: $main;
+        font-weight: 500;
       }
+    }
 
-      .Event-organiser-desc-container {
-        padding-left: 12px;
-        font-size: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: start;
+    .EventDetails-playlist-genre {
+      float: right;
+      width: 40%;
 
-        .Event-organiser-title {
-          font-weight: 500;
-        }
+      .EventDetails-playlist-title {
+        font-size: 14px;
+        color: $main;
+        font-weight: 500;
       }
     }
   }
+
 }

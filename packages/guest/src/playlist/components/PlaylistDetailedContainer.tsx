@@ -13,7 +13,7 @@ import PlaylistDetailed from './PlaylistDetailed'
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.event.selectedEvent,
-  events: state.event.events,
+  eventLoading: state.event.eventLoading,
   userPlaylists: state.playlist.eventPlaylists,
   selectedPlaylist: state.playlist.selectedPlaylist,
   votes: state.vote.votes,
