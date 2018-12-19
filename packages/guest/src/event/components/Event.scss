@@ -34,9 +34,26 @@
         center;
       background-size: cover;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
       flex-direction: column;
+      padding-bottom: 5px;
+    }
+
+    .Event-img-secondRow {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      padding: 0 10px;
+      align-items: center;
+      margin-top: 10px;
+
+      .Event-img-organizer-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        font-size: 14px;
+      }
     }
 
     .Event-img-info-block {
@@ -154,17 +171,6 @@
       overflow: hidden;
       font-size: 12px;
     }
-
-    .Event-times-container-column-desc {
-      font-size: 12px;
-    }
-
-    .Event-times-container {
-      display: flex;
-      align-items: center;
-      padding-top: 10px;
-      justify-content: space-between;
-    }
   }
 
   .EventDetails-container {
@@ -172,10 +178,20 @@
   }
 
   .Event-description-title {
-    color: $main;
+    color: white;
     font-size: 14px;
-    font-weight: 500;
-    padding-top: 10px;
+    font-weight: 600;
+  }
+
+  .Event-times-container-column-desc {
+    font-size: 12px;
+  }
+
+  .Event-times-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
   }
 
   .Event-button {

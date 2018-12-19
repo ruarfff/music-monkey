@@ -20,4 +20,5 @@ export default interface IPlaylist {
   uri: string
   followers?: IFollowers
   eventId: string
+  description: string
 }

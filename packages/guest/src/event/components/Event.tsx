@@ -13,14 +13,15 @@ import {
 import Icon from '@material-ui/core/Icon'
 import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import { cloneDeep, isEmpty } from 'lodash'
+import { Moment } from 'moment'
 import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import IRsvp from '../../rsvp/IRsvp'
+import { ProfileImage } from '../../topbar/ProfileImage'
 import IUser from '../../user/IUser'
 import useMenuActive from '../../util/useMenuActive'
-// import LinkButton from '../../util/LinkButton'
 import IEvent from '../IEvent'
 import IEventGuest from '../IEventGuest'
 import './Event.scss'
@@ -39,6 +40,7 @@ const styles = (theme: Theme) =>
       borderRadius: '20px',
       fontSize: '11px',
       padding: '0px 12px',
+      height: '36px',
     },
   })
 
@@ -132,13 +134,32 @@ const Event = withStyles(styles)(({
     updateRsvp(rsvp[0])
 
     handleMenuClose()
-    // set option
     selectOption(option)
   }
 
   if (isEmpty(selectedEvent)) {
     return <LoadingSpinner />
   }
+
+  const getEndDateFormat = (startDate: Moment, endDate: Moment) => {
+    const message = `${
+      startDate.format('DD') === endDate.format('DD') ? 'h:mm a' : 'h:mm a, Do '
+      }
+     ${startDate.format('MMMM') === endDate.format('MMMM') ? '' : 'MMMM'}`
+    return message
+  }
+
+  const dateFormat = (event: any) => {
+    if (isEmpty(event)) {
+      return null
+    }
+    const { startDateTime, endDateTime } = event
+    return `${startDateTime.format('Do MMMM, h:mm a')} to ${endDateTime.format(
+      getEndDateFormat(startDateTime, endDateTime)
+    )}`
+  }
+
+  const times = dateFormat(selectedEvent)
 
   return (
     <div className="Event-root">
@@ -166,41 +187,50 @@ const Event = withStyles(styles)(({
               </div>
             </div>
           </div>
+          <div className="Event-img-secondRow">
+            <div className="Event-img-organizer-wrapper">
+              <span>Organizer</span>
+              <div>
+                <ProfileImage user={user}/>
+                <span>{selectedEvent.organizer}</span>
+              </div>
+            </div>
 
-          {/*<LinkButton*/}
-            {/*to={'/playlist/' + selectedEvent.eventId}*/}
-            {/*variant="contained"*/}
-            {/*size="small"*/}
-            {/*className="Event-button"*/}
-            {/*disabled={selectedEvent.playlist.tracks.items.length === 0}*/}
-          {/*>*/}
-            {/*<Icon className="Event-button-icon">queue_music</Icon> Event*/}
-            {/*Playlist*/}
-          {/*</LinkButton>*/}
+            <Button
+              aria-haspopup="true"
+              onClick={handleMenuOpen}
+              className={classes.eventButton}
+            >
+              {selected}
+              <Icon> arrow_drop_down</Icon>
+            </Button>
+            <Menu
+              id="simple-menu"
+              open={isOpen}
+              anchorEl={menuLink}
+              onClose={handleMenuClose}
+            >
+              {options.map((option, i) =>
+                <MenuItem
+                  key={i}
+                  onClick={handleMenuItemClick(option)}
+                >
+                  {option}
+                </MenuItem>
+              )}
+            </Menu>
 
-          <Button
-            aria-haspopup="true"
-            onClick={handleMenuOpen}
-            className={classes.eventButton}
-          >
-            {selected}
-            <Icon> arrow_drop_down</Icon>
-          </Button>
-          <Menu
-            id="simple-menu"
-            open={isOpen}
-            anchorEl={menuLink}
-            onClose={handleMenuClose}
-          >
-            {options.map((option, i) =>
-              <MenuItem
-                key={i}
-                onClick={handleMenuItemClick(option)}
-              >
-                {option}
-              </MenuItem>
-            )}
-          </Menu>
+            <div className="Event-times-container">
+              <div className="Event-times-container-column">
+                <div className="Event-description-title">
+                  Times
+                </div>
+                <div className="Event-times-container-column-desc">
+                  {times}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div>
@@ -214,7 +244,7 @@ const Event = withStyles(styles)(({
             classes={{ indicator: 'indicator-color' }}
             className="Event-tabs"
           >
-            <Tab icon={<Icon>event</Icon>} className="Event-tab" />
+            <Tab icon={<Icon>library_music</Icon>} className="Event-tab" />
             <Tab icon={<Icon>location_on</Icon>} className="Event-tab" />
             <Tab icon={<Icon>account_circle</Icon>} className="Event-tab" />
           </Tabs>
@@ -223,8 +253,6 @@ const Event = withStyles(styles)(({
           <Typography component="div">
             <EventDetails
               event={selectedEvent}
-              user={user}
-              updateRsvp={updateRsvp}
             />
           </Typography>
         )}
