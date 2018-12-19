@@ -18,7 +18,7 @@
     "material-ui-pickers": "^2.0.4",
     "nuka-carousel": "^4.4.3",
     "react-beautiful-dnd": "^10.0.2",
-    "react-dropzone": "^7.0.1",
+    "react-dropzone": "^8.0.2",
     "react-dropzone-component": "^3.2.0",
     "react-places-autocomplete": "^7.0.1",
     "react-select": "^2.1.1",
