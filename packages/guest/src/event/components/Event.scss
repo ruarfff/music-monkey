@@ -27,17 +27,24 @@
     align-items: center;
     color: white;
 
+    .Event-background {
+      height: 205px;
+      width: 100%;
+      position: absolute;
+      z-index: 0;
+    }
+
     .Event-img {
       height: 205px;
       width: 100%;
-      background: $main url('../../img/Other/eventLevel2.png') no-repeat center
-        center;
-      background-size: cover;
+      background: rgba(175, 0, 255, 0.6);
       display: flex;
       justify-content: flex-end;
       align-items: center;
       flex-direction: column;
       padding-bottom: 5px;
+      position: relative;
+      z-index: 2;
     }
 
     .Event-img-secondRow {

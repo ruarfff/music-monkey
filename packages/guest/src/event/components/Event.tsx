@@ -48,6 +48,9 @@ const styles = (theme: Theme) =>
         backgroundColor: theme.palette.secondary.main,
       }
     },
+    eventImg: {
+
+    }
   })
 
 interface IEventProps extends WithStyles<typeof styles> {
@@ -135,9 +138,10 @@ const Event = withStyles(styles)(({
       getEvent(eventId)
     }
 
-    if (!isEmpty(selectedEvent) && selected === '') {
+    if (!isEmpty(selectedEvent) && selected === 'Are you going?') {
       selectOption(selectedEvent.guests.map((guest: any) => {
-        if (guest.rsvp.userId === user.userId) {
+        if (guest.rsvp.userId === user.userId && guest.rsvp.status !== '') {
+          console.log(guest.rsvp.status)
           return guest.rsvp.status
         }
       }))
@@ -195,6 +199,7 @@ const Event = withStyles(styles)(({
         </Link>
       </div>
       <div className="Event-header-container">
+        <img className="Event-background" src={selectedEvent.imageUrl} alt=""/>
         <div className="Event-img">
           <div className="Event-img-info-block">
             <div className="Event-img-calendar">
@@ -228,7 +233,7 @@ const Event = withStyles(styles)(({
               className={classes.eventButton}
             >
               {selected}
-              <Icon> arrow_drop_down</Icon>
+              <Icon>arrow_drop_down</Icon>
             </Button>
             <Menu
               id="simple-menu"
