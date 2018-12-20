@@ -18,10 +18,13 @@ import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
+import { subscribeToVotesModified } from '../../notification'
 import IRsvp from '../../rsvp/IRsvp'
 import { ProfileImage } from '../../topbar/ProfileImage'
 import IUser from '../../user/IUser'
 import useMenuActive from '../../util/useMenuActive'
+import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
+import IVote from '../../vote/IVote'
 import IEvent from '../IEvent'
 import IEventGuest from '../IEventGuest'
 import './Event.scss'
@@ -51,6 +54,11 @@ interface IEventProps extends WithStyles<typeof styles> {
   inviteEvent: IEvent
   eventsLoading: boolean
   eventLoading: boolean
+  votes: Map<string, ITrackVoteStatus>
+  fetchingVotes: boolean
+  createVote(vote: IVote): IAction
+  deleteVote(voteId: string): IAction
+  fetchEventVotes(eventId: string): IAction
   getEvent(eventId: string): IAction
   fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
   clearInvite(): IAction
@@ -70,6 +78,11 @@ const Event = withStyles(styles)(({
   selectedEvent,
   getEvent,
   match,
+  votes,
+  fetchEventVotes,
+  createVote,
+  deleteVote,
+  fetchingVotes,
   eventsLoading,
   inviteEvent,
   eventLoading,
@@ -99,6 +112,16 @@ const Event = withStyles(styles)(({
       fetchOrCreateRsvp(inviteId, user.userId, eventId)
       clearInvite()
     }
+
+    if (isEmpty(selectedEvent) && !eventLoading) {
+      getEvent(eventId)
+    }
+
+    if (isEmpty(votes) && !fetchingVotes) {
+      fetchEventVotes(eventId)
+    }
+
+    subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
   }, [])
 
   useEffect(() => {
@@ -252,6 +275,11 @@ const Event = withStyles(styles)(({
         {tabIndex === 0 && (
           <Typography component="div">
             <EventDetails
+              user={user}
+              fetchEventVotes={fetchEventVotes}
+              createVote={createVote}
+              deleteVote={deleteVote}
+              votes={votes}
               event={selectedEvent}
             />
           </Typography>
