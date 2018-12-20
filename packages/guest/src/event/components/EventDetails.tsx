@@ -79,12 +79,12 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
             )}
           </div>
 
-          {!event.genre &&
+          {event.genre &&
             <div className="EventDetails-playlist-genre">
               <span className="EventDetails-playlist-title">
                   Genre
               </span><br/>
-              {event.genre}test
+              {event.genre}
             </div>
           }
         </div>
