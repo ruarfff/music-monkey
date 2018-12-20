@@ -132,7 +132,7 @@ function toggleSuggestPlaylists(state: IEventViewState) {
       }
     }
   } else {
-    return { ...state }
+    return state
   }
 }
 
@@ -151,7 +151,7 @@ function toggleAutoAcceptSuggestions(state: IEventViewState) {
       }
     }
   } else {
-    return { ...state }
+    return state
   }
 }
 
@@ -169,6 +169,6 @@ function toggleDynamicVoting(state: IEventViewState) {
       }
     }
   } else {
-    return { ...state }
+    return state
   }
 }

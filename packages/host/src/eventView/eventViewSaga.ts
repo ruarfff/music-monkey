@@ -24,7 +24,7 @@ function* fetchEventByIdFlow(action: IAction) {
   const eventId: string = action.payload
   try {
     const event = yield call(getEventById, eventId)
-    const playlist = event.playlist
+    const playlist = { ...event.playlist }
     if (!event.settings) {
       event.settings = {} as IEventSettings
     }

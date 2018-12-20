@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash'
 import IAction from '../IAction'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
 import ISuggestion from './ISuggestion'
@@ -24,24 +23,28 @@ export default function suggestion(
     case FETCH_SUGGESTIONS_INITIATED:
       return { ...state, fetchingSuggestions: true } as ISuggestionState
     case FETCH_SUGGESTIONS_SUCCESS: {
-      const suggestions = cloneDeep(payload)
+      const suggestions = [...payload]
 
       const pendingSuggestions = suggestions.filter(
-        (s: IDecoratedSuggestion) => !s.suggestion.accepted && !s.suggestion.rejected)
+        (s: IDecoratedSuggestion) =>
+          !s.suggestion.accepted && !s.suggestion.rejected
+      )
 
       const rejectedSuggestions = suggestions.filter(
-        (s: IDecoratedSuggestion) => s.suggestion.rejected)
+        (s: IDecoratedSuggestion) => s.suggestion.rejected
+      )
 
       const acceptedSuggestions = suggestions.filter(
-        (s: IDecoratedSuggestion) => s.suggestion.accepted)
+        (s: IDecoratedSuggestion) => s.suggestion.accepted
+      )
 
       return {
         ...state,
         fetchingSuggestions: false,
         pendingSuggestions,
         rejectedSuggestions,
-        acceptedSuggestions,
-      }
+        acceptedSuggestions
+      } as ISuggestionState
     }
     case FETCH_SUGGESTIONS_FAILED:
       return {
@@ -76,19 +79,19 @@ export default function suggestion(
         )
         stagedSuggestions = !!suggestionToAccept
           ? [
-            ...state.stagedSuggestions,
-            {
-              ...suggestionToAccept,
-              suggestion: { ...suggestionToAccept.suggestion, staged: true }
-            }
-          ]
+              ...state.stagedSuggestions,
+              {
+                ...suggestionToAccept,
+                suggestion: { ...suggestionToAccept.suggestion, staged: true }
+              }
+            ]
           : state.stagedSuggestions
       }
 
       const rejectedSuggestions = !!suggestionToAccept
         ? state.rejectedSuggestions.filter(
-          s => s.suggestion.suggestionId !== payload.suggestionId
-        )
+            s => s.suggestion.suggestionId !== payload.suggestionId
+          )
         : state.rejectedSuggestions
       return {
         ...state,
@@ -138,16 +141,13 @@ export default function suggestion(
       return {
         ...state,
         pendingSuggestions: [],
-        stagedSuggestions: [
-          ...state.stagedSuggestions,
-          ...pendingSetToStaged
-        ]
+        stagedSuggestions: [...state.stagedSuggestions, ...pendingSetToStaged]
       }
     }
     case CLEAR_STAGED_SUGGESTIONS:
       return {
         ...state,
-        stagedSuggestions: [],
+        stagedSuggestions: []
       }
     case RESET_STAGED_SUGGESTIONS: {
       const unStaged = state.stagedSuggestions.map(s => ({
