@@ -29,7 +29,7 @@ interface ISavePlaylistArgs {
   suggestions: Map<string, IDecoratedSuggestion>
 }
 
-function saveEventPlaylist({
+async function saveEventPlaylist({
   eventId,
   playlist,
   suggestions
@@ -47,22 +47,13 @@ function saveEventPlaylist({
   )
 
   if (trackUrisNotInPlaylist.length < 1) {
-    return acceptSuggestions(
-      eventId,
-      Array.from(suggestions.values()).map(s => s.suggestion)
-    ).then(() => eventId)
+    await acceptSuggestions(eventId, Array.from(suggestions.values()).map(s => s.suggestion));
+    return eventId;
   }
 
-  return addTracksToPlaylist(playlist.id, trackUrisNotInPlaylist)
-    .then(() => {
-      return acceptSuggestions(
-        eventId,
-        Array.from(suggestions.values()).map(s => s.suggestion)
-      )
-    })
-    .then(() => {
-      return eventId
-    })
+  await addTracksToPlaylist(playlist.id, trackUrisNotInPlaylist);
+  await acceptSuggestions(eventId, Array.from(suggestions.values()).map(s => s.suggestion));
+  return eventId;
 }
 
 function* saveEventPlaylistFlow(action: IAction) {
