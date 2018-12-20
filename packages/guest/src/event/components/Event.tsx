@@ -103,6 +103,7 @@ const Event = withStyles(styles)(({
     setTabIndex(value)
   }
 
+<<<<<<< HEAD
   useEffect(() => {
     if (
       !isEmpty(inviteEvent) &&
@@ -123,6 +124,21 @@ const Event = withStyles(styles)(({
 
     subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
   }, [])
+=======
+  useEffect(
+    () => {
+      if (
+        !isEmpty(inviteEvent) &&
+        !isEmpty(inviteId) &&
+        eventId === inviteEvent.eventId
+      ) {
+        fetchOrCreateRsvp(inviteId, user.userId, eventId)
+        clearInvite()
+      }
+    },
+    [eventId]
+  )
+>>>>>>> f17afe884ad5413bf360f9c8782f0e162256c710
 
   useEffect(() => {
     if (
