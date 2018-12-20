@@ -87,7 +87,11 @@ class EventGuestsRightSideView extends React.PureComponent<
             >
               Guest List
             </Typography>
-            <Grid container={true} justify={'space-evenly'}>
+            <Grid
+              container={true}
+              justify={'space-evenly'}
+              alignItems={'flex-start'}
+            >
               {event.guests.map((eventGuest, index) =>
                 this.renderEventGuest(eventGuest, classes, index)
               )}

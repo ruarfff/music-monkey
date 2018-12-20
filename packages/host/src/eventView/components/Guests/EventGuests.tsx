@@ -140,7 +140,11 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
             onCopyEventInvite={copyEventInvite}
           />
         </Grid>
-        <Grid container={true} className={classes.guestsContainer} spacing={24}>
+        <Grid
+          container={true}
+          className={classes.guestsContainer}
+          spacing={24}
+        >
           {filteredGuests.map(eventGuest =>
             this.renderEventGuest(eventGuest, classes)
           )}
