@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash'
-import { Redirect, Route, RouteComponentProps } from 'react-router'
+import { Route, RouteComponentProps } from 'react-router'
 import BottomBar from '../bottombar/BottomBarContainer'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
@@ -50,10 +50,6 @@ const MainLayout = ({
     },
     [isAuthenticated]
   )
-
-  if (!!inviteId && !inviteLoading && isEmpty(inviteEvent)) {
-    return <Redirect to={`/invite/${inviteId}`} />
-  }
 
   if (isAuthenticated) {
     return (
