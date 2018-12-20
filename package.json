@@ -23,7 +23,7 @@
     "prop-types": "^15.6.2",
     "pusher-js": "^4.2.2",
     "query-string": "^6.1.0",
-    "react": "16.7.0-alpha.2",
+    "react": "16.7.0",
     "react-autosuggest": "^9.3.4",
     "react-avatar-editor": "^11.0.4",
     "react-cookie": "^3.0.8",
