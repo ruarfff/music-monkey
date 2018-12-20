@@ -14,6 +14,7 @@ import {
   FETCH_USERS_EVENTS,
   FETCH_USERS_EVENTS_ERROR,
   FETCH_USERS_EVENTS_SUCCESS,
+  GET_EVENT_HOST_SUCCESS,
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
@@ -24,6 +25,14 @@ export default function event(
   { type, payload }: Action
 ) {
   switch (type) {
+    case GET_EVENT_HOST_SUCCESS:
+      return {
+        ...state,
+        selectedEvent: {
+          ...state.selectedEvent,
+          hostData: payload.data
+        }
+      }
     case DESELECT_EVENT:
       return {
         ...state,

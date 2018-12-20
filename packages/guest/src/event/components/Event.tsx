@@ -222,7 +222,7 @@ const Event = withStyles(styles)(({
             <div className="Event-img-organizer-wrapper">
               <span>Organizer</span>
               <div>
-                <ProfileImage user={user}/>
+                <ProfileImage user={selectedEvent.hostData}/>
                 <span>{selectedEvent.organizer}</span>
               </div>
             </div>

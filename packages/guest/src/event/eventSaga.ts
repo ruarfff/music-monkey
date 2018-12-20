@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import IAction from '../IAction'
 import { EVENT_PLAYLISTS_LOADED, PLAYLIST_SELECTED } from '../playlist/playlistActions'
+import { getUserById } from '../user/userClient'
 import {
   EVENT_FETCH_BY_INVITE_ID_INITIATED,
   EVENT_FETCH_ERROR,
@@ -8,13 +9,26 @@ import {
   EVENT_FETCHED,
   FETCH_USERS_EVENTS,
   FETCH_USERS_EVENTS_ERROR,
-  FETCH_USERS_EVENTS_SUCCESS
+  FETCH_USERS_EVENTS_SUCCESS,
+  GET_EVENT_HOST_REQUEST,
+  GET_EVENT_HOST_SUCCESS
 } from './eventActions'
 import {
-  getEventById,
-  getEventByInviteId,
-  getUsersInvitedEvents
+getEventById,
+getEventByInviteId,
+getUsersInvitedEvents
 } from './eventClient'
+
+function* fetchEventHostByIdFlow(action: IAction) {
+  const userId = action.payload
+  console.log(action.payload)
+  try {
+    const host = yield call(getUserById, userId)
+    yield put({ type: GET_EVENT_HOST_SUCCESS, payload: host})
+  } catch (err) {
+    console.log(err.message)
+  }
+}
 
 function* fetchEventByInviteIdFLow(action: IAction) {
   const inviteId: string = action.payload
@@ -24,6 +38,10 @@ function* fetchEventByInviteIdFLow(action: IAction) {
   } catch (err) {
     yield put({ type: EVENT_FETCH_ERROR, payload: err })
   }
+}
+
+export function* watchFetchEventHostByIdFlow() {
+  yield takeEvery(GET_EVENT_HOST_REQUEST, fetchEventHostByIdFlow)
 }
 
 export function* watchFetchEventByInviteId() {
@@ -36,6 +54,7 @@ function* fetchEventFlow(action: IAction) {
     const event = yield call(getEventById, eventId)
     yield put({ type: EVENT_FETCHED, payload: event })
     yield put({ type: PLAYLIST_SELECTED, payload: event.playlist})
+    yield put({ type: GET_EVENT_HOST_REQUEST, payload: event.userId })
   } catch (err) {
     yield put({ type: EVENT_FETCH_ERROR, payload: err })
   }

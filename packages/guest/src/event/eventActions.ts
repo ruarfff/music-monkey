@@ -17,6 +17,15 @@ export const FETCH_USERS_EVENTS = 'FETCH_USERS_EVENTS'
 export const FETCH_USERS_EVENTS_SUCCESS = 'FETCH_USERS_EVENTS_SUCCESS'
 export const FETCH_USERS_EVENTS_ERROR = 'FETCH_USERS_EVENTS_ERROR'
 
+export const GET_EVENT_HOST_REQUEST = 'GET_EVENT_HOST_REQUEST'
+export const GET_EVENT_HOST_SUCCESS = 'GET_EVENT_HOST_SUCCESS'
+export const GET_EVENT_HOST_FAILURE = 'GET_EVENT_HOST_FAILURE'
+
+export const getEventHost = (userId: string): IAction => ({
+  type: GET_EVENT_HOST_REQUEST,
+  payload: userId
+})
+
 export const deselectEvent = (): IAction => ({
   type: DESELECT_EVENT
 })

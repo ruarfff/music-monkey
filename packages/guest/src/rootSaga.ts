@@ -9,6 +9,7 @@ import {
 import {
   watchFetchEvent,
   watchFetchEventByInviteId,
+  watchFetchEventHostByIdFlow,
   watchFetchUsersEvents
 } from './event/eventSaga'
 import {
@@ -63,6 +64,7 @@ export default function* rootSaga() {
     watchFetchInvite(),
     watchClearInvite(),
     watchUpdateUserFlow(),
-    watchFetchUpdateRsvp()
+    watchFetchUpdateRsvp(),
+    watchFetchEventHostByIdFlow()
   ])
 }
