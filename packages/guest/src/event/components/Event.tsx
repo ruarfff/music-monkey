@@ -44,6 +44,9 @@ const styles = (theme: Theme) =>
       fontSize: '11px',
       padding: '0px 12px',
       height: '36px',
+      '&:hover': {
+        backgroundColor: theme.palette.secondary.main,
+      }
     },
   })
 
@@ -93,7 +96,7 @@ const Event = withStyles(styles)(({
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
 
-  const [selected, selectOption] = useState('')
+  const [selected, selectOption] = useState('Are you going?')
 
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
 
