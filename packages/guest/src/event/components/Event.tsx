@@ -139,12 +139,11 @@ const Event = withStyles(styles)(({
     }
 
     if (!isEmpty(selectedEvent) && selected === 'Are you going?') {
-      selectOption(selectedEvent.guests.map((guest: any) => {
-        if (guest.rsvp.userId === user.userId && guest.rsvp.status !== '') {
-          console.log(guest.rsvp.status)
-          return guest.rsvp.status
+      selectedEvent.guests.map((guest: any) => {
+        if (guest.rsvp.userId === user.userId && guest.rsvp.status !== 'Pending') {
+          selectOption(guest.rsvp.status)
         }
-      }))
+      })
     }
   })
 

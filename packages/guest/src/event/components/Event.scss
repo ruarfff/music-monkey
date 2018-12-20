@@ -39,7 +39,7 @@
       width: 100%;
       background: rgba(175, 0, 255, 0.6);
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       flex-direction: column;
       padding-bottom: 5px;
@@ -60,6 +60,11 @@
         flex-direction: column;
         width: 30%;
         font-size: 14px;
+
+        div {
+          display: flex;
+          flex-direction: column;
+        }
       }
     }
 
