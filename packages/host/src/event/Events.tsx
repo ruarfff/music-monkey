@@ -49,7 +49,7 @@ class Events extends React.Component<IEventsProps> {
           .filter(event => event.startDateTime.isAfter(now))
           .map(event => event.playlist),
         'id'
-      )
+      ).reverse()
     }
 
     const leftControl = ({ previousSlide }: any) => (
