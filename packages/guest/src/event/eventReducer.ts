@@ -39,12 +39,13 @@ export default function event(
         selectedEvent: {} as IEvent
       }
     case UPDATE_RSVP_SUCCESS:
-      const updatedGuests = cloneDeep(state.selectedEvent.guests.map((guest) => {
+      const updatedGuests = cloneDeep(state.selectedEvent.guests).map((guest) => {
         if (payload.userId === guest.user.userId) {
           guest.rsvp.status = payload.status
         }
         return guest
-      }))
+      })
+
       return {
         ...state,
         selectedEvent: {

@@ -1,4 +1,4 @@
-// import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
 import * as React from 'react'
 import IAction from '../../IAction'
 import ITrack from '../../track/ITrack'
@@ -64,10 +64,10 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
               Playlist Name
             </span><br/>
             <span>
-              {event.playlist.name}
+              {!isEmpty(event.playlist) && event.playlist.name}
             </span>
             <br/>
-            {event.playlist.description !== '' && (
+            {(!isEmpty(event.playlist) && event.playlist.description !== '') && (
               <>
                 <span className="EventDetails-playlist-title">
                   Playlist Description
@@ -89,14 +89,18 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
           }
         </div>
         <div>
-          <TrackList
-            tracks={event.playlist.tracks.items.map((item) =>
-              item.track
-            )}
-            withVoting={true}
-            votes={this.props.votes}
-            onVote={this.handleTrackVote}
-          />
+          {
+            !isEmpty(event.playlist) && (
+              <TrackList
+                tracks={event.playlist.tracks.items.map((item) =>
+                  item.track
+                )}
+                withVoting={true}
+                votes={this.props.votes}
+                onVote={this.handleTrackVote}
+              />
+            )
+          }
         </div>
       </div>
     )
