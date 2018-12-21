@@ -14,9 +14,9 @@ import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import {
-  onGuestUpdate,
-  subscribeToSuggestionsAccepted,
-  subscribeToVotesModified
+onGuestUpdate,
+subscribeToSuggestionsAccepted,
+subscribeToVotesModified
 } from '../notification'
 import EventGuests from './components/Guests/EventGuestsContainer'
 import EventPlaylistView from './components/Playlist/EventPlaylistViewContainer'
@@ -195,7 +195,6 @@ class EventView extends React.Component<
   }
 
   private handleSuggestionNotification = (type: any) => {
-    console.log(type)
     const eventId = this.props.match.params.eventId
     if (type === 'accepted') {
       this.props.getEventById(eventId)

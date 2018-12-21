@@ -4,21 +4,23 @@ import { deleteEvent, getEventById, updateEvent } from '../event/eventClient'
 import IEventSettings from '../event/IEventSettings'
 import { EVENT_PLAYLIST_FETCHED } from '../eventPlaylist/eventPlaylistActions'
 import IAction from '../IAction'
+import IPlaylistItem from '../playlist/IPlaylistItem'
 import {
-  EVENT_DELETE_FAILED,
-  EVENT_DELETE_INITIATED,
-  EVENT_DELETE_SUCCESSFUL,
-  EVENT_FETCH_BY_ID_ERROR,
-  EVENT_FETCH_BY_ID_INITIATED,
-  EVENT_FETCH_BY_ID_NO_LOADING_INITIATED,
-  EVENT_FETCHED_BY_ID,
-  REFRESH_EVENT_PLAYLIST,
-  TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
-  TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
-  TOGGLE_DYNAMIC_VOTING,
-  TOGGLE_DYNAMIC_VOTING_ERROR,
-  TOGGLE_SUGGESTING_PLAYLISTS
+EVENT_DELETE_FAILED,
+EVENT_DELETE_INITIATED,
+EVENT_DELETE_SUCCESSFUL,
+EVENT_FETCH_BY_ID_ERROR,
+EVENT_FETCH_BY_ID_INITIATED,
+EVENT_FETCH_BY_ID_NO_LOADING_INITIATED,
+EVENT_FETCHED_BY_ID,
+REFRESH_EVENT_PLAYLIST,
+TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
+TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
+TOGGLE_DYNAMIC_VOTING,
+TOGGLE_DYNAMIC_VOTING_ERROR,
+TOGGLE_SUGGESTING_PLAYLISTS
 } from './eventViewActions'
+import { getTracksFeatures } from '../playlist/playlistActions'
 
 function* fetchEventByIdFlow(action: IAction) {
   const eventId: string = action.payload
@@ -30,6 +32,16 @@ function* fetchEventByIdFlow(action: IAction) {
     }
     yield put({ type: EVENT_FETCHED_BY_ID, payload: omit(event, ['playlist']) })
     yield put({ type: EVENT_PLAYLIST_FETCHED, payload: playlist })
+    const trackIds = [] as string[]
+    if (playlist.tracks.items.length > 0) {
+      playlist.tracks.items.map((track: IPlaylistItem) => {
+        trackIds.push(track.track.id)
+      })
+      if (trackIds.length > 0) {
+        yield put(getTracksFeatures(trackIds))
+      }
+    }
+
   } catch (err) {
     yield put({ type: EVENT_FETCH_BY_ID_ERROR, payload: err })
   }
