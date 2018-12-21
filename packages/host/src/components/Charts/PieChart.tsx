@@ -28,16 +28,20 @@ class PieChartWidget extends React.Component<
   IPieChartWidgetProps & WithStyles
 > {
   public state = {
-    anchorEl: null
+    anchorEl: null,
+    pickedEventName: 'All'
   }
 
   public handleClick = (event: any) => {
     this.setState({ anchorEl: event.currentTarget })
   }
 
-  public handleClose = (id: string) => () => {
-    this.setState({ anchorEl: null })
-    this.props.filterByEventPick(id)
+  public handleClose = (event: IEvent) => () => {
+    this.setState({
+      anchorEl: null,
+      pickedEventName: event.name || event.eventId
+    })
+    this.props.filterByEventPick(event.eventId)
   }
 
   public render() {
@@ -54,19 +58,19 @@ class PieChartWidget extends React.Component<
             aria-haspopup="true"
             onClick={this.handleClick}
           >
-            Sort
+            Event: {this.state.pickedEventName}
           </Button>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
-            onClose={this.handleClose('all')}
+            onClose={this.handleClose({eventId: 'all'} as IEvent)}
           >
-            <MenuItem onClick={this.handleClose('all')}>All</MenuItem>
+            <MenuItem onClick={this.handleClose({eventId: 'all'} as IEvent)}>All</MenuItem>
             {events.map(
               (event, i) =>
                 event.eventId && (
-                  <MenuItem key={i} onClick={this.handleClose(event.eventId)}>
+                  <MenuItem key={i} onClick={this.handleClose(event)}>
                     {event.name}
                   </MenuItem>
                 )
