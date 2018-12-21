@@ -5,7 +5,8 @@ import {
   Menu,
   MenuItem,
   Tab,
-  Tabs, Theme,
+  Tabs,
+  Theme,
   Typography,
   WithStyles,
   withStyles
@@ -45,12 +46,10 @@ const styles = (theme: Theme) =>
       padding: '0px 12px',
       height: '36px',
       '&:hover': {
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.secondary.main
       }
     },
-    eventImg: {
-
-    }
+    eventImg: {}
   })
 
 interface IEventProps extends WithStyles<typeof styles> {
@@ -71,239 +70,246 @@ interface IEventProps extends WithStyles<typeof styles> {
   updateRsvp(rsvp: IRsvp): IAction
 }
 
-const options = [
-  'I\'m Going',
-  'Maybe',
-  'I\'m not going'
-]
+const options = ["I'm Going", 'Maybe', "I'm not going"]
 
-const Event = withStyles(styles)(({
-  classes,
-  user,
-  inviteId,
-  selectedEvent,
-  getEvent,
-  match,
-  votes,
-  fetchEventVotes,
-  createVote,
-  deleteVote,
-  fetchingVotes,
-  eventsLoading,
-  inviteEvent,
-  eventLoading,
-  fetchOrCreateRsvp,
-  clearInvite,
-  updateRsvp
-}: IEventProps & RouteComponentProps<any>) => {
-  const eventId = match.params.eventId
-  const [tabIndex, setTabIndex] = useState(0)
+const Event = withStyles(styles)(
+  ({
+    classes,
+    user,
+    inviteId,
+    selectedEvent,
+    getEvent,
+    match,
+    votes,
+    fetchEventVotes,
+    createVote,
+    deleteVote,
+    fetchingVotes,
+    eventsLoading,
+    inviteEvent,
+    eventLoading,
+    fetchOrCreateRsvp,
+    clearInvite,
+    updateRsvp
+  }: IEventProps & RouteComponentProps<any>) => {
+    const eventId = match.params.eventId
+    const [tabIndex, setTabIndex] = useState(0)
 
-  const [selected, selectOption] = useState('Are you going?')
+    const [selected, selectOption] = useState('Are you going?')
 
-  const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
+    const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
 
-  const isOpen = Boolean(menuLink)
+    const isOpen = Boolean(menuLink)
 
-  const handleTabChange = (e: any, value: any) => {
-    setTabIndex(value)
-  }
-
-  useEffect(() => {
-    if (
-      !isEmpty(inviteEvent) &&
-      !isEmpty(inviteId) &&
-      eventId === inviteEvent.eventId
-    ) {
-      fetchOrCreateRsvp(inviteId, user.userId, eventId)
-      clearInvite()
+    const handleTabChange = (e: any, value: any) => {
+      setTabIndex(value)
     }
 
-    if (isEmpty(selectedEvent) && !eventLoading) {
-      getEvent(eventId)
-    }
-
-    if (isEmpty(votes) && !fetchingVotes) {
-      fetchEventVotes(eventId)
-    }
-
-    subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
-  }, [eventId])
-
-  useEffect(() => {
-    if (
-      !eventsLoading && !eventLoading &&
-      (isEmpty(selectedEvent) || eventId !== selectedEvent.eventId)
-    ) {
-      getEvent(eventId)
-    }
-
-    if (!isEmpty(selectedEvent) && selected === 'Are you going?') {
-      selectedEvent.guests.map((guest: any) => {
-        if (guest.rsvp.userId === user.userId && guest.rsvp.status !== 'Pending') {
-          selectOption(guest.rsvp.status)
+    useEffect(
+      () => {
+        console.log('EVNETID=' + eventId)
+        if (
+          !isEmpty(inviteEvent) &&
+          !isEmpty(inviteId) &&
+          eventId === inviteEvent.eventId
+        ) {
+          fetchOrCreateRsvp(inviteId, user.userId, eventId)
+          clearInvite()
         }
-      })
-    }
-  })
 
-  const handleMenuItemClick = (option: string) => () => {
-    const guests = !isEmpty(selectedEvent) ?
-      cloneDeep(selectedEvent.guests) :
-      [] as IEventGuest[]
+        if (isEmpty(selectedEvent) && !eventLoading) {
+          getEvent(eventId)
+        }
 
-    const rsvp = guests.map((guest: IEventGuest) => {
-      if (guest.rsvp.userId === user.userId) {
-        guest.rsvp.status = option
-        return guest.rsvp
+        if (isEmpty(votes) && !fetchingVotes) {
+          fetchEventVotes(eventId)
+        }
+
+        subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
+      },
+      [eventId]
+    )
+
+    useEffect(() => {
+      if (
+        !eventsLoading &&
+        !eventLoading &&
+        (isEmpty(selectedEvent) || eventId !== selectedEvent.eventId)
+      ) {
+        getEvent(eventId)
       }
-      return guest.rsvp
+
+      if (!isEmpty(selectedEvent) && selected === 'Are you going?') {
+        selectedEvent.guests.map((guest: any) => {
+          if (
+            guest.rsvp.userId === user.userId &&
+            guest.rsvp.status !== 'Pending'
+          ) {
+            selectOption(guest.rsvp.status)
+          }
+        })
+      }
     })
 
-    updateRsvp(rsvp[0])
+    const handleMenuItemClick = (option: string) => () => {
+      const guests = !isEmpty(selectedEvent)
+        ? cloneDeep(selectedEvent.guests)
+        : ([] as IEventGuest[])
 
-    handleMenuClose()
-    selectOption(option)
-  }
+      const rsvp = guests.map((guest: IEventGuest) => {
+        if (guest.rsvp.userId === user.userId) {
+          guest.rsvp.status = option
+          return guest.rsvp
+        }
+        return guest.rsvp
+      })
 
-  if (isEmpty(selectedEvent)) {
-    return <LoadingSpinner />
-  }
+      updateRsvp(rsvp[0])
 
-  const getEndDateFormat = (startDate: Moment, endDate: Moment) => {
-    const message = `${
-      startDate.format('DD') === endDate.format('DD') ? 'h:mm a' : 'h:mm a, Do '
+      handleMenuClose()
+      selectOption(option)
+    }
+
+    if (isEmpty(selectedEvent)) {
+      return <LoadingSpinner />
+    }
+
+    const getEndDateFormat = (startDate: Moment, endDate: Moment) => {
+      const message = `${
+        startDate.format('DD') === endDate.format('DD')
+          ? 'h:mm a'
+          : 'h:mm a, Do '
       }
      ${startDate.format('MMMM') === endDate.format('MMMM') ? '' : 'MMMM'}`
-    return message
-  }
-
-  const dateFormat = (event: any) => {
-    if (isEmpty(event)) {
-      return null
+      return message
     }
-    const { startDateTime, endDateTime } = event
-    return `${startDateTime.format('Do MMMM, h:mm a')} to ${endDateTime.format(
-      getEndDateFormat(startDateTime, endDateTime)
-    )}`
-  }
 
-  const times = dateFormat(selectedEvent)
+    const dateFormat = (event: any) => {
+      if (isEmpty(event)) {
+        return null
+      }
+      const { startDateTime, endDateTime } = event
+      return `${startDateTime.format(
+        'Do MMMM, h:mm a'
+      )} to ${endDateTime.format(getEndDateFormat(startDateTime, endDateTime))}`
+    }
 
-  return (
-    <div className="Event-root">
-      <div className="Event-header-top-menu">
-        <Link to="/">
-          <ChevronLeft className="Event-back-arrow" />
-        </Link>
-      </div>
-      <div className="Event-header-container">
-        <img className="Event-background" src={selectedEvent.imageUrl} alt=""/>
-        <div className="Event-img">
-          <div className="Event-img-info-block">
-            <div className="Event-img-calendar">
-              <div className="Event-img-calendar-month">
-                {selectedEvent.startDateTime.format('MMM')}
-              </div>
-              <div className="Event-img-calendar-number">
-                {selectedEvent.startDateTime.format('D')}
-              </div>
-            </div>
-            <div className="Event-img-info">
-              <div className="Event-img-info-title">{selectedEvent.name}</div>
-              <div className="Event-img-info-location">
-                <Icon>location_on</Icon>
-                {selectedEvent.location.address}
-              </div>
-            </div>
-          </div>
-          <div className="Event-img-secondRow">
-            <div className="Event-img-organizer-wrapper">
-              <span>Organizer</span>
-              <div>
-                <ProfileImage user={selectedEvent.hostData}/>
-                <span>{selectedEvent.organizer}</span>
-              </div>
-            </div>
+    const times = dateFormat(selectedEvent)
 
-            <Button
-              aria-haspopup="true"
-              onClick={handleMenuOpen}
-              className={classes.eventButton}
-            >
-              {selected}
-              <Icon>arrow_drop_down</Icon>
-            </Button>
-            <Menu
-              id="simple-menu"
-              open={isOpen}
-              anchorEl={menuLink}
-              onClose={handleMenuClose}
-            >
-              {options.map((option, i) =>
-                <MenuItem
-                  key={i}
-                  onClick={handleMenuItemClick(option)}
-                >
-                  {option}
-                </MenuItem>
-              )}
-            </Menu>
-
-            <div className="Event-times-container">
-              <div className="Event-times-container-column">
-                <div className="Event-description-title">
-                  Times
+    return (
+      <div className="Event-root">
+        <div className="Event-header-top-menu">
+          <Link to="/">
+            <ChevronLeft className="Event-back-arrow" />
+          </Link>
+        </div>
+        <div className="Event-header-container">
+          <img
+            className="Event-background"
+            src={selectedEvent.imageUrl}
+            alt=""
+          />
+          <div className="Event-img">
+            <div className="Event-img-info-block">
+              <div className="Event-img-calendar">
+                <div className="Event-img-calendar-month">
+                  {selectedEvent.startDateTime.format('MMM')}
                 </div>
-                <div className="Event-times-container-column-desc">
-                  {times}
+                <div className="Event-img-calendar-number">
+                  {selectedEvent.startDateTime.format('D')}
+                </div>
+              </div>
+              <div className="Event-img-info">
+                <div className="Event-img-info-title">{selectedEvent.name}</div>
+                <div className="Event-img-info-location">
+                  <Icon>location_on</Icon>
+                  {selectedEvent.location.address}
+                </div>
+              </div>
+            </div>
+            <div className="Event-img-secondRow">
+              <div className="Event-img-organizer-wrapper">
+                <span>Organizer</span>
+                <div>
+                  <ProfileImage user={selectedEvent.hostData} />
+                  <span>{selectedEvent.organizer}</span>
+                </div>
+              </div>
+
+              <Button
+                aria-haspopup="true"
+                onClick={handleMenuOpen}
+                className={classes.eventButton}
+              >
+                {selected}
+                <Icon>arrow_drop_down</Icon>
+              </Button>
+              <Menu
+                id="simple-menu"
+                open={isOpen}
+                anchorEl={menuLink}
+                onClose={handleMenuClose}
+              >
+                {options.map((option, i) => (
+                  <MenuItem key={i} onClick={handleMenuItemClick(option)}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Menu>
+
+              <div className="Event-times-container">
+                <div className="Event-times-container-column">
+                  <div className="Event-description-title">Times</div>
+                  <div className="Event-times-container-column-desc">
+                    {times}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={tabIndex}
+              onChange={handleTabChange}
+              indicatorColor="primary"
+              textColor="secondary"
+              fullWidth={true}
+              classes={{ indicator: 'indicator-color' }}
+              className="Event-tabs"
+            >
+              <Tab icon={<Icon>library_music</Icon>} className="Event-tab" />
+              <Tab icon={<Icon>location_on</Icon>} className="Event-tab" />
+              <Tab icon={<Icon>account_circle</Icon>} className="Event-tab" />
+            </Tabs>
+          </AppBar>
+          {tabIndex === 0 && (
+            <Typography component="div">
+              <EventDetails
+                user={user}
+                fetchEventVotes={fetchEventVotes}
+                createVote={createVote}
+                deleteVote={deleteVote}
+                votes={votes}
+                event={selectedEvent}
+              />
+            </Typography>
+          )}
+          {tabIndex === 1 && (
+            <Typography component="div" dir={'1'}>
+              <EventLocation event={selectedEvent} />
+            </Typography>
+          )}
+          {tabIndex === 2 && (
+            <Typography component="div" dir={'2'}>
+              <EventGuests event={selectedEvent} />
+            </Typography>
+          )}
+        </div>
       </div>
-      <div>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={tabIndex}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="secondary"
-            fullWidth={true}
-            classes={{ indicator: 'indicator-color' }}
-            className="Event-tabs"
-          >
-            <Tab icon={<Icon>library_music</Icon>} className="Event-tab" />
-            <Tab icon={<Icon>location_on</Icon>} className="Event-tab" />
-            <Tab icon={<Icon>account_circle</Icon>} className="Event-tab" />
-          </Tabs>
-        </AppBar>
-        {tabIndex === 0 && (
-          <Typography component="div">
-            <EventDetails
-              user={user}
-              fetchEventVotes={fetchEventVotes}
-              createVote={createVote}
-              deleteVote={deleteVote}
-              votes={votes}
-              event={selectedEvent}
-            />
-          </Typography>
-        )}
-        {tabIndex === 1 && (
-          <Typography component="div" dir={'1'}>
-            <EventLocation event={selectedEvent} />
-          </Typography>
-        )}
-        {tabIndex === 2 && (
-          <Typography component="div" dir={'2'}>
-            <EventGuests event={selectedEvent} />
-          </Typography>
-        )}
-      </div>
-    </div>
-  )
-})
+    )
+  }
+)
 
 export default Event

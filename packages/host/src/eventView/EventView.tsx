@@ -194,9 +194,12 @@ class EventView extends React.Component<
     }
   }
 
-  private handleSuggestionNotification = () => {
+  private handleSuggestionNotification = (type: any) => {
+    console.log(type)
     const eventId = this.props.match.params.eventId
-    if (eventId) {
+    if (type === 'accepted') {
+      this.props.getEventById(eventId)
+    } else if (eventId) {
       this.props.getEventSuggestions(eventId)
     }
   }
