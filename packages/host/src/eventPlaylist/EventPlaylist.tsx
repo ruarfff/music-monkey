@@ -256,7 +256,5 @@ export default class EventPlaylist extends React.Component<
       result.source.index,
       result.destination.index
     )
-
-    setTimeout(() => this.handleGetTrackFeatures(), 200)
   }
 }
