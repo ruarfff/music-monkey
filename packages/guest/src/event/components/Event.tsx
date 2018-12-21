@@ -19,7 +19,7 @@ import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
-import { subscribeToVotesModified } from '../../notification'
+import { subscribeToSuggestionsAccepted, subscribeToVotesModified } from '../../notification'
 import IRsvp from '../../rsvp/IRsvp'
 import { ProfileImage } from '../../topbar/ProfileImage'
 import IUser from '../../user/IUser'
@@ -107,7 +107,6 @@ const Event = withStyles(styles)(
 
     useEffect(
       () => {
-        console.log('EVNETID=' + eventId)
         if (
           !isEmpty(inviteEvent) &&
           !isEmpty(inviteId) &&
@@ -126,6 +125,7 @@ const Event = withStyles(styles)(
         }
 
         subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
+        subscribeToSuggestionsAccepted(eventId, () => getEvent(eventId))
       },
       [eventId]
     )
