@@ -5,6 +5,7 @@ import IEventSettings from '../event/IEventSettings'
 import { EVENT_PLAYLIST_FETCHED } from '../eventPlaylist/eventPlaylistActions'
 import IAction from '../IAction'
 import IPlaylistItem from '../playlist/IPlaylistItem'
+import { getTracksFeatures } from '../playlist/playlistActions'
 import {
 EVENT_DELETE_FAILED,
 EVENT_DELETE_INITIATED,
@@ -20,7 +21,6 @@ TOGGLE_DYNAMIC_VOTING,
 TOGGLE_DYNAMIC_VOTING_ERROR,
 TOGGLE_SUGGESTING_PLAYLISTS
 } from './eventViewActions'
-import { getTracksFeatures } from '../playlist/playlistActions'
 
 function* fetchEventByIdFlow(action: IAction) {
   const eventId: string = action.payload

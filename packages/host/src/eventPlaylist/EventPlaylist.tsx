@@ -16,7 +16,6 @@ import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import IPlaylist from '../playlist/IPlaylist'
-import IPlaylistItem from '../playlist/IPlaylistItem'
 import IDecoratedSuggestion from '../suggestion/IDecoratedSuggestion'
 import ITrack from '../track/ITrack'
 import ITrackWithFeatures from '../track/ITrackWithFeatures'
@@ -32,7 +31,6 @@ interface IEventPlaylistProps {
   stagedSuggestions: IDecoratedSuggestion[]
   saving: boolean
   votes: Map<string, ITrackVoteStatus>
-  getTracksFeatures(trackIds: string[]): IAction
   saveEventPlaylist(
     eventId: string,
     playlist: IPlaylist,
@@ -57,10 +55,6 @@ export default class EventPlaylist extends React.Component<
   public state = {
     anchorEl: null,
     isOpen: false
-  }
-
-  public componentDidMount() {
-    this.handleGetTrackFeatures()
   }
 
   public handleClick = (event: any) => {
@@ -234,19 +228,6 @@ export default class EventPlaylist extends React.Component<
         </div>
       </div>
     )
-  }
-
-  private handleGetTrackFeatures = () => {
-    const { playlist } = this.props
-    const trackIds = [] as string[]
-    if (playlist.tracks.items.length > 0) {
-      playlist.tracks.items.map((track: IPlaylistItem) => {
-        trackIds.push(track.track.id)
-      })
-      if (trackIds.length > 0) {
-        this.props.getTracksFeatures(trackIds)
-      }
-    }
   }
 
   private handleSavePlaylist = () => {
