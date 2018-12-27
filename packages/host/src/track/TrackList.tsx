@@ -41,7 +41,7 @@ const TrackList = ({
   onTrackSelected = (t: ITrack) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
   removeTrack = (uri: string, position: number) => ({} as any),
-  showNotification = () => ({} as any),
+  showNotification = () => ({} as any)
 }: ITrackListProps) => (
   <React.Fragment>
     <DragDropContext onDragEnd={onDragEnd}>
@@ -60,7 +60,7 @@ const TrackList = ({
               }
 
               return (
-                <Draggable key={i} draggableId={trackId} index={i}>
+                <Draggable key={i} draggableId={trackId + '-' + i} index={i}>
                   {(draggableProvided, draggableSnapshot) => (
                     <div
                       ref={draggableProvided.innerRef}
