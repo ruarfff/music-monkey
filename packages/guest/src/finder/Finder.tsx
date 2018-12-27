@@ -54,13 +54,16 @@ const Finder = ({
   saveTrackSuggestion,
   fetchPlaylists,
   selectPlaylist,
-  savePlaylistSuggestion,
+  savePlaylistSuggestion
 }: IFinderProps) => {
-  React.useEffect(() => {
-    if (!isEmpty(user) && isEmpty(userPlaylists)) {
-      fetchPlaylists(user)
-    }
-  }, [])
+  React.useEffect(
+    () => {
+      if (!isEmpty(user) && isEmpty(userPlaylists)) {
+        fetchPlaylists(user)
+      }
+    },
+    [user]
+  )
 
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
@@ -69,24 +72,30 @@ const Finder = ({
   }
 
   const onPlaylistSelected = (playlist: IPlaylist) => () => {
-    showConfirmationPlaylistDialog(user, selectedEvent, playlist, savePlaylistSuggestion)
+    showConfirmationPlaylistDialog(
+      user,
+      selectedEvent,
+      playlist,
+      savePlaylistSuggestion
+    )
   }
 
-  const playlistTracks = !isEmpty(selectedEvent) ?
-    selectedEvent.playlist.tracks.items.map((track) => track.track.uri) : []
+  const playlistTracks = !isEmpty(selectedEvent)
+    ? selectedEvent.playlist.tracks.items.map(track => track.track.uri)
+    : []
 
   let filteredSearch = [] as ITrack[]
 
-  if(!isEmpty(searchResults)) {
-    filteredSearch = searchResults
-      .filter((searchedTrack) => playlistTracks.indexOf(searchedTrack.uri) === -1)
+  if (!isEmpty(searchResults)) {
+    filteredSearch = searchResults.filter(
+      searchedTrack => playlistTracks.indexOf(searchedTrack.uri) === -1
+    )
   }
 
   return (
     <div>
-      {isEmpty(selectedEvent) &&
-        !isEmpty(events) && (
-          <EventPicker events={events} onSelectEvent={selectEvent} />
+      {isEmpty(selectedEvent) && !isEmpty(events) && (
+        <EventPicker events={events} onSelectEvent={selectEvent} />
       )}
       <Search />
       {(searching || !isEmpty(filteredSearch)) && (
@@ -95,51 +104,56 @@ const Finder = ({
           onTrackSelected={onTrackSelected}
         />
       )}
-      {!searching &&
-        isEmpty(filteredSearch) && (
-          <div>
-            <Divider variant={'inset'} className="Finder-divider" />
-            {!isEmpty(selectedEvent) &&
-              <SelectedEvent event={selectedEvent} deselectEvent={deselectEvent}/>
-            }
-            <Divider variant={'inset'} className="Finder-divider" />
-            <AppBar position="static" color="default">
-              <Tabs
-                value={tabIndex}
-                onChange={handleTabChange}
-                indicatorColor="secondary"
-                textColor="secondary"
-                fullWidth={true}
-                classes={{ indicator: 'indicator-color' }}
-              >
-                <Tab label="RECOMMENDED" />
-                <Tab label="MY PLAYLISTS" />
-              </Tabs>
-            </AppBar>
-            <SwipeableViews
-              axis={'x'}
-              index={tabIndex}
-              onChangeIndex={handleTabChange}
+      {!searching && isEmpty(filteredSearch) && (
+        <div>
+          <Divider variant={'inset'} className="Finder-divider" />
+          {!isEmpty(selectedEvent) && (
+            <SelectedEvent
+              event={selectedEvent}
+              deselectEvent={deselectEvent}
+            />
+          )}
+          <Divider variant={'inset'} className="Finder-divider" />
+          <AppBar position="static" color="default">
+            <Tabs
+              value={tabIndex}
+              onChange={handleTabChange}
+              indicatorColor="secondary"
+              textColor="secondary"
+              fullWidth={true}
+              classes={{ indicator: 'indicator-color' }}
             >
-              {tabIndex === 0 ?
-                <RecommendationsTab onTrackSelected={onTrackSelected} /> :
-                <div/>
-              }
-              {tabIndex === 1 ?
-                <MyPlaylistsTab
-                  user={user}
-                  selectedEvent={selectedEvent}
-                  savePlaylistSuggestion={onPlaylistSelected}
-                  onTrackSelected={onTrackSelected}
-                  playlists={userPlaylists}
-                  selectedUserPlaylist={selectedUserPlaylist}
-                  selectPlaylist={selectPlaylist}
-                  attached={false}
-                /> : <div/>
-              }
-            </SwipeableViews>
-          </div>
-        )}
+              <Tab label="RECOMMENDED" />
+              <Tab label="MY PLAYLISTS" />
+            </Tabs>
+          </AppBar>
+          <SwipeableViews
+            axis={'x'}
+            index={tabIndex}
+            onChangeIndex={handleTabChange}
+          >
+            {tabIndex === 0 ? (
+              <RecommendationsTab onTrackSelected={onTrackSelected} />
+            ) : (
+              <div />
+            )}
+            {tabIndex === 1 ? (
+              <MyPlaylistsTab
+                user={user}
+                selectedEvent={selectedEvent}
+                savePlaylistSuggestion={onPlaylistSelected}
+                onTrackSelected={onTrackSelected}
+                playlists={userPlaylists}
+                selectedUserPlaylist={selectedUserPlaylist}
+                selectPlaylist={selectPlaylist}
+                attached={false}
+              />
+            ) : (
+              <div />
+            )}
+          </SwipeableViews>
+        </div>
+      )}
     </div>
   )
 }
@@ -164,7 +178,7 @@ function showConfirmationPlaylistDialog(
         eventId: event.eventId,
         userId: user.userId,
         playlistUri: playlist.uri,
-        trackUris: playlist.tracks.items.map((t) => t.track.uri)
+        trackUris: playlist.tracks.items.map(t => t.track.uri)
       } as IPlaylistSuggestion)
     }
   })
