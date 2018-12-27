@@ -19,7 +19,10 @@ import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
-import { subscribeToSuggestionsAccepted, subscribeToVotesModified } from '../../notification'
+import {
+  subscribeToSuggestionsAccepted,
+  subscribeToVotesModified
+} from '../../notification'
 import IRsvp from '../../rsvp/IRsvp'
 import { ProfileImage } from '../../topbar/ProfileImage'
 import IUser from '../../user/IUser'
@@ -130,26 +133,29 @@ const Event = withStyles(styles)(
       [eventId]
     )
 
-    useEffect(() => {
-      if (
-        !eventsLoading &&
-        !eventLoading &&
-        (isEmpty(selectedEvent) || eventId !== selectedEvent.eventId)
-      ) {
-        getEvent(eventId)
-      }
+    useEffect(
+      () => {
+        if (
+          !eventsLoading &&
+          !eventLoading &&
+          (isEmpty(selectedEvent) || eventId !== selectedEvent.eventId)
+        ) {
+          getEvent(eventId)
+        }
 
-      if (!isEmpty(selectedEvent) && selected === 'Are you going?') {
-        selectedEvent.guests.map((guest: any) => {
-          if (
-            guest.rsvp.userId === user.userId &&
-            guest.rsvp.status !== 'Pending'
-          ) {
-            selectOption(guest.rsvp.status)
-          }
-        })
-      }
-    })
+        if (!isEmpty(selectedEvent) && selected === 'Are you going?') {
+          selectedEvent.guests.map((guest: any) => {
+            if (
+              guest.rsvp.userId === user.userId &&
+              guest.rsvp.status !== 'Pending'
+            ) {
+              selectOption(guest.rsvp.status)
+            }
+          })
+        }
+      },
+      [eventId]
+    )
 
     const handleMenuItemClick = (option: string) => () => {
       const guests = !isEmpty(selectedEvent)

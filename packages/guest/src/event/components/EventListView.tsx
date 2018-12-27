@@ -15,8 +15,7 @@ interface IEventListViewProps {
   eventsLoading: boolean
   selectPage(value: string): IAction
   selectEvent(event: IEvent): IAction
-  selectPlaylist(playlist: IPlaylist): IAction
-  getEvent(eventId: string): IAction
+  selectPlaylist(playlist: IPlaylist): IAction  
 }
 
 const EventListView = ({
