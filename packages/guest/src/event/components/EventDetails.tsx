@@ -19,7 +19,6 @@ interface IEventDetailsProps {
 }
 
 class EventDetails extends React.PureComponent<IEventDetailsProps> {
-
   public handleTrackVote = (track: ITrack) => {
     const trackId = track.uri
     const { user, votes, event } = this.props
@@ -33,7 +32,7 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
           () =>
             this.props.event &&
             this.props.fetchEventVotes(this.props.event.eventId),
-          300
+          200
         )
         return
       }
@@ -49,7 +48,7 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
       () =>
         this.props.event &&
         this.props.fetchEventVotes(this.props.event.eventId),
-      300
+      200
     )
   }
 
@@ -60,53 +59,42 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
       <div className="EventDetails-root">
         <div className="EventDetails-playlist-description">
           <div className="EventDetails-playlist-info">
-            <span className="EventDetails-playlist-title">
-              Playlist Name
-            </span><br/>
-            <span>
-              {!isEmpty(event.playlist) && event.playlist.name}
-            </span>
-            <br/>
-            {(!isEmpty(event.playlist) && event.playlist.description !== '') && (
+            <span className="EventDetails-playlist-title">Playlist Name</span>
+            <br />
+            <span>{!isEmpty(event.playlist) && event.playlist.name}</span>
+            <br />
+            {!isEmpty(event.playlist) && event.playlist.description !== '' && (
               <>
                 <span className="EventDetails-playlist-title">
                   Playlist Description
-                </span><br/>
-                <span>
-                {event.playlist.description}
                 </span>
+                <br />
+                <span>{event.playlist.description}</span>
               </>
             )}
           </div>
 
-          {event.genre &&
+          {event.genre && (
             <div className="EventDetails-playlist-genre">
-              <span className="EventDetails-playlist-title">
-                  Genre
-              </span><br/>
+              <span className="EventDetails-playlist-title">Genre</span>
+              <br />
               {event.genre}
             </div>
-          }
+          )}
         </div>
         <div>
-          {
-            !isEmpty(event.playlist) && (
-              <TrackList
-                tracks={event.playlist.tracks.items.map((item) =>
-                  item.track
-                )}
-                withVoting={true}
-                votes={this.props.votes}
-                onVote={this.handleTrackVote}
-              />
-            )
-          }
+          {!isEmpty(event.playlist) && (
+            <TrackList
+              tracks={event.playlist.tracks.items.map(item => item.track)}
+              withVoting={true}
+              votes={this.props.votes}
+              onVote={this.handleTrackVote}
+            />
+          )}
         </div>
       </div>
     )
   }
 }
-
-
 
 export default EventDetails

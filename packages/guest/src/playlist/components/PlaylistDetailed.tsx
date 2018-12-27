@@ -94,7 +94,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
   }
 
   public componentWillReceiveProps(newProps: IPlayListProps) {
-
     const eventId = this.props.match.params.eventId
 
     const { userPlaylists } = newProps
@@ -104,8 +103,9 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     selectedPlaylist = !isEmpty(this.props.selectedPlaylist)
       ? this.props.selectedPlaylist
       : userPlaylists.length > 0
-        ? userPlaylists.filter(playlist => playlist.eventId === eventId)[0] || {} as IPlaylist
-        : undefined
+      ? userPlaylists.filter(playlist => playlist.eventId === eventId)[0] ||
+        ({} as IPlaylist)
+      : undefined
 
     if (isEmpty(this.props.selectedPlaylist) && !isEmpty(selectedPlaylist)) {
       // this.props.onPlaylistSelected(selectedPlaylist)
@@ -267,7 +267,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
           () =>
             this.props.event &&
             this.props.fetchEventVotes(this.props.event.eventId),
-          500
+          200
         )
         return
       }
@@ -282,7 +282,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
       () =>
         this.props.event &&
         this.props.fetchEventVotes(this.props.event.eventId),
-      500
+      200
     )
   }
 

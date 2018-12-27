@@ -100,7 +100,9 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
 
   public componentDidMount() {
     const { user, getNotifications } = this.props
-    onRsvpSaved(user.userId, getNotifications(user.userId))
+    onRsvpSaved(user.userId, () => {
+      getNotifications(user.userId)
+    })
   }
 
   public menuName = (history: string) => {
@@ -162,7 +164,7 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
             <Button
               variant="contained"
               size="small"
-              color='secondary'
+              color="secondary"
               className={classes.addEventBtn}
             >
               <img className={classes.imageInButton} src={eventIcon} alt="" />
@@ -171,7 +173,9 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
           </Link>
         )}
         <IconButton
-          aria-owns={this.state.showNotification ? 'menu-notification' : undefined}
+          aria-owns={
+            this.state.showNotification ? 'menu-notification' : undefined
+          }
           aria-haspopup="true"
           color="inherit"
           onClick={this.toggleNotification}

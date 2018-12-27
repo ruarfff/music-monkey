@@ -8,7 +8,10 @@ import {
   NOTIFICATION_FETCH_SUCCESS,
   READ_NOTIFICATION
 } from './notificationActions'
-import initialState, { INotification, INotificationState } from './notificationInitialState'
+import initialState, {
+  INotification,
+  INotificationState
+} from './notificationInitialState'
 
 export default function notification(
   state: INotificationState = initialState,
@@ -29,18 +32,18 @@ export default function notification(
       }
 
     case NOTIFICATION_FETCH_SUCCESS:
-      const decoratedNotifications = payload.data.map((n:INotification) => ({
+      const decoratedNotifications = payload.data.map((n: INotification) => ({
         ...n,
         updatedAt: moment(n.updatedAt),
-        createdAt: moment(n.createdAt),
+        createdAt: moment(n.createdAt)
       }))
       return {
         ...state,
         loading: false,
         notifications: decoratedNotifications
       }
-    case READ_NOTIFICATION:
-      let modifiedNotifications = state.notifications.map((n) => {
+    case READ_NOTIFICATION: {
+      const modifiedNotifications = state.notifications.map(n => {
         if (n.notificationId === payload && n.status !== 'Actioned') {
           return {
             ...n,
@@ -53,17 +56,20 @@ export default function notification(
         ...state,
         notifications: modifiedNotifications
       }
-    case ACTIONED_NOTIFICATION:
-      modifiedNotifications = _.cloneDeep(state.notifications)
-      const itemToRemove = modifiedNotifications
-        .findIndex(n => n.notificationId === payload)
+    }
+    case ACTIONED_NOTIFICATION: {
+      const modifiedNotifications = _.cloneDeep(state.notifications)
+      const itemToRemove = modifiedNotifications.findIndex(
+        n => n.notificationId === payload
+      )
 
-      modifiedNotifications.splice(itemToRemove,1)
+      modifiedNotifications.splice(itemToRemove, 1)
 
       return {
         ...state,
         notifications: modifiedNotifications
       }
+    }
     default:
       return state
   }

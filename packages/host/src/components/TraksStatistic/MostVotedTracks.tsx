@@ -1,13 +1,13 @@
-import Paper from '@material-ui/core/Paper'
-import * as React from 'react'
-import './MostPopularTracks.scss'
-import IPlaylist from '../../playlist/IPlaylist'
-import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
-import IAction from '../../IAction'
-import IEvent from '../../event/IEvent'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Paper from '@material-ui/core/Paper'
+import * as React from 'react'
+import IEvent from '../../event/IEvent'
+import IAction from '../../IAction'
+import IPlaylist from '../../playlist/IPlaylist'
 import IPlaylistItem from '../../playlist/IPlaylistItem'
+import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
+import './MostPopularTracks.scss'
 
 interface IMostPopularTracksProps {
   votes: Map<string, ITrackVoteStatus>
@@ -34,7 +34,11 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
         pickedEvent.playlist,
         this.props.votes
       )
-    } else if (nextProps.votes !== votes && !pickedEvent.playlist && events[0].playlist) {
+    } else if (
+      nextProps.votes !== votes &&
+      !pickedEvent.playlist &&
+      events[0].playlist
+    ) {
       this.props.sortPlaylistByVotesDescending(
         events[0].playlist,
         this.props.votes
@@ -49,7 +53,7 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
   public handleClose = (event?: IEvent) => () => {
     this.setState({ anchorEl: null })
     if (event && event.eventId) {
-      this.setState({ pickedEvent: event})
+      this.setState({ pickedEvent: event })
       this.props.fetchEventVotes(event.eventId)
     }
   }
@@ -59,11 +63,11 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
     const { events, playlist } = this.props
     return (
       <Paper>
-        <span className='title'>Most Voted Tracks</span>
+        <span className="title">Most Voted Tracks</span>
         <span
           aria-owns={anchorEl ? 'simple-menu' : undefined}
           aria-haspopup="true"
-          className='menuBtn'
+          className="menuBtn"
           onClick={this.handleClick}
         >
           Pick Event
@@ -74,27 +78,21 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
           open={Boolean(anchorEl)}
           onClose={this.handleClose()}
         >
-          {events && events.map((event: IEvent, index: number) => {
-            if(event.eventId) {
-              return (
-                <MenuItem key={index} onClick={this.handleClose(event)}>
-                  {event.name}
-                </MenuItem>
-              )
-            }
-            return (
-              <MenuItem onClick={this.handleClose()}>
-                no events
-              </MenuItem>
-            )
-
-          })}
+          {events &&
+            events.map((event: IEvent, index: number) => {
+              if (event.eventId) {
+                return (
+                  <MenuItem key={index} onClick={this.handleClose(event)}>
+                    {event.name}
+                  </MenuItem>
+                )
+              }
+              return <MenuItem onClick={this.handleClose()}>no events</MenuItem>
+            })}
         </Menu>
         <div className="listWrapper">
           {playlist &&
-          playlist.tracks.items
-            .slice(0, 5)
-            .map((item: IPlaylistItem, i) => {
+            playlist.tracks.items.slice(0, 5).map((item: IPlaylistItem, i) => {
               return item ? (
                 <div key={i} className={'listItem'}>
                   <div className={'imgSection'}>
@@ -107,8 +105,8 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
                   <div className={'nameSection'}>
                     <span>{item.track.name}</span>
                     <span className="artistName">
-                        {item.track.album.artists[0].name}
-                      </span>
+                      {item.track.album.artists[0].name}
+                    </span>
                   </div>
                 </div>
               ) : (

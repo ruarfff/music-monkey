@@ -14,9 +14,9 @@ import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import {
-onGuestUpdate,
-subscribeToSuggestionsAccepted,
-subscribeToVotesModified
+  onGuestUpdate,
+  subscribeToSuggestionsAccepted,
+  subscribeToVotesModified
 } from '../notification'
 import EventGuests from './components/Guests/EventGuestsContainer'
 import EventPlaylistView from './components/Playlist/EventPlaylistViewContainer'
@@ -206,10 +206,13 @@ class EventView extends React.Component<
   private handleEventVotesModified = () => {
     const eventId = this.props.match.params.eventId
     const { event } = this.props
+    console.log('Handling vote modified')
     if (eventId) {
+      console.log('Fetching votes for ' + eventId)
       this.props.fetchEventVotes(eventId)
     }
     if (!isEmpty(event) && event.settings.dynamicVotingEnabled) {
+      console.log('Fetching votes for ' + eventId + ' using no loading method')
       this.props.getEventByIdNoLoading(eventId)
     }
   }
