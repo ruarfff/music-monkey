@@ -6,14 +6,14 @@ import {
   Paper,
   Typography
 } from '@material-ui/core'
+import { sortBy } from 'lodash'
 import moment from 'moment'
 import * as React from 'react'
-import { sortBy } from 'lodash'
 import { Link } from 'react-router-dom'
-import IEvent from '../IEvent'
-import './EventList.scss'
 import IAction from '../../IAction'
 import IPlaylist from '../../playlist/IPlaylist'
+import IEvent from '../IEvent'
+import './EventList.scss'
 
 interface IEventListProps {
   events: IEvent[]
@@ -42,14 +42,20 @@ export default class EventList extends React.PureComponent<IEventListProps> {
       'endDateTime'
     ).reverse()
 
-    const liveEvents = sortBy(events.filter(
-      event => now.isAfter(event.startDateTime) && now.isBefore(event.endDateTime),
-      'endDateTime'
-      ).reverse()
+    const liveEvents = sortBy(
+      events
+        .filter(
+          event =>
+            now.isAfter(event.startDateTime) && now.isBefore(event.endDateTime),
+          'endDateTime'
+        )
+        .reverse()
     )
 
-    const upcomingEvents = sortBy(events.filter(event =>
-      now.isBefore(event.startDateTime), 'endDateTime').reverse()
+    const upcomingEvents = sortBy(
+      events
+        .filter(event => now.isBefore(event.startDateTime), 'endDateTime')
+        .reverse()
     )
 
     return (
@@ -77,30 +83,42 @@ export default class EventList extends React.PureComponent<IEventListProps> {
     return (
       <React.Fragment>
         {events.map((event, index) => (
-          <div className="EventList-item" key={index} onClick={this.handleSelectEvent(event)}>
+          <div
+            className="EventList-item"
+            key={index}
+            onClick={this.handleSelectEvent(event)}
+          >
             <ListItem component={listLink('/events/' + event.eventId)}>
               <img
                 alt={event.name}
                 src={event.imageUrl || '/img/partycover-sm.png'}
                 className="EventList-event-image"
               />
-              {status === 'live' &&
-              <ListItemText
-                primary={event.name}
-                secondary={'Happening Now'}
-              />}
-              {status === 'upcoming' &&
-              <ListItemText
-                primary={event.name}
-                secondary={`Starts at ${event.startDateTime.format(' Do MMMM, YYYY')}`}
-              />}
-              {status === 'past' && <ListItemText
-                primary={event.name}
-                secondary={`Finished at ${event.endDateTime.format(' Do MMMM, YYYY')}`}
-              />}
+              {status === 'live' && (
+                <ListItemText
+                  primary={event.name}
+                  secondary={'Happening Now'}
+                />
+              )}
+              {status === 'upcoming' && (
+                <ListItemText
+                  primary={event.name}
+                  secondary={`Starts at ${event.startDateTime.format(
+                    ' Do MMMM, YYYY'
+                  )}`}
+                />
+              )}
+              {status === 'past' && (
+                <ListItemText
+                  primary={event.name}
+                  secondary={`Finished at ${event.endDateTime.format(
+                    ' Do MMMM, YYYY'
+                  )}`}
+                />
+              )}
             </ListItem>
             <li>
-              <Divider variant='inset' className="EventList-item-divider" />
+              <Divider variant="inset" className="EventList-item-divider" />
             </li>
           </div>
         ))}

@@ -4,13 +4,15 @@ const pusher = new Pusher('d7c284d8f17d26f74047', {
   encrypted: true
 })
 // TODO: Whole thing a terrible hack. Must make this subscription stuff smarter.
-let subscribedToSuggestions = false
-let subscribedToVoteCreate = false
-export const subscribeToSuggestionsAccepted = (
+let subscribedToSuggestions: string = ''
+let subscribedToVotes: string = ''
+let subscribedToPlaylists: string = ''
+
+export const subscribeToSuggestionsModified = (
   eventId: string,
   callback: any
 ) => {
-  if (!subscribedToSuggestions) {
+  if (subscribedToSuggestions !== eventId) {
     const channel = pusher.subscribe('mm-suggestions-' + eventId)
 
     channel.bind('suggestion-saved', data => callback(data))
@@ -18,17 +20,57 @@ export const subscribeToSuggestionsAccepted = (
     channel.bind('suggestions-rejected', data => callback(data))
     channel.bind('suggestions-auto-accepted', data => callback('accepted'))
 
-    subscribedToSuggestions = true
+    subscribedToSuggestions = eventId
+  }
+}
+
+export const unSubscribeToSuggestionsModified = (eventId: string) => {
+  try {
+    pusher.unsubscribe('mm-suggestions-' + eventId)
+    subscribedToSuggestions = ''
+  } catch (err) {
+    console.log(err)
   }
 }
 
 export const subscribeToVotesModified = (eventId: string, callback: any) => {
-  if (!subscribedToVoteCreate) {
+  if (subscribedToVotes !== eventId) {
     const channel = pusher.subscribe('mm-votes-' + eventId)
 
     channel.bind('vote-saved', callback)
     channel.bind('vote-deleted', callback)
 
-    subscribedToVoteCreate = true
+    subscribedToVotes = eventId
+  }
+}
+
+export const unSubscribeToVotesModified = (eventId: string) => {
+  try {
+    pusher.unsubscribe('mm-votes-' + eventId)
+    subscribedToVotes = ''
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const subscribeToPlaylistModified = (
+  playlistId: string,
+  callback: any
+) => {
+  if (subscribedToPlaylists !== playlistId) {
+    const channel = pusher.subscribe('mm-playlists-' + playlistId)
+
+    channel.bind('playlist-updated', callback)
+
+    subscribedToPlaylists = playlistId
+  }
+}
+
+export const unSubscribeToPlaylistModified = (playlistId: string) => {
+  try {
+    pusher.unsubscribe('mm-playlists-' + playlistId)
+    subscribedToPlaylists = ''
+  } catch (err) {
+    console.log(err)
   }
 }

@@ -15,8 +15,10 @@ import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
 import {
-  subscribeToSuggestionsAccepted,
-  subscribeToVotesModified
+  subscribeToSuggestionsModified,
+  subscribeToVotesModified,
+  unSubscribeToSuggestionsModified,
+  unSubscribeToVotesModified
 } from '../../notification'
 import PlayerContainer from '../../player/PlayerContainer'
 import PlayerPlaylistContainer from '../../player/PlayerPlaylistContainer'
@@ -89,35 +91,13 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     }
 
     subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
-
-    subscribeToSuggestionsAccepted(eventId, () => getUsersSuggestions(eventId))
+    subscribeToSuggestionsModified(eventId, () => getUsersSuggestions(eventId))
   }
 
-  public componentWillReceiveProps(newProps: IPlayListProps) {
+  public componentWillUnmount() {
     const eventId = this.props.match.params.eventId
-
-    const { userPlaylists } = newProps
-
-    let selectedPlaylist: any
-
-    selectedPlaylist = !isEmpty(this.props.selectedPlaylist)
-      ? this.props.selectedPlaylist
-      : userPlaylists.length > 0
-      ? userPlaylists.filter(playlist => playlist.eventId === eventId)[0] ||
-        ({} as IPlaylist)
-      : undefined
-
-    if (isEmpty(this.props.selectedPlaylist) && !isEmpty(selectedPlaylist)) {
-      // this.props.onPlaylistSelected(selectedPlaylist)
-    }
-  }
-
-  public handleChange = (event: any, value: any) => {
-    this.setState({ value })
-  }
-
-  public handleChangeIndex = (index: any) => {
-    this.setState({ value: index })
+    unSubscribeToSuggestionsModified(eventId)
+    unSubscribeToVotesModified(eventId)
   }
 
   public renderApprovedTracks = (selectedPlaylist: any) => {
@@ -153,7 +133,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
             <div className="playlist-header">
               <div className="playlist-header-top-menu">
                 <Link to={'/playlists'}>
-                  <Icon onClick={this.onGoBack}>chevron_left</Icon>
+                  <Icon>chevron_left</Icon>
                 </Link>
               </div>
               <div className="playlist-content">
@@ -200,7 +180,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
             >
               <Tab label="APPROVED" />
               <Tab label="MAYBE" />
-              {/*<Tab label="MY REQUESTS" disabled={true} />*/}
             </Tabs>
           </AppBar>
           <SwipeableViews
@@ -227,13 +206,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
             ) : (
               <div />
             )}
-            {/*{value === 2 ? (*/}
-            {/*<Typography component="div" dir={'2'}>*/}
-            {/*test3*/}
-            {/*</Typography>*/}
-            {/*) : (*/}
-            {/*<div />*/}
-            {/*)}*/}
           </SwipeableViews>
         </div>
       )
@@ -242,13 +214,20 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     return [PlaylistTabs, showPlayer ? <PlayerContainer /> : '']
   }
 
+  private handleChange = (event: any, value: any) => {
+    this.setState({ value })
+  }
+
+  private handleChangeIndex = (index: any) => {
+    this.setState({ value: index })
+  }
+
   private onPlayClicked = () => {
     this.setState({
       showPlayerPlaylist: !this.state.showPlayerPlaylist,
       showPlayer: false
     })
   }
-  private onGoBack = () => ({})
 
   private onShowPlayerPlaylist = () => {
     this.setState({ showPlayerPlaylist: !this.state.showPlayerPlaylist })
@@ -263,12 +242,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
       const voteStatus = votes.get(trackId)
       if (voteStatus && voteStatus.votedByCurrentUser) {
         this.props.deleteVote(`${trackId}:${eventId}:${user.userId}`)
-        setTimeout(
-          () =>
-            this.props.event &&
-            this.props.fetchEventVotes(this.props.event.eventId),
-          200
-        )
         return
       }
     }
@@ -278,12 +251,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
       userId: user.userId
     } as IVote
     this.props.createVote(vote)
-    setTimeout(
-      () =>
-        this.props.event &&
-        this.props.fetchEventVotes(this.props.event.eventId),
-      200
-    )
   }
 
   private handleTrackSelected = (track: ITrack) => {

@@ -6,7 +6,7 @@ import IEvent from '../event/IEvent'
 import EventPicker from '../finder/EventPicker'
 import SelectedEvent from '../finder/SelectedEvent'
 import IAction from '../IAction'
-import { subscribeToSuggestionsAccepted } from '../notification'
+import { subscribeToSuggestionsModified } from '../notification'
 import ISuggestionState from '../suggestion/ISuggestionState'
 import AcceptedTracks from '../trackView/AcceptedTracksContainer'
 import MaybeTracks from '../trackView/MaybeTracksContainer'
@@ -48,7 +48,7 @@ class Requests extends React.Component<IRequestsProps> {
       this.props.getUsersSuggestions(newProps.event.eventId)
     }
     if (!isEmpty(newProps.event)) {
-      subscribeToSuggestionsAccepted(
+      subscribeToSuggestionsModified(
         newProps.event.eventId,
         this.handleSuggestionNotification
       )
