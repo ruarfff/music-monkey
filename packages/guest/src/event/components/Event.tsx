@@ -44,7 +44,6 @@ interface IEventProps {
   selectedEvent: IEvent
   inviteId: string
   inviteEvent: IEvent
-  eventsLoading: boolean
   eventLoading: boolean
   votes: Map<string, ITrackVoteStatus>
   fetchingVotes: boolean
@@ -64,7 +63,6 @@ export default ({
   selectedEvent,
   inviteId,
   inviteEvent,
-  eventsLoading,
   eventLoading,
   votes,
   fetchingVotes,
@@ -125,12 +123,13 @@ export default ({
   const handleSelectEvent = () => {
     useEffect(
       () => {
-        if (
+        getEvent(eventId)
+        // TODO: Always getting event as a bit of a hack since event doesn't update in background when not in view.
+        /*if (
           (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) &&
           !eventLoading
         ) {
-          getEvent(eventId)
-        }
+        }*/
       },
       [eventId]
     )
