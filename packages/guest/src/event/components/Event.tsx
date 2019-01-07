@@ -167,8 +167,6 @@ export default ({
     useEffect(
       () => {
         if (!isEmpty(selectedEvent)) {
-          console.log('Subscribing to playlist stuff')
-          console.log('PLAYLIST_ID', selectedEvent.playlist.id)
           subscribeToPlaylistModified(selectedEvent.playlist.id, () => {
             getEvent(eventId)
           })
