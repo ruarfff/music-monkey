@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
@@ -15,7 +16,7 @@ interface IEventListViewProps {
   eventsLoading: boolean
   selectPage(value: string): IAction
   selectEvent(event: IEvent): IAction
-  selectPlaylist(playlist: IPlaylist): IAction  
+  selectPlaylist(playlist: IPlaylist): IAction
 }
 
 const EventListView = ({
@@ -24,8 +25,18 @@ const EventListView = ({
   selectPlaylist,
   selectEvent
 }: IEventListViewProps) => {
-  if (eventsLoading || isEmpty(events)) {
+  if (eventsLoading) {
     return <LoadingSpinner />
+  }
+
+  if (isEmpty(events)) {
+    return (
+      <div>
+        <Typography align={'center'} variant={'h6'}>
+          It looks like you don't have any events yet :(
+        </Typography>
+      </div>
+    )
   }
 
   return (

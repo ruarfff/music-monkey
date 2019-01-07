@@ -1,13 +1,10 @@
-import IEvent from '../event/IEvent'
 import Action from '../IAction'
 import IInvite from './IInvite'
 import IInviteState from './IInviteState'
 import {
-  CLEAR_INVITE_SUCCESS,
   FETCHING_INVITE,
   FETCHING_INVITE_ERROR,
-  FETCHING_INVITE_SUCCESS,
-  INVITE_ID_LOADED
+  FETCHING_INVITE_SUCCESS
 } from './inviteActions'
 import initialState from './inviteInitialState'
 
@@ -16,11 +13,6 @@ export default function invite(
   { type, payload }: Action
 ): IInviteState {
   switch (type) {
-    case INVITE_ID_LOADED:
-      return {
-        ...state,
-        inviteId: payload
-      }
     case FETCHING_INVITE:
       return {
         ...state,
@@ -39,13 +31,6 @@ export default function invite(
         inviteId,
         event,
         loading: false
-      }
-    }
-    case CLEAR_INVITE_SUCCESS: {
-      return {
-        ...state,
-        inviteId: '',
-        event: {} as IEvent
       }
     }
     default:

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { clearInvite } from '../../invite/inviteActions'
 import IRootState from '../../rootState'
 import { fetchOrCreateRsvp, updateRsvp } from '../../rsvp/rsvpActions'
 import { createVote, deleteVote, fetchEventVotes } from '../../vote/voteActions'
@@ -19,7 +18,6 @@ const mapStateToProps = (state: IRootState) => ({
 const mapDispatchToProps = {
   getEvent,
   fetchOrCreateRsvp,
-  clearInvite,
   updateRsvp,
   createVote,
   deleteVote,

@@ -12,12 +12,7 @@ import {
   watchFetchEventHostByIdFlow,
   watchFetchUsersEvents
 } from './event/eventSaga'
-import {
-  watchClearInvite,
-  watchFetchInvite,
-  watchLoadInviteId,
-  watchStoreInviteId
-} from './invite/inviteSaga'
+import { watchFetchInvite } from './invite/inviteSaga'
 import { watchFetchPlaylists } from './playlist/playlistSaga'
 import { watchFetchRecommendation } from './recommendation/recommendationsSaga'
 import { watchFetchOrCreateRsvp, watchFetchUpdateRsvp } from './rsvp/rsvpSaga'
@@ -42,8 +37,6 @@ export default function* rootSaga() {
     watchLogin(),
     watchSelectPage(),
     watchFetchPlaylists(),
-    watchStoreInviteId(),
-    watchLoadInviteId(),
     watchFetchSuggestions(),
     watchFetchUsersSuggestions(),
     watchSaveTrackSuggestion(),
@@ -62,7 +55,6 @@ export default function* rootSaga() {
     watchFetchEventVotes(),
     watchFetchUsersEvents(),
     watchFetchInvite(),
-    watchClearInvite(),
     watchUpdateUserFlow(),
     watchFetchUpdateRsvp(),
     watchFetchEventHostByIdFlow()

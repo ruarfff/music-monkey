@@ -1,17 +1,18 @@
 import { connect } from 'react-redux'
-import IRootState from '../rootState'
+import IRootState from '../../rootState'
+import { fetchInvite } from '../inviteActions'
 import Invite from './Invite'
-import { fetchInvite, storeInviteId } from './inviteActions'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
+  isAuthenticated: state.auth.isAuthenticated,
   authError: state.auth.authError,
   inviteId: state.invite.inviteId,
-  event: state.invite.event,
+  inviteEvent: state.invite.event,
   loading: state.invite.loading
 })
 
-const mapDispatchToProps = { fetchInvite, storeInviteId }
+const mapDispatchToProps = { fetchInvite }
 
 const InviteContainer = connect(
   mapStateToProps,

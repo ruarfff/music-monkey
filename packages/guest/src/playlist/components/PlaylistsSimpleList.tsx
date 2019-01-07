@@ -7,14 +7,15 @@ import {
   ListItemAvatar,
   ListItemText,
   Menu,
-  MenuItem
+  MenuItem,
+  Typography
 } from '@material-ui/core'
-import { isEmpty } from 'lodash'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import { isEmpty } from 'lodash'
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import IPlaylist from '../IPlaylist'
-import { Link } from 'react-router-dom'
 
 interface IPlaylistsSimpleListProps {
   playlists: IPlaylist[]
@@ -35,31 +36,37 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
 
     const handlePlaylistSelected = (playlist: IPlaylist) => () => {
       this.props.selectPlaylist(playlist)
-      if(onPlaylistSelected) {
+      if (onPlaylistSelected) {
         onPlaylistSelected(playlist)
       }
     }
 
-    const filteredPlaylists = playlists.filter((playlist) => playlist.tracks.items.length > 0)
+    const filteredPlaylists = playlists.filter(
+      playlist => playlist.tracks.items.length > 0
+    )
 
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
-    let playlistView = <p>You do not have any playlists yet</p>
+
+    let playlistView = (
+      <Typography align={'center'} variant={'h6'}>
+        It looks like you don't have any playlists yet :(
+      </Typography>
+    )
+
     if (!isEmpty(filteredPlaylists)) {
       if (filteredPlaylists.length > 0) {
         playlistView = (
           <List>
             {filteredPlaylists.map((playlist: IPlaylist, i: number) => (
               <div className="playlist-list-item-wrapper" key={i}>
-                <Link to={disableLinks ? '#' : ('/playlist/' + playlist.eventId) }>
+                <Link to={disableLinks ? '#' : '/playlist/' + playlist.eventId}>
                   <ListItem
                     disabled={playlist.tracks.total < 1}
                     button={true}
                     onClick={handlePlaylistSelected(playlist)}
                   >
-                    <div
-                      className="playlist-list-item"
-                    >
+                    <div className="playlist-list-item">
                       <ListItemAvatar>
                         <Avatar
                           alt={playlist.name}
@@ -103,7 +110,7 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
                   </ListItem>
                 </Link>
                 <li>
-                  <Divider variant='inset' />
+                  <Divider variant="inset" />
                 </li>
               </div>
             ))}

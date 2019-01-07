@@ -5,7 +5,6 @@ import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import Images from '../img/ImportImg'
 import ErrorNotification from '../util/ErrorNotification'
-import LoginEmail from './LoginEmailContainer'
 
 import './Login.scss'
 
@@ -45,7 +44,6 @@ class Login extends React.PureComponent<ILoginProps> {
           {eventDetails}
           <div className="Login-section">
             <div className="Login-content">
-              <LoginEmail />
               <a href={facebookLoginUrl} className="text-decoration-none">
                 <Button color="default" className="Login-content-text facebook">
                   <img src={Images.Facebook} />
@@ -77,16 +75,15 @@ class Login extends React.PureComponent<ILoginProps> {
             </div>
           </div>
         </div>
-        {authError &&
-          authError.errorContext === 'guest-login' && (
-            <ErrorNotification
-              message={
-                (authError.response && authError.response.data) ||
-                authError.message
-              }
-              onClose={this.handleErrorAcknowledged}
-            />
-          )}
+        {authError && authError.errorContext === 'guest-login' && (
+          <ErrorNotification
+            message={
+              (authError.response && authError.response.data) ||
+              authError.message
+            }
+            onClose={this.handleErrorAcknowledged}
+          />
+        )}
       </div>
     )
   }

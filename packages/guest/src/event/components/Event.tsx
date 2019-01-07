@@ -52,7 +52,6 @@ interface IEventProps {
   fetchEventVotes(eventId: string): IAction
   getEvent(eventId: string): IAction
   fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
-  clearInvite(): IAction
   updateRsvp(rsvp: IRsvp): IAction
 }
 
@@ -71,7 +70,6 @@ export default ({
   fetchEventVotes,
   getEvent,
   fetchOrCreateRsvp,
-  clearInvite,
   updateRsvp,
   match
 }: IEventProps & RouteComponentProps<any>) => {
@@ -113,7 +111,6 @@ export default ({
           eventId === inviteEvent.eventId
         ) {
           fetchOrCreateRsvp(inviteId, user.userId, eventId)
-          clearInvite()
         }
       },
       [eventId]
