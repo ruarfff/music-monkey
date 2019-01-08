@@ -15,8 +15,10 @@ import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
 import {
+  subscribeToPlaylistModified,
   subscribeToSuggestionsModified,
   subscribeToVotesModified,
+  unSubscribeToPlaylistModified,
   unSubscribeToSuggestionsModified,
   unSubscribeToVotesModified
 } from '../../notification'
@@ -89,12 +91,14 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
 
     subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
     subscribeToSuggestionsModified(eventId, () => getEvent(eventId))
+    subscribeToPlaylistModified(this.props.event.playlist.id, () => getEvent(eventId))
   }
 
   public componentWillUnmount() {
     const eventId = this.props.match.params.eventId
     unSubscribeToSuggestionsModified(eventId)
     unSubscribeToVotesModified(eventId)
+    unSubscribeToPlaylistModified(eventId)
   }
 
   public renderApprovedTracks = (selectedPlaylist: any) => {
