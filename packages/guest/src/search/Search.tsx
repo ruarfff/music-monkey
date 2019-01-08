@@ -60,7 +60,7 @@ export default class Search extends React.Component<
   }
 
   private handleChange = (searchTerm: string) => {
-    if (!!!searchTerm.length) {
+    if (!searchTerm.length) {
       this.props.clearSearch()
       this.onSuggestionsClearRequested()
     } else {

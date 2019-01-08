@@ -1,6 +1,9 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import IAction from '../IAction'
-import { removeTrack } from '../search/searchActions'
+import {
+  CLEAR_SEARCH,
+  removeTrack
+} from '../search/searchActions'
 import {
   DELETE_SUGGESTION_FAILED,
   DELETE_SUGGESTION_INITIATED,
@@ -64,6 +67,7 @@ function* saveTrackSuggestionFlow(action: IAction) {
       suggestionTransformer.trackSuggestionToSuggestion(action.payload)
     )
     yield put({ type: SAVE_SUGGESTION_SUCCESS, payload: savedSuggestion })
+    yield put({ type: CLEAR_SEARCH})
     yield put(removeTrack(savedSuggestion.data.trackUri))
   } catch (err) {
     yield put({ type: SAVE_SUGGESTION_FAILED, payload: err })
