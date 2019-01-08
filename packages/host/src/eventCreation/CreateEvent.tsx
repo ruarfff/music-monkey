@@ -72,6 +72,7 @@ interface ICreateEventProps {
   playlists: IPlaylist[]
   copiedToClipboard: boolean
   message: string
+  isCreatingPlaylist: boolean
   clearMessage(): IAction
   cancel(): void
   closeCreatePlaylist(): IAction
@@ -236,6 +237,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       user,
       playlistInput,
       playlists,
+      isCreatingPlaylist,
       closeExistingPlaylist,
       closeCreatePlaylist,
       createEventPlaylist,
@@ -311,6 +313,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             selectCreatePlaylist={selectCreatePlaylist}
             closeCreatePlaylist={closeCreatePlaylist}
             createEventPlaylist={createEventPlaylist}
+            isCreatingPlaylist={isCreatingPlaylist}
           />
         </Grid>
         <Grid item={true} xs={12} sm={12}>

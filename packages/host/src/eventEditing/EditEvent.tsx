@@ -67,6 +67,7 @@ interface IEditEventProps extends RouteComponentProps<any> {
   playlists: IPlaylist[]
   playlistInput: IPlaylistInput
   history: History
+  isCreatingPlaylist: boolean
   getEventById(eventId: string): IAction
   onEventDeleteSelected(): IAction
   onEventDeleteClosed(): IAction
@@ -118,6 +119,7 @@ class EditEvent extends React.PureComponent<IEditEventProps & WithStyles> {
       selectCreatePlaylist,
       closeCreatePlaylist,
       createEventPlaylist,
+      isCreatingPlaylist,
       classes
     } = this.props
     return (
@@ -203,6 +205,7 @@ class EditEvent extends React.PureComponent<IEditEventProps & WithStyles> {
         <Grid item={true} xs={12} sm={12}>
           {!isEmpty(user) && (
             <PlaylistSelection
+              isCreatingPlaylist={isCreatingPlaylist}
               playlists={playlists}
               fetchPlaylists={fetchPlaylists}
               user={user}

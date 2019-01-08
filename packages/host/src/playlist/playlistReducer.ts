@@ -1,19 +1,23 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
+import {
+  EVENT_CREATE_PLAYLIST_INITIATED,
+  EVENT_PLAYLIST_CREATED
+} from '../event/eventActions'
 import Action from '../IAction'
 import {
-ADD_TRACK_FAILURE,
-ADD_TRACK_SUCCESS,
-FETCH_PLAYLISTS,
-FETCH_PLAYLISTS_ERROR,
-FETCH_PLAYLISTS_SUCCESS,
-PLAYLIST_DESELECTED,
-PLAYLIST_SELECTED,
-REMOVE_TRACK_FAILURE,
-REMOVE_TRACK_SUCCESS,
-SEARCH_TRACKS_FAILURE,
-SEARCH_TRACKS_SUCCESS,
-TRACK_FEATURES_FAILURE,
-TRACK_FEATURES_SUCCESS
+  ADD_TRACK_FAILURE,
+  ADD_TRACK_SUCCESS,
+  FETCH_PLAYLISTS,
+  FETCH_PLAYLISTS_ERROR,
+  FETCH_PLAYLISTS_SUCCESS,
+  PLAYLIST_DESELECTED,
+  PLAYLIST_SELECTED,
+  REMOVE_TRACK_FAILURE,
+  REMOVE_TRACK_SUCCESS,
+  SEARCH_TRACKS_FAILURE,
+  SEARCH_TRACKS_SUCCESS,
+  TRACK_FEATURES_FAILURE,
+  TRACK_FEATURES_SUCCESS
 } from './playlistActions'
 import initialState from './playlistInitialState'
 
@@ -26,6 +30,16 @@ export default function playlists(
       return {
         ...state,
         searchResult: {},
+      }
+    case EVENT_CREATE_PLAYLIST_INITIATED:
+      return {
+        ...state,
+        isCreating: true
+      }
+    case EVENT_PLAYLIST_CREATED:
+      return {
+        ...state,
+        isCreating: false
       }
     case TRACK_FEATURES_SUCCESS:
       return {

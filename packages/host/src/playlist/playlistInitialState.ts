@@ -7,6 +7,7 @@ export default {
   data: [] as IPlaylist[],
   error: {} as Error,
   isLoading: false,
+  isCreating: false,
   searchResult: {} as ISearch,
   selectedPlaylist: {} as IPlaylist,
   notification: '',
