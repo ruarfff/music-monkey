@@ -7,6 +7,7 @@ export default interface IPlaylistState {
   selectedPlaylist: IPlaylist
   error?: Error
   isLoading: boolean
+  isCreating: boolean
   searchResult: ISearch
   notification: string
   tracksWithFeatures: ITrackWithFeatures[]

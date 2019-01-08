@@ -1,3 +1,4 @@
+import { LOCATION_CHANGE } from 'connected-react-router'
 import { cloneDeep } from 'lodash'
 import IAction from '../IAction'
 import ISearchState from './ISearchState'
@@ -15,6 +16,8 @@ export default function search(
   { type, payload }: IAction
 ) {
   switch (type) {
+    case LOCATION_CHANGE:
+      return { ...state, tracks: [] }
     case SEARCH_REMOVE_ADDED_TRACK:
       const filteredTracks =
         cloneDeep(state.tracks

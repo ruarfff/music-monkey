@@ -39,7 +39,8 @@ const mapStateToProps = (state: IRootState) => ({
   deleteSuccess: state.eventView.deleteSucceeded,
   deleteFailed: state.eventView.deleteFailed,
   editSuccess: state.eventView.editSuccess,
-  editFailure: state.eventView.editFailure
+  editFailure: state.eventView.editFailure,
+  isCreatingPlaylist: state.playlist.isCreating,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

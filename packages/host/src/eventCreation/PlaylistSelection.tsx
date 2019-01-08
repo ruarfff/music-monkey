@@ -16,6 +16,7 @@ interface IPlaylistSelectionProps {
   value: string
   playlistInput: any
   playlists: IPlaylist[]
+  isCreatingPlaylist: boolean
   closeCreatePlaylist(): any
   closeExistingPlaylist(): any
   createEventPlaylist(playlistDetails: any): any
@@ -43,10 +44,12 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
   }
 
   public handlePlaylistCreation = (playlistDetals: IPlaylistDetails) => {
-    this.props.createEventPlaylist({
-      ...playlistDetals,
-      user: this.props.user,
-    })
+    if (!this.props.isCreatingPlaylist) {
+      this.props.createEventPlaylist({
+        ...playlistDetals,
+        user: this.props.user,
+      })
+    }
     this.props.closeCreatePlaylist()
   }
 

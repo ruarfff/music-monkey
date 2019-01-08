@@ -58,10 +58,8 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
   public state = {
     value: 0,
     showPlaylist: false,
-    playlist: {},
     showPlayer: false,
-    showPlayerPlaylist: false,
-    loading: false
+    showPlayerPlaylist: false
   }
 
   public componentDidMount() {
@@ -73,7 +71,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
       fetchEventVotes,
       getEvent,
       getSuggestions,
-      getUsersSuggestions
     } = this.props
 
     const eventId = this.props.match.params.eventId
@@ -91,7 +88,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     }
 
     subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
-    subscribeToSuggestionsModified(eventId, () => getUsersSuggestions(eventId))
+    subscribeToSuggestionsModified(eventId, () => getEvent(eventId))
   }
 
   public componentWillUnmount() {
