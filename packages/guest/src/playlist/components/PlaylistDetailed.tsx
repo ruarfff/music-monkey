@@ -91,7 +91,18 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
 
     subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
     subscribeToSuggestionsModified(eventId, () => getEvent(eventId))
-    subscribeToPlaylistModified(this.props.event.playlist.id, () => getEvent(eventId))
+  }
+
+  public componentWillReceiveProps(newProps: IPlayListProps) {
+    const {
+      getEvent
+    } = this.props
+
+    const eventId = this.props.match.params.eventId
+
+    if (!isEmpty(newProps.event)) {
+      subscribeToPlaylistModified(newProps.event.playlist.id, () => getEvent(eventId))
+    }
   }
 
   public componentWillUnmount() {
