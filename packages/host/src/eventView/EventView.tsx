@@ -99,7 +99,7 @@ class EventView extends React.Component<
 
   public componentWillUpdate() {
     const eventId = this.props.match.params.eventId
-    subscribeToSuggestionsAccepted(eventId, this.handleSuggestionNotification)
+    subscribeToSuggestionsAccepted(eventId, () => this.props.getEventSuggestions(eventId))
     subscribeToVotesModified(eventId, this.handleEventVotesModified)
     onGuestUpdate(eventId, this.handleUpdateGuests)
   }
@@ -191,15 +191,6 @@ class EventView extends React.Component<
     const eventId = this.props.match.params.eventId
     if (eventId) {
       this.props.getEventById(eventId)
-    }
-  }
-
-  private handleSuggestionNotification = (type: any) => {
-    const eventId = this.props.match.params.eventId
-    if (type === 'accepted') {
-      this.props.getEventById(eventId)
-    } else if (eventId) {
-      this.props.getEventSuggestions(eventId)
     }
   }
 
