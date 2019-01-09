@@ -1,4 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
+// import { FETCH_USERS_EVENTS } from '../event/eventActions'
 import IAction from '../IAction'
 import {
   FETCH_OR_CREATE_RSVP_FAILURE,
@@ -36,6 +37,8 @@ function* fetchOrCreateRsvpFlow({ payload }: IAction) {
       rsvp = createRsvp(payload)
     }
     yield put({ type: FETCH_OR_CREATE_RSVP_SUCCESS, payload: rsvp })
+
+    // yield put({ type: FETCH_USERS_EVENTS })
   } catch (err) {
     console.error(err)
     yield put({ type: FETCH_OR_CREATE_RSVP_FAILURE, payload: err })

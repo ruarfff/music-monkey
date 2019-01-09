@@ -14,17 +14,31 @@ interface IEventListViewProps {
   user: IUser
   events: IEvent[]
   eventsLoading: boolean
+  selectedEvent: IEvent
   selectPage(value: string): IAction
   selectEvent(event: IEvent): IAction
   selectPlaylist(playlist: IPlaylist): IAction
+  fetchUsersEvents(): IAction
 }
 
 const EventListView = ({
   events,
+  selectedEvent,
   eventsLoading,
   selectPlaylist,
-  selectEvent
+  selectEvent,
+  fetchUsersEvents,
 }: IEventListViewProps) => {
+  React.useEffect(() => {
+
+    const shouldFetchEvent = !events.filter((event) =>
+      !isEmpty(selectedEvent) && event.eventId === selectedEvent.eventId
+    ).length
+    if (!isEmpty(selectedEvent) && selectedEvent.eventId && shouldFetchEvent) {
+      fetchUsersEvents()
+    }
+  }, [])
+
   if (eventsLoading) {
     return <LoadingSpinner />
   }
