@@ -11,14 +11,17 @@ import {
   Typography
 } from '@material-ui/core'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { isEmpty } from 'lodash'
+import { isEmpty, sortBy, uniqBy } from 'lodash'
+import moment from 'moment'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
 import IPlaylist from '../IPlaylist'
 
 interface IPlaylistsSimpleListProps {
   playlists: IPlaylist[]
+  events?: IEvent[]
   attached: boolean
   disableLinks?: boolean
   selectPlaylist(playlist: IPlaylist): IAction
@@ -32,7 +35,7 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
   }
 
   public render() {
-    const { onPlaylistSelected, playlists, disableLinks } = this.props
+    const { onPlaylistSelected, playlists, disableLinks, events } = this.props
 
     const handlePlaylistSelected = (playlist: IPlaylist) => () => {
       this.props.selectPlaylist(playlist)
@@ -41,9 +44,43 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
       }
     }
 
-    const filteredPlaylists = playlists.filter(
-      playlist => playlist.tracks.items.length > 0
-    )
+    const now = moment()
+
+    let pastEvents, liveEvents, upcomingEvents, sortedPlaylists
+
+    if (!isEmpty(events) && events) {
+      pastEvents = sortBy(
+        events.filter(event => now.isAfter(event.endDateTime)),
+        'endDateTime'
+      ).reverse()
+
+      liveEvents = sortBy(
+        events
+          .filter(
+            event =>
+              now.isAfter(event.startDateTime) && now.isBefore(event.endDateTime),
+            'endDateTime'
+          )
+          .reverse()
+      )
+
+      upcomingEvents = sortBy(
+        events
+          .filter(event => now.isBefore(event.startDateTime), 'endDateTime')
+          .reverse()
+      )
+
+      sortedPlaylists = uniqBy([...liveEvents, ...upcomingEvents, ...pastEvents].map(
+        (event) => event.playlist
+      ), 'id')
+    }
+
+    const filteredPlaylists = sortedPlaylists ?
+      sortedPlaylists.filter(
+        playlist => playlist.tracks.items.length > 0
+      ) : playlists.filter(
+        playlist => playlist.tracks.items.length > 0
+      )
 
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)

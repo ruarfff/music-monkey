@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import IRootState from '../rootState'
-import { clearSearch, searchTracks } from '../search/searchActions'
+import { clearSearch, searchTracks } from './searchActions'
 import { selectTrack } from '../track/trackActions'
 import Search from './Search'
 
