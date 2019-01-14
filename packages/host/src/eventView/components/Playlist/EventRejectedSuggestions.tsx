@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid/Grid'
 import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import { WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
@@ -24,18 +23,13 @@ const decorate = withStyles(() => ({
     color: 'white'
   },
   trackBand: {
-    padding: 0,
     fontWeight: 800
   },
-  trackName: {
-    padding: 0
-  },
   listItem: {
-    borderBottom: '1px solid #979797'
+    borderBottom: '1px solid #979797',
+    display: 'flex',
+    justifyContent: 'space-between'
   },
-  listItemContent: {
-    maxWidth: '700px'
-  }
 }))
 
 interface IEventRejectedSuggestionsProps {
@@ -125,44 +119,36 @@ class EventRejectedSuggestions extends React.PureComponent<
         button={true}
       >
         {trackImage}
-        <Grid className={classes.listItemContent} container={true} spacing={24}>
-          <Grid
-            item={true}
-            md={4}
-            container={true}
-            direction={'row'}
-            alignItems={'flex-end'}
-          >
-            <Grid
-              container={true}
-              direction={'column'}
-              justify={'center'}
-              md={4}
-              item={true}
-            >
-              <ListItemText
-                className={classes.trackBand}
-                primary={track.album.artists[0].name}
-              />
-              <ListItemText
-                className={classes.trackName}
-                primary={track.name}
-              />
-            </Grid>
-            <ListItemText primary={formatDuration(track.duration_ms)}/>
-          </Grid>
-
-          <Grid item={true} md={4}>
-            {track.preview_url && (
-              <audio
-                src={track.preview_url}
-                controls={true}
-                className="EventSuggestions-audio"
-                preload="none"
-              />
-            )}
-          </Grid>
-        </Grid>
+        <div className={'listItemContent'}>
+          <div className={'listItemTextBlock'}>
+            <div className={'listItemArtist'}>
+              <span className={classes.trackBand}>
+                {track.album.artists[0].name}
+              </span>
+              <span>
+                {track.name}
+              </span>
+            </div>
+            <span className={'listItemDuration'}>
+              {formatDuration(track.duration_ms)}
+            </span>
+          </div>
+          {track.preview_url ? (
+            <audio
+              src={track.preview_url}
+              controls={true}
+              className="EventSuggestions-audio"
+              preload="none"
+            />
+          ) : (
+            <audio
+              src={''}
+              controls={true}
+              className="EventSuggestions-audio"
+              preload="none"
+            />
+          )}
+        </div>
         {userAccountIcon}
         <ListItemSecondaryAction>
           <Button

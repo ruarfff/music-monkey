@@ -44,3 +44,26 @@
   margin-right: 8em;
   font-size: 2em;
 }
+
+.listItemArtist {
+  display: flex;
+  width: 190px;
+  flex-direction: column;
+}
+
+.listItemDuration {
+  width: 100px;
+}
+
+.listItemContent {
+  max-width: 700px;
+  display: flex;
+  align-items: center;
+}
+
+.listItemTextBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+}

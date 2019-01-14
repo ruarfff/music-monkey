@@ -5,23 +5,21 @@ import Grid from '@material-ui/core/Grid/Grid'
 import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText/ListItemText'
-// import Slide from '@material-ui/core/Slide'
 import { WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import DoneAll from '@material-ui/icons/DoneAll'
 import classNames from 'classnames'
-import * as React from 'react'
 import { isEmpty, uniqBy } from 'lodash'
+import * as React from 'react'
 import IAction from '../../../IAction'
+import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
 import ISuggestion from '../../../suggestion/ISuggestion'
 import ITrack from '../../../track/ITrack'
 import { formatDuration } from '../../../util/formatDuration'
 import './Styles/EventSuggestions.scss'
-import IPlaylist from '../../../playlist/IPlaylist'
 
 const decorate = withStyles(() => ({
   reject: {
@@ -148,48 +146,36 @@ class EventSuggestions extends React.Component<
       >
         <ListItem className={classes.listItem} dense={true} button={true}>
           {trackImage}
-          <Grid
-            className={classes.listItemContent}
-            container={true}
-            spacing={24}
-          >
-            <Grid
-              item={true}
-              md={6}
-              container={true}
-              direction={'row'}
-              alignItems={'flex-end'}
-            >
-              <Grid
-                container={true}
-                direction={'column'}
-                justify={'center'}
-                md={3}
-                item={true}
-              >
-                <ListItemText
-                  className={classes.trackBand}
-                  primary={track.album.artists[0].name}
-                />
-                <ListItemText
-                  className={classes.trackName}
-                  primary={track.name}
-                />
-              </Grid>
-                <ListItemText primary={formatDuration(track.duration_ms)}/>
-            </Grid>
-
-            <Grid item={true} md={6}>
-              {track.preview_url && (
-                <audio
-                  src={track.preview_url}
-                  controls={true}
-                  className="EventSuggestions-audio"
-                  preload="none"
-                />
-              )}
-            </Grid>
-          </Grid>
+          <div className={'listItemContent'}>
+            <div className={'listItemTextBlock'}>
+              <div className={'listItemArtist'}>
+              <span className={classes.trackBand}>
+                {track.album.artists[0].name}
+              </span>
+                <span>
+                {track.name}
+              </span>
+              </div>
+              <span className={'listItemDuration'}>
+              {formatDuration(track.duration_ms)}
+            </span>
+            </div>
+            {track.preview_url ? (
+              <audio
+                src={track.preview_url}
+                controls={true}
+                className="EventSuggestions-audio"
+                preload="none"
+              />
+            ) : (
+              <audio
+                src={''}
+                controls={true}
+                className="EventSuggestions-audio"
+                preload="none"
+              />
+            )}
+          </div>
 
           {userAccountIcon}
           <ListItemSecondaryAction>
