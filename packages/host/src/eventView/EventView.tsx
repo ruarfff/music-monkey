@@ -99,7 +99,13 @@ class EventView extends React.Component<
 
   public componentWillUpdate() {
     const eventId = this.props.match.params.eventId
-    subscribeToSuggestionsAccepted(eventId, () => this.props.getEventSuggestions(eventId))
+    subscribeToSuggestionsAccepted(eventId, () => {
+      if (this.props.event.settings.autoAcceptSuggestionsEnabled) {
+        this.props.getEventById(eventId)
+      } else {
+        this.props.getEventSuggestions(eventId)
+      }
+    })
     subscribeToVotesModified(eventId, this.handleEventVotesModified)
     onGuestUpdate(eventId, this.handleUpdateGuests)
   }
