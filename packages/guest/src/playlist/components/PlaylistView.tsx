@@ -28,7 +28,6 @@ const PlaylistView = ({
 }: IPlaylistViewProps) => {
   useEffect(() => fetchPlaylists(user), [])
 
-
   return (
     <PlaylistsSimpleList
       events={events}
