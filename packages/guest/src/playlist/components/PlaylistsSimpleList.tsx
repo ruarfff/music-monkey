@@ -48,7 +48,7 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
 
     let pastEvents, liveEvents, upcomingEvents, sortedPlaylists
 
-    if (!isEmpty(events) && events) {
+    if (!isEmpty(events) && events && !disableLinks) {
       pastEvents = sortBy(
         events.filter(event => now.isAfter(event.endDateTime)),
         'endDateTime'
@@ -71,7 +71,9 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
       )
 
       sortedPlaylists = uniqBy([...liveEvents, ...upcomingEvents, ...pastEvents].map(
-        (event) => event.playlist
+        (event) => {
+          return { ...event.playlist, eventId: event.eventId}
+        }
       ), 'id')
     }
 
