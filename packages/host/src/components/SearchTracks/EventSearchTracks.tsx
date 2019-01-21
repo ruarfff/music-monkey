@@ -7,13 +7,13 @@ import CloseIcon from '@material-ui/icons/Close'
 import Search from '@material-ui/icons/Search'
 import { debounce, isEmpty } from 'lodash'
 import * as React from 'react'
-import EventInput from '../EventInput/EventInput'
-import TrackItem from './TrackItem'
 import IAction from '../../IAction'
 import IPlaylist from '../../playlist/IPlaylist'
 import ISearch from '../../playlist/ISearch'
 import ITrack from '../../track/ITrack'
+import EventInput from '../EventInput/EventInput'
 import './EventSearchTracks.scss'
+import TrackItem from './TrackItem'
 
 const WAIT_INTERVAL = 400
 
@@ -21,6 +21,7 @@ interface IEventSearchTracksProps {
   searchResult: ISearch
   playlist: IPlaylist
   notification: string
+  layout?: string
   searchTrack(text: string): IAction
   addTrack(playlistId: string, track: ITrack): IAction
 }
@@ -77,7 +78,15 @@ class EventSearchTracks extends React.PureComponent<
   }
 
   public render() {
-    const { searchResult, classes, addTrack, playlist, notification } = this.props
+    const {
+      searchResult,
+      classes,
+      addTrack,
+      playlist,
+      notification,
+      layout
+    } = this.props
+
     const playlistTracks = playlist.tracks.items.map((track) => track.track.uri)
 
     let filteredSearch
@@ -129,6 +138,7 @@ class EventSearchTracks extends React.PureComponent<
           <List>
             {filteredSearch && filteredSearch.map((track, index) => (
               <TrackItem
+                layout={layout}
                 handleClearSearch={this.handleClearSearch}
                 playlistId={playlist.id} addTrack={addTrack}
                 track={track}

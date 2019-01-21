@@ -211,6 +211,7 @@ class EditEvent extends React.PureComponent<IEditEventProps & WithStyles> {
               user={user}
               value={eventEdit && eventEdit.playlistUrl}
               onPlaylistAdded={this.handleContentEdit('playlistUrl')}
+              handlePickGenre={this.handleContentEdit('genre')}
               playlistInput={playlistInput}
               selectExistingPlaylist={selectExistingPlaylist}
               closeExistingPlaylist={closeExistingPlaylist}

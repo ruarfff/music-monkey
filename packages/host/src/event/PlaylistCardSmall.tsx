@@ -11,6 +11,7 @@ const decorate = withStyles((theme: Theme) => ({
     height: '210px',
     marginLeft: '1em',
     marginRight: '1em',
+    marginBottom: '1em',
     width: '210px',
 
     '&:hover': {
@@ -52,36 +53,59 @@ const decorate = withStyles((theme: Theme) => ({
   }
 }))
 
-interface IEventBigCardProps {
+interface IPlaylistCardProps {
   playlist: IPlaylist
+  disableLink?: boolean
 }
 
-class PlaylistCard extends React.Component<IEventBigCardProps & WithStyles> {
+class PlaylistCard extends React.Component<IPlaylistCardProps & WithStyles> {
 
-  public render() {
+  public cardContent = () => {
     const { classes, playlist } = this.props
 
     const image =
       (playlist && playlist.images && playlist.images.length > 0) ? playlist.images[0].url : '/img/partycover-sm.png'
 
     return (
-      <Card className={classes.card}>
-        <a href={playlist ? playlist.external_urls.spotify : '/'} target="_blank" className={classes.link}>
-          <div className={classes.imgContainer}>
-            <img className={classes.img} src={image} alt=""/>
-          </div>
+      <React.Fragment>
+        <div className={classes.imgContainer}>
+          <img className={classes.img} src={image} alt=""/>
+        </div>
 
-          <Typography className={classes.title}>
-            {playlist && playlist.name}
-          </Typography>
-          <div>
+        <Typography className={classes.title}>
+          {playlist && playlist.name}
+        </Typography>
+        <div>
+          <a href={playlist ? playlist.external_urls.spotify : '/'}
+             target="_blank"
+             className={classes.link}
+          >
             <Button
               color='primary'
             >
               GO TO PLAYLIST
             </Button>
-          </div>
-        </a>
+          </a>
+        </div>
+      </React.Fragment>
+    )
+  }
+
+  public render() {
+    const { classes, playlist, disableLink } = this.props
+
+    return (
+      <Card className={classes.card}>
+        {
+          !disableLink ? (
+              <a href={(playlist ? playlist.external_urls.spotify : '/')}
+                 target={!disableLink ? "_blank" : ''}
+                 className={classes.link}
+              >
+                {this.cardContent()}
+              </a>
+          ) : <React.Fragment>{this.cardContent()}</React.Fragment>
+        }
       </Card>
     )
   }

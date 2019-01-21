@@ -7,7 +7,6 @@ import * as React from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import EventInput from '../components/EventInput/EventInput'
-import GenrePicker from '../components/GenrePicker/GenrePicker'
 import LocationAutoComplete from '../components/location/LocationAutoComplete'
 import MapComponent from '../components/MapComponent'
 import EventSearchTracks from '../components/SearchTracks/EventSearchTracksContainer'
@@ -97,8 +96,6 @@ interface ICreateEventProps {
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   public state = {
     currentStep: 0,
-    anchorCoHost: null,
-    eventType: 'public',
     showSaveDialog: true,
     showRequiredDialog: true,
     showFinishCreatingEventDialog: true,
@@ -137,7 +134,14 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public setChanges = () => {
-    const decoratedState = _.omit(this.state, 'currentStep', 'anchorCoHost', 'eventType', 'showSaveDialog')
+    const decoratedState = _.omit(
+      this.state,
+      'currentStep',
+      'showSaveDialog',
+      'showRequiredDialog',
+      'showFinishCreatingEventDialog',
+      'showCreatePlaylistErrorDialog'
+      )
     this.props.eventContentUpdated(decoratedState)
   }
 
@@ -149,11 +153,14 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       venue
     } = this.state
 
-    if (currentStep === 0 &&
-      !name ||
-      !organizer ||
-      !venue ||
-      !this.props.event.playlistUrl
+    if ((currentStep === 1 && (
+        !name ||
+        !organizer ||
+        !venue)
+       ) || (
+         currentStep === 0 &&
+        !this.props.event.playlistUrl
+      )
     ) {
       this.showRequiredDialog()
     } else {
@@ -207,7 +214,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       organizer,
       venue
     } = this.state
-    if (currentStep === 0 && (
+    if (currentStep === 1 && (
         !name ||
         !organizer ||
         !venue ||
@@ -229,8 +236,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
   public renderFirstStep = () => {
     const {
-      eventImageUploaded,
-      eventImageUploadError,
       selectCreatePlaylist,
       selectExistingPlaylist,
       fetchPlaylists,
@@ -246,10 +251,75 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       classes
     } = this.props
 
-    const { name, description, organizer, venue } = this.state
     return (
       <React.Fragment>
         {errors.playlistCreation && this.showCreatePlaylistErrorDialog()}
+        <Grid item={true} xs={12} sm={6}>
+          <PlaylistSelection
+            playlists={playlists}
+            fetchPlaylists={fetchPlaylists}
+            user={user}
+            value={event && event.playlistUrl}
+            onPlaylistAdded={this.onDynamicChange('playlistUrl')}
+            handlePickGenre={this.handleContentUpdated('genre')}
+            playlistInput={playlistInput}
+            selectExistingPlaylist={selectExistingPlaylist}
+            closeExistingPlaylist={closeExistingPlaylist}
+            selectCreatePlaylist={selectCreatePlaylist}
+            closeCreatePlaylist={closeCreatePlaylist}
+            createEventPlaylist={createEventPlaylist}
+            isCreatingPlaylist={isCreatingPlaylist}
+          />
+        </Grid>
+        <Grid item={true} xs={12} sm={6}>
+          {this.props.event.playlistUrl &&
+            playlists.map((playlist: IPlaylist, key) =>
+              event.playlistUrl === playlist.external_urls.spotify &&
+              <React.Fragment key={key}>
+                <span>Add tracks to playlist</span>
+                <EventSearchTracks
+                  playlist={playlist}
+                  layout={'column'}
+                />
+              </React.Fragment>
+            )
+          }
+        </Grid>
+        <div className="control-btn-row">
+          <Button
+            variant="contained"
+            onClick={this.handleCancel}
+            className={classes.button}
+          >
+            <span className="control-btn-text-primary">Cancel</span>
+          </Button>
+          <Button
+            onClick={this.nextStep}
+            color="secondary"
+            variant="contained"
+            className={classes.button}
+          >
+            <span className="control-btn-text-secondary">Next</span>
+          </Button>
+        </div>
+      </React.Fragment>
+    )
+  }
+
+  public renderSecondStep = () => {
+    const {
+      event,
+      classes,
+      locationChanged,
+      locationSelected,
+      eventImageUploaded,
+      eventImageUploadError,
+    } = this.props
+
+    const { name, description, organizer, venue } = this.state
+
+    return (
+      <React.Fragment>
         <Grid item={true} xs={12} sm={6}>
           <EventInput
             label={'Event Name'}
@@ -295,71 +365,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             onChange={this.handleContentUpdated('organizer')}
           />
         </Grid>
-        <Grid item={true} xs={12} sm={6}>
-          <GenrePicker
-            onChange={this.handleContentUpdated('genre')}
-          />
-        </Grid>
-        <Grid item={true} xs={12} sm={12}>
-          <PlaylistSelection
-            playlists={playlists}
-            fetchPlaylists={fetchPlaylists}
-            user={user}
-            value={event && event.playlistUrl}
-            onPlaylistAdded={this.onDynamicChange('playlistUrl')}
-            playlistInput={playlistInput}
-            selectExistingPlaylist={selectExistingPlaylist}
-            closeExistingPlaylist={closeExistingPlaylist}
-            selectCreatePlaylist={selectCreatePlaylist}
-            closeCreatePlaylist={closeCreatePlaylist}
-            createEventPlaylist={createEventPlaylist}
-            isCreatingPlaylist={isCreatingPlaylist}
-          />
-        </Grid>
-        <Grid item={true} xs={12} sm={12}>
-
-          {event.playlistUrl &&
-            playlists.map((playlist: IPlaylist, key) =>
-              event.playlistUrl === playlist.external_urls.spotify &&
-              <React.Fragment key={key}>
-                <span>Add tracks to playlist</span>
-                <EventSearchTracks playlist={playlist}/>
-              </React.Fragment>
-            )
-          }
-        </Grid>
-        <div className="control-btn-row">
-          <Button
-            variant="contained"
-            onClick={this.handleCancel}
-            className={classes.button}
-          >
-            <span className="control-btn-text-primary">Cancel</span>
-          </Button>
-          <Button
-            // disabled={!name || !organizer || !venue || !event.playlistUrl}
-            onClick={this.nextStep}
-            color="secondary"
-            variant="contained"
-            className={classes.button}
-          >
-            <span className="control-btn-text-secondary">Next</span>
-          </Button>
-        </div>
-      </React.Fragment>
-    )
-  }
-
-  public renderSecondStep = () => {
-    const {
-      event,
-      classes,
-      locationChanged,
-      locationSelected,
-    } = this.props
-
-    return (
-      <React.Fragment>
         <Grid item={true} xs={12} sm={12}>
           <LocationAutoComplete
             value={event.location ? event.location.address || '' : ''}
@@ -466,7 +471,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
                 <Grid
                   container={true}
                   spacing={24}
-                  alignItems="center"
                   direction="row"
                 >
                   {this.renderFirstStep()}

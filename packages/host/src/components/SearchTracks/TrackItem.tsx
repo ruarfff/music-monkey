@@ -11,6 +11,7 @@ import { formatDuration } from '../../util/formatDuration'
 interface ITrackItemProps {
   track: ITrack
   playlistId: string
+  layout?: string
   addTrack(playlistId: string, track: ITrack): IAction
   handleClearSearch(): void
 }
@@ -20,22 +21,8 @@ const decorate = withStyles(() => ({
     background: '#27AE60',
     color: 'white'
   },
-  trackBand: {
-    padding: 0,
-    fontWeight: 800,
-  },
-  trackName: {
-    padding: 0,
-  },
   listItem: {
-    borderBottom: '1px solid #979797'
-  },
-  listItemContent: {
-    width: '100%',
-    maxWidth: '900px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    borderBottom: '1px solid #979797',
   },
 }))
 
@@ -47,7 +34,7 @@ class TrackItem extends React.PureComponent<
   }
 
   public render() {
-    const { classes, track } = this.props
+    const { classes, track, layout } = this.props
     let trackImage = <span />
     if (track.album && track.album.images && track.album.images.length > 0) {
       trackImage = (
@@ -68,21 +55,23 @@ class TrackItem extends React.PureComponent<
         button={true}
       >
         {trackImage}
-        <div className={classes.listItemContent}>
-          <div className='trackNameContainer'>
-            <span
-              className={classes.trackBand}
-            >
+        <div className={
+          layout === 'column' ?
+          'listItemContent-column listItemContent' :
+          'listItemContent'
+        }>
+          <div className='trackLeftContent'>
+            <div className='trackNameContainer'>
+            <span className='trackBand'>
               {track.album.artists[0].name}
             </span>
-            <span
-              className={classes.trackName}
-            >
+              <span className='trackName'>
               {track.name}
             </span>
-          </div>
-          <div className='trackDuration'>
-            {formatDuration(track.duration_ms)}
+            </div>
+            <div className='trackDuration'>
+              {formatDuration(track.duration_ms)}
+            </div>
           </div>
           <div className='trackContainer'>
             <audio

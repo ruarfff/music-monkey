@@ -5,3 +5,27 @@
 .PlaylistSelection-button {
   color: #ffb000;
 }
+
+.PlaylistCardsContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.Plus {
+  font-size: 190px;
+  width: 240px;
+  text-align: center;
+  cursor: pointer;
+  color: #ffb000;
+  transition: 0.5s;
+
+  &:hover {
+    text-shadow: 1px 1px 1px black;
+  }
+
+  &:hover:active {
+    text-shadow: none;
+  }
+}

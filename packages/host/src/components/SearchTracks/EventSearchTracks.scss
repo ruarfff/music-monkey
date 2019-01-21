@@ -1,11 +1,33 @@
 .SearchSection {
   display: flex;
   align-items: center;
-  padding-top: 20px;
 }
 
 .trackNameContainer {
   display: flex;
   flex-direction: column;
   width: 300px;
+}
+
+.trackBand {
+  font-weight: 800;
+}
+
+.trackLeftContent {
+  display: flex;
+  align-items: center;
+}
+
+.listItemContent {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.trackDuration {
+  width: 80px;
+}
+
+.listItemContent-column {
+  flex-direction: column!important;
+  align-items: flex-start!important;
 }
