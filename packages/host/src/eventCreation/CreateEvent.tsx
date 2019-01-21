@@ -103,7 +103,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     name: '',
     description: '',
     organizer: '',
-    venue: '',
     genre: '',
   }
 
@@ -150,13 +149,14 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       currentStep,
       name,
       organizer,
-      venue
     } = this.state
+
+    const location = this.props.event.location.address
 
     if ((currentStep === 1 && (
         !name ||
         !organizer ||
-        !venue)
+        !location)
        ) || (
          currentStep === 0 &&
         !this.props.event.playlistUrl
@@ -212,12 +212,13 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       currentStep,
       name,
       organizer,
-      venue
     } = this.state
+    const location = this.props.event.location.address
+
     if (currentStep === 1 && (
         !name ||
         !organizer ||
-        !venue ||
+        !location ||
         !this.props.event.playlistUrl
       )
     ) {
@@ -316,7 +317,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       eventImageUploadError,
     } = this.props
 
-    const { name, description, organizer, venue } = this.state
+    const { name, description, organizer } = this.state
 
     return (
       <React.Fragment>
@@ -346,17 +347,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
         <Grid item={true} xs={12} sm={6}>
           <EventInput
-            label={'Venue'}
-            placeholder={''}
-            error={!venue}
-            errorLabel={'Required'}
-            value={venue || ''}
-            onChange={this.handleContentUpdated('venue')}
-          />
-        </Grid>
-
-        <Grid item={true} xs={12} sm={6}>
-          <EventInput
             label={'Organizer'}
             placeholder={'Who is organising this event?'}
             value={organizer ? organizer : this.props.event.organizer}
@@ -365,7 +355,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             onChange={this.handleContentUpdated('organizer')}
           />
         </Grid>
-        <Grid item={true} xs={12} sm={12}>
+        <Grid item={true} xs={12} sm={6}>
           <LocationAutoComplete
             value={event.location ? event.location.address || '' : ''}
             onSelect={locationSelected}

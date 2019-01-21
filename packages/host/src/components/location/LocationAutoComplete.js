@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem/MenuItem'
 import TextField from '@material-ui/core/TextField/TextField'
 import { withStyles } from '@material-ui/core/styles'
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     flexGrow: 1,
     position: 'relative'
@@ -57,10 +57,16 @@ const styles = theme => ({
 })
 
 function renderInput(inputProps, classes) {
-  const { onChange, onBlur, onKeyDown, placeholder, value } = inputProps
+  const {
+    onChange,
+    onBlur,
+    onKeyDown,
+    placeholder,
+    value
+  } = inputProps
   return (
     <TextField
-      label="Location"
+      label="Location *"
       fullWidth
       margin="normal"
       className={classes.formControl}
