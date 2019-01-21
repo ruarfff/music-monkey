@@ -16,15 +16,18 @@ const EventDateTimePicker: React.SFC<
   const handleChange = (event: any) => {
     props.onChange(event)
   }
-  const { value, disablePast } = props
+  const { value, disablePast, classes } = props
 
   return (
     <DateTimePicker
+      fullWidth={true}
       disablePast={disablePast}
       autoOk={true}
       ampm={false}
       value={value}
       onChange={handleChange}
+      InputProps={{ className: classes.input }}
+      InputLabelProps={{ className: classes.label }}
     />
   )
 }
