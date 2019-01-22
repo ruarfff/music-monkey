@@ -13,11 +13,12 @@ export const clearMessage = (): IAction => {
   }
 }
 
-export const shareByEmails = (emails: string[], event: IEvent): IAction => {
+export const shareByEmails = (emails: string[], emailText: string, event: IEvent): IAction => {
   return {
     type: SHARE_EMAIL_REQUEST,
     payload: {
       emails,
+      emailText,
       event,
     },
   }

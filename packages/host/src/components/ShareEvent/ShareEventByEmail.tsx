@@ -6,26 +6,33 @@ import './SharePopup.scss'
 
 interface IShareEventByEmailProps {
   event: IEvent
-  shareByEmails(emails: string[], event: IEvent): void
+  shareByEmails(emails: string[], emailText: string, event: IEvent): void
   togglePopup(): void
 }
 
 class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
   public state = {
     emails: '',
+    emailText: 'You are invited to a party!',
     validation: false
   }
 
   public render() {
-    const { emails, validation } = this.state
+    const { emails, validation, emailText } = this.state
     return (
       <div className='emailShareWrapper'>
         <EventInput
           value={emails}
-          maxRows={2}
+          maxRows={4}
           label={'Email Input'}
           placeholder={'Somemail@gmail.com, example@gmail.com'}
           onChange={this.handleEmailChange('emails')}
+        />
+        <EventInput
+          value={emailText}
+          maxRows={4}
+          label={'Email text'}
+          onChange={this.handleEmailTextChange}
         />
         <Button
           variant={'contained'}
@@ -54,13 +61,21 @@ class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
     }
   }
 
+  private handleEmailTextChange = (e: any) => {
+    this.setState({
+      emailText: e
+    })
+  }
+
   private handleEmailChange = (key: string) => (content: any) => {
     this.setState({[key]: content})
     this.handleValidation(content)
   }
 
   private handleSubmit = () => {
-    this.props.shareByEmails(this.state.emails.replace(' ', '').split(','), this.props.event)
+    const { event } = this.props
+    const { emails, emailText } = this.state
+    this.props.shareByEmails(emails.replace(' ', '').split(','), emailText, event)
     this.props.togglePopup()
   }
 }
