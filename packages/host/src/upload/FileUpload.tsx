@@ -21,10 +21,13 @@ const s3 = new AWS.S3({
 
 const djsConfig = {
   addRemoveLinks: true,
+  uploadMultiple: false,
   autoProcessQueue: false,
   dictDefaultMessage: 'Add Image',
   maxFiles: 1,
-  paramName: 'event-image'
+  paramName: 'event-image',
+  thumbnailWidth: 300,
+  thumbnailHeight: 300
 }
 
 function upload(file: any) {
@@ -54,7 +57,9 @@ function upload(file: any) {
 }
 
 const componentConfig = {
-  postUrl: 'upload'
+  postUrl: 'upload',
+  iconFiletypes: ['.jpg', '.png'],
+  showFiletypeIcon: true,
 }
 
 interface IFileUploadProps {

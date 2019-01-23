@@ -27,11 +27,31 @@ div.filepicker {
   border-radius: 4px;
   width: auto;
   height: 300px;
+  position: relative;
 
  img {
    width: 100%;
-   height: 300px;
+   max-height: 300px;
+   height: 100%;
  }
+}
+
+.dz-details {
+  text-align: center;
+  margin-top: -57px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.dz-remove {
+  display: block;
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  text-align: center;
+}
+
+.dz-success-mark, .dz-error-mark {
+  display: none;
 }
 
 .dropzone .dz-preview.dz-image-preview {
@@ -46,6 +66,7 @@ div.filepicker {
   padding: 10px 16px;
   border-radius: 4px;
   text-transform: uppercase;
+  position: absolute;
 }
 
 .control-btn-row {
