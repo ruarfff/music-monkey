@@ -80,7 +80,7 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
     const filteredPlaylists = sortedPlaylists ?
       sortedPlaylists.filter(
         playlist => playlist.tracks.items.length > 0
-      ) : playlists.filter(
+      ) : playlists && playlists.filter(
         playlist => playlist.tracks.items.length > 0
       )
 
