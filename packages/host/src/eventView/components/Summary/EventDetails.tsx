@@ -156,7 +156,6 @@ class EventDetails extends React.PureComponent<
                       <Switch
                         checked={event.settings.suggestingPlaylistsEnabled}
                         onChange={this.suggestingPlaylistsToggled}
-                        value="suggestingPlaylistsEnabled"
                       />
                     }
                     label="Allow Playlist Suggestions"
@@ -166,7 +165,6 @@ class EventDetails extends React.PureComponent<
                       <Switch
                         checked={event.settings.autoAcceptSuggestionsEnabled}
                         onChange={this.autoAcceptSuggestionsToggled}
-                        value="autoAcceptSuggestionsEnabled"
                       />
                     }
                     label="Auto Accept Suggestions"
@@ -176,7 +174,6 @@ class EventDetails extends React.PureComponent<
                       <Switch
                         checked={event.settings.dynamicVotingEnabled}
                         onChange={this.handleDynamicVotingToggled}
-                        value="dynamicVotingEnabled"
                       />
                     }
                     label="Dynamic Voting"
