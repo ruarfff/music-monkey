@@ -29,6 +29,7 @@ interface IPlaylistSelectionProps {
   selectExistingPlaylist(): any
   fetchPlaylists(user: IUser): IAction
   handlePickGenre(content: string): void
+  setEventPlaylist?(playlist: IPlaylist): void
 }
 
 const SweetAlert = withReactContent(Swal) as any
@@ -63,6 +64,10 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
 
   public handlePlaylistSelected = (playlist: IPlaylist) => () => {
     this.props.onPlaylistAdded(playlist.external_urls.spotify)
+    if (this.props.setEventPlaylist) {
+      this.props.setEventPlaylist(playlist)
+    }
+
     this.setState({
       name: playlist.name,
       description: playlist.description

@@ -16,8 +16,9 @@ interface ITrackListProps {
   onVote?: ((track: ITrack) => void)
   onTrackSelected?: ((track: ITrack) => void)
   onDragEnd?: ((result: any) => void)
-  removeTrack: ((uri: string, position: number) => void)
+  removeTrack?: ((uri: string, position: number) => void)
   showNotification?: (() => void)
+  disableRemoveTrack?: boolean
 }
 
 const getItemStyle = (isDragging: any, draggableStyle: any) => {
@@ -41,7 +42,8 @@ const TrackList = ({
   onTrackSelected = (t: ITrack) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
   removeTrack = (uri: string, position: number) => ({} as any),
-  showNotification = () => ({} as any)
+  showNotification = () => ({} as any),
+  disableRemoveTrack = false,
 }: ITrackListProps) => (
   <React.Fragment>
     <DragDropContext onDragEnd={onDragEnd}>
@@ -81,6 +83,7 @@ const TrackList = ({
                         onVote={onVote}
                         removeTrack={removeTrack}
                         handleShowNotification={showNotification}
+                        disableRemoveTrack={disableRemoveTrack}
                       />
                     </div>
                   )}

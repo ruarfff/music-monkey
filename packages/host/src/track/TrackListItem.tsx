@@ -36,8 +36,9 @@ interface ITrackListItemProps {
   numberOfVotes: number
   onVote: ((track: ITrack) => void)
   onTrackSelected: ((track: ITrack) => void)
-  removeTrack: ((uri:string, position: number) => void)
+  removeTrack?: ((uri:string, position: number) => void)
   handleShowNotification: (() => void)
+  disableRemoveTrack?: boolean
 }
 
 const TrackListItem = ({
@@ -50,7 +51,8 @@ const TrackListItem = ({
   onTrackSelected,
   removeTrack,
   classes,
-  handleShowNotification
+  handleShowNotification,
+  disableRemoveTrack
 }: ITrackListItemProps & WithStyles) => {
   if (!track) {
     return <span />
@@ -64,8 +66,10 @@ const TrackListItem = ({
   }
 
   const handleRemoveTrack = (uri: string, position: number) => () => {
-    removeTrack(uri, position)
-    handleShowNotification()
+    if (!!removeTrack) {
+      removeTrack(uri, position)
+      handleShowNotification()
+    }
   }
 
   let trackImage = <span />
@@ -109,9 +113,11 @@ const TrackListItem = ({
             </Grid>
             <ListItemText primary={formatDuration(track.duration_ms)}/>
             <ListItemText primary={tracksWithFeature && 'tempo ' + Math.round(tracksWithFeature.tempo)} />
-            <Button onClick={handleRemoveTrack(track.uri, track.track_number)}>
-              REMOVE
-            </Button>
+            {!disableRemoveTrack &&
+              <Button onClick={handleRemoveTrack(track.uri, track.track_number)}>
+                REMOVE
+              </Button>
+            }
           </Grid>
         </Grid>
           {votingButton}

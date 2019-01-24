@@ -17,9 +17,10 @@ import {
   selectCreatePlaylist,
   selectExistingPlaylist
 } from '../event/eventActions'
+import { setEventPlaylist } from '../eventPlaylist/eventPlaylistActions'
 import {
-  acknowledgeEventInviteCopied,
-  copyEventInvite
+acknowledgeEventInviteCopied,
+copyEventInvite
 } from '../eventView/eventViewActions'
 import { fetchPlaylists } from '../playlist/playlistActions'
 import IRootState from '../rootState'
@@ -34,7 +35,8 @@ const mapStateToProps = (state: IRootState) => ({
   playlistInput: state.event.playlistInput,
   playlists: state.playlist.data,
   isCreatingPlaylist: state.playlist.isCreating,
-  copiedToClipboard: state.eventView.copiedToClipboard
+  copiedToClipboard: state.eventView.copiedToClipboard,
+  searchResult: state.playlist.searchResult
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -44,6 +46,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ...bindActionCreators(
     {
+      setEventPlaylist,
       closeCreatePlaylist,
       closeExistingPlaylist,
       createEventPlaylist,

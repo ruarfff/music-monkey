@@ -11,7 +11,8 @@ import {
   PLAYLIST_SORTED_BY_VOTES_DESCENDING,
   SAVE_EVENT_PLAYLIST,
   SAVE_EVENT_PLAYLIST_ERROR,
-  SAVE_EVENT_PLAYLIST_SUCCESS
+  SAVE_EVENT_PLAYLIST_SUCCESS,
+  SET_EVENT_PLAYLIST
 } from './eventPlaylistActions'
 import initialState from './eventPlaylistInitialState'
 import IEventPlaylistState from './IEventPlaylistState'
@@ -21,6 +22,11 @@ export default function eventPlaylist(
   { type, payload }: IAction
 ) {
   switch (type) {
+    case SET_EVENT_PLAYLIST:
+      return {
+        ...state,
+        playlist: payload
+      }
     case ADD_TRACK_SUCCESS:
       const newPlaylist = _.cloneDeep(state.playlist)
       newPlaylist.tracks.items.push({

@@ -11,10 +11,17 @@ export const EVENT_PLAYLIST_FETCHED = 'EVENT_PLAYLIST_FETCHED'
 
 export const MOVE_ITEM_IN_EVENT_PLAYLIST = 'MOVE_ITEM_IN_EVENT_PLAYLIST'
 
+export const SET_EVENT_PLAYLIST = 'EVENT_PLAYLIST'
+
 export const SORT_PLAYLIST_BY_VOTES_DESCENDING =
   'SORT_PLAYLIST_BY_VOTES_DESCENDING'
 export const PLAYLIST_SORTED_BY_VOTES_DESCENDING =
   'PLAYLIST_SORTED_BY_VOTES_DESCENDING'
+
+export const setEventPlaylist = (playlist: IPlaylist): IAction => ({
+  type: SET_EVENT_PLAYLIST,
+  payload: playlist,
+})
 
 export const saveEventPlaylist = (
   eventId: string,

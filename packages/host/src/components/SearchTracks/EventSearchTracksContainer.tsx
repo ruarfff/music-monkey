@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import {
-  searchTrack,
   addTrack,
+  searchTrack,
 } from '../../playlist/playlistActions'
 import IRootState from '../../rootState'
 import EventSearchTracks from './EventSearchTracks'

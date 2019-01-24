@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
+import List from '@material-ui/core/List'
 import { Theme, WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import * as _ from 'lodash'
@@ -16,6 +17,8 @@ import IPlaylistInput from '../event/IPlaylistInput'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
+import ISearch from '../playlist/ISearch'
+import TrackList from '../track/TrackList'
 import FileUpload from '../upload/FileUpload'
 import IUser from '../user/IUser'
 import './CreateEvent.scss'
@@ -72,6 +75,7 @@ interface ICreateEventProps {
   copiedToClipboard: boolean
   message: string
   isCreatingPlaylist: boolean
+  searchResult: ISearch
   clearMessage(): IAction
   cancel(): void
   closeCreatePlaylist(): IAction
@@ -91,6 +95,7 @@ interface ICreateEventProps {
   copyEventInvite(): IAction
   eventSavingReset(): IAction
   acknowledgeEventInviteCopied(): IAction
+  setEventPlaylist(playlist: IPlaylist): IAction
 }
 
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
@@ -117,6 +122,11 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
         organizer: this.props.event.organizer
       })
     }
+  }
+
+  public handleSetPlaylist = (playlist: IPlaylist) => {
+    console.log(playlist)
+    this.props.setEventPlaylist(playlist)
   }
 
   public prevStep = () => {
@@ -249,7 +259,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       createEventPlaylist,
       event,
       errors,
-      classes
+      classes,
+      searchResult,
     } = this.props
 
     return (
@@ -270,21 +281,37 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             closeCreatePlaylist={closeCreatePlaylist}
             createEventPlaylist={createEventPlaylist}
             isCreatingPlaylist={isCreatingPlaylist}
+            setEventPlaylist={this.handleSetPlaylist}
           />
         </Grid>
         <Grid item={true} xs={12} sm={6}>
-          {this.props.event.playlistUrl &&
+          {event.playlistUrl &&
             playlists.map((playlist: IPlaylist, key) =>
-              event.playlistUrl === playlist.external_urls.spotify &&
-              <React.Fragment key={key}>
-                <span>Add tracks to playlist</span>
-                <EventSearchTracks
-                  playlist={playlist}
-                  layout={'column'}
-                />
-              </React.Fragment>
+              event.playlistUrl === playlist.external_urls.spotify && (
+                <React.Fragment key={key}>
+                  <span>Add tracks to playlist</span>
+                  <EventSearchTracks
+                    playlist={playlist}
+                    layout={'column'}
+                  />
+                </React.Fragment>
+              )
             )
           }
+          {(event.playlistUrl && _.isEmpty(searchResult)) && (
+            <List>
+              {playlists.filter((playlist: IPlaylist) =>
+                playlist.external_urls.spotify === event.playlistUrl
+              ).map((playlist: IPlaylist, key: number) => (
+                <TrackList
+                  key={key}
+                  disableRemoveTrack={true}
+                  tracks={playlist.tracks.items.map((i) => i.track)}
+                />
+              ))
+              }
+            </List>
+          )}
         </Grid>
         <div className="control-btn-row">
           <Button

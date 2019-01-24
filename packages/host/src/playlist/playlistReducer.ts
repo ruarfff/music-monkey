@@ -26,6 +26,11 @@ export default function playlists(
   { type, payload }: Action
 ) {
   switch (type) {
+    case ADD_TRACK_SUCCESS:
+      return {
+        ...state,
+        searchResult: {},
+      }
     case LOCATION_CHANGE:
       return {
         ...state,
