@@ -50,12 +50,21 @@ const decorate = withStyles((theme: Theme) => ({
   trackLength: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  highlighted: {
+    height: '210px',
+    marginLeft: '1em',
+    marginRight: '1em',
+    marginBottom: '1em',
+    width: '210px',
+    border: '2px solid #3AABD1'
   }
 }))
 
 interface IPlaylistCardProps {
   playlist: IPlaylist
   disableLink?: boolean
+  playlistUrl?: string
 }
 
 class PlaylistCard extends React.Component<IPlaylistCardProps & WithStyles> {
@@ -92,10 +101,10 @@ class PlaylistCard extends React.Component<IPlaylistCardProps & WithStyles> {
   }
 
   public render() {
-    const { classes, playlist, disableLink } = this.props
+    const { classes, playlist, disableLink, playlistUrl } = this.props
 
     return (
-      <Card className={classes.card}>
+      <Card className={playlistUrl === playlist.external_urls.spotify ? classes.highlighted : classes.card}>
         {
           !disableLink ? (
               <a href={(playlist ? playlist.external_urls.spotify : '/')}

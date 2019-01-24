@@ -17,7 +17,7 @@ import './PlaylistSelection.scss'
 
 interface IPlaylistSelectionProps {
   user: IUser
-  value: string
+  playlistUrl: string
   playlistInput: any
   playlists: IPlaylist[]
   isCreatingPlaylist: boolean
@@ -104,7 +104,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
 
   public render() {
     const {
-      value,
+      playlistUrl,
       playlists,
       handlePickGenre,
     } = this.props
@@ -148,6 +148,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
               onClick={this.handlePlaylistSelected(playlist)}
             >
               <PlaylistCard
+                playlistUrl={playlistUrl}
                 playlist={playlist}
                 key={index}
                 disableLink={true}
@@ -164,12 +165,12 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
             disabled={false}
             fullWidth={true}
             margin="normal"
-            value={value}
+            value={playlistUrl}
             onClick={this.selectExistingSelected}
           />
           <div className="PlaylistSelection-menu-icon">
-            {value && (
-              <a href={value} target="_blank">
+            {playlistUrl && (
+              <a href={playlistUrl} target="_blank">
                 <OpenInNew fill="#FFB000" />
               </a>
             )}

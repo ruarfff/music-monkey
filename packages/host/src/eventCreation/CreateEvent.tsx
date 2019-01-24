@@ -125,7 +125,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public handleSetPlaylist = (playlist: IPlaylist) => {
-    console.log(playlist)
     this.props.setEventPlaylist(playlist)
   }
 
@@ -271,7 +270,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             playlists={playlists}
             fetchPlaylists={fetchPlaylists}
             user={user}
-            value={event && event.playlistUrl}
+            playlistUrl={event && event.playlistUrl}
             onPlaylistAdded={this.onDynamicChange('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}
             playlistInput={playlistInput}
