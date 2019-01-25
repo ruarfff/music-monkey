@@ -76,6 +76,7 @@ interface ICreateEventProps {
   message: string
   isCreatingPlaylist: boolean
   searchResult: ISearch
+  selectedPlaylist: IPlaylist
   clearMessage(): IAction
   cancel(): void
   closeCreatePlaylist(): IAction
@@ -259,6 +260,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       errors,
       classes,
       searchResult,
+      selectedPlaylist,
     } = this.props
 
     return (
@@ -298,16 +300,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           }
           {(event.playlistUrl && _.isEmpty(searchResult)) && (
             <List>
-              {playlists.filter((playlist: IPlaylist) =>
-                playlist.external_urls.spotify === event.playlistUrl
-              ).map((playlist: IPlaylist, key: number) => (
                 <TrackList
-                  key={key}
-                  disableRemoveTrack={true}
-                  tracks={playlist.tracks.items.map((i) => i.track)}
-                />
-              ))
-              }
+                disableRemoveTrack={true}
+                tracks={selectedPlaylist.tracks.items.map((i) => i.track)}
+              />
             </List>
           )}
         </Grid>
