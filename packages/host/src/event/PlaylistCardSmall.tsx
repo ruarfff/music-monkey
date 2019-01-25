@@ -104,7 +104,7 @@ class PlaylistCard extends React.Component<IPlaylistCardProps & WithStyles> {
     const { classes, playlist, disableLink, playlistUrl } = this.props
 
     return (
-      <Card className={playlistUrl === playlist.external_urls.spotify ? classes.highlighted : classes.card}>
+      <Card className={(playlist.external_urls && playlistUrl === playlist.external_urls.spotify) ? classes.highlighted : classes.card}>
         {
           !disableLink ? (
               <a href={(playlist ? playlist.external_urls.spotify : '/')}
