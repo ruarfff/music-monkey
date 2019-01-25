@@ -4,11 +4,12 @@ import { Theme, WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import backgroundImg from '../assets/partycover.png'
 import dateIcon from '../assets/date-icon.svg'
 import locationIcon from '../assets/location-marker-icon.svg'
 import InviteCopyAlert from '../components/InviteLink/InviteCopyAlert'
 import MapComponent from '../components/MapComponent'
-import SharePopup from '../components/ShareEvent/SharePopup'
+import ShareEventByEmail from '../components/ShareEvent/ShareEventByEmailContainer'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import './CreateEvent.scss'
@@ -41,7 +42,8 @@ const decorate = withStyles((theme: Theme) => ({
     cursor: 'pointer',
   },
   navigationContainer: {
-    height: '160px',
+    marginTop: '20px',
+    height: '100px',
     display: 'flex',
   },
   link: {
@@ -85,6 +87,8 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
       copiedToClipboard,
     } = this.props
 
+    const eventImg = !event.imageUrl ? backgroundImg : event.imageUrl
+
     return (
       <React.Fragment>
         {copiedToClipboard &&
@@ -93,11 +97,11 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
             onClose={acknowledgeEventInviteCopied}
           />
         }
-        <Grid item={true} md={8}>
+        <Grid item={true} md={4}>
           <div>
             <img
               className={classes.img}
-              src={event.imageUrl}
+              src={eventImg}
             />
           </div>
           <div className={classes.title}>
@@ -119,21 +123,13 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
               View on Map
             </span>
           </div>
-        </Grid>
-        <Grid item={true} md={4}>
+
           <Grid
             container={true}
             direction={'column'}
             justify={'space-between'}
             className={classes.navigationContainer}
           >
-            <SharePopup
-              event={event}
-              clearMessage={this.props.clearMessage}
-              message={this.props.message}
-              inviteId={event && event.invites ? event.invites[0] : ''}
-              onCopyEventInvite={copyEventInvite}
-            />
             <a className={classes.link} target="_blank" href={event.playlistUrl}>
               <Button
                 variant='contained'
@@ -154,6 +150,14 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
               </Button>
             </Link>
           </Grid>
+        </Grid>
+        <Grid item={true} md={8}>
+          <ShareEventByEmail
+            withPreview={true}
+            event={event}
+            inviteId={event && event.invites ? event.invites[0] : ''}
+            onCopyEventInvite={copyEventInvite}
+          />
         </Grid>
         <Grid item={true} md={12}>
             {(event.location && this.state.showMap) && this.renderMap(event.location.latLng)}

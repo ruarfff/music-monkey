@@ -1,7 +1,7 @@
 // import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
-import TextField from '@material-ui/core/TextField/TextField'
-import OpenInNew from '@material-ui/icons/OpenInNew'
+// import TextField from '@material-ui/core/TextField/TextField'
+// import OpenInNew from '@material-ui/icons/OpenInNew'
 import * as React from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -158,24 +158,24 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
           ))}
         </div>
 
-        <Grid item={true} md={12}>
-          <TextField
-            label="SELECT FROM SPOTIFY"
-            required={true}
-            disabled={false}
-            fullWidth={true}
-            margin="normal"
-            value={playlistUrl}
-            onClick={this.selectExistingSelected}
-          />
-          <div className="PlaylistSelection-menu-icon">
-            {playlistUrl && (
-              <a href={playlistUrl} target="_blank">
-                <OpenInNew fill="#FFB000" />
-              </a>
-            )}
-          </div>
-        </Grid>
+        {/*<Grid item={true} md={12}>*/}
+          {/*<TextField*/}
+            {/*label="SELECT FROM SPOTIFY"*/}
+            {/*required={true}*/}
+            {/*disabled={false}*/}
+            {/*fullWidth={true}*/}
+            {/*margin="normal"*/}
+            {/*value={playlistUrl}*/}
+            {/*onClick={this.selectExistingSelected}*/}
+          {/*/>*/}
+          {/*<div className="PlaylistSelection-menu-icon">*/}
+            {/*{playlistUrl && (*/}
+              {/*<a href={playlistUrl} target="_blank">*/}
+                {/*<OpenInNew fill="#FFB000" />*/}
+              {/*</a>*/}
+            {/*)}*/}
+          {/*</div>*/}
+        {/*</Grid>*/}
       </Grid>
     )
   }

@@ -1,13 +1,19 @@
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 import * as React from 'react'
 import IEvent from '../../event/IEvent'
 import EventInput from '../EventInput/EventInput'
+import InviteLink from '../InviteLink/InviteLink'
+import EmailPreview from './EmailPreview'
 import './SharePopup.scss'
 
 interface IShareEventByEmailProps {
   event: IEvent
+  inviteId: string
+  withPreview?: boolean
   shareByEmails(emails: string[], emailText: string, event: IEvent): void
-  togglePopup(): void
+  togglePopup?(): void
+  onCopyEventInvite(): void
 }
 
 class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
@@ -17,8 +23,10 @@ class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
     validation: false
   }
 
-  public render() {
-    const { emails, validation, emailText } = this.state
+  public renderPopupLayout = () => {
+    const { togglePopup, inviteId, onCopyEventInvite } = this.props
+    const { emails, emailText, validation } = this.state
+
     return (
       <div className='emailShareWrapper'>
         <EventInput
@@ -43,7 +51,100 @@ class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
         >
           SHARE
         </Button>
+        <InviteLink
+          togglePopup={togglePopup}
+          inviteId={inviteId}
+          onCopyEventInvite={onCopyEventInvite}
+        />
+        <a
+          id='fbLink'
+          href={'https://www.facebook.com/sharer/sharer.php?u=guests.musicmonkey.io/invite/' + inviteId}
+          target="_blank"
+          className='shareFacebookBtn'
+        >
+          <Button
+            onClick={this.props.togglePopup}
+            variant='contained'
+            fullWidth={true}
+          >
+            SHARE ON FACEBOOK
+          </Button>
+        </a>
+
       </div>
+    )
+  }
+
+  public renderPreviewLayout = () => {
+    const { inviteId, onCopyEventInvite, event } = this.props
+    const { emails, emailText, validation } = this.state
+
+    return (
+      <Grid container={true} spacing={24}>
+        <Grid item={true} md={6}>
+          Invite Preview
+          <EventInput
+            value={emailText}
+            maxRows={4}
+            label={'Email text'}
+            onChange={this.handleEmailTextChange}
+          />
+          <EmailPreview
+            event={event}
+            emailText={emailText}
+          />
+        </Grid>
+
+        <Grid item={true} md={6}>
+          Send Invite
+          <EventInput
+            value={emails}
+            maxRows={4}
+            label={'Email Input'}
+            placeholder={'Somemail@gmail.com, example@gmail.com'}
+            onChange={this.handleEmailChange('emails')}
+          />
+          <Button
+            variant={'contained'}
+            color={'secondary'}
+            disabled={!validation}
+            fullWidth={true}
+            onClick={this.handleSubmit}
+          >
+            SHARE
+          </Button>
+          <InviteLink
+            inviteId={inviteId}
+            onCopyEventInvite={onCopyEventInvite}
+          />
+          <a
+            id='fbLink'
+            href={'https://www.facebook.com/sharer/sharer.php?u=guests.musicmonkey.io/invite/' + inviteId}
+            target="_blank"
+            className='shareFacebookBtn'
+          >
+            <Button
+              onClick={this.props.togglePopup}
+              variant='contained'
+              fullWidth={true}
+            >
+              SHARE ON FACEBOOK
+            </Button>
+          </a>
+
+        </Grid>
+      </Grid>
+    )
+  }
+
+  public render() {
+    return (
+     <React.Fragment>
+       {this.props.withPreview ?
+         this.renderPreviewLayout() :
+         this.renderPopupLayout()
+       }
+     </React.Fragment>
     )
   }
 
@@ -73,10 +174,12 @@ class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
   }
 
   private handleSubmit = () => {
-    const { event } = this.props
+    const { event, togglePopup, shareByEmails } = this.props
     const { emails, emailText } = this.state
-    this.props.shareByEmails(emails.replace(' ', '').split(','), emailText, event)
-    this.props.togglePopup()
+    shareByEmails(emails.replace(' ', '').split(','), emailText, event)
+    if (!!togglePopup) {
+      togglePopup()
+    }
   }
 }
 

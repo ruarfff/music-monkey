@@ -5,7 +5,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import * as React from 'react'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
-import InviteLink from '../InviteLink/InviteLink'
 import ShareEventByEmail from './ShareEventByEmailContainer'
 import './SharePopup.scss'
 
@@ -63,27 +62,9 @@ class SharePopup extends React.PureComponent<ISharePopupProps> {
               <ShareEventByEmail
                 event={event}
                 togglePopup={this.togglePopup}
-              />
-              <InviteLink
-                togglePopup={this.togglePopup}
                 inviteId={inviteId}
                 onCopyEventInvite={onCopyEventInvite}
               />
-              <a
-                id='fbLink'
-                href={'https://www.facebook.com/sharer/sharer.php?u=guests.musicmonkey.io/invite/' + inviteId}
-                target="_blank"
-                className='shareFacebookBtn'
-              >
-                <Button
-                  onClick={this.togglePopup}
-                  variant='contained'
-                  fullWidth={true}
-                >
-                  SHARE ON FACEBOOK
-                </Button>
-              </a>
-
             </div>
           </div>
         }

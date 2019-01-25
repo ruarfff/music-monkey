@@ -1,0 +1,76 @@
+.emailPreviewContainer {
+  height: 410px;
+  margin: 0 auto;
+  max-width: 640px;
+  width: 100%;
+
+  .TopLine {
+    color: white;
+    background: #ffb000;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .emailPreviewContent {
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 365px;
+    padding: 20px;
+
+    .emailPreviewLogo {
+      img {
+        width: 100px;
+      }
+    }
+
+    .emailPreviewEventName {
+      font-size: 26px;
+      color: white;
+    }
+
+    .emailPreviewDateWrapper {
+      border-radius: 4px;
+      max-width: 196px;
+      width: 100%;
+      overflow: hidden;
+
+      .emailPreviewDateTop {
+        background: #3AABD1;
+        color: white;
+        font-size: 14px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .emailPreviewDateBot {
+        background: white;
+        color: black;
+        font-size: 14px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .emailPreviewText {
+      color: white;
+      font-size: 14px;
+      max-width: 300px;
+      word-wrap: break-word;
+    }
+
+    .emailPreviewLink {
+      color: white;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+  }
+}

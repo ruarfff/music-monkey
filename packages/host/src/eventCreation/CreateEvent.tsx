@@ -227,9 +227,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     if (currentStep === 1 && (
         !name ||
         !organizer ||
-        !location ||
-        !this.props.event.playlistUrl
-      )
+        !location
+      ) || (currentStep === 0 && !this.props.event.playlistUrl)
     ) {
       this.showRequiredDialog()
     } else if(step === 2 && this.props.event.createdAt === undefined) {
