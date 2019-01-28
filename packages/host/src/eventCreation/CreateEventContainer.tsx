@@ -17,10 +17,13 @@ import {
   selectCreatePlaylist,
   selectExistingPlaylist
 } from '../event/eventActions'
-import { setEventPlaylist } from '../eventPlaylist/eventPlaylistActions'
 import {
-acknowledgeEventInviteCopied,
-copyEventInvite
+  deselectPlaylist,
+  setEventPlaylist
+} from '../eventPlaylist/eventPlaylistActions'
+import {
+  acknowledgeEventInviteCopied,
+  copyEventInvite
 } from '../eventView/eventViewActions'
 import { fetchPlaylists } from '../playlist/playlistActions'
 import IRootState from '../rootState'
@@ -48,6 +51,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   ...bindActionCreators(
     {
       setEventPlaylist,
+      deselectPlaylist,
       closeCreatePlaylist,
       closeExistingPlaylist,
       createEventPlaylist,

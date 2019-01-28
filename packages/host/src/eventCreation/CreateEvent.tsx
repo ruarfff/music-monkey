@@ -75,6 +75,7 @@ interface ICreateEventProps {
   isCreatingPlaylist: boolean
   searchResult: ISearch
   selectedPlaylist: IPlaylist
+  deselectPlaylist(): IAction
   clearMessage(): IAction
   cancel(): void
   closeCreatePlaylist(): IAction
@@ -111,6 +112,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public componentDidMount() {
+    this.props.deselectPlaylist()
     this.props.eventSavingReset()
     this.props.initializeCreateForm(this.props.event, this.props.user)
   }
@@ -259,6 +261,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       classes,
       searchResult,
       selectedPlaylist,
+      deselectPlaylist,
     } = this.props
 
     return (
@@ -270,6 +273,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             searchResult={searchResult}
             playlists={playlists}
             fetchPlaylists={fetchPlaylists}
+            deselectPlaylist={deselectPlaylist}
             user={user}
             onPlaylistAdded={this.onDynamicChange('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}

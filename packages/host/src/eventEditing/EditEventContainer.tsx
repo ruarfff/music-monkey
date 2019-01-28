@@ -19,7 +19,10 @@ import {
   selectCreatePlaylist,
   selectExistingPlaylist
 } from '../event/eventActions'
-import { setEventPlaylist } from '../eventPlaylist/eventPlaylistActions'
+import {
+  deselectPlaylist,
+  setEventPlaylist
+} from '../eventPlaylist/eventPlaylistActions'
 import {
   deleteEvent,
   getEventById,
@@ -52,6 +55,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   ...bindActionCreators(
     {
+      deselectPlaylist,
       getEventById,
       deleteEvent,
       onEventDeleteSelected,

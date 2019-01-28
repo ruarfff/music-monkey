@@ -1,10 +1,11 @@
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
 import List from '@material-ui/core/List/List'
-import { isEmpty } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import * as React from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import partyImg from '../assets/partycover.png'
 import EventInput from '../components/EventInput/EventInput'
 import GenrePicker from '../components/GenrePicker/GenrePicker'
 import TrackItem from '../components/SearchTracks/TrackItemContainer'
@@ -23,6 +24,7 @@ interface IPlaylistSelectionProps {
   isCreatingPlaylist: boolean
   searchResult: ISearch
   selectedPlaylist: IPlaylist
+  deselectPlaylist(): IAction
   closeCreatePlaylist(): any
   closeExistingPlaylist(): any
   createEventPlaylist(playlistDetails: any): any
@@ -104,6 +106,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
       playlists,
       handlePickGenre,
       selectedPlaylist,
+      deselectPlaylist,
     } = this.props
 
     const {
@@ -122,6 +125,10 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
           .map(item => item.track.duration_ms)
           .reduce((acc, dur) => acc + dur)
         : 0
+
+    const img = (!isEmpty(selectedPlaylist) && selectedPlaylist.images[0]) ?
+      selectedPlaylist.images[0].url :
+      partyImg
 
     const formattedDuration = formatDuration(durationSeconds)
 
@@ -154,7 +161,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
               <span>Playlist Summary</span>
               <div className='PlaylistSummary'>
                 <div className='PlaylistImg'>
-                  <img src={selectedPlaylist.images[0].url}/>
+                  <img src={img}/>
                 </div>
                 <div className='PlaylistDescription'>
                   <div>
@@ -166,13 +173,15 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
                   <Button
                     color={'secondary'}
                     variant={'contained'}
+                    onClick={deselectPlaylist}
                   >
                     Deselect Playlist
                   </Button>
                 </div>
               </div>
               <List>
-                {selectedPlaylist.tracks.items.reverse().map((i, index) => (
+                {cloneDeep(selectedPlaylist.tracks.items)
+                  .reverse().map((i: any, index: number) => (
                   <TrackItem
                     key={index}
                     track={i.track}

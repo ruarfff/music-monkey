@@ -16,7 +16,9 @@ interface IShareEventByEmailProps {
   onCopyEventInvite(): void
 }
 
-class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
+export default class ShareEventByEmail extends React.PureComponent<
+  IShareEventByEmailProps
+> {
   public state = {
     emails: '',
     emailText: 'You are invited to a party!',
@@ -182,5 +184,3 @@ class ShareEventByEmail extends React.PureComponent<IShareEventByEmailProps> {
     }
   }
 }
-
-export default ShareEventByEmail

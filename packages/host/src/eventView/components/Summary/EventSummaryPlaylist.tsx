@@ -4,6 +4,7 @@ import { WithStyles } from '@material-ui/core/es'
 import Grid from '@material-ui/core/Grid'
 import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography'
+import { cloneDeep } from 'lodash'
 import * as React from 'react'
 import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
@@ -58,7 +59,7 @@ class EventSummaryPlaylist extends React.PureComponent<
 
     const size = suggestion.length > 2 ? 3 : 1
 
-    const openUrl = playlist.external_urls.spotify
+    const openUrl = playlist.external_urls && playlist.external_urls.spotify
 
     const numTracks =
       playlist.tracks && playlist.tracks.items
@@ -143,7 +144,7 @@ class EventSummaryPlaylist extends React.PureComponent<
             Recently Requested Tracks
           </Typography>
           {suggestion &&
-            suggestion
+              cloneDeep(suggestion)
               .reverse()
               .slice(0, size)
               .map((suggest, i) => (

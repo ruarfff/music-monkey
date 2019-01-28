@@ -42,7 +42,7 @@ class TrackItem extends React.PureComponent<
         <ListItemIcon>
           <img
             className="EventSuggestions-trackImage"
-            src={track.album.images[track.album.images.length - 1].url}
+            src={track.album.images[0].url}
             alt={track.name}
           />
         </ListItemIcon>

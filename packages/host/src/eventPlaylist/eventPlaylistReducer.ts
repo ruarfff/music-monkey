@@ -37,7 +37,7 @@ export default function eventPlaylist(
     case ADD_TRACK_SUCCESS:
       const newPlaylist = _.cloneDeep(state.playlist)
       newPlaylist.tracks.items.push({
-        added_at: '',
+        added_at: `${Date.now()}`,
         track: payload
       })
       return {

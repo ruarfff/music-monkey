@@ -1,5 +1,6 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
 import moment from 'moment'
+import { DESELECT_EVENT_PLAYLIST } from '../eventPlaylist/eventPlaylistActions'
 import { EVENT_FETCHED_BY_ID } from '../eventView/eventViewActions'
 import Action from '../IAction'
 import {
@@ -39,6 +40,14 @@ export default function event(
   { type, payload }: Action
 ) {
   switch (type) {
+    case DESELECT_EVENT_PLAYLIST:
+      return {
+        ...state,
+        savingEvent: {
+          ...state.savingEvent,
+          playlistUrl: ''
+        }
+      }
     case CLEAR_MESSAGE:
       return {
         ...state,
@@ -137,6 +146,7 @@ export default function event(
     case LOCATION_CHANGE:
       return {
         ...state,
+        errors: {},
         savingEvent: {
           ...initialState.savingEvent
         },
