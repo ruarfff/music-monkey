@@ -140,7 +140,8 @@ class EventSearchTracks extends React.PureComponent<
               <TrackItem
                 layout={layout}
                 handleClearSearch={this.handleClearSearch}
-                playlistId={playlist.id} addTrack={addTrack}
+                playlistId={playlist.id}
+                addTrack={addTrack}
                 track={track}
                 key={index}
               />

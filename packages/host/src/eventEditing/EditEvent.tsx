@@ -21,6 +21,7 @@ import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
 import FileUpload from '../upload/FileUpload'
 import IUser from '../user/IUser'
+import ISearch from '../playlist/ISearch'
 
 const decorate = withStyles(() => ({
   editContainer: {
@@ -68,6 +69,8 @@ interface IEditEventProps extends RouteComponentProps<any> {
   playlistInput: IPlaylistInput
   history: History
   isCreatingPlaylist: boolean
+  selectedPlaylist: IPlaylist
+  searchResult: ISearch
   getEventById(eventId: string): IAction
   onEventDeleteSelected(): IAction
   onEventDeleteClosed(): IAction
@@ -112,6 +115,8 @@ class EditEvent extends React.PureComponent<IEditEventProps & WithStyles> {
       fetchPlaylists,
       playlists,
       eventEdit,
+      searchResult,
+      selectedPlaylist,
       locationSelected,
       locationChanged,
       selectExistingPlaylist,
@@ -205,11 +210,12 @@ class EditEvent extends React.PureComponent<IEditEventProps & WithStyles> {
         <Grid item={true} xs={12} sm={12}>
           {!isEmpty(user) && (
             <PlaylistSelection
+              selectedPlaylist={selectedPlaylist}
+              searchResult={searchResult}
               isCreatingPlaylist={isCreatingPlaylist}
               playlists={playlists}
               fetchPlaylists={fetchPlaylists}
               user={user}
-              playlistUrl={eventEdit && eventEdit.playlistUrl}
               onPlaylistAdded={this.handleContentEdit('playlistUrl')}
               handlePickGenre={this.handleContentEdit('genre')}
               playlistInput={playlistInput}

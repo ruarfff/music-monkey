@@ -12,8 +12,9 @@ interface ITrackItemProps {
   track: ITrack
   playlistId: string
   layout?: string
+  disableAddButton?: boolean
   addTrack(playlistId: string, track: ITrack): IAction
-  handleClearSearch(): void
+  handleClearSearch?(): void
 }
 
 const decorate = withStyles(() => ({
@@ -34,7 +35,7 @@ class TrackItem extends React.PureComponent<
   }
 
   public render() {
-    const { classes, track, layout } = this.props
+    const { classes, track, layout, disableAddButton } = this.props
     let trackImage = <span />
     if (track.album && track.album.images && track.album.images.length > 0) {
       trackImage = (
@@ -82,22 +83,28 @@ class TrackItem extends React.PureComponent<
             />
           </div>
         </div>
-        <ListItemSecondaryAction>
-          <Button
-            className={classes.accept}
-            variant="contained"
-            onClick={this.handleAddTrack(track)}
-          >
-            ADD
-          </Button>
-        </ListItemSecondaryAction>
+        {
+          !disableAddButton && (
+            <ListItemSecondaryAction>
+              <Button
+                className={classes.accept}
+                variant="contained"
+                onClick={this.handleAddTrack(track)}
+              >
+                ADD
+              </Button>
+            </ListItemSecondaryAction>
+          )
+        }
       </ListItem>
     )
   }
 
   private handleAddTrack = (track: ITrack) => () => {
     this.props.addTrack(this.props.playlistId, track)
-    this.props.handleClearSearch()
+    if (this.props.handleClearSearch) {
+      this.props.handleClearSearch()
+    }
   }
 }
 

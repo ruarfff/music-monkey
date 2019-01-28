@@ -1,11 +1,13 @@
 import * as _ from 'lodash'
 import IAction from '../IAction'
+import IPlaylist from '../playlist/IPlaylist'
 import {
   ADD_TRACK_SUCCESS,
   REMOVE_TRACK_SUCCESS
 } from '../playlist/playlistActions'
 import arrayMove from '../util/arrayMove'
 import {
+  DESELECT_EVENT_PLAYLIST,
   EVENT_PLAYLIST_FETCHED,
   MOVE_ITEM_IN_EVENT_PLAYLIST,
   PLAYLIST_SORTED_BY_VOTES_DESCENDING,
@@ -22,6 +24,11 @@ export default function eventPlaylist(
   { type, payload }: IAction
 ) {
   switch (type) {
+    case DESELECT_EVENT_PLAYLIST:
+      return {
+        ...state,
+        playlist: {} as IPlaylist
+      }
     case SET_EVENT_PLAYLIST:
       return {
         ...state,
@@ -29,7 +36,6 @@ export default function eventPlaylist(
       }
     case ADD_TRACK_SUCCESS:
       const newPlaylist = _.cloneDeep(state.playlist)
-      console.log(newPlaylist)
       newPlaylist.tracks.items.push({
         added_at: '',
         track: payload

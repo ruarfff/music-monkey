@@ -1,26 +1,28 @@
-// import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
-// import TextField from '@material-ui/core/TextField/TextField'
-// import OpenInNew from '@material-ui/icons/OpenInNew'
+import List from '@material-ui/core/List/List'
+import { isEmpty } from 'lodash'
 import * as React from 'react'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import EventInput from '../components/EventInput/EventInput'
 import GenrePicker from '../components/GenrePicker/GenrePicker'
+import TrackItem from '../components/SearchTracks/TrackItemContainer'
 import PlaylistCard from '../event/PlaylistCardSmall'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
+import ISearch from '../playlist/ISearch'
 import IUser from '../user/IUser'
-// import CreatePlaylistDialog from './CreatePlaylistDialog'
-// import ExistingPlaylistDialog from './ExistingPlaylistDialog'
+import { formatDuration } from '../util/formatDuration'
 import './PlaylistSelection.scss'
 
 interface IPlaylistSelectionProps {
   user: IUser
-  playlistUrl: string
   playlistInput: any
   playlists: IPlaylist[]
   isCreatingPlaylist: boolean
+  searchResult: ISearch
+  selectedPlaylist: IPlaylist
   closeCreatePlaylist(): any
   closeExistingPlaylist(): any
   createEventPlaylist(playlistDetails: any): any
@@ -67,11 +69,6 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
     if (this.props.setEventPlaylist) {
       this.props.setEventPlaylist(playlist)
     }
-
-    this.setState({
-      name: playlist.name,
-      description: playlist.description
-    })
   }
 
   public handlePlaylistCreation = () => {
@@ -104,9 +101,9 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
 
   public render() {
     const {
-      playlistUrl,
       playlists,
       handlePickGenre,
+      selectedPlaylist,
     } = this.props
 
     const {
@@ -114,68 +111,108 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
       description
     } = this.state
 
+    const numTracks = (!isEmpty(selectedPlaylist) &&
+      selectedPlaylist.tracks &&
+      selectedPlaylist.tracks.items
+    ) ? selectedPlaylist.tracks.items.length : 0
+
+    const durationSeconds =
+      numTracks > 0
+        ? selectedPlaylist.tracks.items
+          .map(item => item.track.duration_ms)
+          .reduce((acc, dur) => acc + dur)
+        : 0
+
+    const formattedDuration = formatDuration(durationSeconds)
+
     return (
       <Grid container={true} spacing={24} alignItems="flex-end">
         <Grid item={true} md={12}>
-          <span>Add or pick a playlist</span>
-          <EventInput
-            onChange={this.handlePlaylistNameChange}
-            value={name}
-            error={!name}
-            errorLabel={'Enter playlist name'}
-            placeholder={'Playlist Name'}
-            label={'Set Playlist Name'}
-          />
+          {isEmpty(selectedPlaylist) ? (
+            <React.Fragment>
+              <span>Add or pick a playlist</span>
+              <EventInput
+                onChange={this.handlePlaylistNameChange}
+                value={name}
+                error={!name}
+                errorLabel={'Enter playlist name'}
+                placeholder={'Playlist Name'}
+                label={'Set Playlist Name'}
+              />
 
-          <EventInput
-            onChange={this.handlePlaylistDescriptionChange}
-            value={description}
-            placeholder={'Playlist Description'}
-            label={'Set Playlist Description'}
-          />
+              <EventInput
+                onChange={this.handlePlaylistDescriptionChange}
+                value={description}
+                placeholder={'Playlist Description'}
+                label={'Set Playlist Description'}
+              />
 
-          <GenrePicker onChange={handlePickGenre} />
+              <GenrePicker onChange={handlePickGenre} />
+            </React.Fragment>
+            ) : (
+            <React.Fragment>
+              <span>Playlist Summary</span>
+              <div className='PlaylistSummary'>
+                <div className='PlaylistImg'>
+                  <img src={selectedPlaylist.images[0].url}/>
+                </div>
+                <div className='PlaylistDescription'>
+                  <div>
+                    {selectedPlaylist.name}
+                  </div>
+                  <div>
+                    {formattedDuration}
+                  </div>
+                  <Button
+                    color={'secondary'}
+                    variant={'contained'}
+                  >
+                    Deselect Playlist
+                  </Button>
+                </div>
+              </div>
+              <List>
+                {selectedPlaylist.tracks.items.reverse().map((i, index) => (
+                  <TrackItem
+                    key={index}
+                    track={i.track}
+                    disableAddButton={true}
+                    layout={'column'}
+                    playlistId={selectedPlaylist.id}
+                  />
+                ))}
+              </List>
+            </React.Fragment>
+          )}
         </Grid>
         <div className="PlaylistCardsContainer">
-          <div
-            className='Plus'
-            onClick={this.handlePlaylistCreation}
-          >
-            +
-          </div>
-          {playlists.map((playlist: IPlaylist, index: number) => (
-            <div
-              onClick={this.handlePlaylistSelected(playlist)}
-            >
-              <PlaylistCard
-                playlistUrl={playlistUrl}
-                playlist={playlist}
-                key={index}
-                disableLink={true}
-              />
-            </div>
 
-          ))}
+          {isEmpty(selectedPlaylist) && (
+            <React.Fragment>
+              <div
+                className='Plus'
+                onClick={this.handlePlaylistCreation}
+              >
+                +
+              </div>
+              {
+                playlists.map((playlist: IPlaylist, index: number) => (
+                  <div
+                    key={index}
+                    onClick={this.handlePlaylistSelected(playlist)}
+                  >
+                    <PlaylistCard
+                      playlist={playlist}
+                      disableLink={true}
+                    />
+                  </div>
+                ))
+              }
+            </React.Fragment>
+
+          )}
+
         </div>
-
-        {/*<Grid item={true} md={12}>*/}
-          {/*<TextField*/}
-            {/*label="SELECT FROM SPOTIFY"*/}
-            {/*required={true}*/}
-            {/*disabled={false}*/}
-            {/*fullWidth={true}*/}
-            {/*margin="normal"*/}
-            {/*value={playlistUrl}*/}
-            {/*onClick={this.selectExistingSelected}*/}
-          {/*/>*/}
-          {/*<div className="PlaylistSelection-menu-icon">*/}
-            {/*{playlistUrl && (*/}
-              {/*<a href={playlistUrl} target="_blank">*/}
-                {/*<OpenInNew fill="#FFB000" />*/}
-              {/*</a>*/}
-            {/*)}*/}
-          {/*</div>*/}
-        {/*</Grid>*/}
       </Grid>
     )
   }

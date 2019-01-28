@@ -1,6 +1,5 @@
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
-import List from '@material-ui/core/List'
 import { Theme, WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import * as _ from 'lodash'
@@ -18,7 +17,6 @@ import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
 import ISearch from '../playlist/ISearch'
-import TrackList from '../track/TrackList'
 import FileUpload from '../upload/FileUpload'
 import IUser from '../user/IUser'
 import './CreateEvent.scss'
@@ -268,10 +266,11 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
         {errors.playlistCreation && this.showCreatePlaylistErrorDialog()}
         <Grid item={true} xs={12} sm={6}>
           <PlaylistSelection
+            selectedPlaylist={selectedPlaylist}
+            searchResult={searchResult}
             playlists={playlists}
             fetchPlaylists={fetchPlaylists}
             user={user}
-            playlistUrl={event && event.playlistUrl}
             onPlaylistAdded={this.onDynamicChange('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}
             playlistInput={playlistInput}
@@ -298,14 +297,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               )
             )
           }
-          {(event.playlistUrl && _.isEmpty(searchResult)) && (
-            <List>
-                <TrackList
-                disableRemoveTrack={true}
-                tracks={selectedPlaylist.tracks.items.map((i) => i.track)}
-              />
-            </List>
-          )}
         </Grid>
         <div className="control-btn-row">
           <Button

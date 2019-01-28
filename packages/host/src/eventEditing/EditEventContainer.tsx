@@ -42,6 +42,8 @@ const mapStateToProps = (state: IRootState) => ({
   editSuccess: state.eventView.editSuccess,
   editFailure: state.eventView.editFailure,
   isCreatingPlaylist: state.playlist.isCreating,
+  searchResult: state.playlist.searchResult,
+  selectedPlaylist: state.eventPlaylist.playlist,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
