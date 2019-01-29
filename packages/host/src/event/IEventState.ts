@@ -7,6 +7,7 @@ export default interface IEventState {
   events: IEvent[]
   playlistInput: IPlaylistInput
   savingEvent: IEvent
+  createEventStep: number
   eventsLoading: boolean
   showSavedDialogue: boolean
   shareEventMessage: string

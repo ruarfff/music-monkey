@@ -75,6 +75,7 @@ interface ICreateEventProps {
   isCreatingPlaylist: boolean
   searchResult: ISearch
   selectedPlaylist: IPlaylist
+  currentStep: number
   deselectPlaylist(): IAction
   clearMessage(): IAction
   cancel(): void
@@ -96,12 +97,13 @@ interface ICreateEventProps {
   eventSavingReset(): IAction
   acknowledgeEventInviteCopied(): IAction
   setEventPlaylist(playlist: IPlaylist): IAction
+  setStep(step: number): IAction
 }
 
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   public state = {
-    currentStep: 0,
     showSaveDialog: true,
+    showSaveErrorDialog: true,
     showRequiredDialog: true,
     showFinishCreatingEventDialog: true,
     showCreatePlaylistErrorDialog: true,
@@ -130,9 +132,9 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public prevStep = () => {
-    const { currentStep } = this.state
+    const { currentStep, setStep } = this.props
     if (currentStep !== 0) {
-      this.setState({ currentStep: currentStep - 1 })
+      setStep(currentStep - 1)
     }
   }
 
@@ -149,17 +151,19 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       'showSaveDialog',
       'showRequiredDialog',
       'showFinishCreatingEventDialog',
-      'showCreatePlaylistErrorDialog'
+      'showCreatePlaylistErrorDialog',
+      'showSaveErrorDialog'
       )
     this.props.eventContentUpdated(decoratedState)
   }
 
   public nextStep = () => {
     const {
-      currentStep,
       name,
       organizer,
     } = this.state
+
+    const { currentStep, setStep } = this.props
 
     const location = this.props.event.location.address
 
@@ -175,10 +179,21 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       this.showRequiredDialog()
     } else {
       this.setChanges()
-      if (currentStep !== 2) {
-        this.setState({ currentStep: currentStep + 1 })
+      if (currentStep !== 1) {
+        setStep(currentStep + 1)
       }
     }
+  }
+
+  public showCreateEventErrorDialog = () => {
+    const message = this.props.errors.saving.response.statusText
+
+    this.setState({ showSaveErrorDialog: false })
+    SweetAlert.fire({
+      confirmButtonColor: '#8f0a00',
+      title: message,
+      type: 'error'
+    })
   }
 
   public showCreatePlaylistErrorDialog = () => {
@@ -218,8 +233,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public pickStep = (step: number) => {
+    const { currentStep, setStep } = this.props
     const {
-      currentStep,
       name,
       organizer,
     } = this.state
@@ -235,7 +250,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     } else if(step === 2 && this.props.event.createdAt === undefined) {
       this.showFinishCreatingEventDialog()
     } else {
-      this.setState({ currentStep: step })
+      setStep(step)
       this.setChanges()
     }
   }
@@ -447,10 +462,11 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       acknowledgeEventInviteCopied,
       copiedToClipboard,
       message,
-      clearMessage
+      clearMessage,
+      currentStep
     } = this.props
 
-    if (this.state.currentStep === 2 && this.state.showSaveDialog) {
+    if (currentStep === 2 && this.state.showSaveDialog) {
       this.showSavedDialogue()
     }
     return (
@@ -470,10 +486,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   public render() {
     return (
       <React.Fragment>
-        <CreateEventSteps pickStep={this.pickStep} step={this.state.currentStep} />
+        <CreateEventSteps pickStep={this.pickStep} step={this.props.currentStep} />
         <form className="CreateEvent-root" noValidate={true} autoComplete="off">
             {
-              <div hidden={this.state.currentStep !== 0}>
+              <div hidden={this.props.currentStep !== 0}>
                 <Grid
                   container={true}
                   spacing={24}
@@ -484,7 +500,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               </div>
             }
             {
-              <div hidden={this.state.currentStep !== 1}>
+              <div hidden={this.props.currentStep !== 1}>
                 <Grid
                   container={true}
                   spacing={24}
@@ -495,7 +511,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
                 </Grid>
               </div>
             }
-            {this.state.currentStep === 2 &&
+            {this.props.currentStep === 2 &&
               <Grid
                 container={true}
                 spacing={24}
@@ -515,13 +531,32 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   private handleSaveEvent = () => {
+    const {
+      errors,
+      event,
+      editEventRequest,
+      saveEvent,
+    } = this.props
     this.nextStep()
-    if (this.props.event.createdAt !== undefined) {
-      this.props.editEventRequest(this.props.event)
+    if ( !_.isEmpty(errors.saving) ) {
+      this.showCreateEventErrorDialog()
+    }
+    if (event.createdAt !== undefined) {
+      editEventRequest({
+        ...event,
+        name: this.state.name,
+        description: this.state.description,
+        organizer: this.state.organizer,
+        dataUrl: ''
+      })
     } else {
-      setTimeout(() => {
-        this.props.saveEvent(this.props.event)
-      }, 1000)
+        saveEvent({
+          ...event,
+          name: this.state.name,
+          description: this.state.description,
+          organizer: this.state.organizer,
+          dataUrl: ''
+        })
     }
   }
 

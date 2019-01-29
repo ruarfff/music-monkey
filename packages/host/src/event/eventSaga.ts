@@ -5,22 +5,23 @@ import IPlaylistDetails from '../playlist/IPlaylistDetails'
 import { FETCH_PLAYLISTS } from '../playlist/playlistActions'
 import { createPlaylist } from '../playlist/playlistClient'
 import {
-EVENT_CONTENT_UPDATED,
-EVENT_CREATE_PLAYLIST_INITIATED,
-EVENT_EDIT_FAILURE,
-EVENT_EDIT_REQUEST,
-EVENT_EDIT_SUCCESS,
-EVENT_LOCATION_ERROR,
-EVENT_LOCATION_POPULATED,
-EVENT_LOCATION_SELECTED,
-EVENT_PLAYLIST_CREATED,
-EVENT_PLAYLIST_CREATION_ERROR,
-EVENT_SAVE_ERROR,
-EVENT_SAVE_INITIATED,
-EVENT_SAVED,
-EVENTS_FETCH_ERROR,
-EVENTS_FETCH_INITIATED,
-EVENTS_FETCHED
+  EVENT_CONTENT_UPDATED,
+  EVENT_CREATE_PLAYLIST_INITIATED,
+  EVENT_EDIT_FAILURE,
+  EVENT_EDIT_REQUEST,
+  EVENT_EDIT_SUCCESS,
+  EVENT_LOCATION_ERROR,
+  EVENT_LOCATION_POPULATED,
+  EVENT_LOCATION_SELECTED,
+  EVENT_PLAYLIST_CREATED,
+  EVENT_PLAYLIST_CREATION_ERROR,
+  EVENT_SAVE_ERROR,
+  EVENT_SAVE_INITIATED,
+  EVENT_SAVED,
+  EVENTS_FETCH_ERROR,
+  EVENTS_FETCH_INITIATED,
+  EVENTS_FETCHED,
+  SET_CREATE_EVENT_STEP
 } from './eventActions'
 import { createEvent, getEvents, updateEvent } from './eventClient'
 import IEvent from './IEvent'
@@ -80,6 +81,7 @@ function* saveEventFlow(action: IAction) {
       payload: savedEvent,
       type: EVENT_SAVED
     })
+    yield put({type: SET_CREATE_EVENT_STEP, payload: 2})
   } catch (err) {
     yield put({ type: EVENT_SAVE_ERROR, payload: err })
   }

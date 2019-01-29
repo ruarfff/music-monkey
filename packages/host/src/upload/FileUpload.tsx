@@ -57,6 +57,7 @@ function upload(file: any) {
 }
 
 const componentConfig = {
+  maxFilesize: 2,
   postUrl: 'upload',
   iconFiletypes: ['.jpg', '.png'],
   showFiletypeIcon: true,

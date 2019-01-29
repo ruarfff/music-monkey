@@ -15,6 +15,7 @@ export default {
     isCreatingNewPlaylist: false,
     isSelectingExistingPlaylist: false
   },
+  createEventStep: 0,
   savingEvent: {
     description: '',
     dataUrl: '',

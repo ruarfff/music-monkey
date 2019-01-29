@@ -15,7 +15,8 @@ import {
   locationSelected,
   saveEvent,
   selectCreatePlaylist,
-  selectExistingPlaylist
+  selectExistingPlaylist,
+  setStep
 } from '../event/eventActions'
 import {
   deselectPlaylist,
@@ -40,7 +41,8 @@ const mapStateToProps = (state: IRootState) => ({
   selectedPlaylist: state.eventPlaylist.playlist,
   isCreatingPlaylist: state.playlist.isCreating,
   copiedToClipboard: state.eventView.copiedToClipboard,
-  searchResult: state.playlist.searchResult
+  searchResult: state.playlist.searchResult,
+  currentStep: state.event.createEventStep
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -70,6 +72,7 @@ const mapDispatchToProps = (dispatch: any) => ({
       acknowledgeEventInviteCopied,
       editEventRequest,
       clearMessage,
+      setStep,
     },
     dispatch
   )

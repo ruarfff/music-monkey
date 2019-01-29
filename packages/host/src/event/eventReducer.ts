@@ -29,7 +29,8 @@ import {
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
   SELECT_EXISTING_PLAYLIST_CLOSED,
-  SELECT_EXISTING_PLAYLIST_SELECTED
+  SELECT_EXISTING_PLAYLIST_SELECTED,
+  SET_CREATE_EVENT_STEP
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
@@ -40,6 +41,11 @@ export default function event(
   { type, payload }: Action
 ) {
   switch (type) {
+    case SET_CREATE_EVENT_STEP:
+      return {
+        ...state,
+        createEventStep: payload,
+      }
     case DESELECT_EVENT_PLAYLIST:
       return {
         ...state,
@@ -147,6 +153,7 @@ export default function event(
       return {
         ...state,
         errors: {},
+        createEventStep: 0,
         savingEvent: {
           ...initialState.savingEvent
         },

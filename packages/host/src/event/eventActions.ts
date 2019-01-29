@@ -34,6 +34,13 @@ export const EVENT_EDIT_SUCCESS = 'EVENT_EDIT_SUCCESS'
 export const EVENT_EDIT_FAILURE = 'EVENT_EDIT_FAILURE'
 export const EVENT_EDIT_CLOSE = 'EVENT_EDIT_CLOSE'
 
+export const SET_CREATE_EVENT_STEP = 'SET_CREATE_EVENT_STEP'
+
+export const setStep = (step: number):Action => ({
+  type: SET_CREATE_EVENT_STEP,
+  payload: step,
+})
+
 export const editEventSuccess = (): Action => ({
   type: EVENT_EDIT_SUCCESS
 })

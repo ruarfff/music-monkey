@@ -135,30 +135,26 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
     return (
       <Grid container={true} spacing={24} alignItems="flex-end">
         <Grid item={true} md={12}>
-          {isEmpty(selectedPlaylist) ? (
-            <React.Fragment>
-              <span>Add or pick a playlist</span>
-              <EventInput
-                onChange={this.handlePlaylistNameChange}
-                value={name}
-                error={!name}
-                errorLabel={'Enter playlist name'}
-                placeholder={'Playlist Name'}
-                label={'Set Playlist Name'}
-              />
+          <span>Add or pick a playlist</span>
+          <EventInput
+            onChange={this.handlePlaylistNameChange}
+            value={name}
+            error={!name}
+            errorLabel={'Enter playlist name'}
+            placeholder={'Playlist Name'}
+            label={'Set Playlist Name'}
+          />
 
-              <EventInput
-                onChange={this.handlePlaylistDescriptionChange}
-                value={description}
-                placeholder={'Playlist Description'}
-                label={'Set Playlist Description'}
-              />
+          <EventInput
+            onChange={this.handlePlaylistDescriptionChange}
+            value={description}
+            placeholder={'Playlist Description'}
+            label={'Set Playlist Description'}
+          />
 
-              <GenrePicker onChange={handlePickGenre} />
-            </React.Fragment>
-            ) : (
+          <GenrePicker onChange={handlePickGenre} />
+          {!isEmpty(selectedPlaylist) && (
             <React.Fragment>
-              <span>Playlist Summary</span>
               <div className='PlaylistSummary'>
                 <div className='PlaylistImg'>
                   <img src={img}/>
