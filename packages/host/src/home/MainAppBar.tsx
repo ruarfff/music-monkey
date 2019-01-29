@@ -12,7 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import eventIcon from '../assets/event-icon.svg'
+import eventIcon from '../assets/monkey_logo.png'
 import NotificationPopup from '../components/NotificationPopup/NotificationPopup'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
@@ -68,7 +68,8 @@ const decorate = withStyles(({ transitions, zIndex }) => ({
     color: '#979797'
   },
   imageInButton: {
-    marginRight: '5px'
+    marginRight: '5px',
+    height: '20px'
   }
 }))
 
@@ -159,7 +160,7 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
 
     const profilePic = (
       <div className={classes.profile}>
-        {location !== '/create-event' && (
+        {((location !== '/create-event') && (location !== '/')) && (
           <Link to="/create-event" className="Home-create-event-link">
             <Button
               variant="contained"

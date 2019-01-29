@@ -1,7 +1,11 @@
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import IconButton from '@material-ui/core/IconButton'
+import Snackbar from '@material-ui/core/Snackbar'
+import CloseIcon from '@material-ui/icons/Close'
 import * as React from 'react'
 import IEvent from '../../event/IEvent'
+import IAction from '../../IAction'
 import EventInput from '../EventInput/EventInput'
 import InviteLink from '../InviteLink/InviteLink'
 import EmailPreview from './EmailPreview'
@@ -11,9 +15,11 @@ interface IShareEventByEmailProps {
   event: IEvent
   inviteId: string
   withPreview?: boolean
+  message: string
   shareByEmails(emails: string[], emailText: string, event: IEvent): void
   togglePopup?(): void
   onCopyEventInvite(): void
+  clearMessage(): IAction
 }
 
 export default class ShareEventByEmail extends React.PureComponent<
@@ -22,15 +28,38 @@ export default class ShareEventByEmail extends React.PureComponent<
   public state = {
     emails: '',
     emailText: 'You are invited to a party!',
-    validation: false
+    validation: false,
+    showMessage: false,
+  }
+
+  public componentDidUpdate() {
+    this.setState({showMessage: this.props.message !== ''})
   }
 
   public renderPopupLayout = () => {
     const { togglePopup, inviteId, onCopyEventInvite } = this.props
-    const { emails, emailText, validation } = this.state
+    const { emails, emailText, validation, showMessage } = this.state
 
     return (
       <div className='emailShareWrapper'>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={showMessage}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.props.message}</span>}
+          action={
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          }
+        />
         <EventInput
           value={emails}
           maxRows={4}
@@ -51,7 +80,7 @@ export default class ShareEventByEmail extends React.PureComponent<
           fullWidth={true}
           onClick={this.handleSubmit}
         >
-          SHARE
+          SEND INVITE
         </Button>
         <InviteLink
           togglePopup={togglePopup}
@@ -79,10 +108,28 @@ export default class ShareEventByEmail extends React.PureComponent<
 
   public renderPreviewLayout = () => {
     const { inviteId, onCopyEventInvite, event } = this.props
-    const { emails, emailText, validation } = this.state
+    const { emails, emailText, validation, showMessage } = this.state
 
     return (
       <Grid container={true} spacing={24}>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={showMessage}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.props.message}</span>}
+          action={
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          }
+        />
         <Grid item={true} md={6}>
           Invite Preview
           <EventInput
@@ -113,7 +160,7 @@ export default class ShareEventByEmail extends React.PureComponent<
             fullWidth={true}
             onClick={this.handleSubmit}
           >
-            SHARE
+            SEND INVITE
           </Button>
           <InviteLink
             inviteId={inviteId}
@@ -182,5 +229,9 @@ export default class ShareEventByEmail extends React.PureComponent<
     if (!!togglePopup) {
       togglePopup()
     }
+  }
+
+  private handleClose = () => {
+    this.props.clearMessage()
   }
 }

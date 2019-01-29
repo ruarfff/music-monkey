@@ -85,6 +85,8 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
       copyEventInvite,
       acknowledgeEventInviteCopied,
       copiedToClipboard,
+      message,
+      clearMessage,
     } = this.props
 
     const eventImg = !event.imageUrl ? backgroundImg : event.imageUrl
@@ -112,7 +114,7 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
               <img className={classes.descriptionItemImg} src={dateIcon} />
               <span>{event.startDateTime.format('Do MMMM YYYY LT')}</span>
             </div>
-            <div>
+            <div className={classes.descriptionItem}>
               <img className={classes.descriptionItemImg} src={locationIcon} />
               <span>{event.location && event.location.address}</span>
             </div>
@@ -153,6 +155,8 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
         </Grid>
         <Grid item={true} md={8}>
           <ShareEventByEmail
+            clearMessage={clearMessage}
+            message={message}
             withPreview={true}
             event={event}
             inviteId={event && event.invites ? event.invites[0] : ''}

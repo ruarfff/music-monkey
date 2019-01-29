@@ -1,7 +1,4 @@
 import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import Snackbar from '@material-ui/core/Snackbar'
-import CloseIcon from '@material-ui/icons/Close'
 import * as React from 'react'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
@@ -19,36 +16,13 @@ interface ISharePopupProps {
 class SharePopup extends React.PureComponent<ISharePopupProps> {
   public state = {
     showPopup: false,
-    showMessage: this.props.message !== ''
-  }
-
-  public componentDidUpdate() {
-    this.setState({showMessage: this.props.message !== ''})
   }
 
   public render() {
-    const { inviteId, event, onCopyEventInvite } = this.props
-    const { showPopup, showMessage } = this.state
+    const { inviteId, event, onCopyEventInvite, clearMessage, message } = this.props
+    const { showPopup } = this.state
     return (
       <React.Fragment>
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={showMessage}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">{this.props.message}</span>}
-          action={
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleClose}
-            >
-              <CloseIcon />
-            </IconButton>
-          }
-        />
         <Button
           onClick={this.togglePopup}
           color='secondary'
@@ -60,6 +34,8 @@ class SharePopup extends React.PureComponent<ISharePopupProps> {
           <div className='SharePopupWrapper' onClick={this.closePopup}>
             <div className='SharePopupContainer'>
               <ShareEventByEmail
+                message={message}
+                clearMessage={clearMessage}
                 event={event}
                 togglePopup={this.togglePopup}
                 inviteId={inviteId}
@@ -70,10 +46,6 @@ class SharePopup extends React.PureComponent<ISharePopupProps> {
         }
       </React.Fragment>
     )
-  }
-
-  private handleClose = () => {
-    this.props.clearMessage()
   }
 
   private togglePopup = () => {
