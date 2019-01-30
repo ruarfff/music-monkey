@@ -41,11 +41,12 @@
 
 .slider {
   overflow: hidden;
-  padding-left: 40px;
+  padding-left: 100px;
   padding-bottom: 2px;
 }
 
 .eventsList {
+  margin-top: 1em;
   display: flex;
   flex-flow: row wrap;
   height: 100%;
@@ -80,7 +81,19 @@
   align-items: center;
   height: 220px;
 }
-
+.slider
 .eventCardIcon {
   margin-right: 14px;
 }
+
+
+.event-createEventButtonContent {
+  display: flex;
+  flex-direction: column;
+  color: white;
+
+  .event-monkeyLogoButton {
+    width: 100%;
+  }
+}
+
