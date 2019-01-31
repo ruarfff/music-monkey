@@ -2,7 +2,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 
 export const decorate = withStyles(() => ({
   input: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: '4px',
     border: '1px solid #979797',
     paddingLeft: '16px',
@@ -23,16 +23,15 @@ export const decorate = withStyles(() => ({
       borderBottom: 'none!important',
     },
     paddingTop: '4px',
-    zIndex: 10,
   },
   textArea: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: '4px',
     border: '1px solid #979797',
     paddingLeft: '16px',
     alignItems: 'start',
     display: 'flex',
-    minHeight: '240px',
+    minHeight: '100px',
     '&:hover:not($disabled):before': {
       borderBottom: '1px solid #979797!important',
     },

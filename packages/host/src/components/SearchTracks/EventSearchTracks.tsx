@@ -10,6 +10,7 @@ import * as React from 'react'
 import IAction from '../../IAction'
 import IPlaylist from '../../playlist/IPlaylist'
 import ISearch from '../../playlist/ISearch'
+import Recommendations from '../../recommendations/RecommendationsContainer'
 import ITrack from '../../track/ITrack'
 import EventInput from '../EventInput/EventInput'
 import './EventSearchTracks.scss'
@@ -95,6 +96,7 @@ class EventSearchTracks extends React.PureComponent<
       filteredSearch = searchResult.items
         .filter((searchedTrack) => playlistTracks.indexOf(searchedTrack.uri) === -1)
     }
+
     return (
       <div>
         <Snackbar
@@ -136,7 +138,7 @@ class EventSearchTracks extends React.PureComponent<
 
         <div className="SearchResults">
           <List>
-            {filteredSearch && filteredSearch.map((track, index) => (
+            {filteredSearch ? filteredSearch.map((track, index) => (
               <TrackItem
                 layout={layout}
                 handleClearSearch={this.handleClearSearch}
@@ -145,7 +147,11 @@ class EventSearchTracks extends React.PureComponent<
                 track={track}
                 key={index}
               />
-            ))}
+            )) :
+              <Recommendations
+                playlist={playlist}
+                layout={layout}
+              />}
           </List>
         </div>
       </div>

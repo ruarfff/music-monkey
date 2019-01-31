@@ -18,11 +18,14 @@ export default ({ event, emailText }: IEmailPreviewProps) => {
       style={{background: `url(${bg}) center`, backgroundSize: 'cover'}}
     >
       <div className='TopLine'>
-        <span>Music Monkey</span>
+        <span>MusicMonkey</span>
       </div>
       <div className='emailPreviewContent'>
         <div className='emailPreviewLogo'>
           <img src={logo} alt="monkey logo"/>
+        </div>
+        <div className='emailPreviewLink'>
+          click here for more details
         </div>
         <div className='emailPreviewEventName'>
           {event.name}
@@ -37,9 +40,6 @@ export default ({ event, emailText }: IEmailPreviewProps) => {
         </div>
         <div className='emailPreviewText'>
           {emailText}
-        </div>
-        <div className='emailPreviewLink'>
-          click here for more details
         </div>
       </div>
     </div>

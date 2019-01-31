@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import './NoEvent.scss'
 
 
-const NoEvents: React.SFC = () => (
+const NoEvents: React.FC = () => (
   <div className="eventsNoEventsMessage">
     <div>
       <h3>

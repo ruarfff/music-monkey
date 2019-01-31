@@ -9,6 +9,7 @@ import home from './home/homeReducer'
 import insights from './insights/insightsReducer'
 import notification from './notification/notificationReducer'
 import playlist from './playlist/playlistReducer'
+import recommendation from './recommendations/recommendationReducer'
 import suggestion from './suggestion/suggestionReducer'
 import user from './user/userReducer'
 import vote from './vote/voteReducer'
@@ -26,5 +27,6 @@ export default (history: History) =>
     user,
     vote,
     insights,
-    notification
+    notification,
+    recommendation,
   })

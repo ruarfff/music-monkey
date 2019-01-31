@@ -40,11 +40,10 @@ const styles = (theme) => ({
     borderRadius: '4px',
     minHeight: '40px',
     paddingLeft: '16px',
-    backgroundColor: 'white'
+    backgroundColor: 'rgba(255, 255, 255, 0.5)'
   },
   label: {
     paddingLeft: '16px',
-    zIndex: 10,
     '&:hover:not($disabled):before': {
       borderBottom: 'none!important'
     },

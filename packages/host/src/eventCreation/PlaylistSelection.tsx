@@ -1,21 +1,27 @@
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
+import IconButton from '@material-ui/core/IconButton/IconButton'
 import List from '@material-ui/core/List/List'
+import Snackbar from '@material-ui/core/Snackbar/Snackbar'
+import CloseIcon from '@material-ui/icons/Close'
 import { cloneDeep, isEmpty } from 'lodash'
 import * as React from 'react'
+import { DropResult } from 'react-beautiful-dnd'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import partyImg from '../assets/partycover.png'
 import EventInput from '../components/EventInput/EventInput'
 import GenrePicker from '../components/GenrePicker/GenrePicker'
-import TrackItem from '../components/SearchTracks/TrackItemContainer'
 import PlaylistCard from '../event/PlaylistCardSmall'
 import IAction from '../IAction'
+import notification from '../notification/notificationReducer'
 import IPlaylist from '../playlist/IPlaylist'
 import ISearch from '../playlist/ISearch'
+import TrackList from '../track/TrackList'
 import IUser from '../user/IUser'
 import { formatDuration } from '../util/formatDuration'
 import './PlaylistSelection.scss'
+
 
 interface IPlaylistSelectionProps {
   user: IUser
@@ -25,15 +31,17 @@ interface IPlaylistSelectionProps {
   searchResult: ISearch
   selectedPlaylist: IPlaylist
   deselectPlaylist(): IAction
-  closeCreatePlaylist(): any
-  closeExistingPlaylist(): any
   createEventPlaylist(playlistDetails: any): any
   onPlaylistAdded(playlistUrl: string): any
-  selectCreatePlaylist(): any
-  selectExistingPlaylist(): any
   fetchPlaylists(user: IUser): IAction
   handlePickGenre(content: string): void
-  setEventPlaylist?(playlist: IPlaylist): void
+  setEventPlaylist(playlist: IPlaylist): void
+  onPlaylistDragDrop(
+    playlist: IPlaylist,
+    fromIndex: number,
+    toIndex: number
+  ): IAction
+  tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
 }
 
 const SweetAlert = withReactContent(Swal) as any
@@ -43,6 +51,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
     name: '',
     description: '',
     showFillPlaylistErrorDialog: true,
+    isOpen: false,
     selected: {
       label: '',
       value: ''
@@ -62,15 +71,9 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
     this.props.fetchPlaylists(this.props.user)
   }
 
-  public handleClose = () => {
-    this.setState({ anchorEl: null })
-  }
-
   public handlePlaylistSelected = (playlist: IPlaylist) => () => {
     this.props.onPlaylistAdded(playlist.external_urls.spotify)
-    if (this.props.setEventPlaylist) {
-      this.props.setEventPlaylist(playlist)
-    }
+    this.props.setEventPlaylist(playlist)
   }
 
   public handlePlaylistCreation = () => {
@@ -88,17 +91,37 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
     }
   }
 
-  public selectExistingSelected = () => {
-    this.handleClose()
-    this.props.selectExistingPlaylist()
-  }
-
   public handlePlaylistNameChange = (name: string) => {
     this.setState({ name })
   }
 
   public handlePlaylistDescriptionChange = (description: string) => {
     this.setState({ description })
+  }
+
+  public handleShowNotification = () => {
+    this.setState({ isOpen: true })
+  }
+
+  public handleCloseNotification = () => {
+    this.setState({ isOpen: false })
+  }
+
+  public handlePlaylistDragDrop = (result: DropResult) => {
+    // dropped outside the list
+    if (!result.destination) {
+      return
+    }
+
+    this.props.onPlaylistDragDrop(
+      this.props.selectedPlaylist,
+      result.source.index,
+      result.destination.index
+    )
+  }
+
+  public handleRemoveTrack = (uri: string, position: number) => {
+    this.props.tryRemoveTrack(this.props.selectedPlaylist.id, uri, position)
   }
 
   public render() {
@@ -111,7 +134,8 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
 
     const {
       name,
-      description
+      description,
+      isOpen
     } = this.state
 
     const numTracks = (!isEmpty(selectedPlaylist) &&
@@ -155,6 +179,29 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
           <GenrePicker onChange={handlePickGenre} />
           {!isEmpty(selectedPlaylist) && (
             <React.Fragment>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center'
+                }}
+                autoHideDuration={4000}
+                open={isOpen}
+                onClose={this.handleCloseNotification}
+                ContentProps={{
+                  'aria-describedby': 'message-id'
+                }}
+                message={<span id="message-id">{notification}</span>}
+                action={[
+                  <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    onClick={this.handleCloseNotification}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ]}
+              />
               <div className='PlaylistSummary'>
                 <div className='PlaylistImg'>
                   <img src={img}/>
@@ -166,26 +213,32 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
                   <div>
                     {formattedDuration}
                   </div>
+                  <div>
+                    {
+                      numTracks > 1 ?
+                      numTracks + ' Tracks' :
+                      numTracks + ' Track'
+                    }
+                  </div>
                   <Button
                     color={'secondary'}
                     variant={'contained'}
                     onClick={deselectPlaylist}
                   >
-                    Deselect Playlist
+                    CHOOSE OTHER PLAYLIST
                   </Button>
                 </div>
               </div>
               <List>
-                {cloneDeep(selectedPlaylist.tracks.items)
-                  .reverse().map((i: any, index: number) => (
-                  <TrackItem
-                    key={index}
-                    track={i.track}
-                    disableAddButton={true}
-                    layout={'column'}
-                    playlistId={selectedPlaylist.id}
-                  />
-                ))}
+                <TrackList
+                  removeTrack={this.handleRemoveTrack}
+                  onDragEnd={this.handlePlaylistDragDrop}
+                  tracks={
+                    cloneDeep(selectedPlaylist.tracks.items)
+                      .map(i => i.track)
+                  }
+                  showNotification={this.handleShowNotification}
+                />
               </List>
             </React.Fragment>
           )}
@@ -214,9 +267,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
                 ))
               }
             </React.Fragment>
-
           )}
-
         </div>
       </Grid>
     )

@@ -43,7 +43,7 @@ class Events extends React.Component<IEventsProps> {
   ) => {
     // const now = moment()
 
-    let upcomingPlaylists: any[] = events.map(event => event.playlist)
+    const upcomingPlaylists: any[] = events.map(event => event.playlist)
 
     // if (!!events && playlist) {
     //   upcomingPlaylists = _.uniqBy(

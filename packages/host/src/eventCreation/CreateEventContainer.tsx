@@ -20,13 +20,17 @@ import {
 } from '../event/eventActions'
 import {
   deselectPlaylist,
+  moveItemInEventPlaylist,
   setEventPlaylist
 } from '../eventPlaylist/eventPlaylistActions'
 import {
   acknowledgeEventInviteCopied,
   copyEventInvite
 } from '../eventView/eventViewActions'
-import { fetchPlaylists } from '../playlist/playlistActions'
+import {
+  fetchPlaylists,
+  tryRemoveTrack,
+} from '../playlist/playlistActions'
 import IRootState from '../rootState'
 import { clearMessage } from '../shareEvent/shareActions'
 import CreateEvent from './CreateEvent'
@@ -52,6 +56,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ...bindActionCreators(
     {
+      tryRemoveTrack,
+      onPlaylistDragDrop: moveItemInEventPlaylist,
       setEventPlaylist,
       deselectPlaylist,
       closeCreatePlaylist,

@@ -79,8 +79,6 @@ interface ICreateEventProps {
   deselectPlaylist(): IAction
   clearMessage(): IAction
   cancel(): void
-  closeCreatePlaylist(): IAction
-  closeExistingPlaylist(): IAction
   createEventPlaylist(playlist: IPlaylistDetails): IAction
   eventContentUpdated(content: any): IAction
   eventImageUploadError(error: Error): IAction
@@ -90,14 +88,18 @@ interface ICreateEventProps {
   locationSelected(address: string): IAction
   editEventRequest(event: IEvent): IAction
   saveEvent(event: IEvent): IAction
-  selectCreatePlaylist(): IAction
-  selectExistingPlaylist(): IAction
   fetchPlaylists(user: IUser): IAction
   copyEventInvite(): IAction
   eventSavingReset(): IAction
   acknowledgeEventInviteCopied(): IAction
   setEventPlaylist(playlist: IPlaylist): IAction
   setStep(step: number): IAction
+  onPlaylistDragDrop(
+    playlist: IPlaylist,
+    fromIndex: number,
+    toIndex: number
+  ): IAction
+  tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
 }
 
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
@@ -114,9 +116,12 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public componentDidMount() {
+    this.props.initializeCreateForm(this.props.event, this.props.user)
+  }
+
+  public componentWillUnmount() {
     this.props.deselectPlaylist()
     this.props.eventSavingReset()
-    this.props.initializeCreateForm(this.props.event, this.props.user)
   }
 
   public componentWillUpdate() {
@@ -129,6 +134,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
   public handleSetPlaylist = (playlist: IPlaylist) => {
     this.props.setEventPlaylist(playlist)
+    this.setState({
+      name: playlist.name,
+      description: playlist.description
+    })
   }
 
   public prevStep = () => {
@@ -154,7 +163,11 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       'showCreatePlaylistErrorDialog',
       'showSaveErrorDialog'
       )
-    this.props.eventContentUpdated(decoratedState)
+    if (this.props.currentStep === 0) {
+      this.props.eventContentUpdated({genre: this.state.genre})
+    } else {
+      this.props.eventContentUpdated(decoratedState)
+    }
   }
 
   public nextStep = () => {
@@ -163,7 +176,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       organizer,
     } = this.state
 
-    const { currentStep, setStep } = this.props
+    const { currentStep } = this.props
 
     const location = this.props.event.location.address
 
@@ -179,9 +192,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       this.showRequiredDialog()
     } else {
       this.setChanges()
-      if (currentStep !== 1) {
-        setStep(currentStep + 1)
-      }
     }
   }
 
@@ -261,22 +271,19 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
   public renderFirstStep = () => {
     const {
-      selectCreatePlaylist,
-      selectExistingPlaylist,
       fetchPlaylists,
       user,
       playlistInput,
       playlists,
       isCreatingPlaylist,
-      closeExistingPlaylist,
-      closeCreatePlaylist,
       createEventPlaylist,
-      event,
       errors,
       classes,
       searchResult,
       selectedPlaylist,
       deselectPlaylist,
+      onPlaylistDragDrop,
+      tryRemoveTrack
     } = this.props
 
     return (
@@ -284,6 +291,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
         {errors.playlistCreation && this.showCreatePlaylistErrorDialog()}
         <Grid item={true} xs={12} sm={6}>
           <PlaylistSelection
+            onPlaylistDragDrop={onPlaylistDragDrop}
+            tryRemoveTrack={tryRemoveTrack}
             selectedPlaylist={selectedPlaylist}
             searchResult={searchResult}
             playlists={playlists}
@@ -293,27 +302,20 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             onPlaylistAdded={this.onDynamicChange('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}
             playlistInput={playlistInput}
-            selectExistingPlaylist={selectExistingPlaylist}
-            closeExistingPlaylist={closeExistingPlaylist}
-            selectCreatePlaylist={selectCreatePlaylist}
-            closeCreatePlaylist={closeCreatePlaylist}
             createEventPlaylist={createEventPlaylist}
             isCreatingPlaylist={isCreatingPlaylist}
             setEventPlaylist={this.handleSetPlaylist}
           />
         </Grid>
         <Grid item={true} xs={12} sm={6}>
-          {event.playlistUrl &&
-            playlists.map((playlist: IPlaylist, key) =>
-              event.playlistUrl === playlist.external_urls.spotify && (
-                <React.Fragment key={key}>
-                  <span>Add tracks to playlist</span>
-                  <EventSearchTracks
-                    playlist={playlist}
-                    layout={'column'}
-                  />
-                </React.Fragment>
-              )
+          {!_.isEmpty(selectedPlaylist) && (
+              <React.Fragment>
+                <span>Add tracks to playlist</span>
+                <EventSearchTracks
+                  playlist={selectedPlaylist}
+                  layout={'column'}
+                />
+              </React.Fragment>
             )
           }
         </Grid>
@@ -326,12 +328,12 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             <span className="control-btn-text-primary">Cancel</span>
           </Button>
           <Button
-            onClick={this.nextStep}
+            onClick={this.handleSaveEvent}
             color="secondary"
             variant="contained"
             className={classes.button}
           >
-            <span className="control-btn-text-secondary">Next</span>
+            <span className="control-btn-text-secondary">Create Event</span>
           </Button>
         </div>
       </React.Fragment>
@@ -346,26 +348,30 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       locationSelected,
       eventImageUploaded,
       eventImageUploadError,
+      currentStep
     } = this.props
 
-    const { name, description, organizer } = this.state
+    const { organizer, showSaveDialog } = this.state
 
+    if (currentStep === 1 && showSaveDialog) {
+      this.showSavedDialogue()
+    }
     return (
       <React.Fragment>
         <Grid item={true} xs={12} sm={6}>
           <EventInput
             label={'Event Name'}
             placeholder={'Provide a name for your event'}
-            value={name}
-            onChange={this.handleContentUpdated('name')}
-            error={!name}
+            value={event.name}
+            onChange={this.onDynamicChange('name')}
+            error={!event.name}
             errorLabel={'Required'}
           />
           <EventInput
             label={'Event description'}
             maxRows={11}
-            value={description || ''}
-            onChange={this.handleContentUpdated('description')}
+            value={event.description}
+            onChange={this.onDynamicChange('description')}
           />
         </Grid>
 
@@ -443,12 +449,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             className={classes.button}
           >
             <span className="control-btn-text-secondary">
-              {
-                this.props.event.createdAt === undefined ?
-                  'Create Event' :
-                  'Edit Event'
-              }
-              </span>
+              next
+            </span>
           </Button>
         </div>
       </React.Fragment>
@@ -463,12 +465,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       copiedToClipboard,
       message,
       clearMessage,
-      currentStep
     } = this.props
 
-    if (currentStep === 2 && this.state.showSaveDialog) {
-      this.showSavedDialogue()
-    }
     return (
       <React.Fragment>
         <ShareEvent
@@ -504,7 +502,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
                 <Grid
                   container={true}
                   spacing={24}
-                  alignItems="center"
                   direction="row"
                 >
                   {this.renderSecondStep()}
@@ -515,7 +512,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               <Grid
                 container={true}
                 spacing={24}
-                alignItems="center"
                 direction="row"
               >
                 { this.renderThirdStep()}
@@ -536,6 +532,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       event,
       editEventRequest,
       saveEvent,
+      setStep,
+      currentStep,
     } = this.props
     this.nextStep()
     if ( !_.isEmpty(errors.saving) ) {
@@ -549,6 +547,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
         organizer: this.state.organizer,
         dataUrl: ''
       })
+      setStep(currentStep + 1)
     } else {
         saveEvent({
           ...event,

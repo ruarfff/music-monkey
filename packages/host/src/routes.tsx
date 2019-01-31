@@ -8,7 +8,6 @@ import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import AccountViewContainer from './accountView/AccountViewContainer'
 import Login from './auth/LoginContainer'
 import CreateEvent from './eventCreation/CreateEventContainer'
-import EditEventContainer from './eventEditing/EditEventContainer'
 import EventsContainer from './eventsView/EventsViewContainer'
 import EventView from './eventView/EventViewContainer'
 import Home from './home/HomeContainer'
@@ -50,7 +49,7 @@ const routes = [
         path: '/events/:eventId'
       },
       {
-        component: EditEventContainer,
+        component: CreateEvent,
         path: '/events/:eventId/edit'
       },
       {

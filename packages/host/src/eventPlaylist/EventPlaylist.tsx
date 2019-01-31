@@ -44,11 +44,11 @@ interface IEventPlaylistProps {
     fromIndex: number,
     toIndex: number
   ): IAction
+  tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
   sortPlaylistByVotesDescending(
     playlist: IPlaylist,
     votes: Map<string, ITrackVoteStatus>
   ): IAction
-  tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
 }
 
 export default class EventPlaylist extends React.Component<

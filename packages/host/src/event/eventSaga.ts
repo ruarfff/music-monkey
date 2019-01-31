@@ -1,4 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
+import { SET_EVENT_PLAYLIST } from '../eventPlaylist/eventPlaylistActions'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
@@ -26,6 +27,7 @@ import {
 import { createEvent, getEvents, updateEvent } from './eventClient'
 import IEvent from './IEvent'
 
+
 const { geocodeByAddress, getLatLng } = require('react-places-autocomplete')
 
 function savePlaylist(playlistDetails: IPlaylistDetails) {
@@ -41,6 +43,13 @@ function* createPlaylistFlow(action: IAction) {
     yield put({
       payload: playlist,
       type: EVENT_PLAYLIST_CREATED
+    })
+    yield put({
+      type: SET_EVENT_PLAYLIST,
+      payload: {
+        ...playlist,
+        name: playlistDetails.name
+      }
     })
     yield put({type: FETCH_PLAYLISTS, payload: playlistDetails.user})
   } catch (error) {
@@ -81,7 +90,7 @@ function* saveEventFlow(action: IAction) {
       payload: savedEvent,
       type: EVENT_SAVED
     })
-    yield put({type: SET_CREATE_EVENT_STEP, payload: 2})
+    yield put({type: SET_CREATE_EVENT_STEP, payload: 1})
   } catch (err) {
     yield put({ type: EVENT_SAVE_ERROR, payload: err })
   }

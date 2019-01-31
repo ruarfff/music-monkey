@@ -33,6 +33,7 @@ import {
   watchFetchSearchTracks,
   watchFetchTrackFeatures
 } from './playlist/playlistSaga'
+import { watchFetchRecommendation } from './recommendations/recommendationSaga'
 import { watchFetchShareEmail } from './shareEvent/shareSaga'
 import {
   watchFetchSuggestions,
@@ -72,6 +73,7 @@ export default function* rootSaga() {
     watchFetchSearchTracks(),
     watchFetchAddTrackToPlaylist(),
     watchUpdateNotification(),
-    watchFetchTrackFeatures()
+    watchFetchTrackFeatures(),
+    watchFetchRecommendation(),
   ])
 }

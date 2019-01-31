@@ -6,6 +6,7 @@ import { IHomeState } from './home/IHomeState'
 import { IInsightsInitialState } from './insights/insightsInitialState'
 import { INotificationState } from './notification/notificationInitialState'
 import IPlaylistState from './playlist/IPlaylistState'
+import IRecommendationsState from './recommendations/IRecommendationState'
 import ISuggestionState from './suggestion/ISuggestionState'
 import IUserState from './user/IUserState'
 import IVoteState from './vote/IVoteState'
@@ -22,4 +23,5 @@ export default interface IRootState {
   vote: IVoteState
   insights: IInsightsInitialState
   notification: INotificationState
+  recommendation: IRecommendationsState
 }

@@ -51,7 +51,7 @@ class EventCard extends React.Component<
           className={step === 0 ? classes.highlight : classes.stepsText}
           onClick={this.setStep(0)}
         >
-          STEP 1: CREATE EVENT
+          STEP 1: CREATE PLAYLIST
         </Typography>
         <Typography
           className={step === 1 ? classes.highlight : classes.stepsText}
