@@ -7,6 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Switch from '@material-ui/core/Switch/Switch'
 import * as _ from 'lodash'
 import * as React from 'react'
+import { RouteComponentProps } from 'react-router'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import EventInput from '../components/EventInput/EventInput'
@@ -68,7 +69,7 @@ const decorate = withStyles((theme: Theme) => ({
 
 const SweetAlert = withReactContent(Swal) as any
 
-interface ICreateEventProps {
+interface ICreateEventProps extends RouteComponentProps<any> {
   user: IUser
   event: IEvent
   errors: IEventErrors
@@ -107,6 +108,7 @@ interface ICreateEventProps {
     toIndex: number
   ): IAction
   tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
+  getEventById(eventId: string): IAction
 }
 
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
@@ -124,7 +126,16 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
   public componentDidMount() {
     this.props.initializeCreateForm(this.props.event, this.props.user)
+
+    const eventId = this.props.match.params.eventId
+
+    const { event, getEventById } = this.props
+
+    if (!event.eventId && eventId) {
+      getEventById(eventId)
+    }
   }
+
 
   public componentWillUnmount() {
     this.props.deselectPlaylist()
