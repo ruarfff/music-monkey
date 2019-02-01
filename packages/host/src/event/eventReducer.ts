@@ -1,7 +1,12 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
 import moment from 'moment'
 import { DESELECT_EVENT_PLAYLIST, SET_EVENT_PLAYLIST } from '../eventPlaylist/eventPlaylistActions'
-import { EVENT_FETCHED_BY_ID } from '../eventView/eventViewActions'
+import {
+  EVENT_FETCHED_BY_ID,
+  TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
+  TOGGLE_DYNAMIC_VOTING,
+  TOGGLE_SUGGESTING_PLAYLISTS,
+} from '../eventView/eventViewActions'
 import Action from '../IAction'
 import {
   CLEAR_MESSAGE,
@@ -34,6 +39,7 @@ import {
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
+import IEventSettings from './IEventSettings'
 import IEventState from './IEventState'
 
 export default function event(
@@ -41,6 +47,42 @@ export default function event(
   { type, payload }: Action
 ) {
   switch (type) {
+    case TOGGLE_AUTO_ACCEPT_SUGGESTIONS:
+      return {
+        ...state,
+        savingEvent: {
+          ...state.savingEvent,
+          settings: {
+            ...state.savingEvent.settings,
+            autoAcceptSuggestionsEnabled: !state.savingEvent
+              .settings.autoAcceptSuggestionsEnabled
+          } as IEventSettings
+        }
+      }
+    case TOGGLE_DYNAMIC_VOTING:
+      return {
+        ...state,
+        savingEvent: {
+          ...state.savingEvent,
+          settings: {
+            ...state.savingEvent.settings,
+            dynamicVotingEnabled: !state.savingEvent
+              .settings.dynamicVotingEnabled
+          } as IEventSettings
+        }
+      }
+    case TOGGLE_SUGGESTING_PLAYLISTS:
+      return {
+        ...state,
+        savingEvent: {
+          ...state.savingEvent,
+          settings: {
+            ...state.savingEvent.settings,
+            suggestingPlaylistsEnabled: !state.savingEvent
+              .settings.suggestingPlaylistsEnabled
+          } as IEventSettings
+        }
+      }
     case SET_CREATE_EVENT_STEP:
       return {
         ...state,

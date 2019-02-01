@@ -132,23 +132,13 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
             justify={'space-between'}
             className={classes.navigationContainer}
           >
-            <a className={classes.link} target="_blank" href={event.playlistUrl}>
-              <Button
-                variant='contained'
-                color='secondary'
-                target='_blank'
-                fullWidth={true}
-              >
-                GO TO PLAYLIST
-              </Button>
-            </a>
             <Link className={classes.link} to={'/events/' + event.eventId}>
               <Button
                 variant="contained"
                 color='secondary'
                 fullWidth={true}
               >
-                GO TO EVENT
+                GO TO EVENT SUMMARY
               </Button>
             </Link>
           </Grid>

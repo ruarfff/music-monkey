@@ -1,11 +1,16 @@
 import Button from '@material-ui/core/Button'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import { WithStyles } from '@material-ui/core/es'
+import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup/FormGroup'
 import Grid from '@material-ui/core/Grid'
 import withStyle from '@material-ui/core/styles/withStyles'
+import Switch from '@material-ui/core/Switch/Switch'
 import Typography from '@material-ui/core/Typography'
 import { cloneDeep } from 'lodash'
 import * as React from 'react'
+import IEvent from '../../../event/IEvent'
+import IAction from '../../../IAction'
 import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
 import { formatDuration } from '../../../util/formatDuration'
@@ -41,17 +46,28 @@ const decorated = withStyle(() => ({
 }))
 
 interface IEventSummaryPlaylistProps {
+  event: IEvent
   genre?: string
   eventImg?: string
   playlist: IPlaylist
   suggestion: IDecoratedSuggestion[]
+  toggleDynamicVoting(event: IEvent): IAction
+  toggleAutoAcceptSuggestions(event: IEvent): IAction
+  toggleSuggestingPlaylists(event: IEvent): IAction
 }
 
 class EventSummaryPlaylist extends React.PureComponent<
   IEventSummaryPlaylistProps & WithStyles
 > {
   public render() {
-    const { playlist, classes, suggestion, genre, eventImg } = this.props
+    const {
+      playlist,
+      classes,
+      suggestion,
+      genre,
+      eventImg,
+      event
+    } = this.props
 
     if (!playlist) {
       return <span />
@@ -137,6 +153,40 @@ class EventSummaryPlaylist extends React.PureComponent<
                 )}
               </Grid>
             </Grid>
+            <Grid item={true} xs={12}>
+              <span>
+                Party modes
+              </span>
+              <FormGroup row={true}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={event.settings.suggestingPlaylistsEnabled}
+                      onChange={this.suggestingPlaylistsToggled}
+                    />
+                  }
+                  label="Allow Playlist Suggestions"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={event.settings.autoAcceptSuggestionsEnabled}
+                      onChange={this.autoAcceptSuggestionsToggled}
+                    />
+                  }
+                  label="Auto Accept Suggestions"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={event.settings.dynamicVotingEnabled}
+                      onChange={this.handleDynamicVotingToggled}
+                    />
+                  }
+                  label="Dynamic Voting"
+                />
+              </FormGroup>
+            </Grid>
           </Grid>
         </Grid>
         <Grid item={true} xs={12}>
@@ -164,6 +214,21 @@ class EventSummaryPlaylist extends React.PureComponent<
         </Grid>
       </Grid>
     )
+  }
+
+  private handleDynamicVotingToggled = () => {
+    const { event, toggleDynamicVoting } = this.props
+    toggleDynamicVoting(event)
+  }
+
+  private autoAcceptSuggestionsToggled = () => {
+    const { event, toggleAutoAcceptSuggestions } = this.props
+    toggleAutoAcceptSuggestions(event)
+  }
+
+  private suggestingPlaylistsToggled = () => {
+    const { event, toggleSuggestingPlaylists } = this.props
+    toggleSuggestingPlaylists(event)
   }
 }
 

@@ -1,8 +1,11 @@
 import IEvent from '../event/IEvent'
+import IEventSettings from '../event/IEventSettings'
 import IEventViewState from './IEventViewState'
 
 export default {
-  event: {} as IEvent,
+  event: {
+    settings: {} as IEventSettings
+  } as IEvent,
   loading: false,
   fetchError: {} as Error,
   deleteSelected: false,

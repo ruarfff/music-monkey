@@ -1,16 +1,12 @@
 import { Grid } from '@material-ui/core'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormGroup from '@material-ui/core/FormGroup'
 import { WithStyles } from '@material-ui/core/styles'
 import withStyle from '@material-ui/core/styles/withStyles'
-import Switch from '@material-ui/core/Switch'
 import Typography from '@material-ui/core/Typography/Typography'
 import * as React from 'react'
 import eventIcon from '../../../assets/date-icon.svg'
 import locationIcon from '../../../assets/location-marker-icon.svg'
 import MapItem from '../../../components/MapComponent/index'
 import IEvent from '../../../event/IEvent'
-import IAction from '../../../IAction'
 import LinkButton from '../../../util/LinkButton'
 import './Styles/EventDetails.scss'
 
@@ -39,9 +35,6 @@ const decorated = withStyle(() => ({
 
 interface IEventDetailsProps {
   event: IEvent
-  toggleDynamicVoting(event: IEvent): IAction
-  toggleAutoAcceptSuggestions(event: IEvent): IAction
-  toggleSuggestingPlaylists(event: IEvent): IAction
 }
 
 class EventDetails extends React.PureComponent<
@@ -49,7 +42,6 @@ class EventDetails extends React.PureComponent<
 > {
   public state = {
     showMap: false,
-    showSettings: false,
   }
 
   public render() {
@@ -143,43 +135,10 @@ class EventDetails extends React.PureComponent<
             xs={12}
           >
             <Grid item={true}>
-              <span
-                className={classes.showOnMap}
-                onClick={this.toggleSettings}
-              >
-                Event's modes
+              <span>
+                Party modes
               </span>
-              {this.state.showSettings && (
-                <FormGroup row={true}>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={event.settings.suggestingPlaylistsEnabled}
-                        onChange={this.suggestingPlaylistsToggled}
-                      />
-                    }
-                    label="Allow Playlist Suggestions"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={event.settings.autoAcceptSuggestionsEnabled}
-                        onChange={this.autoAcceptSuggestionsToggled}
-                      />
-                    }
-                    label="Auto Accept Suggestions"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={event.settings.dynamicVotingEnabled}
-                        onChange={this.handleDynamicVotingToggled}
-                      />
-                    }
-                    label="Dynamic Voting"
-                  />
-                </FormGroup>
-              )}
+
             </Grid>
             <Grid
               className="EventDetails-actions"
@@ -209,25 +168,6 @@ class EventDetails extends React.PureComponent<
 
   private toggleMap = () => {
     this.setState({ showMap: !this.state.showMap })
-  }
-
-  private toggleSettings = () => {
-    this.setState({ showSettings: !this.state.showSettings })
-  }
-
-  private handleDynamicVotingToggled = () => {
-    const { event, toggleDynamicVoting } = this.props
-    toggleDynamicVoting(event)
-  }
-
-  private autoAcceptSuggestionsToggled = () => {
-    const { event, toggleAutoAcceptSuggestions } = this.props
-    toggleAutoAcceptSuggestions(event)
-  }
-
-  private suggestingPlaylistsToggled = () => {
-    const { event, toggleSuggestingPlaylists } = this.props
-    toggleSuggestingPlaylists(event)
   }
 }
 

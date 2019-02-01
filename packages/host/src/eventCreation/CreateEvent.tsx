@@ -1,7 +1,10 @@
 import Button from '@material-ui/core/Button'
+import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup/FormGroup'
 import Grid from '@material-ui/core/Grid/Grid'
 import { Theme, WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
+import Switch from '@material-ui/core/Switch/Switch'
 import * as _ from 'lodash'
 import * as React from 'react'
 import Swal from 'sweetalert2'
@@ -24,6 +27,7 @@ import CreateEventSteps from './CreateEventSteps'
 import EventDateTimePicker from './EventDateTimePicker'
 import PlaylistSelection from './PlaylistSelection'
 import ShareEvent from './ShareEvent'
+
 
 const decorate = withStyles((theme: Theme) => ({
   button: {
@@ -79,6 +83,9 @@ interface ICreateEventProps {
   deselectPlaylist(): IAction
   clearMessage(): IAction
   cancel(): void
+  toggleDynamicVoting(event: IEvent): IAction
+  toggleAutoAcceptSuggestions(event: IEvent): IAction
+  toggleSuggestingPlaylists(event: IEvent): IAction
   createEventPlaylist(playlist: IPlaylistDetails): IAction
   eventContentUpdated(content: any): IAction
   eventImageUploadError(error: Error): IAction
@@ -269,6 +276,21 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     return <MapComponent coords={coords} />
   }
 
+  public handleDynamicVotingToggled = () => {
+    const { event, toggleDynamicVoting } = this.props
+    toggleDynamicVoting(event)
+  }
+
+  public autoAcceptSuggestionsToggled = () => {
+    const { event, toggleAutoAcceptSuggestions } = this.props
+    toggleAutoAcceptSuggestions(event)
+  }
+
+  public suggestingPlaylistsToggled = () => {
+    const { event, toggleSuggestingPlaylists } = this.props
+    toggleSuggestingPlaylists(event)
+  }
+
   public renderFirstStep = () => {
     const {
       fetchPlaylists,
@@ -421,6 +443,38 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           />
         </Grid>
 
+        <Grid item={true} xs={12} sm={12}>
+          <FormGroup row={true}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={event.settings.suggestingPlaylistsEnabled}
+                  onChange={this.suggestingPlaylistsToggled}
+                />
+              }
+              label="Allow Playlist Suggestions"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={event.settings.autoAcceptSuggestionsEnabled}
+                  onChange={this.autoAcceptSuggestionsToggled}
+                />
+              }
+              label="Auto Accept Suggestions"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={event.settings.dynamicVotingEnabled}
+                  onChange={this.handleDynamicVotingToggled}
+                />
+              }
+              label="Dynamic Voting"
+            />
+          </FormGroup>
+        </Grid>
+
         <div className="control-btn-row">
           <Button
             variant="contained"
@@ -449,7 +503,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             className={classes.button}
           >
             <span className="control-btn-text-secondary">
-              next
+              Next
             </span>
           </Button>
         </div>
@@ -542,16 +596,12 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     if (event.createdAt !== undefined) {
       editEventRequest({
         ...event,
-        name: this.state.name,
-        description: this.state.description,
-        organizer: this.state.organizer,
         dataUrl: ''
       })
       setStep(currentStep + 1)
     } else {
         saveEvent({
           ...event,
-          name: this.state.name,
           description: this.state.description,
           organizer: this.state.organizer,
           dataUrl: ''
