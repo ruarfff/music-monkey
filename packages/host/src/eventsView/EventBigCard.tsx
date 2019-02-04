@@ -87,13 +87,9 @@ class EventBigCard extends React.Component<
             <Link to={'/events/' + event.eventId} className={classes.link}>
               <Button color="secondary">GO TO EVENT</Button>
             </Link>
-            <a
-              href={event.playlist ? event.playlist.external_urls.spotify : '/'}
-              target="_blank"
-              className={classes.link}
-            >
-              <Button color="secondary">PLAYLIST</Button>
-            </a>
+            <Link to={'/events/' + event.eventId + '/edit'} className={classes.link}>
+              <Button color="secondary">EDIT EVENT</Button>
+            </Link>
           </div>
         </Grid>
       </Card>
