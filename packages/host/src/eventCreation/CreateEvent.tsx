@@ -280,18 +280,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
   public pickStep = (step: number) => {
     const { currentStep, setStep } = this.props
-    const {
-      name,
-      organizer,
-    } = this.state
-    const location = this.props.event.location.address
 
-    if (currentStep === 1 && (
-        !name ||
-        !organizer ||
-        !location
-      ) || (currentStep === 0 && !this.props.event.playlistUrl)
-    ) {
+    if (currentStep === 0 && !this.props.event.playlistUrl) {
       this.showRequiredDialog()
     } else if(step === 2 && this.props.event.createdAt === undefined) {
       this.showFinishCreatingEventDialog()
