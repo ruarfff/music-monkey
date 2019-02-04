@@ -5,6 +5,7 @@ import { Theme, WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import IPlaylist from '../playlist/IPlaylist'
 import { formatDuration } from '../util/formatDuration'
 
@@ -51,6 +52,7 @@ const decorate = withStyles((theme: Theme) => ({
 }))
 
 interface IEventBigCardProps {
+  eventId: string
   playlist: IPlaylist
 }
 
@@ -58,7 +60,7 @@ class PlaylistCard extends React.Component<
   IEventBigCardProps & WithStyles> {
 
   public render() {
-    const { classes, playlist } = this.props
+    const { classes, playlist, eventId } = this.props
 
     const durationSeconds =
       playlist.tracks.items.length > 0
@@ -88,13 +90,13 @@ class PlaylistCard extends React.Component<
             </Typography>
           </div>
           <div>
-            <a href={playlist ? playlist.external_urls.spotify : '/'} target="_blank" className={classes.link}>
+            <Link to={`/events/${eventId}/edit`} className={classes.link}>
               <Button
                 color='secondary'
               >
-                GO TO PLAYLIST
+                EDIT EVENT
               </Button>
-            </a>
+            </Link>
           </div>
 
         </Grid>

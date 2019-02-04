@@ -25,7 +25,9 @@ import {
 } from '../eventPlaylist/eventPlaylistActions'
 import {
   acknowledgeEventInviteCopied,
-  copyEventInvite, getEventById,
+  copyEventInvite,
+  deleteEvent,
+  getEventById,
   toggleAutoAcceptSuggestions,
   toggleDynamicVoting,
   toggleSuggestingPlaylists
@@ -86,6 +88,7 @@ const mapDispatchToProps = (dispatch: any) => ({
       toggleSuggestingPlaylists,
       toggleAutoAcceptSuggestions,
       getEventById,
+      deleteEvent,
     },
     dispatch
   )

@@ -12,7 +12,7 @@ class MyPlaylists extends React.PureComponent<IMyPlaylistsProps> {
       <>
         {
           this.props.events.map((event: IEvent, key) =>
-            event.playlist && <PlaylistCard playlist={event.playlist} key={key}/>
+            event.playlist && event.eventId && <PlaylistCard eventId={event.eventId} playlist={event.playlist} key={key}/>
           )
         }
       </>

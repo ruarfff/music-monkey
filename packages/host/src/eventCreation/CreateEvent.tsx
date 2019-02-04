@@ -109,6 +109,7 @@ interface ICreateEventProps extends RouteComponentProps<any> {
   ): IAction
   tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
   getEventById(eventId: string): IAction
+  deleteEvent(eventId: string): IAction
 }
 
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
@@ -260,6 +261,23 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     }).then()
   }
 
+  public showConfirmationDialog = () => {
+    SweetAlert.fire({
+      title: 'Delete Event',
+      text: `Are you sure?`,
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#ffb000',
+      cancelButtonColor: '#e0e0e0',
+      confirmButtonText: 'Delete'
+    }).then((result: any) => {
+      if (result.value && this.props.event && this.props.event.eventId) {
+        this.props.deleteEvent(this.props.event.eventId)
+        this.props.history.push('/')
+      }
+    })
+  }
+
   public pickStep = (step: number) => {
     const { currentStep, setStep } = this.props
     const {
@@ -316,7 +334,9 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       selectedPlaylist,
       deselectPlaylist,
       onPlaylistDragDrop,
-      tryRemoveTrack
+      tryRemoveTrack,
+      event,
+      history
     } = this.props
 
     return (
@@ -353,6 +373,17 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           }
         </Grid>
         <div className="control-btn-row">
+          {
+            history.location.pathname === `/events/${event.eventId}/edit` && (
+              <Button
+                variant="contained"
+                className={classes.button}
+                onClick={this.showConfirmationDialog}
+              >
+                <span className="control-btn-text-primary">Delete Event</span>
+              </Button>
+            )
+          }
           <Button
             variant="contained"
             onClick={this.handleCancel}
@@ -366,7 +397,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             variant="contained"
             className={classes.button}
           >
-            <span className="control-btn-text-secondary">Create Event</span>
+            <span className="control-btn-text-secondary">{!event.eventId ? 'Create Event' : 'Next'}</span>
           </Button>
         </div>
       </React.Fragment>
@@ -381,7 +412,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       locationSelected,
       eventImageUploaded,
       eventImageUploadError,
-      currentStep
+      currentStep,
+      history
     } = this.props
 
     const { organizer, showSaveDialog } = this.state
@@ -487,6 +519,17 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
         </Grid>
 
         <div className="control-btn-row">
+          {
+            history.location.pathname === `events/${event.eventId}/edit` && (
+              <Button
+                variant="contained"
+                className={classes.button}
+                onClick={this.showConfirmationDialog}
+              >
+                <span className="control-btn-text-primary">Delete Event</span>
+              </Button>
+            )
+          }
           <Button
             variant="contained"
             color="default"
@@ -599,9 +642,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       saveEvent,
       setStep,
       currentStep,
+      history
     } = this.props
     this.nextStep()
-    if ( !_.isEmpty(errors.saving) ) {
+    if ( !_.isEmpty(errors.saving) && history.location.pathname !== `/events/${event.eventId}/edit`) {
       this.showCreateEventErrorDialog()
     }
     if (event.createdAt !== undefined) {

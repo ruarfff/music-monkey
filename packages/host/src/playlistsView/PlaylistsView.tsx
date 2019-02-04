@@ -37,6 +37,10 @@ interface IEventsProps {
   fetchPlaylists(user: IUser): IAction
 }
 
+interface IDecoratedPlaylist extends IPlaylist{
+  eventId: string
+}
+
 class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
   public componentDidMount() {
     if (this.props.user.data) {
@@ -45,7 +49,7 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
     }
   }
 
-  public renderPlayList = (playlists: IPlaylist[], noEventsMessage: string) => (
+  public renderPlayList = (playlists: IDecoratedPlaylist[], noEventsMessage: string) => (
     <React.Fragment>
       {playlists.length < 1 && (
         <Typography
@@ -60,9 +64,9 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
 
       <div className="eventsList">
         {map(
-          sortBy(playlists, (playlist: IPlaylist) => playlist.followers),
-          (playlist: IPlaylist, i) => (
-            <PlaylistCard key={i} playlist={playlist} />
+          sortBy(playlists, (playlist: IDecoratedPlaylist) => playlist.followers),
+          (playlist: any, i) => (
+            <PlaylistCard key={i} playlist={playlist} eventId={playlist.eventId} />
           )
         )}
       </div>
@@ -76,7 +80,10 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
 
     const now = moment()
 
-    const allPlaylists = playlists
+    const allPlaylists = events.map((event: any) => ({
+        ...event.playlist,
+        eventId: event.eventId
+    }) as IDecoratedPlaylist)
     let pastPlaylists: any[] = []
     let upcomingPlaylists: any[] = []
 
@@ -84,13 +91,31 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
       pastPlaylists = _.uniqBy(
         events
           .filter(event => event.startDateTime.isBefore(now))
-          .map(event => event.playlist),
+          .map(event => {
+            if(event.eventId) {
+              return {
+                ...event.playlist,
+                eventId:event.eventId
+              }
+            } else {
+              return event.playlist
+            }
+          }),
         'id'
       )
       upcomingPlaylists = _.uniqBy(
         events
           .filter(event => event.startDateTime.isAfter(now))
-          .map(event => event.playlist),
+          .map(event => {
+            if(event.eventId) {
+              return {
+                ...event.playlist,
+                eventId:event.eventId
+              }
+            } else {
+              return event.playlist
+            }
+          }),
         'id'
       )
     }
