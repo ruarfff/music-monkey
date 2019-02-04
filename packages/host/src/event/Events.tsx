@@ -126,9 +126,9 @@ class Events extends React.Component<IEventsProps> {
       <div className="events">
         {eventsLoading && <LoadingSpinner />}
 
-        {!eventsLoading &&
+        {(!eventsLoading &&
           !_.isEmpty(events) &&
-          events.length > 0 && (
+          events.length > 0) ? (
             <React.Fragment>
               <Grid container={true} spacing={24} direction="row">
                 <Grid item={true} sm={5} container={true} justify={'center'}>
@@ -177,7 +177,29 @@ class Events extends React.Component<IEventsProps> {
 
               </Grid>
             </React.Fragment>
-          )}
+          ) : (
+          <Grid
+            item={true}
+            sm={2}
+            container={true}
+            justify={'center'}
+            alignItems={'center'}
+          >
+            <Button
+              variant={'contained'}
+              color={'secondary'}
+            >
+              <Link to={'/create-event'}>
+                <div className="event-createEventButtonContent">
+                  <img src={logoForButton} className="event-monkeyLogoButton"/>
+                  <span>
+                    CREATE NEW EVENT
+                  </span>
+                </div>
+              </Link>
+            </Button>
+          </Grid>
+        )}
       </div>
     )
   }
