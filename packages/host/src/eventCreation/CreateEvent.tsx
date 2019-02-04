@@ -238,7 +238,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     this.setState({ showRequiredDialog: false })
     SweetAlert.fire({
       confirmButtonColor: '#8f0a00',
-      title: 'Fill in all required fields',
+      title: 'Pick or create a playlist',
       type: 'error'
     }).then()
   }
