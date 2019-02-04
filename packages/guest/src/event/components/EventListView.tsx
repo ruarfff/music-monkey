@@ -30,12 +30,13 @@ const EventListView = ({
   fetchUsersEvents,
 }: IEventListViewProps) => {
   React.useEffect(() => {
-
-    const shouldFetchEvent = !events.filter((event) =>
-      !isEmpty(selectedEvent) && event.eventId === selectedEvent.eventId
-    ).length
-    if (!isEmpty(selectedEvent) && selectedEvent.eventId && shouldFetchEvent) {
-      fetchUsersEvents()
+    if (!!events) {
+      const shouldFetchEvent = !events.filter((event) =>
+        !isEmpty(selectedEvent) && event.eventId === selectedEvent.eventId
+      ).length
+      if (!isEmpty(selectedEvent) && selectedEvent.eventId && shouldFetchEvent) {
+        fetchUsersEvents()
+      }
     }
   }, [])
 
