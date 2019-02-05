@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
+import { fetchUsersEvents } from '../../event/eventActions'
 import { selectPlaylist } from '../../navigation/activeActions'
 import IRootState from '../../rootState'
-import { fetchPlaylists } from '../playlistActions'
 import PlayListView from './PlaylistView'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -12,7 +12,7 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   selectPlaylist,
-  fetchPlaylists
+  fetchUsersEvents
 }
 
 const PlaylistViewContainer = connect(

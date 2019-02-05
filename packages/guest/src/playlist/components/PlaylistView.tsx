@@ -14,7 +14,7 @@ interface IPlaylistViewProps {
   events: IEvent[]
   selectPlaylist(playlist: IPlaylist): IAction
   onPlaylistSelected(playlist: IPlaylist): any
-  fetchPlaylists(user: IUser): IAction
+  fetchUsersEvents(): IAction
 }
 
 const onPlaylistSelected = () => ({} as IAction)
@@ -24,9 +24,9 @@ const PlaylistView = ({
   events,
   user,
   selectPlaylist,
-  fetchPlaylists
+  fetchUsersEvents,
 }: IPlaylistViewProps) => {
-  useEffect(() => fetchPlaylists(user), [])
+  useEffect(() => fetchUsersEvents(), [])
 
   return (
     <PlaylistsSimpleList
@@ -39,4 +39,4 @@ const PlaylistView = ({
   )
 }
 
-export default PlaylistView
+export default React.memo(PlaylistView)
