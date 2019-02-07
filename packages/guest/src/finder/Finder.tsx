@@ -72,12 +72,17 @@ const Finder = ({
   }
 
   const onPlaylistSelected = (playlist: IPlaylist) => () => {
-    showConfirmationPlaylistDialog(
-      user,
-      selectedEvent,
-      playlist,
-      savePlaylistSuggestion
-    )
+    if (selectedEvent.settings.suggestingPlaylistsEnabled) {
+      showConfirmationPlaylistDialog(
+        user,
+        selectedEvent,
+        playlist,
+        savePlaylistSuggestion
+      )
+    } else {
+      showErrorPlaylistDialog()
+    }
+
   }
 
   const playlistTracks = !isEmpty(selectedEvent)
@@ -156,6 +161,17 @@ const Finder = ({
       )}
     </div>
   )
+}
+
+function showErrorPlaylistDialog() {
+  SweetAlert.fire({
+    title: 'Suggest playlist',
+    text: 'Playlist submission not allowed by host currently',
+    type: 'error',
+    confirmButtonColor: '#ffb000',
+    cancelButtonColor: '#e0e0e0',
+    confirmButtonText: 'Suggest it!'
+  })
 }
 
 function showConfirmationPlaylistDialog(

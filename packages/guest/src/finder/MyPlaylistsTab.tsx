@@ -30,7 +30,7 @@ const MyPlaylistsTab = ({
   selectPlaylist,
   addedPlaylist,
   onTrackSelected,
-  savePlaylistSuggestion
+  savePlaylistSuggestion,
 }: IMyPlaylistsTabProps) => {
 
   React.useEffect(() => {
@@ -63,15 +63,11 @@ const MyPlaylistsTab = ({
         >
           BACK TO PLAYLISTS
         </Button>
-        {
-          selectedEvent.settings.suggestingPlaylistsEnabled && (
-            <Button
-              onClick={savePlaylistSuggestion(selectedUserPlaylist)}
-            >
-              ADD ALL TRACKS
-            </Button>
-          )
-        }
+        <Button
+          onClick={savePlaylistSuggestion(selectedUserPlaylist)}
+        >
+          ADD ALL TRACKS
+        </Button>
         <List>
           <TrackList
             tracks={selectedUserPlaylist.tracks.items.map((t) => t.track)}
