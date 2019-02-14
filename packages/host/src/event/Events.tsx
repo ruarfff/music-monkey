@@ -147,19 +147,19 @@ class Events extends React.Component<IEventsProps> {
                   justify={'center'}
                   alignItems={'center'}
                 >
-                  <Button
-                    variant={'contained'}
-                    color={'secondary'}
-                  >
-                    <Link to={'/create-event'}>
+                  <Link to={'/create-event'}>
+                    <Button
+                      variant={'contained'}
+                      color={'secondary'}
+                    >
                       <div className="event-createEventButtonContent">
                         <img src={logoForButton} className="event-monkeyLogoButton"/>
                         <span>
                           CREATE NEW EVENT
                         </span>
                       </div>
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 </Grid>
 
                 <Grid item={true} sm={5} container={true} justify={'center'}>
@@ -185,19 +185,19 @@ class Events extends React.Component<IEventsProps> {
             justify={'center'}
             alignItems={'center'}
           >
-            <Button
-              variant={'contained'}
-              color={'secondary'}
-            >
-              <Link to={'/create-event'}>
+            <Link to={'/create-event'}>
+              <Button
+                variant={'contained'}
+                color={'secondary'}
+              >
                 <div className="event-createEventButtonContent">
                   <img src={logoForButton} className="event-monkeyLogoButton"/>
                   <span>
                     CREATE NEW EVENT
                   </span>
                 </div>
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Grid>
         )}
       </div>
