@@ -177,7 +177,7 @@ class Events extends React.Component<IEventsProps> {
 
               </Grid>
             </React.Fragment>
-          ) : (
+          ) : !eventsLoading && (
           <Grid
             item={true}
             sm={2}
