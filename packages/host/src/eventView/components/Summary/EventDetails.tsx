@@ -75,6 +75,12 @@ class EventDetails extends React.PureComponent<
               {event.name}
             </Typography>
 
+            {event.description && (
+              <Typography variant="h6" gutterBottom={true}>
+                Event Description: {event.description}
+              </Typography>
+            )}
+
             <Typography
               className={classes.imgRow}
               variant="caption"
@@ -101,28 +107,22 @@ class EventDetails extends React.PureComponent<
               Show on Map
             </Typography>
 
-            <Typography
-              className={classes.endDate}
-              variant="caption"
-              gutterBottom={true}
-            >
-              Pre-Game closes:
-              {event.startDateTime
-                ? event.endDateTime.format('Do MMMM YYYY')
-                : ''}
-            </Typography>
+            {/*<Typography*/}
+              {/*className={classes.endDate}*/}
+              {/*variant="caption"*/}
+              {/*gutterBottom={true}*/}
+            {/*>*/}
+              {/*Pre-Game closes:*/}
+              {/*{event.startDateTime*/}
+                {/*? event.endDateTime.format('Do MMMM YYYY')*/}
+                {/*: ''}*/}
+            {/*</Typography>*/}
 
-            {event.eventCode && (
-              <Typography variant="body2" gutterBottom={true}>
-                Event Code: {event.eventCode}
-              </Typography>
-            )}
-
-            {event.venue && (
-              <Typography variant="body2" gutterBottom={true}>
-                Venue: {event.venue}
-              </Typography>
-            )}
+            {/*{event.eventCode && (*/}
+              {/*<Typography variant="body2" gutterBottom={true}>*/}
+                {/*Event Code: {event.eventCode}*/}
+              {/*</Typography>*/}
+            {/*)}*/}
           </Grid>
 
           <Grid
@@ -134,12 +134,6 @@ class EventDetails extends React.PureComponent<
             spacing={16}
             xs={12}
           >
-            <Grid item={true}>
-              <span>
-                Party modes
-              </span>
-
-            </Grid>
             <Grid
               className="EventDetails-actions"
               justify="flex-start"
@@ -157,7 +151,7 @@ class EventDetails extends React.PureComponent<
                 Edit Event
               </LinkButton>
             </Grid>
-            {this.state.showMap && (
+            {this.state.showMap && event.location && event.location.latLng && (
               <MapItem coords={event.location && event.location.latLng} />
             )}
           </Grid>

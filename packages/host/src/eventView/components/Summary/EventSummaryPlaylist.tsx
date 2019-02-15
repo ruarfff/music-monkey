@@ -134,9 +134,9 @@ class EventSummaryPlaylist extends React.PureComponent<
                     </Typography>
                   </div>
                   <div>
-                    <Typography color="textSecondary">
-                      Mode: Play to Play
-                    </Typography>
+                    {/*<Typography color="textSecondary">*/}
+                      {/*Mode: Play to Play*/}
+                    {/*</Typography>*/}
                     <Typography color="textSecondary">Genre: {genre ? genre : 'All'}</Typography>
                   </div>
                 </Grid>

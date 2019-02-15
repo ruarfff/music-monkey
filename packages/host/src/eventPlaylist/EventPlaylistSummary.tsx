@@ -6,6 +6,7 @@ import * as React from 'react'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
+import { formatDuration } from '../util/formatDuration'
 import './EventPlaylistSummary.scss'
 
 interface IEventPlaylistSummaryProps {
@@ -22,6 +23,20 @@ class EventPlaylistSummary extends React.PureComponent<
   public render() {
     const playlist: IPlaylist = this.props.playlist || ({} as IPlaylist)
     const event: IEvent = this.props.event || ({} as IEvent)
+
+    const numTracks =
+      playlist.tracks && playlist.tracks.items
+        ? playlist.tracks.items.length
+        : 0
+
+    const durationSeconds =
+      numTracks > 0
+        ? playlist.tracks.items
+          .map(item => item.track.duration_ms)
+          .reduce((acc, dur) => acc + dur)
+        : 0
+
+    const formattedDuration = formatDuration(durationSeconds)
 
     return (
       <Grid container={true} spacing={24}>
@@ -72,8 +87,12 @@ class EventPlaylistSummary extends React.PureComponent<
 
             <div className="EventPlaylistSummary-item">
               <div>
-                <span className="EventPlaylistSummary-status">Status:</span>
-                <span className="EventPlaylistSummary-status">Pre-Game</span>
+                <span className="EventPlaylistSummary-status">
+                  Tracks: {playlist.tracks.items.length}
+                </span>
+                <span className="EventPlaylistSummary-status">
+                  {formattedDuration}
+                </span>
               </div>
               <div>
                 <span className="EventPlaylistSummary-time">Live at:</span>

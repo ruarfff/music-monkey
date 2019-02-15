@@ -66,14 +66,6 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
     showMap: false,
   }
 
-  public renderMap = (coords: any) => {
-    return (
-      <MapComponent
-        coords={coords}
-      />
-    )
-  }
-
   public handleToggleMap = () => {
     this.setState({showMap: !this.state.showMap})
   }
@@ -89,10 +81,7 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
       clearMessage,
     } = this.props
 
-    console.log(event)
-
     const eventImg = !event.imageUrl ? backgroundImg : event.imageUrl
-
     return (
       <React.Fragment>
         {copiedToClipboard &&
@@ -161,7 +150,12 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
           />
         </Grid>
         <Grid item={true} md={12}>
-            {(event.location && this.state.showMap) && this.renderMap(event.location.latLng)}
+            {
+              (!!event.location && !!event.location.latLng && this.state.showMap) &&
+              <MapComponent
+                coords={event.location.latLng}
+              />
+            }
         </Grid>
       </React.Fragment>
     )
