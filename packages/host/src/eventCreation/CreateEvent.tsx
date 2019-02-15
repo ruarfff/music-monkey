@@ -143,10 +143,15 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     this.props.eventSavingReset()
   }
 
-  public componentWillReceiveProps() {
+  public componentWillReceiveProps(newProps: ICreateEventProps) {
     if (this.state.organizer === '' && this.props.event.organizer !== '') {
       this.setState({
         organizer: this.props.event.organizer
+      })
+    }
+    if (this.state.name !== newProps.event.name) {
+      this.setState({
+        name: newProps.event.name
       })
     }
   }
@@ -182,7 +187,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       'showRequiredDialog',
       'showFinishCreatingEventDialog',
       'showCreatePlaylistErrorDialog',
-      'showSaveErrorDialog'
+      'showSaveErrorDialog',
+      'description'
       )
     if (this.props.currentStep === 0) {
       this.props.eventContentUpdated({genre: this.state.genre})
@@ -645,7 +651,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     } else {
         saveEvent({
           ...event,
-          description: this.state.description,
           organizer: this.state.organizer,
           dataUrl: ''
         })

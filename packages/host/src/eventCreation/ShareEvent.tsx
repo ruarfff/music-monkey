@@ -89,6 +89,8 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
       clearMessage,
     } = this.props
 
+    console.log(event)
+
     const eventImg = !event.imageUrl ? backgroundImg : event.imageUrl
 
     return (
@@ -109,6 +111,11 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
           <div className={classes.title}>
             {event.name}
           </div>
+          {event.description !== '' && (
+            <div className={classes.descriptionItem}>
+              description: {event.description}
+            </div>
+          )}
           <div>
             <div className={classes.descriptionItem}>
               <img className={classes.descriptionItemImg} src={dateIcon} />
