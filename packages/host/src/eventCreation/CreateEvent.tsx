@@ -425,6 +425,39 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             value={event.description}
             onChange={this.onDynamicChange('description')}
           />
+
+          <Grid container={true} direction={'column'}>
+            <span>Party modes</span>
+            <FormGroup row={true}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={event.settings.suggestingPlaylistsEnabled}
+                    onChange={this.suggestingPlaylistsToggled}
+                  />
+                }
+                label="Allow Playlist Suggestions"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={event.settings.autoAcceptSuggestionsEnabled}
+                    onChange={this.autoAcceptSuggestionsToggled}
+                  />
+                }
+                label="Auto Accept Suggestions"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={event.settings.dynamicVotingEnabled}
+                    onChange={this.handleDynamicVotingToggled}
+                  />
+                }
+                label="Dynamic Voting"
+              />
+            </FormGroup>
+          </Grid>
         </Grid>
 
         <Grid item={true} xs={12} sm={6}>
@@ -471,38 +504,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             onChange={this.onDynamicChange('endDateTime')}
             label={'Finishing At'}
           />
-        </Grid>
-
-        <Grid item={true} xs={12} sm={12}>
-          <FormGroup row={true}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={event.settings.suggestingPlaylistsEnabled}
-                  onChange={this.suggestingPlaylistsToggled}
-                />
-              }
-              label="Allow Playlist Suggestions"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={event.settings.autoAcceptSuggestionsEnabled}
-                  onChange={this.autoAcceptSuggestionsToggled}
-                />
-              }
-              label="Auto Accept Suggestions"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={event.settings.dynamicVotingEnabled}
-                  onChange={this.handleDynamicVotingToggled}
-                />
-              }
-              label="Dynamic Voting"
-            />
-          </FormGroup>
         </Grid>
 
         <div className="control-btn-row">
