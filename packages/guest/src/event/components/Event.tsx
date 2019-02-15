@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import {
+  onGuestUpdate,
   subscribeToPlaylistModified,
   subscribeToSuggestionsModified,
   subscribeToVotesModified,
@@ -75,9 +76,29 @@ export default ({
 }: IEventProps & RouteComponentProps<any>) => {
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
-  const [selected, selectOption] = useState('Are you going?')
+  const [selected, selectOption] = useState('you going?')
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
   const isOpen = Boolean(menuLink)
+
+  useEffect(
+    () => {
+      if (eventId) {
+        onGuestUpdate(eventId, getEvent(eventId))
+      }
+    },
+    [eventId]
+  )
+
+  const userRsvp = (selectedEvent && selectedEvent.guests) && selectedEvent.guests
+    .filter((guest: IEventGuest) => guest.user.userId === user.userId)[0]
+
+  useEffect(
+    () => {
+      if (isEmpty(userRsvp) && eventId && !eventLoading) {
+        getEvent(eventId)
+      }
+    }
+  )
 
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
@@ -182,7 +203,7 @@ export default ({
   const handleEventResponse = () => {
     useEffect(
       () => {
-        if (!isEmpty(selectedEvent) && selected === 'Are you going?') {
+        if (!isEmpty(selectedEvent) && selected === 'you going?') {
           selectedEvent.guests.map((guest: any) => {
             if (
               guest.rsvp.userId === user.userId &&
@@ -248,7 +269,12 @@ export default ({
               </div>
             </div>
             <div className="Event-img-info">
-              <div className="Event-img-info-title">{selectedEvent.name}</div>
+              <div className="Event-img-info-title">
+                {selectedEvent.name}
+              </div>
+              <div className="Event-img-info-location">
+                {selectedEvent.description}
+              </div>
               <div className="Event-img-info-location">
                 <Icon>location_on</Icon>
                 {selectedEvent.location.address}

@@ -7,6 +7,7 @@ const pusher = new Pusher('d7c284d8f17d26f74047', {
 let subscribedToSuggestions: string = ''
 let subscribedToVotes: string = ''
 let subscribedToPlaylists: string = ''
+let subscribedToGuestUpdate = false
 
 export const subscribeToSuggestionsModified = (
   eventId: string,
@@ -21,6 +22,15 @@ export const subscribeToSuggestionsModified = (
     channel.bind('suggestions-auto-accepted', data => callback('accepted'))
 
     subscribedToSuggestions = eventId
+  }
+}
+
+export const onGuestUpdate = (eventId: string, callback: any) => {
+  if (!subscribedToGuestUpdate) {
+    const channel = pusher.subscribe('mm-rsvps-' + eventId)
+    channel.bind('rsvp-saved', callback)
+    channel.bind('rsvp-updated', callback)
+    subscribedToGuestUpdate = true
   }
 }
 
