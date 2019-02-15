@@ -143,8 +143,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     this.props.eventSavingReset()
   }
 
-  public componentWillUpdate() {
-    if (this.state.organizer === '') {
+  public componentWillReceiveProps() {
+    if (this.state.organizer === '' && this.props.event.organizer !== '') {
       this.setState({
         organizer: this.props.event.organizer
       })
@@ -153,10 +153,12 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
   public handleSetPlaylist = (playlist: IPlaylist) => {
     this.props.setEventPlaylist(playlist)
-    this.setState({
-      name: playlist.name,
-      description: playlist.description
-    })
+    if (this.props.event.name === '') {
+      this.setState({
+        name: playlist.name,
+        description: playlist.description
+      })
+    }
   }
 
   public prevStep = () => {
@@ -199,16 +201,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
     const location = this.props.event.location.address
 
-    if ((currentStep === 1 && (
-        !name ||
-        !organizer ||
-        !location)
-       ) || (
-         currentStep === 0 &&
-        !this.props.event.playlistUrl
-      )
-    ) {
-      this.showRequiredDialog()
+    if (currentStep === 0 && !this.props.event.playlistUrl) {
+      this.showRequiredDialog('Pick or create a playlist')
+    } else if (currentStep === 1 && (!name || !organizer || !location )) {
+      this.showRequiredDialog('Fill all required fields')
     } else {
       this.setChanges()
     }
@@ -234,7 +230,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     }).then()
   }
 
-  public showRequiredDialog = () => {
+  public showRequiredDialog = (message: string) => {
     this.setState({ showRequiredDialog: false })
     SweetAlert.fire({
       confirmButtonColor: '#8f0a00',
@@ -282,7 +278,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const { currentStep, setStep } = this.props
 
     if (currentStep === 0 && !this.props.event.playlistUrl) {
-      this.showRequiredDialog()
+      this.showRequiredDialog('Pick or create a playlist')
     } else if(step === 2 && this.props.event.createdAt === undefined) {
       this.showFinishCreatingEventDialog()
     } else {
@@ -342,6 +338,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             fetchPlaylists={fetchPlaylists}
             deselectPlaylist={deselectPlaylist}
             user={user}
+            handleEventName={this.onDynamicChange('name')}
             onPlaylistAdded={this.onDynamicChange('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}
             playlistInput={playlistInput}
@@ -441,7 +438,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           <EventInput
             label={'Organizer'}
             placeholder={'Who is organising this event?'}
-            value={organizer ? organizer : this.props.event.organizer}
+            value={organizer}
             error={!organizer}
             errorLabel={'Required'}
             onChange={this.handleContentUpdated('organizer')}

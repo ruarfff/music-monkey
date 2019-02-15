@@ -33,6 +33,7 @@ interface IPlaylistSelectionProps {
   deselectPlaylist(): IAction
   createEventPlaylist(playlistDetails: any): any
   onPlaylistAdded(playlistUrl: string): any
+  handleEventName(name: string): any
   fetchPlaylists(user: IUser): IAction
   handlePickGenre(content: string): void
   setEventPlaylist(playlist: IPlaylist): void
@@ -93,6 +94,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
 
   public handlePlaylistNameChange = (name: string) => {
     this.setState({ name })
+    this.props.handleEventName(name)
   }
 
   public handlePlaylistDescriptionChange = (description: string) => {
@@ -164,6 +166,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
             onChange={this.handlePlaylistNameChange}
             value={name}
             error={!name}
+            autoFocus={true}
             errorLabel={'Enter playlist name'}
             placeholder={'Playlist Name'}
             label={'Set Playlist Name'}

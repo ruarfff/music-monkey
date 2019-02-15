@@ -11,6 +11,7 @@ interface IEventInputProps {
   error?: boolean
   errorLabel?: string
   classes?: any
+  autoFocus?: boolean
   onChange(value: string): void
 }
 
@@ -27,7 +28,8 @@ class EventInput extends React.Component<IEventInputProps & WithStyles> {
       maxRows,
       value,
       error,
-      errorLabel
+      errorLabel,
+      autoFocus
     } = this.props
 
     const { touched } = this.state
@@ -38,7 +40,7 @@ class EventInput extends React.Component<IEventInputProps & WithStyles> {
         label={error && touched ? errorLabel : label}
         placeholder={placeholder}
         required={true}
-        autoFocus={true}
+        autoFocus={autoFocus}
         fullWidth={true}
         rowsMax={maxRows}
         error={error && touched}

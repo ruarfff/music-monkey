@@ -89,11 +89,12 @@ export default function event(
         createEventStep: payload,
       }
     case SET_EVENT_PLAYLIST:
+      const eventName = state.savingEvent.name
       return {
         ...state,
         savingEvent: {
           ...state.savingEvent,
-          name: payload.name,
+          name: eventName === '' ? payload.name : eventName,
         }
       }
     case DESELECT_EVENT_PLAYLIST:
