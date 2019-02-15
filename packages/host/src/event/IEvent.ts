@@ -23,4 +23,5 @@ export default interface IEvent {
   guests: IEventGuest[]
   settings: IEventSettings
   createdAt?: string
+  updatedAt?: string
 }

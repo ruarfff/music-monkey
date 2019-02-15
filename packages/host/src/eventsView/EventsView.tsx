@@ -55,7 +55,9 @@ class EventsView extends React.Component<IEventsProps & WithStyles> {
 
       <div className="eventsList">
         {map(
-          sortBy(events, (event: IEvent) => event.startDateTime).reverse(),
+          sortBy(events, (event: IEvent) =>
+            event.updatedAt ? event.updatedAt : event.createdAt
+          ).reverse(),
           (event: IEvent) => (
             <EventBigCard key={event.eventId} event={event} />
           )
