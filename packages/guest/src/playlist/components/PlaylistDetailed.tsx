@@ -29,6 +29,7 @@ import ITrack from '../../track/ITrack'
 import TrackList from '../../track/TrackList'
 import MaybeTracks from '../../trackView/MaybeTracksContainer'
 import IUser from '../../user/IUser'
+import { formatDuration } from '../../util/formatDuration'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import IVote from '../../vote/IVote'
 import IPlaylist from '../IPlaylist'
@@ -135,6 +136,14 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     const { showPlayer, value, showPlayerPlaylist } = this.state
     const { selectedPlaylist } = this.props
 
+    let durationSeconds = 0
+    if (!isEmpty(selectedPlaylist) && selectedPlaylist.tracks.items.length > 0) {
+      durationSeconds = selectedPlaylist.tracks.items
+            .map(item => item.track.duration_ms)
+            .reduce((acc, dur) => acc + dur)
+    }
+
+
     let PlaylistTabs = <div />
     if (!isEmpty(selectedPlaylist)) {
       PlaylistTabs = (
@@ -167,10 +176,15 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
                     primary={selectedPlaylist.name}
                   />
                   <div className="playlist-content-title-length">
-                    <span className="playlist-content-title-songs">
-                      {selectedPlaylist.tracks && selectedPlaylist.tracks.total}{' '}
-                      Songs
-                    </span>
+                    <div>
+                      <span className="playlist-content-title-songs">
+                        {`Total time: ${formatDuration(durationSeconds)}`}
+                      </span><br/>
+                        <span className="playlist-content-title-songs">
+                        {`${selectedPlaylist.tracks && selectedPlaylist.tracks.total} Songs`}
+                      </span>
+                    </div>
+
                     <Button
                       variant="fab"
                       color="primary"
