@@ -23,12 +23,12 @@ import IPlaylistDetails from '../playlist/IPlaylistDetails'
 import ISearch from '../playlist/ISearch'
 import FileUpload from '../upload/FileUpload'
 import IUser from '../user/IUser'
+import ITrackVoteStatus from '../vote/ITrackVoteStatus'
 import './CreateEvent.scss'
 import CreateEventSteps from './CreateEventSteps'
 import EventDateTimePicker from './EventDateTimePicker'
 import PlaylistSelection from './PlaylistSelection'
 import ShareEvent from './ShareEvent'
-
 
 const decorate = withStyles((theme: Theme) => ({
   button: {
@@ -81,6 +81,12 @@ interface ICreateEventProps extends RouteComponentProps<any> {
   searchResult: ISearch
   selectedPlaylist: IPlaylist
   currentStep: number
+  votes: Map<string, ITrackVoteStatus>
+  sortPlaylistByVotesDescending(
+    playlist: IPlaylist,
+    votes: Map<string, ITrackVoteStatus>
+  ): IAction
+  fetchEventVotes(eventId: string): IAction
   deselectPlaylist(): IAction
   clearMessage(): IAction
   cancel(): void
@@ -135,6 +141,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     if (!event.eventId && eventId) {
       getEventById(eventId)
     }
+
+    this.props.fetchEventVotes(eventId)
   }
 
 
@@ -153,6 +161,12 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       this.setState({
         name: newProps.event.name
       })
+    }
+
+    const eventId = this.props.match.params.eventId
+
+    if (this.props.selectedPlaylist.id !== newProps.selectedPlaylist.id) {
+      this.props.fetchEventVotes(eventId)
     }
   }
 
@@ -298,8 +312,15 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public handleDynamicVotingToggled = () => {
-    const { event, toggleDynamicVoting } = this.props
+    const {
+      event,
+      toggleDynamicVoting,
+      votes,
+      selectedPlaylist,
+      sortPlaylistByVotesDescending
+    } = this.props
     toggleDynamicVoting(event)
+    sortPlaylistByVotesDescending(selectedPlaylist, votes)
   }
 
   public autoAcceptSuggestionsToggled = () => {

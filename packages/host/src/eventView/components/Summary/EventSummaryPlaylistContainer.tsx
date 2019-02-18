@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { sortPlaylistByVotesDescending } from '../../../eventPlaylist/eventPlaylistActions'
 import IRootState from '../../../rootState'
 import {
   toggleAutoAcceptSuggestions,
@@ -12,13 +13,15 @@ const mapStateToProps = (state: IRootState) => ({
   suggestion: state.suggestion.acceptedSuggestions,
   genre: state.eventView.event.genre,
   eventImg: state.eventView.event.imageUrl,
-  event: state.eventView.event
+  event: state.eventView.event,
+  votes: state.vote.votes
 })
 
 const mapDispatchToProps = {
   toggleDynamicVoting,
   toggleAutoAcceptSuggestions,
-  toggleSuggestingPlaylists
+  toggleSuggestingPlaylists,
+  sortPlaylistByVotesDescending,
 }
 
 const EventSummaryPlaylistContainer = connect(

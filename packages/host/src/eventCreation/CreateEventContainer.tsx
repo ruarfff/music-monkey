@@ -21,7 +21,8 @@ import {
 import {
   deselectPlaylist,
   moveItemInEventPlaylist,
-  setEventPlaylist
+  setEventPlaylist,
+  sortPlaylistByVotesDescending
 } from '../eventPlaylist/eventPlaylistActions'
 import {
   acknowledgeEventInviteCopied,
@@ -38,9 +39,11 @@ import {
 } from '../playlist/playlistActions'
 import IRootState from '../rootState'
 import { clearMessage } from '../shareEvent/shareActions'
+import { fetchEventVotes } from '../vote/voteActions'
 import CreateEvent from './CreateEvent'
 
 const mapStateToProps = (state: IRootState) => ({
+  votes: state.vote.votes,
   user: state.user.data,
   event: state.event.savingEvent,
   message: state.event.shareEventMessage,
@@ -89,6 +92,8 @@ const mapDispatchToProps = (dispatch: any) => ({
       toggleAutoAcceptSuggestions,
       getEventById,
       deleteEvent,
+      sortPlaylistByVotesDescending,
+      fetchEventVotes
     },
     dispatch
   )

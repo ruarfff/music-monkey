@@ -14,6 +14,7 @@ import IAction from '../../../IAction'
 import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
 import { formatDuration } from '../../../util/formatDuration'
+import ITrackVoteStatus from '../../../vote/ITrackVoteStatus'
 import './Styles/EventSummaryPlaylist.scss'
 
 const decorated = withStyle(() => ({
@@ -51,6 +52,11 @@ interface IEventSummaryPlaylistProps {
   eventImg?: string
   playlist: IPlaylist
   suggestion: IDecoratedSuggestion[]
+  votes: Map<string, ITrackVoteStatus>
+  sortPlaylistByVotesDescending(
+    playlist: IPlaylist,
+    votes: Map<string, ITrackVoteStatus>
+  ): IAction
   toggleDynamicVoting(event: IEvent): IAction
   toggleAutoAcceptSuggestions(event: IEvent): IAction
   toggleSuggestingPlaylists(event: IEvent): IAction
@@ -217,8 +223,15 @@ class EventSummaryPlaylist extends React.PureComponent<
   }
 
   private handleDynamicVotingToggled = () => {
-    const { event, toggleDynamicVoting } = this.props
+    const {
+      event,
+      toggleDynamicVoting,
+      votes,
+      playlist,
+      sortPlaylistByVotesDescending
+    } = this.props
     toggleDynamicVoting(event)
+    sortPlaylistByVotesDescending(playlist, votes)
   }
 
   private autoAcceptSuggestionsToggled = () => {
