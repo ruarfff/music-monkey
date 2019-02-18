@@ -52,6 +52,7 @@ interface IEventProps {
   deleteVote(voteId: string): IAction
   fetchEventVotes(eventId: string): IAction
   getEvent(eventId: string): IAction
+  fetchUsersEvents(): IAction
   fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
   updateRsvp(rsvp: IRsvp): IAction
 }
@@ -66,6 +67,7 @@ export default ({
   eventLoading,
   votes,
   fetchingVotes,
+  fetchUsersEvents,
   createVote,
   deleteVote,
   fetchEventVotes,
@@ -84,6 +86,7 @@ export default ({
     () => {
       if (eventId) {
         onGuestUpdate(eventId, getEvent(eventId))
+        fetchUsersEvents()
       }
     },
     [eventId]

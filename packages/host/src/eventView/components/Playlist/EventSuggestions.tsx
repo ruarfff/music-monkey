@@ -13,6 +13,7 @@ import DoneAll from '@material-ui/icons/DoneAll'
 import classNames from 'classnames'
 import { isEmpty, uniqBy } from 'lodash'
 import * as React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import IAction from '../../../IAction'
 import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
@@ -45,9 +46,14 @@ const decorate = withStyles(() => ({
   }
 }))
 
-interface IEventSuggestionsProps {
+interface IEventSuggestionsProps extends RouteComponentProps<any> {
   suggestions: IDecoratedSuggestion[]
   playlist: IPlaylist
+  saveEventPlaylist(
+    eventId: string,
+    playlist: IPlaylist,
+    suggestions: Map<string, IDecoratedSuggestion>
+  ): IAction
   stageAllSuggestions(suggestions: IDecoratedSuggestion[]): IAction
   stageSuggestion(suggestion: ISuggestion): IAction
   rejectSuggestion(suggestion: ISuggestion): IAction
@@ -104,6 +110,20 @@ class EventSuggestions extends React.Component<
       </div>
     )
   }
+
+  private handleSavePlaylist = (
+    decoratedSuggestions: IDecoratedSuggestion[]
+  ) => () => {
+    const { playlist, saveEventPlaylist } = this.props
+    const eventId = this.props.match.params.eventId
+    const suggestionMap = new Map()
+    decoratedSuggestions.map((ds) => {
+      suggestionMap.set(ds.track.uri, ds)
+    })
+
+    saveEventPlaylist(eventId, playlist, suggestionMap)
+  }
+
 
   private renderSuggestion = (
     decoratedSuggestion: IDecoratedSuggestion,
@@ -189,7 +209,7 @@ class EventSuggestions extends React.Component<
             <Button
               className={classes.accept}
               variant="contained"
-              onClick={this.handleSuggestionAccepted(decoratedSuggestion)}
+              onClick={this.handleSavePlaylist([decoratedSuggestion])}
             >
               ACCEPT
             </Button>
@@ -199,16 +219,16 @@ class EventSuggestions extends React.Component<
     )
   }
 
-  private handleSuggestionAccepted = (
-    decoratedSuggestion: IDecoratedSuggestion
-  ) => () => {
-    const { track, suggestion } = decoratedSuggestion
-    this.setState({ tracksBeingRemoved: track })
-    setTimeout(() => {
-      this.setState({ tracksBeingRemoved: {} as ITrack })
-      this.props.stageSuggestion(suggestion)
-    }, 700)
-  }
+  // private handleSuggestionAccepted = (
+  //   decoratedSuggestion: IDecoratedSuggestion
+  // ) => () => {
+  //   const { track, suggestion } = decoratedSuggestion
+  //   this.setState({ tracksBeingRemoved: track })
+  //   setTimeout(() => {
+  //     this.setState({ tracksBeingRemoved: {} as ITrack })
+  //     this.props.stageSuggestion(suggestion)
+  //   }, 700)
+  // }
 
   private handleSuggestionRejected = (
     decoratedSuggestion: IDecoratedSuggestion
@@ -221,9 +241,9 @@ class EventSuggestions extends React.Component<
     }, 700)
   }
 
-  private handleAcceptAllClicked = (filteredSuggestions: IDecoratedSuggestion[]) => () => {
-    this.props.stageAllSuggestions(filteredSuggestions)
-  }
+  // private handleAcceptAllClicked = (filteredSuggestions: IDecoratedSuggestion[]) => () => {
+  //   this.props.stageAllSuggestions(filteredSuggestions)
+  // }
 
   private renderAcceptButtons = (filteredSuggestions: IDecoratedSuggestion[]) => {
     return (
@@ -232,7 +252,7 @@ class EventSuggestions extends React.Component<
           className="EventSuggestions-button"
           variant="contained"
           color="primary"
-          onClick={this.handleAcceptAllClicked(filteredSuggestions)}
+          onClick={this.handleSavePlaylist(filteredSuggestions)}
         >
           <DoneAll
             className={classNames(
@@ -247,4 +267,4 @@ class EventSuggestions extends React.Component<
   }
 }
 
-export default decorate(EventSuggestions)
+export default withRouter(decorate(EventSuggestions))

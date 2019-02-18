@@ -10,10 +10,12 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import * as React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import IAction from '../../../IAction'
+import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
 import ISuggestion from '../../../suggestion/ISuggestion'
-import ITrack from '../../../track/ITrack'
+// import ITrack from '../../../track/ITrack'
 import { formatDuration } from '../../../util/formatDuration'
 import './Styles/EventSuggestions.scss'
 
@@ -32,8 +34,14 @@ const decorate = withStyles(() => ({
   },
 }))
 
-interface IEventRejectedSuggestionsProps {
+interface IEventRejectedSuggestionsProps extends RouteComponentProps<any> {
   suggestions: IDecoratedSuggestion[]
+  playlist: IPlaylist
+  saveEventPlaylist(
+    eventId: string,
+    playlist: IPlaylist,
+    suggestions: Map<string, IDecoratedSuggestion>
+  ): IAction
   stageSuggestion(suggestion: ISuggestion): IAction
 }
 
@@ -70,17 +78,28 @@ class EventRejectedSuggestions extends React.PureComponent<
       </div>
     )
   }
+  //
+  // private handleSuggestionAccepted = (
+  //   decoratedSuggestion: IDecoratedSuggestion
+  // ) => () => {
+  //   const { track, suggestion } = decoratedSuggestion
+  //   this.setState({ tracksBeingRemoved: track })
+  //   setTimeout(() => {
+  //     this.setState({ tracksBeingRemoved: {} as ITrack })
+  //     this.props.stageSuggestion(suggestion)
+  //   }, 700)
+  // }
 
-  private handleSuggestionAccepted = (
+  private handleSavePlaylist = (
     decoratedSuggestion: IDecoratedSuggestion
   ) => () => {
-    const { track, suggestion } = decoratedSuggestion
-    this.setState({ tracksBeingRemoved: track })
-    setTimeout(() => {
-      this.setState({ tracksBeingRemoved: {} as ITrack })
-      this.props.stageSuggestion(suggestion)
-    }, 700)
+    const { playlist, saveEventPlaylist } = this.props
+    const eventId = this.props.match.params.eventId
+    const suggestionMap = new Map()
+    suggestionMap.set(decoratedSuggestion.track.uri, decoratedSuggestion)
+    saveEventPlaylist(eventId, playlist, suggestionMap)
   }
+
 
   private renderSuggestion = (decoratedSuggestion: IDecoratedSuggestion, index: number) => {
 
@@ -154,7 +173,7 @@ class EventRejectedSuggestions extends React.PureComponent<
           <Button
             className={classes.accept}
             variant="contained"
-            onClick={this.handleSuggestionAccepted(decoratedSuggestion)}
+            onClick={this.handleSavePlaylist(decoratedSuggestion)}
           >
             ACCEPT
           </Button>
@@ -164,4 +183,4 @@ class EventRejectedSuggestions extends React.PureComponent<
   }
 }
 
-export default decorate(EventRejectedSuggestions)
+export default withRouter(decorate(EventRejectedSuggestions))

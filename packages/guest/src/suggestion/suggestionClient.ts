@@ -2,7 +2,7 @@ import client from 'music-monkey-client'
 import ISuggestion from './ISuggestion'
 
 export const getSuggestions = async (eventId: string) => {
-  const response = await client.get('/users/suggestions?eventId=' + eventId, {
+  const response = await client.get('/suggestions?eventId=' + eventId, {
     withCredentials: true
   })
   return response.data

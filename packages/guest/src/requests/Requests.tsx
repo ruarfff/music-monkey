@@ -19,7 +19,6 @@ interface IRequestsProps {
   events: IEvent[]
   user: IUser
   suggestion: ISuggestionState
-  getSuggestions(eventId: string): IAction
   getUsersSuggestions(eventId: string): IAction
   selectEvent(event: IEvent): IAction
   deselectEvent(): IAction

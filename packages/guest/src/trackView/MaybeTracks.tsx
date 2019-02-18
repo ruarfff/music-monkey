@@ -1,5 +1,6 @@
 import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
+import { isEmpty, uniqBy } from 'lodash'
 import * as React from 'react'
 import IEvent from '../event/IEvent'
 import IDecoratedSuggestion from '../suggestion/IDecoratedSuggestion'
@@ -23,16 +24,24 @@ export default class MaybeTracks extends React.PureComponent<
         )
       : []
 
+    const playlistTracks = selectedEvent.playlist.tracks.items.map((track) => track.track.uri)
+    let filteredSuggestions = maybeSuggestions
+
+    if(!isEmpty(suggestions)) {
+      filteredSuggestions = uniqBy(maybeSuggestions
+        .filter((suggestedTrack) => playlistTracks.indexOf(suggestedTrack.track.uri) === -1), 'track.uri')
+    }
+
     return (
       <List>
-        {maybeSuggestions.length > 0 && (
+        {filteredSuggestions.length > 0 && (
           <TrackList
-            tracks={maybeSuggestions.map(s => s.track)}
-            suggestions={maybeSuggestions}
+            tracks={filteredSuggestions.map(s => s.track)}
+            suggestions={filteredSuggestions}
             selectedEvent={selectedEvent}
           />
         )}
-        {maybeSuggestions.length < 1 && (
+        {filteredSuggestions.length < 1 && (
           <ListItem>
             <span className='noTracks'>
               No suggestions yet

@@ -53,7 +53,6 @@ interface IPlayListProps extends RouteComponentProps<any> {
   deselectTrack(): IAction
   getSuggestions(eventId: string): IAction
   getEvent(eventId: string): IAction
-  getUsersSuggestions(eventId: string): IAction
 }
 
 export default class PlaylistDetailed extends React.Component<IPlayListProps> {
@@ -68,11 +67,10 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     const {
       event,
       votes,
-      suggestions,
+      getSuggestions,
       eventLoading,
       fetchEventVotes,
       getEvent,
-      getSuggestions,
     } = this.props
 
     const eventId = this.props.match.params.eventId
@@ -85,23 +83,28 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
       fetchEventVotes(eventId)
     }
 
-    if (isEmpty(suggestions) && !this.props.fetchingSuggestions) {
-      getSuggestions(eventId)
-    }
-
+    getSuggestions(eventId)
     subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
-    subscribeToSuggestionsModified(eventId, () => getEvent(eventId))
   }
 
   public componentWillReceiveProps(newProps: IPlayListProps) {
     const {
-      getEvent
+      getEvent,
+      suggestions,
+      getSuggestions,
     } = this.props
 
     const eventId = this.props.match.params.eventId
 
     if (!isEmpty(newProps.event)) {
       subscribeToPlaylistModified(newProps.event.playlist.id, () => getEvent(eventId))
+      subscribeToSuggestionsModified(
+        newProps.event.eventId,
+        () => getSuggestions(eventId)
+      )
+      if (isEmpty(suggestions) && !this.props.fetchingSuggestions) {
+        getSuggestions(eventId)
+      }
     }
   }
 

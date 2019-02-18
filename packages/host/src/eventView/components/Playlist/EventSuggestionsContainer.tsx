@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { saveEventPlaylist } from '../../../eventPlaylist/eventPlaylistActions'
 import IRootState from '../../../rootState'
 import {
   rejectSuggestion,
@@ -15,7 +16,8 @@ const mapStateToProps = (state: IRootState) => ({
 const mapDispatchToProps = {
   stageAllSuggestions,
   stageSuggestion,
-  rejectSuggestion
+  rejectSuggestion,
+  saveEventPlaylist
 }
 
 const EventSuggestionContainer = connect(
