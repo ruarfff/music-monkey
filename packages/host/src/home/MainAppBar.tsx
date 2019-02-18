@@ -100,10 +100,18 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
   }
 
   public componentDidMount() {
+    this.handleGetNotifications()
+  }
+
+  public componentWillUpdate() {
+    const { user } = this.props
+    onRsvpSaved(user.userId, () => this.handleGetNotifications())
+  }
+
+  public handleGetNotifications = () => {
     const { user, getNotifications } = this.props
-    onRsvpSaved(user.userId, () => {
-      getNotifications(user.userId)
-    })
+
+    getNotifications(user.userId)
   }
 
   public menuName = (history: string) => {
@@ -133,6 +141,9 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
 
   public toggleNotification = (event?: any) => {
     if (event) {
+      if (!this.state.showNotification) {
+        this.props.getNotifications(this.props.user.userId)
+      }
       this.setState({
         showNotification: !this.state.showNotification,
         notificationAnchor: event.currentTarget
