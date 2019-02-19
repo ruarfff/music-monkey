@@ -30,6 +30,7 @@ import EventDateTimePicker from './EventDateTimePicker'
 import PlaylistSelection from './PlaylistSelection'
 import ShareEvent from './ShareEvent'
 
+
 const decorate = withStyles((theme: Theme) => ({
   button: {
     marginRight: '30px',
@@ -128,7 +129,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     name: '',
     description: '',
     organizer: '',
-    genre: '',
+    genre: ''
   }
 
   public componentDidMount() {
@@ -165,7 +166,9 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
     const eventId = this.props.match.params.eventId
 
-    if (this.props.selectedPlaylist.id !== newProps.selectedPlaylist.id) {
+    if (!_.isEmpty(this.props.selectedPlaylist) &&
+      this.props.selectedPlaylist.id !== newProps.selectedPlaylist.id
+    ) {
       this.props.fetchEventVotes(eventId)
     }
   }
@@ -214,7 +217,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   public nextStep = () => {
     const {
       name,
-      organizer,
+      organizer
     } = this.state
 
     const { currentStep } = this.props
@@ -587,7 +590,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       acknowledgeEventInviteCopied,
       copiedToClipboard,
       message,
-      clearMessage,
+      clearMessage
     } = this.props
 
     return (
