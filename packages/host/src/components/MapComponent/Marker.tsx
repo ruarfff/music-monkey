@@ -7,7 +7,7 @@ interface IMapComponentProps {
   lng: number
 }
 
-const MapComponent: React.SFC<IMapComponentProps> = props => {
+const MapComponent: React.FC<IMapComponentProps> = props => {
   return (
     <div>
       <img src={mapMarker} />

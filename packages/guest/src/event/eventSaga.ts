@@ -21,7 +21,6 @@ getUsersInvitedEvents
 
 function* fetchEventHostByIdFlow(action: IAction) {
   const userId = action.payload
-  console.log(action.payload)
   try {
     const host = yield call(getUserById, userId)
     yield put({ type: GET_EVENT_HOST_SUCCESS, payload: host})

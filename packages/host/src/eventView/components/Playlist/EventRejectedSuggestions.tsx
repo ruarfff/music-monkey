@@ -15,7 +15,6 @@ import IAction from '../../../IAction'
 import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
 import ISuggestion from '../../../suggestion/ISuggestion'
-// import ITrack from '../../../track/ITrack'
 import { formatDuration } from '../../../util/formatDuration'
 import './Styles/EventSuggestions.scss'
 

@@ -8,7 +8,6 @@ import EventSearchTracks from './EventSearchTracks'
 
 const mapStateToProps = (state: IRootState) => ({
   searchResult: state.playlist.searchResult,
-  // playlist: state.eventPlaylist.playlist,
   notification: state.playlist.notification
 })
 

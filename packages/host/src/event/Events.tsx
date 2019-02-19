@@ -1,7 +1,5 @@
-// import Divider from '@material-ui/core/Divider/Divider'
 import Button from '@material-ui/core/Button/Button'
 import Grid from '@material-ui/core/Grid/Grid'
-// import Hidden from '@material-ui/core/Hidden/Hidden'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography/Typography'
 import _ from 'lodash'

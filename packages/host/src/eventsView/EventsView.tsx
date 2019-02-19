@@ -102,7 +102,7 @@ class EventsView extends React.Component<IEventsProps & WithStyles> {
                         className={
                           currentPath === '/all-events'
                             ? classes.buttonOrange
-                            : classes.button
+                            : classes.buttonGray
                         }
                       >
                         ALL
@@ -114,7 +114,7 @@ class EventsView extends React.Component<IEventsProps & WithStyles> {
                         className={
                           currentPath === '/past-events'
                             ? classes.buttonOrange
-                            : classes.button
+                            : classes.buttonGray
                         }
                       >
                         PAST EVENTS
@@ -126,7 +126,7 @@ class EventsView extends React.Component<IEventsProps & WithStyles> {
                         className={
                           currentPath === '/upcoming-events'
                             ? classes.buttonOrange
-                            : classes.button
+                            : classes.buttonGray
                         }
                       >
                         UPCOMING EVENTS

@@ -27,29 +27,12 @@ const decorate = withStyles((theme: Theme) => ({
   link: {
     textDecoration: 'none',
   },
-  eventDescription: {
-    color: '#979797',
-    fontSize: '12px',
-    lineHeight: '16px',
-    marginBottom: '4px',
-    display: 'flex'
-  },
   imgContainer: {
     width: '100%'
   },
   img: {
     width: 'inherit',
     height: '140px'
-  },
-  cardContent: {
-    padding: '15px 25px',
-    height: 'calc(100% - 250px)',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  trackLength: {
-    display: 'flex',
-    justifyContent: 'space-between'
   },
 }))
 

@@ -10,7 +10,7 @@ interface IEventFetchErrorProps {
   onTryAgain(): void
 }
 
-const EventFetchError: React.SFC<IEventFetchErrorProps> = ({ onTryAgain }) => (
+const EventFetchError: React.FC<IEventFetchErrorProps> = ({ onTryAgain }) => (
   <Card>
     <CardContent>
       <Typography gutterBottom={true} variant="h5" component="h2">

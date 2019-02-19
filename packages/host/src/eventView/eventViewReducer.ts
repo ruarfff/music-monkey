@@ -1,6 +1,5 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
 import {
-  EVENT_EDIT_CLOSE,
   EVENT_EDIT_FAILURE,
   EVENT_EDIT_SUCCESS
 } from '../event/eventActions'
@@ -44,12 +43,6 @@ export default function eventView(
       return {
         ...state,
         editFailure: true
-      }
-    case EVENT_EDIT_CLOSE:
-      return {
-        ...state,
-        editSuccess: false,
-        editFailure: false
       }
     case EVENT_FETCH_BY_ID_INITIATED:
       return {

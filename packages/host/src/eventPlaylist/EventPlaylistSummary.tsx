@@ -10,7 +10,6 @@ import { formatDuration } from '../util/formatDuration'
 import ITrackVoteStatus from '../vote/ITrackVoteStatus'
 import './EventPlaylistSummary.scss'
 
-
 interface IEventPlaylistSummaryProps {
   event: IEvent
   playlist: IPlaylist

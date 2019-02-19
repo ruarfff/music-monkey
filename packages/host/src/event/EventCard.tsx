@@ -11,9 +11,6 @@ import eventIcon from '../assets/event-date-icon.svg'
 import IEvent from './IEvent'
 
 const decorate = withStyles((theme: Theme) => ({
-  actions: {
-    display: 'flex'
-  },
   card: {
     height: '150px',
     marginTop: '2em',
@@ -25,14 +22,6 @@ const decorate = withStyles((theme: Theme) => ({
     '&:hover': {
       boxShadow: '0px 1px 1px black',
     },
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%' // 16:9
-  },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
   },
   link: {
     textDecoration: 'none',

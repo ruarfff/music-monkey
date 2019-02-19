@@ -38,34 +38,6 @@ const decorate = withStyles((theme: Theme) => ({
       marginRight: 0
     }
   },
-  addCoHost: {
-    marginTop: '10px'
-  },
-  dropDown: {
-    display: 'inline-block',
-    marginTop: '20px',
-    borderRadius: '4px',
-    border: '1px solid #979797',
-    paddingLeft: '16px',
-    minHeight: '40px',
-    marginRight: '20px',
-    top: '8px',
-    '&:hover:not($disabled):before': {
-      borderBottom: '1px solid #979797!important'
-    },
-    '&:before': {
-      content: 'none'
-    },
-    '&:after': {
-      content: 'none'
-    }
-  },
-  codeInput: {
-    display: 'inline-block'
-  },
-  disabled: {
-
-  }
 }))
 
 const SweetAlert = withReactContent(Swal) as any
@@ -122,10 +94,7 @@ interface ICreateEventProps extends RouteComponentProps<any> {
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   public state = {
     showSaveDialog: true,
-    showSaveErrorDialog: true,
-    showRequiredDialog: true,
-    showFinishCreatingEventDialog: true,
-    showCreatePlaylistErrorDialog: true,
+    showErrorDialog: true,
     name: '',
     description: '',
     organizer: '',
@@ -200,11 +169,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const decoratedState = _.omit(
       this.state,
       'currentStep',
+      'showErrorDialog',
       'showSaveDialog',
-      'showRequiredDialog',
-      'showFinishCreatingEventDialog',
-      'showCreatePlaylistErrorDialog',
-      'showSaveErrorDialog',
       'description'
       )
     if (this.props.currentStep === 0) {
@@ -225,48 +191,19 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const location = this.props.event.location.address
 
     if (currentStep === 0 && !this.props.event.playlistUrl) {
-      this.showRequiredDialog('Pick or create a playlist')
+      this.showErrorDialog('Pick or create a playlist')
     } else if (currentStep === 1 && (!name || !organizer || !location )) {
-      this.showRequiredDialog('Fill all required fields')
+      this.showErrorDialog('Fill all required fields')
     } else {
       this.setChanges()
     }
   }
 
-  public showCreateEventErrorDialog = () => {
-    const message = this.props.errors.saving.response.statusText
-
-    this.setState({ showSaveErrorDialog: false })
+  public showErrorDialog = (message: string) => () => {
+    this.setState({ showErrorDialog: false })
     SweetAlert.fire({
       confirmButtonColor: '#8f0a00',
       title: message,
-      type: 'error'
-    })
-  }
-
-  public showCreatePlaylistErrorDialog = () => {
-    this.setState({ showCreatePlaylistErrorDialog: false })
-    SweetAlert.fire({
-      confirmButtonColor: '#8f0a00',
-      title: 'Playlist wasn`t created',
-      type: 'error'
-    }).then()
-  }
-
-  public showRequiredDialog = (message: string) => {
-    this.setState({ showRequiredDialog: false })
-    SweetAlert.fire({
-      confirmButtonColor: '#8f0a00',
-      title: 'Pick or create a playlist',
-      type: 'error'
-    }).then()
-  }
-
-  public showFinishCreatingEventDialog = () => {
-    this.setState({ showFinishCreatingEventDialog: false })
-    SweetAlert.fire({
-      confirmButtonColor: '#8f0a00',
-      title: 'Finish creating of event',
       type: 'error'
     }).then()
   }
@@ -301,9 +238,9 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const { currentStep, setStep } = this.props
 
     if (currentStep === 0 && !this.props.event.playlistUrl) {
-      this.showRequiredDialog('Pick or create a playlist')
+      this.showErrorDialog('Pick or create a playlist')
     } else if(step === 2 && this.props.event.createdAt === undefined) {
-      this.showFinishCreatingEventDialog()
+      this.showErrorDialog('Finish creating of event')
     } else {
       setStep(step)
       this.setChanges()
@@ -357,7 +294,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
     return (
       <React.Fragment>
-        {errors.playlistCreation && this.showCreatePlaylistErrorDialog()}
+        {errors.playlistCreation && this.showErrorDialog('Playlist wasn`t created')}
         <Grid item={true} xs={12} sm={6}>
           <PlaylistSelection
             onPlaylistDragDrop={onPlaylistDragDrop}
@@ -664,7 +601,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     } = this.props
     this.nextStep()
     if ( !_.isEmpty(errors.saving) && history.location.pathname !== `/events/${event.eventId}/edit`) {
-      this.showCreateEventErrorDialog()
+      this.showErrorDialog(this.props.errors.saving.response.statusText)
     }
     if (event.createdAt !== undefined) {
       editEventRequest({

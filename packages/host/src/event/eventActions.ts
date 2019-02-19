@@ -32,7 +32,6 @@ export const CREATE_PLAYLIST_CLOSED = 'CREATE_PLAYLIST_CLOSED'
 export const EVENT_EDIT_REQUEST = 'EVENT_EDIT_REQUEST'
 export const EVENT_EDIT_SUCCESS = 'EVENT_EDIT_SUCCESS'
 export const EVENT_EDIT_FAILURE = 'EVENT_EDIT_FAILURE'
-export const EVENT_EDIT_CLOSE = 'EVENT_EDIT_CLOSE'
 
 export const SET_CREATE_EVENT_STEP = 'SET_CREATE_EVENT_STEP'
 
@@ -47,10 +46,6 @@ export const editEventSuccess = (): Action => ({
 
 export const editEventFailure = (): Action => ({
   type: EVENT_EDIT_FAILURE
-})
-
-export const editEventClose = (): Action => ({
-  type: EVENT_EDIT_CLOSE
 })
 
 export const editEventRequest = (event: IEvent): Action => ({
