@@ -28,8 +28,6 @@ const EventGuests = ({ event }: IEventGuestsProps) => {
           </div>
         )
       })}
-      <div className="stoper-block" />
-      <div className="stoper-block" />
     </div>
   )
 }

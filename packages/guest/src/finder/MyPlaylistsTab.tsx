@@ -80,7 +80,7 @@ const MyPlaylistsTab = ({
   }
 
   return (
-    <Typography component="div" dir={'1'}>
+    <Typography component="div" dir="1">
       {isEmpty(selectedUserPlaylist) ?
         renderPlaylistSimpleList() :
         renderListOfTracks()}

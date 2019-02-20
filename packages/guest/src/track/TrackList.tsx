@@ -25,8 +25,8 @@ const TrackList = ({
   withVoting = false,
   withSuggestingEnabled = false,
   votes = new Map(),
-  onVote = (t: ITrack) => ({} as any),
-  onTrackSelected = (t: ITrack) => ({} as any)
+  onVote = (t: ITrack) => undefined,
+  onTrackSelected = (t: ITrack) => undefined
 }: ITrackListProps) => (
   <React.Fragment>
     {tracks.map((track, i) => {

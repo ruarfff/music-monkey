@@ -111,14 +111,14 @@ const Finder = ({
       )}
       {!searching && isEmpty(filteredSearch) && (
         <div>
-          <Divider variant={'inset'} className="Finder-divider" />
+          <Divider variant="inset" className="Finder-divider" />
           {!isEmpty(selectedEvent) && (
             <SelectedEvent
               event={selectedEvent}
               deselectEvent={deselectEvent}
             />
           )}
-          <Divider variant={'inset'} className="Finder-divider" />
+          <Divider variant="inset" className="Finder-divider" />
           <AppBar position="static" color="default">
             <Tabs
               value={tabIndex}
@@ -133,7 +133,7 @@ const Finder = ({
             </Tabs>
           </AppBar>
           <SwipeableViews
-            axis={'x'}
+            axis="x"
             index={tabIndex}
             onChangeIndex={handleTabChange}
           >

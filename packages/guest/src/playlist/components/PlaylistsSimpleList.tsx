@@ -153,7 +153,6 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
                 </li>
               </div>
             ))}
-            <div className="stoper-block" />
           </List>
         )
       }

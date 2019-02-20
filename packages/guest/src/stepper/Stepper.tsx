@@ -26,11 +26,11 @@ class Stepper extends React.Component<any, any> {
       <div>
         <div className="content-stepper">
           <SwipeableViews
-            axis={'x'}
+            axis="x"
             index={this.state.activeStep}
             onChangeIndex={this.handleStepChange}
             enableMouseEvents={true}
-            className={'stepper'}
+            className="stepper"
           >
             <div className="stepper-container">
               <img className="img-logo" src={Images.Logo} />

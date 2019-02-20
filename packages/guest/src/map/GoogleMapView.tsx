@@ -14,6 +14,7 @@ interface IMapProps {
 const onMapClicked = (open: boolean, callback: any) => () => {
   callback(open)
 }
+
 const GoogleMapView = withGoogleMap((props: IMapProps) => {
   return (
     <GoogleMap

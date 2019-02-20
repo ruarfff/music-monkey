@@ -104,30 +104,27 @@ class Requests extends React.Component<IRequestsProps> {
             </Tabs>
           </AppBar>
           <SwipeableViews
-            axis={'x'}
+            axis="x"
             index={value}
             onChangeIndex={this.handleChangeIndex}
           >
             {value === 0 ? (
-              <Typography component="div" dir={'0'}>
+              <Typography component="div" dir="0">
                 <AcceptedTracks />
-                <div className="stoper-block" />
               </Typography>
             ) : (
               <div />
             )}
             {value === 1 ? (
-              <Typography component="div" dir={'1'}>
+              <Typography component="div" dir="1">
                 <MaybeTracks />
-                <div className="stoper-block" />
               </Typography>
             ) : (
               <div />
             )}
             {value === 2 ? (
-              <Typography component="div" dir={'2'}>
+              <Typography component="div" dir="2">
                 <RejectedTracks />
-                <div className="stoper-block" />
               </Typography>
             ) : (
               <div />

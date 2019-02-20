@@ -78,11 +78,6 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
         className={link !== currentPath ? '' : classes.subListItemHighlighted}
         button={true}
       >
-        {/*<ListItemIcon>*/}
-        {/*<img*/}
-        {/*src={link !== currentPath ? SubMenuIcon : SubMenuIconHighlighted}*/}
-        {/*/>*/}
-        {/*</ListItemIcon>*/}
         <ListItemText
           inset={true}
           primary={
@@ -115,13 +110,13 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
     } = this.props
     const { isOpen } = this.state
 
-    const highlihgtSub = this.shouldHighlightList()
+    const highlightSub = this.shouldHighlightList()
 
     return (
       <React.Fragment>
         <ListItem
           className={
-            pathName === currentPath || highlihgtSub
+            pathName === currentPath || highlightSub
               ? classes.highlightedListItem
               : classes.listItem
           }
@@ -157,7 +152,7 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
             className={classes.collapse}
           >
             <List
-              className={highlihgtSub ? classes.highlightedListItem : ''}
+              className={highlightSub ? classes.highlightedListItem : ''}
               component="article"
               disablePadding={true}
             >

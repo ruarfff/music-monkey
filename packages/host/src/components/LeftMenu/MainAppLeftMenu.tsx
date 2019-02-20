@@ -17,7 +17,7 @@ class MainAppLeftMenu extends React.Component<IMainAppLeftMenuProps> {
   public render() {
     const { path } = this.props
 
-    const eventsList = [
+    const eventsSubItems = [
       {
         text: 'Past Events',
         link: '/past-events'
@@ -36,7 +36,7 @@ class MainAppLeftMenu extends React.Component<IMainAppLeftMenuProps> {
       }
     ]
 
-    const playlist = [
+    const playlistSubItems = [
       {
         text: 'All Playlists',
         link: '/all-playlists'
@@ -74,14 +74,14 @@ class MainAppLeftMenu extends React.Component<IMainAppLeftMenuProps> {
               currentPath={path}
               icon={EventIcon}
               collapsed={true}
-              collapsedList={eventsList}
+              collapsedList={eventsSubItems}
             />
             <LeftMenuItem
               text={'Playlists'}
               currentPath={path}
               icon={playlistIcon}
               collapsed={true}
-              collapsedList={playlist}
+              collapsedList={playlistSubItems}
             />
             <Link to={'/account'}>
               <LeftMenuItem

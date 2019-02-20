@@ -132,17 +132,66 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     )
   }
 
-  public render() {
-    const { showPlayer, value, showPlayerPlaylist } = this.state
+  public renderPlaylistDetails = () => {
     const { selectedPlaylist } = this.props
 
     let durationSeconds = 0
     if (!isEmpty(selectedPlaylist) && selectedPlaylist.tracks.items.length > 0) {
       durationSeconds = selectedPlaylist.tracks.items
-            .map(item => item.track.duration_ms)
-            .reduce((acc, dur) => acc + dur)
+        .map(item => item.track.duration_ms)
+        .reduce((acc, dur) => acc + dur)
     }
 
+    return (
+      <div className="playlist-header">
+        <div className="playlist-header-top-menu">
+          <Link to={'/playlists'}>
+            <Icon>chevron_left</Icon>
+          </Link>
+        </div>
+        <div className="playlist-content">
+          <div className="playlist-content-img">
+            <img
+              src={
+                (selectedPlaylist.images.length > 0 &&
+                  selectedPlaylist.images[0].url) ||
+                ''
+              }
+            />
+          </div>
+          <div className="playlist-content-title-block">
+            <ListItemText
+              className="playlist-content-title"
+              primary={selectedPlaylist.name}
+            />
+            <div className="playlist-content-title-length">
+              <div>
+                      <span className="playlist-content-title-songs">
+                        {`Total time: ${formatDuration(durationSeconds)}`}
+                      </span><br/>
+                <span className="playlist-content-title-songs">
+                        {`${selectedPlaylist.tracks && selectedPlaylist.tracks.total} Songs`}
+                      </span>
+              </div>
+
+              <Button
+                variant="fab"
+                color="primary"
+                className="finder-playlist-header-container-button"
+                onClick={this.onPlayClicked}
+              >
+                <Icon>{'play_arrow'}</Icon>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  public render() {
+    const { showPlayer, value, showPlayerPlaylist } = this.state
+    const { selectedPlaylist } = this.props
 
     let PlaylistTabs = <div />
     if (!isEmpty(selectedPlaylist)) {
@@ -153,51 +202,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
               handleTrackVote={this.handleTrackVote}
               showPlayerPlaylist={this.onShowPlayerPlaylist}
             />
-          ) : (
-            <div className="playlist-header">
-              <div className="playlist-header-top-menu">
-                <Link to={'/playlists'}>
-                  <Icon>chevron_left</Icon>
-                </Link>
-              </div>
-              <div className="playlist-content">
-                <div className="playlist-content-img">
-                  <img
-                    src={
-                      (selectedPlaylist.images.length > 0 &&
-                        selectedPlaylist.images[0].url) ||
-                      ''
-                    }
-                  />
-                </div>
-                <div className="playlist-content-title-block">
-                  <ListItemText
-                    className="playlist-content-title"
-                    primary={selectedPlaylist.name}
-                  />
-                  <div className="playlist-content-title-length">
-                    <div>
-                      <span className="playlist-content-title-songs">
-                        {`Total time: ${formatDuration(durationSeconds)}`}
-                      </span><br/>
-                        <span className="playlist-content-title-songs">
-                        {`${selectedPlaylist.tracks && selectedPlaylist.tracks.total} Songs`}
-                      </span>
-                    </div>
-
-                    <Button
-                      variant="fab"
-                      color="primary"
-                      className="finder-playlist-header-container-button"
-                      onClick={this.onPlayClicked}
-                    >
-                      <Icon>{'play_arrow'}</Icon>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          ) : this.renderPlaylistDetails()}
           <AppBar position="static" color="default">
             <Tabs
               value={value}
@@ -222,8 +227,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
             {value === 0 ? (
               <Typography component="div" dir={'0'} style={{ padding: 10 }}>
                 {this.renderApprovedTracks(selectedPlaylist)}
-                <div className="stoper-block" />
-                <div className="stoper-block" />
               </Typography>
             ) : (
               <div />

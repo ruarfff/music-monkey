@@ -8,7 +8,7 @@ import {
     SELECT_PAGE
 } from './activeActions'
 
-export function* SelectPage() {
+export function* selectPage() {
   try {
     yield put({ type: CLEAR_SUGGESTION })
     yield put({ type: CLEAR_SEARCH })
@@ -19,5 +19,5 @@ export function* SelectPage() {
 }
 
 export function* watchSelectPage() {
-  yield takeEvery(SELECT_PAGE, SelectPage)
+  yield takeEvery(SELECT_PAGE, selectPage)
 }

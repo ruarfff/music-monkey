@@ -7,13 +7,9 @@ const mapStateToProps = (state: IRootState) => ({
     firstAuthenticated: state.auth.firstAuthenticated
 })
 
-const mapDispatchToProps = {
-  
-}
-
 const StepperContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Stepper)
 
 export default StepperContainer

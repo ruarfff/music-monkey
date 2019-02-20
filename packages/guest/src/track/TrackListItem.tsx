@@ -2,13 +2,9 @@ import {
   Avatar,
   Divider,
   Icon,
-  // IconButton,
   ListItem,
   ListItemText
-  // Menu,
-  // MenuItem
 } from '@material-ui/core'
-// import MoreVertIcon from '@material-ui/icons/MoreVert'
 import * as React from 'react'
 import ITrack from '../track/ITrack'
 import './TrackListItem.scss'
@@ -104,17 +100,6 @@ const TrackListItem = ({
         ) : (
           ''
         )}
-        {/* <IconButton
-          aria-label="More"
-          aria-owns={open ? 'long-menu' : ''}
-          aria-haspopup="true"
-          className="playList-button-menu"
-        >
-          <MoreVertIcon />
-        </IconButton>
-        <Menu id="long-menu" open={false}>
-          <MenuItem>{'test'}</MenuItem>
-        </Menu> */}
       </ListItem>
       <Divider variant='inset' />
     </div>

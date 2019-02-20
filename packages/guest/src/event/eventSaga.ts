@@ -10,22 +10,23 @@ import {
   FETCH_USERS_EVENTS,
   FETCH_USERS_EVENTS_ERROR,
   FETCH_USERS_EVENTS_SUCCESS,
+  GET_EVENT_HOST_FAILURE,
   GET_EVENT_HOST_REQUEST,
   GET_EVENT_HOST_SUCCESS
 } from './eventActions'
 import {
-getEventById,
-getEventByInviteId,
-getUsersInvitedEvents
+  getEventById,
+  getEventByInviteId,
+  getUsersInvitedEvents
 } from './eventClient'
 
 function* fetchEventHostByIdFlow(action: IAction) {
   const userId = action.payload
   try {
     const host = yield call(getUserById, userId)
-    yield put({ type: GET_EVENT_HOST_SUCCESS, payload: host})
+    yield put({ type: GET_EVENT_HOST_SUCCESS, payload: host })
   } catch (err) {
-    console.log(err.message)
+    yield put({ type: GET_EVENT_HOST_FAILURE, payload: err })
   }
 }
 

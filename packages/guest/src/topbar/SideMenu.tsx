@@ -17,6 +17,10 @@ interface ISideMenuProps extends RouteComponentProps<any> {
   user: any
 }
 
+const checkLocation = (location: string, path: string) => {
+  return location === path ? 'active' : ''
+}
+
 const SideMenu = ({ user, location }: ISideMenuProps) => {
   const { pathname } = location
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
@@ -46,9 +50,7 @@ const SideMenu = ({ user, location }: ISideMenuProps) => {
 
         <Link to={'/'}>
           <MenuItem
-            className={`SideMenu-item ${
-              pathname === '/' ? 'active' : ''
-            }`}
+            className={`SideMenu-item ${checkLocation(pathname, '/')}`}
           >
             <Icon>event</Icon>
             <span>Events</span>
@@ -56,9 +58,7 @@ const SideMenu = ({ user, location }: ISideMenuProps) => {
         </Link>
         <Link to={'/playlists'}>
           <MenuItem
-            className={`SideMenu-item ${
-              pathname === '/playlists' ? 'active' : ''
-            }`}
+            className={`SideMenu-item ${checkLocation(pathname, '/playlists')}`}
           >
             <Icon>library_music</Icon>
             <span>Playlists</span>
@@ -66,9 +66,7 @@ const SideMenu = ({ user, location }: ISideMenuProps) => {
         </Link>
         <Link to={'/finder'}>
           <MenuItem
-            className={`SideMenu-item ${
-              pathname === '/finder' ? 'active' : ''
-            }`}
+            className={`SideMenu-item ${checkLocation(pathname, '/finder')}`}
           >
             <Icon>search</Icon>
             <span>Finder</span>
@@ -76,9 +74,7 @@ const SideMenu = ({ user, location }: ISideMenuProps) => {
         </Link>
         <Link to={'/requests'}>
           <MenuItem
-            className={`SideMenu-item ${
-              pathname === '/requests' ? 'active' : ''
-            }`}
+            className={`SideMenu-item ${checkLocation(pathname, '/requests')}`}
           >
             <Icon>favorite</Icon>
             <span>My Requests</span>
@@ -86,9 +82,7 @@ const SideMenu = ({ user, location }: ISideMenuProps) => {
         </Link>
         <Link to={'/account'}>
           <MenuItem
-            className={`SideMenu-item ${
-              pathname === '/account' ? 'active' : ''
-            }`}
+            className={`SideMenu-item ${checkLocation(pathname, '/account')}`}
           >
             <Icon>account_circle</Icon>
             <span>Account</span>
