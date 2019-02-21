@@ -187,14 +187,14 @@ export default ({
   const handlePlaylist = () => {
     useEffect(
       () => {
-        if (!isEmpty(selectedEvent)) {
+        if (!isEmpty(selectedEvent && !isEmpty(selectedEvent.playlist))) {
           subscribeToPlaylistModified(selectedEvent.playlist.id, () => {
             getEvent(eventId)
           })
         }
 
         return function cleanup() {
-          if (!isEmpty(selectedEvent)) {
+          if (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)) {
             unSubscribeToPlaylistModified(selectedEvent.playlist.id)
           }
         }

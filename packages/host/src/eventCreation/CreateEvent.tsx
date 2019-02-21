@@ -106,6 +106,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
     const eventId = this.props.match.params.eventId
 
+    if (!eventId) {
+      this.props.deselectPlaylist()
+    }
+
     const { event, getEventById } = this.props
 
     if (!event.eventId && eventId) {
