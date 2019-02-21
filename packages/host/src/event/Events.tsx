@@ -4,7 +4,6 @@ import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography/Typography'
 import _ from 'lodash'
 import { map, sortBy } from 'lodash'
-// import moment from 'moment'
 import Carousel from 'nuka-carousel'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
@@ -18,7 +17,6 @@ import EventCard from './EventCard'
 import './Events.scss'
 import IEvent from './IEvent'
 import IEventState from './IEventState'
-// import NoEvents from './NoEvents'
 import PlaylistCard from './PlaylistCardSmall'
 
 interface IEventsProps {
@@ -39,18 +37,8 @@ class Events extends React.Component<IEventsProps> {
     playlist: boolean,
     message?: string
   ) => {
-    // const now = moment()
 
     const upcomingPlaylists: any[] = events.map(event => event.playlist)
-
-    // if (!!events && playlist) {
-    //   upcomingPlaylists = _.uniqBy(
-    //     events
-    //       .filter(event => event.startDateTime.isAfter(now))
-    //       .map(event => event.playlist),
-    //     'id'
-    //   ).reverse()
-    // }
 
     const leftControl = ({ previousSlide }: any) => (
       <IconButton onClick={previousSlide}>
@@ -114,11 +102,6 @@ class Events extends React.Component<IEventsProps> {
 
   public render() {
     const { events, eventsLoading } = this.props.events
-    // const now = moment()
-    // let upcomingEvents: IEvent[] = []
-    // if (!!events) {
-    //   upcomingEvents = events.filter(event => event.startDateTime.isAfter(now))
-    // }
 
     return (
       <div className="events">

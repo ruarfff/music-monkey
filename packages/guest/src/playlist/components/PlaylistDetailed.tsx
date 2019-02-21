@@ -91,7 +91,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
   public componentWillReceiveProps(newProps: IPlayListProps) {
     const {
       getEvent,
-      suggestions,
       getSuggestions,
     } = this.props
 
@@ -103,9 +102,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
         newProps.event.eventId,
         () => getSuggestions(eventId)
       )
-      if (isEmpty(suggestions) && !newProps.fetchingSuggestions) {
-        getSuggestions(eventId)
-      }
     }
   }
 

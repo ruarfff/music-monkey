@@ -1,12 +1,16 @@
 import {
   Icon,
   IconButton,
-  LinearProgress,
   ListItemText
 } from '@material-ui/core'
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import './Player.scss'
+import TimeLine from './TimeLine'
+
+const SweetAlert = withReactContent(Swal) as any
 
 interface IPlayerProps extends RouteComponentProps<any> {
   track: any
@@ -14,8 +18,7 @@ interface IPlayerProps extends RouteComponentProps<any> {
 
 interface IPlayerState {
   play: boolean
-  time: number
-  touch: boolean
+  showErrorDialog: boolean
 }
 
 export default class Player extends React.Component<
@@ -27,32 +30,25 @@ export default class Player extends React.Component<
 
     this.state = {
       play: true,
-      time: 0,
-      touch: false
+      showErrorDialog: true
     }
   }
 
   public componentDidMount() {
-    const audio = document.getElementById('player') as HTMLMediaElement
-    if (!!audio) {
-      audio.onloadstart = () => {
-        audio.play()
-        this.setState({ play: true })
-      }
+    if (!this.props.track.preview_url) {
+      this.showErrorDialog('Sorry. This song don`t have a preview')
+    }
+  }
+
+  public componentWillReceiveProps(newProps: IPlayerProps) {
+    if (!newProps.track.preview_url) {
+      this.showErrorDialog('Sorry. This song don`t have a preview')
     }
   }
 
   public render() {
-    const { play, time } = this.state
+    const { play } = this.state
     const { track } = this.props
-    setInterval(this.progress, 400)
-    const audio = document.getElementById('player') as HTMLMediaElement
-    if (!!audio) {
-      audio.onloadstart = () => {
-        audio.play()
-        this.setState({ play: true })
-      }
-    }
     return (
       <div className="player-container">
         <div className="player-track-img">
@@ -60,14 +56,10 @@ export default class Player extends React.Component<
         </div>
         <div className="player-control-container">
           <div className="player-control-duration">
-            {/* <Tooltip title="Add" placement="top"> */}
-            <LinearProgress
-              variant="determinate"
-              value={time}
-              onClick={this.onProgressClicked}
-              onTouchStart={this.onProgressTouched}
-              onTouchMove={this.onTouchStart}
-              onTouchEnd={this.onTouchEnd}
+            <TimeLine
+              isPlay={play}
+              trackUrl={track.preview_url}
+              handleTogglePlayer={this.handleTogglePlayer}
             />
             {/* </Tooltip> */}
           </div>
@@ -83,91 +75,30 @@ export default class Player extends React.Component<
                 color="primary"
                 className="finder-playlist-header-container-button"
                 component="span"
-                onClick={this.onPlay}
+                onClick={this.handleTogglePlayer}
               >
                 <Icon>{play ? 'pause' : 'play_arrow'}</Icon>
               </IconButton>
             </div>
           </div>
         </div>
-        <div style={{ display: 'none' }}>
-          <audio
-            src={track.preview_url}
-            id="player"
-            autoPlay={true}
-            controls={true}
-            className="EventSuggestions-audio"
-            preload="none"
-          />
-        </div>
       </div>
     )
   }
 
-  private onProgressTouched = () => {
-    this.setState({ touch: true })
+  private handleTogglePlayer = () => {
+    this.setState({play: !this.state.play})
   }
 
-  private onProgressClicked = (elem: any) => {
-    this.playToTime(elem)
-  }
-
-  private progress = () => {
-    if (this.state.play && !this.state.touch) {
-      const { time, play } = this.state
-      const audio = document.getElementById('player') as HTMLMediaElement
-      if (!!audio && time !== 100) {
-        if (time !== (audio.currentTime * 100) / audio.duration) {
-          const timer = (audio.currentTime * 100) / audio.duration
-          this.setState({ time: +timer.toFixed(2) })
-        }
-      }
-      if (time === 100 && play) {
-        this.setState({ play: false })
-      }
+  private showErrorDialog = (message: string) => {
+    if (this.state.play) {
+      this.handleTogglePlayer()
     }
-  }
-
-  private playToTime = (elem: any) => {
-    const time =
-      ((elem.clientX - elem.currentTarget.offsetLeft) * 100) /
-      elem.currentTarget.offsetWidth
-    const audio = document.getElementById('player') as HTMLMediaElement
-    if (!!audio) {
-      audio.currentTime = (audio.duration * time) / 100
-      audio.play()
-      this.setState({ play: true, time })
-    }
-  }
-
-  private onTouchStart = (elem: any) => {
-    const time =
-      ((elem.touches[0].clientX - elem.currentTarget.offsetLeft) * 100) /
-      elem.currentTarget.offsetWidth
-    this.setState({ time })
-  }
-
-  private onTouchEnd = (elem: any) => {
-    const audio = document.getElementById('player') as HTMLMediaElement
-    if (!!audio) {
-      audio.currentTime = (audio.duration * this.state.time) / 100
-      audio.play()
-      this.setState({ play: true, touch: false })
-    }
-  }
-
-  private onPlay = () => {
-    const { play, time } = this.state
-
-    const audio = document.getElementById('player') as HTMLMediaElement
-    if (time === 100) {
-      this.setState({ play: false, time: 0 })
-    }
-    if (!play) {
-      audio.play()
-    } else {
-      audio.pause()
-    }
-    this.setState({ play: !play })
+    this.setState({ showErrorDialog: false })
+    SweetAlert.fire({
+      confirmButtonColor: '#ffb000',
+      title: message,
+      type: 'error'
+    }).then()
   }
 }
