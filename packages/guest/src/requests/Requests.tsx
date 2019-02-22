@@ -110,7 +110,6 @@ class Requests extends React.Component<IRequestsProps> {
       sortedEvents = pastEvents.concat(liveEvents, upcomingEvents)
     }
 
-
     let tabs = <div />
 
     if (!suggestion.fetchingSuggestions) {

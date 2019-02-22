@@ -35,7 +35,7 @@ it('should handle ADD_TRACK_FAILURE', () => {
 it('should handle ADD_TRACK_SUCCESS', () => {
   expect(playlist(initialState, {type: ADD_TRACK_SUCCESS})).toEqual({
     ...initialState,
-    notification: '',
+    notification: 'Track successfully added',
   })
 })
 
