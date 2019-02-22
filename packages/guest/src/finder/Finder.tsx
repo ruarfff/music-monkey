@@ -1,5 +1,6 @@
 import { AppBar, Divider, Tab, Tabs } from '@material-ui/core'
-import { isEmpty } from 'lodash'
+import { isEmpty, sortBy } from 'lodash'
+import moment from 'moment'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import Swal from 'sweetalert2'
@@ -97,10 +98,40 @@ const Finder = ({
     )
   }
 
+  const now = moment()
+
+  let sortedEvents = [] as IEvent[]
+
+  if (!isEmpty(events)) {
+    const pastEvents = sortBy(
+      events.filter(
+        event => now.isAfter(event.endDateTime)
+      ), 'endDateTime'
+    ).reverse()
+
+    const liveEvents = sortBy(
+      events
+        .filter(
+          event =>
+            now.isAfter(event.startDateTime) && now.isBefore(event.endDateTime)
+        ),'endDateTime'
+    ).reverse()
+
+    const upcomingEvents = sortBy(
+      events
+        .filter(
+          event => now.isBefore(event.startDateTime)
+        ), 'endDateTime'
+    ).reverse()
+
+
+    sortedEvents = pastEvents.concat(liveEvents, upcomingEvents)
+  }
+
   return (
     <div>
-      {isEmpty(selectedEvent) && !isEmpty(events) && (
-        <EventPicker events={events} onSelectEvent={selectEvent} />
+      {isEmpty(selectedEvent) && !isEmpty(sortedEvents) && (
+        <EventPicker events={sortedEvents} onSelectEvent={selectEvent} />
       )}
       <Search />
       {(searching || !isEmpty(filteredSearch)) && (

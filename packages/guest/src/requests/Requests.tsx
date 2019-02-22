@@ -1,5 +1,6 @@
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
-import { isEmpty } from 'lodash'
+import { isEmpty, sortBy } from 'lodash'
+import moment from 'moment'
 import * as React from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../event/IEvent'
@@ -78,12 +79,45 @@ class Requests extends React.Component<IRequestsProps> {
       selectEvent,
       deselectEvent
     } = this.props
+
+    const now = moment()
+
+    let sortedEvents = [] as IEvent[]
+
+    if (!isEmpty(events)) {
+      const pastEvents = sortBy(
+        events.filter(
+          e => now.isAfter(e.endDateTime)
+        ), 'endDateTime'
+      ).reverse()
+
+      const liveEvents = sortBy(
+        events
+          .filter(
+            e =>
+              now.isAfter(e.startDateTime) && now.isBefore(e.endDateTime)
+          ),'endDateTime'
+      ).reverse()
+
+      const upcomingEvents = sortBy(
+        events
+          .filter(
+            e => now.isBefore(e.startDateTime)
+          ), 'endDateTime'
+      ).reverse()
+
+
+      sortedEvents = pastEvents.concat(liveEvents, upcomingEvents)
+    }
+
+
     let tabs = <div />
+
     if (!suggestion.fetchingSuggestions) {
       tabs = (
         <div>
-          {isEmpty(event) && !isEmpty(events) && (
-            <EventPicker events={events} onSelectEvent={selectEvent} />
+          {isEmpty(event) && !isEmpty(sortedEvents) && (
+            <EventPicker events={sortedEvents} onSelectEvent={selectEvent} />
           )}
           {!isEmpty(event) && (
             <SelectedEvent event={event} deselectEvent={deselectEvent} />
