@@ -79,9 +79,19 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
 
     const filteredPlaylists = sortedPlaylists ?
       sortedPlaylists.filter(
-        playlist => playlist.tracks.items.length > 0
+        playlist => {
+          if (!!playlist.tracks) {
+            return playlist.tracks.items.length > 0
+          }
+          return
+        }
       ) : playlists && playlists.filter(
-        playlist => playlist.tracks.items.length > 0
+        playlist => {
+          if (!!playlist.tracks) {
+            return playlist.tracks.items.length > 0
+          }
+          return
+        }
       )
 
     const { anchorEl } = this.state

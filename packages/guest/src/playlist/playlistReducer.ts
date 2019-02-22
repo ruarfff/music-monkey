@@ -32,11 +32,12 @@ export default function playlist(
     case PLAYLIST_DESELECTED:
       return { ...state, selectedPlaylist: {} }
     case EVENT_PLAYLISTS_LOADED:
+      const filteredEvents = payload.filter((event: IEvent) => event.playlistUrl)
       return {
         ...state,
-        eventPlaylists: payload.map((event: IEvent) => ({
-          ...event.playlist,
-          eventId: event.eventId
+        eventPlaylists: filteredEvents.map((event: IEvent) => ({
+        ...event.playlist,
+            eventId: event.eventId
         }))
       }
     default:

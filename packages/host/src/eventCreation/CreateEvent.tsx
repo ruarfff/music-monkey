@@ -203,7 +203,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     }
   }
 
-  public showErrorDialog = (message: string) => () => {
+  public showErrorDialog = (message: string) => {
     this.setState({ showErrorDialog: false })
     SweetAlert.fire({
       confirmButtonColor: '#8f0a00',
@@ -607,19 +607,25 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     if ( !_.isEmpty(errors.saving) && history.location.pathname !== `/events/${event.eventId}/edit`) {
       this.showErrorDialog(this.props.errors.saving.response.statusText)
     }
-    if (event.createdAt !== undefined) {
-      editEventRequest({
-        ...event,
-        dataUrl: ''
-      })
-      setStep(currentStep + 1)
-    } else {
+    if (currentStep === 0 && !!event.playlistUrl) {
+      if (event.createdAt !== undefined) {
+        editEventRequest({
+          ...event,
+          dataUrl: ''
+        })
+        setStep(currentStep + 1)
+      } else {
         saveEvent({
           ...event,
           organizer: this.state.organizer,
           dataUrl: ''
         })
+      }
+    } else {
+      console.log('test')
+      this.showErrorDialog('Pick or create a playlist')
     }
+
   }
 
   private handleContentUpdated = (key: string) => (content: any) => {
