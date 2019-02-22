@@ -10,6 +10,7 @@ export default {
   isCreating: false,
   searchResult: {} as ISearch,
   selectedPlaylist: {} as IPlaylist,
+  createdPlaylists: [] as IPlaylist[],
   notification: '',
   tracksWithFeatures: [] as ITrackWithFeatures[]
 } as IPlaylistState

@@ -1,10 +1,11 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { SET_EVENT_PLAYLIST } from '../eventPlaylist/eventPlaylistActions'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
 import { FETCH_PLAYLISTS } from '../playlist/playlistActions'
-import { createPlaylist } from '../playlist/playlistClient'
+import { createPlaylist, replaceTracksInPlaylist } from '../playlist/playlistClient'
+import IUser from '../user/IUser'
 import {
   EVENT_CONTENT_UPDATED,
   EVENT_CREATE_PLAYLIST_INITIATED,
@@ -82,15 +83,54 @@ function* fetchLatLngFlow(action: IAction) {
   }
 }
 
+const getEventPlaylist = (state: any) => state.eventPlaylist.playlist
+const getPlaylistName = (state: any) => state.event.savingEvent.name
+const getJustCreatedPlaylists = (state: any) => state.playlist.createdPlaylists
+
 function* saveEventFlow(action: IAction) {
   const event: IEvent = action.payload
+  let copiedPlaylist
+  let eventPlaylist:any
+
   try {
-    const savedEvent = yield call(createEvent, event)
+    eventPlaylist = yield select(getEventPlaylist)
+    const playlistName = yield select(getPlaylistName)
+    const justCreatePlaylists = yield select(getJustCreatedPlaylists)
+    const playlistDetails: IPlaylistDetails = {
+      name: playlistName || eventPlaylist.name,
+      description: eventPlaylist.description,
+      user: {} as IUser
+    }
+
+    const isJustCreated = justCreatePlaylists.filter((playlist: any) =>
+      playlist.id === eventPlaylist.id
+    ).length === 1
+
+    if (eventPlaylist.tracks.items.length > 0 && !isJustCreated) {
+      const tracksToCopy = eventPlaylist.tracks.items.map((item: any) => item.track.uri)
+
+      copiedPlaylist = yield call(savePlaylist, playlistDetails)
+
+      yield call(replaceTracksInPlaylist, copiedPlaylist.id, tracksToCopy)
+    }
+  } catch (err) {
+    console.log(err.message)
+  }
+
+  try {
+    let savedEvent
+
+    if (copiedPlaylist) {
+      savedEvent = yield call(createEvent, {...event, playlist: copiedPlaylist})
+    } else {
+      savedEvent = yield call(createEvent, event)
+    }
+
     yield put({
       payload: savedEvent,
       type: EVENT_SAVED
     })
-    yield put({type: SET_CREATE_EVENT_STEP, payload: 1})
+    yield put({ type: SET_CREATE_EVENT_STEP, payload: 1 })
   } catch (err) {
     yield put({ type: EVENT_SAVE_ERROR, payload: err })
   }
@@ -99,8 +139,43 @@ function* saveEventFlow(action: IAction) {
 function* updateEventFlow(action: IAction) {
   const event: IEvent = action.payload
 
+  let copiedPlaylist
+  let eventPlaylist:any
+
   try {
-    const editedEvent = yield call(updateEvent, event)
+    eventPlaylist = yield select(getEventPlaylist)
+    const playlistName = yield select(getPlaylistName)
+    const justCreatePlaylists = yield select(getJustCreatedPlaylists)
+    const playlistDetails: IPlaylistDetails = {
+      name: playlistName || eventPlaylist.name,
+      description: eventPlaylist.description,
+      user: {} as IUser
+    }
+
+    const isJustCreated = justCreatePlaylists.filter((playlist: any) =>
+      playlist.id === eventPlaylist.id
+    ).length === 1
+
+    if (eventPlaylist.tracks.items.length > 0 && !isJustCreated) {
+      const tracksToCopy = eventPlaylist.tracks.items.map((item: any) => item.track.uri)
+
+      copiedPlaylist = yield call(savePlaylist, playlistDetails)
+
+      yield call(replaceTracksInPlaylist, copiedPlaylist.id, tracksToCopy)
+    }
+  } catch (err) {
+    console.log(err.message)
+  }
+
+  try {
+    let editedEvent
+
+    if (copiedPlaylist) {
+      editedEvent = yield call(updateEvent, {...event, playlist: copiedPlaylist})
+    } else {
+      editedEvent = yield call(updateEvent, event)
+    }
+
     yield put({
       payload: editedEvent,
       type: EVENT_EDIT_SUCCESS

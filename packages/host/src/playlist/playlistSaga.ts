@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, select, takeEvery } from 'redux-saga/effects'
 import IAction from '../IAction';
 import {
   ADD_TRACK_REQUEST,
@@ -54,10 +54,30 @@ function* fetchSearchedTracks(action: IAction) {
   }
 }
 
+const getCurrentLocation = (state: any) => state.router.location.pathname
+const getJustCreatedPlaylists = (state: any) => state.playlist.createdPlaylists
+
 function* fetchAddTrackToPlaylist(action: IAction) {
   try {
-    yield call(addTracksToPlaylist, action.payload.playlistId, [action.payload.track.uri])
-    yield call(fetchPlaylist, action.payload.playlistId)
+    const location = yield select(getCurrentLocation)
+    const justCreatedPlaylists = yield select(getJustCreatedPlaylists)
+
+    const isCreateOrEditPage = location.indexOf('create-event') !== -1 || location.indexOf('edit') !== -1
+
+    const isJustCreated = justCreatedPlaylists.filter((playlist: any) =>
+      playlist.id === action.payload.playlistId
+    ).length === 1
+
+    if (isCreateOrEditPage && isJustCreated) {
+      yield call(addTracksToPlaylist, action.payload.playlistId, [action.payload.track.uri])
+      yield call(fetchPlaylist, action.payload.playlistId)
+    }
+
+    if (!isCreateOrEditPage) {
+      yield call(addTracksToPlaylist, action.payload.playlistId, [action.payload.track.uri])
+      yield call(fetchPlaylist, action.payload.playlistId)
+    }
+
     yield put(addTrackSuccess(action.payload.track))
   } catch (e) {
     yield put(addTrackError())

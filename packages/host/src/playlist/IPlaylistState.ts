@@ -11,4 +11,5 @@ export default interface IPlaylistState {
   searchResult: ISearch
   notification: string
   tracksWithFeatures: ITrackWithFeatures[]
+  createdPlaylists: IPlaylist[]
 }
