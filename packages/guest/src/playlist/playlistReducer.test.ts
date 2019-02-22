@@ -71,8 +71,8 @@ it('should handle PLAYLIST_DESELECTED', () => {
 
 it('should handle EVENT_PLAYLISTS_LOADED', () => {
   const events = [
-    { eventId: 'event-1', playlist: { id: 'playlist-1' } },
-    { eventId: 'event-2', playlist: { id: 'playlist-2' } }
+    { eventId: 'event-1', playlistUrl: '1', playlist: { id: 'playlist-1' } },
+    { eventId: 'event-2', playlistUrl: '2', playlist: { id: 'playlist-2' } }
   ]
   expect(
     playlist(initialState, { payload: events, type: EVENT_PLAYLISTS_LOADED })
