@@ -60,7 +60,7 @@ const componentConfig = {
   maxFilesize: 2,
   postUrl: 'upload',
   iconFiletypes: ['.jpg', '.png'],
-  showFiletypeIcon: true,
+  showFiletypeIcon: true
 }
 
 interface IFileUploadProps {
@@ -79,15 +79,11 @@ class FileUpload extends React.Component<IFileUploadProps, {}> {
       }
     }
     return (
-      <div>
-        <DropzoneComponent
-          config={componentConfig}
-          eventHandlers={eventHandlers}
-          djsConfig={djsConfig}
-        >
-          {({ getRootProps }: any) => <div {...getRootProps()} />}
-        </DropzoneComponent>
-      </div>
+      <DropzoneComponent
+        config={componentConfig}
+        eventHandlers={eventHandlers}
+        djsConfig={djsConfig}
+      />
     )
   }
 }
