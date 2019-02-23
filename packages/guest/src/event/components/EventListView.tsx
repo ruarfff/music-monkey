@@ -1,8 +1,12 @@
 import { Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
+import { useEffect, useState } from 'react'
+import { Redirect } from 'react-router'
 import IAction from '../../IAction'
+import { inviteAnsweredKey, inviteIdKey } from '../../invite/inviteConstants'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import IPlaylist from '../../playlist/IPlaylist'
+import localStorage from '../../storage/localStorage'
 import IUser from '../../user/IUser'
 import IEvent from '../IEvent'
 import EventList from './EventList'
@@ -27,18 +31,51 @@ const EventListView = ({
   eventsLoading,
   selectPlaylist,
   selectEvent,
-  fetchUsersEvents,
+  fetchUsersEvents
 }: IEventListViewProps) => {
-  React.useEffect(() => {
+  const [redirect, setRedirect] = useState(false)
+  const [inviteId, setInviteId] = useState('')
+  const [inviteAnswered, setInviteAnswered] = useState(null)
+
+  useEffect(() => {
+    let storedInvite = localStorage.get(inviteIdKey, null)
+    if (storedInvite === 'undefined') {
+      storedInvite = null
+    }
+    setInviteId(storedInvite)
+    setInviteAnswered(localStorage.get(inviteAnsweredKey, null))
+  })
+  useEffect(() => {
+    const shouldRedirect = !!(inviteId && inviteAnswered === 'false')
+    if (shouldRedirect !== redirect) {
+      setRedirect(shouldRedirect)
+    }
+
+    console.log('Invite Id', inviteId)
+    console.log('Invite Answered', inviteAnswered)
+    console.log(redirect)
+  }, [inviteAnswered, inviteId])
+
+  useEffect(() => {
     if (!!events) {
-      const shouldFetchEvent = !events.filter((event) =>
-        !isEmpty(selectedEvent) && event.eventId === selectedEvent.eventId
+      const shouldFetchEvent = !events.filter(
+        event =>
+          !isEmpty(selectedEvent) && event.eventId === selectedEvent.eventId
       ).length
-      if (!isEmpty(selectedEvent) && selectedEvent.eventId && shouldFetchEvent) {
+      if (
+        !isEmpty(selectedEvent) &&
+        selectedEvent.eventId &&
+        shouldFetchEvent
+      ) {
         fetchUsersEvents()
       }
     }
   }, [])
+
+  if (redirect && inviteId) {
+    console.log('REDIRECTING')
+    return <Redirect to={'/invite/' + inviteId} />
+  }
 
   if (eventsLoading) {
     return <LoadingSpinner />
