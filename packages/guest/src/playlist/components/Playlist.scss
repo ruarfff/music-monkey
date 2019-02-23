@@ -143,7 +143,7 @@ img.Playist-img {
       height: 100px;
       display: flex;
       justify-content: flex-start;
-      align-items: start;
+      align-items: flex-start;
       margin-bottom: 25px;
 
       .playlist-content-img {
@@ -196,11 +196,10 @@ img.Playist-img {
 
 .playlist-list-item-wrapper {
   a {
-    text-decoration: none!important;
+    text-decoration: none !important;
   }
 
   .playlist-list-item {
     display: flex;
   }
 }
-

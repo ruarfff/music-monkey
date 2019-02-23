@@ -1,44 +1,44 @@
 @import '../theme/colours.scss';
 
 .account-search-block {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
-    .account-search {
-        margin: 0 !important;
-        font-size: 17px;
-        border: none;
-        outline: none;
-    }
+  .account-search {
+    margin: 0 !important;
+    font-size: 17px;
+    border: none;
+    outline: none;
+  }
 
-    .account-search-icon {
-        color: #6c2e89;
-    }
+  .account-search-icon {
+    color: #6c2e89;
+  }
 }
 
 .list-item-requests {
-    display: flex !important;
-    align-items: start !important;
-    justify-content: space-between !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
 
-    .list-item-requests-event {
-        font-size: 14px;
-        color: $secondary-light;
-    }
+  .list-item-requests-event {
+    font-size: 14px;
+    color: $secondary-light;
+  }
 
-    .list-item-requests-title {
-        width: 100%;
-        padding-left: 20px;
-    }
+  .list-item-requests-title {
+    width: 100%;
+    padding-left: 20px;
+  }
 
-    .list-group-button-count.black {
-        span {
-            color: #000 !important;
-        }
+  .list-group-button-count.black {
+    span {
+      color: #000 !important;
     }
+  }
 }
 
 .divider-account-search-block {
-    margin: 0 !important;
+  margin: 0 !important;
 }
