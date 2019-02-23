@@ -1891,9 +1891,9 @@
     csstype "^2.0.0"
 
 "@types/react-places-autocomplete@^7.2.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@types/react-places-autocomplete/-/react-places-autocomplete-7.2.1.tgz#875e0cda5811aa20a36cf24a4e9cab8af678258a"
-  integrity sha512-lFwiXpCnOzETS2trMwmRyTH3RFXRN7NiNnoQyzCsS0YYZ0s4CMVTnKRB+IIJTMkyxG8Q+TT7rD7XaDLXBS71iA==
+  version "7.2.5"
+  resolved "https://registry.yarnpkg.com/@types/react-places-autocomplete/-/react-places-autocomplete-7.2.5.tgz#03e59d87ee65c52b73144695f4c4f082d2cc1f70"
+  integrity sha512-XIQOvg07V7b2Ejv+xpHEeIGFUQI/GePejaJnFIXnUUfO2rEL97QE3AsP7be/ikwIjxecCZ3kPClhTzcQaAAucg==
   dependencies:
     "@types/googlemaps" "*"
     "@types/react" "*"
