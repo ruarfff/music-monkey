@@ -87,7 +87,6 @@ export default function playlists(
       }
     case LOAD_MORE_PLAYLISTS_SUCCESS: {
       const playlists = cloneDeep(state.data).concat(payload)
-      console.log(playlists)
       return {
         ...state,
         data: playlists,

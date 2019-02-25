@@ -64,6 +64,7 @@ class EventPlaylistSummary extends React.PureComponent<
                 <FormControlLabel
                   control={
                     <Switch
+                      value={'suggesting Playlists Enabled'}
                       checked={event.settings.suggestingPlaylistsEnabled}
                       onChange={this.suggestingPlaylistsToggled}
                     />
@@ -73,6 +74,7 @@ class EventPlaylistSummary extends React.PureComponent<
                 <FormControlLabel
                   control={
                     <Switch
+                      value={'auto Accept Suggestions Enabled'}
                       checked={event.settings.autoAcceptSuggestionsEnabled}
                       onChange={this.autoAcceptSuggestionsToggled}
                     />
@@ -82,6 +84,7 @@ class EventPlaylistSummary extends React.PureComponent<
                 <FormControlLabel
                   control={
                     <Switch
+                      value={'dynamic Voting Enabled'}
                       checked={event.settings.dynamicVotingEnabled}
                       onChange={this.handleDynamicVotingToggled}
                     />

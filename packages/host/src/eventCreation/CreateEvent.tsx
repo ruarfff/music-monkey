@@ -408,7 +408,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               <FormControlLabel
                 control={
                   <Switch
-                    value={event.settings.suggestingPlaylistsEnabled}
+                    value={'suggesting Playlists Enabled'}
                     checked={event.settings.suggestingPlaylistsEnabled}
                     onChange={this.suggestingPlaylistsToggled}
                   />
@@ -418,7 +418,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               <FormControlLabel
                 control={
                   <Switch
-                    value={event.settings.autoAcceptSuggestionsEnabled}
+                    value={'auto Accept Suggestions Enabled'}
                     checked={event.settings.autoAcceptSuggestionsEnabled}
                     onChange={this.autoAcceptSuggestionsToggled}
                   />
@@ -428,7 +428,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               <FormControlLabel
                 control={
                   <Switch
-                    value={event.settings.dynamicVotingEnabled}
+                    value={'dynamic Voting Enabled'}
                     checked={event.settings.dynamicVotingEnabled}
                     onChange={this.handleDynamicVotingToggled}
                   />
