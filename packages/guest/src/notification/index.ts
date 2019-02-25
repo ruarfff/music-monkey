@@ -7,6 +7,7 @@ const pusher = new Pusher('d7c284d8f17d26f74047', {
 let subscribedToSuggestions: string = ''
 let subscribedToVotes: string = ''
 let subscribedToPlaylists: string = ''
+let subscribedToEvent: string = ''
 let subscribedToGuestUpdate = false
 
 export const subscribeToSuggestionsModified = (
@@ -80,6 +81,29 @@ export const unSubscribeToPlaylistModified = (playlistId: string) => {
   try {
     pusher.unsubscribe('mm-playlists-' + playlistId)
     subscribedToPlaylists = ''
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+export const subscribeToEventUpdated = (
+  eventId: string,
+  callback: any
+) => {
+  if (subscribedToEvent !== eventId) {
+    const channel = pusher.subscribe('mm-events-' + eventId)
+
+    channel.bind('event-updated', callback)
+
+    subscribedToEvent = eventId
+  }
+}
+
+export const unSubscribeToEventUpdated = (eventId: string) => {
+  try {
+    pusher.unsubscribe('mm-events-' + eventId)
+    subscribedToEvent = ''
   } catch (err) {
     console.log(err)
   }

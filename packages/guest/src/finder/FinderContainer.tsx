@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { deselectEvent, selectEvent } from '../event/eventActions'
+import { deselectEvent, getEvent, selectEvent } from '../event/eventActions'
 import { selectPlaylist } from '../navigation/activeActions'
 import { fetchPlaylists } from '../playlist/playlistActions'
 import IRootState from '../rootState'
@@ -26,7 +26,8 @@ const mapDispatchToProps = {
   fetchPlaylists,
   selectPlaylist,
   savePlaylistSuggestion,
-  deselectEvent
+  deselectEvent,
+  getEvent
 }
 
 const FinderContainer = withRouter(

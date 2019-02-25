@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
+import { subscribeToEventUpdated, unSubscribeToEventUpdated } from '../notification'
 import IPlaylist from '../playlist/IPlaylist'
 import Search from '../search/SearchContainer'
 import IPlaylistSuggestion from '../suggestion/IPlaylistSuggestion'
@@ -39,6 +40,7 @@ interface IFinderProps extends RouteComponentProps<any> {
   fetchPlaylists(user: IUser): IAction
   selectPlaylist(playlist: IPlaylist): IAction
   savePlaylistSuggestion(suggestions: IPlaylistSuggestion): IAction
+  getEvent(eventId: string): IAction
 }
 
 const Finder = ({
@@ -55,7 +57,8 @@ const Finder = ({
   saveTrackSuggestion,
   fetchPlaylists,
   selectPlaylist,
-  savePlaylistSuggestion
+  savePlaylistSuggestion,
+  getEvent
 }: IFinderProps) => {
   React.useEffect(
     () => {
@@ -65,6 +68,20 @@ const Finder = ({
     },
     [user]
   )
+
+  React.useEffect((
+    () => {
+      if (!isEmpty(selectedEvent)) {
+        subscribeToEventUpdated(selectedEvent.eventId, () => getEvent(selectedEvent.eventId))
+
+        return () => {
+          unSubscribeToEventUpdated(selectedEvent.eventId)
+        }
+      } else {
+        return
+      }
+    }
+  ))
 
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
