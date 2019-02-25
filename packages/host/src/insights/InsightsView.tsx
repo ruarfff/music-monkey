@@ -72,8 +72,6 @@ class InsightsView extends React.Component<IInsightsViewProps> {
           <Grid item={true} md={6}>
             <PieChartWidget filterByEventPick={filterByEventPick} pickedEvent={pickedEvent} events={events} />
           </Grid>
-          <Grid item={true} md={6}>
-          </Grid>
         </Grid>
       </div>
     )
