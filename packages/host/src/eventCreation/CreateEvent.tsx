@@ -62,6 +62,7 @@ interface ICreateEventProps extends RouteComponentProps<any> {
   deselectPlaylist(): IAction
   clearMessage(): IAction
   cancel(): void
+  getMoreUsersPlaylists(user: IUser, offset: number): IAction
   toggleDynamicVoting(event: IEvent): IAction
   toggleAutoAcceptSuggestions(event: IEvent): IAction
   toggleSuggestingPlaylists(event: IEvent): IAction
@@ -294,6 +295,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       deselectPlaylist,
       onPlaylistDragDrop,
       tryRemoveTrack,
+      getMoreUsersPlaylists,
       event,
       history
     } = this.props
@@ -311,6 +313,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             fetchPlaylists={fetchPlaylists}
             deselectPlaylist={deselectPlaylist}
             user={user}
+            getMoreUsersPlaylists={getMoreUsersPlaylists}
             handleEventName={this.onDynamicChange('name')}
             onPlaylistAdded={this.onDynamicChange('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}

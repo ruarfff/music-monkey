@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid/Grid'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import List from '@material-ui/core/List/List'
 import Snackbar from '@material-ui/core/Snackbar/Snackbar'
+import CachedIcon from '@material-ui/icons/Cached'
 import CloseIcon from '@material-ui/icons/Close'
 import { cloneDeep, isEmpty } from 'lodash'
 import * as React from 'react'
@@ -37,6 +38,7 @@ interface IPlaylistSelectionProps {
   fetchPlaylists(user: IUser): IAction
   handlePickGenre(content: string): void
   setEventPlaylist(playlist: IPlaylist): void
+  getMoreUsersPlaylists(user: IUser, offset: number): void
   onPlaylistDragDrop(
     playlist: IPlaylist,
     fromIndex: number,
@@ -51,6 +53,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
   public state = {
     name: '',
     description: '',
+    offset: 50,
     showFillPlaylistErrorDialog: true,
     isOpen: false,
     selected: {
@@ -75,6 +78,11 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
   public handlePlaylistSelected = (playlist: IPlaylist) => () => {
     this.props.onPlaylistAdded(playlist.external_urls.spotify)
     this.props.setEventPlaylist(playlist)
+  }
+
+  public handleLoadMore = () => {
+    this.props.getMoreUsersPlaylists(this.props.user, this.state.offset)
+    this.setState({offset: this.state.offset + 50})
   }
 
   public handlePlaylistCreation = () => {
@@ -269,6 +277,14 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
                   </div>
                 ))
               }
+              <div
+                className='Plus'
+                onClick={this.handleLoadMore}
+              >
+                <CachedIcon
+                  fontSize={'inherit'}
+                />
+              </div>
             </React.Fragment>
           )}
         </div>

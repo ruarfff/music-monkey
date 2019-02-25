@@ -9,16 +9,20 @@ import {
   FETCH_PLAYLISTS_SUCCESS,
   getTracksFeaturesFailure,
   getTracksFeaturesSuccess,
+  LOAD_MORE_PLAYLISTS_FAILURE,
+  LOAD_MORE_PLAYLISTS_REQUEST,
+  LOAD_MORE_PLAYLISTS_SUCCESS,
   REMOVE_TRACK_REQUEST,
   removeTrackError,
   SEARCH_TRACKS_REQUEST,
   searchTrackFailure,
   searchTrackSuccess,
   TRACK_FEATURES_REQUEST,
-  trackRemoved,
+  trackRemoved
 } from './playlistActions'
 import {
   addTracksToPlaylist,
+  fetchMoreUsersPlaylists,
   fetchPlaylist,
   fetchUsersPlaylists,
   getTracksFeatures,
@@ -32,6 +36,15 @@ function* fetchPlaylistsFlow(action: IAction) {
     yield put({ type: FETCH_PLAYLISTS_SUCCESS, payload: playlists })
   } catch (error) {
     yield put({ type: FETCH_PLAYLISTS_ERROR, payload: error })
+  }
+}
+
+function* fetchMorePlaylistsFlow(action: IAction) {
+  try {
+    const playlists = yield call(fetchMoreUsersPlaylists, action.payload.user, action.payload.offset)
+    yield put({ type: LOAD_MORE_PLAYLISTS_SUCCESS, payload: playlists })
+  } catch (error) {
+    yield put({ type: LOAD_MORE_PLAYLISTS_FAILURE, payload: error })
   }
 }
 
@@ -91,6 +104,10 @@ function* fetchTracksFeatures({ payload }: IAction) {
   } catch (e) {
     yield put(getTracksFeaturesFailure(e.message))
   }
+}
+
+export function* watchFetchMorePlaylistsFlow() {
+  yield takeEvery(LOAD_MORE_PLAYLISTS_REQUEST, fetchMorePlaylistsFlow)
 }
 
 export function* watchFetchTrackFeatures() {

@@ -35,6 +35,7 @@ import {
 } from '../eventView/eventViewActions'
 import {
   fetchPlaylists,
+  getMoreUsersPlaylists,
   tryRemoveTrack,
 } from '../playlist/playlistActions'
 import IRootState from '../rootState'
@@ -93,7 +94,8 @@ const mapDispatchToProps = (dispatch: any) => ({
       getEventById,
       deleteEvent,
       sortPlaylistByVotesDescending,
-      fetchEventVotes
+      fetchEventVotes,
+      getMoreUsersPlaylists
     },
     dispatch
   )

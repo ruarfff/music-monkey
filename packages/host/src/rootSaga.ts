@@ -28,6 +28,7 @@ import {
 } from './notification/notificationSaga'
 import {
   watchFetchAddTrackToPlaylist,
+  watchFetchMorePlaylistsFlow,
   watchFetchPlaylists,
   watchFetchRemoveTrackFromPlaylist,
   watchFetchSearchTracks,
@@ -75,5 +76,6 @@ export default function* rootSaga() {
     watchUpdateNotification(),
     watchFetchTrackFeatures(),
     watchFetchRecommendation(),
+    watchFetchMorePlaylistsFlow(),
   ])
 }

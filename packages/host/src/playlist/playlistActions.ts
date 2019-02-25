@@ -25,6 +25,23 @@ export const TRACK_FEATURES_REQUEST = 'TRACK_FEATURES_REQUEST'
 export const TRACK_FEATURES_SUCCESS = 'TRACK_FEATURES_SUCCESS'
 export const TRACK_FEATURES_FAILURE = 'TRACK_FEATURES_FAILURE'
 
+export const LOAD_MORE_PLAYLISTS_REQUEST = 'LOAD_MORE_PLAYLISTS_REQUEST'
+export const LOAD_MORE_PLAYLISTS_SUCCESS = 'LOAD_MORE_PLAYLISTS_SUCCESS'
+export const LOAD_MORE_PLAYLISTS_FAILURE = 'LOAD_MORE_PLAYLISTS_FAILURE'
+
+export const getMoreUsersPlaylists = (user: IUser, offset: number) => ({
+  type: LOAD_MORE_PLAYLISTS_REQUEST,
+  payload: {
+    user,
+    offset
+  }
+})
+
+export const getMoreUsersPlaylistsSuccess = (playlists: IPlaylist[]) => ({
+  type: LOAD_MORE_PLAYLISTS_SUCCESS,
+  payload: playlists
+})
+
 
 export const getTracksFeatures = (trackIds: string[]): IAction => {
   return {

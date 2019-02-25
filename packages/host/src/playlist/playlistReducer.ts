@@ -11,6 +11,8 @@ import {
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
+  LOAD_MORE_PLAYLISTS_REQUEST,
+  LOAD_MORE_PLAYLISTS_SUCCESS,
   PLAYLIST_DESELECTED,
   PLAYLIST_SELECTED,
   REMOVE_TRACK_FAILURE,
@@ -18,7 +20,7 @@ import {
   SEARCH_TRACKS_FAILURE,
   SEARCH_TRACKS_SUCCESS,
   TRACK_FEATURES_FAILURE,
-  TRACK_FEATURES_SUCCESS
+  TRACK_FEATURES_SUCCESS,
 } from './playlistActions'
 import initialState from './playlistInitialState'
 
@@ -37,7 +39,7 @@ export default function playlists(
         ...state,
         isCreating: true
       }
-    case EVENT_PLAYLIST_CREATED:
+    case EVENT_PLAYLIST_CREATED: {
       const playlists = cloneDeep(state.createdPlaylists)
       playlists.push(payload)
       return {
@@ -45,6 +47,7 @@ export default function playlists(
         isCreating: false,
         createdPlaylists: playlists
       }
+    }
     case TRACK_FEATURES_SUCCESS:
       return {
         ...state,
@@ -77,6 +80,20 @@ export default function playlists(
       return { ...state, searchResult: payload.tracks }
     case SEARCH_TRACKS_FAILURE:
       return state
+    case LOAD_MORE_PLAYLISTS_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case LOAD_MORE_PLAYLISTS_SUCCESS: {
+      const playlists = cloneDeep(state.data).concat(payload)
+      console.log(playlists)
+      return {
+        ...state,
+        data: playlists,
+        isLoading: false
+      }
+    }
     case FETCH_PLAYLISTS:
       return { ...state, isLoading: true }
     case FETCH_PLAYLISTS_SUCCESS:

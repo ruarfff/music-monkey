@@ -44,7 +44,14 @@ export const fetchPlaylist = async (playlistId: string) => {
 }
 
 export const fetchUsersPlaylists = async (user: IUser) => {
-  const res = await client.get('/users/' + user.userId + '/playlists', {
+  const res = await client.get('/users/' + user.userId + '/playlists?limit=50', {
+    withCredentials: true
+  })
+  return res.data
+}
+
+export const fetchMoreUsersPlaylists = async (user: IUser, offset: number) => {
+  const res = await client.get(`/users/${user.userId}/playlists?limit=50&offset=${offset}`, {
     withCredentials: true
   })
   return res.data
