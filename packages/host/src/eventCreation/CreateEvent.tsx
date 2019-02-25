@@ -101,6 +101,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     genre: ''
   }
 
+  public timer: any = _.debounce((eventPart) => this.props.eventContentUpdated(eventPart), 300)
+
   public componentDidMount() {
     this.props.initializeCreateForm(this.props.event, this.props.user)
 
@@ -162,12 +164,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       setStep(currentStep - 1)
     }
   }
-
-  public onDynamicChange = (key: string) => _.debounce((content: any) => {
-    const eventPart = {}
-    eventPart[key] = content
-    this.props.eventContentUpdated(eventPart)
-  }, 300)
 
   public setChanges = () => {
     const decoratedState = _.omit(
@@ -314,8 +310,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             deselectPlaylist={deselectPlaylist}
             user={user}
             getMoreUsersPlaylists={getMoreUsersPlaylists}
-            handleEventName={this.onDynamicChange('name')}
-            onPlaylistAdded={this.onDynamicChange('playlistUrl')}
+            handleEventName={this.handleContentUpdated('name')}
+            onPlaylistAdded={this.handleContentUpdated('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}
             playlistInput={playlistInput}
             createEventPlaylist={createEventPlaylist}
@@ -379,7 +375,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       history
     } = this.props
 
-    const { organizer, showSaveDialog } = this.state
+    const { organizer, showSaveDialog, name } = this.state
 
     if (currentStep === 1 && showSaveDialog) {
       this.showSavedDialogue()
@@ -390,16 +386,16 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           <EventInput
             label={'Event Name'}
             placeholder={'Provide a name for your event'}
-            value={event.name}
-            onChange={this.onDynamicChange('name')}
-            error={!event.name}
+            value={name}
+            onChange={this.handleContentUpdated('name')}
+            error={!name}
             errorLabel={'Required'}
           />
           <EventInput
             label={'Event description'}
             maxRows={11}
             value={event.description}
-            onChange={this.onDynamicChange('description')}
+            onChange={this.handleContentUpdated('description')}
           />
 
           <Grid container={true} direction={'column'}>
@@ -471,7 +467,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           <EventDateTimePicker
             disablePast={true}
             value={event.startDateTime}
-            onChange={this.onDynamicChange('startDateTime')}
+            onChange={this.handleContentUpdated('startDateTime')}
             label={'Starting At'}
           />
         </Grid>
@@ -480,7 +476,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           <EventDateTimePicker
             disablePast={true}
             value={event.endDateTime}
-            onChange={this.onDynamicChange('endDateTime')}
+            onChange={this.handleContentUpdated('endDateTime')}
             label={'Finishing At'}
           />
         </Grid>
@@ -645,6 +641,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const eventPart = {}
     eventPart[key] = content
     this.setState({[key]: content})
+    this.timer(eventPart)
   }
 }
 
