@@ -97,7 +97,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     showErrorDialog: true,
     name: '',
     description: '',
-    organizer: '',
+    organizer: this.props.event.organizer || '',
     genre: ''
   }
 
@@ -128,7 +128,11 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public componentWillReceiveProps(newProps: ICreateEventProps) {
-    if (this.state.organizer === '' && this.props.event.organizer !== '') {
+    if (
+      this.state.organizer === '' &&
+      newProps.event.organizer !== '' &&
+      newProps.event.createdAt === undefined
+    ) {
       this.setState({
         organizer: this.props.event.organizer
       })
@@ -184,18 +188,13 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public nextStep = () => {
-    const {
-      name,
-      organizer
-    } = this.state
+    const { currentStep, event } = this.props
 
-    const { currentStep } = this.props
+    const location = event.location.address
 
-    const location = this.props.event.location.address
-
-    if (currentStep === 0 && !this.props.event.playlistUrl) {
+    if (currentStep === 0 && !event.playlistUrl) {
       this.showErrorDialog('Pick or create a playlist')
-    } else if (currentStep === 1 && (!name || !organizer || !location )) {
+    } else if (currentStep === 1 && (!event.name || !event.organizer || !location )) {
       this.showErrorDialog('Fill all required fields')
     } else {
       this.setChanges()
@@ -375,7 +374,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       history
     } = this.props
 
-    const { organizer, showSaveDialog, name } = this.state
+    const { organizer, showSaveDialog, name, description } = this.state
 
     if (currentStep === 1 && showSaveDialog) {
       this.showSavedDialogue()
@@ -394,7 +393,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           <EventInput
             label={'Event description'}
             maxRows={11}
-            value={event.description}
+            value={description}
             onChange={this.handleContentUpdated('description')}
           />
 
