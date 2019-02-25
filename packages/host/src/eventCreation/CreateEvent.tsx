@@ -30,7 +30,6 @@ import EventDateTimePicker from './EventDateTimePicker'
 import PlaylistSelection from './PlaylistSelection'
 import ShareEvent from './ShareEvent'
 
-
 const decorate = withStyles((theme: Theme) => ({
   button: {
     marginRight: '30px',
@@ -163,11 +162,12 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     }
   }
 
-  public onDynamicChange = (key: string) => (content: any) => {
+  public onDynamicChange = (key: string) => _.debounce((content: any) => {
     const eventPart = {}
     eventPart[key] = content
     this.props.eventContentUpdated(eventPart)
-  }
+    // _.debounce(() => this.props.eventContentUpdated(eventPart), 300)
+  }, 300)
 
   public setChanges = () => {
     const decoratedState = _.omit(
@@ -177,8 +177,13 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       'showSaveDialog',
       'description'
       )
+
+    console.log(decoratedState)
     if (this.props.currentStep === 0) {
-      this.props.eventContentUpdated({genre: this.state.genre})
+      this.props.eventContentUpdated({
+        genre: this.state.genre,
+        name: this.state.name
+      })
     } else {
       this.props.eventContentUpdated(decoratedState)
     }
@@ -243,8 +248,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
     if (currentStep === 0 && !this.props.event.playlistUrl) {
       this.showErrorDialog('Pick or create a playlist')
-    } else if(step === 2 && this.props.event.createdAt === undefined) {
-      this.showErrorDialog('Finish creating of event')
+    } else if(currentStep === 0 && this.props.event.createdAt === undefined) {
+      this.handleSaveEvent()
     } else {
       setStep(step)
       this.setChanges()
@@ -403,6 +408,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               <FormControlLabel
                 control={
                   <Switch
+                    value={event.settings.suggestingPlaylistsEnabled}
                     checked={event.settings.suggestingPlaylistsEnabled}
                     onChange={this.suggestingPlaylistsToggled}
                   />
@@ -412,6 +418,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               <FormControlLabel
                 control={
                   <Switch
+                    value={event.settings.autoAcceptSuggestionsEnabled}
                     checked={event.settings.autoAcceptSuggestionsEnabled}
                     onChange={this.autoAcceptSuggestionsToggled}
                   />
@@ -421,6 +428,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
               <FormControlLabel
                 control={
                   <Switch
+                    value={event.settings.dynamicVotingEnabled}
                     checked={event.settings.dynamicVotingEnabled}
                     onChange={this.handleDynamicVotingToggled}
                   />
@@ -608,7 +616,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       this.showErrorDialog(this.props.errors.saving.response.statusText)
     }
     if (currentStep === 0 && !!event.playlistUrl) {
-      if (event.createdAt !== undefined) {
+      if (!!event.createdAt) {
         editEventRequest({
           ...event,
           dataUrl: ''
@@ -621,9 +629,14 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
           dataUrl: ''
         })
       }
-    } else {
-      console.log('test')
+    } else if (currentStep === 0 && !event.playlistUrl) {
       this.showErrorDialog('Pick or create a playlist')
+    } else {
+      editEventRequest({
+        ...event,
+        dataUrl: ''
+      })
+      setStep(currentStep + 1)
     }
 
   }

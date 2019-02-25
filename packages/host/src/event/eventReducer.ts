@@ -1,6 +1,9 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
 import moment from 'moment'
-import { DESELECT_EVENT_PLAYLIST, SET_EVENT_PLAYLIST } from '../eventPlaylist/eventPlaylistActions'
+import {
+  DESELECT_EVENT_PLAYLIST,
+  SET_EVENT_PLAYLIST
+} from '../eventPlaylist/eventPlaylistActions'
 import {
   EVENT_FETCHED_BY_ID,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
@@ -89,12 +92,15 @@ export default function event(
         createEventStep: payload,
       }
     case SET_EVENT_PLAYLIST:
-      const eventName = state.savingEvent.name
+      const eventName = state.savingEvent.name === '' ?
+        payload.name : state.savingEvent.name
+
+      console.log(eventName)
       return {
         ...state,
         savingEvent: {
           ...state.savingEvent,
-          name: eventName === '' ? payload.name : eventName,
+          name: eventName,
         }
       }
     case DESELECT_EVENT_PLAYLIST:
