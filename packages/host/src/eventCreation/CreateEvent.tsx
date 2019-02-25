@@ -128,21 +128,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public componentWillReceiveProps(newProps: ICreateEventProps) {
-    if (
-      this.state.organizer === '' &&
-      newProps.event.organizer !== '' &&
-      newProps.event.createdAt === undefined
-    ) {
-      this.setState({
-        organizer: this.props.event.organizer
-      })
-    }
-    if (this.state.name !== newProps.event.name) {
-      this.setState({
-        name: newProps.event.name
-      })
-    }
-
     const eventId = this.props.match.params.eventId
 
     if (!_.isEmpty(this.props.selectedPlaylist) &&
@@ -620,7 +605,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       } else {
         saveEvent({
           ...event,
-          organizer: this.state.organizer,
+          organizer: event.organizer,
           dataUrl: ''
         })
       }
