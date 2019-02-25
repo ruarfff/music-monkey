@@ -94,8 +94,6 @@ export default function event(
     case SET_EVENT_PLAYLIST:
       const eventName = state.savingEvent.name === '' ?
         payload.name : state.savingEvent.name
-
-      console.log(eventName)
       return {
         ...state,
         savingEvent: {

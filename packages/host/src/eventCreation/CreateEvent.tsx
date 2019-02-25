@@ -166,7 +166,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const eventPart = {}
     eventPart[key] = content
     this.props.eventContentUpdated(eventPart)
-    // _.debounce(() => this.props.eventContentUpdated(eventPart), 300)
   }, 300)
 
   public setChanges = () => {
@@ -177,8 +176,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       'showSaveDialog',
       'description'
       )
-
-    console.log(decoratedState)
     if (this.props.currentStep === 0) {
       this.props.eventContentUpdated({
         genre: this.state.genre,
