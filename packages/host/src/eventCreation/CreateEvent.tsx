@@ -226,7 +226,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       this.showErrorDialog('Pick or create a playlist')
     } else if(currentStep === 0 && this.props.event.createdAt === undefined) {
       this.handleSaveEvent()
-    } else {
+    } else if (this.shouldGoToNextStep()) {
+      this.handleSaveEvent()
       setStep(step)
     }
   }
