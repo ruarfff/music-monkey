@@ -34,6 +34,18 @@ export const EVENT_EDIT_SUCCESS = 'EVENT_EDIT_SUCCESS'
 export const EVENT_EDIT_FAILURE = 'EVENT_EDIT_FAILURE'
 
 export const SET_CREATE_EVENT_STEP = 'SET_CREATE_EVENT_STEP'
+export const CLEAR_SAVING_EVENT = 'CLEAR_SAVING_EVENT'
+
+export const PLAYLIST_NAME_INPUT_CHANGE = 'PLAYLIST_NAME_INPUT_CHANGE'
+
+export const playlistInputChange = (name: string):Action => ({
+  type: PLAYLIST_NAME_INPUT_CHANGE,
+  payload: name
+})
+
+export const clearSavingEvent = ():Action => ({
+  type: CLEAR_SAVING_EVENT
+})
 
 export const setStep = (step: number):Action => ({
   type: SET_CREATE_EVENT_STEP,
@@ -97,10 +109,6 @@ export const closeExistingPlaylist = (): Action => ({
 
 export const selectCreatePlaylist = (): Action => ({
   type: CREATE_PLAYLIST_SELECTED
-})
-
-export const closeCreatePlaylist = (): Action => ({
-  type: CREATE_PLAYLIST_CLOSED
 })
 
 export const createEventPlaylist = (

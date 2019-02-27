@@ -69,11 +69,13 @@ function* fetchSearchedTracks(action: IAction) {
 
 const getCurrentLocation = (state: any) => state.router.location.pathname
 const getJustCreatedPlaylists = (state: any) => state.playlist.createdPlaylists
+const getIsReselectedPlaylist = (state: any) => state.event.playlistReselected
 
 function* fetchAddTrackToPlaylist(action: IAction) {
   try {
     const location = yield select(getCurrentLocation)
     const justCreatedPlaylists = yield select(getJustCreatedPlaylists)
+    const isReselected: boolean = yield select(getIsReselectedPlaylist)
 
     const isCreateOrEditPage = location.indexOf('create-event') !== -1 || location.indexOf('edit') !== -1
 
@@ -81,7 +83,10 @@ function* fetchAddTrackToPlaylist(action: IAction) {
       playlist.id === action.payload.playlistId
     ).length === 1
 
-    if (isCreateOrEditPage && isJustCreated) {
+    const createPageValidation = isCreateOrEditPage && isJustCreated
+    const editPageValidation = isCreateOrEditPage && !isReselected
+
+    if ((createPageValidation) || (editPageValidation)) {
       yield call(addTracksToPlaylist, action.payload.playlistId, [action.payload.track.uri])
       yield call(fetchPlaylist, action.payload.playlistId)
     }

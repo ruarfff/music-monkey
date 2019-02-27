@@ -17,6 +17,7 @@ import {
   SHARE_EMAIL_SUCCESS
 } from '../shareEvent/shareActions'
 import {
+  CLEAR_SAVING_EVENT,
   CREATE_PLAYLIST_CLOSED,
   CREATE_PLAYLIST_SELECTED,
   EVENT_CONTENT_UPDATED,
@@ -36,9 +37,10 @@ import {
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
+  PLAYLIST_NAME_INPUT_CHANGE,
   SELECT_EXISTING_PLAYLIST_CLOSED,
   SELECT_EXISTING_PLAYLIST_SELECTED,
-  SET_CREATE_EVENT_STEP
+  SET_CREATE_EVENT_STEP,
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
@@ -50,6 +52,14 @@ export default function event(
   { type, payload }: Action
 ) {
   switch (type) {
+    case CLEAR_SAVING_EVENT:
+      return {
+        ...state,
+        savingEvent: {
+          ...initialState.savingEvent,
+          organizer: state.savingEvent.organizer
+        }
+      }
     case TOGGLE_AUTO_ACCEPT_SUGGESTIONS:
       return {
         ...state,
@@ -92,14 +102,15 @@ export default function event(
         createEventStep: payload,
       }
     case SET_EVENT_PLAYLIST:
-      const eventName = state.savingEvent.name === '' ?
+      const eventName = state.isPlaylistNameInputEmpty ?
         payload.name : state.savingEvent.name
       return {
         ...state,
         savingEvent: {
           ...state.savingEvent,
           name: eventName,
-        }
+        },
+        playlistReselected: true
       }
     case DESELECT_EVENT_PLAYLIST:
       return {
@@ -163,6 +174,15 @@ export default function event(
           ...state.errors,
           location: payload
         }
+      }
+    case PLAYLIST_NAME_INPUT_CHANGE:
+      return {
+        ...state,
+        savingEvent: {
+          ...state.savingEvent,
+          name: payload
+        },
+        isPlaylistNameInputEmpty: !payload
       }
     case EVENT_CONTENT_UPDATED: {
       const savingEvent: IEvent = {

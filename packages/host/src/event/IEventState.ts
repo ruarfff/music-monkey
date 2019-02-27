@@ -11,4 +11,6 @@ export default interface IEventState {
   eventsLoading: boolean
   showSavedDialogue: boolean
   shareEventMessage: string
+  playlistReselected: boolean
+  isPlaylistNameInputEmpty: boolean
 }

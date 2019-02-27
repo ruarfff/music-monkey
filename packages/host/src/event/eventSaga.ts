@@ -90,12 +90,14 @@ const getJustCreatedPlaylists = (state: any) => state.playlist.createdPlaylists
 function* saveEventFlow(action: IAction) {
   const event: IEvent = action.payload
   let copiedPlaylist
-  let eventPlaylist:any
 
   try {
-    eventPlaylist = yield select(getEventPlaylist)
+    const eventPlaylist = yield select(getEventPlaylist)
     const playlistName = yield select(getPlaylistName)
     const justCreatePlaylists = yield select(getJustCreatedPlaylists)
+
+    console.log(playlistName, eventPlaylist.name, playlistName || eventPlaylist.name)
+
     const playlistDetails: IPlaylistDetails = {
       name: playlistName || eventPlaylist.name,
       description: eventPlaylist.description,
@@ -108,9 +110,9 @@ function* saveEventFlow(action: IAction) {
 
     if (eventPlaylist.tracks.items.length > 0 && !isJustCreated) {
       const tracksToCopy = eventPlaylist.tracks.items.map((item: any) => item.track.uri)
-
+      // create playlist copy
       copiedPlaylist = yield call(savePlaylist, playlistDetails)
-
+      // put tracks into copied playlist
       yield call(replaceTracksInPlaylist, copiedPlaylist.id, tracksToCopy)
     }
   } catch (err) {
@@ -121,7 +123,10 @@ function* saveEventFlow(action: IAction) {
     let savedEvent
 
     if (copiedPlaylist) {
-      savedEvent = yield call(createEvent, {...event, playlist: copiedPlaylist})
+      savedEvent = yield call(createEvent, {
+        ...event,
+        playlistUrl: copiedPlaylist.external_urls.spotify
+      })
     } else {
       savedEvent = yield call(createEvent, event)
     }
@@ -136,14 +141,18 @@ function* saveEventFlow(action: IAction) {
   }
 }
 
+const getCurrentStep = (state: any) => state.event.createEventStep
+const getIsReselectedPlaylist = (state: any) => state.event.playlistReselected
+
 function* updateEventFlow(action: IAction) {
   const event: IEvent = action.payload
 
   let copiedPlaylist
-  let eventPlaylist:any
+  const eventPlaylist: any = yield select(getEventPlaylist)
+  const currentStep: number = yield select(getCurrentStep)
+  const isReselected: boolean = yield select(getIsReselectedPlaylist)
 
   try {
-    eventPlaylist = yield select(getEventPlaylist)
     const playlistName = yield select(getPlaylistName)
     const justCreatePlaylists = yield select(getJustCreatedPlaylists)
     const playlistDetails: IPlaylistDetails = {
@@ -156,7 +165,7 @@ function* updateEventFlow(action: IAction) {
       playlist.id === eventPlaylist.id
     ).length === 1
 
-    if (eventPlaylist.tracks.items.length > 0 && !isJustCreated) {
+    if (eventPlaylist.tracks.items.length > 0 && !isJustCreated && currentStep === 0 && isReselected) {
       const tracksToCopy = eventPlaylist.tracks.items.map((item: any) => item.track.uri)
 
       copiedPlaylist = yield call(savePlaylist, playlistDetails)
@@ -170,8 +179,12 @@ function* updateEventFlow(action: IAction) {
   try {
     let editedEvent
 
-    if (copiedPlaylist) {
-      editedEvent = yield call(updateEvent, {...event, playlist: copiedPlaylist})
+    if (copiedPlaylist && currentStep === 0) {
+      editedEvent = yield call(updateEvent, {
+        ...event,
+        imageUrl: copiedPlaylist.images[0],
+        playlistUrl: copiedPlaylist.external_urls.spotify
+      })
     } else {
       editedEvent = yield call(updateEvent, event)
     }

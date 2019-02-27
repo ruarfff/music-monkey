@@ -39,5 +39,7 @@ export default {
   },
   eventsLoading: false,
   showSavedDialogue: false,
-  shareEventMessage: ''
+  playlistReselected: false,
+  shareEventMessage: '',
+  isPlaylistNameInputEmpty: true
 } as IEventState

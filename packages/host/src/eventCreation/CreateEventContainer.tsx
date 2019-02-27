@@ -2,7 +2,7 @@ import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  closeCreatePlaylist,
+  clearSavingEvent,
   closeExistingPlaylist,
   createEventPlaylist,
   editEventRequest,
@@ -13,6 +13,7 @@ import {
   initializeCreateForm,
   locationChanged,
   locationSelected,
+  playlistInputChange,
   saveEvent,
   selectCreatePlaylist,
   selectExistingPlaylist,
@@ -69,7 +70,6 @@ const mapDispatchToProps = (dispatch: any) => ({
       onPlaylistDragDrop: moveItemInEventPlaylist,
       setEventPlaylist,
       deselectPlaylist,
-      closeCreatePlaylist,
       closeExistingPlaylist,
       createEventPlaylist,
       eventContentUpdated,
@@ -95,7 +95,9 @@ const mapDispatchToProps = (dispatch: any) => ({
       deleteEvent,
       sortPlaylistByVotesDescending,
       fetchEventVotes,
-      getMoreUsersPlaylists
+      getMoreUsersPlaylists,
+      clearSavingEvent,
+      playlistInputChange
     },
     dispatch
   )

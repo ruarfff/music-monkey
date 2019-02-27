@@ -89,6 +89,8 @@ interface ICreateEventProps extends RouteComponentProps<any> {
   tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
   getEventById(eventId: string): IAction
   deleteEvent(eventId: string): IAction
+  clearSavingEvent(): IAction
+  playlistInputChange(name: string): IAction
 }
 
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
@@ -109,6 +111,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const eventId = this.props.match.params.eventId
 
     if (!eventId) {
+      this.props.clearSavingEvent()
       this.props.deselectPlaylist()
     }
 
@@ -129,6 +132,18 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
   public componentWillReceiveProps(newProps: ICreateEventProps) {
     const eventId = this.props.match.params.eventId
+
+    if (!this.state.organizer && newProps.event.organizer) {
+      this.setState({organizer: newProps.event.organizer})
+    }
+
+    if (!this.state.name && newProps.event.name) {
+      this.setState({name: newProps.event.name})
+    }
+
+    if (!this.state.description && newProps.event.description) {
+      this.setState({description: newProps.event.description})
+    }
 
     if (!_.isEmpty(this.props.selectedPlaylist) &&
       this.props.selectedPlaylist.id !== newProps.selectedPlaylist.id
@@ -154,36 +169,19 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     }
   }
 
-  public setChanges = () => {
-    const decoratedState = _.omit(
-      this.state,
-      'currentStep',
-      'showErrorDialog',
-      'showSaveDialog',
-      'description'
-      )
-    if (this.props.currentStep === 0) {
-      this.props.eventContentUpdated({
-        genre: this.state.genre,
-        name: this.state.name
-      })
-    } else {
-      this.props.eventContentUpdated(decoratedState)
-    }
-  }
-
-  public nextStep = () => {
+  public shouldGoToNextStep = () => {
     const { currentStep, event } = this.props
 
     const location = event.location.address
 
     if (currentStep === 0 && !event.playlistUrl) {
       this.showErrorDialog('Pick or create a playlist')
+      return false
     } else if (currentStep === 1 && (!event.name || !event.organizer || !location )) {
       this.showErrorDialog('Fill all required fields')
-    } else {
-      this.setChanges()
+      return false
     }
+    return true
   }
 
   public showErrorDialog = (message: string) => {
@@ -230,7 +228,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       this.handleSaveEvent()
     } else {
       setStep(step)
-      this.setChanges()
     }
   }
 
@@ -294,7 +291,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             deselectPlaylist={deselectPlaylist}
             user={user}
             getMoreUsersPlaylists={getMoreUsersPlaylists}
-            handleEventName={this.handleContentUpdated('name')}
+            handleEventName={this.handlePlaylistInputChange}
             onPlaylistAdded={this.handleContentUpdated('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}
             playlistInput={playlistInput}
@@ -361,7 +358,11 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
     const { organizer, showSaveDialog, name, description } = this.state
 
-    if (currentStep === 1 && showSaveDialog) {
+    if (
+      currentStep === 1 &&
+      showSaveDialog &&
+      !history.location.pathname.indexOf('edit')
+    ) {
       this.showSavedDialogue()
     }
     return (
@@ -591,34 +592,39 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       currentStep,
       history
     } = this.props
-    this.nextStep()
     if ( !_.isEmpty(errors.saving) && history.location.pathname !== `/events/${event.eventId}/edit`) {
       this.showErrorDialog(this.props.errors.saving.response.statusText)
     }
-    if (currentStep === 0 && !!event.playlistUrl) {
-      if (!!event.createdAt) {
+    if (this.shouldGoToNextStep()) {
+      if (currentStep === 0 && !!event.playlistUrl) {
+        if (!!event.createdAt) {
+          editEventRequest({
+            ...event,
+            dataUrl: ''
+          })
+          setStep(currentStep + 1)
+        } else {
+          saveEvent({
+            ...event,
+            organizer: event.organizer,
+            dataUrl: ''
+          })
+        }
+      } else if (currentStep === 0 && !event.playlistUrl) {
+        this.showErrorDialog('Pick or create a playlist')
+      } else {
         editEventRequest({
           ...event,
           dataUrl: ''
         })
         setStep(currentStep + 1)
-      } else {
-        saveEvent({
-          ...event,
-          organizer: event.organizer,
-          dataUrl: ''
-        })
       }
-    } else if (currentStep === 0 && !event.playlistUrl) {
-      this.showErrorDialog('Pick or create a playlist')
-    } else {
-      editEventRequest({
-        ...event,
-        dataUrl: ''
-      })
-      setStep(currentStep + 1)
     }
+  }
 
+  private handlePlaylistInputChange = (content: any) => {
+    this.setState({name: content})
+    _.debounce((name: any) => this.props.playlistInputChange(name), 300)(content)
   }
 
   private handleContentUpdated = (key: string) => (content: any) => {
