@@ -100,7 +100,8 @@ export default ({
       if (isEmpty(userRsvp) && eventId && !eventLoading) {
         getEvent(eventId)
       }
-    }
+    },
+    [eventId]
   )
 
   const handleTabChange = (e: any, value: any) => {
