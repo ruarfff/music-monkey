@@ -24,4 +24,5 @@ export default interface IEvent {
   settings: IEventSettings
   createdAt?: string
   updatedAt?: string
+  userId?: string
 }

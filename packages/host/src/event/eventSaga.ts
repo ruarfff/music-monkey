@@ -86,6 +86,7 @@ function* fetchLatLngFlow(action: IAction) {
 const getEventPlaylist = (state: any) => state.eventPlaylist.playlist
 const getPlaylistName = (state: any) => state.event.savingEvent.name
 const getJustCreatedPlaylists = (state: any) => state.playlist.createdPlaylists
+const getUserId = (state: any) => state.user.data.userId
 
 function* saveEventFlow(action: IAction) {
   const event: IEvent = action.payload
@@ -95,8 +96,6 @@ function* saveEventFlow(action: IAction) {
     const eventPlaylist = yield select(getEventPlaylist)
     const playlistName = yield select(getPlaylistName)
     const justCreatePlaylists = yield select(getJustCreatedPlaylists)
-
-    console.log(playlistName, eventPlaylist.name, playlistName || eventPlaylist.name)
 
     const playlistDetails: IPlaylistDetails = {
       name: playlistName || eventPlaylist.name,
@@ -110,9 +109,8 @@ function* saveEventFlow(action: IAction) {
 
     if (eventPlaylist.tracks.items.length > 0 && !isJustCreated) {
       const tracksToCopy = eventPlaylist.tracks.items.map((item: any) => item.track.uri)
-      // create playlist copy
+
       copiedPlaylist = yield call(savePlaylist, playlistDetails)
-      // put tracks into copied playlist
       yield call(replaceTracksInPlaylist, copiedPlaylist.id, tracksToCopy)
     }
   } catch (err) {
@@ -121,18 +119,26 @@ function* saveEventFlow(action: IAction) {
 
   try {
     let savedEvent
+    const uId: string = yield select(getUserId)
 
     if (copiedPlaylist) {
       savedEvent = yield call(createEvent, {
         ...event,
-        playlistUrl: copiedPlaylist.external_urls.spotify
+        playlistUrl: copiedPlaylist.external_urls.spotify,
+        userId: uId
       })
     } else {
-      savedEvent = yield call(createEvent, event)
+      savedEvent = yield call(createEvent, {
+        ...event,
+        userId: uId
+      })
     }
 
     yield put({
-      payload: savedEvent,
+      payload: {
+        ...savedEvent,
+        userId: uId
+      },
       type: EVENT_SAVED
     })
     yield put({ type: SET_CREATE_EVENT_STEP, payload: 1 })
