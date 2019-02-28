@@ -86,7 +86,7 @@ function* fetchLatLngFlow(action: IAction) {
 const getEventPlaylist = (state: any) => state.eventPlaylist.playlist
 const getEvent = (state: any) => state.event
 const getJustCreatedPlaylists = (state: any) => state.playlist.createdPlaylists
-const getUserId = (state: any) => state.user.data.userId
+const getUser = (state: any) => state.user.data
 
 function* saveEventFlow(action: IAction) {
   const event: IEvent = action.payload
@@ -119,26 +119,27 @@ function* saveEventFlow(action: IAction) {
 
   try {
     let savedEvent
-    const uId: string = yield select(getUserId)
+    const user: any = yield select(getUser)
 
     if (copiedPlaylist) {
       savedEvent = yield call(createEvent, {
         ...event,
         playlistUrl: copiedPlaylist.external_urls.spotify,
-        userId: uId
+        userId: user.userId
       })
-      yield put({type: UPDATE_PLAYLIST_AFTER_COPY, payload: copiedPlaylist})
+      yield put({ type: UPDATE_PLAYLIST_AFTER_COPY, payload: copiedPlaylist })
+      yield put({ type: FETCH_PLAYLISTS, payload: user})
     } else {
       savedEvent = yield call(createEvent, {
         ...event,
-        userId: uId
+        userId: user.userId
       })
     }
 
     yield put({
       payload: {
         ...savedEvent,
-        userId: uId
+        userId: user.userId
       },
       type: EVENT_SAVED
     })
@@ -185,6 +186,7 @@ function* updateEventFlow(action: IAction) {
 
   try {
     let editedEvent
+    const user: any = yield select(getUser)
 
     if (copiedPlaylist && currentStep === 0) {
       editedEvent = yield call(updateEvent, {
@@ -192,6 +194,7 @@ function* updateEventFlow(action: IAction) {
         playlistUrl: copiedPlaylist.external_urls.spotify,
       })
       yield put({type: UPDATE_PLAYLIST_AFTER_COPY, payload: copiedPlaylist})
+      yield put({ type: FETCH_PLAYLISTS, payload: user})
     } else {
       editedEvent = yield call(updateEvent, event)
     }
