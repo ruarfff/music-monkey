@@ -89,6 +89,7 @@ interface ICreateEventProps extends RouteComponentProps<any> {
   deleteEvent(eventId: string): IAction
   clearSavingEvent(): IAction
   playlistInputChange(name: string): IAction
+  clearJustCreatedPlaylists(): IAction
 }
 
 class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
@@ -105,6 +106,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
   public componentDidMount() {
     this.props.initializeCreateForm(this.props.event, this.props.user)
+    this.props.clearJustCreatedPlaylists()
 
     const eventId = this.props.match.params.eventId
 

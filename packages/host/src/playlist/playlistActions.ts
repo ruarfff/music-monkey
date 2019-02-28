@@ -29,7 +29,13 @@ export const LOAD_MORE_PLAYLISTS_REQUEST = 'LOAD_MORE_PLAYLISTS_REQUEST'
 export const LOAD_MORE_PLAYLISTS_SUCCESS = 'LOAD_MORE_PLAYLISTS_SUCCESS'
 export const LOAD_MORE_PLAYLISTS_FAILURE = 'LOAD_MORE_PLAYLISTS_FAILURE'
 
-export const getMoreUsersPlaylists = (user: IUser, offset: number) => ({
+export const CLEAR_JUST_CREATED_PLAYLISTS = 'CLEAR_JUST_CREATED_PLAYLISTS'
+
+export const clearJustCreatedPlaylists = () => ({
+  type: CLEAR_JUST_CREATED_PLAYLISTS
+})
+
+export const getMoreUsersPlaylists = (user: IUser, offset: number): IAction => ({
   type: LOAD_MORE_PLAYLISTS_REQUEST,
   payload: {
     user,
@@ -37,7 +43,7 @@ export const getMoreUsersPlaylists = (user: IUser, offset: number) => ({
   }
 })
 
-export const getMoreUsersPlaylistsSuccess = (playlists: IPlaylist[]) => ({
+export const getMoreUsersPlaylistsSuccess = (playlists: IPlaylist[]): IAction => ({
   type: LOAD_MORE_PLAYLISTS_SUCCESS,
   payload: playlists
 })

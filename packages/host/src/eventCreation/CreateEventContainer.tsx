@@ -35,9 +35,10 @@ import {
   toggleSuggestingPlaylists
 } from '../eventView/eventViewActions'
 import {
+  clearJustCreatedPlaylists,
   fetchPlaylists,
   getMoreUsersPlaylists,
-  tryRemoveTrack,
+  tryRemoveTrack
 } from '../playlist/playlistActions'
 import IRootState from '../rootState'
 import { clearMessage } from '../shareEvent/shareActions'
@@ -96,7 +97,8 @@ const mapDispatchToProps = (dispatch: any) => ({
       fetchEventVotes,
       getMoreUsersPlaylists,
       clearSavingEvent,
-      playlistInputChange
+      playlistInputChange,
+      clearJustCreatedPlaylists
     },
     dispatch
   )
