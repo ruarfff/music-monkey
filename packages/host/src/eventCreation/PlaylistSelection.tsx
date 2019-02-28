@@ -26,7 +26,6 @@ import './PlaylistSelection.scss'
 
 interface IPlaylistSelectionProps {
   user: IUser
-  playlistInput: any
   playlists: IPlaylist[]
   isCreatingPlaylist: boolean
   searchResult: ISearch

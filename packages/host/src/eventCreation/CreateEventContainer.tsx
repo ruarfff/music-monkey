@@ -50,7 +50,6 @@ const mapStateToProps = (state: IRootState) => ({
   event: state.event.savingEvent,
   message: state.event.shareEventMessage,
   errors: state.event.errors,
-  playlistInput: state.event.playlistInput,
   playlists: state.playlist.data,
   selectedPlaylist: state.eventPlaylist.playlist,
   isCreatingPlaylist: state.playlist.isCreating,

@@ -48,10 +48,43 @@ function* fetchMorePlaylistsFlow(action: IAction) {
   }
 }
 
+const getEventPlaylist = (state: any) => state.eventPlaylist.playlist
+
 function* fetchRemoveTrackFromPlaylist(action: IAction) {
   const { playlistId, trackUri, trackPosition } = action.payload
   try {
-    const newPlaylist = yield call(removeTrackFromPlaylist, playlistId, trackUri, trackPosition)
+    const location = yield select(getCurrentLocation)
+    const justCreatedPlaylists = yield select(getJustCreatedPlaylists)
+    const isReselected: boolean = yield select(getIsReselectedPlaylist)
+
+    const isCreateOrEditPage = location.indexOf('create-event') !== -1 || location.indexOf('edit') !== -1
+
+    const isJustCreated = justCreatedPlaylists.filter((playlist: any) =>
+      playlist.id === action.payload.playlistId
+    ).length === 1
+
+    const createPageValidation = isCreateOrEditPage && isJustCreated
+    const editPageValidation = isCreateOrEditPage && !isReselected
+
+    let newPlaylist
+
+    if ((createPageValidation) || (editPageValidation)) {
+      newPlaylist = yield call(removeTrackFromPlaylist, playlistId, trackUri, trackPosition)
+    } else {
+      const eventPlaylist = yield select(getEventPlaylist)
+      newPlaylist = {
+        ...eventPlaylist,
+        tracks: {
+          ...eventPlaylist.tracks,
+          items: eventPlaylist.tracks.items.filter((i: any) => i.track.uri !== trackUri)
+        }
+      }
+    }
+
+    if (!isCreateOrEditPage) {
+      newPlaylist = yield call(removeTrackFromPlaylist, playlistId, trackUri, trackPosition)
+    }
+
     yield put(trackRemoved(newPlaylist))
   } catch (error) {
     yield put(removeTrackError())

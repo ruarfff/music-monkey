@@ -18,8 +18,6 @@ import {
 } from '../shareEvent/shareActions'
 import {
   CLEAR_SAVING_EVENT,
-  CREATE_PLAYLIST_CLOSED,
-  CREATE_PLAYLIST_SELECTED,
   EVENT_CONTENT_UPDATED,
   EVENT_CREATE_FORM_INITIALIZED,
   EVENT_EDIT_FAILURE,
@@ -38,8 +36,6 @@ import {
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
   PLAYLIST_NAME_INPUT_CHANGE,
-  SELECT_EXISTING_PLAYLIST_CLOSED,
-  SELECT_EXISTING_PLAYLIST_SELECTED,
   SET_CREATE_EVENT_STEP,
 } from './eventActions'
 import initialState from './eventInitialState'
@@ -102,8 +98,9 @@ export default function event(
         createEventStep: payload,
       }
     case SET_EVENT_PLAYLIST:
-      const eventName = state.isPlaylistNameInputEmpty ?
-        payload.name : state.savingEvent.name
+      const eventName = state.savingEvent.name ? state.savingEvent.name : (state.playlistInput ?
+        state.playlistInput :
+        payload.name)
       return {
         ...state,
         savingEvent: {
@@ -142,7 +139,11 @@ export default function event(
       return state
 
     case EVENT_EDIT_SUCCESS:
-      return state
+      return {
+        ...state,
+        savingEvent: payload,
+        playlistReselected: false,
+      }
 
     case EVENT_FETCHED_BY_ID:
       return {
@@ -178,11 +179,7 @@ export default function event(
     case PLAYLIST_NAME_INPUT_CHANGE:
       return {
         ...state,
-        savingEvent: {
-          ...state.savingEvent,
-          name: payload
-        },
-        isPlaylistNameInputEmpty: !payload
+        playlistInput: payload
       }
     case EVENT_CONTENT_UPDATED: {
       const savingEvent: IEvent = {
@@ -244,38 +241,6 @@ export default function event(
         errors: {
           ...state.errors,
           saving: payload
-        }
-      }
-    case SELECT_EXISTING_PLAYLIST_SELECTED:
-      return {
-        ...state,
-        playlistInput: {
-          ...state.playlistInput,
-          isSelectingExistingPlaylist: true
-        }
-      }
-    case SELECT_EXISTING_PLAYLIST_CLOSED:
-      return {
-        ...state,
-        playlistInput: {
-          ...state.playlistInput,
-          isSelectingExistingPlaylist: false
-        }
-      }
-    case CREATE_PLAYLIST_SELECTED:
-      return {
-        ...state,
-        playlistInput: {
-          ...state.playlistInput,
-          isCreatingNewPlaylist: true
-        }
-      }
-    case CREATE_PLAYLIST_CLOSED:
-      return {
-        ...state,
-        playlistInput: {
-          ...state.playlistInput,
-          isCreatingNewPlaylist: false
         }
       }
     case EVENT_PLAYLIST_CREATION_ERROR:

@@ -16,7 +16,6 @@ import MapComponent from '../components/MapComponent'
 import EventSearchTracks from '../components/SearchTracks/EventSearchTracksContainer'
 import IEvent from '../event/IEvent'
 import IEventErrors from '../event/IEventErrors'
-import IPlaylistInput from '../event/IPlaylistInput'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
@@ -45,7 +44,6 @@ interface ICreateEventProps extends RouteComponentProps<any> {
   user: IUser
   event: IEvent
   errors: IEventErrors
-  playlistInput: IPlaylistInput
   playlists: IPlaylist[]
   copiedToClipboard: boolean
   message: string
@@ -137,7 +135,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       this.setState({organizer: newProps.event.organizer})
     }
 
-    if (!this.state.name && newProps.event.name) {
+    if ((!this.state.name && newProps.event.name) || (this.state.name !== newProps.event.name)) {
       this.setState({name: newProps.event.name})
     }
 
@@ -190,7 +188,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       confirmButtonColor: '#8f0a00',
       title: message,
       type: 'error'
-    }).then()
+    }).then(() => this.setState({showErrorDialog: true}))
   }
 
   public showSavedDialogue = () => {
@@ -262,7 +260,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const {
       fetchPlaylists,
       user,
-      playlistInput,
       playlists,
       isCreatingPlaylist,
       createEventPlaylist,
@@ -295,7 +292,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             handleEventName={this.handlePlaylistInputChange}
             onPlaylistAdded={this.handleContentUpdated('playlistUrl')}
             handlePickGenre={this.handleContentUpdated('genre')}
-            playlistInput={playlistInput}
             createEventPlaylist={createEventPlaylist}
             isCreatingPlaylist={isCreatingPlaylist}
             setEventPlaylist={this.handleSetPlaylist}
@@ -362,7 +358,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     if (
       currentStep === 1 &&
       showSaveDialog &&
-      !history.location.pathname.indexOf('edit')
+      history.location.pathname === '/create-event'
     ) {
       this.showSavedDialogue()
     }
@@ -624,8 +620,13 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   private handlePlaylistInputChange = (content: any) => {
-    this.setState({name: content})
-    _.debounce((name: any) => this.props.playlistInputChange(name), 300)(content)
+    const { history, event, playlistInputChange } = this.props
+    if (history.location.pathname === '/create-event' && !event.createdAt) {
+      this.setState({name: content})
+      this.timer({name: content})
+    } else {
+      _.debounce((name: any) => playlistInputChange(name), 300)(content)
+    }
   }
 
   private handleContentUpdated = (key: string) => (content: any) => {

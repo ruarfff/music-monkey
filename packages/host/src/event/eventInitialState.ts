@@ -11,10 +11,6 @@ export default {
     playlistCreation: undefined
   },
   events: [],
-  playlistInput: {
-    isCreatingNewPlaylist: false,
-    isSelectingExistingPlaylist: false
-  },
   createEventStep: 0,
   savingEvent: {
     description: '',
@@ -41,5 +37,5 @@ export default {
   showSavedDialogue: false,
   playlistReselected: false,
   shareEventMessage: '',
-  isPlaylistNameInputEmpty: true
+  playlistInput: ''
 } as IEventState

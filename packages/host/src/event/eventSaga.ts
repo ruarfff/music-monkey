@@ -84,7 +84,7 @@ function* fetchLatLngFlow(action: IAction) {
 }
 
 const getEventPlaylist = (state: any) => state.eventPlaylist.playlist
-const getPlaylistName = (state: any) => state.event.savingEvent.name
+const getEvent = (state: any) => state.event
 const getJustCreatedPlaylists = (state: any) => state.playlist.createdPlaylists
 const getUserId = (state: any) => state.user.data.userId
 
@@ -94,11 +94,11 @@ function* saveEventFlow(action: IAction) {
 
   try {
     const eventPlaylist = yield select(getEventPlaylist)
-    const playlistName = yield select(getPlaylistName)
+    const event = yield select(getEvent)
     const justCreatePlaylists = yield select(getJustCreatedPlaylists)
 
     const playlistDetails: IPlaylistDetails = {
-      name: playlistName || eventPlaylist.name,
+      name: event.playlistInput || eventPlaylist.name,
       description: eventPlaylist.description,
       user: {} as IUser
     }
@@ -159,10 +159,10 @@ function* updateEventFlow(action: IAction) {
   const isReselected: boolean = yield select(getIsReselectedPlaylist)
 
   try {
-    const playlistName = yield select(getPlaylistName)
+    const event = yield select(getEvent)
     const justCreatePlaylists = yield select(getJustCreatedPlaylists)
     const playlistDetails: IPlaylistDetails = {
-      name: playlistName || eventPlaylist.name,
+      name: event.playlistInput || eventPlaylist.name,
       description: eventPlaylist.description,
       user: {} as IUser
     }
@@ -188,8 +188,7 @@ function* updateEventFlow(action: IAction) {
     if (copiedPlaylist && currentStep === 0) {
       editedEvent = yield call(updateEvent, {
         ...event,
-        imageUrl: copiedPlaylist.images[0],
-        playlistUrl: copiedPlaylist.external_urls.spotify
+        playlistUrl: copiedPlaylist.external_urls.spotify,
       })
     } else {
       editedEvent = yield call(updateEvent, event)
