@@ -222,12 +222,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   public pickStep = (step: number) => {
     const { currentStep, setStep } = this.props
 
-    if (currentStep === 0 && !this.props.event.playlistUrl) {
-      this.showErrorDialog('Pick or create a playlist')
-    } else if(currentStep === 0 && this.props.event.createdAt === undefined) {
+    if (this.shouldGoToNextStep() && currentStep !== 2) {
       this.handleSaveEvent()
-    } else if (this.shouldGoToNextStep()) {
-      this.handleSaveEvent()
+      setStep(step)
+    } else {
       setStep(step)
     }
   }
