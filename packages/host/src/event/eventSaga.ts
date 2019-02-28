@@ -1,5 +1,5 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import { SET_EVENT_PLAYLIST } from '../eventPlaylist/eventPlaylistActions'
+import { SET_EVENT_PLAYLIST, UPDATE_PLAYLIST_AFTER_COPY } from '../eventPlaylist/eventPlaylistActions'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
@@ -127,6 +127,7 @@ function* saveEventFlow(action: IAction) {
         playlistUrl: copiedPlaylist.external_urls.spotify,
         userId: uId
       })
+      yield put({type: UPDATE_PLAYLIST_AFTER_COPY, payload: copiedPlaylist})
     } else {
       savedEvent = yield call(createEvent, {
         ...event,
@@ -190,6 +191,7 @@ function* updateEventFlow(action: IAction) {
         ...event,
         playlistUrl: copiedPlaylist.external_urls.spotify,
       })
+      yield put({type: UPDATE_PLAYLIST_AFTER_COPY, payload: copiedPlaylist})
     } else {
       editedEvent = yield call(updateEvent, event)
     }

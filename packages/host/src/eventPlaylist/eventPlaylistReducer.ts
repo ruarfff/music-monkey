@@ -14,7 +14,8 @@ import {
   SAVE_EVENT_PLAYLIST,
   SAVE_EVENT_PLAYLIST_ERROR,
   SAVE_EVENT_PLAYLIST_SUCCESS,
-  SET_EVENT_PLAYLIST
+  SET_EVENT_PLAYLIST,
+  UPDATE_PLAYLIST_AFTER_COPY
 } from './eventPlaylistActions'
 import initialState from './eventPlaylistInitialState'
 import IEventPlaylistState from './IEventPlaylistState'
@@ -28,6 +29,18 @@ export default function eventPlaylist(
       return {
         ...state,
         playlist: {} as IPlaylist
+      }
+    case UPDATE_PLAYLIST_AFTER_COPY:
+      return {
+        ...state,
+        playlist: {
+          ...state.playlist,
+          id: payload.id,
+          uri: payload.uri,
+          name: payload.name,
+          external_urls: payload.external_urls,
+          href: payload.href
+        }
       }
     case SET_EVENT_PLAYLIST:
       return {
