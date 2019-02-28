@@ -98,7 +98,7 @@ function* saveEventFlow(action: IAction) {
     const justCreatePlaylists = yield select(getJustCreatedPlaylists)
 
     const playlistDetails: IPlaylistDetails = {
-      name: event.playlistInput || eventPlaylist.name,
+      name: event.savingEvent.name || eventPlaylist.name,
       description: eventPlaylist.description,
       user: {} as IUser
     }
