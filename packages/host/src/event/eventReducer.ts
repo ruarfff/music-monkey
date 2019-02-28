@@ -54,7 +54,7 @@ export default function event(
         savingEvent: {
           ...initialState.savingEvent,
           organizer: state.savingEvent.organizer
-        }
+        },
       }
     case TOGGLE_AUTO_ACCEPT_SUGGESTIONS:
       return {

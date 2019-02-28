@@ -1,6 +1,7 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
 import { cloneDeep } from 'lodash'
 import {
+  CLEAR_SAVING_EVENT,
   EVENT_CREATE_PLAYLIST_INITIATED,
   EVENT_PLAYLIST_CREATED
 } from '../event/eventActions'
@@ -38,6 +39,11 @@ export default function playlists(
       return {
         ...state,
         isCreating: true
+      }
+    case CLEAR_SAVING_EVENT:
+      return {
+        ...state,
+        createdPlaylists: []
       }
     case EVENT_PLAYLIST_CREATED: {
       const playlists = cloneDeep(state.createdPlaylists)
