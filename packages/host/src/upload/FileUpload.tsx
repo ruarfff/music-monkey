@@ -3,6 +3,7 @@ import * as React from 'react'
 import { DropzoneComponent } from 'react-dropzone-component'
 import uuidv1 from 'uuid/v1'
 import Action from '../IAction'
+import LoadingSpinner from '../loading/LoadingSpinner'
 
 const bucket = 'musicmonkey-uploads'
 const bucketRegion = 'eu-west-1'
@@ -69,21 +70,36 @@ interface IFileUploadProps {
 }
 
 class FileUpload extends React.Component<IFileUploadProps, {}> {
+  public state = {
+    showLoading: false
+  }
+  public toggleLoading = () => {
+    this.setState({showLoading: !this.state.showLoading})
+  }
+
   public render() {
     const { onUpload, onUploadError } = this.props
     const eventHandlers = {
-      addedfile: (file: any) => {
-        upload(file)
+      addedfile: async (file: any) => {
+        this.toggleLoading()
+        await upload(file)
           .then(onUpload)
           .catch(onUploadError)
+        this.toggleLoading()
       }
     }
+
     return (
-      <DropzoneComponent
-        config={componentConfig}
-        eventHandlers={eventHandlers}
-        djsConfig={djsConfig}
-      />
+      <React.Fragment>
+        {this.state.showLoading && (
+          <LoadingSpinner/>
+        )}
+        <DropzoneComponent
+          config={componentConfig}
+          eventHandlers={eventHandlers}
+          djsConfig={djsConfig}
+        />
+      </React.Fragment>
     )
   }
 }

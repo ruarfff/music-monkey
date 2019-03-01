@@ -2,10 +2,17 @@ import * as React from 'react'
 import ReactLoading from 'react-loading'
 import './LoadingSpinner.scss'
 
-const LoadingSpinner = () => (
-  <div className="LoadingSpinner">
-    <ReactLoading type="cylon" color="#AF00FF" height={400} width={400} />
-  </div>
-)
+interface ILoadingSpinner {
+  height?: number
+  width?: number
+}
+
+const LoadingSpinner = ({height, width}:ILoadingSpinner) => {
+  return (
+    <div className="LoadingSpinner">
+      <ReactLoading type="cylon" color="#AF00FF" height={height ? height : 400} width={width ? width : 400} />
+    </div>
+  )
+}
 
 export default LoadingSpinner
