@@ -111,15 +111,15 @@ class EventSummaryPlaylist extends React.PureComponent<
             <Grid item={true} xs={12}>
               <Typography gutterBottom={true} variant="subtitle1">
                 Playlist{' '}
-                <Button color="secondary">
-                  <a
-                    className={classes.spotifyLink}
-                    href={openUrl}
-                    target="_blank"
-                  >
+                <a
+                  className={classes.spotifyLink}
+                  href={openUrl}
+                  target="_blank"
+                >
+                  <Button color="secondary">
                     Open in Spotify
-                  </a>
-                </Button>
+                  </Button>
+                </a>
               </Typography>
             </Grid>
             <Grid item={true} xs={12} container={true}>

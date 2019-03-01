@@ -76,7 +76,7 @@ class EventDetails extends React.PureComponent<
             </Typography>
 
             {event.description && (
-              <Typography variant="h6" gutterBottom={true}>
+              <Typography className={classes.imgRow} gutterBottom={true}>
                 Event Description: {event.description}
               </Typography>
             )}
