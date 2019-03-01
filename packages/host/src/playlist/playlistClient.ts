@@ -112,3 +112,22 @@ export const getTracksFeatures = async (trackIds: string[]) => {
   )
   return response.data
 }
+
+export const updatePlaylistDetails = async (
+  playlistId: string,
+  name: string,
+  description: string
+) => {
+  const response = await client.put(
+    '/playlists/' + playlistId,
+    {
+      name,
+      description
+    },
+    {
+      withCredentials: true
+    }
+  )
+
+  return response
+}

@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
 import { sortPlaylistByVotesDescending } from '../../../eventPlaylist/eventPlaylistActions'
+import { editPlaylist } from '../../../playlist/playlistActions'
 import IRootState from '../../../rootState'
 import {
   toggleAutoAcceptSuggestions,
   toggleDynamicVoting,
   toggleSuggestingPlaylists
 } from '../../eventViewActions'
+
 import EventSummaryPlaylist from './EventSummaryPlaylist'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -22,6 +24,7 @@ const mapDispatchToProps = {
   toggleAutoAcceptSuggestions,
   toggleSuggestingPlaylists,
   sortPlaylistByVotesDescending,
+  editPlaylist
 }
 
 const EventSummaryPlaylistContainer = connect(

@@ -15,6 +15,7 @@ import IPlaylist from '../../../playlist/IPlaylist'
 import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
 import { formatDuration } from '../../../util/formatDuration'
 import ITrackVoteStatus from '../../../vote/ITrackVoteStatus'
+import EditPlaylistPopup from './EditPlaylistPopup'
 import './Styles/EventSummaryPlaylist.scss'
 
 const decorated = withStyle(() => ({
@@ -60,11 +61,16 @@ interface IEventSummaryPlaylistProps {
   toggleDynamicVoting(event: IEvent): IAction
   toggleAutoAcceptSuggestions(event: IEvent): IAction
   toggleSuggestingPlaylists(event: IEvent): IAction
+  editPlaylist(playlistId: string, name: string, description: string): IAction
 }
 
 class EventSummaryPlaylist extends React.PureComponent<
   IEventSummaryPlaylistProps & WithStyles
 > {
+  public state = {
+    showPopup: false,
+  }
+
   public render() {
     const {
       playlist,
@@ -72,7 +78,8 @@ class EventSummaryPlaylist extends React.PureComponent<
       suggestion,
       genre,
       eventImg,
-      event
+      event,
+      editPlaylist,
     } = this.props
 
     if (!playlist) {
@@ -106,6 +113,13 @@ class EventSummaryPlaylist extends React.PureComponent<
 
     return (
       <Grid className={classes.playlistWrapper} container={true} spacing={16}>
+        {this.state.showPopup && (
+          <EditPlaylistPopup
+            playlist={playlist}
+            togglePopup={this.togglePopup}
+            editPlaylist={editPlaylist}
+          />
+        )}
         <Grid item={true} xs={12} className={classes.playlistView}>
           <Grid container={true} alignItems={'center'}>
             <Grid item={true} xs={12}>
@@ -140,9 +154,6 @@ class EventSummaryPlaylist extends React.PureComponent<
                     </Typography>
                   </div>
                   <div>
-                    {/*<Typography color="textSecondary">*/}
-                      {/*Mode: Play to Play*/}
-                    {/*</Typography>*/}
                     <Typography color="textSecondary">Genre: {genre ? genre : 'All'}</Typography>
                   </div>
                 </Grid>
@@ -195,6 +206,11 @@ class EventSummaryPlaylist extends React.PureComponent<
                   label="Dynamic Voting"
                 />
               </FormGroup>
+              <Button
+                onClick={this.togglePopup}
+              >
+                Edit Playlist Details
+              </Button>
             </Grid>
           </Grid>
         </Grid>
@@ -223,6 +239,12 @@ class EventSummaryPlaylist extends React.PureComponent<
         </Grid>
       </Grid>
     )
+  }
+
+  private togglePopup = () => {
+    this.setState({
+      showPopup: !this.state.showPopup
+    })
   }
 
   private handleDynamicVotingToggled = () => {

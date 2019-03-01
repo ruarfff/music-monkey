@@ -29,7 +29,28 @@ export const LOAD_MORE_PLAYLISTS_REQUEST = 'LOAD_MORE_PLAYLISTS_REQUEST'
 export const LOAD_MORE_PLAYLISTS_SUCCESS = 'LOAD_MORE_PLAYLISTS_SUCCESS'
 export const LOAD_MORE_PLAYLISTS_FAILURE = 'LOAD_MORE_PLAYLISTS_FAILURE'
 
+export const EDIT_PLAYLIST_REQUEST = 'EDIT_PLAYLIST_REQUEST'
+export const EDIT_PLAYLIST_SUCCESS = 'EDIT_PLAYLIST_SUCCESS'
+export const EDIT_PLAYLIST_FAILURE = 'EDIT_PLAYLIST_FAILURE'
+
 export const CLEAR_JUST_CREATED_PLAYLISTS = 'CLEAR_JUST_CREATED_PLAYLISTS'
+
+export const editPlaylist = (playlistId: string, name: string, description: string):IAction => ({
+  type: EDIT_PLAYLIST_REQUEST,
+  payload: {
+    playlistId,
+    name,
+    description
+  }
+})
+
+export const editPlaylistSuccess = ():IAction => ({
+  type: EDIT_PLAYLIST_SUCCESS
+})
+
+export const editPlaylistFailure = ():IAction => ({
+  type: EDIT_PLAYLIST_FAILURE
+})
 
 export const clearJustCreatedPlaylists = () => ({
   type: CLEAR_JUST_CREATED_PLAYLISTS

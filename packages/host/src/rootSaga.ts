@@ -29,6 +29,7 @@ import {
 import {
   watchFetchAddTrackToPlaylist,
   watchFetchMorePlaylistsFlow,
+  watchFetchPlaylistEditDetails,
   watchFetchPlaylists,
   watchFetchRemoveTrackFromPlaylist,
   watchFetchSearchTracks,
@@ -77,5 +78,6 @@ export default function* rootSaga() {
     watchFetchTrackFeatures(),
     watchFetchRecommendation(),
     watchFetchMorePlaylistsFlow(),
+    watchFetchPlaylistEditDetails(),
   ])
 }

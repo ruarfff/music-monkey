@@ -1,9 +1,11 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import IAction from '../IAction';
+import { EVENT_FETCH_BY_ID_INITIATED } from '../eventView/eventViewActions'
+import IAction from '../IAction'
 import {
   ADD_TRACK_REQUEST,
   addTrackError,
   addTrackSuccess,
+  EDIT_PLAYLIST_REQUEST, EDIT_PLAYLIST_SUCCESS,
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
@@ -28,6 +30,7 @@ import {
   getTracksFeatures,
   removeTrackFromPlaylist,
   searchForTracks,
+  updatePlaylistDetails
 } from './playlistClient'
 
 function* fetchPlaylistsFlow(action: IAction) {
@@ -144,6 +147,21 @@ function* fetchTracksFeatures({ payload }: IAction) {
   }
 }
 
+const getEventId = (state: any) => state.eventView.event.eventId
+
+function* fetchPlaylistEditDetails({ payload }: IAction) {
+  try {
+    const { playlistId, name, description } = payload
+    yield call(updatePlaylistDetails, playlistId, name, description)
+
+    const eventId = yield select(getEventId)
+    yield put({ type: EDIT_PLAYLIST_SUCCESS })
+    yield put({ type: EVENT_FETCH_BY_ID_INITIATED, payload: eventId })
+  } catch (e) {
+    console.log(e.message)
+  }
+}
+
 export function* watchFetchMorePlaylistsFlow() {
   yield takeEvery(LOAD_MORE_PLAYLISTS_REQUEST, fetchMorePlaylistsFlow)
 }
@@ -166,4 +184,8 @@ export function* watchFetchRemoveTrackFromPlaylist() {
 
 export function* watchFetchPlaylists() {
   yield takeEvery(FETCH_PLAYLISTS, fetchPlaylistsFlow)
+}
+
+export function* watchFetchPlaylistEditDetails() {
+  yield takeEvery(EDIT_PLAYLIST_REQUEST, fetchPlaylistEditDetails)
 }
