@@ -137,6 +137,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       this.setState({organizer: newProps.event.organizer})
     }
 
+    if (!this.state.genre && newProps.event.genre) {
+      this.setState({genre: newProps.event.genre})
+    }
+
     if ((!this.state.name && newProps.event.name) || (this.state.name !== newProps.event.name)) {
       this.setState({name: newProps.event.name})
     }
