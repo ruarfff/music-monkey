@@ -217,27 +217,30 @@ class EventSummaryPlaylist extends React.PureComponent<
           </Grid>
         </Grid>
         <Grid item={true} xs={12}>
-          <Typography className={classes.recentlyTitle} variant="caption">
-            Recently Requested Tracks
-          </Typography>
-          {suggestion &&
-              cloneDeep(suggestion)
-              .reverse()
-              .slice(0, size)
-              .map((suggest, i) => (
-                <div className={classes.suggestionRow} key={i}>
-                  <img
-                    className={classes.suggestionImg}
-                    src={suggest.track.album.images[0].url}
-                  />
-                  <div>
-                    <Typography>
-                      {suggest.track.album.artists[0].name}
-                    </Typography>
-                    <Typography>{suggest.track.name}</Typography>
+          {suggestion && (
+            <React.Fragment>
+              <Typography className={classes.recentlyTitle} variant="caption">
+                Recently Requested Tracks
+              </Typography>
+              {cloneDeep(suggestion)
+                .reverse()
+                .slice(0, size)
+                .map((suggest, i) => (
+                  <div className={classes.suggestionRow} key={i}>
+                    <img
+                      className={classes.suggestionImg}
+                      src={suggest.track.album.images[0].url}
+                    />
+                    <div>
+                      <Typography>
+                        {suggest.track.album.artists[0].name}
+                      </Typography>
+                      <Typography>{suggest.track.name}</Typography>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+            </React.Fragment>
+          )}
         </Grid>
       </Grid>
     )
