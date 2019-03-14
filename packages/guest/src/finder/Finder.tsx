@@ -65,6 +65,9 @@ const Finder = ({
       if (!isEmpty(user) && isEmpty(userPlaylists)) {
         fetchPlaylists(user)
       }
+      if (!isEmpty(selectedEvent)) {
+        getEvent(selectedEvent.eventId)
+      }
     },
     [user]
   )
