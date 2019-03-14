@@ -5,10 +5,11 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import * as React from 'react'
 import IPlaylist from '../playlist/IPlaylist'
+import { formatDuration } from '../util/formatDuration'
 
 const decorate = withStyles(() => ({
   card: {
-    height: '210px',
+    height: '230px',
     marginLeft: '1em',
     marginRight: '1em',
     marginBottom: '1em',
@@ -33,6 +34,9 @@ const decorate = withStyles(() => ({
   img: {
     width: 'inherit',
     height: '140px'
+  },
+  btn: {
+    marginLeft: '8px',
   }
 }))
 
@@ -44,6 +48,13 @@ interface IPlaylistCardProps {
 class PlaylistCard extends React.Component<IPlaylistCardProps & WithStyles> {
   public render() {
     const { classes, playlist, disableLink } = this.props
+
+    const durationSeconds =
+      playlist && playlist.tracks.items.length > 0
+        ? playlist.tracks.items
+          .map(item => item.track.duration_ms)
+          .reduce((acc, dur) => acc + dur)
+        : 0
 
     const image =
       playlist && playlist.images && playlist.images.length > 0
@@ -57,7 +68,9 @@ class PlaylistCard extends React.Component<IPlaylistCardProps & WithStyles> {
         </div>
 
         <Typography className={classes.title}>
-          {playlist && playlist.name}
+          {playlist && playlist.name}<br/>
+          tracks: {playlist && playlist.tracks.items.length}<br/>
+          time: {formatDuration(durationSeconds)}
         </Typography>
         <div>
           <a
@@ -65,7 +78,12 @@ class PlaylistCard extends React.Component<IPlaylistCardProps & WithStyles> {
             target={!disableLink ? '_blank' : ''}
             className={classes.link}
           >
-            <Button color="primary">GO TO PLAYLIST</Button>
+            <Button
+              color="primary"
+              className={classes.btn}
+            >
+              GO TO PLAYLIST
+            </Button>
           </a>
         </div>
       </Card>
