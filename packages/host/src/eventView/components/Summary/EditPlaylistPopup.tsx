@@ -55,12 +55,16 @@ class EditPlaylistPopup extends React.PureComponent<IEditPlaylistPopupProps> {
             onChange={this.handleInputChange('description')}
           />
           <Button
+            color={'default'}
+            variant={'contained'}
             onClick={this.handleCancel}
           >
             Cancel
           </Button>
           <Button
             onClick={this.handleEditPlaylist}
+            color={'secondary'}
+            variant={'contained'}
           >
             Edit
           </Button>

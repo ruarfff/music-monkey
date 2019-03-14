@@ -207,6 +207,8 @@ class EventSummaryPlaylist extends React.PureComponent<
                 />
               </FormGroup>
               <Button
+                color={'secondary'}
+                variant={'contained'}
                 onClick={this.togglePopup}
               >
                 Edit Playlist Details
