@@ -217,7 +217,7 @@ class EventSummaryPlaylist extends React.PureComponent<
           </Grid>
         </Grid>
         <Grid item={true} xs={12}>
-          {suggestion && (
+          {suggestion.length > 0 && (
             <React.Fragment>
               <Typography className={classes.recentlyTitle} variant="caption">
                 Recently Requested Tracks
