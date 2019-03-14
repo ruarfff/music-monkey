@@ -224,12 +224,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   }
 
   public pickStep = (step: number) => {
-    const { currentStep, setStep } = this.props
-
-    if (this.shouldGoToNextStep() && currentStep !== 2) {
+    const { setStep } = this.props
+    const shouldGoNext = this.shouldGoToNextStep()
+    if (shouldGoNext) {
       this.handleSaveEvent()
-      setStep(step)
-    } else {
       setStep(step)
     }
   }
