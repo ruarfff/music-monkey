@@ -20,6 +20,7 @@ interface IMyPlaylistsTabProps {
   addedPlaylist?(value: IPlaylist): any
   onTrackSelected(track: ITrack): any
   savePlaylistSuggestion(suggestions: IPlaylist): any
+  fetchMorePlaylists(user: IUser): IAction
 }
 
 const MyPlaylistsTab = ({
@@ -31,11 +32,31 @@ const MyPlaylistsTab = ({
   addedPlaylist,
   onTrackSelected,
   savePlaylistSuggestion,
+  fetchMorePlaylists,
 }: IMyPlaylistsTabProps) => {
+
+  const handleFetchMorePlaylists = () => {
+    fetchMorePlaylists(user)
+  }
 
   React.useEffect(() => {
     if (!isEmpty(selectedUserPlaylist)) {
       deselectPlaylist()
+    }
+  }, [])
+
+  const trackScrolling = () => {
+    if (document.body.offsetHeight === window.pageYOffset + window.innerHeight) {
+      handleFetchMorePlaylists()
+    }
+  }
+
+  React.useEffect(() => {
+    document.addEventListener('scroll', trackScrolling)
+
+
+    return function cleanup() {
+      document.removeEventListener('scroll', trackScrolling)
     }
   }, [])
 

@@ -1,8 +1,11 @@
+import { cloneDeep } from 'lodash'
 import IEvent from '../event/IEvent'
 import Action from '../IAction'
 import { SELECT_PLAYLIST } from '../navigation/activeActions'
 import {
   EVENT_PLAYLISTS_LOADED,
+  FETCH_MORE_PLAYLISTS_REQUEST,
+  FETCH_MORE_PLAYLISTS_SUCCESS,
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
@@ -19,8 +22,17 @@ export default function playlist(
   switch (type) {
     case SELECT_PLAYLIST:
       return { ...state, selectedPlaylist: payload}
+    case FETCH_MORE_PLAYLISTS_REQUEST:
     case FETCH_PLAYLISTS:
       return { ...state, isLoading: true }
+    case FETCH_MORE_PLAYLISTS_SUCCESS:
+      const newData = cloneDeep(state.data).concat(payload)
+      return {
+        ...state,
+        data: newData,
+        isLoading: false,
+        offset: state.offset + 50
+      }
     case FETCH_PLAYLISTS_SUCCESS:
       return { ...state, data: payload, isLoading: false }
     case PLAYLIST_CLEAR:

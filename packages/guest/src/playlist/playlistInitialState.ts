@@ -6,5 +6,6 @@ export default {
   eventPlaylists: [],
   error: undefined,
   isLoading: false,
-  selectedPlaylist: {} as IPlaylist
+  selectedPlaylist: {} as IPlaylist,
+  offset: 50
 } as IPlaylistState
