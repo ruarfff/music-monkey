@@ -17,7 +17,7 @@ export default class MaybeTracks extends React.PureComponent<
 > {
   public render() {
     const { suggestions, selectedEvent } = this.props
-    const maybeSuggestions = !!suggestions
+    const maybeSuggestions = !isEmpty(suggestions) && !isEmpty(selectedEvent)
       ? suggestions.filter(s => s.suggestion.eventId === selectedEvent.eventId)
         .filter(
           s => s.suggestion && !s.suggestion.rejected && !s.suggestion.accepted
