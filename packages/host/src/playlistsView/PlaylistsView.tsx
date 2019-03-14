@@ -43,38 +43,41 @@ interface IDecoratedPlaylist extends IPlaylist{
 
 class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
   public componentDidMount() {
-    if (this.props.user.data) {
+    if (!!this.props.user.data) {
       this.props.getEvents()
-      this.props.fetchPlaylists(this.props.user.data)
     }
   }
 
-  public renderPlayList = (playlists: IDecoratedPlaylist[], noEventsMessage: string) => (
-    <React.Fragment>
-      {playlists.length < 1 && (
-        <Typography
-          className="eventsListCaption"
-          align="center"
-          variant="body2"
-          gutterBottom={true}
-        >
-          {noEventsMessage}
-        </Typography>
-      )}
+  public renderPlayList = (playlists: IDecoratedPlaylist[], noEventsMessage: string) => {
+    const filteredPlaylists = playlists.filter((playlist: IDecoratedPlaylist) => playlist.id !== undefined)
 
-      <div className="eventsList">
-        {map(
-          sortBy(playlists, (playlist: IDecoratedPlaylist) => playlist.followers),
-          (playlist: any, i) => (
-            <PlaylistCard key={i} playlist={playlist} eventId={playlist.eventId} />
-          )
+    return (
+      <React.Fragment>
+        {filteredPlaylists.length < 1 && (
+          <Typography
+            className="eventsListCaption"
+            align="center"
+            variant="body2"
+            gutterBottom={true}
+          >
+            {noEventsMessage}
+          </Typography>
         )}
-      </div>
-    </React.Fragment>
-  )
+
+        <div className="eventsList">
+          {map(
+            sortBy(filteredPlaylists, (playlist: IDecoratedPlaylist) => playlist.followers),
+            (playlist: any, i) => (
+              <PlaylistCard key={i} playlist={playlist} eventId={playlist.eventId} />
+            )
+          )}
+        </div>
+      </React.Fragment>
+    )
+  }
 
   public render() {
-    const { history, classes, playlists } = this.props
+    const { history, classes } = this.props
     const { events, eventsLoading } = this.props.events
     const currentPath = history.location.pathname
 
@@ -128,8 +131,7 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
 
         {!eventsLoading &&
           !!events &&
-          playlists &&
-          playlists.length > 0 && (
+          events.length > 0 && (
             <React.Fragment>
               <Grid container={true} spacing={24} direction="row">
                 <Hidden xsDown={true}>
