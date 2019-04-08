@@ -1921,9 +1921,9 @@
   integrity sha512-3AQoUxQcQtLHsK25wtTWIoIpgYjH3vSDroZOUr7PpCHw/jLY1RB9z9E8dBT/OSmwStVgkRNvdh+ZHNiomRieaw==
 
 "@types/pusher-js@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@types/pusher-js/-/pusher-js-4.2.0.tgz#88a06cc695a4cd5656738db9f66c9c9cc5057806"
-  integrity sha512-iCvPvf7HbfuR5TPVWjof/sIWyT+bSJYCT0IDHk5WjeZ2CT8XYQIQBiVGutrqDk7erXQUq+L0iAG9r2kig0f6IA==
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@types/pusher-js/-/pusher-js-4.2.1.tgz#a7dcd68c56b91fb2ab7cd198d04c72d775d6a44e"
+  integrity sha512-Y2OAPQR/7e8JW3PMYo+kpqT1kCYhcCow3Bs13VZDOecsbnyCuzK//xKS6GB9+yv1en9iLxkzKK8qJMDQ9X46tA==
 
 "@types/q@^1.5.1":
   version "1.5.1"
