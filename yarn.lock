@@ -3883,9 +3883,9 @@ connect-history-api-fallback@^1.3.0:
   integrity sha1-sGhzk0vF40T+9hGhlqb6rgruAVo=
 
 connected-react-router@^6.0.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-6.1.0.tgz#a6f361313cf0a37c8c33578494bb813d09252abf"
-  integrity sha512-sdu+rf6TvjH3/I/S6+VFV9efThSyyRVwOhTZhC7XdqqZ700PdqgzfPr3sSK635JPbBFYhFYP97/KWTFdjldL0A==
+  version "6.3.2"
+  resolved "https://registry.yarnpkg.com/connected-react-router/-/connected-react-router-6.3.2.tgz#8c90b77f1d7b783608cd50e4f69bf60e47265425"
+  integrity sha512-YxrAfMExl/OBsi+ojA4ywZeC7cmQ52MnZ4bhzqLhhjuOiXcQogC4kW0kodouXAXrXDovb2l3yEhDfpH99/wYcw==
   dependencies:
     immutable "^3.8.1"
     seamless-immutable "^7.1.3"
