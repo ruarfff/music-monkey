@@ -38,52 +38,54 @@ class Login extends React.PureComponent<ILoginProps> {
     return (
       <div>
         <div className="Login-container">
-          <div className="Login-section">
-            <Typography variant="h3">Login</Typography>
-          </div>
-          {eventDetails}
-          <div className="Login-section">
-            <div className="Login-content">
-              <a href={facebookLoginUrl} className="text-decoration-none">
-                <Button color="default" className="Login-content-text facebook">
-                  <img src={Images.Facebook} />
-                  SIGN IN WITH FACEBOOK
+          <div className="Login-block">
+            <div className="Login-section">
+              <Typography variant="h3">Login</Typography>
+            </div>
+            {eventDetails}
+            <div className="Login-section">
+              <div className="Login-content">
+                <a href={facebookLoginUrl} className="text-decoration-none">
+                  <Button color="default" className="Login-content-text facebook">
+                    <img src={Images.Facebook} />
+                    SIGN IN WITH FACEBOOK
+                  </Button>
+                </a>
+                <a href={spotifyLoginUrl} className="text-decoration-none">
+                  <Button color="default" className="Login-content-text email">
+                    <img className="spotify-img" src={Images.Spotify} />
+                    SIGN IN WITH SPOTIFY
+                  </Button>
+                </a>
+              </div>
+            </div>
+            <div className="Login-section">
+              <Divider className="Login-divider" />
+              <Typography variant="subtitle1">OR</Typography>
+            </div>
+            <div className="Login-section">
+              <div className="Login-content">
+                <Button
+                  color="default"
+                  className="Login-content-text account"
+                  onClick={this.handleLoginAsGuestSelected}
+                >
+                  <Icon>account_circle</Icon>
+                  CONTINUE AS GUEST
                 </Button>
-              </a>
-              <a href={spotifyLoginUrl} className="text-decoration-none">
-                <Button color="default" className="Login-content-text email">
-                  <img className="spotify-img" src={Images.Spotify} />
-                  SIGN IN WITH SPOTIFY
-                </Button>
-              </a>
+              </div>
             </div>
           </div>
-          <div className="Login-section">
-            <Divider className="Login-divider" />
-            <Typography variant="subtitle1">OR</Typography>
-          </div>
-          <div className="Login-section">
-            <div className="Login-content">
-              <Button
-                color="default"
-                className="Login-content-text account"
-                onClick={this.handleLoginAsGuestSelected}
-              >
-                <Icon>account_circle</Icon>
-                CONTINUE AS GUEST
-              </Button>
-            </div>
-          </div>
+          {authError && authError.errorContext === 'guest-login' && (
+            <ErrorNotification
+              message={
+                (authError.response && authError.response.data) ||
+                authError.message
+              }
+              onClose={this.handleErrorAcknowledged}
+            />
+          )}
         </div>
-        {authError && authError.errorContext === 'guest-login' && (
-          <ErrorNotification
-            message={
-              (authError.response && authError.response.data) ||
-              authError.message
-            }
-            onClose={this.handleErrorAcknowledged}
-          />
-        )}
       </div>
     )
   }

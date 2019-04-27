@@ -9,118 +9,131 @@
   overflow-y: scroll;
   height: 100vh;
   border-radius: 0.4em;
-  background: white url('../assets/background-marshmallow.png') no-repeat center center;
+  background: url('../assets/club.png') no-repeat center center;
   background-size: cover;
 
-  .Login-section {
+  .Login-block {
+    background: rgba(255, 255, 255, 0.5);
     display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
     flex-direction: column;
-  }
-
-  .Login-divider {
-    width: 100%;
-    height: 1px;
-    background-color: #9b9b9b;
-    display: flex;
-    justify-content: center;
     align-items: center;
-  }
-
-  .Login-content {
-    margin: 1em 2em;
-    min-width: 210px;
-    display: flex;
     justify-content: center;
-    flex-direction: column;
+    overflow-y: scroll;
+    height: 100vh;
+    border-radius: 0.4em;
+    background-size: cover;
+    width: 100%;
 
-    .Login-content-text {
-      text-align: left;
-      font-weight: 500;
-      color: #4a4a4a;
-      align-items: center;
+    .Login-section {
       display: flex;
-      padding: 0.1em 0;
-      margin-top: 0.4em;
-      .material-icons {
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .Login-divider {
+      width: 100%;
+      height: 1px;
+      background-color: #9b9b9b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .Login-content {
+      margin: 1em 2em;
+      min-width: 210px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      .Login-content-text {
+        text-align: left;
+        font-weight: 500;
+        color: #4a4a4a;
+        align-items: center;
+        display: flex;
+        padding: 0.1em 0;
+        margin-top: 0.4em;
+        .material-icons {
+          color: $secondary-light;
+        }
+      }
+
+      .Login-content-text.location {
+        span {
+          font-size: 18px;
+        }
+      }
+      .Login-content-text.calendar {
+        span {
+          font-size: 18px;
+        }
+      }
+
+      .Login-content-text.description {
+        padding-top: 7px;
+      }
+
+      .Login-content-text.title {
+        font-size: 15px;
+        font-weight: 500;
+      }
+
+      .Login-content-text.facebook,
+      .Login-content-text.email,
+      .Login-content-text.account {
+        color: black;
+        margin-top: 5px;
+
+        img {
+          width: auto;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .login-input-container {
+      position: relative;
+      margin-bottom: 15px;
+
+      .login-eye-icon {
+        position: absolute;
+        top: 9px;
+        right: 10px;
+        color: #9e9e9e;
+      }
+    }
+
+    .login-header-container {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border-bottom: 1px solid #f7f7f7;
+
+      .spotify-img {
+        width: auto;
+      }
+
+      .login-header-icon {
         color: $secondary-light;
       }
     }
 
-    .Login-content-text.location {
-      span {
-        font-size: 18px;
+    .login-link-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px;
+
+      a {
+        font-size: 10px;
+        color: gray;
+        text-decoration: none;
       }
-    }
-    .Login-content-text.calendar {
-      span {
-        font-size: 18px;
-      }
-    }
-
-    .Login-content-text.description {
-      padding-top: 7px;
-    }
-
-    .Login-content-text.title {
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    .Login-content-text.facebook,
-    .Login-content-text.email,
-    .Login-content-text.account {
-      color: black;
-      margin-top: 5px;
-
-      img {
-        width: auto;
-        margin-right: 10px;
-      }
-    }
-  }
-
-  .login-input-container {
-    position: relative;
-    margin-bottom: 15px;
-
-    .login-eye-icon {
-      position: absolute;
-      top: 9px;
-      right: 10px;
-      color: #9e9e9e;
-    }
-  }
-
-  .login-header-container {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-bottom: 1px solid #f7f7f7;
-
-    .spotify-img {
-      width: auto;
-    }
-
-    .login-header-icon {
-      color: $secondary-light;
-    }
-  }
-
-  .login-link-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px;
-
-    a {
-      font-size: 10px;
-      color: gray;
-      text-decoration: none;
     }
   }
 }
