@@ -4,14 +4,19 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import * as React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
+import IEvent from '../event/IEvent'
 import './BottomBar.scss'
 import { FinderButton } from './FinderButton'
+
+interface IBottomBar extends RouteComponentProps<any> {
+  event: IEvent
+}
 
 const checkLocation = (location: string, path: string) => {
   return location === path ? 'highlighted' : ''
 }
 
-const BottomBar: React.FC<RouteComponentProps> = (props) => {
+const BottomBar = (props: IBottomBar) => {
   const location = props.location.pathname
   return (
     <div className="BottomBar-navigation">
@@ -38,7 +43,7 @@ const BottomBar: React.FC<RouteComponentProps> = (props) => {
       </div>
 
       <div className="BottomBar-finder-button">
-        <FinderButton />
+        <FinderButton id={props.event && props.event.eventId} />
       </div>
 
       <div className="BottomBar-navigation-right">
@@ -46,7 +51,7 @@ const BottomBar: React.FC<RouteComponentProps> = (props) => {
           className={`BottomBar-navigation-item
           ${checkLocation(location, '/requests')}`}
         >
-          <Link to="/requests">
+          <Link to={props.event && props.event.eventId ? `/requests/${props.event.eventId}` : '/requests'}>
             <FavoriteIcon />
             <span>Requests</span>
           </Link>

@@ -24,7 +24,8 @@ export default class MaybeTracks extends React.PureComponent<
         )
       : []
 
-    const playlistTracks = selectedEvent.playlist.tracks.items.map((track) => track.track.uri)
+    const playlistTracks = (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)) ?
+      selectedEvent.playlist.tracks.items.map((track) => track.track.uri) : []
     let filteredSuggestions = maybeSuggestions
 
     if(!isEmpty(suggestions)) {

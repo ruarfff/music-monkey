@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deselectEvent, selectEvent } from '../event/eventActions'
+import { deselectEvent, getEvent, selectEvent } from '../event/eventActions'
 import IRootState from '../rootState'
 import {
   getSuggestions,
@@ -19,7 +19,8 @@ const mapDispatchToProps = {
   getSuggestions,
   getUsersSuggestions,
   selectEvent,
-  deselectEvent
+  deselectEvent,
+  getEvent,
 }
 
 const RequestsContainer = connect(

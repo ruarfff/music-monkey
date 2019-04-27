@@ -83,6 +83,11 @@ const routes = [
         exact: true
       },
       {
+        component: userIsAuthenticated(Requests),
+        path: '/requests/:eventId',
+        exact: true
+      },
+      {
         component: userIsAuthenticated(PlaylistView),
         path: '/playlists',
         exact: true
@@ -96,7 +101,12 @@ const routes = [
         component: userIsAuthenticated(Finder),
         path: '/finder',
         exact: true
-      }
+      },
+      {
+        component: userIsAuthenticated(Finder),
+        path: '/finder/:eventId',
+        exact: true
+      },
     ]
   }
 ]

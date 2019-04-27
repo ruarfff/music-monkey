@@ -35,8 +35,10 @@ class EditPlaylistPopup extends React.PureComponent<IEditPlaylistPopupProps> {
   public handleEditPlaylist = () => {
     const { editPlaylist, togglePopup, playlist } = this.props
     const { name, description } = this.state
-    editPlaylist(playlist.id, name, description)
-    togglePopup()
+    if (name !== '' && description !== '') {
+      editPlaylist(playlist.id, name, description)
+      togglePopup()
+    }
   }
 
   public render() {
@@ -46,12 +48,16 @@ class EditPlaylistPopup extends React.PureComponent<IEditPlaylistPopupProps> {
         <div className='editPlaylistPopupContainer'>
           <EventInput
             label='Playlist name'
+            error={!name}
+            errorLabel={'Name is required'}
             value={name}
             onChange={this.handleInputChange('name')}
           />
           <EventInput
             label='Playlist description'
             value={description}
+            errorLabel={'Description is required'}
+            error={!description}
             onChange={this.handleInputChange('description')}
           />
           <Button

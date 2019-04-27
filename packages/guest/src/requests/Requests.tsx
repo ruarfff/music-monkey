@@ -2,6 +2,7 @@ import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty, sortBy } from 'lodash'
 import moment from 'moment'
 import * as React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../event/IEvent'
 import EventPicker from '../finder/EventPicker'
@@ -15,7 +16,7 @@ import RejectedTracks from '../trackView/RejectedTracksContainer'
 import IUser from '../user/IUser'
 import './Requests.scss'
 
-interface IRequestsProps {
+interface IRequestsProps extends RouteComponentProps<any>{
   event: IEvent
   events: IEvent[]
   user: IUser
@@ -23,6 +24,7 @@ interface IRequestsProps {
   getUsersSuggestions(eventId: string): IAction
   selectEvent(event: IEvent): IAction
   deselectEvent(): IAction
+  getEvent(eventId: string): IAction
 }
 
 class Requests extends React.Component<IRequestsProps> {
@@ -37,6 +39,11 @@ class Requests extends React.Component<IRequestsProps> {
     ) {
       this.props.getUsersSuggestions(this.props.event.eventId)
     }
+    const eventId = this.props.match.params.eventId
+    if (eventId) {
+      this.props.getEvent(eventId)
+    }
+
   }
 
   public componentWillReceiveProps(newProps: IRequestsProps) {
@@ -77,7 +84,7 @@ class Requests extends React.Component<IRequestsProps> {
       event,
       events,
       selectEvent,
-      deselectEvent
+      deselectEvent,
     } = this.props
 
     const now = moment()
@@ -116,7 +123,7 @@ class Requests extends React.Component<IRequestsProps> {
       tabs = (
         <div>
           {isEmpty(event) && !isEmpty(sortedEvents) && (
-            <EventPicker events={sortedEvents} onSelectEvent={selectEvent} />
+            <EventPicker isFinder={false} events={sortedEvents} onSelectEvent={selectEvent} />
           )}
           {!isEmpty(event) && (
             <SelectedEvent event={event} deselectEvent={deselectEvent} />
@@ -171,4 +178,4 @@ class Requests extends React.Component<IRequestsProps> {
   }
 }
 
-export default Requests
+export default withRouter(Requests)

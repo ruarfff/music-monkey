@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom'
 import Monkey from '../assets/finder-logo.png'
 import './FinderButton.scss'
 
-export const FinderButton: React.FC = () => {
+interface IFinderButton {
+  id: string
+}
+
+export const FinderButton = (props: IFinderButton) => {
   return (
     <div className="FinderButton-root">
-      <Link to="/finder" className="FinderButton-link">
+      <Link to={props.id ? `/finder/${props.id}` : '/finder'} className="FinderButton-link">
         <img src={Monkey} />
       </Link>
     </div>

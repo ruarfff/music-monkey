@@ -46,6 +46,7 @@ interface IFinderProps extends RouteComponentProps<any> {
 
 const Finder = ({
   user,
+  match,
   events,
   selectedEvent,
   history,
@@ -88,6 +89,17 @@ const Finder = ({
     }
   ))
 
+  const eventId = match.params.eventId
+
+  React.useEffect(
+    () => {
+      if (eventId) {
+        getEvent(eventId)
+      }
+    },
+    []
+  )
+
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
   const onTrackSelected = (track: ITrack) => {
@@ -108,7 +120,7 @@ const Finder = ({
 
   }
 
-  const playlistTracks = !isEmpty(selectedEvent)
+  const playlistTracks = (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist))
     ? selectedEvent.playlist.tracks.items.map(track => track.track.uri)
     : []
 
@@ -153,7 +165,7 @@ const Finder = ({
   return (
     <div>
       {isEmpty(selectedEvent) && !isEmpty(sortedEvents) && (
-        <EventPicker events={sortedEvents} onSelectEvent={selectEvent} />
+        <EventPicker isFinder={true} events={sortedEvents} onSelectEvent={selectEvent} />
       )}
       <Search />
       {(searching || !isEmpty(filteredSearch)) && (

@@ -102,7 +102,7 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
           </div>
           {event.description !== '' && (
             <div className={classes.descriptionItem}>
-              Event description: {event.description}
+              Event Description: {event.description}
             </div>
           )}
           <div>
