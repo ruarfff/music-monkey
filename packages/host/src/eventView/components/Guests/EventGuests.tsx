@@ -2,11 +2,14 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import { WithStyles } from '@material-ui/core/es'
 import Grid from '@material-ui/core/Grid/Grid'
+import IconButton from '@material-ui/core/IconButton/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Snackbar from '@material-ui/core/Snackbar/Snackbar'
 import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import CloseIcon from '@material-ui/icons/Close'
 import * as React from 'react'
 import SharePopup from '../../../components/ShareEvent/SharePopup'
 import IEvent from '../../../event/IEvent'
@@ -107,6 +110,24 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
 
     return (
       <div className="EventSuggestions-root">
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={!!this.props.message}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.props.message}</span>}
+          action={
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleCloseMessage}
+            >
+              <CloseIcon />
+            </IconButton>
+          }
+        />
         <Grid
           container={true}
           className={classes.filter}
@@ -180,6 +201,10 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
           </Typography>
       </Grid>
     )
+  }
+
+  private handleCloseMessage = () => {
+    this.props.clearMessage()
   }
 }
 

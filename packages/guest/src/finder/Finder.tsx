@@ -159,7 +159,7 @@ const Finder = ({
     ).reverse()
 
 
-    sortedEvents = pastEvents.concat(liveEvents, upcomingEvents)
+    sortedEvents = upcomingEvents.concat(liveEvents, pastEvents)
   }
 
   return (

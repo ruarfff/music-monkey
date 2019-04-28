@@ -18,12 +18,14 @@ import { Link } from 'react-router-dom'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
 import IPlaylist from '../IPlaylist'
+import LoadingSpinner from '../../loading/LoadingSpinner'
 
 interface IPlaylistsSimpleListProps {
   playlists: IPlaylist[]
   events?: IEvent[]
   attached: boolean
   disableLinks?: boolean
+  eventsLoading?: boolean
   selectPlaylist(playlist: IPlaylist): IAction
   addedPlaylist?(value: IPlaylist): any
   onPlaylistSelected?(playlist: IPlaylist): any
@@ -35,7 +37,7 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
   }
 
   public render() {
-    const { onPlaylistSelected, playlists, disableLinks, events } = this.props
+    const { onPlaylistSelected, playlists, disableLinks, events, eventsLoading } = this.props
 
     const handlePlaylistSelected = (playlist: IPlaylist) => () => {
       this.props.selectPlaylist(playlist)
@@ -168,7 +170,7 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
       }
     }
 
-    return playlistView
+    return !eventsLoading ? playlistView : <LoadingSpinner />
   }
 
   private handleAddAll = (playlist: IPlaylist) => () => {

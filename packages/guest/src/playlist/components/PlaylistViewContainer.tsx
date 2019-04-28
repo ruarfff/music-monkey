@@ -7,7 +7,8 @@ import PlayListView from './PlaylistView'
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   eventPlaylists: state.playlist.eventPlaylists,
-  events: state.event.events
+  events: state.event.events,
+  eventsLoading: state.event.eventsLoading,
 })
 
 const mapDispatchToProps = {

@@ -15,9 +15,6 @@ export default {
   savingEvent: {
     description: '',
     dataUrl: '',
-    endDateTime: moment()
-      .add(3, 'hours')
-      .startOf('hour'),
     eventCode: '',
     imageUrl: '',
     genre: 'None',
@@ -26,7 +23,12 @@ export default {
     organizer: '',
     playlistUrl: '',
     startDateTime: moment()
+      .utc()
       .add(2, 'hours')
+      .startOf('hour'),
+    endDateTime: moment()
+      .utc()
+      .add(3, 'hours')
       .startOf('hour'),
     venue: '',
     invites: [],

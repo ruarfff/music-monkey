@@ -1,9 +1,12 @@
 import { Avatar } from '@material-ui/core'
 import { WithStyles } from '@material-ui/core/es'
 import Grid from '@material-ui/core/Grid/Grid'
+import IconButton from '@material-ui/core/IconButton/IconButton'
+import Snackbar from '@material-ui/core/Snackbar/Snackbar'
 import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import CloseIcon from '@material-ui/icons/Close'
 import * as React from 'react'
 import SharePopup from '../../../components/ShareEvent/SharePopup'
 import IEvent from '../../../event/IEvent'
@@ -69,6 +72,24 @@ class EventGuestsRightSideView extends React.PureComponent<
 
     return (
       <div className="EventSuggestions-root">
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={!!this.props.message}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.props.message}</span>}
+          action={
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          }
+        />
         <Grid container={true} justify={'center'} spacing={24}>
           <Grid className={classes.inviteLink} item={true}>
             <SharePopup
@@ -101,6 +122,10 @@ class EventGuestsRightSideView extends React.PureComponent<
         </Grid>
       </div>
     )
+  }
+
+  private handleClose = () => {
+    this.props.clearMessage()
   }
 
   private renderEventGuest = (eventGuest: IEventGuest, classes: any, index: number) => {

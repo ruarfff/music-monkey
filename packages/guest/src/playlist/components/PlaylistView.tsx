@@ -12,6 +12,7 @@ interface IPlaylistViewProps {
   user: IUser
   eventPlaylists: IPlaylist[]
   events: IEvent[]
+  eventsLoading: boolean
   selectPlaylist(playlist: IPlaylist): IAction
   onPlaylistSelected(playlist: IPlaylist): any
   fetchUsersEvents(): IAction
@@ -23,6 +24,7 @@ const PlaylistView = ({
   eventPlaylists,
   events,
   user,
+  eventsLoading,
   selectPlaylist,
   fetchUsersEvents,
 }: IPlaylistViewProps) => {
@@ -32,6 +34,7 @@ const PlaylistView = ({
     <PlaylistsSimpleList
       events={events}
       playlists={eventPlaylists}
+      eventsLoading={eventsLoading}
       attached={false}
       onPlaylistSelected={onPlaylistSelected}
       selectPlaylist={selectPlaylist}

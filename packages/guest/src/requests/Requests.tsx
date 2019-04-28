@@ -114,7 +114,7 @@ class Requests extends React.Component<IRequestsProps> {
       ).reverse()
 
 
-      sortedEvents = pastEvents.concat(liveEvents, upcomingEvents)
+      sortedEvents = upcomingEvents.concat(liveEvents, pastEvents)
     }
 
     let tabs = <div />

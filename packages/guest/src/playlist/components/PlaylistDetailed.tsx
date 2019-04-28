@@ -216,9 +216,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
             axis={'x'}
             index={value}
             onChangeIndex={this.handleChangeIndex}
-            style={
-              showPlayerPlaylist ? { height: '200px', overflowX: 'scroll' } : {}
-            }
           >
             {value === 0 ? (
               <Typography component="div" dir={'0'} style={{ padding: 10 }}>

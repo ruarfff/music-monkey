@@ -24,6 +24,14 @@ const theme = createMuiTheme({
         backgroundColor: styles.secondaryLight,
       },
     },
+    MuiMenuItem: {
+      gutters: {
+        padding: '0 16px',
+        height: '40px',
+        display: 'flex!important',
+        alignItems: 'center',
+      },
+    },
   },
   palette: {
     primary: {

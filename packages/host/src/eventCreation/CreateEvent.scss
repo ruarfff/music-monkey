@@ -8,6 +8,11 @@
   padding: 20px;
 }
 
+div[role=option] {
+  line-height: 40px;
+  width: 100%;
+}
+
 div.filepicker {
   background: url("../assets/partycover.png") no-repeat center;
   background-size: cover;
