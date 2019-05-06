@@ -8,7 +8,9 @@
     "build": "lerna run build --parallel",
     "test": "lerna run test --stream",
     "lint": "lerna run lint --stream",
-    "clean": "lerna clean"
+    "clean": "lerna clean",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@material-ui/core": "^3.6.1",
@@ -41,7 +43,8 @@
     "redux-saga": "^0.16.0",
     "sweetalert2": "^7.29.2",
     "sweetalert2-react-content": "^1.0.1",
-    "uuid": "3.3.2"
+    "uuid": "3.3.2",
+    "snyk": "^1.161.1"
   },
   "devDependencies": {
     "@material-ui/codemod": "^1.0.0-rc.0",
@@ -111,5 +114,6 @@
   "workspaces": [
     "packages/*",
     "libs/*"
-  ]
+  ],
+  "snyk": true
 }
