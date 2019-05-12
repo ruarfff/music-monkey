@@ -42,11 +42,13 @@ export default class PlayerPlaylist extends React.Component<
       play: true,
       time: 0,
       touch: false,
-      track: this.props.playlist.tracks ? this.props.playlist.tracks.items[0].track : {},
+      track: this.props.playlist.tracks
+        ? this.props.playlist.tracks.items[0].track
+        : {},
       trackNum: 0,
-      tracks: this.props.playlist.tracks ? this.props.playlist.tracks.items.map(
-        (s: any, index: number) => index
-      ) : [],
+      tracks: this.props.playlist.tracks
+        ? this.props.playlist.tracks.items.map((s: any, index: number) => index)
+        : [],
       random: false,
       loop: false
     }
@@ -87,7 +89,7 @@ export default class PlayerPlaylist extends React.Component<
   public componentWillReceiveProps(newProps: IPlayerPlaylistProps) {
     const { selectedTrack, playlist } = newProps
     if (!!selectedTrack) {
-      playlist.tracks.items.filter((tracks: any, index: number) => {
+      playlist.tracks.items.forEach((tracks: any, index: number) => {
         if (tracks.track.id === selectedTrack.id) {
           this.setState({
             trackNum: index
@@ -273,8 +275,8 @@ export default class PlayerPlaylist extends React.Component<
             ? 0
             : ++trackNum
           : trackNum === 0
-            ? this.props.playlist.tracks.items.length - 1
-            : --trackNum
+          ? this.props.playlist.tracks.items.length - 1
+          : --trackNum
       })
     }
   }

@@ -52,16 +52,14 @@ interface IEventBigCardProps {
   event: IEvent
 }
 
-class EventBigCard extends React.Component<
-  IEventBigCardProps & WithStyles
-> {
+class EventBigCard extends React.Component<IEventBigCardProps & WithStyles> {
   public render() {
     const { event, classes } = this.props
     return (
       <Card className={classes.card}>
         <Link to={'/events/' + event.eventId} className={classes.link}>
           <div className={classes.imgContainer}>
-            <img className={classes.img} src={event.imageUrl} alt="" />
+            <img className={classes.img} src={event.imageUrl} alt="event" />
           </div>
         </Link>
         <Grid
@@ -73,13 +71,13 @@ class EventBigCard extends React.Component<
           <Typography className={classes.title}>{event.name}</Typography>
           <div>
             <Typography className={classes.eventDescription}>
-              <img src={eventIcon} />
+              <img alt="event" src={eventIcon} />
               {event.startDateTime
                 ? event.startDateTime.format('Do MMMM YYYY')
                 : ''}
             </Typography>
             <Typography noWrap={true} className={classes.eventDescription}>
-              <img src={locationIcon} />
+              <img alt="location" src={locationIcon} />
               {event.location && event.location.address}
             </Typography>
           </div>
@@ -87,7 +85,10 @@ class EventBigCard extends React.Component<
             <Link to={'/events/' + event.eventId} className={classes.link}>
               <Button color="secondary">GO TO EVENT</Button>
             </Link>
-            <Link to={'/events/' + event.eventId + '/edit'} className={classes.link}>
+            <Link
+              to={'/events/' + event.eventId + '/edit'}
+              className={classes.link}
+            >
               <Button color="secondary">EDIT EVENT</Button>
             </Link>
           </div>

@@ -24,11 +24,14 @@ interface IEventListProps {
   onSelectEvent(event: IEvent): any
 }
 
-const EventList = ({isFinder, events, onSelectEvent }: IEventListProps) => (
+const EventList = ({ isFinder, events, onSelectEvent }: IEventListProps) => (
   <List>
     {events.map((event, index) => (
-      <Link to={`/${isFinder ? 'finder' : 'requests'}/${event.eventId}`}>
-        <div className="EventPicker-item" key={index}>
+      <Link
+        to={`/${isFinder ? 'finder' : 'requests'}/${event.eventId}`}
+        key={index}
+      >
+        <div className="EventPicker-item">
           <ListItem button={true} onClick={onSelectEvent(event)}>
             <img
               alt={event.name}
@@ -42,7 +45,7 @@ const EventList = ({isFinder, events, onSelectEvent }: IEventListProps) => (
             />
           </ListItem>
           <li>
-            <Divider variant='inset' className="EventPicker-item-divider" />
+            <Divider variant="inset" className="EventPicker-item-divider" />
           </li>
         </div>
       </Link>
@@ -51,8 +54,11 @@ const EventList = ({isFinder, events, onSelectEvent }: IEventListProps) => (
   </List>
 )
 
-const EventPicker = ({ events, onSelectEvent, isFinder }: IEventPickerProps) => {
-
+const EventPicker = ({
+  events,
+  onSelectEvent,
+  isFinder
+}: IEventPickerProps) => {
   const handleEventSelected = (event: IEvent) => () => {
     onSelectEvent(event)
   }
@@ -64,7 +70,11 @@ const EventPicker = ({ events, onSelectEvent, isFinder }: IEventPickerProps) => 
           Select Event for Requests
         </DialogTitle>
         <div className="EventPicker-events">
-          <EventList isFinder={isFinder} events={events} onSelectEvent={handleEventSelected} />
+          <EventList
+            isFinder={isFinder}
+            events={events}
+            onSelectEvent={handleEventSelected}
+          />
         </div>
       </div>
     </Dialog>

@@ -46,14 +46,21 @@ class Login extends React.PureComponent<ILoginProps> {
             <div className="Login-section">
               <div className="Login-content">
                 <a href={facebookLoginUrl} className="text-decoration-none">
-                  <Button color="default" className="Login-content-text facebook">
-                    <img src={Images.Facebook} />
+                  <Button
+                    color="default"
+                    className="Login-content-text facebook"
+                  >
+                    <img alt="facebook login" src={Images.Facebook} />
                     SIGN IN WITH FACEBOOK
                   </Button>
                 </a>
                 <a href={spotifyLoginUrl} className="text-decoration-none">
                   <Button color="default" className="Login-content-text email">
-                    <img className="spotify-img" src={Images.Spotify} />
+                    <img
+                      alt="spotify login"
+                      className="spotify-img"
+                      src={Images.Spotify}
+                    />
                     SIGN IN WITH SPOTIFY
                   </Button>
                 </a>

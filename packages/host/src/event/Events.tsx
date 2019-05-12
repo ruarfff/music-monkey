@@ -37,7 +37,6 @@ class Events extends React.Component<IEventsProps> {
     playlist: boolean,
     message?: string
   ) => {
-
     const upcomingPlaylists: any[] = events.map(event => event.playlist)
 
     const leftControl = ({ previousSlide }: any) => (
@@ -55,17 +54,16 @@ class Events extends React.Component<IEventsProps> {
     return (
       <React.Fragment>
         {/*{!playlist && events.length === 0 && <NoEvents />}*/}
-        {playlist &&
-          events.length === 0 && (
-            <Typography
-              className="eventsListCaption"
-              align="center"
-              variant="body2"
-              gutterBottom={true}
-            >
-              {message}
-            </Typography>
-          )}
+        {playlist && events.length === 0 && (
+          <Typography
+            className="eventsListCaption"
+            align="center"
+            variant="body2"
+            gutterBottom={true}
+          >
+            {message}
+          </Typography>
+        )}
         {events.length > 0 && (
           <Carousel
             slidesToShow={1}
@@ -73,10 +71,9 @@ class Events extends React.Component<IEventsProps> {
             renderCenterLeftControls={leftControl}
             renderCenterRightControls={rightControls}
             withoutControls={
-              (
-                (!(events.length > 5) && !playlist) ||
-                (!(upcomingPlaylists.length > 5) && playlist)
-              ) && true
+              ((!(events.length > 5) && !playlist) ||
+                (!(upcomingPlaylists.length > 5) && playlist)) &&
+              true
             }
           >
             {events.length > 0 &&
@@ -107,79 +104,72 @@ class Events extends React.Component<IEventsProps> {
       <div className="events">
         {eventsLoading && <LoadingSpinner />}
 
-        {(!eventsLoading &&
-          !_.isEmpty(events) &&
-          events.length > 0) ? (
-            <React.Fragment>
-              <Grid container={true} spacing={24} direction="row">
-                <Grid item={true} sm={5} container={true} justify={'center'}>
-                  <Link to={'/all-events'} className="eventListShowAll">
-                    EVENTS
-                  </Link>
-                  <div className="eventsList">
-                    {this.renderCarousel(events, false)}
-                  </div>
-                </Grid>
-
-                <Grid
-                  item={true}
-                  sm={2}
-                  container={true}
-                  justify={'center'}
-                  alignItems={'center'}
-                >
-                  <Link to={'/create-event'}>
-                    <Button
-                      variant={'contained'}
-                      color={'secondary'}
-                    >
-                      <div className="event-createEventButtonContent">
-                        <img src={logoForButton} className="event-monkeyLogoButton"/>
-                        <span>
-                          CREATE NEW EVENT
-                        </span>
-                      </div>
-                    </Button>
-                  </Link>
-                </Grid>
-
-                <Grid item={true} sm={5} container={true} justify={'center'}>
-                  <Link to={'/all-playlists'} className="eventListShowAll">
-                    PLAYLISTS
-                  </Link>
-                  <div className="eventsList">
-                    {this.renderCarousel(
-                      events,
-                      true,
-                      'No Upcoming Playlists'
-                    )}
-                  </div>
-                </Grid>
-
-              </Grid>
-            </React.Fragment>
-          ) : !eventsLoading && (
-          <Grid
-            item={true}
-            sm={2}
-            container={true}
-            justify={'center'}
-            alignItems={'center'}
-          >
-            <Link to={'/create-event'}>
-              <Button
-                variant={'contained'}
-                color={'secondary'}
-              >
-                <div className="event-createEventButtonContent">
-                  <img src={logoForButton} className="event-monkeyLogoButton"/>
-                  <span>
-                    CREATE NEW EVENT
-                  </span>
+        {!eventsLoading && !_.isEmpty(events) && events.length > 0 ? (
+          <React.Fragment>
+            <Grid container={true} spacing={24} direction="row">
+              <Grid item={true} sm={5} container={true} justify={'center'}>
+                <Link to={'/all-events'} className="eventListShowAll">
+                  EVENTS
+                </Link>
+                <div className="eventsList">
+                  {this.renderCarousel(events, false)}
                 </div>
-              </Button>
-            </Link>
-          </Grid>
+              </Grid>
+
+              <Grid
+                item={true}
+                sm={2}
+                container={true}
+                justify={'center'}
+                alignItems={'center'}
+              >
+                <Link to={'/create-event'}>
+                  <Button variant={'contained'} color={'secondary'}>
+                    <div className="event-createEventButtonContent">
+                      <img
+                        alt="music monkey logo"
+                        src={logoForButton}
+                        className="event-monkeyLogoButton"
+                      />
+                      <span>CREATE NEW EVENT</span>
+                    </div>
+                  </Button>
+                </Link>
+              </Grid>
+
+              <Grid item={true} sm={5} container={true} justify={'center'}>
+                <Link to={'/all-playlists'} className="eventListShowAll">
+                  PLAYLISTS
+                </Link>
+                <div className="eventsList">
+                  {this.renderCarousel(events, true, 'No Upcoming Playlists')}
+                </div>
+              </Grid>
+            </Grid>
+          </React.Fragment>
+        ) : (
+          !eventsLoading && (
+            <Grid
+              item={true}
+              sm={2}
+              container={true}
+              justify={'center'}
+              alignItems={'center'}
+            >
+              <Link to={'/create-event'}>
+                <Button variant={'contained'} color={'secondary'}>
+                  <div className="event-createEventButtonContent">
+                    <img
+                      alt="music monkey logo"
+                      src={logoForButton}
+                      className="event-monkeyLogoButton"
+                    />
+                    <span>CREATE NEW EVENT</span>
+                  </div>
+                </Button>
+              </Link>
+            </Grid>
+          )
         )}
       </div>
     )

@@ -3,14 +3,14 @@ import mapMarker from '../../assets/location-marker-icon.svg'
 import './MapComponent.scss'
 
 interface IMapComponentProps {
-  lat: number,
+  lat: number
   lng: number
 }
 
 const MapComponent: React.FC<IMapComponentProps> = props => {
   return (
     <div>
-      <img src={mapMarker} />
+      <img alt="map marker" src={mapMarker} />
     </div>
   )
 }

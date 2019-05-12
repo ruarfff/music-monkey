@@ -2,8 +2,7 @@ import { ListItemText } from '@material-ui/core'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import './SelectedEvent.scss'
-
-const React = require('react')
+import React from 'react'
 
 interface ISelectedEventProps {
   event: IEvent
@@ -14,7 +13,7 @@ const SelectedEvent = ({ event, deselectEvent }: ISelectedEventProps) => {
   return (
     <div onClick={deselectEvent} className="SelectedEvent-block">
       <div className="SelectedEvent-image">
-        <img src={event.imageUrl} />
+        <img alt="event" src={event.imageUrl} />
       </div>
       <div className="SelectedEvent-content">
         <ListItemText

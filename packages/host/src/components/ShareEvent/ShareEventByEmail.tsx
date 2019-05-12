@@ -29,12 +29,12 @@ export default class ShareEventByEmail extends React.PureComponent<
     emails: '',
     emailText: 'You are invited to a party!',
     validation: false,
-    showMessage: false,
+    showMessage: false
   }
 
   public componentDidUpdate() {
     if (this.props.withPreview) {
-      this.setState({showMessage: this.props.message !== ''})
+      this.setState({ showMessage: this.props.message !== '' })
     }
   }
 
@@ -43,12 +43,12 @@ export default class ShareEventByEmail extends React.PureComponent<
     const { emails, emailText, validation, showMessage } = this.state
 
     return (
-      <div className='emailShareWrapper'>
+      <div className="emailShareWrapper">
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={showMessage}
           ContentProps={{
-            'aria-describedby': 'message-id',
+            'aria-describedby': 'message-id'
           }}
           message={<span id="message-id">{this.props.message}</span>}
           action={
@@ -66,7 +66,7 @@ export default class ShareEventByEmail extends React.PureComponent<
           value={emails}
           maxRows={4}
           label={'Email Input'}
-          placeholder={'Somemail@gmail.com, example@gmail.com'}
+          placeholder={'some_email@gmail.com, example@gmail.com'}
           onChange={this.handleEmailChange('emails')}
         />
         <EventInput
@@ -90,20 +90,23 @@ export default class ShareEventByEmail extends React.PureComponent<
           onCopyEventInvite={onCopyEventInvite}
         />
         <a
-          id='fbLink'
-          href={'https://www.facebook.com/sharer/sharer.php?u=guests.musicmonkey.io/invite/' + inviteId}
+          id="fbLink"
+          href={
+            'https://www.facebook.com/sharer/sharer.php?u=guests.musicmonkey.io/invite/' +
+            inviteId
+          }
           target="_blank"
-          className='shareFacebookBtn'
+          rel="noopener noreferrer"
+          className="shareFacebookBtn"
         >
           <Button
             onClick={this.props.togglePopup}
-            variant='contained'
+            variant="contained"
             fullWidth={true}
           >
             SHARE ON FACEBOOK
           </Button>
         </a>
-
       </div>
     )
   }
@@ -118,7 +121,7 @@ export default class ShareEventByEmail extends React.PureComponent<
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={showMessage}
           ContentProps={{
-            'aria-describedby': 'message-id',
+            'aria-describedby': 'message-id'
           }}
           message={<span id="message-id">{this.props.message}</span>}
           action={
@@ -140,10 +143,7 @@ export default class ShareEventByEmail extends React.PureComponent<
             label={'Email text'}
             onChange={this.handleEmailTextChange}
           />
-          <EmailPreview
-            event={event}
-            emailText={emailText}
-          />
+          <EmailPreview event={event} emailText={emailText} />
         </Grid>
 
         <Grid item={true} md={6}>
@@ -152,7 +152,7 @@ export default class ShareEventByEmail extends React.PureComponent<
             value={emails}
             maxRows={4}
             label={'Email Input'}
-            placeholder={'Somemail@gmail.com, example@gmail.com'}
+            placeholder={'som-_email@gmail.com, example@gmail.com'}
             onChange={this.handleEmailChange('emails')}
           />
           <Button
@@ -169,20 +169,23 @@ export default class ShareEventByEmail extends React.PureComponent<
             onCopyEventInvite={onCopyEventInvite}
           />
           <a
-            id='fbLink'
-            href={'https://www.facebook.com/sharer/sharer.php?u=guests.musicmonkey.io/invite/' + inviteId}
+            id="fbLink"
+            href={
+              'https://www.facebook.com/sharer/sharer.php?u=guests.musicmonkey.io/invite/' +
+              inviteId
+            }
             target="_blank"
-            className='shareFacebookBtn'
+            rel="noopener noreferrer"
+            className="shareFacebookBtn"
           >
             <Button
               onClick={this.props.togglePopup}
-              variant='contained'
+              variant="contained"
               fullWidth={true}
             >
               SHARE ON FACEBOOK
             </Button>
           </a>
-
         </Grid>
       </Grid>
     )
@@ -190,27 +193,26 @@ export default class ShareEventByEmail extends React.PureComponent<
 
   public render() {
     return (
-     <React.Fragment>
-       {this.props.withPreview ?
-         this.renderPreviewLayout() :
-         this.renderPopupLayout()
-       }
-     </React.Fragment>
+      <React.Fragment>
+        {this.props.withPreview
+          ? this.renderPreviewLayout()
+          : this.renderPopupLayout()}
+      </React.Fragment>
     )
   }
 
   private handleValidation = (emails: string) => {
-    const reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
     let emailsArr = emails.split(',')
     emailsArr = emailsArr.map(email => email.replace(' ', ''))
 
     if (emailsArr.length > 1) {
-      emailsArr.map(email => {
-        this.setState({validation: reg.test(email)})
+      emailsArr.forEach(email => {
+        this.setState({ validation: reg.test(email) })
       })
     } else {
-      this.setState({validation: reg.test(emails)})
+      this.setState({ validation: reg.test(emails) })
     }
   }
 
@@ -221,7 +223,7 @@ export default class ShareEventByEmail extends React.PureComponent<
   }
 
   private handleEmailChange = (key: string) => (content: any) => {
-    this.setState({[key]: content})
+    this.setState({ [key]: content })
     this.handleValidation(content)
   }
 

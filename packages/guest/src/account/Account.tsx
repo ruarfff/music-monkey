@@ -164,7 +164,7 @@ class AccountDetails extends React.Component<
           >
             <Grid className={classes.item}>
               <Grid className={classes.iconWrapper}>
-                <img src={emailIcon} />
+                <img alt="email" src={emailIcon} />
               </Grid>
               <Grid className={classes.input}>
                 {!isEdit ? (
@@ -187,7 +187,7 @@ class AccountDetails extends React.Component<
           >
             <Grid className={classes.item}>
               <Grid className={classes.iconWrapper}>
-                <img src={phoneIcon} />
+                <img alt="phone" src={phoneIcon} />
               </Grid>
               <Grid className={classes.input}>
                 {!isEdit ? (

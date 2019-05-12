@@ -34,14 +34,13 @@ function* fetchEventByIdFlow(action: IAction) {
     yield put({ type: EVENT_PLAYLIST_FETCHED, payload: playlist })
     const trackIds = [] as string[]
     if (playlist.tracks.items.length > 0) {
-      playlist.tracks.items.map((track: IPlaylistItem) => {
+      playlist.tracks.items.forEach((track: IPlaylistItem) => {
         trackIds.push(track.track.id)
       })
       if (trackIds.length > 0) {
         yield put(getTracksFeatures(trackIds))
       }
     }
-
   } catch (err) {
     yield put({ type: EVENT_FETCH_BY_ID_ERROR, payload: err })
   }

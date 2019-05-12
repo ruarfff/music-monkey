@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { WithStyles } from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography'
-import * as _ from 'lodash'
+import _ from 'lodash'
 import * as React from 'react'
 import emailIcon from '../assets/email-icon.svg'
 import facebookIcon from '../assets/facebook.svg'
@@ -19,7 +19,7 @@ import EditAvatar from './EditAvatar'
 const decorate = withStyles(() => ({
   avatarBlock: {
     maxWidth: '125px',
-    marginBottom: '20px',
+    marginBottom: '20px'
   },
   avatarImg: {
     width: '125px',
@@ -28,7 +28,7 @@ const decorate = withStyles(() => ({
   title: {
     fontSize: '20px',
     lineHeight: '23px',
-    marginBottom: '10px',
+    marginBottom: '10px'
   },
   description: {
     fontSize: '18px'
@@ -41,7 +41,7 @@ const decorate = withStyles(() => ({
     maxWidth: '200px',
     maxHeight: '40px',
     marginTop: '0!important',
-    marginLeft: '10px',
+    marginLeft: '10px'
   },
   iconWrapper: {
     height: '20px',
@@ -49,7 +49,7 @@ const decorate = withStyles(() => ({
   },
   itemRow: {
     height: '60px',
-    marginBottom: '10px',
+    marginBottom: '10px'
   }
 }))
 
@@ -58,8 +58,9 @@ interface IAccountDetailsProps {
   updateUserRequest(user: IUser): IAction
 }
 
-class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> {
-
+class AccountDetails extends React.Component<
+  IAccountDetailsProps & WithStyles
+> {
   public state = {
     isEdit: false,
     showAvatarEditor: false,
@@ -67,7 +68,7 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
     phone: '',
     facebookId: '',
     twitterId: '',
-    instagramId: '',
+    instagramId: ''
   }
 
   public componentWillReceiveProps(newProps: IAccountDetailsProps) {
@@ -77,13 +78,13 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
         phone: this.props.user.phone,
         facebookId: this.props.user.facebookId,
         twitterId: this.props.user.twitterId,
-        instagramId: this.props.user.instagramId,
+        instagramId: this.props.user.instagramId
       })
     }
   }
 
   public toggleEditAvatarModal = () => {
-    this.setState({showAvatarEditor: !this.state.showAvatarEditor})
+    this.setState({ showAvatarEditor: !this.state.showAvatarEditor })
   }
 
   public render() {
@@ -91,16 +92,14 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
     const { user, classes } = this.props
     return (
       <React.Fragment>
-        {showAvatarEditor && <EditAvatar
-          // uploadAvatar={uploadAvatar}
-          toggleEditAvatarModal={this.toggleEditAvatarModal}
-          url={user.image}
-        />}
-        <Grid
-          item={true}
-          md={12}
-          container={true}
-        >
+        {showAvatarEditor && (
+          <EditAvatar
+            // uploadAvatar={uploadAvatar}
+            toggleEditAvatarModal={this.toggleEditAvatarModal}
+            url={user.image}
+          />
+        )}
+        <Grid item={true} md={12} container={true}>
           <Grid
             item={true}
             className={classes.avatarBlock}
@@ -113,18 +112,11 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
               className={classes.avatarImg}
               src={user.image}
             />
-            <Typography>
-              {user.displayName}
-            </Typography>
-            <Typography>
-              {user.country}
-            </Typography>
+            <Typography>{user.displayName}</Typography>
+            <Typography>{user.country}</Typography>
           </Grid>
 
-          <Grid
-            item={true}
-            md={12}
-          >
+          <Grid item={true} md={12}>
             <Typography className={classes.title}>
               Contact Information
             </Typography>
@@ -136,15 +128,17 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
               className={classes.itemRow}
             >
               <Grid className={classes.iconWrapper}>
-                <img src={emailIcon}/>
+                <img alt="email" src={emailIcon} />
               </Grid>
               <Grid className={classes.input}>
-                {!isEdit ? user.email :
+                {!isEdit ? (
+                  user.email
+                ) : (
                   <EventInput
                     value={this.state.email}
                     onChange={this.handleEdit('email')}
                   />
-                }
+                )}
               </Grid>
             </Grid>
             <Grid
@@ -155,29 +149,24 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
               className={classes.itemRow}
             >
               <Grid className={classes.iconWrapper}>
-                <img src={phoneIcon}/>
+                <img alt="phone" src={phoneIcon} />
               </Grid>
               <Grid className={classes.input}>
-                {!isEdit ? user.phone :
+                {!isEdit ? (
+                  user.phone
+                ) : (
                   <EventInput
                     value={this.state.phone}
                     onChange={this.handleEdit('phone')}
                   />
-                }
+                )}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid
-          item={true}
-          md={12}
-          container={true}
-          direction={'column'}
-        >
-          <Typography className={classes.title}>
-            Social Accounts
-          </Typography>
+        <Grid item={true} md={12} container={true} direction={'column'}>
+          <Typography className={classes.title}>Social Accounts</Typography>
           <Grid
             item={true}
             container={true}
@@ -186,15 +175,17 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
             className={classes.itemRow}
           >
             <Grid className={classes.iconWrapper}>
-              <img src={instagramIcon} alt=""/>
+              <img src={instagramIcon} alt="" />
             </Grid>
             <Grid className={classes.input}>
-              {!isEdit ? this.state.instagramId :
+              {!isEdit ? (
+                this.state.instagramId
+              ) : (
                 <EventInput
                   value={user.instagramId}
                   onChange={this.handleEdit('instagramId')}
                 />
-              }
+              )}
             </Grid>
           </Grid>
           <Grid
@@ -205,15 +196,17 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
             className={classes.itemRow}
           >
             <Grid className={classes.iconWrapper}>
-              <img src={facebookIcon} alt=""/>
+              <img src={facebookIcon} alt="" />
             </Grid>
             <Grid className={classes.input}>
-              {!isEdit ? this.state.facebookId :
+              {!isEdit ? (
+                this.state.facebookId
+              ) : (
                 <EventInput
                   value={user.facebookId}
                   onChange={this.handleEdit('facebookId')}
                 />
-              }
+              )}
             </Grid>
           </Grid>
           <Grid
@@ -224,19 +217,21 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
             className={classes.itemRow}
           >
             <Grid className={classes.iconWrapper}>
-              <img src={twitterIcon} alt=""/>
+              <img src={twitterIcon} alt="" />
             </Grid>
             <Grid className={classes.input}>
-              {!isEdit ? this.state.twitterId :
+              {!isEdit ? (
+                this.state.twitterId
+              ) : (
                 <EventInput
                   value={user.twitterId}
                   onChange={this.handleEdit('twitterId')}
                 />
-              }
+              )}
             </Grid>
           </Grid>
 
-          {!this.state.isEdit ?
+          {!this.state.isEdit ? (
             <Button
               variant="contained"
               color="secondary"
@@ -244,7 +239,8 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
               onClick={this.editDetails}
             >
               EDIT CONTACT DETAILS
-            </Button> :
+            </Button>
+          ) : (
             <Button
               variant="contained"
               color="secondary"
@@ -253,9 +249,8 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
             >
               SAVE
             </Button>
-          }
+          )}
         </Grid>
-
       </React.Fragment>
     )
   }
@@ -264,19 +259,19 @@ class AccountDetails extends React.Component<IAccountDetailsProps & WithStyles> 
     if (this.state.isEdit) {
       const updatedUser = {
         ...this.props.user,
-        ..._.omit(this.state, ['isEdit', 'showAvatarEditor']),
+        ..._.omit(this.state, ['isEdit', 'showAvatarEditor'])
       }
 
       this.props.updateUserRequest(updatedUser)
     }
 
-    this.setState({isEdit: !this.state.isEdit})
+    this.setState({ isEdit: !this.state.isEdit })
   }
 
   private handleEdit = (key: string) => (content: any) => {
     const accountPart = {}
     accountPart[key] = content
-    this.setState({[key]: content})
+    this.setState({ [key]: content })
   }
 }
 

@@ -44,7 +44,7 @@ const EventListView = ({
     }
     setInviteId(storedInvite)
     setInviteAnswered(localStorage.get(inviteAnsweredKey, null))
-  })
+  }, [])
   useEffect(() => {
     const shouldRedirect = !!(inviteId && inviteAnswered === 'false')
     if (shouldRedirect !== redirect) {
@@ -54,7 +54,7 @@ const EventListView = ({
     console.log('Invite Id', inviteId)
     console.log('Invite Answered', inviteAnswered)
     console.log(redirect)
-  }, [inviteAnswered, inviteId])
+  }, [inviteAnswered, inviteId, redirect])
 
   useEffect(() => {
     if (!!events) {
@@ -70,7 +70,7 @@ const EventListView = ({
         fetchUsersEvents()
       }
     }
-  }, [])
+  }, [events, fetchUsersEvents, selectedEvent])
 
   if (redirect && inviteId) {
     console.log('REDIRECTING')

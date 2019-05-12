@@ -10,7 +10,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
-const decorate = withStyles(({}) => ({
+const decorate = withStyles(() => ({
   listIcon: {
     marginRight: '-5px'
   },
@@ -125,7 +125,7 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
           selected={pathName === currentPath && true}
         >
           <ListItemIcon className={classes.listIcon}>
-            <img src={icon} />
+            <img alt="list item" src={icon} />
           </ListItemIcon>
           <ListItemText
             inset={true}

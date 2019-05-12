@@ -71,7 +71,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
       getSuggestions,
       eventLoading,
       fetchEventVotes,
-      getEvent,
+      getEvent
     } = this.props
 
     const eventId = this.props.match.params.eventId
@@ -89,18 +89,16 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
   }
 
   public componentWillReceiveProps(newProps: IPlayListProps) {
-    const {
-      getEvent,
-      getSuggestions,
-    } = this.props
+    const { getEvent, getSuggestions } = this.props
 
     const eventId = this.props.match.params.eventId
 
     if (!isEmpty(newProps.event)) {
-      subscribeToPlaylistModified(newProps.event.playlist.id, () => getEvent(eventId))
-      subscribeToSuggestionsModified(
-        newProps.event.eventId,
-        () => getSuggestions(eventId)
+      subscribeToPlaylistModified(newProps.event.playlist.id, () =>
+        getEvent(eventId)
+      )
+      subscribeToSuggestionsModified(newProps.event.eventId, () =>
+        getSuggestions(eventId)
       )
     }
   }
@@ -132,7 +130,10 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     const { selectedPlaylist } = this.props
 
     let durationSeconds = 0
-    if (!isEmpty(selectedPlaylist) && selectedPlaylist.tracks.items.length > 0) {
+    if (
+      !isEmpty(selectedPlaylist) &&
+      selectedPlaylist.tracks.items.length > 0
+    ) {
       durationSeconds = selectedPlaylist.tracks.items
         .map(item => item.track.duration_ms)
         .reduce((acc, dur) => acc + dur)
@@ -148,6 +149,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
         <div className="playlist-content">
           <div className="playlist-content-img">
             <img
+              alt="playlist"
               src={
                 (selectedPlaylist.images.length > 0 &&
                   selectedPlaylist.images[0].url) ||
@@ -162,12 +164,14 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
             />
             <div className="playlist-content-title-length">
               <div>
-                      <span className="playlist-content-title-songs">
-                        {`Total time: ${formatDuration(durationSeconds)}`}
-                      </span><br/>
                 <span className="playlist-content-title-songs">
-                        {`${selectedPlaylist.tracks && selectedPlaylist.tracks.total} Songs`}
-                      </span>
+                  {`Total time: ${formatDuration(durationSeconds)}`}
+                </span>
+                <br />
+                <span className="playlist-content-title-songs">
+                  {`${selectedPlaylist.tracks &&
+                    selectedPlaylist.tracks.total} Songs`}
+                </span>
               </div>
 
               <Button
@@ -198,14 +202,16 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
               handleTrackVote={this.handleTrackVote}
               showPlayerPlaylist={this.onShowPlayerPlaylist}
             />
-          ) : this.renderPlaylistDetails()}
+          ) : (
+            this.renderPlaylistDetails()
+          )}
           <AppBar position="static" color="default">
             <Tabs
               value={value}
               onChange={this.handleChange}
               indicatorColor="secondary"
               textColor="secondary"
-              fullWidth={true}
+              variant="fullWidth"
               classes={{ indicator: 'indicator-color' }}
             >
               <Tab label="APPROVED" />

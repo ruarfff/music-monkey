@@ -7,8 +7,7 @@ import IPlaylist from '../playlist/IPlaylist'
 import ITrack from '../track/ITrack'
 import TrackList from '../track/TrackList'
 import IUser from '../user/IUser'
-
-const React = require('react')
+import React, { useEffect } from 'react'
 
 interface IMyPlaylistsTabProps {
   user: IUser
@@ -32,33 +31,34 @@ const MyPlaylistsTab = ({
   addedPlaylist,
   onTrackSelected,
   savePlaylistSuggestion,
-  fetchMorePlaylists,
+  fetchMorePlaylists
 }: IMyPlaylistsTabProps) => {
-
   const handleFetchMorePlaylists = () => {
     fetchMorePlaylists(user)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isEmpty(selectedUserPlaylist)) {
-      deselectPlaylist()
+      selectPlaylist({} as IPlaylist)
     }
-  }, [])
+  }, [selectPlaylist, selectedUserPlaylist])
 
-  const trackScrolling = () => {
-    if (document.body.offsetHeight === window.pageYOffset + window.innerHeight) {
-      handleFetchMorePlaylists()
+  useEffect(() => {
+    const trackScrolling = () => {
+      if (
+        document.body.offsetHeight ===
+        window.pageYOffset + window.innerHeight
+      ) {
+        handleFetchMorePlaylists()
+      }
     }
-  }
 
-  React.useEffect(() => {
     document.addEventListener('scroll', trackScrolling)
-
 
     return function cleanup() {
       document.removeEventListener('scroll', trackScrolling)
     }
-  }, [])
+  })
 
   const renderPlaylistSimpleList = () => {
     return (
@@ -72,26 +72,18 @@ const MyPlaylistsTab = ({
     )
   }
 
-  const deselectPlaylist = () => {
-    selectPlaylist({} as IPlaylist)
-  }
-
   const renderListOfTracks = () => {
     return (
       <React.Fragment>
-        <Button
-          onClick={deselectPlaylist}
-        >
+        <Button onClick={() => selectPlaylist({} as IPlaylist)}>
           BACK TO PLAYLISTS
         </Button>
-        <Button
-          onClick={savePlaylistSuggestion(selectedUserPlaylist)}
-        >
+        <Button onClick={savePlaylistSuggestion(selectedUserPlaylist)}>
           ADD ALL TRACKS
         </Button>
         <List>
           <TrackList
-            tracks={selectedUserPlaylist.tracks.items.map((t) => t.track)}
+            tracks={selectedUserPlaylist.tracks.items.map(t => t.track)}
             onTrackSelected={onTrackSelected}
             withSuggestingEnabled={true}
           />
@@ -102,9 +94,9 @@ const MyPlaylistsTab = ({
 
   return (
     <Typography component="div" dir="1">
-      {isEmpty(selectedUserPlaylist) ?
-        renderPlaylistSimpleList() :
-        renderListOfTracks()}
+      {isEmpty(selectedUserPlaylist)
+        ? renderPlaylistSimpleList()
+        : renderListOfTracks()}
       <div className="Finder-stopper-block" />
     </Typography>
   )

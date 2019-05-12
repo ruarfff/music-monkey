@@ -16,7 +16,7 @@ import RejectedTracks from '../trackView/RejectedTracksContainer'
 import IUser from '../user/IUser'
 import './Requests.scss'
 
-interface IRequestsProps extends RouteComponentProps<any>{
+interface IRequestsProps extends RouteComponentProps<any> {
   event: IEvent
   events: IEvent[]
   user: IUser
@@ -43,7 +43,6 @@ class Requests extends React.Component<IRequestsProps> {
     if (eventId) {
       this.props.getEvent(eventId)
     }
-
   }
 
   public componentWillReceiveProps(newProps: IRequestsProps) {
@@ -79,13 +78,7 @@ class Requests extends React.Component<IRequestsProps> {
 
   public render() {
     const { value } = this.state
-    const {
-      suggestion,
-      event,
-      events,
-      selectEvent,
-      deselectEvent,
-    } = this.props
+    const { suggestion, event, events, selectEvent, deselectEvent } = this.props
 
     const now = moment()
 
@@ -93,26 +86,21 @@ class Requests extends React.Component<IRequestsProps> {
 
     if (!isEmpty(events)) {
       const pastEvents = sortBy(
-        events.filter(
-          e => now.isAfter(e.endDateTime)
-        ), 'endDateTime'
+        events.filter(e => now.isAfter(e.endDateTime)),
+        'endDateTime'
       ).reverse()
 
       const liveEvents = sortBy(
-        events
-          .filter(
-            e =>
-              now.isAfter(e.startDateTime) && now.isBefore(e.endDateTime)
-          ),'endDateTime'
+        events.filter(
+          e => now.isAfter(e.startDateTime) && now.isBefore(e.endDateTime)
+        ),
+        'endDateTime'
       ).reverse()
 
       const upcomingEvents = sortBy(
-        events
-          .filter(
-            e => now.isBefore(e.startDateTime)
-          ), 'endDateTime'
+        events.filter(e => now.isBefore(e.startDateTime)),
+        'endDateTime'
       ).reverse()
-
 
       sortedEvents = upcomingEvents.concat(liveEvents, pastEvents)
     }
@@ -123,7 +111,11 @@ class Requests extends React.Component<IRequestsProps> {
       tabs = (
         <div>
           {isEmpty(event) && !isEmpty(sortedEvents) && (
-            <EventPicker isFinder={false} events={sortedEvents} onSelectEvent={selectEvent} />
+            <EventPicker
+              isFinder={false}
+              events={sortedEvents}
+              onSelectEvent={selectEvent}
+            />
           )}
           {!isEmpty(event) && (
             <SelectedEvent event={event} deselectEvent={deselectEvent} />
@@ -135,7 +127,7 @@ class Requests extends React.Component<IRequestsProps> {
               onChange={this.handleChange}
               indicatorColor="secondary"
               textColor="secondary"
-              fullWidth={true}
+              variant="fullWidth"
               classes={{ indicator: 'indicator-color' }}
             >
               <Tab label="APPROVED" />

@@ -7,7 +7,10 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
-import { subscribeToEventUpdated, unSubscribeToEventUpdated } from '../notification'
+import {
+  subscribeToEventUpdated,
+  unSubscribeToEventUpdated
+} from '../notification'
 import IPlaylist from '../playlist/IPlaylist'
 import Search from '../search/SearchContainer'
 import IPlaylistSuggestion from '../suggestion/IPlaylistSuggestion'
@@ -21,9 +24,9 @@ import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
 import SearchResults from './SearchResults'
 import SelectedEvent from './SelectedEvent'
+import React, { useEffect } from 'react'
 
 const SweetAlert = withReactContent(Swal) as any
-const React = require('react')
 
 interface IFinderProps extends RouteComponentProps<any> {
   user: IUser
@@ -46,10 +49,8 @@ interface IFinderProps extends RouteComponentProps<any> {
 
 const Finder = ({
   user,
-  match,
   events,
   selectedEvent,
-  history,
   userPlaylists,
   selectedUserPlaylist,
   searching,
@@ -63,42 +64,29 @@ const Finder = ({
   getEvent,
   fetchMorePlaylists
 }: IFinderProps) => {
-  React.useEffect(
-    () => {
-      if (!isEmpty(user) && isEmpty(userPlaylists)) {
-        fetchPlaylists(user)
-      }
-      if (!isEmpty(selectedEvent)) {
-        getEvent(selectedEvent.eventId)
-      }
-    },
-    [user]
-  )
-
-  React.useEffect((
-    () => {
-      if (!isEmpty(selectedEvent)) {
-        subscribeToEventUpdated(selectedEvent.eventId, () => getEvent(selectedEvent.eventId))
-
-        return () => {
-          unSubscribeToEventUpdated(selectedEvent.eventId)
-        }
-      } else {
-        return
-      }
+  useEffect(() => {
+    if (!isEmpty(user) && isEmpty(userPlaylists)) {
+      fetchPlaylists(user)
     }
-  ))
+    if (!isEmpty(selectedEvent)) {
+      getEvent(selectedEvent.eventId)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
-  const eventId = match.params.eventId
+  useEffect(() => {
+    if (!isEmpty(selectedEvent)) {
+      subscribeToEventUpdated(selectedEvent.eventId, () =>
+        getEvent(selectedEvent.eventId)
+      )
 
-  React.useEffect(
-    () => {
-      if (eventId) {
-        getEvent(eventId)
+      return () => {
+        unSubscribeToEventUpdated(selectedEvent.eventId)
       }
-    },
-    []
-  )
+    } else {
+      return
+    }
+  })
 
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
@@ -117,12 +105,12 @@ const Finder = ({
     } else {
       showErrorPlaylistDialog()
     }
-
   }
 
-  const playlistTracks = (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist))
-    ? selectedEvent.playlist.tracks.items.map(track => track.track.uri)
-    : []
+  const playlistTracks =
+    !isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)
+      ? selectedEvent.playlist.tracks.items.map(track => track.track.uri)
+      : []
 
   let filteredSearch = [] as ITrack[]
 
@@ -138,26 +126,22 @@ const Finder = ({
 
   if (!isEmpty(events)) {
     const pastEvents = sortBy(
-      events.filter(
-        event => now.isAfter(event.endDateTime)
-      ), 'endDateTime'
+      events.filter(event => now.isAfter(event.endDateTime)),
+      'endDateTime'
     ).reverse()
 
     const liveEvents = sortBy(
-      events
-        .filter(
-          event =>
-            now.isAfter(event.startDateTime) && now.isBefore(event.endDateTime)
-        ),'endDateTime'
+      events.filter(
+        event =>
+          now.isAfter(event.startDateTime) && now.isBefore(event.endDateTime)
+      ),
+      'endDateTime'
     ).reverse()
 
     const upcomingEvents = sortBy(
-      events
-        .filter(
-          event => now.isBefore(event.startDateTime)
-        ), 'endDateTime'
+      events.filter(event => now.isBefore(event.startDateTime)),
+      'endDateTime'
     ).reverse()
-
 
     sortedEvents = upcomingEvents.concat(liveEvents, pastEvents)
   }
@@ -165,7 +149,11 @@ const Finder = ({
   return (
     <div>
       {isEmpty(selectedEvent) && !isEmpty(sortedEvents) && (
-        <EventPicker isFinder={true} events={sortedEvents} onSelectEvent={selectEvent} />
+        <EventPicker
+          isFinder={true}
+          events={sortedEvents}
+          onSelectEvent={selectEvent}
+        />
       )}
       <Search />
       {(searching || !isEmpty(filteredSearch)) && (
@@ -190,7 +178,7 @@ const Finder = ({
               onChange={handleTabChange}
               indicatorColor="secondary"
               textColor="secondary"
-              fullWidth={true}
+              variant="fullWidth"
               classes={{ indicator: 'indicator-color' }}
             >
               <Tab label="RECOMMENDED" />

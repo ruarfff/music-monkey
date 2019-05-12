@@ -135,7 +135,7 @@ export default class EventPlaylist extends React.Component<
             >
               <Typography>Tracks</Typography>
 
-              <div className='EventPlaylist-rightSideButtons'>
+              <div className="EventPlaylist-rightSideButtons">
                 {hasStagedTrack && this.renderSaveButtons(hasStagedTrack)}
                 <Button
                   aria-owns={anchorEl ? 'simple-menu' : undefined}
@@ -167,20 +167,19 @@ export default class EventPlaylist extends React.Component<
                 </List>
               )}
 
-              {playlist &&
-                playlist.tracks.total > 0 && (
-                  <List>
-                    <TrackList
-                      tracksWithFeatures={tracksWithFeatures}
-                      tracks={playlist.tracks.items.map(item => item.track)}
-                      withVoting={true}
-                      votes={votes}
-                      onDragEnd={this.handlePlaylistDragDrop}
-                      removeTrack={this.handleRemoveTrack}
-                      showNotification={this.handleShowNotification}
-                    />
-                  </List>
-                )}
+              {playlist && playlist.tracks.total > 0 && (
+                <List>
+                  <TrackList
+                    tracksWithFeatures={tracksWithFeatures}
+                    tracks={playlist.tracks.items.map(item => item.track)}
+                    withVoting={true}
+                    votes={votes}
+                    onDragEnd={this.handlePlaylistDragDrop}
+                    removeTrack={this.handleRemoveTrack}
+                    showNotification={this.handleShowNotification}
+                  />
+                </List>
+              )}
               {playlist && playlist.tracks.total < 1 && <p>No tracks yet</p>}
             </Grid>
           </Grid>
@@ -236,7 +235,7 @@ export default class EventPlaylist extends React.Component<
     const { playlist } = this.props
     const trackIds = [] as string[]
     if (playlist.tracks.items.length > 0) {
-      playlist.tracks.items.map((track: IPlaylistItem) => {
+      playlist.tracks.items.forEach((track: IPlaylistItem) => {
         trackIds.push(track.track.id)
       })
       if (trackIds.length > 0) {

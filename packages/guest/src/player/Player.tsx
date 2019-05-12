@@ -1,8 +1,4 @@
-import {
-  Icon,
-  IconButton,
-  ListItemText
-} from '@material-ui/core'
+import { Icon, IconButton, ListItemText } from '@material-ui/core'
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import Swal from 'sweetalert2'
@@ -52,7 +48,7 @@ export default class Player extends React.Component<
     return (
       <div className="player-container">
         <div className="player-track-img">
-          <img src={track.album.images[0].url} />
+          <img alt="track" src={track.album.images[0].url} />
         </div>
         <div className="player-control-container">
           <div className="player-control-duration">
@@ -87,7 +83,7 @@ export default class Player extends React.Component<
   }
 
   private handleTogglePlayer = () => {
-    this.setState({play: !this.state.play})
+    this.setState({ play: !this.state.play })
   }
 
   private showErrorDialog = (message: string) => {

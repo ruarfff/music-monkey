@@ -24,7 +24,7 @@ const decorated = withStyle(() => ({
     height: '100%'
   },
   playlistView: {
-    marginBottom: '50px',
+    marginBottom: '50px'
   },
   spotifyLink: {
     color: '#FFB000'
@@ -68,7 +68,7 @@ class EventSummaryPlaylist extends React.PureComponent<
   IEventSummaryPlaylistProps & WithStyles
 > {
   public state = {
-    showPopup: false,
+    showPopup: false
   }
 
   public render() {
@@ -79,7 +79,7 @@ class EventSummaryPlaylist extends React.PureComponent<
       genre,
       eventImg,
       event,
-      editPlaylist,
+      editPlaylist
     } = this.props
 
     if (!playlist) {
@@ -106,9 +106,9 @@ class EventSummaryPlaylist extends React.PureComponent<
 
     let image = eventImg && eventImg
 
-
     if (!eventImg) {
-      image = playlist.images && playlist.images.length ? playlist.images[0].url : ''
+      image =
+        playlist.images && playlist.images.length ? playlist.images[0].url : ''
     }
 
     return (
@@ -129,10 +129,9 @@ class EventSummaryPlaylist extends React.PureComponent<
                   className={classes.spotifyLink}
                   href={openUrl}
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Button color="secondary">
-                    Open in Spotify
-                  </Button>
+                  <Button color="secondary">Open in Spotify</Button>
                 </a>
               </Typography>
             </Grid>
@@ -154,7 +153,9 @@ class EventSummaryPlaylist extends React.PureComponent<
                     </Typography>
                   </div>
                   <div>
-                    <Typography color="textSecondary">Genre: {genre ? genre : 'All'}</Typography>
+                    <Typography color="textSecondary">
+                      Genre: {genre ? genre : 'All'}
+                    </Typography>
                   </div>
                 </Grid>
               </Grid>
@@ -171,9 +172,7 @@ class EventSummaryPlaylist extends React.PureComponent<
               </Grid>
             </Grid>
             <Grid item={true} xs={12}>
-              <span>
-                Party modes
-              </span>
+              <span>Party modes</span>
               <FormGroup row={true}>
                 <FormControlLabel
                   control={
@@ -228,6 +227,7 @@ class EventSummaryPlaylist extends React.PureComponent<
                 .map((suggest, i) => (
                   <div className={classes.suggestionRow} key={i}>
                     <img
+                      alt="suggestion"
                       className={classes.suggestionImg}
                       src={suggest.track.album.images[0].url}
                     />

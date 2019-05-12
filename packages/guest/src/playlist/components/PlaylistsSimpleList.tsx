@@ -37,7 +37,13 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
   }
 
   public render() {
-    const { onPlaylistSelected, playlists, disableLinks, events, eventsLoading } = this.props
+    const {
+      onPlaylistSelected,
+      playlists,
+      disableLinks,
+      events,
+      eventsLoading
+    } = this.props
 
     const handlePlaylistSelected = (playlist: IPlaylist) => () => {
       this.props.selectPlaylist(playlist)
@@ -60,7 +66,8 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
         events
           .filter(
             event =>
-              now.isAfter(event.startDateTime) && now.isBefore(event.endDateTime),
+              now.isAfter(event.startDateTime) &&
+              now.isBefore(event.endDateTime),
             'endDateTime'
           )
           .reverse()
@@ -72,29 +79,28 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
           .reverse()
       )
 
-      sortedPlaylists = uniqBy([...liveEvents, ...upcomingEvents, ...pastEvents].map(
-        (event) => {
-          return { ...event.playlist, eventId: event.eventId}
-        }
-      ), 'id')
+      sortedPlaylists = uniqBy(
+        [...liveEvents, ...upcomingEvents, ...pastEvents].map(event => {
+          return { ...event.playlist, eventId: event.eventId }
+        }),
+        'id'
+      )
     }
 
-    const filteredPlaylists = sortedPlaylists ?
-      sortedPlaylists.filter(
-        playlist => {
+    const filteredPlaylists = sortedPlaylists
+      ? sortedPlaylists.filter(playlist => {
           if (!!playlist.tracks) {
             return playlist.tracks.items.length > 0
           }
-          return
-        }
-      ) : playlists && playlists.filter(
-        playlist => {
+          return false
+        })
+      : playlists &&
+        playlists.filter(playlist => {
           if (!!playlist.tracks) {
             return playlist.tracks.items.length > 0
           }
-          return
-        }
-      )
+          return false
+        })
 
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)

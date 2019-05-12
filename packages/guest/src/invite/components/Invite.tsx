@@ -31,21 +31,18 @@ const Invite = ({
   loading
 }: IInviteProps) => {
   const inviteIdFromUrl = match.params.inviteId
-  useEffect(
-    () => {
-      localStorage.set(inviteIdKey, inviteIdFromUrl)
-      localStorage.set(inviteAnsweredKey, 'false')
-      console.log('Setting invite to ' + inviteIdFromUrl)
+  useEffect(() => {
+    localStorage.set(inviteIdKey, inviteIdFromUrl)
+    localStorage.set(inviteAnsweredKey, 'false')
+    console.log('Setting invite to ' + inviteIdFromUrl)
 
-      if (isEmpty(inviteEvent) && !loading) {
-        fetchInvite(inviteIdFromUrl)
-      }
-      if (!isEmpty(inviteEvent) && !isEmpty(user)) {
-        localStorage.set(inviteAnsweredKey, 'true')
-      }
-    },
-    [inviteIdFromUrl, loading]
-  )
+    if (isEmpty(inviteEvent) && !loading) {
+      fetchInvite(inviteIdFromUrl)
+    }
+    if (!isEmpty(inviteEvent) && !isEmpty(user)) {
+      localStorage.set(inviteAnsweredKey, 'true')
+    }
+  }, [fetchInvite, inviteEvent, inviteIdFromUrl, loading, user])
 
   if (!isAuthenticated && isEmpty(user) && authError) {
     return <Redirect to={'/login?redirect=/invite/' + inviteIdFromUrl} />

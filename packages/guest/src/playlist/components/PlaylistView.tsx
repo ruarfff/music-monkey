@@ -4,9 +4,7 @@ import IUser from '../../user/IUser'
 import IPlaylist from '../IPlaylist'
 import './Playlist.scss'
 import PlaylistsSimpleList from './PlaylistsSimpleList'
-
-const React = require('react')
-const { useEffect } = React
+import React, { useEffect } from 'react'
 
 interface IPlaylistViewProps {
   user: IUser
@@ -26,9 +24,11 @@ const PlaylistView = ({
   user,
   eventsLoading,
   selectPlaylist,
-  fetchUsersEvents,
+  fetchUsersEvents
 }: IPlaylistViewProps) => {
-  useEffect(() => fetchUsersEvents(), [])
+  useEffect(() => {
+    fetchUsersEvents()
+  }, [fetchUsersEvents])
 
   return (
     <PlaylistsSimpleList

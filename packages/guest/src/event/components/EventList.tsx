@@ -85,7 +85,7 @@ export default class EventList extends React.PureComponent<IEventListProps> {
         {events.map((event, index) => (
           <div
             className="EventList-item"
-            key={index}
+            key={index + status}
             onClick={this.handleSelectEvent(event)}
           >
             <ListItem component={listLink('/events/' + event.eventId)}>

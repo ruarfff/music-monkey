@@ -10,8 +10,11 @@ interface IFinderButton {
 export const FinderButton = (props: IFinderButton) => {
   return (
     <div className="FinderButton-root">
-      <Link to={props.id ? `/finder/${props.id}` : '/finder'} className="FinderButton-link">
-        <img src={Monkey} />
+      <Link
+        to={props.id ? `/finder/${props.id}` : '/finder'}
+        className="FinderButton-link"
+      >
+        <img alt="finder" src={Monkey} />
       </Link>
     </div>
   )

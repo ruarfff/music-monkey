@@ -75,12 +75,17 @@ class EventSuggestions extends React.Component<
   public render() {
     const { suggestions, playlist } = this.props
 
-    const playlistTracks = playlist.tracks.items.map((track) => track.track.uri)
+    const playlistTracks = playlist.tracks.items.map(track => track.track.uri)
     let filteredSuggestions = suggestions
 
-    if(!isEmpty(suggestions)) {
-      filteredSuggestions = uniqBy(suggestions
-        .filter((suggestedTrack) => playlistTracks.indexOf(suggestedTrack.track.uri) === -1), 'track.uri')
+    if (!isEmpty(suggestions)) {
+      filteredSuggestions = uniqBy(
+        suggestions.filter(
+          suggestedTrack =>
+            playlistTracks.indexOf(suggestedTrack.track.uri) === -1
+        ),
+        'track.uri'
+      )
     }
 
     if (!filteredSuggestions || filteredSuggestions.length < 1) {
@@ -91,13 +96,12 @@ class EventSuggestions extends React.Component<
       )
     }
 
-
     return (
       <div className="EventSuggestions-root">
         <Grid container={true} spacing={24}>
           <Grid item={true} sm={12}>
             {filteredSuggestions.length > 0 &&
-            this.renderAcceptButtons(filteredSuggestions)}
+              this.renderAcceptButtons(filteredSuggestions)}
           </Grid>
           <Grid item={true} sm={12}>
             <List>
@@ -117,13 +121,12 @@ class EventSuggestions extends React.Component<
     const { playlist, saveEventPlaylist } = this.props
     const eventId = this.props.match.params.eventId
     const suggestionMap = new Map()
-    decoratedSuggestions.map((ds) => {
+    decoratedSuggestions.forEach(ds => {
       suggestionMap.set(ds.track.uri, ds)
     })
 
     saveEventPlaylist(eventId, playlist, suggestionMap)
   }
-
 
   private renderSuggestion = (
     decoratedSuggestion: IDecoratedSuggestion,
@@ -157,28 +160,20 @@ class EventSuggestions extends React.Component<
     }
 
     return (
-      <Grid
-        key={index}
-        // in={track.uri !== this.state.tracksBeingRemoved.uri}
-        // direction="right"
-        // mountOnEnter={false}
-        // unmountOnExit={true}
-      >
+      <Grid key={index}>
         <ListItem className={classes.listItem} dense={true} button={true}>
           {trackImage}
           <div className={'listItemContent'}>
             <div className={'listItemTextBlock'}>
               <div className={'listItemArtist'}>
-              <span className={classes.trackBand}>
-                {track.album.artists[0].name}
-              </span>
-                <span>
-                {track.name}
-              </span>
+                <span className={classes.trackBand}>
+                  {track.album.artists[0].name}
+                </span>
+                <span>{track.name}</span>
               </div>
               <span className={'listItemDuration'}>
-              {formatDuration(track.duration_ms)}
-            </span>
+                {formatDuration(track.duration_ms)}
+              </span>
             </div>
             {track.preview_url ? (
               <audio
@@ -245,7 +240,9 @@ class EventSuggestions extends React.Component<
   //   this.props.stageAllSuggestions(filteredSuggestions)
   // }
 
-  private renderAcceptButtons = (filteredSuggestions: IDecoratedSuggestion[]) => {
+  private renderAcceptButtons = (
+    filteredSuggestions: IDecoratedSuggestion[]
+  ) => {
     return (
       <div>
         <Button

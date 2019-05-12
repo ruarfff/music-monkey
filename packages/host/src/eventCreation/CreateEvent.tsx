@@ -35,7 +35,7 @@ const decorate = withStyles((theme: Theme) => ({
     '&:last-child': {
       marginRight: 0
     }
-  },
+  }
 }))
 
 const SweetAlert = withReactContent(Swal) as any
@@ -102,7 +102,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     genre: ''
   }
 
-  public timer: any = _.debounce((eventPart) => this.props.eventContentUpdated(eventPart), 300)
+  public timer: any = _.debounce(
+    (eventPart: any) => this.props.eventContentUpdated(eventPart),
+    300
+  )
 
   public componentDidMount() {
     this.props.initializeCreateForm(this.props.event, this.props.user)
@@ -124,7 +127,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     this.props.fetchEventVotes(eventId)
   }
 
-
   public componentWillUnmount() {
     this.props.deselectPlaylist()
     this.props.eventSavingReset()
@@ -134,22 +136,26 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     const eventId = this.props.match.params.eventId
 
     if (!this.state.organizer && newProps.event.organizer) {
-      this.setState({organizer: newProps.event.organizer})
+      this.setState({ organizer: newProps.event.organizer })
     }
 
     if (!this.state.genre && newProps.event.genre) {
-      this.setState({genre: newProps.event.genre})
+      this.setState({ genre: newProps.event.genre })
     }
 
-    if ((!this.state.name && newProps.event.name) || (this.state.name !== newProps.event.name)) {
-      this.setState({name: newProps.event.name})
+    if (
+      (!this.state.name && newProps.event.name) ||
+      this.state.name !== newProps.event.name
+    ) {
+      this.setState({ name: newProps.event.name })
     }
 
     if (!this.state.description && newProps.event.description) {
-      this.setState({description: newProps.event.description})
+      this.setState({ description: newProps.event.description })
     }
 
-    if (!_.isEmpty(this.props.selectedPlaylist) &&
+    if (
+      !_.isEmpty(this.props.selectedPlaylist) &&
       this.props.selectedPlaylist.id !== newProps.selectedPlaylist.id
     ) {
       this.props.fetchEventVotes(eventId)
@@ -181,7 +187,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
     if (currentStep === 0 && !event.playlistUrl) {
       this.showErrorDialog('Pick or create a playlist')
       return false
-    } else if (currentStep === 1 && (!event.name || !event.organizer || !location )) {
+    } else if (
+      currentStep === 1 &&
+      (!event.name || !event.organizer || !location)
+    ) {
       this.showErrorDialog('Fill all required fields')
       return false
     }
@@ -194,7 +203,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       confirmButtonColor: '#8f0a00',
       title: message,
       type: 'error'
-    }).then(() => this.setState({showErrorDialog: true}))
+    }).then(() => this.setState({ showErrorDialog: true }))
   }
 
   public showSavedDialogue = () => {
@@ -279,7 +288,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
 
     return (
       <React.Fragment>
-        {errors.playlistCreation && this.showErrorDialog('Playlist wasn`t created')}
+        {errors.playlistCreation &&
+          this.showErrorDialog("Playlist wasn't created")}
         <Grid item={true} xs={12} sm={6}>
           <PlaylistSelection
             onPlaylistDragDrop={onPlaylistDragDrop}
@@ -301,28 +311,25 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
         </Grid>
         <Grid item={true} xs={12} sm={6}>
           {!_.isEmpty(selectedPlaylist) && (
-              <React.Fragment>
-                <span>Add tracks to playlist</span>
-                <EventSearchTracks
-                  playlist={selectedPlaylist}
-                  layout={'column'}
-                />
-              </React.Fragment>
-            )
-          }
+            <React.Fragment>
+              <span>Add tracks to playlist</span>
+              <EventSearchTracks
+                playlist={selectedPlaylist}
+                layout={'column'}
+              />
+            </React.Fragment>
+          )}
         </Grid>
         <div className="control-btn-row">
-          {
-            history.location.pathname === `/events/${event.eventId}/edit` && (
-              <Button
-                variant="contained"
-                className={classes.button}
-                onClick={this.showConfirmationDialog}
-              >
-                <span className="control-btn-text-primary">Delete Event</span>
-              </Button>
-            )
-          }
+          {history.location.pathname === `/events/${event.eventId}/edit` && (
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={this.showConfirmationDialog}
+            >
+              <span className="control-btn-text-primary">Delete Event</span>
+            </Button>
+          )}
           <Button
             variant="contained"
             onClick={this.handleCancel}
@@ -336,7 +343,9 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             variant="contained"
             className={classes.button}
           >
-            <span className="control-btn-text-secondary">{!event.eventId ? 'Create Event' : 'Next'}</span>
+            <span className="control-btn-text-secondary">
+              {!event.eventId ? 'Create Event' : 'Next'}
+            </span>
           </Button>
         </div>
       </React.Fragment>
@@ -466,17 +475,15 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
         </Grid>
 
         <div className="control-btn-row">
-          {
-            history.location.pathname === `events/${event.eventId}/edit` && (
-              <Button
-                variant="contained"
-                className={classes.button}
-                onClick={this.showConfirmationDialog}
-              >
-                <span className="control-btn-text-primary">Delete Event</span>
-              </Button>
-            )
-          }
+          {history.location.pathname === `events/${event.eventId}/edit` && (
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={this.showConfirmationDialog}
+            >
+              <span className="control-btn-text-primary">Delete Event</span>
+            </Button>
+          )}
           <Button
             variant="contained"
             color="default"
@@ -494,18 +501,13 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
             <span className="control-btn-text-primary">Prev</span>
           </Button>
           <Button
-            disabled={
-              !event.startDateTime ||
-              !event.endDateTime
-            }
+            disabled={!event.startDateTime || !event.endDateTime}
             variant="contained"
             color="secondary"
             onClick={this.handleSaveEvent}
             className={classes.button}
           >
-            <span className="control-btn-text-secondary">
-              Next
-            </span>
+            <span className="control-btn-text-secondary">Next</span>
           </Button>
         </div>
       </React.Fragment>
@@ -539,39 +541,30 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   public render() {
     return (
       <React.Fragment>
-        <CreateEventSteps pickStep={this.pickStep} step={this.props.currentStep} />
+        <CreateEventSteps
+          pickStep={this.pickStep}
+          step={this.props.currentStep}
+        />
         <form className="CreateEvent-root" noValidate={true} autoComplete="off">
-            {
-              <div hidden={this.props.currentStep !== 0}>
-                <Grid
-                  container={true}
-                  spacing={24}
-                  direction="row"
-                >
-                  {this.renderFirstStep()}
-                </Grid>
-              </div>
-            }
-            {
-              <div hidden={this.props.currentStep !== 1}>
-                <Grid
-                  container={true}
-                  spacing={24}
-                  direction="row"
-                >
-                  {this.renderSecondStep()}
-                </Grid>
-              </div>
-            }
-            {this.props.currentStep === 2 &&
-              <Grid
-                container={true}
-                spacing={24}
-                direction="row"
-              >
-                { this.renderThirdStep()}
+          {
+            <div hidden={this.props.currentStep !== 0}>
+              <Grid container={true} spacing={24} direction="row">
+                {this.renderFirstStep()}
               </Grid>
-            }
+            </div>
+          }
+          {
+            <div hidden={this.props.currentStep !== 1}>
+              <Grid container={true} spacing={24} direction="row">
+                {this.renderSecondStep()}
+              </Grid>
+            </div>
+          }
+          {this.props.currentStep === 2 && (
+            <Grid container={true} spacing={24} direction="row">
+              {this.renderThirdStep()}
+            </Grid>
+          )}
         </form>
       </React.Fragment>
     )
@@ -591,7 +584,10 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
       currentStep,
       history
     } = this.props
-    if ( !_.isEmpty(errors.saving) && history.location.pathname !== `/events/${event.eventId}/edit`) {
+    if (
+      !_.isEmpty(errors.saving) &&
+      history.location.pathname !== `/events/${event.eventId}/edit`
+    ) {
       this.showErrorDialog(this.props.errors.saving.response.statusText)
     }
     if (this.shouldGoToNextStep()) {
@@ -624,8 +620,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   private handlePlaylistInputChange = (content: any) => {
     const { history, event, playlistInputChange } = this.props
     if (history.location.pathname === '/create-event' && !event.createdAt) {
-      this.setState({name: content})
-      this.timer({name: content})
+      this.setState({ name: content })
+      this.timer({ name: content })
     } else {
       _.debounce((name: any) => playlistInputChange(name), 300)(content)
     }
@@ -634,7 +630,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps & WithStyles> {
   private handleContentUpdated = (key: string) => (content: any) => {
     const eventPart = {}
     eventPart[key] = content
-    this.setState({[key]: content})
+    this.setState({ [key]: content })
     this.timer(eventPart)
   }
 }

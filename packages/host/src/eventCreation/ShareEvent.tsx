@@ -18,7 +18,7 @@ const decorate = withStyles((theme: Theme) => ({
   img: {
     width: '100%',
     maxWidth: '500px',
-    borderRadius:'4px'
+    borderRadius: '4px'
   },
   title: {
     fontSize: '34px',
@@ -30,7 +30,7 @@ const decorate = withStyles((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     marginBottom: '10px',
-    height: '30px',
+    height: '30px'
   },
   descriptionItemImg: {
     marginRight: '10px',
@@ -39,15 +39,15 @@ const decorate = withStyles((theme: Theme) => ({
   viewOnMap: {
     color: '#FFB000',
     paddingLeft: '30px',
-    cursor: 'pointer',
+    cursor: 'pointer'
   },
   navigationContainer: {
     marginTop: '20px',
     height: '100px',
-    display: 'flex',
+    display: 'flex'
   },
   link: {
-    textDecoration: 'none',
+    textDecoration: 'none'
   }
 }))
 
@@ -61,13 +61,12 @@ interface IShareEventProps {
 }
 
 class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
-
   public state = {
-    showMap: false,
+    showMap: false
   }
 
   public handleToggleMap = () => {
-    this.setState({showMap: !this.state.showMap})
+    this.setState({ showMap: !this.state.showMap })
   }
 
   public render() {
@@ -78,28 +77,23 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
       acknowledgeEventInviteCopied,
       copiedToClipboard,
       message,
-      clearMessage,
+      clearMessage
     } = this.props
 
     const eventImg = !event.imageUrl ? backgroundImg : event.imageUrl
     return (
       <React.Fragment>
-        {copiedToClipboard &&
+        {copiedToClipboard && (
           <InviteCopyAlert
             message="Copied to Clipboard"
             onClose={acknowledgeEventInviteCopied}
           />
-        }
+        )}
         <Grid item={true} md={4}>
           <div>
-            <img
-              className={classes.img}
-              src={eventImg}
-            />
+            <img alt={event.name} className={classes.img} src={eventImg} />
           </div>
-          <div className={classes.title}>
-            {event.name}
-          </div>
+          <div className={classes.title}>{event.name}</div>
           {event.description !== '' && (
             <div className={classes.descriptionItem}>
               Event Description: {event.description}
@@ -107,17 +101,22 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
           )}
           <div>
             <div className={classes.descriptionItem}>
-              <img className={classes.descriptionItemImg} src={dateIcon} />
+              <img
+                alt={event.description}
+                className={classes.descriptionItemImg}
+                src={dateIcon}
+              />
               <span>{event.startDateTime.format('Do MMMM YYYY LT')}</span>
             </div>
             <div className={classes.descriptionItem}>
-              <img className={classes.descriptionItemImg} src={locationIcon} />
+              <img
+                alt={event.description}
+                className={classes.descriptionItemImg}
+                src={locationIcon}
+              />
               <span>{event.location && event.location.address}</span>
             </div>
-            <span
-              className={classes.viewOnMap}
-              onClick={this.handleToggleMap}
-            >
+            <span className={classes.viewOnMap} onClick={this.handleToggleMap}>
               View on Map
             </span>
           </div>
@@ -129,11 +128,7 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
             className={classes.navigationContainer}
           >
             <Link className={classes.link} to={'/events/' + event.eventId}>
-              <Button
-                variant="contained"
-                color='secondary'
-                fullWidth={true}
-              >
+              <Button variant="contained" color="secondary" fullWidth={true}>
                 GO TO EVENT SUMMARY
               </Button>
             </Link>
@@ -150,12 +145,11 @@ class ShareEvent extends React.PureComponent<IShareEventProps & WithStyles> {
           />
         </Grid>
         <Grid item={true} md={12}>
-            {
-              (!!event.location && !!event.location.latLng && this.state.showMap) &&
-              <MapComponent
-                coords={event.location.latLng}
-              />
-            }
+          {!!event.location &&
+            !!event.location.latLng &&
+            this.state.showMap && (
+              <MapComponent coords={event.location.latLng} />
+            )}
         </Grid>
       </React.Fragment>
     )

@@ -36,9 +36,7 @@ import './Event.scss'
 import EventDetails from './EventDetails'
 import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
-
-const React = require('react')
-const { useEffect, useState } = React
+import React, { useEffect, useState } from 'react'
 
 interface IEventProps {
   user: IUser
@@ -82,27 +80,25 @@ export default ({
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
   const isOpen = Boolean(menuLink)
 
-  useEffect(
-    () => {
-      if (eventId) {
-        onGuestUpdate(eventId, getEvent(eventId))
-        fetchUsersEvents()
-      }
-    },
-    [eventId]
-  )
+  useEffect(() => {
+    if (eventId) {
+      onGuestUpdate(eventId, getEvent(eventId))
+      fetchUsersEvents()
+    }
+  }, [eventId, fetchUsersEvents, getEvent])
 
-  const userRsvp = (selectedEvent && selectedEvent.guests) && selectedEvent.guests
-    .filter((guest: IEventGuest) => guest.user.userId === user.userId)[0]
+  const userRsvp =
+    selectedEvent &&
+    selectedEvent.guests &&
+    selectedEvent.guests.filter(
+      (guest: IEventGuest) => guest.user.userId === user.userId
+    )[0]
 
-  useEffect(
-    () => {
-      if (isEmpty(userRsvp) && eventId && !eventLoading) {
-        getEvent(eventId)
-      }
-    },
-    [eventId]
-  )
+  useEffect(() => {
+    if (isEmpty(userRsvp) && eventId && !eventLoading) {
+      getEvent(eventId)
+    }
+  }, [eventId, eventLoading, getEvent, userRsvp])
 
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
@@ -127,107 +123,71 @@ export default ({
     selectOption(option)
   }
 
-  const handleInvite = () => {
-    useEffect(
-      () => {
-        if (
-          !isEmpty(inviteEvent) &&
-          !isEmpty(inviteId) &&
-          eventId === inviteEvent.eventId
-        ) {
-          fetchOrCreateRsvp(inviteId, user.userId, eventId)
-        }
-      },
-      [eventId]
-    )
-  }
+  // handleInvite
+  useEffect(() => {
+    if (
+      !isEmpty(inviteEvent) &&
+      !isEmpty(inviteId) &&
+      eventId === inviteEvent.eventId
+    ) {
+      fetchOrCreateRsvp(inviteId, user.userId, eventId)
+    }
+  })
 
-  const handleSelectEvent = () => {
-    useEffect(
-      () => {
+  // handleSelectEvent
+  useEffect(() => {
+    getEvent(eventId)
+    // TODO: Always getting event as a bit of a hack since event doesn't update in background when not in view.
+  }, [eventId, getEvent])
+
+  // handleVotes
+  useEffect(() => {
+    if (isEmpty(votes) && !fetchingVotes) {
+      fetchEventVotes(eventId)
+    }
+    subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
+
+    return function cleanup() {
+      unSubscribeToVotesModified(eventId)
+    }
+  }, [eventId, fetchEventVotes, fetchingVotes, votes])
+
+  // handleSuggestions
+  useEffect(() => {
+    subscribeToSuggestionsModified(eventId, () => getEvent(eventId))
+    return function cleanup() {
+      unSubscribeToSuggestionsModified(eventId)
+    }
+  }, [eventId, getEvent])
+
+  //handlePlaylist
+  useEffect(() => {
+    if (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)) {
+      subscribeToPlaylistModified(selectedEvent.playlist.id, () =>
         getEvent(eventId)
-        // TODO: Always getting event as a bit of a hack since event doesn't update in background when not in view.
-        /*if (
-          (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) &&
-          !eventLoading
+      )
+    }
+
+    return function cleanup() {
+      if (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)) {
+        unSubscribeToPlaylistModified(selectedEvent.playlist.id)
+      }
+    }
+  }, [eventId, getEvent, selectedEvent])
+
+  // handleEventResponse
+  useEffect(() => {
+    if (!isEmpty(selectedEvent) && selected === 'you going?') {
+      selectedEvent.guests.forEach((guest: any) => {
+        if (
+          guest.rsvp.userId === user.userId &&
+          guest.rsvp.status !== 'Pending'
         ) {
-        }*/
-      },
-      [eventId]
-    )
-  }
-
-  const handleVotes = () => {
-    useEffect(
-      () => {
-        if (isEmpty(votes) && !fetchingVotes) {
-          fetchEventVotes(eventId)
+          selectOption(guest.rsvp.status)
         }
-        subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
-
-        return function cleanup() {
-          unSubscribeToVotesModified(eventId)
-        }
-      },
-      [eventId]
-    )
-  }
-
-  const handleSuggestions = () => {
-    useEffect(
-      () => {
-        subscribeToSuggestionsModified(eventId, () => getEvent(eventId))
-        return function cleanup() {
-          unSubscribeToSuggestionsModified(eventId)
-        }
-      },
-      [eventId]
-    )
-  }
-
-  const handlePlaylist = () => {
-    useEffect(
-      () => {
-        if (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)) {
-          subscribeToPlaylistModified(selectedEvent.playlist.id, () =>
-            getEvent(eventId)
-          )
-        }
-
-        return function cleanup() {
-          if (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)) {
-            unSubscribeToPlaylistModified(selectedEvent.playlist.id)
-          }
-        }
-      },
-      [selectedEvent]
-    )
-  }
-
-  const handleEventResponse = () => {
-    useEffect(
-      () => {
-        if (!isEmpty(selectedEvent) && selected === 'you going?') {
-          selectedEvent.guests.map((guest: any) => {
-            if (
-              guest.rsvp.userId === user.userId &&
-              guest.rsvp.status !== 'Pending'
-            ) {
-              selectOption(guest.rsvp.status)
-            }
-          })
-        }
-      },
-      [selectedEvent]
-    )
-  }
-
-  handleInvite()
-  handleSelectEvent()
-  handleVotes()
-  handleSuggestions()
-  handlePlaylist()
-  handleEventResponse()
+      })
+    }
+  }, [selected, selectedEvent, user.userId])
 
   if (isEmpty(selectedEvent)) {
     return <LoadingSpinner />
@@ -273,9 +233,7 @@ export default ({
               </div>
             </div>
             <div className="Event-img-info">
-              <div className="Event-img-info-title">
-                {selectedEvent.name}
-              </div>
+              <div className="Event-img-info-title">{selectedEvent.name}</div>
               <div className="Event-img-info-location">
                 {selectedEvent.description}
               </div>
@@ -331,7 +289,7 @@ export default ({
             onChange={handleTabChange}
             indicatorColor="primary"
             textColor="secondary"
-            fullWidth={true}
+            variant="fullWidth"
             classes={{ indicator: 'indicator-color' }}
             className="Event-tabs"
           >

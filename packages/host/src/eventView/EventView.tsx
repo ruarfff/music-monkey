@@ -158,7 +158,7 @@ class EventView extends React.Component<
               TabIndicatorProps={{ className: classes.TabIndicator }}
               centered={true}
               className={classes.tabs}
-              fullWidth={true}
+              variant="fullWidth"
             >
               <Tab className={classes.tab} label="Event Summary" />
               <Tab className={classes.tab} label="Playlist" />

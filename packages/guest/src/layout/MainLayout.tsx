@@ -24,14 +24,11 @@ const MainLayout = ({
   isAuthenticated,
   fetchUsersEvents
 }: IMainLayoutProps) => {
-  useEffect(
-    () => {
-      if (isEmpty(events) && isAuthenticated) {
-        fetchUsersEvents()
-      }
-    },
-    [isAuthenticated]
-  )
+  useEffect(() => {
+    if (isEmpty(events) && isAuthenticated) {
+      fetchUsersEvents()
+    }
+  }, [events, fetchUsersEvents, isAuthenticated])
 
   return (
     <div className="MainLayout-root">

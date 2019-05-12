@@ -36,7 +36,7 @@ export default ({ events }: IMyGuestsProps) => {
           if (guest) {
             return renderGuests(guest, key)
           } else {
-            return
+            return null
           }
         })
       ) : (

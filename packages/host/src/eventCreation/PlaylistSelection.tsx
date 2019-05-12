@@ -23,7 +23,6 @@ import IUser from '../user/IUser'
 import { formatDuration } from '../util/formatDuration'
 import './PlaylistSelection.scss'
 
-
 interface IPlaylistSelectionProps {
   user: IUser
   playlists: IPlaylist[]
@@ -81,7 +80,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
 
   public handleLoadMore = () => {
     this.props.getMoreUsersPlaylists(this.props.user, this.state.offset)
-    this.setState({offset: this.state.offset + 50})
+    this.setState({ offset: this.state.offset + 50 })
   }
 
   public handlePlaylistCreation = () => {
@@ -138,30 +137,29 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
       playlists,
       handlePickGenre,
       selectedPlaylist,
-      deselectPlaylist,
+      deselectPlaylist
     } = this.props
 
-    const {
-      name,
-      description,
-      isOpen
-    } = this.state
+    const { name, description, isOpen } = this.state
 
-    const numTracks = (!isEmpty(selectedPlaylist) &&
+    const numTracks =
+      !isEmpty(selectedPlaylist) &&
       selectedPlaylist.tracks &&
       selectedPlaylist.tracks.items
-    ) ? selectedPlaylist.tracks.items.length : 0
+        ? selectedPlaylist.tracks.items.length
+        : 0
 
     const durationSeconds =
       numTracks > 0
         ? selectedPlaylist.tracks.items
-          .map(item => item.track.duration_ms)
-          .reduce((acc, dur) => acc + dur)
+            .map(item => item.track.duration_ms)
+            .reduce((acc, dur) => acc + dur)
         : 0
 
-    const img = (!isEmpty(selectedPlaylist) && selectedPlaylist.images[0]) ?
-      selectedPlaylist.images[0].url :
-      partyImg
+    const img =
+      !isEmpty(selectedPlaylist) && selectedPlaylist.images[0]
+        ? selectedPlaylist.images[0].url
+        : partyImg
 
     const formattedDuration = formatDuration(durationSeconds)
 
@@ -212,23 +210,17 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
                   </IconButton>
                 ]}
               />
-              <div className='PlaylistSummary'>
-                <div className='PlaylistImg'>
-                  <img src={img}/>
+              <div className="PlaylistSummary">
+                <div className="PlaylistImg">
+                  <img alt="playlist" src={img} />
                 </div>
-                <div className='PlaylistDescription'>
+                <div className="PlaylistDescription">
+                  <div>{selectedPlaylist.name}</div>
+                  <div>{formattedDuration}</div>
                   <div>
-                    {selectedPlaylist.name}
-                  </div>
-                  <div>
-                    {formattedDuration}
-                  </div>
-                  <div>
-                    {
-                      numTracks > 1 ?
-                      numTracks + ' Tracks' :
-                      numTracks + ' Track'
-                    }
+                    {numTracks > 1
+                      ? numTracks + ' Tracks'
+                      : numTracks + ' Track'}
                   </div>
                   <Button
                     color={'secondary'}
@@ -243,10 +235,9 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
                 <TrackList
                   removeTrack={this.handleRemoveTrack}
                   onDragEnd={this.handlePlaylistDragDrop}
-                  tracks={
-                    cloneDeep(selectedPlaylist.tracks.items)
-                      .map(i => i.track)
-                  }
+                  tracks={cloneDeep(selectedPlaylist.tracks.items).map(
+                    i => i.track
+                  )}
                   showNotification={this.handleShowNotification}
                 />
               </List>
@@ -254,35 +245,21 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
           )}
         </Grid>
         <div className="PlaylistCardsContainer">
-
           {isEmpty(selectedPlaylist) && (
             <React.Fragment>
-              <div
-                className='Plus'
-                onClick={this.handlePlaylistCreation}
-              >
+              <div className="Plus" onClick={this.handlePlaylistCreation}>
                 +
               </div>
-              {
-                playlists.map((playlist: IPlaylist, index: number) => (
-                  <div
-                    key={index}
-                    onClick={this.handlePlaylistSelected(playlist)}
-                  >
-                    <PlaylistCard
-                      playlist={playlist}
-                      disableLink={true}
-                    />
-                  </div>
-                ))
-              }
-              <div
-                className='Plus'
-                onClick={this.handleLoadMore}
-              >
-                <CachedIcon
-                  fontSize={'inherit'}
-                />
+              {playlists.map((playlist: IPlaylist, index: number) => (
+                <div
+                  key={index}
+                  onClick={this.handlePlaylistSelected(playlist)}
+                >
+                  <PlaylistCard playlist={playlist} disableLink={true} />
+                </div>
+              ))}
+              <div className="Plus" onClick={this.handleLoadMore}>
+                <CachedIcon fontSize={'inherit'} />
               </div>
             </React.Fragment>
           )}

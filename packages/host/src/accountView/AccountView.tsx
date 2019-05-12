@@ -14,20 +14,17 @@ import MyGuests from './MyGuests'
 import MyPlaylists from './MyPlaylists'
 
 const decorate = withStyles(() => ({
-  accountWrapper: {
-  },
-  accountLeftSide: {
-  },
+  accountWrapper: {},
+  accountLeftSide: {},
   tabContainer: {
     background: 'white',
-    boxShadow: 'none',
+    boxShadow: 'none'
   },
-  tab: {
-  },
+  tab: {},
   tabs: {
     color: '#5157ab',
     borderBottom: '1px solid #5157ab'
-  },
+  }
 }))
 
 interface IAccountViewProps {
@@ -38,11 +35,7 @@ interface IAccountViewProps {
 }
 
 function TabContainer({ children }: any) {
-  return (
-    <div className='tabContainer'>
-      {children}
-    </div>
-  )
+  return <div className="tabContainer">{children}</div>
 }
 
 class AccountView extends React.Component<IAccountViewProps & WithStyles> {
@@ -56,7 +49,7 @@ class AccountView extends React.Component<IAccountViewProps & WithStyles> {
 
   public render() {
     const { tabIndex } = this.state
-    const { user, classes, events, updateUserRequest} = this.props
+    const { user, classes, events, updateUserRequest } = this.props
     return (
       <Grid className={classes.accountWrapper} container={true} spacing={24}>
         <Grid
@@ -65,16 +58,9 @@ class AccountView extends React.Component<IAccountViewProps & WithStyles> {
           md={3}
           className={classes.accountLeftSide}
         >
-          <AccountDetails
-            user={user}
-            updateUserRequest={updateUserRequest}
-          />
+          <AccountDetails user={user} updateUserRequest={updateUserRequest} />
         </Grid>
-        <Grid
-          container={true}
-          item={true}
-          md={9}
-        >
+        <Grid container={true} item={true} md={9}>
           <AppBar
             position="static"
             color="default"
@@ -83,10 +69,10 @@ class AccountView extends React.Component<IAccountViewProps & WithStyles> {
             <Tabs
               value={tabIndex}
               onChange={this.handleTabChange}
-              TabIndicatorProps={{className: classes.tabs}}
+              TabIndicatorProps={{ className: classes.tabs }}
               centered={true}
               className={classes.tabs}
-              fullWidth={true}
+              variant="fullWidth"
             >
               <Tab className={classes.tab} label="My events" />
               <Tab className={classes.tab} label="My playlists" />
@@ -95,7 +81,7 @@ class AccountView extends React.Component<IAccountViewProps & WithStyles> {
           </AppBar>
           {tabIndex === 0 && (
             <TabContainer className={classes.content}>
-              <MyEvents events={events}/>
+              <MyEvents events={events} />
             </TabContainer>
           )}
           {tabIndex === 1 && (

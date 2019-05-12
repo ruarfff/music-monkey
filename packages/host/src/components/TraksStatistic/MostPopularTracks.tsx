@@ -40,6 +40,7 @@ class MostPopularTracks extends React.Component<IMostPopularTracksProps> {
                   <div key={i} className={'listItem'}>
                     <div className={'imgSection'}>
                       <img
+                        alt="track"
                         className={'trackImg'}
                         src={track.album.images[0].url}
                       />

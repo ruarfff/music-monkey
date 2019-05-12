@@ -33,8 +33,8 @@ class Stepper extends React.Component<any, any> {
             className="stepper"
           >
             <div className="stepper-container">
-              <img className="img-logo" src={Images.Logo} />
-              <img src={Images.Success} className="img-success" />
+              <img alt="logo" src={Images.Logo} className="img-logo" />
+              <img alt="success" src={Images.Success} className="img-success" />
               <div className="stepper-container-text">
                 Music Monkey is nuts about helping <br />
                 you find your favourite tracks that <br />
@@ -42,8 +42,8 @@ class Stepper extends React.Component<any, any> {
               </div>
             </div>
             <div className="stepper-container blue">
-              <img className="img-logo" src={Images.LogoBlue} />
-              <img src={Images.Search} className="img-success" />
+              <img alt="logo" src={Images.LogoBlue} className="img-logo" />
+              <img alt="search" src={Images.Search} className="img-success" />
               <div className="stepper-container-text">
                 Music Monkey is nuts about helping <br />
                 you find your favourite tracks that <br />
@@ -52,8 +52,8 @@ class Stepper extends React.Component<any, any> {
             </div>
 
             <div className="stepper-container yellow">
-              <img className="img-logo" src={Images.LogoYellow} />
-              <img src={Images.Like} className="img-success" />
+              <img alt="logo" src={Images.LogoYellow} className="img-logo" />
+              <img alt="like " src={Images.Like} className="img-success" />
               <div className="stepper-container-text">
                 Music Monkey is nuts about helping <br />
                 you find your favourite tracks that <br />
@@ -70,8 +70,8 @@ class Stepper extends React.Component<any, any> {
               this.state.activeStep === 0
                 ? ''
                 : this.state.activeStep === 1
-                  ? 'blue'
-                  : this.state.activeStep === 2 && 'yellow'
+                ? 'blue'
+                : this.state.activeStep === 2 && 'yellow'
             }`}
             classes={{ dots: 'dot-white', dotActive: 'dot-white-active' }}
             nextButton={

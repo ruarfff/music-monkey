@@ -38,8 +38,8 @@ class EventPlaylistSummary extends React.PureComponent<
     const durationSeconds =
       numTracks > 0
         ? playlist.tracks.items
-          .map(item => item.track.duration_ms)
-          .reduce((acc, dur) => acc + dur)
+            .map(item => item.track.duration_ms)
+            .reduce((acc, dur) => acc + dur)
         : 0
 
     const formattedDuration = formatDuration(durationSeconds)
@@ -54,7 +54,11 @@ class EventPlaylistSummary extends React.PureComponent<
 
                 <span className="EventPlaylist-spotifyLink">
                   {playlist.external_urls && (
-                    <a href={playlist.external_urls.spotify} target="_blank">
+                    <a
+                      href={playlist.external_urls.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Open in Spotify
                     </a>
                   )}

@@ -18,13 +18,19 @@ const EventGuests = ({ event }: IEventGuestsProps) => {
           <div key={index}>
             <ListItem>
               <Avatar>
-                <img className="img-cover" src={user.user.image || ''} />
+                <img
+                  alt="user"
+                  className="img-cover"
+                  src={user.user.image || ''}
+                />
               </Avatar>
               <ListItemText primary={user.user.displayName || 'guest'} />
               <ListItemText primary={user.rsvp.status} />
-              {user.user.userId === event.userId && <ListItemText primary='Host'/>}
+              {user.user.userId === event.userId && (
+                <ListItemText primary="Host" />
+              )}
             </ListItem>
-            <Divider variant='inset' />
+            <Divider variant="inset" />
           </div>
         )
       })}

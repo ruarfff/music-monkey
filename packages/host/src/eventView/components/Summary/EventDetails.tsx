@@ -3,6 +3,7 @@ import { WithStyles } from '@material-ui/core/styles'
 import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import * as React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import eventIcon from '../../../assets/date-icon.svg'
 import locationIcon from '../../../assets/location-marker-icon.svg'
 import MapItem from '../../../components/MapComponent/index'
@@ -33,7 +34,7 @@ const decorated = withStyle(() => ({
   endDate: {}
 }))
 
-interface IEventDetailsProps {
+interface IEventDetailsProps extends RouteComponentProps<any> {
   event: IEvent
 }
 
@@ -41,11 +42,11 @@ class EventDetails extends React.PureComponent<
   IEventDetailsProps & WithStyles
 > {
   public state = {
-    showMap: false,
+    showMap: false
   }
 
   public render() {
-    const { event, classes } = this.props
+    const { event, classes, location } = this.props
     return (
       <div className="event-details-container">
         <Grid className="EventDetails-grid" container={true}>
@@ -86,7 +87,7 @@ class EventDetails extends React.PureComponent<
               variant="caption"
               gutterBottom={true}
             >
-              <img src={eventIcon} className={classes.img} />
+              <img alt="event icon" src={eventIcon} className={classes.img} />
               {event.startDateTime
                 ? event.startDateTime.format('Do MMMM YYYY')
                 : ''}
@@ -98,7 +99,11 @@ class EventDetails extends React.PureComponent<
                 variant="caption"
                 gutterBottom={true}
               >
-                <img src={locationIcon} className={classes.img} />
+                <img
+                  alt="location icon"
+                  src={locationIcon}
+                  className={classes.img}
+                />
                 {event.location.address}
                 <br />
               </Typography>
@@ -106,25 +111,7 @@ class EventDetails extends React.PureComponent<
             <Typography className={classes.showOnMap} onClick={this.toggleMap}>
               Show on Map
             </Typography>
-
-            {/*<Typography*/}
-              {/*className={classes.endDate}*/}
-              {/*variant="caption"*/}
-              {/*gutterBottom={true}*/}
-            {/*>*/}
-              {/*Pre-Game closes:*/}
-              {/*{event.startDateTime*/}
-                {/*? event.endDateTime.format('Do MMMM YYYY')*/}
-                {/*: ''}*/}
-            {/*</Typography>*/}
-
-            {/*{event.eventCode && (*/}
-              {/*<Typography variant="body2" gutterBottom={true}>*/}
-                {/*Event Code: {event.eventCode}*/}
-              {/*</Typography>*/}
-            {/*)}*/}
           </Grid>
-
           <Grid
             className="EventDetails-actions"
             justify="flex-start"
@@ -165,4 +152,4 @@ class EventDetails extends React.PureComponent<
   }
 }
 
-export default decorated(EventDetails)
+export default withRouter(decorated(EventDetails))

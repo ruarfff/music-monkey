@@ -64,8 +64,8 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
     const { anchorEl, pickedEvent } = this.state
     const { events, playlist } = this.props
 
-    const eventsWithTracks = events.filter((event) =>
-      event.playlist && event.playlist.tracks.items.length > 0
+    const eventsWithTracks = events.filter(
+      event => event.playlist && event.playlist.tracks.items.length > 0
     )
 
     return (
@@ -77,7 +77,7 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
           className="menuBtn"
           onClick={this.handleClick}
         >
-          { !isEmpty(pickedEvent) ? pickedEvent.name : 'Pick Event' }
+          {!isEmpty(pickedEvent) ? pickedEvent.name : 'Pick Event'}
         </span>
         <Menu
           id="simple-menu"
@@ -94,7 +94,11 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
                   </MenuItem>
                 )
               }
-              return <MenuItem key={index} onClick={this.handleClose()}>no events</MenuItem>
+              return (
+                <MenuItem key={index} onClick={this.handleClose()}>
+                  no events
+                </MenuItem>
+              )
             })}
         </Menu>
         <div className="listWrapper">
@@ -104,6 +108,7 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
                 <div key={i} className={'listItem'}>
                   <div className={'imgSection'}>
                     <img
+                      alt="track"
                       className={'trackImg'}
                       src={item.track.album.images[0].url}
                     />
