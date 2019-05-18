@@ -6,7 +6,7 @@
     "start": "NODE_ENV='development' REACT_APP_AUTH_SUFFIX='-local' react-scripts start",
     "start:local": "NODE_ENV='development' REACT_APP_AUTH_SUFFIX='-local-dev' REACT_APP_MM_API_URL='http://localhost:8080/api/v1' react-scripts start",
     "build": "NODE_ENV='production' react-scripts build",
-    "test": "react-scripts  test --env=jsdom --coverage --watchAll",
+    "test": "react-scripts  test --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "dependencies": {
