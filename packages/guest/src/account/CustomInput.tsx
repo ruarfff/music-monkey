@@ -1,54 +1,6 @@
-import { WithStyles } from '@material-ui/core/styles'
-import withStyles from '@material-ui/core/styles/withStyles'
 import TextField from '@material-ui/core/TextField/TextField'
 import * as React from 'react'
-
-export const decorate = withStyles(() => ({
-  input: {
-    fontSize: '24px',
-    borderRadius: '4px',
-    border: '1px solid #979797',
-    paddingLeft: '16px',
-    minHeight: '40px',
-    '&:hover:not($disabled):before': {
-      borderBottom: '1px solid #979797!important',
-    },
-    '&:before': {
-      content: 'none',
-    },
-    '&:after': {
-      content: 'none',
-    }
-  },
-  label: {
-    paddingLeft: '16px',
-    '&:hover:not($disabled):before': {
-      borderBottom: 'none!important',
-    },
-    paddingTop: '4px'
-  },
-  textArea: {
-    borderRadius: '4px',
-    border: '1px solid #979797',
-    paddingLeft: '16px',
-    minHeight: '240px',
-    '&:hover:not($disabled):before': {
-      borderBottom: '1px solid #979797!important',
-    },
-    '&:before': {
-      content: 'none',
-    },
-    '&:after': {
-      content: 'none',
-    }
-  },
-  formControl: {
-    margin: 0,
-  },
-  disabled: {
-
-  }
-}))
+import './CustomInput.scss'
 
 interface ICustomInputProps {
   value: string
@@ -57,25 +9,16 @@ interface ICustomInputProps {
   maxRows?: number
   error?: boolean
   errorLabel?: string
-  classes?: any
   onChange(value: string): void
 }
 
-class CustomInput extends React.Component<ICustomInputProps & WithStyles> {
+class CustomInput extends React.Component<ICustomInputProps> {
   public state = {
     touched: false
   }
 
   public render() {
-    const {
-      classes,
-      label,
-      placeholder,
-      maxRows,
-      value,
-      error,
-      errorLabel
-    } = this.props
+    const { label, placeholder, maxRows, value, error, errorLabel } = this.props
 
     const { touched } = this.state
 
@@ -93,13 +36,13 @@ class CustomInput extends React.Component<ICustomInputProps & WithStyles> {
         multiline={!!maxRows}
         value={value}
         onChange={this.handleChange}
-        className={classes.formControl}
+        className={'CustomInput-form-control'}
         InputProps={
           maxRows
-            ? { className: classes.textArea }
-            : { className: classes.input }
+            ? { className: 'CustomInput-text-area' }
+            : { className: 'CustomInput-input' }
         }
-        InputLabelProps={{ className: classes.label }}
+        InputLabelProps={{ className: 'CustomInput-label' }}
       />
     )
   }
@@ -113,4 +56,4 @@ class CustomInput extends React.Component<ICustomInputProps & WithStyles> {
   }
 }
 
-export default decorate(CustomInput)
+export default CustomInput

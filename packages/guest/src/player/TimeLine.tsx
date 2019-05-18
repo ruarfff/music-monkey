@@ -1,19 +1,6 @@
 import LinearProgress from '@material-ui/core/LinearProgress'
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import * as React from 'react'
-
-const decorate = withStyles(() => ({
-  progress: {
-    transition: '.2s linear',
-    cursor: 'pointer',
-    '& div': {
-      transition: 'transform 0.1s linear'
-    },
-    '&:hover': {
-      height: '8px'
-    }
-  }
-}))
+import './TimeLine.scss'
 
 interface ITimeLineProps {
   trackUrl: string
@@ -21,7 +8,7 @@ interface ITimeLineProps {
   handleTogglePlayer(): void
 }
 
-class TimeLine extends React.PureComponent<ITimeLineProps & WithStyles> {
+class TimeLine extends React.PureComponent<ITimeLineProps> {
   public state = {
     time: 0,
     touch: false
@@ -46,7 +33,7 @@ class TimeLine extends React.PureComponent<ITimeLineProps & WithStyles> {
     const { trackUrl } = this.props
     if (trackUrl !== newProps.trackUrl && newProps.trackUrl) {
       this.stopPlay()
-      this.setState({time: 0})
+      this.setState({ time: 0 })
       this.audio.src = newProps.trackUrl
       this.startPlay()
       if (!this.props.isPlay) {
@@ -61,12 +48,13 @@ class TimeLine extends React.PureComponent<ITimeLineProps & WithStyles> {
 
     if (!newProps.trackUrl) {
       this.stopPlay()
-      this.setState({time: 0})
+      this.setState({ time: 0 })
       this.audio.src = ''
     }
 
     if (
-      (!trackUrl && newProps.trackUrl) &&
+      !trackUrl &&
+      newProps.trackUrl &&
       trackUrl !== newProps.trackUrl &&
       this.props.isPlay
     ) {
@@ -85,13 +73,12 @@ class TimeLine extends React.PureComponent<ITimeLineProps & WithStyles> {
     delete this.audio
   }
 
-
   public render() {
     const { time } = this.state
 
     return (
       <LinearProgress
-        className={this.props.classes.progress}
+        className={'TimeLine-progress'}
         variant="determinate"
         value={time}
         onClick={this.onProgressClicked}
@@ -177,4 +164,4 @@ class TimeLine extends React.PureComponent<ITimeLineProps & WithStyles> {
   }
 }
 
-export default decorate(TimeLine)
+export default TimeLine

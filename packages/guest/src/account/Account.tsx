@@ -1,11 +1,9 @@
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import withStyles from '@material-ui/core/styles/withStyles'
-import { WithStyles } from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import * as _ from 'lodash'
+import _ from 'lodash'
 import * as React from 'react'
 import emailIcon from '../assets/email-icon.svg'
 import facebookIcon from '../assets/facebook.svg'
@@ -16,67 +14,14 @@ import IAction from '../IAction'
 import IUser from '../user/IUser'
 import EventInput from './CustomInput'
 import EditAvatar from './EditAvatar'
-
-const decorate = withStyles(() => ({
-  name: {
-    fontSize: '24px',
-    fontWight: '500'
-  },
-  avatarBlock: {
-    marginTop: '10px',
-    marginBottom: '10px'
-  },
-  avatarImg: {
-    width: '125px',
-    height: '125px'
-  },
-  title: {
-    fontSize: '26px',
-    lineHeight: '20px'
-  },
-  description: {
-    fontSize: '18px'
-  },
-  editButton: {
-    color: 'white',
-    maxWidth: '200px'
-  },
-  input: {
-    width: '300px',
-    maxHeight: '40px',
-    marginTop: '0!important',
-    marginLeft: '10px',
-    fontSize: '24px'
-  },
-  iconWrapper: {
-    height: '20px',
-    width: '20px'
-  },
-  itemRow: {
-    display: 'flex',
-    paddingLeft: '30px',
-    height: '60px',
-    marginBottom: '0px',
-    '&:last-child': {
-      paddingLeft: '0',
-      justifyContent: 'center'
-    }
-  },
-  item: {
-    minWidth: '200px',
-    display: 'flex',
-    alignItems: 'center'
-  }
-}))
+import './Account.scss'
 
 interface IAccountDetailsProps {
   user: IUser
   updateUserRequest(user: IUser): IAction
 }
 
-class AccountDetails extends React.Component<
-  IAccountDetailsProps & WithStyles
-> {
+class AccountDetails extends React.Component<IAccountDetailsProps> {
   public state = {
     isEdit: false,
     showAvatarEditor: false,
@@ -115,7 +60,7 @@ class AccountDetails extends React.Component<
 
   public render() {
     const { isEdit, showAvatarEditor } = this.state
-    const { user, classes } = this.props
+    const { user } = this.props
     return (
       <React.Fragment>
         {showAvatarEditor && (
@@ -128,7 +73,7 @@ class AccountDetails extends React.Component<
         <Grid item={true} md={12} container={true}>
           <Grid
             item={true}
-            className={classes.avatarBlock}
+            className={'Account-avatar-block'}
             container={true}
             direction={'column'}
             alignItems={'center'}
@@ -136,23 +81,29 @@ class AccountDetails extends React.Component<
             {user.image ? (
               <Avatar
                 onClick={this.toggleEditAvatarModal}
-                className={classes.avatarImg}
+                className={'Account-avatar-img'}
                 src={user.image}
               />
             ) : (
               <Avatar
                 onClick={this.toggleEditAvatarModal}
-                className={classes.avatarImg}
+                className={'Account-avatar-img'}
               >
-                <AccountCircle className={classes.avatarImg} />
+                <AccountCircle className={'Account-avatar-img'} />
               </Avatar>
             )}
-            <Typography className={classes.name}>{user.displayName}</Typography>
+            <Typography className={'Account-name'}>
+              {user.displayName}
+            </Typography>
           </Grid>
         </Grid>
 
         <Grid item={true} md={12} container={true} direction={'column'}>
-          <Typography align={'center'} className={classes.title} variant={'h6'}>
+          <Typography
+            align={'center'}
+            className={'Account-title'}
+            variant={'h6'}
+          >
             Contact Information
           </Typography>
           <Grid
@@ -160,13 +111,13 @@ class AccountDetails extends React.Component<
             container={true}
             direction={'row'}
             alignItems={'center'}
-            className={classes.itemRow}
+            className={'Account-item-row'}
           >
-            <Grid className={classes.item}>
-              <Grid className={classes.iconWrapper}>
+            <Grid className={'Account-item'}>
+              <Grid className={'Account-icon-wrapper'}>
                 <img alt="email" src={emailIcon} />
               </Grid>
-              <Grid className={classes.input}>
+              <Grid className={'Account-input'}>
                 {!isEdit ? (
                   user.email
                 ) : (
@@ -183,13 +134,13 @@ class AccountDetails extends React.Component<
             container={true}
             direction={'row'}
             alignItems={'center'}
-            className={classes.itemRow}
+            className={'Account-item-row'}
           >
-            <Grid className={classes.item}>
-              <Grid className={classes.iconWrapper}>
+            <Grid className={'Account-item'}>
+              <Grid className={'Account-icon-wrapper'}>
                 <img alt="phone" src={phoneIcon} />
               </Grid>
-              <Grid className={classes.input}>
+              <Grid className={'Account-input'}>
                 {!isEdit ? (
                   user.phone
                 ) : (
@@ -207,13 +158,13 @@ class AccountDetails extends React.Component<
             container={true}
             direction={'row'}
             alignItems={'center'}
-            className={classes.itemRow}
+            className={'Account-item-row'}
           >
-            <Grid className={classes.item}>
-              <Grid className={classes.iconWrapper}>
+            <Grid className={'Account-item'}>
+              <Grid className={'Account-icon-wrapper'}>
                 <img src={instagramIcon} alt="" />
               </Grid>
-              <Grid className={classes.input}>
+              <Grid className={'Account-input'}>
                 {!isEdit ? (
                   user.instagramId
                 ) : (
@@ -230,13 +181,13 @@ class AccountDetails extends React.Component<
             container={true}
             direction={'row'}
             alignItems={'center'}
-            className={classes.itemRow}
+            className={'Account-item-row'}
           >
-            <Grid className={classes.item}>
-              <Grid className={classes.iconWrapper}>
+            <Grid className={'Account-item'}>
+              <Grid className={'Account-icon-wrapper'}>
                 <img src={facebookIcon} alt="" />
               </Grid>
-              <Grid className={classes.input}>
+              <Grid className={'Account-input'}>
                 {!isEdit ? (
                   user.facebookId
                 ) : (
@@ -253,13 +204,13 @@ class AccountDetails extends React.Component<
             container={true}
             direction={'row'}
             alignItems={'center'}
-            className={classes.itemRow}
+            className={'Account-item-row'}
           >
-            <Grid className={classes.item}>
-              <Grid className={classes.iconWrapper}>
+            <Grid className={'Account-item'}>
+              <Grid className={'Account-icon-wrapper'}>
                 <img src={twitterIcon} alt="" />
               </Grid>
-              <Grid className={classes.input}>
+              <Grid className={'Account-input'}>
                 {!isEdit ? (
                   user.twitterId
                 ) : (
@@ -276,13 +227,13 @@ class AccountDetails extends React.Component<
             container={true}
             direction={'row'}
             alignItems={'center'}
-            className={classes.itemRow}
+            className={'Account-item-row'}
           >
             {!this.state.isEdit ? (
               <Button
                 variant="contained"
                 color="secondary"
-                className={classes.editButton}
+                className={'Account-edit-button'}
                 onClick={this.editDetails}
               >
                 EDIT CONTACT DETAILS
@@ -291,7 +242,7 @@ class AccountDetails extends React.Component<
               <Button
                 variant="contained"
                 color="secondary"
-                className={classes.editButton}
+                className={'Account-edit-button'}
                 onClick={this.editDetails}
               >
                 SAVE
@@ -323,4 +274,4 @@ class AccountDetails extends React.Component<
   }
 }
 
-export default decorate(AccountDetails)
+export default AccountDetails

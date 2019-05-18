@@ -1,0 +1,10 @@
+.TimeLine-progress {
+  transition: 0.2s linear;
+  cursor: pointer;
+  & div {
+    transition: transform 0.1s linear;
+  }
+  &:hover {
+    height: 8px;
+  }
+}
