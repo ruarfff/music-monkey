@@ -36,9 +36,11 @@ class App extends React.PureComponent<IAppProps> {
             <Provider store={store}>
               <ConnectedRouter history={history}>
                 <CookiesProvider>
-                  <AuthLoader>
-                    <Routes history={history} />
-                  </AuthLoader>
+                  <React.StrictMode>
+                    <AuthLoader>
+                      <Routes history={history} />
+                    </AuthLoader>
+                  </React.StrictMode>
                 </CookiesProvider>
               </ConnectedRouter>
             </Provider>
