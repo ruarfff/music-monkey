@@ -4,7 +4,7 @@ describe('parsePlaylistUrl', () => {
   const sampleUrl =
     'https://open.spotify.com/user/1155695100/playlist/2Vb5zquQt3uuCO8or2grou'
 
-  it('should return undefinied if url cannot be parsed', () => {
+  it('should return undefined if url cannot be parsed', () => {
     expect(parsePlaylistUrl('')).toBeUndefined()
   })
 
@@ -16,7 +16,8 @@ describe('parsePlaylistUrl', () => {
   })
 
   it('should handle url decoding', () => {
-    const encodedUrl = 'https://open.spotify.com/user/willpmartin%21/playlists/6ADJbaA9dAJ88VvjuQoZPt'
+    const encodedUrl =
+      'https://open.spotify.com/user/willpmartin%21/playlists/6ADJbaA9dAJ88VvjuQoZPt'
     expect(parsePlaylistUrl(encodedUrl)).toEqual({
       userName: 'willpmartin!',
       playlistId: '6ADJbaA9dAJ88VvjuQoZPt'
