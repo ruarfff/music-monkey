@@ -14,12 +14,6 @@ import { Link } from 'react-router-dom'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
-import {
-  subscribeToPlaylistModified,
-  subscribeToVotesModified,
-  unSubscribeToPlaylistModified,
-  unSubscribeToVotesModified
-} from '../../notification'
 import PlayerContainer from '../../player/PlayerContainer'
 import PlayerPlaylistContainer from '../../player/PlayerPlaylistContainer'
 import IDecoratedSuggestion from '../../suggestion/IDecoratedSuggestion'
@@ -81,29 +75,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     if (isEmpty(votes) && !this.props.fetchingVotes) {
       fetchEventVotes(eventId)
     }
-
     getSuggestions(eventId)
-    subscribeToVotesModified(eventId, () => {
-      fetchEventVotes(eventId)
-    })
-  }
-
-  public componentWillReceiveProps(newProps: IPlayListProps) {
-    const { getEvent } = this.props
-
-    const eventId = this.props.match.params.eventId
-
-    if (!isEmpty(newProps.event)) {
-      subscribeToPlaylistModified(newProps.event.playlist.id, () =>
-        getEvent(eventId)
-      )
-    }
-  }
-
-  public componentWillUnmount() {
-    const eventId = this.props.match.params.eventId
-    unSubscribeToVotesModified(eventId)
-    unSubscribeToPlaylistModified(eventId)
   }
 
   public renderApprovedTracks = (selectedPlaylist: any) => {

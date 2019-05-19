@@ -6,31 +6,64 @@
 import { useEffect } from 'react'
 import {
   subscribeToSuggestionsModified,
-  unSubscribeToSuggestionsModified
+  unSubscribeToSuggestionsModified,
+  subscribeToRSVPModified,
+  unSubscribeToRSVPModified,
+  unSubscribeToVotesModified,
+  subscribeToVotesModified,
+  unSubscribeToPlaylistModified,
+  unSubscribeToEventUpdated,
+  subscribeToEventUpdated,
+  subscribeToPlaylistModified
 } from '../notification'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
-import { getEvent } from '../event/eventActions'
 
 interface ISubscriptionWrapper {
   event: IEvent
   children: any
   getEvent(eventId: string): IAction
+  fetchEventVotes(eventId: string): IAction
 }
 
-const SubscriptionWrapper = ({ event, children }: ISubscriptionWrapper) => {
+export default ({
+  event,
+  children,
+  getEvent,
+  fetchEventVotes
+}: ISubscriptionWrapper) => {
   useEffect(() => {
     const eventId = event ? event.eventId : ''
+    const playlistId = event && event.playlist ? event.playlist.id : ''
+
     subscribeToSuggestionsModified(eventId, () => {
+      getEvent(eventId)
+    })
+
+    subscribeToRSVPModified(eventId, () => {
+      getEvent(eventId)
+    })
+
+    subscribeToVotesModified(eventId, () => {
+      fetchEventVotes(eventId)
+    })
+
+    subscribeToPlaylistModified(playlistId, () => {
+      getEvent(eventId)
+    })
+
+    subscribeToEventUpdated(eventId, () => {
       getEvent(eventId)
     })
 
     return () => {
       unSubscribeToSuggestionsModified(eventId)
+      unSubscribeToRSVPModified(eventId)
+      unSubscribeToVotesModified(eventId)
+      unSubscribeToPlaylistModified(playlistId)
+      unSubscribeToEventUpdated(eventId)
     }
-  }, [event])
+  }, [event, fetchEventVotes, getEvent])
 
   return children
 }
-
-export default SubscriptionWrapper

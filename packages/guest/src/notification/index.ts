@@ -26,7 +26,16 @@ export const subscribeToSuggestionsModified = (
   }
 }
 
-export const onGuestUpdate = (eventId: string, callback: any) => {
+export const unSubscribeToSuggestionsModified = (eventId: string) => {
+  try {
+    pusher.unsubscribe('mm-suggestions-' + eventId)
+    subscribedToSuggestions = ''
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const subscribeToRSVPModified = (eventId: string, callback: any) => {
   if (!subscribedToGuestUpdate) {
     const channel = pusher.subscribe('mm-rsvps-' + eventId)
     channel.bind('rsvp-saved', callback)
@@ -35,12 +44,10 @@ export const onGuestUpdate = (eventId: string, callback: any) => {
   }
 }
 
-export const unSubscribeToSuggestionsModified = (eventId: string) => {
-  try {
-    pusher.unsubscribe('mm-suggestions-' + eventId)
-    subscribedToSuggestions = ''
-  } catch (err) {
-    console.log(err)
+export const unSubscribeToRSVPModified = (eventId: string) => {
+  if (!subscribedToGuestUpdate) {
+    pusher.unsubscribe('mm-rsvps-' + eventId)
+    subscribedToGuestUpdate = false
   }
 }
 

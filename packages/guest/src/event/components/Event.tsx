@@ -15,13 +15,6 @@ import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import IAction from '../../IAction'
 import LoadingSpinner from '../../loading/LoadingSpinner'
-import {
-  onGuestUpdate,
-  subscribeToPlaylistModified,
-  subscribeToVotesModified,
-  unSubscribeToPlaylistModified,
-  unSubscribeToVotesModified
-} from '../../notification'
 import IRsvp from '../../rsvp/IRsvp'
 import { ProfileImage } from '../../topbar/ProfileImage'
 import IUser from '../../user/IUser'
@@ -80,7 +73,6 @@ export default ({
 
   useEffect(() => {
     if (eventId) {
-      onGuestUpdate(eventId, getEvent(eventId))
       fetchUsersEvents()
     }
   }, [eventId, fetchUsersEvents, getEvent])
@@ -143,28 +135,8 @@ export default ({
     if (isEmpty(votes) && !fetchingVotes) {
       fetchEventVotes(eventId)
     }
-    subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
-
-    return function cleanup() {
-      unSubscribeToVotesModified(eventId)
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId])
-
-  //handlePlaylist
-  useEffect(() => {
-    if (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)) {
-      subscribeToPlaylistModified(selectedEvent.playlist.id, () =>
-        getEvent(eventId)
-      )
-    }
-
-    return function cleanup() {
-      if (!isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)) {
-        unSubscribeToPlaylistModified(selectedEvent.playlist.id)
-      }
-    }
-  }, [eventId, getEvent, selectedEvent])
 
   // handleEventResponse
   useEffect(() => {

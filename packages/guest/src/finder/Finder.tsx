@@ -7,10 +7,6 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
-import {
-  subscribeToEventUpdated,
-  unSubscribeToEventUpdated
-} from '../notification'
 import IPlaylist from '../playlist/IPlaylist'
 import Search from '../search/SearchContainer'
 import IPlaylistSuggestion from '../suggestion/IPlaylistSuggestion'
@@ -73,20 +69,6 @@ const Finder = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
-
-  useEffect(() => {
-    if (!isEmpty(selectedEvent)) {
-      subscribeToEventUpdated(selectedEvent.eventId, () =>
-        getEvent(selectedEvent.eventId)
-      )
-
-      return () => {
-        unSubscribeToEventUpdated(selectedEvent.eventId)
-      }
-    } else {
-      return
-    }
-  })
 
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
