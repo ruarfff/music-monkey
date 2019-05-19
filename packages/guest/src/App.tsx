@@ -13,6 +13,7 @@ import './App.scss'
 import AuthLoader from './auth/AuthLoaderContainer'
 import { Routes } from './routes'
 import theme from './theme/theme'
+import SubscriptionWrapper from './subscriptions/SubscriptionWrapperContainer'
 
 const generateClassName = createGenerateClassName()
 const jss: any = create(jssPreset())
@@ -36,11 +37,11 @@ class App extends React.PureComponent<IAppProps> {
             <Provider store={store}>
               <ConnectedRouter history={history}>
                 <CookiesProvider>
-                  <React.StrictMode>
-                    <AuthLoader>
+                  <AuthLoader>
+                    <SubscriptionWrapper>
                       <Routes history={history} />
-                    </AuthLoader>
-                  </React.StrictMode>
+                    </SubscriptionWrapper>
+                  </AuthLoader>
                 </CookiesProvider>
               </ConnectedRouter>
             </Provider>

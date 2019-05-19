@@ -16,10 +16,8 @@ import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
 import {
   subscribeToPlaylistModified,
-  subscribeToSuggestionsModified,
   subscribeToVotesModified,
   unSubscribeToPlaylistModified,
-  unSubscribeToSuggestionsModified,
   unSubscribeToVotesModified
 } from '../../notification'
 import PlayerContainer from '../../player/PlayerContainer'
@@ -85,11 +83,13 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     }
 
     getSuggestions(eventId)
-    subscribeToVotesModified(eventId, () => fetchEventVotes(eventId))
+    subscribeToVotesModified(eventId, () => {
+      fetchEventVotes(eventId)
+    })
   }
 
   public componentWillReceiveProps(newProps: IPlayListProps) {
-    const { getEvent, getSuggestions } = this.props
+    const { getEvent } = this.props
 
     const eventId = this.props.match.params.eventId
 
@@ -97,15 +97,11 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
       subscribeToPlaylistModified(newProps.event.playlist.id, () =>
         getEvent(eventId)
       )
-      subscribeToSuggestionsModified(newProps.event.eventId, () =>
-        getSuggestions(eventId)
-      )
     }
   }
 
   public componentWillUnmount() {
     const eventId = this.props.match.params.eventId
-    unSubscribeToSuggestionsModified(eventId)
     unSubscribeToVotesModified(eventId)
     unSubscribeToPlaylistModified(eventId)
   }

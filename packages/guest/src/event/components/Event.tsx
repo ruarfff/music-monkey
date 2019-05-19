@@ -18,10 +18,8 @@ import LoadingSpinner from '../../loading/LoadingSpinner'
 import {
   onGuestUpdate,
   subscribeToPlaylistModified,
-  subscribeToSuggestionsModified,
   subscribeToVotesModified,
   unSubscribeToPlaylistModified,
-  unSubscribeToSuggestionsModified,
   unSubscribeToVotesModified
 } from '../../notification'
 import IRsvp from '../../rsvp/IRsvp'
@@ -150,15 +148,8 @@ export default ({
     return function cleanup() {
       unSubscribeToVotesModified(eventId)
     }
-  }, [eventId, fetchEventVotes, fetchingVotes, votes])
-
-  // handleSuggestions
-  useEffect(() => {
-    subscribeToSuggestionsModified(eventId, () => getEvent(eventId))
-    return function cleanup() {
-      unSubscribeToSuggestionsModified(eventId)
-    }
-  }, [eventId, getEvent])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventId])
 
   //handlePlaylist
   useEffect(() => {

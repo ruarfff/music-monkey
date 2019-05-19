@@ -28,12 +28,12 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
       const voteStatus = votes.get(trackId)
       if (voteStatus && voteStatus.votedByCurrentUser) {
         this.props.deleteVote(`${trackId}:${eventId}:${user.userId}`)
-        setTimeout(
-          () =>
+        setTimeout(() => {
+          return (
             this.props.event &&
-            this.props.fetchEventVotes(this.props.event.eventId),
-          200
-        )
+            this.props.fetchEventVotes(this.props.event.eventId)
+          )
+        }, 200)
         return
       }
     }

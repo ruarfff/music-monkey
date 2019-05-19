@@ -86,11 +86,7 @@ export const unSubscribeToPlaylistModified = (playlistId: string) => {
   }
 }
 
-
-export const subscribeToEventUpdated = (
-  eventId: string,
-  callback: any
-) => {
+export const subscribeToEventUpdated = (eventId: string, callback: any) => {
   if (subscribedToEvent !== eventId) {
     const channel = pusher.subscribe('mm-events-' + eventId)
 
