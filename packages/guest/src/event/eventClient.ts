@@ -14,18 +14,6 @@ export const getEventById = async (eventId: string) => {
   }
 }
 
-export const getEventByInviteId = async (inviteId: string) => {
-  const response = await client.get('/invites/' + inviteId + '/event', {
-    withCredentials: true
-  })
-  const event = response.data
-  return {
-    ...event,
-    endDateTime: moment(event.endDateTime),
-    startDateTime: moment(event.startDateTime)
-  }
-}
-
 export const getUsersInvitedEvents = async () => {
   const response = await client.get('/users/invited/events', {
     withCredentials: true

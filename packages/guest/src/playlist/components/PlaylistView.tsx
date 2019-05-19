@@ -4,7 +4,7 @@ import IUser from '../../user/IUser'
 import IPlaylist from '../IPlaylist'
 import './Playlist.scss'
 import PlaylistsSimpleList from './PlaylistsSimpleList'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 interface IPlaylistViewProps {
   user: IUser
@@ -13,7 +13,6 @@ interface IPlaylistViewProps {
   eventsLoading: boolean
   selectPlaylist(playlist: IPlaylist): IAction
   onPlaylistSelected(playlist: IPlaylist): any
-  fetchUsersEvents(): IAction
 }
 
 const onPlaylistSelected = () => ({} as IAction)
@@ -23,13 +22,8 @@ const PlaylistView = ({
   events,
   user,
   eventsLoading,
-  selectPlaylist,
-  fetchUsersEvents
+  selectPlaylist
 }: IPlaylistViewProps) => {
-  useEffect(() => {
-    fetchUsersEvents()
-  }, [fetchUsersEvents])
-
   return (
     <PlaylistsSimpleList
       events={events}

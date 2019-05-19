@@ -6,7 +6,6 @@ import {
 } from '../playlist/playlistActions'
 import { getUserById } from '../user/userClient'
 import {
-  EVENT_FETCH_BY_INVITE_ID_INITIATED,
   EVENT_FETCH_ERROR,
   EVENT_FETCH_INITIATED,
   EVENT_FETCHED,
@@ -17,11 +16,7 @@ import {
   GET_EVENT_HOST_REQUEST,
   GET_EVENT_HOST_SUCCESS
 } from './eventActions'
-import {
-  getEventById,
-  getEventByInviteId,
-  getUsersInvitedEvents
-} from './eventClient'
+import { getEventById, getUsersInvitedEvents } from './eventClient'
 
 function* fetchEventHostByIdFlow(action: IAction) {
   const userId = action.payload
@@ -33,22 +28,8 @@ function* fetchEventHostByIdFlow(action: IAction) {
   }
 }
 
-function* fetchEventByInviteIdFLow(action: IAction) {
-  const inviteId: string = action.payload
-  try {
-    const event = yield call(getEventByInviteId, inviteId)
-    yield put({ type: EVENT_FETCHED, payload: event })
-  } catch (err) {
-    yield put({ type: EVENT_FETCH_ERROR, payload: err })
-  }
-}
-
 export function* watchFetchEventHostByIdFlow() {
   yield takeEvery(GET_EVENT_HOST_REQUEST, fetchEventHostByIdFlow)
-}
-
-export function* watchFetchEventByInviteId() {
-  yield takeEvery(EVENT_FETCH_BY_INVITE_ID_INITIATED, fetchEventByInviteIdFLow)
 }
 
 function* fetchEventFlow(action: IAction) {

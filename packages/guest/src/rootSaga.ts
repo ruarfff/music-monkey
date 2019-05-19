@@ -8,7 +8,6 @@ import {
 } from './auth/authSaga'
 import {
   watchFetchEvent,
-  watchFetchEventByInviteId,
   watchFetchEventHostByIdFlow,
   watchFetchUsersEvents
 } from './event/eventSaga'
@@ -46,7 +45,6 @@ export default function* rootSaga() {
     watchFetchRecommendation(),
     watchSearch(),
     watchFetchEvent(),
-    watchFetchEventByInviteId(),
     watchSavePlaylistSuggestion(),
     watchLogout(),
     watchSignUp(),

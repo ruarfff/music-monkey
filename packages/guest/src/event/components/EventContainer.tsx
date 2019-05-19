@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import IRootState from '../../rootState'
 import { fetchOrCreateRsvp, updateRsvp } from '../../rsvp/rsvpActions'
 import { createVote, deleteVote, fetchEventVotes } from '../../vote/voteActions'
-import { fetchUsersEvents, getEvent } from '../eventActions'
+import { getEvent } from '../eventActions'
 import Event from './Event'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -12,7 +12,8 @@ const mapStateToProps = (state: IRootState) => ({
   selectedEvent: state.event.selectedEvent,
   inviteId: state.invite.inviteId,
   inviteEvent: state.invite.event,
-  eventLoading: state.event.eventLoading
+  eventLoading: state.event.eventLoading,
+  fetchingRsvp: state.rsvp.fetchingRsvp
 })
 
 const mapDispatchToProps = {
@@ -21,8 +22,7 @@ const mapDispatchToProps = {
   updateRsvp,
   createVote,
   deleteVote,
-  fetchEventVotes,
-  fetchUsersEvents,
+  fetchEventVotes
 }
 
 const EventContainer = connect(

@@ -5,10 +5,6 @@ import {
   selectPlaylist
 } from '../../navigation/activeActions'
 import IRootState from '../../rootState'
-import {
-  fetchUsersEvents,
-  getEvent
-} from '../eventActions'
 import EventListView from './EventListView'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -21,10 +17,8 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   selectPage,
-  getEvent,
   selectEvent,
-  selectPlaylist,
-  fetchUsersEvents
+  selectPlaylist
 }
 
 const EventListViewContainer = connect(

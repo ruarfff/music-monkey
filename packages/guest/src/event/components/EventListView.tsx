@@ -11,8 +11,7 @@ import IUser from '../../user/IUser'
 import IEvent from '../IEvent'
 import EventList from './EventList'
 import './EventListView.scss'
-
-const React = require('react')
+import React from 'react'
 
 interface IEventListViewProps {
   user: IUser
@@ -22,7 +21,6 @@ interface IEventListViewProps {
   selectPage(value: string): IAction
   selectEvent(event: IEvent): IAction
   selectPlaylist(playlist: IPlaylist): IAction
-  fetchUsersEvents(): IAction
 }
 
 const EventListView = ({
@@ -30,8 +28,7 @@ const EventListView = ({
   selectedEvent,
   eventsLoading,
   selectPlaylist,
-  selectEvent,
-  fetchUsersEvents
+  selectEvent
 }: IEventListViewProps) => {
   const [redirect, setRedirect] = useState(false)
   const [inviteId, setInviteId] = useState('')
@@ -55,22 +52,6 @@ const EventListView = ({
     console.log('Invite Answered', inviteAnswered)
     console.log(redirect)
   }, [inviteAnswered, inviteId, redirect])
-
-  useEffect(() => {
-    if (!!events) {
-      const shouldFetchEvent = !events.filter(
-        event =>
-          !isEmpty(selectedEvent) && event.eventId === selectedEvent.eventId
-      ).length
-      if (
-        !isEmpty(selectedEvent) &&
-        selectedEvent.eventId &&
-        shouldFetchEvent
-      ) {
-        fetchUsersEvents()
-      }
-    }
-  }, [events, fetchUsersEvents, selectedEvent])
 
   if (redirect && inviteId) {
     console.log('REDIRECTING')

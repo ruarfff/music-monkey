@@ -12,6 +12,7 @@ import suggestion from './suggestion/suggestionReducer'
 import track from './track/trackReducer'
 import user from './user/userReducer'
 import vote from './vote/voteReducer'
+import rsvp from './rsvp/rsvpReducer'
 
 export default (history: History) =>
   combineReducers({
@@ -22,6 +23,7 @@ export default (history: History) =>
     invite,
     playlist,
     recommendation,
+    rsvp,
     search,
     suggestion,
     track,

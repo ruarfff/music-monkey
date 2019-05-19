@@ -37,11 +37,11 @@ interface IEventProps {
   eventLoading: boolean
   votes: Map<string, ITrackVoteStatus>
   fetchingVotes: boolean
+  fetchingRsvp: boolean
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
   fetchEventVotes(eventId: string): IAction
   getEvent(eventId: string): IAction
-  fetchUsersEvents(): IAction
   fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
   updateRsvp(rsvp: IRsvp): IAction
 }
@@ -56,26 +56,21 @@ export default ({
   eventLoading,
   votes,
   fetchingVotes,
-  fetchUsersEvents,
   createVote,
   deleteVote,
   fetchEventVotes,
   getEvent,
   fetchOrCreateRsvp,
   updateRsvp,
-  match
+  match,
+  fetchingRsvp
 }: IEventProps & RouteComponentProps<any>) => {
   const eventId = match.params.eventId
+  const userId = user ? user.userId : ''
   const [tabIndex, setTabIndex] = useState(0)
   const [selected, selectOption] = useState('you going?')
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
   const isOpen = Boolean(menuLink)
-
-  useEffect(() => {
-    if (eventId) {
-      fetchUsersEvents()
-    }
-  }, [eventId, fetchUsersEvents, getEvent])
 
   const userRsvp =
     selectedEvent &&
@@ -88,7 +83,8 @@ export default ({
     if (isEmpty(userRsvp) && eventId && !eventLoading) {
       getEvent(eventId)
     }
-  }, [eventId, eventLoading, getEvent, userRsvp])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventId, eventLoading, userRsvp])
 
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
@@ -100,7 +96,7 @@ export default ({
       : ([] as IEventGuest[])
 
     const rsvp = guests.map((guest: IEventGuest) => {
-      if (guest.rsvp.userId === user.userId) {
+      if (guest.rsvp.userId === userId) {
         guest.rsvp.status = option
         return guest.rsvp
       }
@@ -120,15 +116,12 @@ export default ({
       !isEmpty(inviteId) &&
       eventId === inviteEvent.eventId
     ) {
-      fetchOrCreateRsvp(inviteId, user.userId, eventId)
+      if (!fetchingRsvp) {
+        fetchOrCreateRsvp(inviteId, userId, eventId)
+      }
     }
-  })
-
-  // handleSelectEvent
-  useEffect(() => {
-    getEvent(eventId)
-    // TODO: Always getting event as a bit of a hack since event doesn't update in background when not in view.
-  }, [eventId, getEvent])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inviteEvent])
 
   // handleVotes
   useEffect(() => {
@@ -142,15 +135,12 @@ export default ({
   useEffect(() => {
     if (!isEmpty(selectedEvent) && selected === 'you going?') {
       selectedEvent.guests.forEach((guest: any) => {
-        if (
-          guest.rsvp.userId === user.userId &&
-          guest.rsvp.status !== 'Pending'
-        ) {
+        if (guest.rsvp.userId === userId && guest.rsvp.status !== 'Pending') {
           selectOption(guest.rsvp.status)
         }
       })
     }
-  }, [selected, selectedEvent, user.userId])
+  }, [selected, selectedEvent, userId])
 
   if (isEmpty(selectedEvent)) {
     return <LoadingSpinner />

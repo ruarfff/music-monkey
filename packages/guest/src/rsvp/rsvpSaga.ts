@@ -1,5 +1,4 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-// import { FETCH_USERS_EVENTS } from '../event/eventActions'
 import IAction from '../IAction'
 import {
   FETCH_OR_CREATE_RSVP_FAILURE,
@@ -10,6 +9,8 @@ import {
   UPDATE_RSVP_SUCCESS
 } from './rsvpActions'
 import { fetchRsvpByInviteAndUser, rsvpInvite, updateRsvp } from './rsvpClient'
+import { getUsersInvitedEvents } from '../event/eventClient'
+import { FETCH_USERS_EVENTS_SUCCESS } from '../event/eventActions'
 
 interface IRsvpArgs {
   inviteId: string
@@ -37,8 +38,8 @@ function* fetchOrCreateRsvpFlow({ payload }: IAction) {
       rsvp = createRsvp(payload)
     }
     yield put({ type: FETCH_OR_CREATE_RSVP_SUCCESS, payload: rsvp })
-
-    // yield put({ type: FETCH_USERS_EVENTS })
+    const events = yield call(getUsersInvitedEvents)
+    yield put({ type: FETCH_USERS_EVENTS_SUCCESS, payload: events })
   } catch (err) {
     console.error(err)
     yield put({ type: FETCH_OR_CREATE_RSVP_FAILURE, payload: err })
@@ -48,9 +49,9 @@ function* fetchOrCreateRsvpFlow({ payload }: IAction) {
 function* fetchUpdateRsvp({ payload }: IAction) {
   try {
     yield call(updateRsvp, payload)
-    yield put({ type: UPDATE_RSVP_SUCCESS, payload})
+    yield put({ type: UPDATE_RSVP_SUCCESS, payload })
   } catch (err) {
-    yield put({ type: UPDATE_RSVP_FAILURE})
+    yield put({ type: UPDATE_RSVP_FAILURE })
     console.log(err)
   }
 }

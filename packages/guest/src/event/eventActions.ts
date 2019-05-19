@@ -40,11 +40,6 @@ export const getEvent = (eventId: string): IAction => ({
   type: EVENT_FETCH_INITIATED
 })
 
-export const getEventByInviteId = (inviteId: string): IAction => ({
-  payload: inviteId,
-  type: EVENT_FETCH_BY_INVITE_ID_INITIATED
-})
-
 export const selectSuggestion = (track: ITrack): IAction => ({
   payload: track,
   type: EVENT_SUGGESTION_SELECTED

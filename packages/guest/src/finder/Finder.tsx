@@ -68,7 +68,7 @@ const Finder = ({
       getEvent(selectedEvent.eventId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [user, selectedEvent])
 
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 

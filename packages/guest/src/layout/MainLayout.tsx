@@ -5,11 +5,8 @@ import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import { RouteWithSubRoutes } from '../routes'
 import TopBar from '../topbar/TopBarContainer'
-
 import './MainLayout.scss'
-
-const React = require('react')
-const { useEffect } = React
+import React, { useEffect } from 'react'
 
 interface IMainLayoutProps extends RouteComponentProps<any> {
   routes: Route[]
@@ -28,7 +25,8 @@ const MainLayout = ({
     if (isEmpty(events) && isAuthenticated) {
       fetchUsersEvents()
     }
-  }, [events, fetchUsersEvents, isAuthenticated])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated])
 
   return (
     <div className="MainLayout-root">
