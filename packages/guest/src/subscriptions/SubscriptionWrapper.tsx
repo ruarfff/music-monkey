@@ -15,7 +15,7 @@ import {
   unSubscribeToEventUpdated,
   subscribeToEventUpdated,
   subscribeToPlaylistModified
-} from '../notification'
+} from './pusherGateway'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 
