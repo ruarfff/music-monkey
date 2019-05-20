@@ -55,7 +55,7 @@
     "@types/google-map-react": "^0.23.10",
     "@types/googlemaps": "^3.30.16",
     "@types/history": "^4.7.2",
-    "@types/jest": "24.0.12",
+    "@types/jest": "24.0.13",
     "@types/jquery": "^3.3.22",
     "@types/jss": "^9.5.7",
     "@types/lodash": "^4.14.119",
