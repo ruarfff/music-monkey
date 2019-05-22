@@ -16,7 +16,6 @@ import eventIcon from '../assets/monkey_logo.png'
 import NotificationPopup from '../components/NotificationPopup/NotificationPopup'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
-import { onRsvpSaved } from '../notification'
 import {
   INotification,
   INotificationState
@@ -103,14 +102,8 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
     this.handleGetNotifications()
   }
 
-  public componentWillUpdate() {
-    const { user } = this.props
-    onRsvpSaved(user.userId, () => this.handleGetNotifications())
-  }
-
   public handleGetNotifications = () => {
     const { user, getNotifications } = this.props
-
     getNotifications(user.userId)
   }
 
@@ -171,7 +164,7 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
 
     const profilePic = (
       <div className={classes.profile}>
-        {((location !== '/create-event') && (location !== '/')) && (
+        {location !== '/create-event' && location !== '/' && (
           <Link to="/create-event" className="Home-create-event-link">
             <Button
               variant="contained"

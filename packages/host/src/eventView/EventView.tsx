@@ -13,11 +13,6 @@ import EventFetchError from '../event/EventFetchError'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import LoadingSpinner from '../loading/LoadingSpinner'
-import {
-  onGuestUpdate,
-  subscribeToSuggestionsAccepted,
-  subscribeToVotesModified
-} from '../notification'
 import EventGuests from './components/Guests/EventGuestsContainer'
 import EventPlaylistView from './components/Playlist/EventPlaylistViewContainer'
 import EventSummaryView from './components/Summary/EventSummaryViewContainer'
@@ -95,19 +90,6 @@ class EventView extends React.Component<
       this.props.fetchEventVotes(eventId)
       this.props.getEventSuggestions(eventId)
     }
-  }
-
-  public componentWillUpdate() {
-    const eventId = this.props.match.params.eventId
-    subscribeToSuggestionsAccepted(eventId, () => {
-      if (this.props.event.settings.autoAcceptSuggestionsEnabled) {
-        this.props.getEventById(eventId)
-      } else {
-        this.props.getEventSuggestions(eventId)
-      }
-    })
-    subscribeToVotesModified(eventId, this.handleEventVotesModified)
-    onGuestUpdate(eventId, this.handleUpdateGuests)
   }
 
   public render() {
@@ -191,27 +173,6 @@ class EventView extends React.Component<
 
   private handleTabChange = (event: any, index: number) => {
     this.setState({ tabIndex: index })
-  }
-
-  private handleUpdateGuests = () => {
-    const eventId = this.props.match.params.eventId
-    if (eventId) {
-      this.props.getEventById(eventId)
-    }
-  }
-
-  private handleEventVotesModified = () => {
-    const eventId = this.props.match.params.eventId
-    const { event } = this.props
-    console.log('Handling vote modified')
-    if (eventId) {
-      console.log('Fetching votes for ' + eventId)
-      this.props.fetchEventVotes(eventId)
-    }
-    if (!isEmpty(event) && event.settings.dynamicVotingEnabled) {
-      console.log('Fetching votes for ' + eventId + ' using no loading method')
-      this.props.getEventByIdNoLoading(eventId)
-    }
   }
 }
 

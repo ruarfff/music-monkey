@@ -13,8 +13,8 @@ import { Provider } from 'react-redux'
 import { Store } from 'redux'
 import './App.scss'
 import { Routes } from './routes'
-
 import theme from './theme/theme'
+import SubscriptionWrapper from './subscriptions/SubscriptionWrapperContainer'
 
 const generateClassName = createGenerateClassName()
 const jss: any = create(jssPreset())
@@ -39,7 +39,9 @@ class App extends React.PureComponent<IAppProps> {
               <Provider store={store}>
                 <ConnectedRouter history={history}>
                   <CookiesProvider>
-                    <Routes history={history} />
+                    <SubscriptionWrapper>
+                      <Routes history={history} />
+                    </SubscriptionWrapper>
                   </CookiesProvider>
                 </ConnectedRouter>
               </Provider>

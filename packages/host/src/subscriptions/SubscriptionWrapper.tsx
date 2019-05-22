@@ -1,0 +1,80 @@
+/**
+ * All subscriptions are setup here.
+ * Subscriptions are listening for asynchronous events sent from the backend.
+ * Actions are sent to here to update app state. No inner components are aware of this.
+ */
+import { useEffect } from 'react'
+import {
+  subscribeToSuggestionsModified,
+  unSubscribeToSuggestionsModified,
+  subscribeToRSVPModified,
+  unSubscribeToRSVPModified,
+  unSubscribeToVotesModified,
+  subscribeToVotesModified,
+  unSubscribeToNotificationsUpdated,
+  subscribeToNotificationsUpdated
+} from './pusherGateway'
+import IEvent from '../event/IEvent'
+import IAction from '../IAction'
+import IUser from '../user/IUser'
+import { getNotifications } from '../notification/notificationActions'
+
+interface ISubscriptionWrapper {
+  event: IEvent
+  user: IUser
+  children: any
+  getEventByIdNoLoading(eventId: string): IAction
+  fetchEventVotes(eventId: string): IAction
+  getEventSuggestions(eventId: string): IAction
+}
+
+export default ({
+  event,
+  user,
+  children,
+  getEventByIdNoLoading,
+  fetchEventVotes,
+  getEventSuggestions
+}: ISubscriptionWrapper) => {
+  useEffect(() => {
+    const eventId = event && event.eventId ? event.eventId : ''
+    const userId = user.userId
+    const autoAcceptSuggestionsEnabled =
+      event && event.settings && event.settings.autoAcceptSuggestionsEnabled
+    const dynamicVotingEnabled =
+      event && event.settings && event.settings.dynamicVotingEnabled
+
+    subscribeToSuggestionsModified(eventId, () => {
+      if (autoAcceptSuggestionsEnabled) {
+        getEventByIdNoLoading(eventId)
+      } else {
+        getEventSuggestions(eventId)
+      }
+    })
+
+    subscribeToRSVPModified(eventId, () => {
+      getEventByIdNoLoading(eventId)
+    })
+
+    subscribeToVotesModified(eventId, () => {
+      fetchEventVotes(eventId)
+      if (dynamicVotingEnabled) {
+        getEventByIdNoLoading(eventId)
+      }
+    })
+
+    subscribeToNotificationsUpdated(userId, () => {
+      getNotifications(userId)
+    })
+
+    return () => {
+      unSubscribeToSuggestionsModified(eventId)
+      unSubscribeToRSVPModified(eventId)
+      unSubscribeToVotesModified(eventId)
+      unSubscribeToNotificationsUpdated(eventId)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [event])
+
+  return children
+}
