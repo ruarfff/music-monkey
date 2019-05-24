@@ -63,7 +63,8 @@ export default ({
       unSubscribeToPlaylistModified(playlistId)
       unSubscribeToEventUpdated(eventId)
     }
-  }, [event, fetchEventVotes, getEvent])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [event])
 
   return children
 }
