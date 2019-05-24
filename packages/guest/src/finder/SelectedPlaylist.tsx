@@ -6,8 +6,7 @@ import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistItem from '../playlist/IPlaylistItem'
 import ITrack from '../track/ITrack'
 import TrackList from '../track/TrackList'
-
-const React = require('react')
+import React from 'react'
 
 interface ISelectedPlaylistProps {
   playlist: IPlaylist
@@ -24,7 +23,7 @@ const SelectedPlaylist = ({
     <div>
       <div className="finder-playlist-header">
         <div className="finder-playlist-img">
-          <img src={Images.Playlist} />
+          <img alt="playlist" src={Images.Playlist} />
         </div>
         <div className="finder-playlist-container">
           <div className="finder-playlist-container-top">
