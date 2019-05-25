@@ -13,7 +13,7 @@ import {
   EVENT_SAVING_RESET,
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
-  EVENTS_FETCHED,
+  EVENTS_FETCHED
 } from './eventActions'
 import initialState from './eventInitialState'
 import events from './eventReducer'
@@ -92,7 +92,7 @@ describe('eventReducer', () => {
       })
     })
 
-    it('should hande EVENT_IMAGE_UPLOADED', () => {
+    it('should handle EVENT_IMAGE_UPLOADED', () => {
       expect(
         events(initialState, {
           type: EVENT_IMAGE_UPLOADED,
@@ -103,7 +103,11 @@ describe('eventReducer', () => {
         })
       ).toEqual({
         ...initialState,
-        savingEvent: { ...initialState.savingEvent, imageUrl: 'image_url', dataUrl: 'data_url' }
+        savingEvent: {
+          ...initialState.savingEvent,
+          imageUrl: 'image_url',
+          dataUrl: 'data_url'
+        }
       })
     })
 
@@ -160,7 +164,7 @@ describe('eventReducer', () => {
         events(
           {
             ...initialState,
-            savingEvent: { ...initialState.savingEvent, name: 'whataname' },
+            savingEvent: { ...initialState.savingEvent, name: 'what-a-name' },
             showSavedDialogue: true
           },
           {
