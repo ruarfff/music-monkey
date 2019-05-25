@@ -58,18 +58,24 @@ const Finder = ({
   selectPlaylist,
   savePlaylistSuggestion,
   getEvent,
-  fetchMorePlaylists
+  fetchMorePlaylists,
+  match
 }: IFinderProps) => {
+  const eventId = match.params.eventId
+
   useEffect(() => {
     if (!isEmpty(user) && isEmpty(userPlaylists)) {
       fetchPlaylists(user)
     }
-    if (!isEmpty(selectedEvent)) {
-      getEvent(selectedEvent.eventId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
+
+  useEffect(() => {
+    if (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) {
+      getEvent(eventId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, selectedEvent])
-
+  }, [eventId])
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
   const onTrackSelected = (track: ITrack) => {
