@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { getEvent } from '../../event/eventActions'
 import IRootState from '../../rootState'
 import {
   getSuggestions,
@@ -9,6 +8,7 @@ import { deselectTrack, selectTrack } from '../../track/trackActions'
 import { createVote, deleteVote, fetchEventVotes } from '../../vote/voteActions'
 import { onPlaylistSelected } from '../playlistActions'
 import PlaylistDetailed from './PlaylistDetailed'
+import { setEventId } from '../../event/eventActions'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
@@ -31,8 +31,8 @@ const mapDispatchToProps = {
   onPlaylistSelected,
   deselectTrack,
   getSuggestions,
-  getEvent,
-  getUsersSuggestions
+  getUsersSuggestions,
+  setEventId
 }
 
 const PlaylistDetailedContainer = connect(

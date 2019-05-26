@@ -17,7 +17,6 @@ import './EventList.scss'
 
 interface IEventListProps {
   events: IEvent[]
-  selectEvent(event: IEvent): IAction
   selectPlaylist(playlist: IPlaylist): IAction
 }
 
@@ -67,14 +66,6 @@ export default class EventList extends React.PureComponent<IEventListProps> {
     )
   }
 
-  private handleSelectEvent = (event: IEvent) => () => {
-    this.props.selectEvent(event)
-    this.props.selectPlaylist({
-      ...event.playlist,
-      eventId: event.eventId
-    })
-  }
-
   private renderEvents = (events: IEvent[], status: string) => {
     const listLink = (to: string) => ({ innerRef, ...props }: any) => (
       <Link {...props} to={to} />
@@ -83,11 +74,7 @@ export default class EventList extends React.PureComponent<IEventListProps> {
     return (
       <React.Fragment>
         {events.map((event, index) => (
-          <div
-            className="EventList-item"
-            key={index + status}
-            onClick={this.handleSelectEvent(event)}
-          >
+          <div className="EventList-item" key={index + status}>
             <ListItem component={listLink('/events/' + event.eventId)}>
               <img
                 alt={event.name}

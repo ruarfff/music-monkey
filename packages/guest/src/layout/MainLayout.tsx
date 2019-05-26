@@ -11,15 +11,23 @@ import React, { useEffect } from 'react'
 interface IMainLayoutProps extends RouteComponentProps<any> {
   routes: Route[]
   events: IEvent[]
+  eventId: string
+  selectedEvent: IEvent
   isAuthenticated: boolean
+  eventLoading: boolean
   fetchUsersEvents(): IAction
+  getEvent(eventId: string): IAction
 }
 
 const MainLayout = ({
   routes,
   events,
+  eventId,
+  selectedEvent,
   isAuthenticated,
-  fetchUsersEvents
+  fetchUsersEvents,
+  getEvent,
+  eventLoading
 }: IMainLayoutProps) => {
   useEffect(() => {
     if (isEmpty(events) && isAuthenticated) {
@@ -27,6 +35,19 @@ const MainLayout = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
+
+  useEffect(() => {
+    console.log('EVENT_ID: ' + eventId)
+    if (isAuthenticated && eventId && !eventLoading) {
+      console.log('Got to getEvent 1: ' + eventId)
+      if (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) {
+        console.log('Got to getEvent 2: ' + eventId)
+        getEvent(eventId)
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventId, isAuthenticated])
 
   return (
     <div className="MainLayout-root">

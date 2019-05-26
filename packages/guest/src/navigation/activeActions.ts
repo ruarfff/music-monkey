@@ -1,4 +1,3 @@
-import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 
@@ -7,11 +6,6 @@ export const SELECT_PAGE = 'SELECT_PAGE'
 export const CLEAR_PLAYLIST = 'CLEAR_PLAYLIST'
 export const SELECT_PLAYLIST = 'SELECT_PLAYLIST'
 export const SHOW_FINDER_MODAL_EVENT = 'showFinderModalEvent'
-
-export const selectEvent = (event: IEvent): IAction => ({
-  payload: event,
-  type: SELECT_EVENT
-})
 
 export const selectPage = (page: string): IAction => ({
   payload: page,

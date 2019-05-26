@@ -7,5 +7,6 @@ export default {
   events: [],
   eventsLoading: false,
   eventLoading: false,
-  selectedSuggestion: undefined
+  selectedSuggestion: undefined,
+  eventId: ''
 } as IEventState

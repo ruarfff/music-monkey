@@ -41,9 +41,9 @@ interface IEventProps {
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
   fetchEventVotes(eventId: string): IAction
-  getEvent(eventId: string): IAction
   fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
   updateRsvp(rsvp: IRsvp): IAction
+  setEventId(eventId: string): IAction
 }
 
 const options = ["I'm Going", 'Maybe', "I'm not going"]
@@ -53,13 +53,12 @@ export default ({
   selectedEvent,
   inviteId,
   inviteEvent,
-  eventLoading,
+  setEventId,
   votes,
   fetchingVotes,
   createVote,
   deleteVote,
   fetchEventVotes,
-  getEvent,
   fetchOrCreateRsvp,
   updateRsvp,
   match,
@@ -71,20 +70,6 @@ export default ({
   const [selected, selectOption] = useState('you going?')
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
   const isOpen = Boolean(menuLink)
-
-  const userRsvp =
-    selectedEvent &&
-    selectedEvent.guests &&
-    selectedEvent.guests.filter(
-      (guest: IEventGuest) => guest.user.userId === user.userId
-    )[0]
-
-  useEffect(() => {
-    if (isEmpty(userRsvp) && eventId && !eventLoading) {
-      getEvent(eventId)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId, eventLoading, userRsvp])
 
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
@@ -125,6 +110,7 @@ export default ({
 
   // handleVotes
   useEffect(() => {
+    if (eventId) setEventId(eventId)
     if (isEmpty(votes) && !fetchingVotes) {
       fetchEventVotes(eventId)
     }

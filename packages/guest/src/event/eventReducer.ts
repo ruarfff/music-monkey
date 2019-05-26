@@ -14,7 +14,7 @@ import {
   FETCH_USERS_EVENTS,
   FETCH_USERS_EVENTS_ERROR,
   FETCH_USERS_EVENTS_SUCCESS,
-  GET_EVENT_HOST_SUCCESS,
+  EVENT_ID_SET
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
@@ -25,21 +25,13 @@ export default function event(
   { type, payload }: Action
 ) {
   switch (type) {
-    case GET_EVENT_HOST_SUCCESS:
-      return {
-        ...state,
-        selectedEvent: {
-          ...state.selectedEvent,
-          hostData: payload.data
-        }
-      }
     case DESELECT_EVENT:
       return {
         ...state,
         selectedEvent: {} as IEvent
       }
     case UPDATE_RSVP_SUCCESS:
-      const updatedGuests = cloneDeep(state.selectedEvent.guests).map((guest) => {
+      const updatedGuests = cloneDeep(state.selectedEvent.guests).map(guest => {
         if (payload.userId === guest.user.userId) {
           guest.rsvp.status = payload.status
         }
@@ -89,10 +81,11 @@ export default function event(
       } as IEventState
     case FETCH_USERS_EVENTS:
       return {
+        ...state,
         eventsLoading: true
       } as IEventState
     case FETCH_USERS_EVENTS_ERROR:
-      return { eventsLoading: false } as IEventState
+      return { ...state, eventsLoading: false } as IEventState
     case FETCH_USERS_EVENTS_SUCCESS:
       return {
         ...state,
@@ -103,6 +96,11 @@ export default function event(
       return {
         ...state,
         selectedEvent: payload
+      }
+    case EVENT_ID_SET:
+      return {
+        ...state,
+        eventId: payload
       }
     default:
       return state

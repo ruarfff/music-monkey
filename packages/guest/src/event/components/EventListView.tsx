@@ -17,18 +17,14 @@ interface IEventListViewProps {
   user: IUser
   events: IEvent[]
   eventsLoading: boolean
-  selectedEvent: IEvent
   selectPage(value: string): IAction
-  selectEvent(event: IEvent): IAction
   selectPlaylist(playlist: IPlaylist): IAction
 }
 
 const EventListView = ({
   events,
-  selectedEvent,
   eventsLoading,
-  selectPlaylist,
-  selectEvent
+  selectPlaylist
 }: IEventListViewProps) => {
   const [redirect, setRedirect] = useState(false)
   const [inviteId, setInviteId] = useState('')
@@ -74,11 +70,7 @@ const EventListView = ({
 
   return (
     <div>
-      <EventList
-        selectPlaylist={selectPlaylist}
-        selectEvent={selectEvent}
-        events={events}
-      />
+      <EventList selectPlaylist={selectPlaylist} events={events} />
     </div>
   )
 }

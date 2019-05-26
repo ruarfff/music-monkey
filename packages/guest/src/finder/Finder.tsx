@@ -33,14 +33,13 @@ interface IFinderProps extends RouteComponentProps<any> {
   searching: boolean
   searchResults: ITrack[]
   selectedUserPlaylist: IPlaylist
-  selectEvent(event: IEvent): IAction
   deselectEvent(): IAction
   saveTrackSuggestion(suggestions: ITrackSuggestion): IAction
   fetchPlaylists(user: IUser): IAction
   selectPlaylist(playlist: IPlaylist): IAction
   savePlaylistSuggestion(suggestions: IPlaylistSuggestion): IAction
-  getEvent(eventId: string): IAction
   fetchMorePlaylists(user: IUser): IAction
+  setEventId(eventId: string): IAction
 }
 
 const Finder = ({
@@ -51,18 +50,20 @@ const Finder = ({
   selectedUserPlaylist,
   searching,
   searchResults,
-  selectEvent,
   deselectEvent,
   saveTrackSuggestion,
   fetchPlaylists,
   selectPlaylist,
   savePlaylistSuggestion,
-  getEvent,
   fetchMorePlaylists,
+  setEventId,
   match
 }: IFinderProps) => {
   const eventId = match.params.eventId
-
+  useEffect(() => {
+    if (eventId) setEventId(eventId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventId])
   useEffect(() => {
     if (!isEmpty(user) && isEmpty(userPlaylists)) {
       fetchPlaylists(user)
@@ -70,12 +71,6 @@ const Finder = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
-  useEffect(() => {
-    if (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) {
-      getEvent(eventId)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId])
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
   const onTrackSelected = (track: ITrack) => {
@@ -137,11 +132,7 @@ const Finder = ({
   return (
     <div>
       {isEmpty(selectedEvent) && !isEmpty(sortedEvents) && (
-        <EventPicker
-          isFinder={true}
-          events={sortedEvents}
-          onSelectEvent={selectEvent}
-        />
+        <EventPicker isFinder={true} events={sortedEvents} />
       )}
       <Search />
       {(searching || !isEmpty(filteredSearch)) && (

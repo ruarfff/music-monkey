@@ -15,16 +15,14 @@ import './EventPicker.scss'
 interface IEventPickerProps {
   isFinder: boolean
   events: IEvent[]
-  onSelectEvent(event: IEvent): any
 }
 
 interface IEventListProps {
   events: IEvent[]
   isFinder: boolean
-  onSelectEvent(event: IEvent): any
 }
 
-const EventList = ({ isFinder, events, onSelectEvent }: IEventListProps) => (
+const EventList = ({ isFinder, events }: IEventListProps) => (
   <List>
     {events.map((event, index) => (
       <Link
@@ -32,7 +30,7 @@ const EventList = ({ isFinder, events, onSelectEvent }: IEventListProps) => (
         key={index}
       >
         <div className="EventPicker-item">
-          <ListItem button={true} onClick={onSelectEvent(event)}>
+          <ListItem button={true}>
             <img
               alt={event.name}
               src={event.imageUrl || '/img/partycover-sm.png'}
@@ -54,15 +52,7 @@ const EventList = ({ isFinder, events, onSelectEvent }: IEventListProps) => (
   </List>
 )
 
-const EventPicker = ({
-  events,
-  onSelectEvent,
-  isFinder
-}: IEventPickerProps) => {
-  const handleEventSelected = (event: IEvent) => () => {
-    onSelectEvent(event)
-  }
-
+const EventPicker = ({ events, isFinder }: IEventPickerProps) => {
   return (
     <Dialog open={true}>
       <div className="EventPicker-modal">
@@ -70,11 +60,7 @@ const EventPicker = ({
           Select Event for Requests
         </DialogTitle>
         <div className="EventPicker-events">
-          <EventList
-            isFinder={isFinder}
-            events={events}
-            onSelectEvent={handleEventSelected}
-          />
+          <EventList isFinder={isFinder} events={events} />
         </div>
       </div>
     </Dialog>

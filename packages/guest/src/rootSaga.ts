@@ -6,11 +6,7 @@ import {
   watchLogout,
   watchSignUp
 } from './auth/authSaga'
-import {
-  watchFetchEvent,
-  watchFetchEventHostByIdFlow,
-  watchFetchUsersEvents
-} from './event/eventSaga'
+import { watchFetchEvent, watchFetchUsersEvents } from './event/eventSaga'
 import { watchFetchInvite } from './invite/inviteSaga'
 import {
   watchFetchMorePlaylistsFlow,
@@ -58,7 +54,6 @@ export default function* rootSaga() {
     watchFetchInvite(),
     watchUpdateUserFlow(),
     watchFetchUpdateRsvp(),
-    watchFetchEventHostByIdFlow(),
     watchFetchMorePlaylistsFlow()
   ])
 }

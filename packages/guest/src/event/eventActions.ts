@@ -1,6 +1,5 @@
 import IAction from '../IAction'
 import ITrack from '../track/ITrack'
-import IEvent from './IEvent'
 
 export const DESELECT_EVENT = 'DESELECT_EVENT'
 export const EVENT_SELECTED = 'EVENT_SELECTED'
@@ -17,22 +16,15 @@ export const FETCH_USERS_EVENTS = 'FETCH_USERS_EVENTS'
 export const FETCH_USERS_EVENTS_SUCCESS = 'FETCH_USERS_EVENTS_SUCCESS'
 export const FETCH_USERS_EVENTS_ERROR = 'FETCH_USERS_EVENTS_ERROR'
 
-export const GET_EVENT_HOST_REQUEST = 'GET_EVENT_HOST_REQUEST'
-export const GET_EVENT_HOST_SUCCESS = 'GET_EVENT_HOST_SUCCESS'
-export const GET_EVENT_HOST_FAILURE = 'GET_EVENT_HOST_FAILURE'
+export const EVENT_ID_SET = 'EVENT_ID_SET'
 
-export const getEventHost = (userId: string): IAction => ({
-  type: GET_EVENT_HOST_REQUEST,
-  payload: userId
+export const setEventId = (eventId: string): IAction => ({
+  payload: eventId,
+  type: EVENT_ID_SET
 })
 
 export const deselectEvent = (): IAction => ({
   type: DESELECT_EVENT
-})
-
-export const selectEvent = (event: IEvent): IAction => ({
-  payload: event,
-  type: EVENT_SELECTED
 })
 
 export const getEvent = (eventId: string): IAction => ({

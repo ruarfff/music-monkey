@@ -26,6 +26,7 @@ import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import IVote from '../../vote/IVote'
 import IPlaylist from '../IPlaylist'
 import './Playlist.scss'
+import { setEventId } from '../../event/eventActions'
 
 interface IPlayListProps extends RouteComponentProps<any> {
   user: IUser
@@ -45,7 +46,7 @@ interface IPlayListProps extends RouteComponentProps<any> {
   onPlaylistSelected(playlist: IPlaylist): IAction
   deselectTrack(): IAction
   getSuggestions(eventId: string): IAction
-  getEvent(eventId: string): IAction
+  setEventId(eventId: string): IAction
 }
 
 export default class PlaylistDetailed extends React.Component<IPlayListProps> {
@@ -57,21 +58,10 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
   }
 
   public componentDidMount() {
-    const {
-      event,
-      votes,
-      getSuggestions,
-      eventLoading,
-      fetchEventVotes,
-      getEvent
-    } = this.props
+    const { votes, getSuggestions, fetchEventVotes } = this.props
 
     const eventId = this.props.match.params.eventId
-
-    if (isEmpty(event) && !eventLoading) {
-      getEvent(eventId)
-    }
-
+    if (eventId) setEventId(eventId)
     if (isEmpty(votes) && !this.props.fetchingVotes) {
       fetchEventVotes(eventId)
     }

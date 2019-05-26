@@ -21,9 +21,8 @@ interface IRequestsProps extends RouteComponentProps<any> {
   user: IUser
   suggestion: ISuggestionState
   getUsersSuggestions(eventId: string): IAction
-  selectEvent(event: IEvent): IAction
   deselectEvent(): IAction
-  getEvent(eventId: string): IAction
+  setEventId(eventId: string): IAction
 }
 
 class Requests extends React.Component<IRequestsProps> {
@@ -32,15 +31,12 @@ class Requests extends React.Component<IRequestsProps> {
   }
 
   public componentDidMount() {
+    this.props.setEventId(this.props.match.params.eventId)
     if (
       !isEmpty(this.props.event) &&
       !this.props.suggestion.fetchingSuggestions
     ) {
       this.props.getUsersSuggestions(this.props.event.eventId)
-    }
-    const eventId = this.props.match.params.eventId
-    if (eventId) {
-      this.props.getEvent(eventId)
     }
   }
 
@@ -71,7 +67,7 @@ class Requests extends React.Component<IRequestsProps> {
 
   public render() {
     const { value } = this.state
-    const { suggestion, event, events, selectEvent, deselectEvent } = this.props
+    const { suggestion, event, events, deselectEvent } = this.props
 
     const now = moment()
 
@@ -104,11 +100,7 @@ class Requests extends React.Component<IRequestsProps> {
       tabs = (
         <div>
           {isEmpty(event) && !isEmpty(sortedEvents) && (
-            <EventPicker
-              isFinder={false}
-              events={sortedEvents}
-              onSelectEvent={selectEvent}
-            />
+            <EventPicker isFinder={false} events={sortedEvents} />
           )}
           {!isEmpty(event) && (
             <SelectedEvent event={event} deselectEvent={deselectEvent} />

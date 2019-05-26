@@ -1,9 +1,5 @@
 import { connect } from 'react-redux'
-import {
-  selectEvent,
-  selectPage,
-  selectPlaylist
-} from '../../navigation/activeActions'
+import { selectPage, selectPlaylist } from '../../navigation/activeActions'
 import IRootState from '../../rootState'
 import EventListView from './EventListView'
 
@@ -17,7 +13,6 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   selectPage,
-  selectEvent,
   selectPlaylist
 }
 
