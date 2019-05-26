@@ -2,10 +2,8 @@ import { Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { useEffect, useState } from 'react'
 import { Redirect } from 'react-router'
-import IAction from '../../IAction'
 import { inviteAnsweredKey, inviteIdKey } from '../../invite/inviteConstants'
 import LoadingSpinner from '../../loading/LoadingSpinner'
-import IPlaylist from '../../playlist/IPlaylist'
 import localStorage from '../../storage/localStorage'
 import IUser from '../../user/IUser'
 import IEvent from '../IEvent'
@@ -16,15 +14,18 @@ import React from 'react'
 interface IEventListViewProps {
   user: IUser
   events: IEvent[]
+  pastEvents: IEvent[]
+  liveEvents: IEvent[]
+  upcomingEvents: IEvent[]
   eventsLoading: boolean
-  selectPage(value: string): IAction
-  selectPlaylist(playlist: IPlaylist): IAction
 }
 
 const EventListView = ({
   events,
   eventsLoading,
-  selectPlaylist
+  pastEvents,
+  liveEvents,
+  upcomingEvents
 }: IEventListViewProps) => {
   const [redirect, setRedirect] = useState(false)
   const [inviteId, setInviteId] = useState('')
@@ -69,9 +70,11 @@ const EventListView = ({
   }
 
   return (
-    <div>
-      <EventList selectPlaylist={selectPlaylist} events={events} />
-    </div>
+    <EventList
+      pastEvents={pastEvents}
+      upcomingEvents={upcomingEvents}
+      liveEvents={liveEvents}
+    />
   )
 }
 

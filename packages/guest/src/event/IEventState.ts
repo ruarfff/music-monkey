@@ -6,6 +6,9 @@ export default interface IEventState {
   eventId: string
   selectedEvent: IEvent
   events: IEvent[]
+  pastEvents: IEvent[]
+  upcomingEvents: IEvent[]
+  liveEvents: IEvent[]
   eventsLoading: boolean
   eventLoading: boolean
   selectedSuggestion?: ISelectedSuggestion

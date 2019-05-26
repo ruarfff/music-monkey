@@ -1,6 +1,5 @@
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
-import { isEmpty, sortBy } from 'lodash'
-import moment from 'moment'
+import { isEmpty } from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
@@ -50,13 +49,6 @@ class Requests extends React.Component<IRequestsProps> {
     }
   }
 
-  public handleSuggestionNotification = () => {
-    const eventId = this.props.event.eventId
-    if (eventId && !this.props.suggestion.fetchingSuggestions) {
-      this.props.getUsersSuggestions(eventId)
-    }
-  }
-
   public handleChange = (event: any, value: any) => {
     this.setState({ value })
   }
@@ -67,39 +59,14 @@ class Requests extends React.Component<IRequestsProps> {
 
   public render() {
     const { value } = this.state
-    const { suggestion, event, events, deselectEvent } = this.props
-
-    const now = moment()
-
-    let sortedEvents = [] as IEvent[]
-
-    if (!isEmpty(events)) {
-      const pastEvents = sortBy(
-        events.filter(e => now.isAfter(e.endDateTime)),
-        'endDateTime'
-      ).reverse()
-
-      const liveEvents = sortBy(
-        events.filter(
-          e => now.isAfter(e.startDateTime) && now.isBefore(e.endDateTime)
-        ),
-        'endDateTime'
-      ).reverse()
-
-      const upcomingEvents = sortBy(
-        events.filter(e => now.isBefore(e.startDateTime)),
-        'endDateTime'
-      ).reverse()
-
-      sortedEvents = upcomingEvents.concat(liveEvents, pastEvents)
-    }
+    const { suggestion, event, deselectEvent } = this.props
 
     let tabs = <div />
 
     if (!suggestion.fetchingSuggestions) {
       tabs = (
         <div>
-          {isEmpty(event) && !isEmpty(sortedEvents) && <EventPicker />}
+          {isEmpty(event) && <EventPicker />}
           {!isEmpty(event) && (
             <SelectedEvent event={event} deselectEvent={deselectEvent} />
           )}

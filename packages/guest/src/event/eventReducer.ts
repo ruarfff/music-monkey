@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash'
 import Action from '../IAction'
+import moment from 'moment'
 import { UPDATE_RSVP_SUCCESS } from '../rsvp/rsvpActions'
 import {
   DESELECT_EVENT,
@@ -19,6 +20,7 @@ import {
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
 import IEventState from './IEventState'
+import { sortBy } from 'lodash'
 
 export default function event(
   state: IEventState = initialState,
@@ -61,6 +63,9 @@ export default function event(
         ...state,
         selectedEvent: {} as IEvent,
         events: [],
+        pastEvents: [],
+        upcomingEvents: [],
+        liveEvents: [],
         eventLoading: false
       } as IEventState
     case EVENT_FETCH_ERROR:
@@ -86,12 +91,31 @@ export default function event(
       } as IEventState
     case FETCH_USERS_EVENTS_ERROR:
       return { ...state, eventsLoading: false } as IEventState
-    case FETCH_USERS_EVENTS_SUCCESS:
+    case FETCH_USERS_EVENTS_SUCCESS: {
+      const events: IEvent[] = sortBy(payload || [], 'endDateTime').reverse()
+      const now = moment()
       return {
         ...state,
-        events: payload,
-        eventsLoading: false
+        events,
+        eventsLoading: false,
+        pastEvents: sortBy(
+          events.filter(event => now.isAfter(event.endDateTime)),
+          'endDateTime'
+        ).reverse(),
+        liveEvents: sortBy(
+          events.filter(
+            event =>
+              now.isAfter(event.startDateTime) &&
+              now.isBefore(event.endDateTime)
+          ),
+          'endDateTime'
+        ).reverse(),
+        upcomingEvents: sortBy(
+          events.filter(event => now.isBefore(event.startDateTime)),
+          'endDateTime'
+        ).reverse()
       } as IEventState
+    }
     case EVENT_SELECTED:
       return {
         ...state,
