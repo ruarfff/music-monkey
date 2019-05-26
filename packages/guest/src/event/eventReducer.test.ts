@@ -94,7 +94,11 @@ describe('eventReducer', () => {
         type: EVENT_SELECTED,
         payload: { eventId: 'event-id' }
       })
-    ).toEqual({ ...initialState, selectedEvent: { eventId: 'event-id' } })
+    ).toEqual({
+      ...initialState,
+      selectedEvent: { eventId: 'event-id' },
+      eventId: 'event-id'
+    })
   })
 
   it('should handle EVENT_ID_SET', () => {

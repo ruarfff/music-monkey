@@ -1,5 +1,6 @@
 import IAction from '../IAction'
 import ITrack from '../track/ITrack'
+import IEvent from './IEvent'
 
 export const DESELECT_EVENT = 'DESELECT_EVENT'
 export const EVENT_SELECTED = 'EVENT_SELECTED'
@@ -21,6 +22,11 @@ export const EVENT_ID_SET = 'EVENT_ID_SET'
 export const setEventId = (eventId: string): IAction => ({
   payload: eventId,
   type: EVENT_ID_SET
+})
+
+export const selectEvent = (event: IEvent): IAction => ({
+  payload: event,
+  type: EVENT_SELECTED
 })
 
 export const deselectEvent = (): IAction => ({

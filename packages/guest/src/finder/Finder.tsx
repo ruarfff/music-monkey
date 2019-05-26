@@ -14,7 +14,7 @@ import ITrackSuggestion from '../suggestion/ITrackSuggestion'
 import ITrack from '../track/ITrack'
 import IUser from '../user/IUser'
 import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
-import EventPicker from './EventPicker'
+import EventPicker from '../event/components/EventPickerContainer'
 import './Finder.scss'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
@@ -131,9 +131,7 @@ const Finder = ({
 
   return (
     <div>
-      {isEmpty(selectedEvent) && !isEmpty(sortedEvents) && (
-        <EventPicker isFinder={true} events={sortedEvents} />
-      )}
+      {isEmpty(selectedEvent) && !isEmpty(sortedEvents) && <EventPicker />}
       <Search />
       {(searching || !isEmpty(filteredSearch)) && (
         <SearchResults

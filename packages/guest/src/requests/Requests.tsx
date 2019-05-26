@@ -5,7 +5,7 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../event/IEvent'
-import EventPicker from '../finder/EventPicker'
+import EventPicker from '../event/components/EventPickerContainer'
 import SelectedEvent from '../finder/SelectedEvent'
 import IAction from '../IAction'
 import ISuggestionState from '../suggestion/ISuggestionState'
@@ -99,9 +99,7 @@ class Requests extends React.Component<IRequestsProps> {
     if (!suggestion.fetchingSuggestions) {
       tabs = (
         <div>
-          {isEmpty(event) && !isEmpty(sortedEvents) && (
-            <EventPicker isFinder={false} events={sortedEvents} />
-          )}
+          {isEmpty(event) && !isEmpty(sortedEvents) && <EventPicker />}
           {!isEmpty(event) && (
             <SelectedEvent event={event} deselectEvent={deselectEvent} />
           )}

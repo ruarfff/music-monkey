@@ -95,7 +95,8 @@ export default function event(
     case EVENT_SELECTED:
       return {
         ...state,
-        selectedEvent: payload
+        selectedEvent: payload,
+        eventId: payload.eventId
       }
     case EVENT_ID_SET:
       return {
