@@ -56,6 +56,7 @@ export default function event(
       return {
         ...state,
         selectedEvent: payload,
+        eventId: payload.eventId,
         eventLoading: false
       } as IEventState
     case EVENT_CLEAR:
