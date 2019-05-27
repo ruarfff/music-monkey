@@ -10,6 +10,7 @@ import IEvent from '../IEvent'
 import EventList from './EventList'
 import './EventListView.scss'
 import React from 'react'
+import IAction from '../../IAction';
 
 interface IEventListViewProps {
   user: IUser
@@ -18,6 +19,7 @@ interface IEventListViewProps {
   liveEvents: IEvent[]
   upcomingEvents: IEvent[]
   eventsLoading: boolean
+  selectEvent(event: IEvent): IAction
 }
 
 const EventListView = ({
@@ -25,7 +27,8 @@ const EventListView = ({
   eventsLoading,
   pastEvents,
   liveEvents,
-  upcomingEvents
+  upcomingEvents,
+  selectEvent
 }: IEventListViewProps) => {
   const [redirect, setRedirect] = useState(false)
   const [inviteId, setInviteId] = useState('')
@@ -74,6 +77,7 @@ const EventListView = ({
       pastEvents={pastEvents}
       upcomingEvents={upcomingEvents}
       liveEvents={liveEvents}
+      onEventSelected={selectEvent}
     />
   )
 }

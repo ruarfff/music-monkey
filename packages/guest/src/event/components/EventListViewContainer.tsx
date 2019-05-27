@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import IRootState from '../../rootState'
 import EventListView from './EventListView'
+import {selectEvent} from '../eventActions'
 
 const mapStateToProps = ({ event, user }: IRootState) => ({
   user: user.data,
@@ -11,7 +12,7 @@ const mapStateToProps = ({ event, user }: IRootState) => ({
   upcomingEvents: event.upcomingEvents
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {selectEvent}
 
 const EventListViewContainer = connect(
   mapStateToProps,
