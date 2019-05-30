@@ -1,8 +1,5 @@
 import {
   AppBar,
-  Button,
-  Icon,
-  ListItemText,
   Tab,
   Tabs,
   Typography
@@ -10,7 +7,6 @@ import {
 import { isEmpty } from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import { Link } from 'react-router-dom'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
@@ -18,15 +14,15 @@ import PlayerContainer from '../../player/PlayerContainer'
 import PlayerPlaylistContainer from '../../player/PlayerPlaylistContainer'
 import IDecoratedSuggestion from '../../suggestion/IDecoratedSuggestion'
 import ITrack from '../../track/ITrack'
-import TrackList from '../../track/TrackList'
 import MaybeTracks from '../../trackView/MaybeTracksContainer'
 import IUser from '../../user/IUser'
-import { formatDuration } from '../../util/formatDuration'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import IVote from '../../vote/IVote'
 import IPlaylist from '../IPlaylist'
 import './Playlist.scss'
 import { setEventId } from '../../event/eventActions'
+import ApprovedTracks from './ApprovedTracks';
+import PlaylistWithPlayer from './PlaylistWithPlayer';
 
 interface IPlayListProps extends RouteComponentProps<any> {
   user: IUser
@@ -68,92 +64,15 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     getSuggestions(eventId)
   }
 
-  public renderApprovedTracks = (selectedPlaylist: any) => {
-    return (
-      <TrackList
-        tracks={
-          selectedPlaylist.tracks &&
-          selectedPlaylist.tracks.items.map((s: any) => s.track)
-        }
-        withSuggestingEnabled={false}
-        onTrackSelected={this.handleTrackSelected}
-        withVoting={true}
-        votes={this.props.votes}
-        onVote={this.handleTrackVote}
-      />
-    )
-  }
-
-  public renderPlaylistDetails = () => {
-    const { selectedPlaylist } = this.props
-
-    let durationSeconds = 0
-    if (
-      !isEmpty(selectedPlaylist) &&
-      selectedPlaylist.tracks.items.length > 0
-    ) {
-      durationSeconds = selectedPlaylist.tracks.items
-        .map(item => item.track.duration_ms)
-        .reduce((acc, dur) => acc + dur)
-    }
-
-    return (
-      <div className="playlist-header">
-        <div className="playlist-header-top-menu">
-          <Link to={'/playlists'}>
-            <Icon>chevron_left</Icon>
-          </Link>
-        </div>
-        <div className="playlist-content">
-          <div className="playlist-content-img">
-            <img
-              alt="playlist"
-              src={
-                (selectedPlaylist.images.length > 0 &&
-                  selectedPlaylist.images[0].url) ||
-                ''
-              }
-            />
-          </div>
-          <div className="playlist-content-title-block">
-            <ListItemText
-              className="playlist-content-title"
-              primary={selectedPlaylist.name}
-            />
-            <div className="playlist-content-title-length">
-              <div>
-                <span className="playlist-content-title-songs">
-                  {`Total time: ${formatDuration(durationSeconds)}`}
-                </span>
-                <br />
-                <span className="playlist-content-title-songs">
-                  {`${selectedPlaylist.tracks &&
-                    selectedPlaylist.tracks.total} Songs`}
-                </span>
-              </div>
-
-              <Button
-                variant="fab"
-                color="primary"
-                className="finder-playlist-header-container-button"
-                onClick={this.onPlayClicked}
-              >
-                <Icon>{'play_arrow'}</Icon>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   public render() {
     const { showPlayer, value, showPlayerPlaylist } = this.state
     const { selectedPlaylist } = this.props
+    if(isEmpty(selectedPlaylist)) {
+        return <div />
+    }
 
-    let PlaylistTabs = <div />
-    if (!isEmpty(selectedPlaylist)) {
-      PlaylistTabs = (
+
+      return[ (
         <div className="playlist-tabs">
           {showPlayerPlaylist ? (
             <PlayerPlaylistContainer
@@ -161,7 +80,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
               showPlayerPlaylist={this.onShowPlayerPlaylist}
             />
           ) : (
-            this.renderPlaylistDetails()
+            <PlaylistWithPlayer playlist={selectedPlaylist} onPlayerClicked={this.onPlayClicked} />
           )}
           <AppBar position="static" color="default">
             <Tabs
@@ -183,7 +102,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
           >
             {value === 0 ? (
               <Typography component="div" dir={'0'} style={{ padding: 10 }}>
-                {this.renderApprovedTracks(selectedPlaylist)}
+                  <ApprovedTracks playlist={selectedPlaylist} votes={this.props.votes} onTrackSelected={this.handleTrackSelected} onVote={this.handleTrackVote} />
               </Typography>
             ) : (
               <div />
@@ -197,10 +116,7 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
             )}
           </SwipeableViews>
         </div>
-      )
-    }
-
-    return [PlaylistTabs, showPlayer ? <PlayerContainer /> : '']
+      ), showPlayer ? <PlayerContainer /> : '']
   }
 
   private handleChange = (event: any, value: any) => {
