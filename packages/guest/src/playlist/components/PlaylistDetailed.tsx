@@ -70,8 +70,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
     if(isEmpty(selectedPlaylist)) {
         return <div />
     }
-
-
       return[ (
         <div className="playlist-tabs">
           {showPlayerPlaylist ? (

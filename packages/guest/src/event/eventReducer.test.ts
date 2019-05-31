@@ -37,13 +37,14 @@ describe('eventReducer', () => {
           { ...initialState, eventLoading: true },
           {
             type: EVENT_FETCHED,
-            payload: {} as IEvent
+            payload: {eventId: 'event-id'} as IEvent
           }
         )
       ).toEqual({
         ...initialState,
         eventLoading: false,
-        selectedEvent: {} as IEvent
+        selectedEvent: {eventId: 'event-id'} as IEvent,
+        eventId: 'event-id'
       })
     })
 
