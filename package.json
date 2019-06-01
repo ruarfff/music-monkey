@@ -6,7 +6,7 @@
     "start": "lerna run start --parallel",
     "start:local": "lerna run start:local --parallel",
     "build": "lerna run build --parallel",
-    "test": "lerna run test --stream",
+    "test": "lerna run test --stream --",
     "clean": "lerna clean"
   },
   "dependencies": {
