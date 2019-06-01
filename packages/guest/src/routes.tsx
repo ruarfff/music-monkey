@@ -1,23 +1,30 @@
 import { push } from 'connected-react-router'
 import { History } from 'history'
-import * as React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { Route, Switch } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from './rootState'
+import LoadingSpinner from './loading/LoadingSpinner'
 
-import Account from './account/AccountContainer'
-import Login from './auth/LoginContainer'
-import SignUp from './auth/SignUpContainer'
-import Event from './event/components/EventContainer'
-import EventListView from './event/components/EventListViewContainer'
-import Finder from './finder/FinderContainer'
-import Invite from './invite/components/InviteContainer'
-import MainLayout from './layout/MainLayoutContainer'
-import PlaylistDetailed from './playlist/components/PlaylistDetailedContainer'
-import PlaylistView from './playlist/components/PlaylistViewContainer'
-import Requests from './requests/RequestsContainer'
-import Stepper from './stepper/StepperContainer'
+const Account = lazy(() => import('./account/AccountContainer'))
+const Login = lazy(() => import('./auth/LoginContainer'))
+const SignUp = lazy(() => import('./auth/SignUpContainer'))
+const Event = lazy(() => import('./event/components/EventContainer'))
+const EventListView = lazy(() =>
+  import('./event/components/EventListViewContainer')
+)
+const Finder = lazy(() => import('./finder/FinderContainer'))
+const Invite = lazy(() => import('./invite/components/InviteContainer'))
+const MainLayout = lazy(() => import('./layout/MainLayoutContainer'))
+const PlaylistDetailed = lazy(() =>
+  import('./playlist/components/PlaylistDetailedContainer')
+)
+const PlaylistView = lazy(() =>
+  import('./playlist/components/PlaylistViewContainer')
+)
+const Requests = lazy(() => import('./requests/RequestsContainer'))
+const Stepper = lazy(() => import('./stepper/StepperContainer'))
 
 const locationHelper = locationHelperBuilder({})
 
@@ -106,7 +113,7 @@ const routes = [
         component: userIsAuthenticated(Finder),
         path: '/finder/:eventId',
         exact: true
-      },
+      }
     ]
   }
 ]
@@ -130,11 +137,13 @@ interface IRouterProps {
 export const Routes: React.SFC<IRouterProps> = ({ history }) => {
   const fof = () => <div>404</div>
   return (
-    <Switch>
-      {routes.map((route, i) => (
-        <RouteWithSubRoutes key={i} {...route} />
-      ))}
-      <Route render={fof} />
-    </Switch>
+    <Suspense fallback={<LoadingSpinner />}>
+      <Switch>
+        {routes.map((route, i) => (
+          <RouteWithSubRoutes key={i} {...route} />
+        ))}
+        <Route render={fof} />
+      </Switch>
+    </Suspense>
   )
 }
