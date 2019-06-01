@@ -25,8 +25,7 @@ export default class SuggestView extends React.PureComponent<
     super(props)
 
     this.state = {
-      open: true,
-      playlist: {}
+      open: true
     }
   }
 
@@ -36,7 +35,7 @@ export default class SuggestView extends React.PureComponent<
     }
   }
 
-  public renderSaggestions() {
+  public renderSuggestions() {
     const { suggestions } = this.props
 
     return suggestions.map((suggestion: any, index: number) => {
@@ -74,25 +73,25 @@ export default class SuggestView extends React.PureComponent<
                 suggestion.suggestion.accepted
                   ? 'playlist_add_check'
                   : suggestion.suggestion.rejected
-                    ? 'highlight_off'
-                    : 'hourglass_empty'
+                  ? 'highlight_off'
+                  : 'hourglass_empty'
               }
             >
               {suggestion.suggestion.accepted
                 ? 'playlist_add_check'
                 : suggestion.suggestion.rejected
-                  ? 'highlight_off'
-                  : 'hourglass_empty'}
+                ? 'highlight_off'
+                : 'hourglass_empty'}
               playlist_add{' '}
             </Icon>
           </ListItem>
-          <Divider variant='inset' />
+          <Divider variant="inset" />
         </div>
       )
     })
   }
 
   public render() {
-    return this.renderSaggestions()
+    return this.renderSuggestions()
   }
 }

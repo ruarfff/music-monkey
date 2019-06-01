@@ -16,8 +16,7 @@ export default class SnackbarsView extends React.PureComponent<
     super(props)
 
     this.state = {
-      open: this.props.open,
-      playlist: {}
+      open: this.props.open
     }
   }
 
