@@ -7,7 +7,8 @@
     "start:local": "lerna run start:local --parallel",
     "build": "lerna run build --parallel",
     "test": "lerna run test --stream --",
-    "clean": "lerna clean"
+    "clean": "lerna clean",
+    "analyze": "lerna run analyze --parallel"
   },
   "dependencies": {
     "@material-ui/core": "3.9.3",
@@ -16,8 +17,11 @@
     "axios-extensions": "^3.0.4",
     "classnames": "^2.2.6",
     "connected-react-router": "6.4.0",
+    "guest": "file:packages/guest",
+    "host": "file:packages/host",
     "lodash": "^4.17.11",
     "moment": "^2.22.1",
+    "music-monkey-client": "file:libs/music-monkey-client",
     "npm-run-all": "^4.1.5",
     "prop-types": "^15.6.2",
     "pusher-js": "^4.2.2",
@@ -38,12 +42,10 @@
     "redux-auth-wrapper": "^2.0.2",
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.0",
+    "source-map-explorer": "^1.8.0",
     "sweetalert2": "^8.11.1",
     "sweetalert2-react-content": "^1.0.1",
-    "uuid": "3.3.2",
-    "guest": "file:packages/guest",
-    "host": "file:packages/host",
-    "music-monkey-client": "file:libs/music-monkey-client"
+    "uuid": "3.3.2"
   },
   "devDependencies": {
     "@material-ui/codemod": "^1.0.0-rc.0",
