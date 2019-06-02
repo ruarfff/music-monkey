@@ -2,7 +2,7 @@ import { Button, List, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
-import PlaylistsSimpleList from '../playlist/components/PlaylistsSimpleList'
+import PlaylistListView from '../playlist/components/PlaylistListView'
 import IPlaylist from '../playlist/IPlaylist'
 import ITrack from '../track/ITrack'
 import TrackList from '../track/TrackList'
@@ -62,7 +62,7 @@ const MyPlaylistsTab = ({
 
   const renderPlaylistSimpleList = () => {
     return (
-      <PlaylistsSimpleList
+      <PlaylistListView
         playlists={playlists}
         selectPlaylist={selectPlaylist}
         attached={true}

@@ -1,18 +1,10 @@
-import {
-  AppBar,
-  Tab,
-  Tabs,
-  Typography
-} from '@material-ui/core'
+import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
-import PlayerContainer from '../../player/PlayerContainer'
-import PlayerPlaylistContainer from '../../player/PlayerPlaylistContainer'
-import IDecoratedSuggestion from '../../suggestion/IDecoratedSuggestion'
 import ITrack from '../../track/ITrack'
 import MaybeTracks from '../../trackView/MaybeTracksContainer'
 import IUser from '../../user/IUser'
@@ -21,31 +13,26 @@ import IVote from '../../vote/IVote'
 import IPlaylist from '../IPlaylist'
 import './Playlist.scss'
 import { setEventId } from '../../event/eventActions'
-import ApprovedTracks from './ApprovedTracks';
-import PlaylistWithPlayer from './PlaylistWithPlayer';
+import ApprovedTracks from './ApprovedTracks'
+import PlaylistPlayer from './PlaylistPlayer'
 
 interface IPlayListProps extends RouteComponentProps<any> {
   user: IUser
   event: IEvent
-  userPlaylists: IPlaylist[]
   selectedPlaylist: IPlaylist
   votes: Map<string, ITrackVoteStatus>
   selectedTrack?: ITrack
-  suggestions: IDecoratedSuggestion[]
-  fetchingSuggestions: boolean
   fetchingVotes: boolean
-  eventLoading: boolean
+  fetchEventVotes(eventId: string): IAction
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
   selectTrack(track: ITrack): IAction
-  fetchEventVotes(eventId: string): IAction
-  onPlaylistSelected(playlist: IPlaylist): IAction
   deselectTrack(): IAction
   getSuggestions(eventId: string): IAction
   setEventId(eventId: string): IAction
 }
 
-export default class PlaylistDetailed extends React.Component<IPlayListProps> {
+export default class Playlist extends React.Component<IPlayListProps> {
   public state = {
     value: 0,
     showPlaylist: false,
@@ -65,56 +52,60 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
   }
 
   public render() {
-    const { showPlayer, value, showPlayerPlaylist } = this.state
-    const { selectedPlaylist } = this.props
-    if(isEmpty(selectedPlaylist)) {
-        return <div />
+    const { value } = this.state
+    const { selectedPlaylist, selectedTrack, votes } = this.props
+    if (isEmpty(selectedPlaylist)) {
+      return <div />
     }
-      return[ (
-        <div className="playlist-tabs">
-          {showPlayerPlaylist ? (
-            <PlayerPlaylistContainer
-              handleTrackVote={this.handleTrackVote}
-              showPlayerPlaylist={this.onShowPlayerPlaylist}
-            />
-          ) : (
-            <PlaylistWithPlayer playlist={selectedPlaylist} onPlayerClicked={this.onPlayClicked} />
-          )}
-          <AppBar position="static" color="default">
-            <Tabs
-              value={value}
-              onChange={this.handleChange}
-              indicatorColor="secondary"
-              textColor="secondary"
-              variant="fullWidth"
-              classes={{ indicator: 'indicator-color' }}
-            >
-              <Tab label="APPROVED" />
-              <Tab label="MAYBE" />
-            </Tabs>
-          </AppBar>
-          <SwipeableViews
-            axis={'x'}
-            index={value}
-            onChangeIndex={this.handleChangeIndex}
+    return [
+      <div className="Playlist-tabs">
+        <PlaylistPlayer
+          playlist={selectedPlaylist}
+          selectedTrack={selectedTrack}
+          votes={votes}
+          handleTrackVote={this.handleTrackVote}
+        />
+        )}
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value}
+            onChange={this.handleChange}
+            indicatorColor="secondary"
+            textColor="secondary"
+            variant="fullWidth"
+            classes={{ indicator: 'indicator-color' }}
           >
-            {value === 0 ? (
-              <Typography component="div" dir={'0'} style={{ padding: 10 }}>
-                  <ApprovedTracks playlist={selectedPlaylist} votes={this.props.votes} onTrackSelected={this.handleTrackSelected} onVote={this.handleTrackVote} />
-              </Typography>
-            ) : (
-              <div />
-            )}
-            {value === 1 ? (
-              <Typography component="div" dir={'1'}>
-                <MaybeTracks />
-              </Typography>
-            ) : (
-              <div />
-            )}
-          </SwipeableViews>
-        </div>
-      ), showPlayer ? <PlayerContainer /> : '']
+            <Tab label="APPROVED" />
+            <Tab label="MAYBE" />
+          </Tabs>
+        </AppBar>
+        <SwipeableViews
+          axis={'x'}
+          index={value}
+          onChangeIndex={this.handleChangeIndex}
+        >
+          {value === 0 ? (
+            <Typography component="div" dir={'0'} style={{ padding: 10 }}>
+              <ApprovedTracks
+                playlist={selectedPlaylist}
+                votes={this.props.votes}
+                onTrackSelected={this.handleTrackSelected}
+                onVote={this.handleTrackVote}
+              />
+            </Typography>
+          ) : (
+            <div />
+          )}
+          {value === 1 ? (
+            <Typography component="div" dir={'1'}>
+              <MaybeTracks />
+            </Typography>
+          ) : (
+            <div />
+          )}
+        </SwipeableViews>
+      </div>
+    ]
   }
 
   private handleChange = (event: any, value: any) => {
@@ -123,17 +114,6 @@ export default class PlaylistDetailed extends React.Component<IPlayListProps> {
 
   private handleChangeIndex = (index: any) => {
     this.setState({ value: index })
-  }
-
-  private onPlayClicked = () => {
-    this.setState({
-      showPlayerPlaylist: !this.state.showPlayerPlaylist,
-      showPlayer: false
-    })
-  }
-
-  private onShowPlayerPlaylist = () => {
-    this.setState({ showPlayerPlaylist: !this.state.showPlayerPlaylist })
   }
 
   private handleTrackVote = (track: ITrack) => {

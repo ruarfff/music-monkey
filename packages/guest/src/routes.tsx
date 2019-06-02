@@ -17,11 +17,9 @@ const EventListView = lazy(() =>
 const Finder = lazy(() => import('./finder/FinderContainer'))
 const Invite = lazy(() => import('./invite/components/InviteContainer'))
 const MainLayout = lazy(() => import('./layout/MainLayoutContainer'))
-const PlaylistDetailed = lazy(() =>
-  import('./playlist/components/PlaylistDetailedContainer')
-)
+const Playlist = lazy(() => import('./playlist/components/PlaylistContainer'))
 const PlaylistView = lazy(() =>
-  import('./playlist/components/PlaylistViewContainer')
+  import('./playlist/components/PlaylistListViewContainer')
 )
 const Requests = lazy(() => import('./requests/RequestsContainer'))
 const Stepper = lazy(() => import('./stepper/StepperContainer'))
@@ -100,7 +98,7 @@ const routes = [
         exact: true
       },
       {
-        component: userIsAuthenticated(PlaylistDetailed),
+        component: userIsAuthenticated(Playlist),
         path: '/playlist/:eventId',
         exact: true
       },

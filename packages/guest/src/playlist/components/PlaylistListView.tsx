@@ -19,8 +19,8 @@ import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
 import IPlaylist from '../IPlaylist'
 import LoadingSpinner from '../../loading/LoadingSpinner'
-
-interface IPlaylistsSimpleListProps {
+import './PlaylistListView.scss'
+interface IPlaylistListViewProps {
   playlists: IPlaylist[]
   events?: IEvent[]
   attached: boolean
@@ -31,7 +31,7 @@ interface IPlaylistsSimpleListProps {
   onPlaylistSelected?(playlist: IPlaylist): any
 }
 
-class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
+class PlaylistListView extends React.Component<IPlaylistListViewProps> {
   public state = {
     anchorEl: null
   }
@@ -116,14 +116,14 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
         playlistView = (
           <List>
             {filteredPlaylists.map((playlist: IPlaylist, i: number) => (
-              <div className="playlist-list-item-wrapper" key={i}>
+              <div className="PlaylistListView-item-wrapper" key={i}>
                 <Link to={disableLinks ? '#' : '/playlist/' + playlist.eventId}>
                   <ListItem
                     disabled={playlist.tracks.total < 1}
                     button={true}
                     onClick={handlePlaylistSelected(playlist)}
                   >
-                    <div className="playlist-list-item">
+                    <div className="PlaylistListView-item">
                       <ListItemAvatar>
                         <Avatar
                           alt={playlist.name}
@@ -146,7 +146,6 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
                           aria-owns={open ? 'long-menu' : ''}
                           aria-haspopup="true"
                           onClick={this.handleClick}
-                          className="playList-button-menu"
                         >
                           <MoreVertIcon />
                         </IconButton>
@@ -195,4 +194,4 @@ class PlaylistsSimpleList extends React.Component<IPlaylistsSimpleListProps> {
   }
 }
 
-export default PlaylistsSimpleList
+export default PlaylistListView

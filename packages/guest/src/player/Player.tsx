@@ -38,7 +38,7 @@ export default class Player extends React.Component<
 
   public componentWillReceiveProps(newProps: IPlayerProps) {
     if (!newProps.track.preview_url) {
-      this.showErrorDialog('Sorry. This song don`t have a preview')
+      this.showErrorDialog('Sorry. This song does not have a preview')
     }
   }
 
@@ -57,7 +57,6 @@ export default class Player extends React.Component<
               trackUrl={track.preview_url}
               handleTogglePlayer={this.handleTogglePlayer}
             />
-            {/* </Tooltip> */}
           </div>
           <div className="player-control">
             <div className="player-control-name">
