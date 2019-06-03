@@ -112,7 +112,7 @@ export default ({
         votes={votes}
         handleTrackVote={handleTrackVote}
       />
-      )}
+
       <AppBar position="static" color="default">
         <Tabs
           value={value}

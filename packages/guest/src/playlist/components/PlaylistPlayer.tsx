@@ -1,9 +1,17 @@
-import { Avatar, Icon, IconButton, ListItemText, Fab } from '@material-ui/core'
+import {
+  Avatar,
+  Icon,
+  IconButton,
+  ListItemText,
+  Fab,
+  LinearProgress
+} from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import './PlaylistPlayer.scss'
 import IPlaylistItem from '../IPlaylistItem'
 import { findIndex, isEmpty } from 'lodash'
+import '../../player/TimeLine.scss'
 
 interface IPlaylistPlayerProps {
   playlist: any
@@ -23,7 +31,6 @@ export default ({
   const [trackNum, setTrackNum] = useState(0)
   const [random, setRandom] = useState(false)
   const [loop, setLoop] = useState(false)
-  const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
   const tracks =
     playlist.tracks && playlist.tracks.items
       ? playlist.tracks.items.map((item: IPlaylistItem) => item.track)
@@ -45,6 +52,7 @@ export default ({
   }
 
   useEffect(() => {
+    const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
     if (!!audio) {
       audio.onended = () => {
         if (!loop) {
@@ -61,7 +69,7 @@ export default ({
         setTime(+timer.toFixed(0))
       })
     }
-  }, [audio, loop, trackNum, tracks.length])
+  }, [loop, trackNum, tracks.length])
 
   const skip = (next: boolean) => {
     if (random) {
@@ -87,6 +95,7 @@ export default ({
   }
 
   const onPlay = () => {
+    const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
     if (time === 100) {
       setPlay(false)
       setTime(0)
@@ -207,17 +216,14 @@ export default ({
               </Icon>
             </div>
           </div>
-          <div className="PlayerPlaylist-control-white">
-            <IconButton
-              color="primary"
-              component="span"
-              disabled={true}
-              classes={{ disabled: 'disabled' }}
-            >
-              <Icon>more_vert</Icon>
-            </IconButton>
-          </div>
         </div>
+      </div>
+      <div className="player-control-duration">
+        <LinearProgress
+          className={'TimeLine-progress'}
+          variant="determinate"
+          value={time}
+        />
       </div>
       <div style={{ display: 'none' }}>
         <audio
