@@ -8,7 +8,7 @@ import IUser from '../../user/IUser'
 it('renders without crashing', () => {
   const user = {} as IUser
   const event = {} as IEvent
-  const votes = {} as Map<string, ITrackVoteStatus>
+  const votes = new Map<string, ITrackVoteStatus>()
   const fetchingVotes = false
   const fetchEventVotes = jest.fn()
   const createVote = jest.fn()

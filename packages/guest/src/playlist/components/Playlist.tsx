@@ -14,6 +14,7 @@ import './Playlist.scss'
 import ApprovedTracks from './ApprovedTracks'
 import PlaylistPlayer from './PlaylistPlayer'
 import IPlaylistItem from '../IPlaylistItem'
+import LoadingSpinner from '../../loading/LoadingSpinner'
 
 interface IPlayListProps extends RouteComponentProps<any> {
   user: IUser
@@ -33,19 +34,44 @@ export default ({
   votes,
   fetchingVotes,
   fetchEventVotes,
+  getSuggestions,
   createVote,
   deleteVote,
-  getSuggestions,
   setEventId,
   match
 }: IPlayListProps) => {
+  const [value, setValue] = useState(0)
+  const [currentTrack, setCurrentTrack] = useState({} as ITrack)
+  const eventId = match.params.eventId
+  const trackId = currentTrack ? currentTrack.uri : ''
   const playlist = event.playlist
   const tracks =
     playlist && playlist.tracks && playlist.tracks.items
       ? playlist.tracks.items.map((item: IPlaylistItem) => item.track)
       : []
-  const [value, setValue] = useState(0)
-  const [currentTrack, setCurrentTrack] = useState(tracks[0])
+  let voteStatus = {} as ITrackVoteStatus
+  if (votes && votes.has(trackId)) {
+    voteStatus = votes.get(trackId) || ({} as ITrackVoteStatus)
+  }
+  if (tracks.length > 0 && isEmpty(currentTrack)) {
+    setCurrentTrack(tracks[0])
+  }
+  useEffect(() => {
+    return () => {
+      setCurrentTrack({} as ITrack)
+    }
+  }, [event])
+
+  useEffect(() => {
+    if (eventId && event.eventId !== eventId) {
+      setEventId(eventId)
+      getSuggestions(eventId)
+      if (isEmpty(votes) && !fetchingVotes) {
+        fetchEventVotes(eventId)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [match.params.eventId, votes, fetchingVotes])
 
   const handleChange = (event: any, value: any) => {
     setValue(value)
@@ -74,27 +100,18 @@ export default ({
     createVote(vote)
   }
 
-  useEffect(() => {
-    const eventId = match.params.eventId
-    if (eventId) {
-      setEventId(eventId)
-      if (isEmpty(votes) && !fetchingVotes) {
-        fetchEventVotes(eventId)
-      }
-      getSuggestions(eventId)
-    }
-  })
-
-  if (isEmpty(playlist)) {
-    return <div />
+  if (isEmpty(playlist) || event.eventId !== eventId) {
+    return <LoadingSpinner />
   }
+
   return (
     <div className="Playlist-tabs">
       <PlaylistPlayer
-        playlist={playlist}
+        tracks={tracks}
         selectedTrack={currentTrack}
-        votes={votes}
-        handleTrackVote={handleTrackVote}
+        selectedTrackVotes={voteStatus}
+        onFavouriteClicked={handleTrackVote}
+        onTrackChanged={setCurrentTrack}
       />
 
       <AppBar position="static" color="default">

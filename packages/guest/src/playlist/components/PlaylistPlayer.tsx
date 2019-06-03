@@ -9,89 +9,98 @@ import {
 import React, { useEffect, useState } from 'react'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import './PlaylistPlayer.scss'
-import IPlaylistItem from '../IPlaylistItem'
-import { findIndex, isEmpty } from 'lodash'
+import { findIndex, isEmpty, pull } from 'lodash'
+import ITrack from '../../track/ITrack'
 
 interface IPlaylistPlayerProps {
-  playlist: any
-  selectedTrack: any
-  votes: Map<string, ITrackVoteStatus>
-  handleTrackVote(track: any): any
+  tracks: ITrack[]
+  selectedTrack: ITrack
+  selectedTrackVotes: ITrackVoteStatus
+  onFavouriteClicked(track: ITrack): void
+  onTrackChanged(track: ITrack): void
 }
 
 export default ({
-  playlist,
+  tracks,
   selectedTrack,
-  votes,
-  handleTrackVote
+  selectedTrackVotes,
+  onFavouriteClicked,
+  onTrackChanged
 }: IPlaylistPlayerProps) => {
   const [play, setPlay] = useState(false)
   const [time, setTime] = useState(0)
-  const [trackNum, setTrackNum] = useState(0)
   const [random, setRandom] = useState(false)
   const [loop, setLoop] = useState(false)
-  const tracks =
-    playlist.tracks && playlist.tracks.items
-      ? playlist.tracks.items.map((item: IPlaylistItem) => item.track)
-      : []
-  if (!!selectedTrack) {
-    const selectedIndex = findIndex(tracks, { id: selectedTrack.id })
-    if (trackNum !== selectedIndex) {
-      setTrackNum(selectedIndex)
-    }
-  }
-  const currentTrack = tracks[trackNum] || {}
-  const voteStatus: ITrackVoteStatus =
-    votes.get(currentTrack.uri) || ({} as ITrackVoteStatus)
-  const numberOfVotes = voteStatus.numberOfVotes || 0
-  const userVoted = voteStatus.votedByCurrentUser
-
-  if (time === 100) {
+  const numberOfVotes = selectedTrackVotes.numberOfVotes || 0
+  const userVoted = selectedTrackVotes.votedByCurrentUser
+  const trackIndex = findIndex(tracks, selectedTrack)
+  if (time >= 100) {
     setTime(0)
   }
 
-  useEffect(() => {
-    const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
-    if (!!audio) {
-      audio.onended = () => {
-        if (!loop) {
-          if (tracks.length - 1 === trackNum) {
-            setTrackNum(0)
-          } else {
-            setTrackNum(trackNum + 1)
-          }
-        }
-      }
+  const randomTrack = () => {
+    const filteredTracks: ITrack[] = pull(tracks, selectedTrack)
+    onTrackChanged(
+      filteredTracks[Math.floor(Math.random() * filteredTracks.length)]
+    )
+  }
 
-      audio.addEventListener('timeupdate', () => {
-        const timer = (audio.currentTime * 100) / audio.duration
-        setTime(+timer.toFixed(0))
-      })
-    }
-  }, [loop, trackNum, tracks.length])
-
-  const skip = (next: boolean) => {
-    if (random) {
-      let rand = 0 + Math.random() * tracks.length
-      rand = Math.floor(rand)
-
-      while (trackNum === rand) {
-        rand = 0 + Math.random() * tracks.length
-        rand = Math.floor(rand)
-      }
-      setTrackNum(rand)
+  const nextTrack = () => {
+    let track = null
+    if (trackIndex < tracks.length - 1) {
+      track = tracks[trackIndex + 1]
     } else {
-      setTrackNum(
-        next
-          ? tracks.length - 1 === trackNum
-            ? 0
-            : trackNum + 1
-          : trackNum === 0
-          ? tracks.length - 1
-          : trackNum - 1
-      )
+      track = tracks[0]
+    }
+    onTrackChanged(track)
+  }
+
+  const previousTrack = () => {
+    if (trackIndex > 0) {
+      onTrackChanged(tracks[trackIndex - 1])
+    } else {
+      onTrackChanged(tracks[tracks.length - 1])
     }
   }
+
+  useEffect(() => {
+    if (!selectedTrack.preview_url) {
+      nextTrack()
+      return
+    }
+    const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
+    const audioSource = document.getElementById(
+      'playlist-player-audio-source'
+    ) as HTMLMediaElement
+
+    if (audioSource.src !== selectedTrack.preview_url) {
+      audioSource.src = selectedTrack.preview_url
+      audio.load()
+      if (play) {
+        setTime(0)
+        audio.play()
+      }
+    }
+
+    const timeUpdater = () => {
+      const timer = (audio.currentTime * 100) / audio.duration
+      setTime(+timer.toFixed(0))
+    }
+
+    audio.onended = () => {
+      if (!loop) {
+        nextTrack()
+      }
+    }
+
+    audio.addEventListener('timeupdate', timeUpdater)
+
+    return () => {
+      audio.removeEventListener('timeupdate', timeUpdater)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loop, onTrackChanged, tracks, tracks.length, selectedTrack])
 
   const onPlay = () => {
     const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
@@ -107,8 +116,8 @@ export default ({
     setPlay(!play)
   }
 
-  if (isEmpty(currentTrack)) {
-    return <span />
+  if (isEmpty(selectedTrack)) {
+    return <div />
   }
   return (
     <div className="PlayerPlaylist-container">
@@ -118,14 +127,14 @@ export default ({
       <div className="PlayerPlaylist-track-img">
         <div className="PlayerPlaylist-track-img-container">
           <Avatar
-            src={currentTrack.album.images[0].url}
+            src={selectedTrack.album.images[0].url}
             className="PlayerPlaylist-track-avatar"
           />
           <div className="progress-circle" data-progress={time || 0} />
         </div>
         <ListItemText
-          primary={currentTrack.artists[0].name}
-          secondary={currentTrack.name}
+          primary={selectedTrack.artists[0].name}
+          secondary={selectedTrack.name}
           className="PlayerPlaylist-track-name"
         />
       </div>
@@ -164,7 +173,11 @@ export default ({
               color="primary"
               component="span"
               onClick={() => {
-                skip(false)
+                if (random) {
+                  randomTrack()
+                } else {
+                  previousTrack()
+                }
               }}
               classes={{ disabled: 'disabled' }}
             >
@@ -187,7 +200,11 @@ export default ({
               color="primary"
               component="span"
               onClick={() => {
-                skip(true)
+                if (random) {
+                  randomTrack()
+                } else {
+                  nextTrack()
+                }
               }}
               classes={{ disabled: 'disabled' }}
             >
@@ -205,7 +222,7 @@ export default ({
               </span>
               <Icon
                 onClick={() => {
-                  handleTrackVote(currentTrack)
+                  onFavouriteClicked(selectedTrack)
                 }}
                 className={`playList-favorite-icon ${
                   userVoted ? '' : 'primary'
@@ -226,13 +243,14 @@ export default ({
       </div>
       <div style={{ display: 'none' }}>
         <audio
-          src={currentTrack.preview_url}
           id="PlayerPlaylist"
           loop={loop}
           controls={true}
           className="EventSuggestions-audio"
           preload="none"
-        />
+        >
+          <source id="playlist-player-audio-source" src="" />
+        </audio>
       </div>
     </div>
   )

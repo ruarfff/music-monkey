@@ -1,5 +1,5 @@
 import { isEmpty, find } from 'lodash'
-import { Route, RouteComponentProps, Switch } from 'react-router'
+import { Route, RouteComponentProps } from 'react-router'
 import BottomBar from '../bottombar/BottomBarContainer'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
@@ -63,11 +63,9 @@ const MainLayout = ({
       <TopBar />
       <main className="MainLayout-body">
         <Suspense fallback={<LoadingSpinner />}>
-          <Switch>
-            {routes.map((route, i) => (
-              <RouteWithSubRoutes key={i} {...route} />
-            ))}
-          </Switch>
+          {routes.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))}
         </Suspense>
       </main>
       <BottomBar />

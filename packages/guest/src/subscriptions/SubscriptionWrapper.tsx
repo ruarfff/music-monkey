@@ -26,7 +26,7 @@ interface ISubscriptionWrapper {
   fetchEventVotes(eventId: string): IAction
 }
 
-export default ({
+const SubscriptionWrapper = ({
   event,
   children,
   getEvent,
@@ -73,3 +73,5 @@ export default ({
 
   return children
 }
+
+export default SubscriptionWrapper
