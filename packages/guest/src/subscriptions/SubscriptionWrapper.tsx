@@ -24,13 +24,17 @@ interface ISubscriptionWrapper {
   children: any
   getEvent(eventId: string): IAction
   fetchEventVotes(eventId: string): IAction
+  getUsersSuggestions(eventId: string): IAction
+  getSuggestions(eventId: string): IAction
 }
 
 const SubscriptionWrapper = ({
   event,
   children,
   getEvent,
-  fetchEventVotes
+  fetchEventVotes,
+  getUsersSuggestions,
+  getSuggestions
 }: ISubscriptionWrapper) => {
   useEffect(() => {
     const eventId = event ? event.eventId : ''
@@ -38,7 +42,8 @@ const SubscriptionWrapper = ({
 
     subscribeToSuggestionsModified(eventId, () => {
       console.log('subscribeToSuggestionsModified ' + eventId)
-      getEvent(eventId)
+      getUsersSuggestions(eventId)
+      getSuggestions(eventId)
     })
 
     subscribeToRSVPModified(eventId, () => {

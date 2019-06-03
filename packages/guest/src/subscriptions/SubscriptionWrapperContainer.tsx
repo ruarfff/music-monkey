@@ -3,6 +3,10 @@ import IRootState from '../rootState'
 import SubscriptionWrapper from './SubscriptionWrapper'
 import { getEvent } from '../event/eventActions'
 import { fetchEventVotes } from '../vote/voteActions'
+import {
+  getUsersSuggestions,
+  getSuggestions
+} from '../suggestion/suggestionActions'
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.event.selectedEvent
@@ -10,7 +14,9 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   getEvent,
-  fetchEventVotes
+  fetchEventVotes,
+  getUsersSuggestions,
+  getSuggestions
 }
 
 export default connect(

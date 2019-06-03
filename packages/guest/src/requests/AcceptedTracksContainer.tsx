@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
 import IRootState from '../rootState'
-import MaybeTracks from './MaybeTracks'
+import AcceptedTracks from './AcceptedTracks'
 
 const mapStateToProps = (state: IRootState) => ({
-  suggestions: state.suggestion.suggestions,
+  suggestions: state.suggestion.userSuggestions,
   selectedEvent: state.event.selectedEvent
 })
 
 const mapDispatchToProps = {}
 
-const MaybeTracksContainer = connect(
+const AcceptedTracksContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(MaybeTracks)
+)(AcceptedTracks)
 
-export default MaybeTracksContainer
+export default AcceptedTracksContainer

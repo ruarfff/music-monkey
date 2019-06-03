@@ -3,9 +3,8 @@ import IRootState from '../rootState'
 import RejectedTracks from './RejectedTracks'
 
 const mapStateToProps = (state: IRootState) => ({
-  suggestions: state.suggestion.suggestions,
+  suggestions: state.suggestion.userSuggestions,
   selectedEvent: state.event.selectedEvent
-
 })
 
 const mapDispatchToProps = {}

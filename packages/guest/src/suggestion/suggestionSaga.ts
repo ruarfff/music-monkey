@@ -1,9 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import IAction from '../IAction'
-import {
-  CLEAR_SEARCH,
-  removeTrack
-} from '../search/searchActions'
+import { CLEAR_SEARCH, removeTrack } from '../search/searchActions'
 import {
   DELETE_SUGGESTION_FAILED,
   DELETE_SUGGESTION_INITIATED,
@@ -11,11 +8,13 @@ import {
   FETCH_SUGGESTIONS_FAILED,
   FETCH_SUGGESTIONS_INITIATED,
   FETCH_SUGGESTIONS_SUCCESS,
-  FETCH_USERS_SUGGESTIONS_INITIATED,
+  FETCH_USER_SUGGESTIONS_INITIATED,
   SAVE_PLAYLIST_SUGGESTION_INITIATED,
   SAVE_SUGGESTION_FAILED,
   SAVE_SUGGESTION_SUCCESS,
-  SAVE_TRACK_SUGGESTION_INITIATED
+  SAVE_TRACK_SUGGESTION_INITIATED,
+  FETCH_USER_SUGGESTIONS_SUCCESS,
+  FETCH_USER_SUGGESTIONS_FAILED
 } from './suggestionActions'
 import {
   bulkSaveSuggestions,
@@ -48,16 +47,16 @@ function* fetchUsersSuggestionsFlow(action: IAction) {
   try {
     const suggestions = yield call(getUsersSuggestions, action.payload)
     yield put({
-      type: FETCH_SUGGESTIONS_SUCCESS,
+      type: FETCH_USER_SUGGESTIONS_SUCCESS,
       payload: suggestions
     })
   } catch (err) {
-    yield put({ type: FETCH_SUGGESTIONS_FAILED, payload: err })
+    yield put({ type: FETCH_USER_SUGGESTIONS_FAILED, payload: err })
   }
 }
 
 export function* watchFetchUsersSuggestions() {
-  yield takeEvery(FETCH_USERS_SUGGESTIONS_INITIATED, fetchUsersSuggestionsFlow)
+  yield takeEvery(FETCH_USER_SUGGESTIONS_INITIATED, fetchUsersSuggestionsFlow)
 }
 
 function* saveTrackSuggestionFlow(action: IAction) {
@@ -67,7 +66,7 @@ function* saveTrackSuggestionFlow(action: IAction) {
       suggestionTransformer.trackSuggestionToSuggestion(action.payload)
     )
     yield put({ type: SAVE_SUGGESTION_SUCCESS, payload: savedSuggestion })
-    yield put({ type: CLEAR_SEARCH})
+    yield put({ type: CLEAR_SEARCH })
     yield put(removeTrack(savedSuggestion.data.trackUri))
   } catch (err) {
     yield put({ type: SAVE_SUGGESTION_FAILED, payload: err })

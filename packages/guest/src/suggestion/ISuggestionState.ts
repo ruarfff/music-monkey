@@ -3,6 +3,7 @@ import ISuggestion from './ISuggestion'
 
 export default interface ISuggestionState {
   suggestions: IDecoratedSuggestion[]
+  userSuggestions: IDecoratedSuggestion[]
   savedSuggestion?: ISuggestion
   deletedSuggestion?: ISuggestion
   deletingSuggestion: boolean

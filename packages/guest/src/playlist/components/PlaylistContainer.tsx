@@ -8,6 +8,7 @@ import { setEventId } from '../../event/eventActions'
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.event.selectedEvent,
+  suggestions: state.suggestion.suggestions,
   votes: state.vote.votes,
   fetchingVotes: state.vote.fetchingVotes
 })

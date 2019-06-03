@@ -1,6 +1,6 @@
 import IAction from '../IAction'
-import ITrackSuggestion from './IPlaylistSuggestion';
-import IPlaylistSuggestion from './IPlaylistSuggestion';
+import ITrackSuggestion from './IPlaylistSuggestion'
+import IPlaylistSuggestion from './IPlaylistSuggestion'
 import ISuggestion from './ISuggestion'
 import {
   CLEAR_SAVED_SUGGESTION,
@@ -8,7 +8,11 @@ import {
   DELETE_SUGGESTION_INITIATED,
   DELETE_SUGGESTION_SUCCESS,
   FETCH_SUGGESTIONS_FAILED,
+  FETCH_SUGGESTIONS_SUCCESS,
   FETCH_SUGGESTIONS_INITIATED,
+  FETCH_USER_SUGGESTIONS_FAILED,
+  FETCH_USER_SUGGESTIONS_SUCCESS,
+  FETCH_USER_SUGGESTIONS_INITIATED,
   SAVE_PLAYLIST_SUGGESTION_INITIATED,
   SAVE_SUGGESTION_FAILED,
   SAVE_SUGGESTION_SUCCESS,
@@ -99,6 +103,56 @@ describe('suggestionReducer', () => {
       ...initialState,
       fetchingSuggestions: false,
       fetchingSuggestionsError: new Error('terrible')
+    })
+  })
+
+  it('should handle FETCH_SUGGESTION_SUCCESS', () => {
+    expect(
+      suggestion(
+        { ...initialState, fetchingSuggestions: true },
+        { type: FETCH_SUGGESTIONS_SUCCESS, payload: [] as ISuggestion[] }
+      )
+    ).toEqual({
+      ...initialState,
+      fetchingSuggestions: false,
+      suggestions: [] as ISuggestion[]
+    })
+  })
+
+  it('should handle FETCH_USER_SUGGESTIONS_INITIATED', () => {
+    expect(
+      suggestion(initialState, {
+        type: FETCH_USER_SUGGESTIONS_INITIATED
+      })
+    ).toEqual({
+      ...initialState,
+      fetchingSuggestions: true
+    })
+  })
+
+  it('should handle FETCH_USER_SUGGESTIONS_FAILED', () => {
+    expect(
+      suggestion(
+        { ...initialState, fetchingSuggestions: true },
+        { type: FETCH_USER_SUGGESTIONS_FAILED, payload: new Error('terrible') }
+      )
+    ).toEqual({
+      ...initialState,
+      fetchingSuggestions: false,
+      fetchingSuggestionsError: new Error('terrible')
+    })
+  })
+
+  it('should handle FETCH_USER_SUGGESTION_SUCCESS', () => {
+    expect(
+      suggestion(
+        { ...initialState, fetchingSuggestions: true },
+        { type: FETCH_USER_SUGGESTIONS_SUCCESS, payload: [] as ISuggestion[] }
+      )
+    ).toEqual({
+      ...initialState,
+      fetchingSuggestions: false,
+      userSuggestions: [] as ISuggestion[]
     })
   })
 

@@ -9,11 +9,13 @@ import {
   FETCH_SUGGESTIONS_FAILED,
   FETCH_SUGGESTIONS_INITIATED,
   FETCH_SUGGESTIONS_SUCCESS,
-  FETCH_USERS_SUGGESTIONS_INITIATED,
   SAVE_PLAYLIST_SUGGESTION_INITIATED,
   SAVE_SUGGESTION_FAILED,
   SAVE_SUGGESTION_SUCCESS,
-  SAVE_TRACK_SUGGESTION_INITIATED
+  SAVE_TRACK_SUGGESTION_INITIATED,
+  FETCH_USER_SUGGESTIONS_INITIATED,
+  FETCH_USER_SUGGESTIONS_SUCCESS,
+  FETCH_USER_SUGGESTIONS_FAILED
 } from './suggestionActions'
 import initialState from './suggestionInitialState'
 
@@ -40,8 +42,6 @@ export default function suggestion(
       } as ISuggestionState
     case FETCH_SUGGESTIONS_INITIATED:
       return { ...state, fetchingSuggestions: true } as ISuggestionState
-      case FETCH_USERS_SUGGESTIONS_INITIATED:
-      return { ...state, fetchingSuggestions: true } as ISuggestionState
     case FETCH_SUGGESTIONS_SUCCESS:
       return {
         ...state,
@@ -54,12 +54,26 @@ export default function suggestion(
         fetchingSuggestions: false,
         fetchingSuggestionsError: payload
       } as ISuggestionState
+    case FETCH_USER_SUGGESTIONS_INITIATED:
+      return { ...state, fetchingSuggestions: true } as ISuggestionState
+    case FETCH_USER_SUGGESTIONS_SUCCESS:
+      return {
+        ...state,
+        fetchingSuggestions: false,
+        userSuggestions: payload
+      }
+    case FETCH_USER_SUGGESTIONS_FAILED:
+      return {
+        ...state,
+        fetchingSuggestions: false,
+        fetchingSuggestionsError: payload
+      } as ISuggestionState
     case CLEAR_SAVED_SUGGESTION:
       return {
         ...state,
         savedSuggestion: undefined
       }
-      case CLEAR_SUGGESTION:
+    case CLEAR_SUGGESTION:
       return {
         ...state,
         suggestions: []

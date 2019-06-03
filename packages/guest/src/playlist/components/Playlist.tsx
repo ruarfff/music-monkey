@@ -6,7 +6,6 @@ import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../../event/IEvent'
 import IAction from '../../IAction'
 import ITrack from '../../track/ITrack'
-import MaybeTracks from '../../trackView/MaybeTracksContainer'
 import IUser from '../../user/IUser'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import IVote from '../../vote/IVote'
@@ -15,12 +14,15 @@ import ApprovedTracks from './ApprovedTracks'
 import PlaylistPlayer from './PlaylistPlayer'
 import IPlaylistItem from '../IPlaylistItem'
 import LoadingSpinner from '../../loading/LoadingSpinner'
+import MaybeTracks from './MaybeTracks'
+import IDecoratedSuggestion from '../../suggestion/IDecoratedSuggestion'
 
 interface IPlayListProps extends RouteComponentProps<any> {
   user: IUser
   event: IEvent
   votes: Map<string, ITrackVoteStatus>
   fetchingVotes: boolean
+  suggestions: IDecoratedSuggestion[]
   fetchEventVotes(eventId: string): IAction
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
@@ -33,6 +35,7 @@ const Playlist = ({
   event,
   votes,
   fetchingVotes,
+  suggestions,
   fetchEventVotes,
   getSuggestions,
   createVote,
@@ -146,7 +149,7 @@ const Playlist = ({
         )}
         {value === 1 ? (
           <Typography component="div" dir={'1'}>
-            <MaybeTracks />
+            <MaybeTracks suggestions={suggestions} selectedEvent={event} />
           </Typography>
         ) : (
           <div />
