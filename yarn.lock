@@ -2178,9 +2178,9 @@
     "@types/react" "*"
 
 "@types/google-map-react@^0.23.10":
-  version "0.23.11"
-  resolved "https://registry.yarnpkg.com/@types/google-map-react/-/google-map-react-0.23.11.tgz#28421923ac04b02bc1ff47bbcc780b74b46aba01"
-  integrity sha512-w5YcTN5+9RI+tcYT40w9Uo0UUTnsEKHwQSo2/ergLf/ZPUquUuwIH4oucdrRHs9IKkQugBm3cfT2gjny0YCWXQ==
+  version "0.23.12"
+  resolved "https://registry.yarnpkg.com/@types/google-map-react/-/google-map-react-0.23.12.tgz#bf50f54aea7e7fa0bb078dced494bf24b77fd471"
+  integrity sha512-Yf8SV5CgPPYdQvqGQGp0fq/m2MTkvDIUWh7z0tk/wxavg5uU6HuXOBE/si+8KtfrTiMf3IuT9Z8NV+hUydn88Q==
   dependencies:
     "@types/react" "*"
 
