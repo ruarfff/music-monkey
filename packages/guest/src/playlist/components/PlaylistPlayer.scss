@@ -463,3 +463,14 @@
   .progress-circle[data-progress="100"]:after {
     background-image: linear-gradient(90deg, $secondary-main 50%, transparent 50%, transparent), linear-gradient(270deg, $secondary-main 50%, $secondary-light 50%, $secondary-light);
   }
+
+  .TimeLine-progress {
+  transition: 0.2s linear;
+  cursor: pointer;
+  & div {
+    transition: transform 0.1s linear;
+  }
+  &:hover {
+    height: 8px;
+  }
+}

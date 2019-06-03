@@ -12,7 +12,6 @@ interface ISearchProps {
   tracks: ITrack[]
   clearSearch(): IAction
   searchTracks(searchTerm: string): IAction
-  selectTrack(track: ITrack): IAction
 }
 
 interface ISearchState {

@@ -9,7 +9,6 @@ import playlist from './playlist/playlistReducer'
 import recommendation from './recommendation/recommendationReducer'
 import search from './search/searchReducer'
 import suggestion from './suggestion/suggestionReducer'
-import track from './track/trackReducer'
 import user from './user/userReducer'
 import vote from './vote/voteReducer'
 import rsvp from './rsvp/rsvpReducer'
@@ -26,7 +25,6 @@ export default (history: History) =>
     rsvp,
     search,
     suggestion,
-    track,
     user,
     vote
   })

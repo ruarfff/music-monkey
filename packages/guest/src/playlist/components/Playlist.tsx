@@ -13,18 +13,16 @@ import IVote from '../../vote/IVote'
 import './Playlist.scss'
 import ApprovedTracks from './ApprovedTracks'
 import PlaylistPlayer from './PlaylistPlayer'
+import IPlaylistItem from '../IPlaylistItem'
 
 interface IPlayListProps extends RouteComponentProps<any> {
   user: IUser
   event: IEvent
   votes: Map<string, ITrackVoteStatus>
-  selectedTrack?: ITrack
   fetchingVotes: boolean
   fetchEventVotes(eventId: string): IAction
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
-  selectTrack(track: ITrack): IAction
-  deselectTrack(): IAction
   getSuggestions(eventId: string): IAction
   setEventId(eventId: string): IAction
 }
@@ -33,20 +31,21 @@ export default ({
   user,
   event,
   votes,
-  selectedTrack,
   fetchingVotes,
   fetchEventVotes,
   createVote,
   deleteVote,
-  selectTrack,
-  deselectTrack,
   getSuggestions,
   setEventId,
   match
 }: IPlayListProps) => {
-  const [value, setValue] = useState(0)
-  const [showPlayer, setShowPlayer] = useState(false)
   const playlist = event.playlist
+  const tracks =
+    playlist && playlist.tracks && playlist.tracks.items
+      ? playlist.tracks.items.map((item: IPlaylistItem) => item.track)
+      : []
+  const [value, setValue] = useState(0)
+  const [currentTrack, setCurrentTrack] = useState(tracks[0])
 
   const handleChange = (event: any, value: any) => {
     setValue(value)
@@ -75,21 +74,6 @@ export default ({
     createVote(vote)
   }
 
-  const handleTrackSelected = (track: ITrack) => {
-    if (selectedTrack) {
-      if (selectedTrack.id === track.id && showPlayer) {
-        setShowPlayer(false)
-        deselectTrack()
-      } else {
-        setShowPlayer(true)
-      }
-    } else {
-      setShowPlayer(true)
-    }
-
-    selectTrack(track)
-  }
-
   useEffect(() => {
     const eventId = match.params.eventId
     if (eventId) {
@@ -108,7 +92,7 @@ export default ({
     <div className="Playlist-tabs">
       <PlaylistPlayer
         playlist={playlist}
-        selectedTrack={selectedTrack}
+        selectedTrack={currentTrack}
         votes={votes}
         handleTrackVote={handleTrackVote}
       />
@@ -136,7 +120,7 @@ export default ({
             <ApprovedTracks
               playlist={playlist}
               votes={votes}
-              onTrackSelected={handleTrackSelected}
+              onTrackSelected={setCurrentTrack}
               onVote={handleTrackVote}
             />
           </Typography>

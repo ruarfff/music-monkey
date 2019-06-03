@@ -5,7 +5,6 @@ import { PLAYLIST_CLEAR } from '../playlist/playlistActions'
 import { RECOMMENDATIONS_CLEAR } from '../recommendation/recommendationsActions'
 import { CLEAR_SEARCH } from '../search/searchActions'
 import { CLEAR_SUGGESTION } from '../suggestion/suggestionActions'
-import { TRACK_DESELECTED } from '../track/trackActions'
 import { FETCH_USER_SUCCESS } from '../user/userActions'
 import {
   LOGGED_OUT,
@@ -52,7 +51,6 @@ export function* logoutFlow() {
     yield put({ type: RECOMMENDATIONS_CLEAR })
     yield put({ type: CLEAR_SEARCH })
     yield put({ type: CLEAR_SUGGESTION })
-    yield put({ type: TRACK_DESELECTED })
   } catch (err) {
     console.error(err)
   }

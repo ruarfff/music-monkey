@@ -1,18 +1,12 @@
 import { put, takeEvery } from 'redux-saga/effects'
 import { CLEAR_SEARCH } from '../search/searchActions'
-import {
-    CLEAR_SUGGESTION
-} from '../suggestion/suggestionActions'
-import { TRACK_DESELECTED } from '../track/trackActions'
-import {
-    SELECT_PAGE
-} from './activeActions'
+import { CLEAR_SUGGESTION } from '../suggestion/suggestionActions'
+import { SELECT_PAGE } from './activeActions'
 
 export function* selectPage() {
   try {
     yield put({ type: CLEAR_SUGGESTION })
     yield put({ type: CLEAR_SEARCH })
-    yield put({ type: TRACK_DESELECTED })
   } catch (error) {
     console.log(error)
   }

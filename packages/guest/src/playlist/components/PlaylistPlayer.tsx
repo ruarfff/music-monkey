@@ -11,7 +11,6 @@ import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import './PlaylistPlayer.scss'
 import IPlaylistItem from '../IPlaylistItem'
 import { findIndex, isEmpty } from 'lodash'
-import '../../player/TimeLine.scss'
 
 interface IPlaylistPlayerProps {
   playlist: any

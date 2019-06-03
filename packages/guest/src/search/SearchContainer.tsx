@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import IRootState from '../rootState'
-import { selectTrack } from '../track/trackActions'
 import Search from './Search'
 import { clearSearch, searchTracks } from './searchActions'
 
@@ -11,8 +10,7 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   searchTracks,
-  clearSearch,
-  selectTrack
+  clearSearch
 }
 
 const SearchContainer = connect(
