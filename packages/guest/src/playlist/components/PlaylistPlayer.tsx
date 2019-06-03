@@ -31,7 +31,6 @@ export default ({
   const [time, setTime] = useState(0)
   const [random, setRandom] = useState(false)
   const [loop, setLoop] = useState(false)
-  const numberOfVotes = selectedTrackVotes.numberOfVotes || 0
   const userVoted = selectedTrackVotes.votedByCurrentUser
   const trackIndex = findIndex(tracks, selectedTrack)
   if (time >= 100) {
@@ -68,7 +67,9 @@ export default ({
       nextTrack()
       return
     }
-    const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
+    const audio = document.getElementById(
+      'playlist-player-audio'
+    ) as HTMLMediaElement
     const audioSource = document.getElementById(
       'playlist-player-audio-source'
     ) as HTMLMediaElement
@@ -103,7 +104,9 @@ export default ({
   }, [loop, onTrackChanged, tracks, tracks.length, selectedTrack])
 
   const onPlay = () => {
-    const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
+    const audio = document.getElementById(
+      'playlist-player-audio'
+    ) as HTMLMediaElement
     if (time === 100) {
       setPlay(false)
       setTime(0)
@@ -120,28 +123,27 @@ export default ({
     return <div />
   }
   return (
-    <div className="PlayerPlaylist-container">
-      <div className="playlist-header-top-menu">
+    <div className="PlaylistPlayer-container">
+      <div className="PlaylistPlayer-header-top-menu">
         <Icon>chevron_left</Icon>
       </div>
-      <div className="PlayerPlaylist-track-img">
-        <div className="PlayerPlaylist-track-img-container">
+      <div className="PlaylistPlayer-track-img">
+        <div className="PlaylistPlayer-track-img-container">
           <Avatar
             src={selectedTrack.album.images[0].url}
-            className="PlayerPlaylist-track-avatar"
+            className="PlaylistPlayer-track-avatar"
           />
-          <div className="progress-circle" data-progress={time || 0} />
         </div>
         <ListItemText
           primary={selectedTrack.artists[0].name}
           secondary={selectedTrack.name}
-          className="PlayerPlaylist-track-name"
+          className="PlaylistPlayer-track-name"
         />
       </div>
-      <div className="PlayerPlaylist-control-container">
-        <div className="PlayerPlaylist-control-container-flex">
+      <div className="PlaylistPlayer-control-container">
+        <div className="PlaylistPlayer-control-container-flex">
           <div
-            className={`PlayerPlaylist-control-white ${loop ? 'active' : ''}`}
+            className={`PlaylistPlayer-control-white ${loop ? 'active' : ''}`}
           >
             <IconButton
               color="primary"
@@ -155,7 +157,7 @@ export default ({
             </IconButton>
           </div>
           <div
-            className={`PlayerPlaylist-control-white ${random ? 'active' : ''}`}
+            className={`PlaylistPlayer-control-white ${random ? 'active' : ''}`}
           >
             <IconButton
               color="primary"
@@ -168,7 +170,7 @@ export default ({
               <Icon>shuffle</Icon>
             </IconButton>
           </div>
-          <div className="PlayerPlaylist-control-white">
+          <div className="PlaylistPlayer-control-white">
             <IconButton
               color="primary"
               component="span"
@@ -185,17 +187,17 @@ export default ({
             </IconButton>
           </div>
         </div>
-        <div className="PlayerPlaylist-control-play">
+        <div className="PlaylistPlayer-control-play">
           <Fab
             color="primary"
-            className="finder-playlist-header-container-button"
+            className="PlaylistPlayer-control-play-button"
             onClick={onPlay}
           >
             <Icon>{play ? 'pause' : 'play_arrow'}</Icon>
           </Fab>
         </div>
-        <div className="PlayerPlaylist-control-container-flex">
-          <div className="PlayerPlaylist-control-white">
+        <div className="PlaylistPlayer-control-container-flex">
+          <div className="PlaylistPlayer-control-white">
             <IconButton
               color="primary"
               component="span"
@@ -211,42 +213,36 @@ export default ({
               <Icon>skip_next</Icon>
             </IconButton>
           </div>
-          <div className="PlayerPlaylist-control-white">
-            <div
-              className="playList-button-favorite"
-              style={{ color: userVoted ? 'secondary' : 'primary' }}
+          <div
+            className={`PlaylistPlayer-control-white ${
+              userVoted ? 'active' : ''
+            }`}
+          >
+            <IconButton
+              color="primary"
+              component="span"
+              onClick={() => {
+                onFavouriteClicked(selectedTrack)
+              }}
+              classes={{ disabled: 'disabled' }}
             >
-              <span className="playList-favorite-count black">
-                {' '}
-                {numberOfVotes}{' '}
-              </span>
-              <Icon
-                onClick={() => {
-                  onFavouriteClicked(selectedTrack)
-                }}
-                className={`playList-favorite-icon ${
-                  userVoted ? '' : 'primary'
-                }`}
-              >
-                favorite
-              </Icon>
-            </div>
+              <Icon>favorite</Icon>
+            </IconButton>
           </div>
         </div>
       </div>
-      <div className="player-control-duration">
-        <LinearProgress
-          className={'TimeLine-progress'}
-          variant="determinate"
-          value={time}
-        />
-      </div>
+
+      <LinearProgress
+        className={'PlaylistPlayer-progress'}
+        variant="determinate"
+        value={time}
+      />
+
       <div style={{ display: 'none' }}>
         <audio
-          id="PlayerPlaylist"
+          id="playlist-player-audio"
           loop={loop}
           controls={true}
-          className="EventSuggestions-audio"
           preload="none"
         >
           <source id="playlist-player-audio-source" src="" />

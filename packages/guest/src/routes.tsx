@@ -129,7 +129,7 @@ interface IRouterProps {
 export const Routes: React.SFC<IRouterProps> = ({ history }) => {
   const fof = () => <div>404</div>
   return (
-    <Suspense fallback={LoadingPage}>
+    <Suspense fallback={<LoadingPage />}>
       <Switch>
         {routes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
