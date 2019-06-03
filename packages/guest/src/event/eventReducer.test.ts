@@ -13,6 +13,7 @@ import initialState from './eventInitialState'
 import event from './eventReducer'
 import IEvent from './IEvent'
 import ISelectedSuggestion from './ISelectedSuggestion'
+import IPlaylist from '../playlist/IPlaylist'
 
 describe('eventReducer', () => {
   it('should return the initial state when no action matches', () => {
@@ -37,13 +38,19 @@ describe('eventReducer', () => {
           { ...initialState, eventLoading: true },
           {
             type: EVENT_FETCHED,
-            payload: {eventId: 'event-id'} as IEvent
+            payload: {
+              eventId: 'event-id',
+              playlist: { id: 'playlist-id' } as IPlaylist
+            } as IEvent
           }
         )
       ).toEqual({
         ...initialState,
         eventLoading: false,
-        selectedEvent: {eventId: 'event-id'} as IEvent,
+        selectedEvent: {
+          eventId: 'event-id',
+          playlist: { id: 'playlist-id' } as IPlaylist
+        } as IEvent,
         eventId: 'event-id'
       })
     })

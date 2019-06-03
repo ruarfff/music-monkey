@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Playlist from './Playlist'
-import IPlaylist from '../IPlaylist'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import ITrack from '../../track/ITrack'
 import IEvent from '../../event/IEvent'
@@ -10,7 +9,6 @@ import IUser from '../../user/IUser'
 it('renders without crashing', () => {
   const user = {} as IUser
   const event = {} as IEvent
-  const selectedPlaylist = {} as IPlaylist
   const votes = {} as Map<string, ITrackVoteStatus>
   const selectedTrack = {} as ITrack
   const fetchingVotes = false
@@ -27,7 +25,6 @@ it('renders without crashing', () => {
     <Playlist
       user={user}
       event={event}
-      selectedPlaylist={selectedPlaylist}
       votes={votes}
       selectedTrack={selectedTrack}
       fetchingVotes={fetchingVotes}

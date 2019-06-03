@@ -1,7 +1,6 @@
 import { cloneDeep } from 'lodash'
 import IEvent from '../event/IEvent'
 import Action from '../IAction'
-import { SELECT_PLAYLIST } from '../navigation/activeActions'
 import {
   EVENT_PLAYLISTS_LOADED,
   FETCH_MORE_PLAYLISTS_REQUEST,
@@ -9,9 +8,7 @@ import {
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
-  PLAYLIST_CLEAR,
-  PLAYLIST_DESELECTED,
-  PLAYLIST_SELECTED
+  PLAYLIST_CLEAR
 } from './playlistActions'
 import initialState from './playlistInitialState'
 
@@ -20,8 +17,6 @@ export default function playlist(
   { type, payload }: Action
 ) {
   switch (type) {
-    case SELECT_PLAYLIST:
-      return { ...state, selectedPlaylist: payload}
     case FETCH_MORE_PLAYLISTS_REQUEST:
     case FETCH_PLAYLISTS:
       return { ...state, isLoading: true }
@@ -36,20 +31,18 @@ export default function playlist(
     case FETCH_PLAYLISTS_SUCCESS:
       return { ...state, data: payload, isLoading: false }
     case PLAYLIST_CLEAR:
-      return { ...state, data: [], selectedPlaylist: {}, isLoading: false }
+      return { ...state, data: [], isLoading: false }
     case FETCH_PLAYLISTS_ERROR:
       return { ...state, error: payload }
-    case PLAYLIST_SELECTED:
-      return { ...state, selectedPlaylist: payload }
-    case PLAYLIST_DESELECTED:
-      return { ...state, selectedPlaylist: {} }
     case EVENT_PLAYLISTS_LOADED:
-      const filteredEvents = payload.filter((event: IEvent) => event.playlistUrl)
+      const filteredEvents = payload.filter(
+        (event: IEvent) => event.playlistUrl
+      )
       return {
         ...state,
         eventPlaylists: filteredEvents.map((event: IEvent) => ({
-        ...event.playlist,
-            eventId: event.eventId
+          ...event.playlist,
+          eventId: event.eventId
         }))
       }
     default:

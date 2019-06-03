@@ -16,7 +16,6 @@ import moment from 'moment'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import IEvent from '../../event/IEvent'
-import IAction from '../../IAction'
 import IPlaylist from '../IPlaylist'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import './PlaylistListView.scss'
@@ -26,9 +25,7 @@ interface IPlaylistListViewProps {
   attached: boolean
   disableLinks?: boolean
   eventsLoading?: boolean
-  selectPlaylist(playlist: IPlaylist): IAction
   addedPlaylist?(value: IPlaylist): any
-  onPlaylistSelected?(playlist: IPlaylist): any
 }
 
 class PlaylistListView extends React.Component<IPlaylistListViewProps> {
@@ -37,20 +34,7 @@ class PlaylistListView extends React.Component<IPlaylistListViewProps> {
   }
 
   public render() {
-    const {
-      onPlaylistSelected,
-      playlists,
-      disableLinks,
-      events,
-      eventsLoading
-    } = this.props
-
-    const handlePlaylistSelected = (playlist: IPlaylist) => () => {
-      this.props.selectPlaylist(playlist)
-      if (onPlaylistSelected) {
-        onPlaylistSelected(playlist)
-      }
-    }
+    const { playlists, disableLinks, events, eventsLoading } = this.props
 
     const now = moment()
 
@@ -118,11 +102,7 @@ class PlaylistListView extends React.Component<IPlaylistListViewProps> {
             {filteredPlaylists.map((playlist: IPlaylist, i: number) => (
               <div className="PlaylistListView-item-wrapper" key={i}>
                 <Link to={disableLinks ? '#' : '/playlist/' + playlist.eventId}>
-                  <ListItem
-                    disabled={playlist.tracks.total < 1}
-                    button={true}
-                    onClick={handlePlaylistSelected(playlist)}
-                  >
+                  <ListItem disabled={playlist.tracks.total < 1} button={true}>
                     <div className="PlaylistListView-item">
                       <ListItemAvatar>
                         <Avatar

@@ -11,8 +11,6 @@ export const FETCH_MORE_PLAYLISTS_REQUEST = 'FETCH_MORE_PLAYLISTS_REQUEST'
 export const FETCH_MORE_PLAYLISTS_SUCCESS = 'FETCH_MORE_PLAYLISTS_SUCCESS'
 export const FETCH_MORE_PLAYLISTS_FAILURE = 'FETCH_MORE_PLAYLISTS_FAILURE'
 
-export const PLAYLIST_SELECTED = 'PLAYLIST_SELECTED'
-export const PLAYLIST_DESELECTED = 'PLAYLIST_DESELECTED'
 export const PLAYLIST_CLEAR = 'PLAYLIST_CLEAR'
 export const EVENT_PLAYLISTS_LOADED = 'EVENT_PLAYLISTS_LOADED'
 
@@ -44,15 +42,6 @@ export const fetchPlaylistsSuccess = (data: IPlaylist): IAction => ({
 export const fetchPlaylistsError = (error: Error): IAction => ({
   payload: error,
   type: FETCH_PLAYLISTS_ERROR
-})
-
-export const onPlaylistSelected = (playlist: IPlaylist): IAction => ({
-  type: PLAYLIST_SELECTED,
-  payload: playlist
-})
-
-export const deselectPlaylist = (): IAction => ({
-  type: PLAYLIST_DESELECTED
 })
 
 export const loadEventPlaylists = (events: IEvent[]): IAction => ({

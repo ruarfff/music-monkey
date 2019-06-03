@@ -1,9 +1,7 @@
 import Action from '../IAction'
 import {
-  CLEAR_PLAYLIST,
   SELECT_EVENT,
   SELECT_PAGE,
-  SELECT_PLAYLIST,
   SHOW_FINDER_MODAL_EVENT
 } from './activeActions'
 import initialState from './activeActionsInitialState'
@@ -28,16 +26,6 @@ export default function event(
       return {
         ...state,
         showFinderModalEvent: payload
-      } as IactiveActionsState
-    case SELECT_PLAYLIST:
-      return {
-        ...state,
-        selectedPlayList: payload
-      } as IactiveActionsState
-    case CLEAR_PLAYLIST:
-      return {
-        ...state,
-        selectedPlayList: {}
       } as IactiveActionsState
     default:
       return state

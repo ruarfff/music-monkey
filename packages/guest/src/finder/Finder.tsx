@@ -35,7 +35,6 @@ interface IFinderProps extends RouteComponentProps<any> {
   deselectEvent(): IAction
   saveTrackSuggestion(suggestions: ITrackSuggestion): IAction
   fetchPlaylists(user: IUser): IAction
-  selectPlaylist(playlist: IPlaylist): IAction
   savePlaylistSuggestion(suggestions: IPlaylistSuggestion): IAction
   fetchMorePlaylists(user: IUser): IAction
   setEventId(eventId: string): IAction
@@ -52,7 +51,6 @@ const Finder = ({
   deselectEvent,
   saveTrackSuggestion,
   fetchPlaylists,
-  selectPlaylist,
   savePlaylistSuggestion,
   fetchMorePlaylists,
   setEventId,
@@ -149,12 +147,10 @@ const Finder = ({
               <MyPlaylistsTab
                 user={user}
                 fetchMorePlaylists={fetchMorePlaylists}
-                selectedEvent={selectedEvent}
                 savePlaylistSuggestion={onPlaylistSelected}
                 onTrackSelected={onTrackSelected}
                 playlists={userPlaylists}
                 selectedUserPlaylist={selectedUserPlaylist}
-                selectPlaylist={selectPlaylist}
                 attached={false}
               />
             ) : (

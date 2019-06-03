@@ -1,13 +1,9 @@
-import {
-  Avatar,
-  Button,
-  Icon,
-  IconButton,
-  ListItemText
-} from '@material-ui/core'
+import { Avatar, Icon, IconButton, ListItemText, Fab } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import './PlaylistPlayer.scss'
+import IPlaylistItem from '../IPlaylistItem'
+import { findIndex, isEmpty } from 'lodash'
 
 interface IPlaylistPlayerProps {
   playlist: any
@@ -22,19 +18,33 @@ export default ({
   votes,
   handleTrackVote
 }: IPlaylistPlayerProps) => {
-  const track = playlist.tracks ? playlist.tracks.items[0].track : {}
-  const tracks = playlist.tracks
-    ? playlist.tracks.items.map((s: any, index: number) => index)
-    : []
-
   const [play, setPlay] = useState(false)
   const [time, setTime] = useState(0)
   const [trackNum, setTrackNum] = useState(0)
   const [random, setRandom] = useState(false)
   const [loop, setLoop] = useState(false)
+  const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
+  const tracks =
+    playlist.tracks && playlist.tracks.items
+      ? playlist.tracks.items.map((item: IPlaylistItem) => item.track)
+      : []
+  if (!!selectedTrack) {
+    const selectedIndex = findIndex(tracks, { id: selectedTrack.id })
+    if (trackNum !== selectedIndex) {
+      setTrackNum(selectedIndex)
+    }
+  }
+  const currentTrack = tracks[trackNum] || {}
+  const voteStatus: ITrackVoteStatus =
+    votes.get(currentTrack.uri) || ({} as ITrackVoteStatus)
+  const numberOfVotes = voteStatus.numberOfVotes || 0
+  const userVoted = voteStatus.votedByCurrentUser
+
+  if (time === 100) {
+    setTime(0)
+  }
 
   useEffect(() => {
-    const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
     if (!!audio) {
       audio.onended = () => {
         if (!loop) {
@@ -51,43 +61,32 @@ export default ({
         setTime(+timer.toFixed(0))
       })
     }
-  })
-
-  useEffect(() => {
-    if (!!selectedTrack) {
-      playlist.tracks.items.forEach((tracks: any, index: number) => {
-        if (tracks.track.id === selectedTrack.id) {
-          setTrackNum(index)
-        }
-      })
-    }
-  })
+  }, [audio, loop, trackNum, tracks.length])
 
   const skip = (next: boolean) => {
     if (random) {
-      let rand = 0 + Math.random() * playlist.tracks.items.length
+      let rand = 0 + Math.random() * tracks.length
       rand = Math.floor(rand)
 
       while (trackNum === rand) {
-        rand = 0 + Math.random() * playlist.tracks.items.length
+        rand = 0 + Math.random() * tracks.length
         rand = Math.floor(rand)
       }
       setTrackNum(rand)
     } else {
       setTrackNum(
         next
-          ? playlist.tracks.items.length - 1 === trackNum
+          ? tracks.length - 1 === trackNum
             ? 0
             : trackNum + 1
           : trackNum === 0
-          ? playlist.tracks.items.length - 1
+          ? tracks.length - 1
           : trackNum - 1
       )
     }
   }
 
   const onPlay = () => {
-    const audio = document.getElementById('PlayerPlaylist') as HTMLMediaElement
     if (time === 100) {
       setPlay(false)
       setTime(0)
@@ -100,24 +99,9 @@ export default ({
     setPlay(!play)
   }
 
-  const currentTrack = playlist.tracks.items[tracks[trackNum]].track
-  const voteStatus: ITrackVoteStatus =
-    votes.get(track.uri) || ({} as ITrackVoteStatus)
-
-  const numberOfVotes = voteStatus.numberOfVotes || 0
-  const userVoted = voteStatus.votedByCurrentUser
-
-  if (
-    !currentTrack.preview_url &&
-    playlist.tracks.items.length - 1 !== trackNum
-  ) {
-    setTrackNum(trackNum + 1)
+  if (isEmpty(currentTrack)) {
+    return <span />
   }
-
-  if (time === 100) {
-    setTime(0)
-  }
-
   return (
     <div className="PlayerPlaylist-container">
       <div className="playlist-header-top-menu">
@@ -126,14 +110,14 @@ export default ({
       <div className="PlayerPlaylist-track-img">
         <div className="PlayerPlaylist-track-img-container">
           <Avatar
-            src={track.album.images[0].url}
+            src={currentTrack.album.images[0].url}
             className="PlayerPlaylist-track-avatar"
           />
           <div className="progress-circle" data-progress={time || 0} />
         </div>
         <ListItemText
-          primary={track.artists[0].name}
-          secondary={track.name}
+          primary={currentTrack.artists[0].name}
+          secondary={currentTrack.name}
           className="PlayerPlaylist-track-name"
         />
       </div>
@@ -181,14 +165,13 @@ export default ({
           </div>
         </div>
         <div className="PlayerPlaylist-control-play">
-          <Button
-            variant="fab"
+          <Fab
             color="primary"
             className="finder-playlist-header-container-button"
             onClick={onPlay}
           >
             <Icon>{play ? 'pause' : 'play_arrow'}</Icon>
-          </Button>
+          </Fab>
         </div>
         <div className="PlayerPlaylist-control-container-flex">
           <div className="PlayerPlaylist-control-white">
@@ -214,7 +197,7 @@ export default ({
               </span>
               <Icon
                 onClick={() => {
-                  handleTrackVote(track)
+                  handleTrackVote(currentTrack)
                 }}
                 className={`playList-favorite-icon ${
                   userVoted ? '' : 'primary'
@@ -238,7 +221,7 @@ export default ({
       </div>
       <div style={{ display: 'none' }}>
         <audio
-          src={track.preview_url}
+          src={currentTrack.preview_url}
           id="PlayerPlaylist"
           loop={loop}
           controls={true}

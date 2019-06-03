@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { selectPlaylist } from '../../navigation/activeActions'
 import IRootState from '../../rootState'
 import PlaylistListView from './PlaylistListView'
 
@@ -10,9 +9,7 @@ const mapStateToProps = (state: IRootState) => ({
   eventsLoading: state.event.eventsLoading
 })
 
-const mapDispatchToProps = {
-  selectPlaylist
-}
+const mapDispatchToProps = {}
 
 const PlaylistViewContainer = connect(
   mapStateToProps,

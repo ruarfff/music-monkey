@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { deselectEvent, setEventId } from '../event/eventActions'
-import { selectPlaylist } from '../navigation/activeActions'
 import { fetchMorePlaylists, fetchPlaylists } from '../playlist/playlistActions'
 import IRootState from '../rootState'
 import {
@@ -14,7 +13,6 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   events: state.event.events,
   userPlaylists: state.playlist.data,
-  selectedUserPlaylist: state.playlist.selectedPlaylist,
   selectedEvent: state.event.selectedEvent,
   searchResults: state.search.tracks,
   searching: state.search.searching
@@ -23,7 +21,6 @@ const mapStateToProps = (state: IRootState) => ({
 const mapDispatchToProps = {
   saveTrackSuggestion,
   fetchPlaylists,
-  selectPlaylist,
   savePlaylistSuggestion,
   deselectEvent,
   fetchMorePlaylists,

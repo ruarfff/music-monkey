@@ -4,7 +4,6 @@ export default {
   selectedPage: 'events',
   selectedTab: '',
   selectedEvent: {},
-  selectedPlayList: {},
   showFinderModalEvent: true,
   showBars: false,
   firstAuthenticated: true

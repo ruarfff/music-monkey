@@ -1,21 +1,16 @@
-import { Button, List, Typography } from '@material-ui/core'
-import { isEmpty } from 'lodash'
-import IEvent from '../event/IEvent'
+import { Typography } from '@material-ui/core'
 import IAction from '../IAction'
 import PlaylistListView from '../playlist/components/PlaylistListView'
 import IPlaylist from '../playlist/IPlaylist'
 import ITrack from '../track/ITrack'
-import TrackList from '../track/TrackList'
 import IUser from '../user/IUser'
 import React, { useEffect } from 'react'
 
 interface IMyPlaylistsTabProps {
   user: IUser
-  selectedEvent: IEvent
   playlists: IPlaylist[]
   attached: boolean
   selectedUserPlaylist: IPlaylist
-  selectPlaylist(playlist: IPlaylist): IAction
   addedPlaylist?(value: IPlaylist): any
   onTrackSelected(track: ITrack): any
   savePlaylistSuggestion(suggestions: IPlaylist): any
@@ -24,10 +19,8 @@ interface IMyPlaylistsTabProps {
 
 const MyPlaylistsTab = ({
   selectedUserPlaylist,
-  selectedEvent,
   user,
   playlists,
-  selectPlaylist,
   addedPlaylist,
   onTrackSelected,
   savePlaylistSuggestion,
@@ -36,12 +29,6 @@ const MyPlaylistsTab = ({
   const handleFetchMorePlaylists = () => {
     fetchMorePlaylists(user)
   }
-
-  useEffect(() => {
-    if (!isEmpty(selectedUserPlaylist)) {
-      selectPlaylist({} as IPlaylist)
-    }
-  }, [selectPlaylist, selectedUserPlaylist])
 
   useEffect(() => {
     const trackScrolling = () => {
@@ -64,14 +51,13 @@ const MyPlaylistsTab = ({
     return (
       <PlaylistListView
         playlists={playlists}
-        selectPlaylist={selectPlaylist}
         attached={true}
         addedPlaylist={addedPlaylist}
         disableLinks={true}
       />
     )
   }
-
+  /**
   const renderListOfTracks = () => {
     return (
       <React.Fragment>
@@ -90,13 +76,11 @@ const MyPlaylistsTab = ({
         </List>
       </React.Fragment>
     )
-  }
+  } */
 
   return (
     <Typography component="div" dir="1">
-      {isEmpty(selectedUserPlaylist)
-        ? renderPlaylistSimpleList()
-        : renderListOfTracks()}
+      {renderPlaylistSimpleList()}
       <div className="Finder-stopper-block" />
     </Typography>
   )
