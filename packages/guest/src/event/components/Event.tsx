@@ -48,7 +48,7 @@ interface IEventProps {
 
 const options = ["I'm Going", 'Maybe', "I'm not going"]
 
-export default ({
+const Event = ({
   user,
   selectedEvent,
   inviteId,
@@ -263,3 +263,5 @@ export default ({
     </div>
   )
 }
+
+export default Event

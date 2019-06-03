@@ -62,54 +62,53 @@ const routes = [
     component: userIsNotAuthenticated(Login),
     path: '/login',
     exact: true
+  },
+  {
+    component: MainLayout,
+    path: '/',
+    routes: [
+      {
+        component: userIsAuthenticated(EventListView),
+        path: '/',
+        exact: true
+      },
+      {
+        component: userIsAuthenticated(Event),
+        path: '/events/:eventId',
+        exact: true
+      },
+      {
+        component: userIsAuthenticated(Account),
+        path: '/account',
+        exact: true
+      },
+      {
+        component: userIsAuthenticated(Requests),
+        path: '/requests',
+        exact: true
+      },
+      {
+        component: userIsAuthenticated(Requests),
+        path: '/requests/:eventId',
+        exact: true
+      },
+      {
+        component: userIsAuthenticated(PlaylistView),
+        path: '/playlists',
+        exact: true
+      },
+      {
+        component: userIsAuthenticated(Playlist),
+        path: '/playlist/:eventId',
+        exact: true
+      },
+      {
+        component: userIsAuthenticated(Finder),
+        path: '/finder/:eventId'
+      }
+    ]
   }
 ]
-
-const mainLayoutRoute = {
-  component: MainLayout,
-  path: '/',
-  routes: [
-    {
-      component: userIsAuthenticated(EventListView),
-      path: '/',
-      exact: true
-    },
-    {
-      component: userIsAuthenticated(Event),
-      path: '/events/:eventId',
-      exact: true
-    },
-    {
-      component: userIsAuthenticated(Account),
-      path: '/account',
-      exact: true
-    },
-    {
-      component: userIsAuthenticated(Requests),
-      path: '/requests',
-      exact: true
-    },
-    {
-      component: userIsAuthenticated(Requests),
-      path: '/requests/:eventId',
-      exact: true
-    },
-    {
-      component: userIsAuthenticated(PlaylistView),
-      path: '/playlists',
-      exact: true
-    },
-    {
-      component: userIsAuthenticated(Playlist),
-      path: '/playlist/:eventId',
-      exact: true
-    },
-    {
-      component: userIsAuthenticated(Finder),
-      path: '/finder/:eventId'
-    }
-  ]
-}
 
 const renderSubRoutes = (route: any) => (props: any) => (
   <route.component {...props} routes={route.routes} />
@@ -135,7 +134,6 @@ export const Routes: React.SFC<IRouterProps> = ({ history }) => {
         {routes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
         ))}
-        <RouteWithSubRoutes {...mainLayoutRoute} />
         <Route render={fof} />
       </Switch>
     </Suspense>

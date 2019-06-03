@@ -28,7 +28,7 @@ interface IPlayListProps extends RouteComponentProps<any> {
   setEventId(eventId: string): IAction
 }
 
-export default ({
+const Playlist = ({
   user,
   event,
   votes,
@@ -155,3 +155,5 @@ export default ({
     </div>
   )
 }
+
+export default Playlist

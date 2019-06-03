@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { deselectEvent, setEventId } from '../event/eventActions'
+import { withRouter } from 'react-router'
 import IRootState from '../rootState'
 import {
   getSuggestions,
@@ -22,9 +23,11 @@ const mapDispatchToProps = {
   setEventId
 }
 
-const RequestsContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Requests)
+const RequestsContainer = withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Requests)
+)
 
 export default RequestsContainer

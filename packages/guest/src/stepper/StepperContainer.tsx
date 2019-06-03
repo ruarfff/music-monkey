@@ -4,12 +4,14 @@ import IRootState from '../rootState'
 import Stepper from './Stepper'
 
 const mapStateToProps = (state: IRootState) => ({
-    firstAuthenticated: state.auth.firstAuthenticated
+  firstAuthenticated: state.auth.firstAuthenticated
 })
+
+const mapDispatchToProps = {}
 
 const StepperContainer = connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Stepper)
 
 export default StepperContainer

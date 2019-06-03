@@ -1,7 +1,7 @@
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import * as React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../event/IEvent'
 import EventPicker from '../event/components/EventPickerContainer'
@@ -120,4 +120,4 @@ class Requests extends React.Component<IRequestsProps> {
   }
 }
 
-export default withRouter(Requests)
+export default Requests
