@@ -1,11 +1,11 @@
 import { push } from 'connected-react-router'
 import { History } from 'history'
-import React, { Suspense, lazy } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Route, Switch } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from './rootState'
-import LoadingSpinner from './loading/LoadingSpinner'
+import LoadingPage from './loading/LoadingPage'
 
 const Account = lazy(() => import('./account/AccountContainer'))
 const Login = lazy(() => import('./auth/LoginContainer'))
@@ -62,59 +62,54 @@ const routes = [
     component: userIsNotAuthenticated(Login),
     path: '/login',
     exact: true
-  },
-  {
-    component: MainLayout,
-    path: '/',
-    routes: [
-      {
-        component: userIsAuthenticated(EventListView),
-        path: '/',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Event),
-        path: '/events/:eventId',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Account),
-        path: '/account',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Requests),
-        path: '/requests',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Requests),
-        path: '/requests/:eventId',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(PlaylistView),
-        path: '/playlists',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Playlist),
-        path: '/playlist/:eventId',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Finder),
-        path: '/finder',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Finder),
-        path: '/finder/:eventId',
-        exact: true
-      }
-    ]
   }
 ]
+
+const mainLayoutRoute = {
+  component: MainLayout,
+  path: '/',
+  routes: [
+    {
+      component: userIsAuthenticated(EventListView),
+      path: '/',
+      exact: true
+    },
+    {
+      component: userIsAuthenticated(Event),
+      path: '/events/:eventId',
+      exact: true
+    },
+    {
+      component: userIsAuthenticated(Account),
+      path: '/account',
+      exact: true
+    },
+    {
+      component: userIsAuthenticated(Requests),
+      path: '/requests',
+      exact: true
+    },
+    {
+      component: userIsAuthenticated(Requests),
+      path: '/requests/:eventId',
+      exact: true
+    },
+    {
+      component: userIsAuthenticated(PlaylistView),
+      path: '/playlists',
+      exact: true
+    },
+    {
+      component: userIsAuthenticated(Playlist),
+      path: '/playlist/:eventId',
+      exact: true
+    },
+    {
+      component: userIsAuthenticated(Finder),
+      path: '/finder/:eventId'
+    }
+  ]
+}
 
 const renderSubRoutes = (route: any) => (props: any) => (
   <route.component {...props} routes={route.routes} />
@@ -135,11 +130,12 @@ interface IRouterProps {
 export const Routes: React.SFC<IRouterProps> = ({ history }) => {
   const fof = () => <div>404</div>
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={LoadingPage}>
       <Switch>
         {routes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
         ))}
+        <RouteWithSubRoutes {...mainLayoutRoute} />
         <Route render={fof} />
       </Switch>
     </Suspense>

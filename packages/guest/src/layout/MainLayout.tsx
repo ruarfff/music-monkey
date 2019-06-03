@@ -1,12 +1,13 @@
 import { isEmpty, find } from 'lodash'
-import { Route, RouteComponentProps } from 'react-router'
+import { Route, RouteComponentProps, Switch } from 'react-router'
 import BottomBar from '../bottombar/BottomBarContainer'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import { RouteWithSubRoutes } from '../routes'
 import TopBar from '../topbar/TopBarContainer'
 import './MainLayout.scss'
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense } from 'react'
+import LoadingSpinner from '../loading/LoadingSpinner'
 
 interface IMainLayoutProps extends RouteComponentProps<any> {
   routes: Route[]
@@ -61,9 +62,13 @@ const MainLayout = ({
     <div className="MainLayout-root">
       <TopBar />
       <main className="MainLayout-body">
-        {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
+        <Suspense fallback={<LoadingSpinner />}>
+          <Switch>
+            {routes.map((route, i) => (
+              <RouteWithSubRoutes key={i} {...route} />
+            ))}
+          </Switch>
+        </Suspense>
       </main>
       <BottomBar />
     </div>
