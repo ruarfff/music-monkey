@@ -3169,9 +3169,9 @@ aws4@^1.8.0:
   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
 
 axios-extensions@^3.0.4:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/axios-extensions/-/axios-extensions-3.0.5.tgz#824490e2c017df4adceb277ed3f314123a1d1a77"
-  integrity sha512-jbc4J+kTWi3dGLGyItZ0RzCKqADgqFwLfhkp4CsmT3/XGcS2/CkZ0glbHeiMrZ7bh5uydX7gVRUiu01dIdT/WA==
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/axios-extensions/-/axios-extensions-3.0.6.tgz#c817f2e6a44a1b05949f8fd20bf978f066e694da"
+  integrity sha512-a8Aj5reFpVeMmIaJMYwTXtW/5WSGBq8KFAaBOxokkPK/Hvi/hnqNeHfMSvPQqxWPCE4r1pTe/3z7FqGLy1D6CQ==
   dependencies:
     "@types/lru-cache" "^4.1.1"
     lru-cache "^4.1.5"
