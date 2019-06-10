@@ -13101,9 +13101,9 @@ sweetalert2-react-content@^1.0.1:
   integrity sha512-vgmDAGwE4nvFWMkfVO/varrZXLhn2/apOL3O+fi3S2a6NkHWBXP1FGU7HkcmrLvNS1oGC3JcaBP2+r98LRyLIw==
 
 sweetalert2@^8.11.1:
-  version "8.11.6"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.11.6.tgz#7687c5e5744f216ceae294c10e224bf111479413"
-  integrity sha512-UFtFNdlwk+NgsRIlGMFA/yz9Pq7D8c32Y11TGEc4t3avrn8f0EFlxP2+Q0JLL219w6PsEglZFfVDmIDEr1816Q==
+  version "8.12.0"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.12.0.tgz#61d0cbfa7eed4e9ff3293d6d3bbe7c399a4c6128"
+  integrity sha512-xeNzODYGPf+btzibAKmKyzRVSDVsdqwk9h7a1bXTLOIbhAvPmkRF1e8Ys17/ZNqr9Cl46wxlVZ9ByUbDkayq+g==
 
 symbol-observable@1.2.0, symbol-observable@^1.0.3, symbol-observable@^1.0.4, symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"
