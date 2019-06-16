@@ -26,7 +26,6 @@ import {
   watchDeleteVote,
   watchFetchEventVotes
 } from './vote/voteSaga'
-
 import { watchSelectPage } from './navigation/activeSaga'
 import { watchUpdateUserFlow } from './user/userSaga'
 
