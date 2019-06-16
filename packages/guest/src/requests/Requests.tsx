@@ -13,7 +13,6 @@ import MaybeTracks from './MaybeTracksContainer'
 import RejectedTracks from './RejectedTracksContainer'
 import IUser from '../user/IUser'
 import './Requests.scss'
-import LoadingSpinner from '../loading/LoadingSpinner'
 
 interface IRequestsProps extends RouteComponentProps<any> {
   event: IEvent
@@ -60,11 +59,7 @@ class Requests extends React.Component<IRequestsProps> {
 
   public render() {
     const { value } = this.state
-    const { suggestion, event, deselectEvent } = this.props
-
-    if (suggestion.fetchingSuggestions) {
-      return <LoadingSpinner />
-    }
+    const { event, deselectEvent } = this.props
 
     return (
       <div>
