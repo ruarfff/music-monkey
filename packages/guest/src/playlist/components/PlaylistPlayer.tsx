@@ -6,11 +6,13 @@ import {
   Fab,
   LinearProgress
 } from '@material-ui/core'
+import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import React, { useEffect, useState } from 'react'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import './PlaylistPlayer.scss'
 import { findIndex, isEmpty, pull } from 'lodash'
 import ITrack from '../../track/ITrack'
+import { Link } from 'react-router-dom'
 
 interface IPlaylistPlayerProps {
   tracks: ITrack[]
@@ -124,9 +126,9 @@ export default ({
   }
   return (
     <div className="PlaylistPlayer-container">
-      <div className="PlaylistPlayer-header-top-menu">
-        <Icon>chevron_left</Icon>
-      </div>
+      <Link to="/playlists" className="PlaylistPlayer-header-top-menu">
+        <ChevronLeft className="Playlist-back-arrow" />
+      </Link>
       <div className="PlaylistPlayer-track-img">
         <div className="PlaylistPlayer-track-img-container">
           <Avatar

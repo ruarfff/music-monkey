@@ -87,7 +87,7 @@ class PlaylistListView extends React.Component<IPlaylistListViewProps> {
       <List>
         {sortedPlaylists.map((playlist: IPlaylist, i: number) => (
           <div className="PlaylistListView-item-wrapper" key={i}>
-            <Link to={'/playlist/' + playlist.eventId}>
+            <Link to={'/playlists/' + playlist.eventId}>
               <ListItem disabled={playlist.tracks.total < 1} button={true}>
                 <div className="PlaylistListView-item">
                   <ListItemAvatar>

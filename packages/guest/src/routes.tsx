@@ -99,7 +99,7 @@ const routes = [
       },
       {
         component: userIsAuthenticated(Playlist),
-        path: '/playlist/:eventId',
+        path: '/playlists/:eventId',
         exact: true
       },
       {

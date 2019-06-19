@@ -154,14 +154,14 @@ const Event = ({
 
   return (
     <div className="Event-root">
-      <div className="Event-header-top-menu">
-        <Link to="/">
-          <ChevronLeft className="Event-back-arrow" />
-        </Link>
-      </div>
       <div className="Event-header-container">
         <img className="Event-background" src={selectedEvent.imageUrl} alt="" />
         <div className="Event-img">
+          <div className="Event-header-top-menu">
+            <Link to="/">
+              <ChevronLeft className="Event-back-arrow" />
+            </Link>
+          </div>
           <div className="Event-img-info-block">
             <div className="Event-img-calendar">
               <div className="Event-img-calendar-month">
