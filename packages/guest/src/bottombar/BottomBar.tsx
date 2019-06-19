@@ -12,20 +12,26 @@ interface IBottomBar extends RouteComponentProps<any> {
   event: IEvent
 }
 
-const checkLocation = (location: string, path: string) => {
-  return location === path ? 'highlighted' : ''
+const checkLocation = (pathname: string, path: string) => {
+  return pathname === path ? 'highlighted' : ''
 }
 
-const BottomBar = (props: IBottomBar) => {
-  const location = props.location.pathname
+const BottomBar = ({ location, event }: IBottomBar) => {
+  const pathname = location.pathname
+  const eventId = event && event.eventId ? event.eventId : null
+  const eventsLink = eventId ? `/events/${eventId}` : '/'
+  const playlistsLink = eventId ? `/playlists/${eventId}` : '/playlists'
+  const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
+  const accountLink = '/account'
+
   return (
     <div className="BottomBar-navigation">
       <div className="BottomBar-navigation-left">
         <div
           className={`BottomBar-navigation-item
-          ${checkLocation(location, '/')}`}
+          ${checkLocation(pathname, eventsLink)}`}
         >
-          <Link to="/">
+          <Link to={eventsLink}>
             <EventIcon />
             <span>Events</span>
           </Link>
@@ -33,9 +39,9 @@ const BottomBar = (props: IBottomBar) => {
 
         <div
           className={`BottomBar-navigation-item
-          ${checkLocation(location, '/playlists')}`}
+          ${checkLocation(pathname, playlistsLink)}`}
         >
-          <Link to="/playlists">
+          <Link to={playlistsLink}>
             <LibraryMusicIcon />
             <span>Playlists</span>
           </Link>
@@ -43,15 +49,15 @@ const BottomBar = (props: IBottomBar) => {
       </div>
 
       <div className="BottomBar-finder-button">
-        <FinderButton id={props.event && props.event.eventId} />
+        <FinderButton id={event && event.eventId} />
       </div>
 
       <div className="BottomBar-navigation-right">
         <div
           className={`BottomBar-navigation-item
-          ${checkLocation(location, '/requests')}`}
+          ${checkLocation(pathname, requestsLink)}`}
         >
-          <Link to={props.event && props.event.eventId ? `/requests/${props.event.eventId}` : '/requests'}>
+          <Link to={requestsLink}>
             <FavoriteIcon />
             <span>Requests</span>
           </Link>
@@ -59,9 +65,9 @@ const BottomBar = (props: IBottomBar) => {
 
         <div
           className={`BottomBar-navigation-item
-          ${checkLocation(location, '/account')}`}
+          ${checkLocation(pathname, accountLink)}`}
         >
-          <Link to="/account">
+          <Link to={accountLink}>
             <AccountCircleIcon />
             <span>Account</span>
           </Link>
