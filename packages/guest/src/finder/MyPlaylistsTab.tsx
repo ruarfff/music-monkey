@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core'
 import IAction from '../IAction'
-import PlaylistListView from '../playlist/components/PlaylistListView'
+//import PlaylistListView from '../playlist/components/PlaylistListView'
 import IPlaylist from '../playlist/IPlaylist'
 import ITrack from '../track/ITrack'
 import IUser from '../user/IUser'
@@ -47,10 +47,11 @@ const MyPlaylistsTab = ({
     }
   })
 
+  /**
   const renderPlaylistSimpleList = () => {
     return (
       <PlaylistListView
-        playlists={playlists}
+        events={[]}
         attached={true}
         addedPlaylist={addedPlaylist}
         disableLinks={true}
@@ -80,7 +81,6 @@ const MyPlaylistsTab = ({
 
   return (
     <Typography component="div" dir="1">
-      {renderPlaylistSimpleList()}
       <div className="Finder-stopper-block" />
     </Typography>
   )

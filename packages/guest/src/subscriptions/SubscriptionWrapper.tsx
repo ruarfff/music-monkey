@@ -41,28 +41,23 @@ const SubscriptionWrapper = ({
     const playlistId = event && event.playlist ? event.playlist.id : ''
 
     subscribeToSuggestionsModified(eventId, () => {
-      console.log('subscribeToSuggestionsModified ' + eventId)
       getUsersSuggestions(eventId)
       getSuggestions(eventId)
     })
 
     subscribeToRSVPModified(eventId, () => {
-      console.log('subscribeToRSVPModified ' + eventId)
       getEvent(eventId)
     })
 
     subscribeToVotesModified(eventId, () => {
-      console.log('subscribeToVotesModified ' + eventId)
       fetchEventVotes(eventId)
     })
 
     subscribeToPlaylistModified(playlistId, () => {
-      console.log('subscribeToPlaylistModified ' + eventId)
       getEvent(eventId)
     })
 
     subscribeToEventUpdated(eventId, () => {
-      console.log('subscribeToEventUpdated ' + eventId)
       getEvent(eventId)
     })
 

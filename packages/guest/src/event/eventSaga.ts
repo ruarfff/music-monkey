@@ -1,6 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import IAction from '../IAction'
-import { EVENT_PLAYLISTS_LOADED } from '../playlist/playlistActions'
 import {
   EVENT_FETCH_ERROR,
   EVENT_FETCH_INITIATED,
@@ -10,9 +9,10 @@ import {
   FETCH_USERS_EVENTS_SUCCESS
 } from './eventActions'
 import { getEventById, getUsersInvitedEvents } from './eventClient'
+import IEvent from './IEvent'
+import { sortBy } from 'lodash'
 
 function* fetchEventFlow(action: IAction) {
-  console.log(`Getting event with action`, action)
   const eventId: string = action.payload
   try {
     const event = yield call(getEventById, eventId)
@@ -28,9 +28,9 @@ export function* watchFetchEvent() {
 
 function* fetchUsersEventsFlow() {
   try {
-    const events = yield call(getUsersInvitedEvents)
+    let events: IEvent[] = yield call(getUsersInvitedEvents)
+    events = sortBy(events || [], 'endDateTime').reverse()
     yield put({ type: FETCH_USERS_EVENTS_SUCCESS, payload: events })
-    yield put({ type: EVENT_PLAYLISTS_LOADED, payload: events })
   } catch (err) {
     yield put({ type: FETCH_USERS_EVENTS_ERROR, payload: err })
   }

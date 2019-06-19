@@ -10,7 +10,8 @@ const mapStateToProps = (state: IRootState) => ({
   selectedEvent: state.event.selectedEvent,
   eventLoading: state.event.eventLoading,
   eventId: state.event.eventId,
-  inviteEvent: state.invite.event
+  inviteEvent: state.invite.event,
+  fetchingRsvp: state.rsvp.fetchingRsvp
 })
 
 const mapDispatchToProps = {

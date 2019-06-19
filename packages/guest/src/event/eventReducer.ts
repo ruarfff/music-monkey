@@ -93,8 +93,8 @@ export default function event(
     case FETCH_USERS_EVENTS_ERROR:
       return { ...state, eventsLoading: false } as IEventState
     case FETCH_USERS_EVENTS_SUCCESS: {
-      const events: IEvent[] = sortBy(payload || [], 'endDateTime').reverse()
       const now = moment()
+      const events: IEvent[] = payload
       return {
         ...state,
         events,

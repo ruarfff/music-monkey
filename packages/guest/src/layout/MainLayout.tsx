@@ -8,7 +8,6 @@ import TopBar from '../topbar/TopBarContainer'
 import './MainLayout.scss'
 import React, { useEffect, Suspense } from 'react'
 import LoadingSpinner from '../loading/LoadingSpinner'
-
 interface IMainLayoutProps extends RouteComponentProps<any> {
   routes: Route[]
   events: IEvent[]
@@ -17,6 +16,7 @@ interface IMainLayoutProps extends RouteComponentProps<any> {
   isAuthenticated: boolean
   eventLoading: boolean
   inviteEvent: IEvent
+  fetchingRsvp: boolean
   fetchUsersEvents(): IAction
   getEvent(eventId: string): IAction
 }
@@ -30,27 +30,26 @@ const MainLayout = ({
   fetchUsersEvents,
   getEvent,
   eventLoading,
-  inviteEvent
+  inviteEvent,
+  fetchingRsvp
 }: IMainLayoutProps) => {
   useEffect(() => {
     if (isAuthenticated) {
       if (
-        isEmpty(events) ||
-        (inviteEvent &&
-          !find(events, event => event.eventId === inviteEvent.eventId))
+        !fetchingRsvp &&
+        (isEmpty(events) ||
+          (inviteEvent &&
+            !find(events, event => event.eventId === inviteEvent.eventId)))
       ) {
         fetchUsersEvents()
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, inviteEvent])
+  }, [isAuthenticated, inviteEvent, fetchingRsvp])
 
   useEffect(() => {
-    console.log('EVENT_ID: ' + eventId)
     if (isAuthenticated && eventId && !eventLoading) {
-      console.log('Got to getEvent 1: ' + eventId)
       if (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) {
-        console.log('Got to getEvent 2: ' + eventId)
         getEvent(eventId)
       }
     }

@@ -8,7 +8,7 @@ export function* selectPage() {
     yield put({ type: CLEAR_SUGGESTION })
     yield put({ type: CLEAR_SEARCH })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 

@@ -10,7 +10,7 @@ import IEvent from '../IEvent'
 import EventList from './EventList'
 import './EventListView.scss'
 import React from 'react'
-import IAction from '../../IAction';
+import IAction from '../../IAction'
 
 interface IEventListViewProps {
   user: IUser
@@ -47,14 +47,9 @@ const EventListView = ({
     if (shouldRedirect !== redirect) {
       setRedirect(shouldRedirect)
     }
-
-    console.log('Invite Id', inviteId)
-    console.log('Invite Answered', inviteAnswered)
-    console.log(redirect)
   }, [inviteAnswered, inviteId, redirect])
 
   if (redirect && inviteId) {
-    console.log('REDIRECTING')
     return <Redirect to={'/invite/' + inviteId} />
   }
 

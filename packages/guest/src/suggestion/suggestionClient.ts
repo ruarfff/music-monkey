@@ -19,7 +19,7 @@ export const getUsersSuggestions = async () => {
       return response.data
     }
   } catch (err) {
-    console.log('err', err)
+    console.error('err', err)
   }
 }
 

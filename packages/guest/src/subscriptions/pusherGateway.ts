@@ -31,7 +31,7 @@ export const unSubscribeToSuggestionsModified = (eventId: string) => {
     pusher.unsubscribe('mm-suggestions-' + eventId)
     subscribedToSuggestions = ''
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -67,7 +67,7 @@ export const unSubscribeToVotesModified = (eventId: string) => {
     pusher.unsubscribe('mm-votes-' + eventId)
     subscribedToVotes = ''
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -89,7 +89,7 @@ export const unSubscribeToPlaylistModified = (playlistId: string) => {
     pusher.unsubscribe('mm-playlists-' + playlistId)
     subscribedToPlaylists = ''
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -108,6 +108,6 @@ export const unSubscribeToEventUpdated = (eventId: string) => {
     pusher.unsubscribe('mm-events-' + eventId)
     subscribedToEvent = ''
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }

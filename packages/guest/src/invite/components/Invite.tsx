@@ -34,7 +34,6 @@ const Invite = ({
   useEffect(() => {
     localStorage.set(inviteIdKey, inviteIdFromUrl)
     localStorage.set(inviteAnsweredKey, 'false')
-    console.log('Setting invite to ' + inviteIdFromUrl)
 
     if (isEmpty(inviteEvent) && !loading) {
       fetchInvite(inviteIdFromUrl)
