@@ -5,8 +5,8 @@ import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import * as React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
 import IEvent from '../event/IEvent'
+import Monkey from '../assets/finder-logo.png'
 import './BottomBar.scss'
-import { FinderButton } from './FinderButton'
 
 interface IBottomBar extends RouteComponentProps<any> {
   event: IEvent
@@ -17,11 +17,12 @@ const checkLocation = (pathname: string, path: string) => {
 }
 
 const BottomBar = ({ location, event }: IBottomBar) => {
-  const pathname = location.pathname
+  const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
   const eventsLink = eventId ? `/events/${eventId}` : '/'
   const playlistsLink = eventId ? `/playlists/${eventId}` : '/playlists'
   const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
+  const finderLink = eventId ? `/finder/${eventId}` : '/finder'
   const accountLink = '/account'
 
   return (
@@ -48,8 +49,12 @@ const BottomBar = ({ location, event }: IBottomBar) => {
         </div>
       </div>
 
-      <div className="BottomBar-finder-button">
-        <FinderButton id={event && event.eventId} />
+      <div className="BottomBar-finder">
+        <div className="BottomBar-finder-button">
+          <Link to={finderLink} className="BottomBar-finder-button-link">
+            <img alt="finder" src={Monkey} />
+          </Link>
+        </div>
       </div>
 
       <div className="BottomBar-navigation-right">

@@ -13,7 +13,7 @@
     color: white !important;
   }
 
-  .BottomBar-finder-button {
+  .BottomBar-finder {
     background: url('../assets/bottom-menu-bg.svg') center center no-repeat;
     width: 88px;
     display: flex;
@@ -22,6 +22,20 @@
     img {
       width: 50px;
       height: 30px;
+    }
+    .BottomBar-finder-button {
+      position: fixed;
+      bottom: 23px;
+
+      .BottomBar-finder-button-link {
+        display: flex;
+        box-sizing: content-box;
+        border-radius: 50%;
+        height: 50px;
+        align-items: center;
+        padding: 7px;
+        background-color: $secondary-main;
+      }
     }
   }
 

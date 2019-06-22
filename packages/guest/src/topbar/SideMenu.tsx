@@ -1,31 +1,44 @@
 import {
   ClickAwayListener,
-  Icon,
   IconButton,
   ListItemText,
   Menu,
   MenuItem
 } from '@material-ui/core'
+import EventIcon from '@material-ui/icons/Event'
+import SearchIcon from '@material-ui/icons/Search'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import MenuIcon from '@material-ui/icons/Menu'
 import * as React from 'react'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import { Link, RouteComponentProps } from 'react-router-dom'
 import useMenuActive from '../util/useMenuActive'
 import { ProfileImage } from './ProfileImage'
 import './SideMenu.scss'
+import IUser from '../user/IUser'
+import IEvent from '../event/IEvent'
 
 interface ISideMenuProps extends RouteComponentProps<any> {
-  user: any
+  user: IUser
+  event: IEvent
 }
 
-const checkLocation = (location: string, path: string) => {
-  return location === path ? 'active' : ''
+const checkLocation = (pathname: string, path: string) => {
+  return pathname === path ? 'active' : ''
 }
 
-const SideMenu = ({ user, location }: ISideMenuProps) => {
+const SideMenu = ({ user, location, event }: ISideMenuProps) => {
   const { pathname } = location
+  const eventId = event && event.eventId ? event.eventId : null
+  const eventsLink = eventId ? `/events/${eventId}` : '/'
+  const playlistsLink = eventId ? `/playlists/${eventId}` : '/playlists'
+  const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
+  const finderLink = eventId ? `/finder/${eventId}` : '/finder'
+  const accountLink = '/account'
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
   return (
-    <span>
+    <div>
       <ClickAwayListener onClickAway={handleMenuClose}>
         <IconButton color="inherit" aria-label="Menu" onClick={handleMenuOpen}>
           <MenuIcon />
@@ -48,49 +61,52 @@ const SideMenu = ({ user, location }: ISideMenuProps) => {
           />
         </div>
 
-        <Link to={'/'}>
+        <Link to={eventsLink}>
           <MenuItem
-            className={`SideMenu-item ${checkLocation(pathname, '/')}`}
+            className={`SideMenu-item ${checkLocation(pathname, eventsLink)}`}
           >
-            <Icon>event</Icon>
+            <EventIcon />
             <span>Events</span>
           </MenuItem>
         </Link>
-        <Link to={'/playlists'}>
+        <Link to={playlistsLink}>
           <MenuItem
-            className={`SideMenu-item ${checkLocation(pathname, '/playlists')}`}
+            className={`SideMenu-item ${checkLocation(
+              pathname,
+              playlistsLink
+            )}`}
           >
-            <Icon>library_music</Icon>
+            <LibraryMusicIcon />
             <span>Playlists</span>
           </MenuItem>
         </Link>
-        <Link to={'/finder'}>
+        <Link to={finderLink}>
           <MenuItem
-            className={`SideMenu-item ${checkLocation(pathname, '/finder')}`}
+            className={`SideMenu-item ${checkLocation(pathname, finderLink)}`}
           >
-            <Icon>search</Icon>
+            <SearchIcon />
             <span>Finder</span>
           </MenuItem>
         </Link>
-        <Link to={'/requests'}>
+        <Link to={requestsLink}>
           <MenuItem
-            className={`SideMenu-item ${checkLocation(pathname, '/requests')}`}
+            className={`SideMenu-item ${checkLocation(pathname, requestsLink)}`}
           >
-            <Icon>favorite</Icon>
-            <span>My Requests</span>
+            <FavoriteIcon />
+            <span>Requests</span>
           </MenuItem>
         </Link>
-        <Link to={'/account'}>
+        <Link to={accountLink}>
           <MenuItem
-            className={`SideMenu-item ${checkLocation(pathname, '/account')}`}
+            className={`SideMenu-item ${checkLocation(pathname, accountLink)}`}
           >
-            <Icon>account_circle</Icon>
+            <AccountCircleIcon />
             <span>Account</span>
           </MenuItem>
         </Link>
       </Menu>
-    </span>
+    </div>
   )
 }
 
-export default withRouter(SideMenu)
+export default SideMenu

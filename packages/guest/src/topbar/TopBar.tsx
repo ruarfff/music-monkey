@@ -1,10 +1,10 @@
-import { AppBar, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Toolbar } from '@material-ui/core'
 import * as React from 'react'
 import { ReactCookieProps } from 'react-cookie'
 import { RouteComponentProps } from 'react-router-dom'
 import IAction from '../IAction'
 import IUser from '../user/IUser'
-import SideMenu from './SideMenu'
+import SideMenu from './SideMenuContainer'
 import './TopBar.scss'
 import UserMenu from './UserMenu'
 
@@ -13,9 +13,7 @@ interface ITopBarProps extends RouteComponentProps<any>, ReactCookieProps {
   logout(): IAction
 }
 
-const TopAppBar = ({ location, user, cookies, logout }: ITopBarProps) => {
-  const { pathname } = location
-
+const TopAppBar = ({ user, cookies, logout }: ITopBarProps) => {
   const handleLogout = () => {
     if (cookies) {
       cookies.remove('jwt')
@@ -26,10 +24,7 @@ const TopAppBar = ({ location, user, cookies, logout }: ITopBarProps) => {
   return (
     <AppBar position="fixed" className="top-appBar">
       <Toolbar variant="dense">
-        <SideMenu user={user} />
-        <Typography variant="h6" className="top-appBar-title">
-          {pathname === '/finder' && 'MUSIC FINDER'}
-        </Typography>
+        <SideMenu />
         <UserMenu user={user} onLogout={handleLogout} />
       </Toolbar>
     </AppBar>
