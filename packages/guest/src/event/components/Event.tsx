@@ -32,16 +32,12 @@ import React, { useEffect, useState } from 'react'
 interface IEventProps {
   user: IUser
   selectedEvent: IEvent
-  inviteId: string
-  inviteEvent: IEvent
   eventLoading: boolean
   votes: Map<string, ITrackVoteStatus>
   fetchingVotes: boolean
-  fetchingRsvp: boolean
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
   fetchEventVotes(eventId: string): IAction
-  fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
   updateRsvp(rsvp: IRsvp): IAction
   setEventId(eventId: string): IAction
 }
@@ -51,18 +47,14 @@ const options = ["I'm Going", 'Maybe', "I'm not going"]
 const Event = ({
   user,
   selectedEvent,
-  inviteId,
-  inviteEvent,
   setEventId,
   votes,
   fetchingVotes,
   createVote,
   deleteVote,
   fetchEventVotes,
-  fetchOrCreateRsvp,
   updateRsvp,
-  match,
-  fetchingRsvp
+  match
 }: IEventProps & RouteComponentProps<any>) => {
   const eventId = match.params.eventId
   const userId = user ? user.userId : ''
@@ -93,20 +85,6 @@ const Event = ({
     handleMenuClose()
     selectOption(option)
   }
-
-  // handleInvite
-  useEffect(() => {
-    if (
-      !isEmpty(inviteEvent) &&
-      !isEmpty(inviteId) &&
-      eventId === inviteEvent.eventId
-    ) {
-      if (!fetchingRsvp) {
-        fetchOrCreateRsvp(inviteId, userId, eventId)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inviteEvent])
 
   // handleVotes
   useEffect(() => {

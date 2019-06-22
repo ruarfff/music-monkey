@@ -10,39 +10,45 @@ import React, { useEffect } from 'react'
 
 interface IInviteProps extends RouteComponentProps<any> {
   user: IUser
-  inviteId: string
   inviteEvent: IEvent
   authError: any
   loading: boolean
   isAuthenticated: boolean
+  fetchingRsvp: boolean
   fetchInvite(inviteId: string): IAction
+  fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
 }
 
 const Invite = ({
   user,
-  inviteId,
   inviteEvent,
   match,
   fetchInvite,
   authError,
   isAuthenticated,
-  loading
+  loading,
+  fetchingRsvp,
+  fetchOrCreateRsvp
 }: IInviteProps) => {
-  const inviteIdFromUrl = match.params.inviteId
+  const inviteId = match.params.inviteId
   useEffect(() => {
-    localStorage.set(inviteIdKey, inviteIdFromUrl)
+    localStorage.set(inviteIdKey, inviteId)
     localStorage.set(inviteAnsweredKey, 'false')
 
     if (isEmpty(inviteEvent) && !loading) {
-      fetchInvite(inviteIdFromUrl)
+      fetchInvite(inviteId)
     }
     if (!isEmpty(inviteEvent) && !isEmpty(user)) {
       localStorage.set(inviteAnsweredKey, 'true')
+      if (!fetchingRsvp) {
+        fetchOrCreateRsvp(inviteId, user.userId, inviteEvent.eventId)
+      }
     }
-  }, [fetchInvite, inviteEvent, inviteIdFromUrl, loading, user])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inviteEvent, inviteId, loading, user])
 
   if (!isAuthenticated && isEmpty(user) && authError) {
-    return <Redirect to={'/login?redirect=/invite/' + inviteIdFromUrl} />
+    return <Redirect to={'/login?redirect=/invite/' + inviteId} />
   } else if (!isEmpty(inviteEvent)) {
     return <Redirect to={`/events/${inviteEvent.eventId}`} />
   }
