@@ -6,9 +6,7 @@ import LoadingSpinner from '../../loading/LoadingSpinner'
 import localStorage from '../../storage/localStorage'
 import IUser from '../../user/IUser'
 import { inviteAnsweredKey, inviteIdKey } from '../inviteConstants'
-
-const React = require('react')
-const { useEffect } = React
+import React, { useEffect } from 'react'
 
 interface IInviteProps extends RouteComponentProps<any> {
   user: IUser
