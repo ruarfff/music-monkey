@@ -4,7 +4,6 @@ import { combineReducers } from 'redux'
 import auth from './auth/authReducer'
 import event from './event/eventReducer'
 import invite from './invite/inviteReducer'
-import active from './navigation/activeActionsReducer'
 import playlist from './playlist/playlistReducer'
 import recommendation from './recommendation/recommendationReducer'
 import search from './search/searchReducer'
@@ -16,7 +15,6 @@ import rsvp from './rsvp/rsvpReducer'
 export default (history: History) =>
   combineReducers({
     router: connectRouter(history),
-    active,
     auth,
     event,
     invite,

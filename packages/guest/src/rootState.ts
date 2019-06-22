@@ -1,7 +1,6 @@
 import IAuthState from './auth/IAuthState'
 import IEventState from './event/IEventState'
 import IInviteState from './invite/IInviteState'
-import IActiveActionsState from './navigation/IactiveActionsState'
 import IPlaylistState from './playlist/IPlaylistState'
 import IRecommendationsState from './recommendation/IRecommendationsState'
 import IRsvpState from './rsvp/IRsvpState'
@@ -21,5 +20,4 @@ export default interface IRootState {
   user: IUserState
   rsvp: IRsvpState
   vote: IVoteState
-  active: IActiveActionsState
 }

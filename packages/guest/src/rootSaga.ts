@@ -26,13 +26,11 @@ import {
   watchDeleteVote,
   watchFetchEventVotes
 } from './vote/voteSaga'
-import { watchSelectPage } from './navigation/activeSaga'
 import { watchUpdateUserFlow } from './user/userSaga'
 
 export default function* rootSaga() {
   yield all([
     watchLogin(),
-    watchSelectPage(),
     watchFetchPlaylists(),
     watchFetchSuggestions(),
     watchFetchUsersSuggestions(),
