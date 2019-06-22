@@ -12,6 +12,7 @@ import useMenuActive from '../../util/useMenuActive'
 import IUser from '../../user/IUser'
 import IRsvp from '../../rsvp/IRsvp'
 import IAction from '../../IAction'
+import './EventHeader.scss'
 
 interface IEventHeaderProps {
   event: IEvent
@@ -79,12 +80,12 @@ const EventHeader = ({ event, user, updateRsvp }: IEventHeaderProps) => {
   const times = dateFormat(event)
 
   return (
-    <div className="Event-header-container">
+    <div className="EventHeader-container">
       <img className="Event-background" src={event.imageUrl} alt="" />
       <div className="Event-img">
-        <div className="Event-header-top-menu">
+        <div className="EventHeader-top-menu">
           <Link to="/">
-            <ChevronLeft className="Event-back-arrow" />
+            <ChevronLeft className="EventHeader-back-arrow" />
           </Link>
         </div>
         <div className="Event-img-info-block">
@@ -135,10 +136,10 @@ const EventHeader = ({ event, user, updateRsvp }: IEventHeaderProps) => {
             ))}
           </Menu>
 
-          <div className="Event-times-container">
-            <div className="Event-times-container-column">
-              <div className="Event-description-title">Times</div>
-              <div className="Event-times-container-column-desc">{times}</div>
+          <div className="EventHeader-times-container">
+            <div>
+              <div className="EventHeader-times-heading">Times</div>
+              <div className="EventHeader-times-text">{times}</div>
             </div>
           </div>
         </div>
