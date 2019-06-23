@@ -9,6 +9,7 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.event.selectedEvent,
   suggestions: state.suggestion.suggestions,
+  fetchingSuggestions: state.suggestion.fetchingSuggestions,
   votes: state.vote.votes,
   fetchingVotes: state.vote.fetchingVotes
 })

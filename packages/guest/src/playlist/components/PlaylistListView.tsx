@@ -8,30 +8,42 @@ import {
   Typography
 } from '@material-ui/core'
 import { isEmpty, uniqBy } from 'lodash'
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import IEvent from '../../event/IEvent'
 import IPlaylist from '../IPlaylist'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import './PlaylistListView.scss'
+import IAction from '../../IAction'
 
 interface IPlaylistListViewProps {
+  selectedEvent: IEvent
   liveEvents: IEvent[]
   pastEvents: IEvent[]
   upcomingEvents: IEvent[]
   eventsLoading?: boolean
+  deselectEvent(): IAction
 }
 
 const PlaylistListView = ({
+  selectedEvent,
   liveEvents,
   upcomingEvents,
   pastEvents,
-  eventsLoading
+  eventsLoading,
+  deselectEvent
 }: IPlaylistListViewProps) => {
+  useEffect(() => {
+    if (!isEmpty(selectedEvent)) {
+      deselectEvent()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedEvent])
+
   if (eventsLoading) {
     return <LoadingSpinner />
   }
-  console.log(pastEvents)
+
   const playlists = uniqBy(
     [...liveEvents, ...upcomingEvents, ...pastEvents]
       .filter((event: IEvent) => event.playlistUrl && event.playlist)

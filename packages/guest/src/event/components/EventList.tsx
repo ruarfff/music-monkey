@@ -9,14 +9,9 @@ interface IEventListProps {
   pastEvents: IEvent[]
   liveEvents: IEvent[]
   upcomingEvents: IEvent[]
-  onEventSelected(event: IEvent): void
 }
 
-const renderEvents = (
-  events: IEvent[],
-  status: string,
-  onEventSelected: any
-) => {
+const renderEvents = (events: IEvent[], status: string) => {
   const listLink = (to: string) => ({ innerRef, ...props }: any) => (
     <Link {...props} to={to} />
   )
@@ -26,13 +21,7 @@ const renderEvents = (
   return (
     <React.Fragment>
       {events.map((event, index) => (
-        <div
-          className="EventList-item"
-          key={index + status}
-          onClick={() => {
-            onEventSelected(event)
-          }}
-        >
+        <div className="EventList-item" key={index + status}>
           <ListItem component={listLink('/events/' + event.eventId)}>
             <img
               alt={event.name}
@@ -71,13 +60,12 @@ const renderEvents = (
 const EventList = ({
   pastEvents,
   upcomingEvents,
-  liveEvents,
-  onEventSelected
+  liveEvents
 }: IEventListProps) => (
   <List>
-    {renderEvents(liveEvents, 'live', onEventSelected)}
-    {renderEvents(upcomingEvents, 'upcoming', onEventSelected)}
-    {renderEvents(pastEvents, 'past', onEventSelected)}
+    {renderEvents(liveEvents, 'live')}
+    {renderEvents(upcomingEvents, 'upcoming')}
+    {renderEvents(pastEvents, 'past')}
   </List>
 )
 

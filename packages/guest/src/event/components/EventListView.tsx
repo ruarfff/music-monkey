@@ -5,7 +5,6 @@ import { Redirect } from 'react-router'
 import { inviteAnsweredKey, inviteIdKey } from '../../invite/inviteConstants'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import localStorage from '../../storage/localStorage'
-import IUser from '../../user/IUser'
 import IEvent from '../IEvent'
 import EventList from './EventList'
 import './EventListView.scss'
@@ -13,26 +12,34 @@ import React from 'react'
 import IAction from '../../IAction'
 
 interface IEventListViewProps {
-  user: IUser
+  selectedEvent: IEvent
   events: IEvent[]
   pastEvents: IEvent[]
   liveEvents: IEvent[]
   upcomingEvents: IEvent[]
   eventsLoading: boolean
-  selectEvent(event: IEvent): IAction
+  deselectEvent(): IAction
 }
 
 const EventListView = ({
+  selectedEvent,
   events,
-  eventsLoading,
   pastEvents,
   liveEvents,
   upcomingEvents,
-  selectEvent
+  eventsLoading,
+  deselectEvent
 }: IEventListViewProps) => {
   const [redirect, setRedirect] = useState(false)
   const [inviteId, setInviteId] = useState('')
   const [inviteAnswered, setInviteAnswered] = useState(null)
+
+  useEffect(() => {
+    if (!isEmpty(selectedEvent)) {
+      deselectEvent()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedEvent])
 
   useEffect(() => {
     let storedInvite = localStorage.get(inviteIdKey, null)
@@ -72,7 +79,6 @@ const EventListView = ({
       pastEvents={pastEvents}
       upcomingEvents={upcomingEvents}
       liveEvents={liveEvents}
-      onEventSelected={selectEvent}
     />
   )
 }

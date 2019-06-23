@@ -35,7 +35,7 @@ const MainLayout = ({
     if (isAuthenticated && !eventLoading) {
       if (
         isEmpty(events) ||
-        (selectedEvent &&
+        (!isEmpty(selectedEvent) &&
           !find(events, e => e.eventId === selectedEvent.eventId))
       ) {
         fetchUsersEvents()
