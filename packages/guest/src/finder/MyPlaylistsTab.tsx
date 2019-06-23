@@ -11,7 +11,6 @@ interface IMyPlaylistsTabProps {
   playlists: IPlaylist[]
   attached: boolean
   selectedUserPlaylist: IPlaylist
-  addedPlaylist?(value: IPlaylist): any
   onTrackSelected(track: ITrack): any
   savePlaylistSuggestion(suggestions: IPlaylist): any
   fetchMorePlaylists(user: IUser): IAction
@@ -21,7 +20,6 @@ const MyPlaylistsTab = ({
   selectedUserPlaylist,
   user,
   playlists,
-  addedPlaylist,
   onTrackSelected,
   savePlaylistSuggestion,
   fetchMorePlaylists
@@ -53,7 +51,6 @@ const MyPlaylistsTab = ({
       <PlaylistListView
         events={[]}
         attached={true}
-        addedPlaylist={addedPlaylist}
         disableLinks={true}
       />
     )

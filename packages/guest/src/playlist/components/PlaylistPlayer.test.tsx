@@ -10,6 +10,7 @@ it('renders without crashing', () => {
   const selectedTrackVotes = {} as ITrackVoteStatus
   const onFavouriteClicked = jest.fn()
   const onTrackChanged = jest.fn()
+  const deselectEvent = jest.fn()
 
   shallow(
     <PlaylistPlayer
@@ -18,6 +19,7 @@ it('renders without crashing', () => {
       selectedTrackVotes={selectedTrackVotes}
       onFavouriteClicked={onFavouriteClicked}
       onTrackChanged={onTrackChanged}
+      deselectEvent={deselectEvent}
     />
   )
 })

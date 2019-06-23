@@ -18,7 +18,7 @@ const Finder = lazy(() => import('./finder/FinderContainer'))
 const Invite = lazy(() => import('./invite/components/InviteContainer'))
 const MainLayout = lazy(() => import('./layout/MainLayoutContainer'))
 const Playlist = lazy(() => import('./playlist/components/PlaylistContainer'))
-const PlaylistView = lazy(() =>
+const PlaylistListView = lazy(() =>
   import('./playlist/components/PlaylistListViewContainer')
 )
 const Requests = lazy(() => import('./requests/RequestsContainer'))
@@ -93,7 +93,7 @@ const routes = [
         exact: true
       },
       {
-        component: userIsAuthenticated(PlaylistView),
+        component: userIsAuthenticated(PlaylistListView),
         path: '/playlists',
         exact: true
       },

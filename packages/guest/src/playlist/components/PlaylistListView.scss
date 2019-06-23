@@ -3,6 +3,10 @@
     text-decoration: none !important;
   }
 
+  .PlaylistListView-disabled-link {
+    pointer-events: none;
+  }
+
   .PlaylistListView-item {
     display: flex;
   }

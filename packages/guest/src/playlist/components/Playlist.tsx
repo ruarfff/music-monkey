@@ -61,6 +61,8 @@ const Playlist = ({
   if (tracks.length > 0 && isEmpty(currentTrack)) {
     setCurrentTrack(tracks[0])
   }
+
+  // Clear track on event change
   useEffect(() => {
     return () => {
       setCurrentTrack({} as ITrack)
@@ -76,7 +78,7 @@ const Playlist = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.params.eventId, votes, fetchingVotes])
+  }, [eventId, votes, fetchingVotes, event])
 
   const handleChange = (event: any, value: any) => {
     setValue(value)
@@ -111,14 +113,16 @@ const Playlist = ({
 
   return (
     <div className="Playlist-tabs">
-      <PlaylistPlayer
-        tracks={tracks}
-        selectedTrack={currentTrack}
-        selectedTrackVotes={voteStatus}
-        onFavouriteClicked={handleTrackVote}
-        onTrackChanged={setCurrentTrack}
-        deselectEvent={deselectEvent}
-      />
+      {!!currentTrack && (
+        <PlaylistPlayer
+          tracks={tracks}
+          selectedTrack={currentTrack}
+          selectedTrackVotes={voteStatus}
+          onFavouriteClicked={handleTrackVote}
+          onTrackChanged={setCurrentTrack}
+          deselectEvent={deselectEvent}
+        />
+      )}
 
       <AppBar position="static" color="default">
         <Tabs

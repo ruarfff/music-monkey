@@ -3,7 +3,9 @@ import IRootState from '../../rootState'
 import PlaylistListView from './PlaylistListView'
 
 const mapStateToProps = (state: IRootState) => ({
-  events: state.event.events,
+  pastEvents: state.event.pastEvents,
+  upcomingEvents: state.event.upcomingEvents,
+  liveEvents: state.event.liveEvents,
   eventsLoading: state.event.eventsLoading
 })
 
