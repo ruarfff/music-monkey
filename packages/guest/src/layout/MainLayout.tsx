@@ -29,23 +29,20 @@ const MainLayout = ({
   isAuthenticated,
   fetchUsersEvents,
   getEvent,
-  eventLoading,
-  inviteEvent,
-  fetchingRsvp
+  eventLoading
 }: IMainLayoutProps) => {
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !eventLoading) {
       if (
-        !fetchingRsvp &&
-        (isEmpty(events) ||
-          (inviteEvent &&
-            !find(events, event => event.eventId === inviteEvent.eventId)))
+        isEmpty(events) ||
+        (selectedEvent &&
+          !find(events, e => e.eventId === selectedEvent.eventId))
       ) {
         fetchUsersEvents()
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, inviteEvent, fetchingRsvp])
+  }, [isAuthenticated, eventLoading, selectedEvent])
 
   useEffect(() => {
     if (isAuthenticated && eventId && !eventLoading) {
@@ -53,7 +50,6 @@ const MainLayout = ({
         getEvent(eventId)
       }
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId, isAuthenticated])
 
