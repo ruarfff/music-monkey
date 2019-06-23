@@ -23,7 +23,6 @@ interface IEventProps {
   fetchingVotes: boolean
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
-  fetchEventVotes(eventId: string): IAction
   setEventId(eventId: string): IAction
 }
 
@@ -32,10 +31,8 @@ const Event = ({
   selectedEvent,
   setEventId,
   votes,
-  fetchingVotes,
   createVote,
   deleteVote,
-  fetchEventVotes,
   match
 }: IEventProps & RouteComponentProps<any>) => {
   const eventId = match.params.eventId
@@ -46,10 +43,7 @@ const Event = ({
 
   // handleVotes
   useEffect(() => {
-    if (eventId) setEventId(eventId)
-    if (isEmpty(votes) && !fetchingVotes) {
-      fetchEventVotes(eventId)
-    }
+    if (eventId !== selectedEvent.eventId) setEventId(eventId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId])
 
@@ -80,7 +74,6 @@ const Event = ({
           <Typography component="div">
             <EventDetails
               user={user}
-              fetchEventVotes={fetchEventVotes}
               createVote={createVote}
               deleteVote={deleteVote}
               votes={votes}

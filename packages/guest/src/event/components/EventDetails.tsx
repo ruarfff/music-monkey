@@ -15,7 +15,6 @@ interface IEventDetailsProps {
   votes: Map<string, ITrackVoteStatus>
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
-  fetchEventVotes(eventId: string): IAction
 }
 
 class EventDetails extends React.PureComponent<IEventDetailsProps> {
@@ -28,12 +27,6 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
       const voteStatus = votes.get(trackId)
       if (voteStatus && voteStatus.votedByCurrentUser) {
         this.props.deleteVote(`${trackId}:${eventId}:${user.userId}`)
-        setTimeout(() => {
-          return (
-            this.props.event &&
-            this.props.fetchEventVotes(this.props.event.eventId)
-          )
-        }, 200)
         return
       }
     }
@@ -44,12 +37,6 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
       userId: user.userId
     } as IVote
     this.props.createVote(vote)
-    setTimeout(
-      () =>
-        this.props.event &&
-        this.props.fetchEventVotes(this.props.event.eventId),
-      200
-    )
   }
 
   public render() {

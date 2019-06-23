@@ -8,6 +8,7 @@ import TopBar from '../topbar/TopBarContainer'
 import './MainLayout.scss'
 import React, { useEffect, Suspense } from 'react'
 import LoadingSpinner from '../loading/LoadingSpinner'
+
 interface IMainLayoutProps extends RouteComponentProps<any> {
   routes: Route[]
   events: IEvent[]
@@ -15,11 +16,13 @@ interface IMainLayoutProps extends RouteComponentProps<any> {
   selectedEvent: IEvent
   isAuthenticated: boolean
   eventLoading: boolean
+  eventsLoading: boolean
   inviteEvent: IEvent
   fetchingRsvp: boolean
   fetchUsersEvents(): IAction
   getEvent(eventId: string): IAction
   getSuggestions(eventId: string): IAction
+  fetchEventVotes(eventId: string): IAction
 }
 
 const MainLayout = ({
@@ -31,10 +34,12 @@ const MainLayout = ({
   fetchUsersEvents,
   getEvent,
   eventLoading,
-  getSuggestions
+  eventsLoading,
+  getSuggestions,
+  fetchEventVotes
 }: IMainLayoutProps) => {
   useEffect(() => {
-    if (isAuthenticated && !eventLoading) {
+    if (isAuthenticated && !eventLoading && !eventsLoading) {
       if (
         isEmpty(events) ||
         (!isEmpty(selectedEvent) &&
@@ -51,6 +56,7 @@ const MainLayout = ({
       if (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) {
         getEvent(eventId)
         getSuggestions(eventId)
+        fetchEventVotes(eventId)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

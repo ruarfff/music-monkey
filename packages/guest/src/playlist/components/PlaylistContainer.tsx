@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import IRootState from '../../rootState'
-import { createVote, deleteVote, fetchEventVotes } from '../../vote/voteActions'
+import { createVote, deleteVote } from '../../vote/voteActions'
 import Playlist from './Playlist'
 import { setEventId } from '../../event/eventActions'
 
@@ -13,7 +13,6 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = {
-  fetchEventVotes,
   createVote,
   deleteVote,
   setEventId

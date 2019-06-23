@@ -58,7 +58,7 @@ const Finder = ({
 }: IFinderProps) => {
   const eventId = match.params.eventId
   useEffect(() => {
-    if (eventId) setEventId(eventId)
+    if (eventId && eventId !== selectedEvent.eventId) setEventId(eventId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId])
   useEffect(() => {
