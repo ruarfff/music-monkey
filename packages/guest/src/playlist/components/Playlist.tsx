@@ -71,9 +71,9 @@ const Playlist = ({
   }, [event])
 
   useEffect(() => {
-    if (eventId && event.eventId !== eventId) {
+    if (event.eventId !== eventId) {
       setEventId(eventId)
-      if (isEmpty(suggestions) && !fetchingSuggestions) {
+      if (!fetchingSuggestions) {
         getSuggestions(eventId)
       }
       if (isEmpty(votes) && !fetchingVotes) {
@@ -83,12 +83,8 @@ const Playlist = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId, votes, fetchingVotes, suggestions, fetchingSuggestions, event])
 
-  const handleChange = (event: any, value: any) => {
+  const handleChange = (e: any, value: any) => {
     setValue(value)
-  }
-
-  const handleChangeIndex = (index: any) => {
-    setValue(index)
   }
 
   const handleTrackVote = (track: ITrack) => {
@@ -139,11 +135,7 @@ const Playlist = ({
           <Tab label="MAYBE" />
         </Tabs>
       </AppBar>
-      <SwipeableViews
-        axis={'x'}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
+      <SwipeableViews axis={'x'} index={value} onChangeIndex={setValue}>
         {value === 0 ? (
           <Typography component="div" dir={'0'} style={{ padding: 10 }}>
             <ApprovedTracks
