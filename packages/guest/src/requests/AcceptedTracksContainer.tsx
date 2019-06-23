@@ -3,8 +3,8 @@ import IRootState from '../rootState'
 import AcceptedTracks from './AcceptedTracks'
 
 const mapStateToProps = (state: IRootState) => ({
-  suggestions: state.suggestion.userSuggestions,
-  selectedEvent: state.event.selectedEvent
+  user: state.user.data,
+  suggestions: state.suggestion.suggestions
 })
 
 const mapDispatchToProps = {}

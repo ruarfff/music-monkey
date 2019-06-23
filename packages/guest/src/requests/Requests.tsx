@@ -10,25 +10,20 @@ import IAction from '../IAction'
 import AcceptedTracks from './AcceptedTracksContainer'
 import MaybeTracks from './MaybeTracksContainer'
 import RejectedTracks from './RejectedTracksContainer'
-import IUser from '../user/IUser'
 import './Requests.scss'
 
 interface IRequestsProps extends RouteComponentProps<any> {
   event: IEvent
-  events: IEvent[]
-  user: IUser
   fetchingSuggestions: boolean
-  getSuggestions(eventId: string): IAction
   deselectEvent(): IAction
   setEventId(eventId: string): IAction
 }
 
 const Requests = ({
   event,
+  fetchingSuggestions,
   deselectEvent,
   setEventId,
-  fetchingSuggestions,
-  getSuggestions,
   match
 }: IRequestsProps) => {
   const [value, setValue] = useState(0)
@@ -36,11 +31,9 @@ const Requests = ({
   useEffect(() => {
     if (event.eventId !== eventId) {
       setEventId(eventId)
-      if (!fetchingSuggestions) {
-        getSuggestions(eventId)
-      }
     }
-  }, [event, eventId, fetchingSuggestions, getSuggestions, setEventId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [event, eventId])
 
   const handleChange = (e: any, value: any) => {
     setValue(value)
@@ -52,7 +45,7 @@ const Requests = ({
       {!isEmpty(event) && (
         <SelectedEvent event={event} deselectEvent={deselectEvent} />
       )}
-      <Divider variant="inset" className="divider-account-search-block" />
+      <Divider variant="inset" className="Requests-divider" />
       <AppBar position="static" color="default">
         <Tabs
           value={value}

@@ -19,6 +19,7 @@ interface IMainLayoutProps extends RouteComponentProps<any> {
   fetchingRsvp: boolean
   fetchUsersEvents(): IAction
   getEvent(eventId: string): IAction
+  getSuggestions(eventId: string): IAction
 }
 
 const MainLayout = ({
@@ -29,7 +30,8 @@ const MainLayout = ({
   isAuthenticated,
   fetchUsersEvents,
   getEvent,
-  eventLoading
+  eventLoading,
+  getSuggestions
 }: IMainLayoutProps) => {
   useEffect(() => {
     if (isAuthenticated && !eventLoading) {
@@ -48,6 +50,7 @@ const MainLayout = ({
     if (isAuthenticated && eventId && !eventLoading) {
       if (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) {
         getEvent(eventId)
+        getSuggestions(eventId)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

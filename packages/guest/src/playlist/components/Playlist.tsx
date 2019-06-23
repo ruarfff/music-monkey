@@ -23,11 +23,9 @@ interface IPlayListProps extends RouteComponentProps<any> {
   votes: Map<string, ITrackVoteStatus>
   fetchingVotes: boolean
   suggestions: IDecoratedSuggestion[]
-  fetchingSuggestions: boolean
   fetchEventVotes(eventId: string): IAction
   createVote(vote: IVote): IAction
   deleteVote(voteId: string): IAction
-  getSuggestions(eventId: string): IAction
   setEventId(eventId: string): IAction
 }
 
@@ -37,9 +35,7 @@ const Playlist = ({
   votes,
   fetchingVotes,
   suggestions,
-  fetchingSuggestions,
   fetchEventVotes,
-  getSuggestions,
   createVote,
   deleteVote,
   setEventId,
@@ -73,15 +69,12 @@ const Playlist = ({
   useEffect(() => {
     if (event.eventId !== eventId) {
       setEventId(eventId)
-      if (!fetchingSuggestions) {
-        getSuggestions(eventId)
-      }
       if (isEmpty(votes) && !fetchingVotes) {
         fetchEventVotes(eventId)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId, votes, fetchingVotes, suggestions, fetchingSuggestions, event])
+  }, [eventId, votes, fetchingVotes, event])
 
   const handleChange = (e: any, value: any) => {
     setValue(value)

@@ -12,10 +12,7 @@ import {
   SAVE_PLAYLIST_SUGGESTION_INITIATED,
   SAVE_SUGGESTION_FAILED,
   SAVE_SUGGESTION_SUCCESS,
-  SAVE_TRACK_SUGGESTION_INITIATED,
-  FETCH_USER_SUGGESTIONS_INITIATED,
-  FETCH_USER_SUGGESTIONS_SUCCESS,
-  FETCH_USER_SUGGESTIONS_FAILED
+  SAVE_TRACK_SUGGESTION_INITIATED
 } from './suggestionActions'
 import initialState from './suggestionInitialState'
 
@@ -49,20 +46,6 @@ export default function suggestion(
         suggestions: payload
       } as ISuggestionState
     case FETCH_SUGGESTIONS_FAILED:
-      return {
-        ...state,
-        fetchingSuggestions: false,
-        fetchingSuggestionsError: payload
-      } as ISuggestionState
-    case FETCH_USER_SUGGESTIONS_INITIATED:
-      return { ...state, fetchingSuggestions: true } as ISuggestionState
-    case FETCH_USER_SUGGESTIONS_SUCCESS:
-      return {
-        ...state,
-        fetchingSuggestions: false,
-        userSuggestions: payload
-      }
-    case FETCH_USER_SUGGESTIONS_FAILED:
       return {
         ...state,
         fetchingSuggestions: false,

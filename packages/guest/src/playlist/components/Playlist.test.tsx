@@ -12,11 +12,9 @@ it('renders without crashing', () => {
   const votes = new Map<string, ITrackVoteStatus>()
   const fetchingVotes = false
   const suggestions = [] as IDecoratedSuggestion[]
-  const fetchingSuggestions = false
   const fetchEventVotes = jest.fn()
   const createVote = jest.fn()
   const deleteVote = jest.fn()
-  const getSuggestions = jest.fn()
   const setEventId = jest.fn()
 
   shallow(
@@ -27,10 +25,8 @@ it('renders without crashing', () => {
       fetchingVotes={fetchingVotes}
       fetchEventVotes={fetchEventVotes}
       suggestions={suggestions}
-      fetchingSuggestions={fetchingSuggestions}
       createVote={createVote}
       deleteVote={deleteVote}
-      getSuggestions={getSuggestions}
       setEventId={setEventId}
       history={{} as any}
       location={{} as any}

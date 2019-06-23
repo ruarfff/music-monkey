@@ -18,9 +18,9 @@ export const subscribeToSuggestionsModified = (
     const channel = pusher.subscribe('mm-suggestions-' + eventId)
 
     channel.bind('suggestion-saved', data => callback(data))
-    channel.bind('suggestions-accepted', data => callback('accepted'))
+    channel.bind('suggestions-accepted', data => callback(data))
     channel.bind('suggestions-rejected', data => callback(data))
-    channel.bind('suggestions-auto-accepted', data => callback('accepted'))
+    channel.bind('suggestions-auto-accepted', data => callback(data))
 
     subscribedToSuggestions = eventId
   }

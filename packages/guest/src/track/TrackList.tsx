@@ -1,5 +1,4 @@
 import * as React from 'react'
-import IEvent from '../event/IEvent'
 import ITrack from '../track/ITrack'
 import ITrackVoteStatus from '../vote/ITrackVoteStatus'
 import TrackListItem from './TrackListItem'
@@ -11,17 +10,13 @@ interface ITrackListProps {
   tracks: ITrack[]
   withVoting?: boolean
   votes?: Map<string, ITrackVoteStatus>
-  onVote?: ((track: ITrack) => void)
-  onTrackSelected?: ((track: ITrack) => void)
   withSuggestingEnabled?: boolean
-  suggestions?: any
-  selectedEvent?: IEvent
+  onVote?: (track: ITrack) => void
+  onTrackSelected?: (track: ITrack) => void
 }
 
 const TrackList = ({
-  selectedEvent = {} as IEvent,
   tracks = [],
-  suggestions = [],
   withVoting = false,
   withSuggestingEnabled = false,
   votes = new Map(),

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { fetchUsersEvents, getEvent } from '../event/eventActions'
+import { getSuggestions } from '../suggestion/suggestionActions'
 import IRootState from '../rootState'
 import MainLayout from './MainLayout'
 
@@ -14,7 +15,8 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   fetchUsersEvents,
-  getEvent
+  getEvent,
+  getSuggestions
 }
 
 const MainLayoutContainer = withRouter(
