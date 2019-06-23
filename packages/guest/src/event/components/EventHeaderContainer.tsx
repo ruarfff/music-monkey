@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import IRootState from '../../rootState'
 import { updateRsvp } from '../../rsvp/rsvpActions'
+import { deselectEvent } from '../eventActions'
 import EventHeader from './EventHeader'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -9,7 +10,8 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = {
-  updateRsvp
+  updateRsvp,
+  deselectEvent
 }
 
 const EventHeaderContainer = connect(

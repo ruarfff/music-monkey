@@ -13,6 +13,7 @@ import './PlaylistPlayer.scss'
 import { findIndex, isEmpty, pull } from 'lodash'
 import ITrack from '../../track/ITrack'
 import { Link } from 'react-router-dom'
+import IAction from '../../IAction'
 
 interface IPlaylistPlayerProps {
   tracks: ITrack[]
@@ -20,6 +21,7 @@ interface IPlaylistPlayerProps {
   selectedTrackVotes: ITrackVoteStatus
   onFavouriteClicked(track: ITrack): void
   onTrackChanged(track: ITrack): void
+  deselectEvent(): IAction
 }
 
 export default ({
@@ -27,7 +29,8 @@ export default ({
   selectedTrack,
   selectedTrackVotes,
   onFavouriteClicked,
-  onTrackChanged
+  onTrackChanged,
+  deselectEvent
 }: IPlaylistPlayerProps) => {
   const [play, setPlay] = useState(false)
   const [time, setTime] = useState(0)
@@ -126,7 +129,13 @@ export default ({
   }
   return (
     <div className="PlaylistPlayer-container">
-      <Link to="/playlists" className="PlaylistPlayer-header-top-menu">
+      <Link
+        to="/playlists"
+        onClick={() => {
+          deselectEvent()
+        }}
+        className="PlaylistPlayer-header-top-menu"
+      >
         <ChevronLeft className="Playlist-back-arrow" />
       </Link>
       <div className="PlaylistPlayer-track-img">

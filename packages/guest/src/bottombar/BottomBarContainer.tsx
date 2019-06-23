@@ -1,14 +1,13 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { Dispatch } from 'redux'
 import IRootState from '../rootState'
 import BottomBar from './BottomBar'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.selectedEvent,
+  event: state.event.selectedEvent
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({})
+const mapDispatchToProps = {}
 
 const BottomBarContainer = connect(
   mapStateToProps,

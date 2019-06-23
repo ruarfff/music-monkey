@@ -28,6 +28,7 @@ interface IPlayListProps extends RouteComponentProps<any> {
   deleteVote(voteId: string): IAction
   getSuggestions(eventId: string): IAction
   setEventId(eventId: string): IAction
+  deselectEvent(): IAction
 }
 
 const Playlist = ({
@@ -41,7 +42,8 @@ const Playlist = ({
   createVote,
   deleteVote,
   setEventId,
-  match
+  match,
+  deselectEvent
 }: IPlayListProps) => {
   const [value, setValue] = useState(0)
   const [currentTrack, setCurrentTrack] = useState({} as ITrack)
@@ -115,6 +117,7 @@ const Playlist = ({
         selectedTrackVotes={voteStatus}
         onFavouriteClicked={handleTrackVote}
         onTrackChanged={setCurrentTrack}
+        deselectEvent={deselectEvent}
       />
 
       <AppBar position="static" color="default">

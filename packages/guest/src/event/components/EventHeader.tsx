@@ -15,12 +15,18 @@ import IAction from '../../IAction'
 import './EventHeader.scss'
 
 interface IEventHeaderProps {
-  event: IEvent
   user: IUser
+  event: IEvent
   updateRsvp(rsvp: IRsvp): IAction
+  deselectEvent(): IAction
 }
 
-const EventHeader = ({ event, user, updateRsvp }: IEventHeaderProps) => {
+const EventHeader = ({
+  event,
+  user,
+  updateRsvp,
+  deselectEvent
+}: IEventHeaderProps) => {
   const options = ["I'm Going", 'Maybe', "I'm not going"]
   const [selected, selectOption] = useState('you going?')
 
@@ -84,7 +90,12 @@ const EventHeader = ({ event, user, updateRsvp }: IEventHeaderProps) => {
       <img className="Event-background" src={event.imageUrl} alt="" />
       <div className="Event-img">
         <div className="EventHeader-top-menu">
-          <Link to="/">
+          <Link
+            to="/"
+            onClick={() => {
+              deselectEvent()
+            }}
+          >
             <ChevronLeft className="EventHeader-back-arrow" />
           </Link>
         </div>
