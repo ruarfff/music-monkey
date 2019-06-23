@@ -2,10 +2,7 @@ import { connect } from 'react-redux'
 import { deselectEvent, setEventId } from '../event/eventActions'
 import { withRouter } from 'react-router'
 import IRootState from '../rootState'
-import {
-  getSuggestions,
-  getUsersSuggestions
-} from '../suggestion/suggestionActions'
+import { getSuggestions } from '../suggestion/suggestionActions'
 import Requests from './Requests'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -18,7 +15,6 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   getSuggestions,
-  getUsersSuggestions,
   deselectEvent,
   setEventId
 }

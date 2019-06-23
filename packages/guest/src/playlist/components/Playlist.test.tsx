@@ -4,12 +4,15 @@ import Playlist from './Playlist'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import IEvent from '../../event/IEvent'
 import IUser from '../../user/IUser'
+import IDecoratedSuggestion from '../../suggestion/IDecoratedSuggestion'
 
 it('renders without crashing', () => {
   const user = {} as IUser
   const event = {} as IEvent
   const votes = new Map<string, ITrackVoteStatus>()
   const fetchingVotes = false
+  const suggestions = [] as IDecoratedSuggestion[]
+  const fetchingSuggestions = false
   const fetchEventVotes = jest.fn()
   const createVote = jest.fn()
   const deleteVote = jest.fn()
@@ -23,6 +26,8 @@ it('renders without crashing', () => {
       votes={votes}
       fetchingVotes={fetchingVotes}
       fetchEventVotes={fetchEventVotes}
+      suggestions={suggestions}
+      fetchingSuggestions={fetchingSuggestions}
       createVote={createVote}
       deleteVote={deleteVote}
       getSuggestions={getSuggestions}

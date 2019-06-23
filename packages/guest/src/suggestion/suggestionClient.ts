@@ -8,21 +8,6 @@ export const getSuggestions = async (eventId: string) => {
   return response.data
 }
 
-export const getUsersSuggestions = async () => {
-  const response = await client.get('/users/suggestions', {
-    withCredentials: true
-  })
-  try {
-    if (response.data.length > 200) {
-      return response.data.slice(0, 200)
-    } else {
-      return response.data
-    }
-  } catch (err) {
-    console.error('err', err)
-  }
-}
-
 export const saveSuggestion = (suggestion: ISuggestion) => {
   return client.post('/suggestions', suggestion, {
     withCredentials: true

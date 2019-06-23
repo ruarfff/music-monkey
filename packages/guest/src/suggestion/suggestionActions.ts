@@ -38,11 +38,6 @@ export const getSuggestions = (eventId: string): IAction => ({
   payload: eventId
 })
 
-export const getUsersSuggestions = (eventId: string): IAction => ({
-  type: FETCH_USER_SUGGESTIONS_INITIATED,
-  payload: eventId
-})
-
 export const clearSavedSuggestion = (): IAction => ({
   type: CLEAR_SAVED_SUGGESTION
 })

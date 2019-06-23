@@ -8,19 +8,15 @@ import {
   FETCH_SUGGESTIONS_FAILED,
   FETCH_SUGGESTIONS_INITIATED,
   FETCH_SUGGESTIONS_SUCCESS,
-  FETCH_USER_SUGGESTIONS_INITIATED,
   SAVE_PLAYLIST_SUGGESTION_INITIATED,
   SAVE_SUGGESTION_FAILED,
   SAVE_SUGGESTION_SUCCESS,
-  SAVE_TRACK_SUGGESTION_INITIATED,
-  FETCH_USER_SUGGESTIONS_SUCCESS,
-  FETCH_USER_SUGGESTIONS_FAILED
+  SAVE_TRACK_SUGGESTION_INITIATED
 } from './suggestionActions'
 import {
   bulkSaveSuggestions,
   deleteSuggestion,
   getSuggestions,
-  getUsersSuggestions,
   saveSuggestion
 } from './suggestionClient'
 import SuggestionTransformer from './SuggestionTransformer'
@@ -41,22 +37,6 @@ function* fetchSuggestionsFlow(action: IAction) {
 
 export function* watchFetchSuggestions() {
   yield takeEvery(FETCH_SUGGESTIONS_INITIATED, fetchSuggestionsFlow)
-}
-
-function* fetchUsersSuggestionsFlow(action: IAction) {
-  try {
-    const suggestions = yield call(getUsersSuggestions, action.payload)
-    yield put({
-      type: FETCH_USER_SUGGESTIONS_SUCCESS,
-      payload: suggestions
-    })
-  } catch (err) {
-    yield put({ type: FETCH_USER_SUGGESTIONS_FAILED, payload: err })
-  }
-}
-
-export function* watchFetchUsersSuggestions() {
-  yield takeEvery(FETCH_USER_SUGGESTIONS_INITIATED, fetchUsersSuggestionsFlow)
 }
 
 function* saveTrackSuggestionFlow(action: IAction) {

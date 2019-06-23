@@ -54,7 +54,7 @@ export default class MaybeTracks extends React.PureComponent<
         )}
         {filteredSuggestions.length < 1 && (
           <ListItem>
-            <span className="noTracks">No suggestions yet</span>
+            <span className="noTracks">No pending suggestions</span>
           </ListItem>
         )}
       </List>

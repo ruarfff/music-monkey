@@ -19,7 +19,7 @@ interface IRequestsProps extends RouteComponentProps<any> {
   events: IEvent[]
   user: IUser
   suggestion: ISuggestionState
-  getUsersSuggestions(eventId: string): IAction
+  getSuggestions(eventId: string): IAction
   deselectEvent(): IAction
   setEventId(eventId: string): IAction
 }
@@ -35,7 +35,7 @@ class Requests extends React.Component<IRequestsProps> {
       !isEmpty(this.props.event) &&
       !this.props.suggestion.fetchingSuggestions
     ) {
-      this.props.getUsersSuggestions(this.props.event.eventId)
+      this.props.getSuggestions(this.props.event.eventId)
     }
   }
 
@@ -45,7 +45,7 @@ class Requests extends React.Component<IRequestsProps> {
       newProps.event.eventId &&
       isEmpty(this.props.event)
     ) {
-      this.props.getUsersSuggestions(newProps.event.eventId)
+      this.props.getSuggestions(newProps.event.eventId)
     }
   }
 
