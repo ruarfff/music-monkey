@@ -6,7 +6,7 @@ import ITrack from '../track/ITrack'
 
 import './Search.scss'
 
-const WAIT_INTERVAL = 400
+const WAIT_INTERVAL = 200
 
 interface ISearchProps {
   tracks: ITrack[]

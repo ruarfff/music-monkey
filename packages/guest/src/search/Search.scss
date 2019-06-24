@@ -15,10 +15,13 @@
     margin-top: 0.5em;
     margin-bottom: 0.7em;
     font-size: 20px;
-    text-align: center;
+    text-align: left;
     border: none;
     outline: none;
     margin-left: -2em;
+  }
+  .Search-input:focus::-webkit-input-placeholder {
+    color: transparent;
   }
 
   .Search-icon {
