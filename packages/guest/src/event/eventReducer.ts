@@ -30,7 +30,8 @@ export default function event(
     case DESELECT_EVENT:
       return {
         ...state,
-        selectedEvent: {} as IEvent
+        selectedEvent: {} as IEvent,
+        eventId: null
       }
     case UPDATE_RSVP_SUCCESS:
       const updatedGuests = cloneDeep(state.selectedEvent.guests).map(guest => {
