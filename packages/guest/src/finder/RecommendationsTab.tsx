@@ -1,8 +1,7 @@
 import { Typography } from '@material-ui/core'
 import Recommendations from '../recommendation/RecommendationsContainer'
 import ITrack from '../track/ITrack'
-
-const React = require('react')
+import React from 'react'
 
 interface IRecommendationsTabProps {
   onTrackSelected(track: ITrack): any
