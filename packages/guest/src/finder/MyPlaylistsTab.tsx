@@ -19,7 +19,7 @@ import IPlaylistImage from '../playlist/IPlaylistImage'
 interface IMyPlaylistsTabProps {
   user: IUser
   playlists: IPlaylist[]
-  selectedUserPlaylist: IPlaylist
+  playlistsEnabled: boolean
   onTrackSelected(track: ITrack): any
   savePlaylistSuggestion(suggestions: IPlaylist): any
   fetchMorePlaylists(user: IUser): IAction
@@ -28,7 +28,7 @@ interface IMyPlaylistsTabProps {
 const MyPlaylistsTab = ({
   user,
   playlists,
-  selectedUserPlaylist,
+  playlistsEnabled,
   onTrackSelected,
   savePlaylistSuggestion,
   fetchMorePlaylists
@@ -78,6 +78,7 @@ const MyPlaylistsTab = ({
               disabled={playlist.tracks.total < 1}
               button={true}
               key={i}
+              onClick={() => setSelectedPlaylist(playlist)}
             >
               <ListItemAvatar>
                 <Avatar alt={playlist.name} src={playlistImage} />
@@ -99,12 +100,14 @@ const MyPlaylistsTab = ({
         <Button onClick={() => setSelectedPlaylist({} as IPlaylist)}>
           BACK TO PLAYLISTS
         </Button>
-        <Button onClick={savePlaylistSuggestion(selectedUserPlaylist)}>
-          ADD ALL TRACKS
-        </Button>
+        {playlistsEnabled && (
+          <Button onClick={savePlaylistSuggestion(selectedPlaylist)}>
+            ADD ALL TRACKS
+          </Button>
+        )}
         <List>
           <TrackList
-            tracks={selectedUserPlaylist.tracks.items.map(t => t.track)}
+            tracks={selectedPlaylist.tracks.items.map(t => t.track)}
             onTrackSelected={onTrackSelected}
             withSuggestingEnabled={true}
           />

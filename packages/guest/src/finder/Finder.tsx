@@ -30,7 +30,6 @@ interface IFinderProps extends RouteComponentProps<any> {
   selectedEvent: IEvent
   searching: boolean
   searchResults: ITrack[]
-  selectedUserPlaylist: IPlaylist
   deselectEvent(): IAction
   saveTrackSuggestion(suggestions: ITrackSuggestion): IAction
   fetchPlaylists(user: IUser): IAction
@@ -46,7 +45,6 @@ const Finder = ({
   selectedEvent,
   searching,
   searchResults,
-  selectedUserPlaylist,
   deselectEvent,
   saveTrackSuggestion,
   fetchPlaylists,
@@ -86,16 +84,12 @@ const Finder = ({
   }
 
   const onPlaylistSelected = (playlist: IPlaylist) => () => {
-    if (selectedEvent.settings.suggestingPlaylistsEnabled) {
-      showConfirmationPlaylistDialog(
-        user,
-        selectedEvent,
-        playlist,
-        savePlaylistSuggestion
-      )
-    } else {
-      showErrorPlaylistDialog()
-    }
+    showConfirmationPlaylistDialog(
+      user,
+      selectedEvent,
+      playlist,
+      savePlaylistSuggestion
+    )
   }
 
   const playlistTracks =
@@ -152,11 +146,13 @@ const Finder = ({
             {tabIndex === 1 ? (
               <MyPlaylistsTab
                 user={user}
+                playlistsEnabled={
+                  selectedEvent.settings.suggestingPlaylistsEnabled
+                }
                 fetchMorePlaylists={fetchMorePlaylists}
                 savePlaylistSuggestion={onPlaylistSelected}
                 onTrackSelected={onTrackSelected}
                 playlists={userPlaylists}
-                selectedUserPlaylist={selectedUserPlaylist}
               />
             ) : (
               <div />
@@ -166,17 +162,6 @@ const Finder = ({
       )}
     </div>
   )
-}
-
-function showErrorPlaylistDialog() {
-  SweetAlert.fire({
-    title: 'Suggest playlist',
-    text: 'Playlist submission not allowed by host currently',
-    type: 'error',
-    confirmButtonColor: '#ffb000',
-    cancelButtonColor: '#e0e0e0',
-    confirmButtonText: 'Suggest it!'
-  })
 }
 
 function showConfirmationPlaylistDialog(
