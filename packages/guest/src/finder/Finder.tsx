@@ -1,4 +1,4 @@
-import { AppBar, Divider, Tab, Tabs } from '@material-ui/core'
+import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
@@ -14,21 +14,20 @@ import ITrack from '../track/ITrack'
 import IUser from '../user/IUser'
 import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
 import EventPicker from '../event/components/EventPickerContainer'
-import './Finder.scss'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
 import SearchResults from './SearchResults'
 import SelectedEvent from './SelectedEvent'
 import React, { useEffect } from 'react'
+import './Finder.scss'
 
 const SweetAlert = withReactContent(Swal) as any
 
 interface IFinderProps extends RouteComponentProps<any> {
   user: IUser
-  events: IEvent[]
   userPlaylists: IPlaylist[]
+  events: IEvent[]
   selectedEvent: IEvent
-  history: any
   searching: boolean
   searchResults: ITrack[]
   selectedUserPlaylist: IPlaylist
@@ -42,12 +41,12 @@ interface IFinderProps extends RouteComponentProps<any> {
 
 const Finder = ({
   user,
+  userPlaylists,
   events,
   selectedEvent,
-  userPlaylists,
-  selectedUserPlaylist,
   searching,
   searchResults,
+  selectedUserPlaylist,
   deselectEvent,
   saveTrackSuggestion,
   fetchPlaylists,
@@ -69,6 +68,18 @@ const Finder = ({
   }, [user])
 
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
+
+  if (isEmpty(events)) {
+    return (
+      <Typography align={'center'} variant={'h6'}>
+        You don't have any events yet.
+      </Typography>
+    )
+  }
+
+  if (isEmpty(selectedEvent)) {
+    return <EventPicker />
+  }
 
   const onTrackSelected = (track: ITrack) => {
     showConfirmationDialog(user, selectedEvent, track, saveTrackSuggestion)
@@ -102,7 +113,6 @@ const Finder = ({
 
   return (
     <div>
-      {isEmpty(selectedEvent) && <EventPicker />}
       <Search />
       {(searching || !isEmpty(filteredSearch)) && (
         <SearchResults
@@ -113,12 +123,7 @@ const Finder = ({
       {!searching && isEmpty(filteredSearch) && (
         <div>
           <Divider variant="inset" className="Finder-divider" />
-          {!isEmpty(selectedEvent) && (
-            <SelectedEvent
-              event={selectedEvent}
-              deselectEvent={deselectEvent}
-            />
-          )}
+          <SelectedEvent event={selectedEvent} deselectEvent={deselectEvent} />
           <Divider variant="inset" className="Finder-divider" />
           <AppBar position="static" color="default">
             <Tabs
@@ -143,6 +148,7 @@ const Finder = ({
             ) : (
               <div />
             )}
+
             {tabIndex === 1 ? (
               <MyPlaylistsTab
                 user={user}
@@ -151,7 +157,6 @@ const Finder = ({
                 onTrackSelected={onTrackSelected}
                 playlists={userPlaylists}
                 selectedUserPlaylist={selectedUserPlaylist}
-                attached={false}
               />
             ) : (
               <div />

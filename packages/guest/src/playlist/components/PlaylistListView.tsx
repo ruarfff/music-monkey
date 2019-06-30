@@ -13,8 +13,8 @@ import { Link } from 'react-router-dom'
 import IEvent from '../../event/IEvent'
 import IPlaylist from '../IPlaylist'
 import LoadingSpinner from '../../loading/LoadingSpinner'
-import './PlaylistListView.scss'
 import IAction from '../../IAction'
+import './PlaylistListView.scss'
 
 interface IPlaylistListViewProps {
   selectedEvent: IEvent

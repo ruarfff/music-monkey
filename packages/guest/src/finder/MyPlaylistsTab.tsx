@@ -1,15 +1,24 @@
-import { Typography } from '@material-ui/core'
+import {
+  Typography,
+  List,
+  Button,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText
+} from '@material-ui/core'
 import IAction from '../IAction'
-//import PlaylistListView from '../playlist/components/PlaylistListView'
+import { isEmpty, sortBy, head } from 'lodash'
 import IPlaylist from '../playlist/IPlaylist'
 import ITrack from '../track/ITrack'
 import IUser from '../user/IUser'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import TrackList from '../track/TrackList'
+import IPlaylistImage from '../playlist/IPlaylistImage'
 
 interface IMyPlaylistsTabProps {
   user: IUser
   playlists: IPlaylist[]
-  attached: boolean
   selectedUserPlaylist: IPlaylist
   onTrackSelected(track: ITrack): any
   savePlaylistSuggestion(suggestions: IPlaylist): any
@@ -17,13 +26,14 @@ interface IMyPlaylistsTabProps {
 }
 
 const MyPlaylistsTab = ({
-  selectedUserPlaylist,
   user,
   playlists,
+  selectedUserPlaylist,
   onTrackSelected,
   savePlaylistSuggestion,
   fetchMorePlaylists
 }: IMyPlaylistsTabProps) => {
+  const [selectedPlaylist, setSelectedPlaylist] = useState({} as IPlaylist)
   const handleFetchMorePlaylists = () => {
     fetchMorePlaylists(user)
   }
@@ -45,21 +55,48 @@ const MyPlaylistsTab = ({
     }
   })
 
-  /**
   const renderPlaylistSimpleList = () => {
+    if (isEmpty(playlists)) {
+      return (
+        <Typography align={'center'} variant={'h6'}>
+          It looks like you don't have any playlists yet :(
+        </Typography>
+      )
+    }
     return (
-      <PlaylistListView
-        events={[]}
-        attached={true}
-        disableLinks={true}
-      />
+      <List>
+        {playlists.map((playlist: IPlaylist, i: number) => {
+          const playlistImage =
+            playlist.images.length > 0
+              ? (
+                  head(sortBy(playlist.images, 'height')) ||
+                  ({} as IPlaylistImage)
+                ).url
+              : '/img/partycover-sm.png'
+          return (
+            <ListItem
+              disabled={playlist.tracks.total < 1}
+              button={true}
+              key={i}
+            >
+              <ListItemAvatar>
+                <Avatar alt={playlist.name} src={playlistImage} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={playlist.name}
+                secondary={`${playlist.tracks.total} tracks`}
+              />
+            </ListItem>
+          )
+        })}
+      </List>
     )
   }
-  /**
+
   const renderListOfTracks = () => {
     return (
       <React.Fragment>
-        <Button onClick={() => selectPlaylist({} as IPlaylist)}>
+        <Button onClick={() => setSelectedPlaylist({} as IPlaylist)}>
           BACK TO PLAYLISTS
         </Button>
         <Button onClick={savePlaylistSuggestion(selectedUserPlaylist)}>
@@ -74,10 +111,13 @@ const MyPlaylistsTab = ({
         </List>
       </React.Fragment>
     )
-  } */
+  }
 
   return (
     <Typography component="div" dir="1">
+      {isEmpty(selectedPlaylist)
+        ? renderPlaylistSimpleList()
+        : renderListOfTracks()}
       <div className="Finder-stopper-block" />
     </Typography>
   )
