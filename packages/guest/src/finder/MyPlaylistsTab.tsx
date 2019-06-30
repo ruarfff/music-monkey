@@ -34,9 +34,6 @@ const MyPlaylistsTab = ({
   fetchMorePlaylists
 }: IMyPlaylistsTabProps) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState({} as IPlaylist)
-  const handleFetchMorePlaylists = () => {
-    fetchMorePlaylists(user)
-  }
 
   useEffect(() => {
     const trackScrolling = () => {
@@ -44,7 +41,8 @@ const MyPlaylistsTab = ({
         document.body.offsetHeight ===
         window.pageYOffset + window.innerHeight
       ) {
-        handleFetchMorePlaylists()
+        console.log('Bug: Not fetching more playlists')
+        //handleFetchMorePlaylists()
       }
     }
 
@@ -73,12 +71,16 @@ const MyPlaylistsTab = ({
                   ({} as IPlaylistImage)
                 ).url
               : '/img/partycover-sm.png'
+
+          const playlistDisabled = playlist.tracks.total < 1
           return (
             <ListItem
-              disabled={playlist.tracks.total < 1}
+              disabled={playlistDisabled}
               button={true}
               key={i}
-              onClick={() => setSelectedPlaylist(playlist)}
+              onClick={() => {
+                if (!playlistDisabled) setSelectedPlaylist(playlist)
+              }}
             >
               <ListItemAvatar>
                 <Avatar alt={playlist.name} src={playlistImage} />
