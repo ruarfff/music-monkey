@@ -1,4 +1,11 @@
-import { Avatar, Divider, ListItem, ListItemText } from '@material-ui/core'
+import {
+  Avatar,
+  Divider,
+  ListItem,
+  ListItemText,
+  List,
+  Typography
+} from '@material-ui/core'
 import * as React from 'react'
 import IEvent from '../IEvent'
 import './EventGuests.scss'
@@ -9,32 +16,49 @@ interface IEventGuestsProps {
 
 const EventGuests = ({ event }: IEventGuestsProps) => {
   return (
-    <div className="event-colendar-tab">
-      <div className="event-img-info-title guests-title">
-        {event.guests.length} Guests Invited
-      </div>
-      {event.guests.map((user: any, index: number) => {
+    <List>
+      {event.guests.map(({ user, rsvp }: any, index: number) => {
+        let initials: any = 'G'
+
+        if (user && user.displayName) {
+          initials = user.displayName.match(/\b\w/g) || []
+          initials = (
+            (initials.shift() || '') + (initials.pop() || '')
+          ).toUpperCase()
+        }
+
         return (
-          <div key={index}>
+          <React.Fragment key={index}>
             <ListItem>
-              <Avatar>
-                <img
-                  alt="user"
-                  className="img-cover"
-                  src={user.user.image || ''}
-                />
-              </Avatar>
-              <ListItemText primary={user.user.displayName || 'guest'} />
-              <ListItemText primary={user.rsvp.status} />
-              {user.user.userId === event.userId && (
-                <ListItemText primary="Host" />
+              {user.image && (
+                <Avatar className="EventGuests-avatar" src={user.image} />
               )}
+              {!user.image && (
+                <Avatar className="EventGuests-avatar">{initials}</Avatar>
+              )}
+
+              <ListItemText
+                primary={user.displayName || 'Guest'}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      className="EventGuests-inline"
+                      color="textPrimary"
+                    >
+                      {rsvp.status}
+                    </Typography>
+                    {user.userId === event.userId && ' — Host'}
+                  </React.Fragment>
+                }
+              />
             </ListItem>
             <Divider variant="inset" />
-          </div>
+          </React.Fragment>
         )
       })}
-    </div>
+    </List>
   )
 }
 

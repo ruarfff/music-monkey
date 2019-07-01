@@ -1,8 +1,24 @@
-@import '../../theme/colours';
+.EventGuests-inline {
+  display: inline;
+}
 
-.guests-title {
-  padding-top: 10px;
-  padding-left: 24px;
-  color: $main;
-  font-weight: 500;
+.EventGuests-avatar {
+  margin: 10;
+}
+.EventGuests-orange-avatar {
+  margin: 10;
+  color: #fff;
+  background-color: orange;
+}
+
+.EventGuests-purple-avatar {
+  margin: 10;
+  color: #fff;
+  background-color: purple;
+}
+
+.EventGuests-purple-avatar {
+  margin: 10;
+  color: #fff;
+  background-color: green;
 }
