@@ -2192,9 +2192,9 @@
     "@types/googlemaps" "*"
 
 "@types/googlemaps@*", "@types/googlemaps@^3.30.16":
-  version "3.36.2"
-  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.36.2.tgz#07d7c73eaeb010faeb9e6636a5f50cf2515ac2cc"
-  integrity sha512-7rF/VXWgd8LYg3HqmSFQYu+NGTzFauaW3oic1f8WjCWxOYIiyuN5gd7hrfhVMcxKRZuIyVcbuI8ty5P+3qNQ5w==
+  version "3.36.6"
+  resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.36.6.tgz#8d930e5e7bcac8769818223665f65004060219ab"
+  integrity sha512-4SYTU3NDJseXspKFvuD818UH2y2t1ncNtrptYrDombU4lgrFH6ZQsNc+m62H//lRHcLZFYD2kNkgh4bxUic0Bg==
 
 "@types/history@*", "@types/history@^4.7.2":
   version "4.7.2"
