@@ -52,13 +52,15 @@ export default function event(
         eventLoading: true
       } as IEventState
     case EVENT_FETCHED: {
-      const existingEvents = [...state.events]
+      let existingEvents = [...state.events]
       const existingIndex = findIndex(
         existingEvents,
         event => event.eventId === payload.eventId
       )
       if (existingIndex > -1) {
         existingEvents[existingIndex] = payload
+      } else {
+        existingEvents = [...existingEvents, payload]
       }
       return {
         ...state,

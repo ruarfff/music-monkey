@@ -33,25 +33,25 @@ describe('eventReducer', () => {
     })
 
     it('should handle EVENT_FETCHED', () => {
+      const fetchedEvent = {
+        eventId: 'event-id',
+        playlist: { id: 'playlist-id' } as IPlaylist
+      } as IEvent
+
       expect(
         event(
           { ...initialState, eventLoading: true },
           {
             type: EVENT_FETCHED,
-            payload: {
-              eventId: 'event-id',
-              playlist: { id: 'playlist-id' } as IPlaylist
-            } as IEvent
+            payload: fetchedEvent
           }
         )
       ).toEqual({
         ...initialState,
         eventLoading: false,
-        selectedEvent: {
-          eventId: 'event-id',
-          playlist: { id: 'playlist-id' } as IPlaylist
-        } as IEvent,
-        eventId: 'event-id'
+        selectedEvent: fetchedEvent,
+        eventId: 'event-id',
+        events: [fetchedEvent]
       })
     })
 
