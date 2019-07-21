@@ -10,13 +10,11 @@ import EventList from './EventList'
 import './EventListView.scss'
 import React from 'react'
 import IAction from '../../IAction'
+import sortEvents from '../sortEvents'
 
 interface IEventListViewProps {
   selectedEvent: IEvent
   events: IEvent[]
-  pastEvents: IEvent[]
-  liveEvents: IEvent[]
-  upcomingEvents: IEvent[]
   eventsLoading: boolean
   deselectEvent(): IAction
 }
@@ -24,9 +22,6 @@ interface IEventListViewProps {
 const EventListView = ({
   selectedEvent,
   events,
-  pastEvents,
-  liveEvents,
-  upcomingEvents,
   eventsLoading,
   deselectEvent
 }: IEventListViewProps) => {
@@ -73,6 +68,8 @@ const EventListView = ({
       </div>
     )
   }
+
+  const { pastEvents, upcomingEvents, liveEvents } = sortEvents(events)
 
   return (
     <EventList

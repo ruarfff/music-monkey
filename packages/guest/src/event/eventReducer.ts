@@ -1,6 +1,5 @@
-import { cloneDeep } from 'lodash'
+import { cloneDeep, findIndex } from 'lodash'
 import Action from '../IAction'
-import moment from 'moment'
 import { UPDATE_RSVP_SUCCESS } from '../rsvp/rsvpActions'
 import {
   DESELECT_EVENT,
@@ -20,7 +19,6 @@ import {
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
 import IEventState from './IEventState'
-import { sortBy } from 'lodash'
 
 export default function event(
   state: IEventState = initialState,
@@ -53,13 +51,23 @@ export default function event(
         ...state,
         eventLoading: true
       } as IEventState
-    case EVENT_FETCHED:
+    case EVENT_FETCHED: {
+      const existingEvents = [...state.events]
+      const existingIndex = findIndex(
+        existingEvents,
+        event => event.eventId === payload.eventId
+      )
+      if (existingIndex > -1) {
+        existingEvents[existingIndex] = payload
+      }
       return {
         ...state,
         selectedEvent: payload,
         eventId: payload.eventId,
-        eventLoading: false
+        eventLoading: false,
+        events: existingEvents
       } as IEventState
+    }
     case EVENT_CLEAR:
       return {
         ...state,
@@ -94,28 +102,11 @@ export default function event(
     case FETCH_USERS_EVENTS_ERROR:
       return { ...state, eventsLoading: false } as IEventState
     case FETCH_USERS_EVENTS_SUCCESS: {
-      const now = moment()
       const events: IEvent[] = payload
       return {
         ...state,
         events,
-        eventsLoading: false,
-        pastEvents: sortBy(
-          events.filter(event => now.isAfter(event.endDateTime)),
-          'endDateTime'
-        ).reverse(),
-        liveEvents: sortBy(
-          events.filter(
-            event =>
-              now.isAfter(event.startDateTime) &&
-              now.isBefore(event.endDateTime)
-          ),
-          'endDateTime'
-        ).reverse(),
-        upcomingEvents: sortBy(
-          events.filter(event => now.isBefore(event.startDateTime)),
-          'endDateTime'
-        ).reverse()
+        eventsLoading: false
       } as IEventState
     }
     case EVENT_SELECTED:

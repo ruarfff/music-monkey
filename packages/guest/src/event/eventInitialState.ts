@@ -6,9 +6,6 @@ export default {
   selectedEvent: {} as IEvent,
   selectedSuggestion: undefined,
   events: [],
-  upcomingEvents: [],
-  liveEvents: [],
-  pastEvents: [],
   eventsLoading: false,
   eventLoading: false,
   eventId: ''

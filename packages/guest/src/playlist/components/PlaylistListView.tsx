@@ -15,21 +15,18 @@ import IPlaylist from '../IPlaylist'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import IAction from '../../IAction'
 import './PlaylistListView.scss'
+import sortEvents from '../../event/sortEvents'
 
 interface IPlaylistListViewProps {
   selectedEvent: IEvent
-  liveEvents: IEvent[]
-  pastEvents: IEvent[]
-  upcomingEvents: IEvent[]
+  events: IEvent[]
   eventsLoading?: boolean
   deselectEvent(): IAction
 }
 
 const PlaylistListView = ({
   selectedEvent,
-  liveEvents,
-  upcomingEvents,
-  pastEvents,
+  events,
   eventsLoading,
   deselectEvent
 }: IPlaylistListViewProps) => {
@@ -43,6 +40,8 @@ const PlaylistListView = ({
   if (eventsLoading) {
     return <LoadingSpinner />
   }
+
+  const { liveEvents, upcomingEvents, pastEvents } = sortEvents(events)
 
   const playlists = uniqBy(
     [...liveEvents, ...upcomingEvents, ...pastEvents]

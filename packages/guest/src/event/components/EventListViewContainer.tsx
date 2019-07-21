@@ -3,13 +3,10 @@ import IRootState from '../../rootState'
 import EventListView from './EventListView'
 import { deselectEvent } from '../eventActions'
 
-const mapStateToProps = ({ event, user }: IRootState) => ({
+const mapStateToProps = ({ event }: IRootState) => ({
   selectedEvent: event.selectedEvent,
   events: event.events,
-  eventsLoading: event.eventsLoading,
-  pastEvents: event.pastEvents,
-  liveEvents: event.liveEvents,
-  upcomingEvents: event.upcomingEvents
+  eventsLoading: event.eventsLoading
 })
 
 const mapDispatchToProps = { deselectEvent }

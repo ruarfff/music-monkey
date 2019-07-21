@@ -55,6 +55,32 @@ describe('eventReducer', () => {
       })
     })
 
+    it('should update existing event in events list when EVENT_FETCHED', () => {
+      const oldEvent = {
+        eventId: 'event-id',
+        playlist: { id: 'playlist-id' } as IPlaylist
+      } as IEvent
+      const newEvent = {
+        eventId: 'event-id',
+        playlist: { id: 'new-playlist-id' } as IPlaylist
+      } as IEvent
+      expect(
+        event(
+          { ...initialState, eventLoading: true, events: [oldEvent] },
+          {
+            type: EVENT_FETCHED,
+            payload: newEvent
+          }
+        )
+      ).toEqual({
+        ...initialState,
+        eventLoading: false,
+        selectedEvent: newEvent,
+        events: [newEvent],
+        eventId: 'event-id'
+      })
+    })
+
     it('should handle EVENT_FETCH_ERROR', () => {
       expect(
         event(initialState, {

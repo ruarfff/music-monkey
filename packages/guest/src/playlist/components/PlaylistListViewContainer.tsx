@@ -5,10 +5,8 @@ import { deselectEvent } from '../../event/eventActions'
 
 const mapStateToProps = (state: IRootState) => ({
   selectedEvent: state.event.selectedEvent,
-  pastEvents: state.event.pastEvents,
-  upcomingEvents: state.event.upcomingEvents,
-  liveEvents: state.event.liveEvents,
-  eventsLoading: state.event.eventsLoading
+  eventsLoading: state.event.eventsLoading,
+  events: state.event.events
 })
 
 const mapDispatchToProps = { deselectEvent }
