@@ -5,8 +5,7 @@ import IRootState from '../rootState'
 import Requests from './Requests'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.selectedEvent,
-  fetchingSuggestions: state.suggestion.fetchingSuggestions
+  selectedEvent: state.event.selectedEvent
 })
 
 const mapDispatchToProps = {

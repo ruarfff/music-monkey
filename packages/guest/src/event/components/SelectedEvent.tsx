@@ -1,6 +1,6 @@
 import { ListItemText } from '@material-ui/core'
-import IEvent from '../event/IEvent'
-import IAction from '../IAction'
+import IEvent from '../IEvent'
+import IAction from '../../IAction'
 import './SelectedEvent.scss'
 import React from 'react'
 
@@ -16,11 +16,7 @@ const SelectedEvent = ({ event, deselectEvent }: ISelectedEventProps) => {
         <img alt="event" src={event.imageUrl} />
       </div>
       <div className="SelectedEvent-content">
-        <ListItemText
-          primary={event.name}
-          secondary={event.organizer}
-          classes={{ primary: 'Finder-event-title' }}
-        />
+        <ListItemText primary={event.name} secondary={event.organizer} />
       </div>
     </div>
   )

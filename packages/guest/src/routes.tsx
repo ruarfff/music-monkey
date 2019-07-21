@@ -104,7 +104,13 @@ const routes = [
       },
       {
         component: userIsAuthenticated(Finder),
-        path: '/finder/:eventId'
+        path: '/finder',
+        exact: true
+      },
+      {
+        component: userIsAuthenticated(Finder),
+        path: '/finder/:eventId',
+        exact: true
       }
     ]
   }

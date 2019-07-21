@@ -1,10 +1,12 @@
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
+import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import IEvent from '../event/IEvent'
+import EventPicker from '../event/components/EventPickerContainer'
+import SelectedEvent from '../event/components/SelectedEvent'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import Search from '../search/SearchContainer'
@@ -13,12 +15,10 @@ import ITrackSuggestion from '../suggestion/ITrackSuggestion'
 import ITrack from '../track/ITrack'
 import IUser from '../user/IUser'
 import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
-import EventPicker from '../event/components/EventPickerContainer'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
 import SearchResults from './SearchResults'
-import SelectedEvent from './SelectedEvent'
-import React, { useEffect } from 'react'
+import Swal from 'sweetalert2'
 import './Finder.scss'
 
 const SweetAlert = withReactContent(Swal) as any
@@ -55,9 +55,13 @@ const Finder = ({
 }: IFinderProps) => {
   const eventId = match.params.eventId
   useEffect(() => {
-    if (eventId && eventId !== selectedEvent.eventId) setEventId(eventId)
+    const selectedEventId = selectedEvent ? selectedEvent.eventId : ''
+    if (eventId && selectedEventId !== eventId) {
+      setEventId(eventId)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId])
+  }, [selectedEvent, eventId])
+
   useEffect(() => {
     if (!isEmpty(user) && isEmpty(userPlaylists)) {
       fetchPlaylists(user)
@@ -73,10 +77,6 @@ const Finder = ({
         You don't have any events yet.
       </Typography>
     )
-  }
-
-  if (isEmpty(selectedEvent)) {
-    return <EventPicker />
   }
 
   const onTrackSelected = (track: ITrack) => {
@@ -108,6 +108,7 @@ const Finder = ({
   return (
     <div>
       <Search />
+      <Divider variant="inset" className="Finder-divider" />
       {(searching || !isEmpty(filteredSearch)) && (
         <SearchResults
           tracks={filteredSearch}
@@ -116,8 +117,13 @@ const Finder = ({
       )}
       {!searching && isEmpty(filteredSearch) && (
         <div>
-          <Divider variant="inset" className="Finder-divider" />
-          <SelectedEvent event={selectedEvent} deselectEvent={deselectEvent} />
+          {isEmpty(selectedEvent) && <EventPicker />}
+          {!isEmpty(selectedEvent) && (
+            <SelectedEvent
+              event={selectedEvent}
+              deselectEvent={deselectEvent}
+            />
+          )}
           <Divider variant="inset" className="Finder-divider" />
           <AppBar position="static" color="default">
             <Tabs

@@ -1,55 +1,52 @@
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
-import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
+import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../event/IEvent'
 import EventPicker from '../event/components/EventPickerContainer'
-import SelectedEvent from '../finder/SelectedEvent'
+import SelectedEvent from '../event/components/SelectedEvent'
 import IAction from '../IAction'
+import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
 import AcceptedTracks from './AcceptedTracksContainer'
 import MaybeTracks from './MaybeTracksContainer'
 import RejectedTracks from './RejectedTracksContainer'
 import './Requests.scss'
 
 interface IRequestsProps extends RouteComponentProps<any> {
-  event: IEvent
-  fetchingSuggestions: boolean
+  selectedEvent: IEvent
   deselectEvent(): IAction
   setEventId(eventId: string): IAction
 }
 
 const Requests = ({
-  event,
-  fetchingSuggestions,
+  selectedEvent,
   deselectEvent,
   setEventId,
   match
 }: IRequestsProps) => {
-  const [value, setValue] = useState(0)
   const eventId = match.params.eventId
   useEffect(() => {
-    if (event.eventId !== eventId) {
+    const selectedEventId = selectedEvent ? selectedEvent.eventId : ''
+    if (eventId && selectedEventId !== eventId) {
       setEventId(eventId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [event, eventId])
+  }, [selectedEvent, eventId])
 
-  const handleChange = (e: any, value: any) => {
-    setValue(value)
-  }
+  const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
   return (
     <div>
-      {isEmpty(event) && <EventPicker />}
-      {!isEmpty(event) && (
-        <SelectedEvent event={event} deselectEvent={deselectEvent} />
+      {isEmpty(selectedEvent) && <EventPicker />}
+      {!isEmpty(selectedEvent) && (
+        <SelectedEvent event={selectedEvent} deselectEvent={deselectEvent} />
       )}
       <Divider variant="inset" className="Requests-divider" />
       <AppBar position="static" color="default">
         <Tabs
-          value={value}
-          onChange={handleChange}
+          value={tabIndex}
+          onChange={handleTabChange}
           indicatorColor="secondary"
           textColor="secondary"
           variant="fullWidth"
@@ -60,22 +57,22 @@ const Requests = ({
           <Tab label="DECLINED" />
         </Tabs>
       </AppBar>
-      <SwipeableViews axis="x" index={value} onChangeIndex={setValue}>
-        {value === 0 ? (
+      <SwipeableViews axis="x" index={tabIndex} onChangeIndex={handleTabChange}>
+        {tabIndex === 0 ? (
           <Typography component="div" dir="0">
             <AcceptedTracks />
           </Typography>
         ) : (
           <div />
         )}
-        {value === 1 ? (
+        {tabIndex === 1 ? (
           <Typography component="div" dir="1">
             <MaybeTracks />
           </Typography>
         ) : (
           <div />
         )}
-        {value === 2 ? (
+        {tabIndex === 2 ? (
           <Typography component="div" dir="2">
             <RejectedTracks />
           </Typography>
