@@ -3,7 +3,6 @@ import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
 import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import withReactContent from 'sweetalert2-react-content'
 import IEvent from '../event/IEvent'
 import EventPicker from '../event/components/EventPickerContainer'
 import SelectedEvent from '../event/components/SelectedEvent'
@@ -18,10 +17,8 @@ import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
 import SearchResults from './SearchResults'
-import Swal from 'sweetalert2'
+import swal from '@sweetalert/with-react'
 import './Finder.scss'
-
-const SweetAlert = withReactContent(Swal) as any
 
 interface IFinderProps extends RouteComponentProps<any> {
   user: IUser
@@ -176,24 +173,23 @@ function showConfirmationPlaylistDialog(
   playlist: IPlaylist,
   savePlaylistSuggestion: any
 ) {
-  SweetAlert.fire({
-    title: 'Suggest this playlist?',
-    text: `Suggest ${playlist.name} for the event ${event.name}`,
-    type: 'question',
-    showCancelButton: true,
-    confirmButtonColor: '#ffb000',
-    cancelButtonColor: '#e0e0e0',
-    confirmButtonText: 'Suggest it!'
-  }).then((result: any) => {
-    if (result.value) {
-      savePlaylistSuggestion({
-        eventId: event.eventId,
-        userId: user.userId,
-        playlistUri: playlist.uri,
-        trackUris: playlist.tracks.items.map(t => t.track.uri)
-      } as IPlaylistSuggestion)
+  return showDialog(playlist.name, event.name, 'Playlist').then(
+    (result: any) => {
+      if (result === 'ok') {
+        savePlaylistSuggestion({
+          eventId: event.eventId,
+          userId: user.userId,
+          playlistUri: playlist.uri,
+          trackUris: playlist.tracks.items.map(t => t.track.uri)
+        } as IPlaylistSuggestion)
+        swal(
+          'Thanks for your suggestion!',
+          `You suggested the playlist ${playlist.name}`,
+          'success'
+        )
+      }
     }
-  })
+  )
 }
 
 function showConfirmationDialog(
@@ -202,22 +198,43 @@ function showConfirmationDialog(
   track: ITrack,
   saveTrackSuggestion: any
 ) {
-  SweetAlert.fire({
-    title: 'Suggest this track?',
-    text: `Suggest ${track.name} for the event ${event.name}`,
-    type: 'question',
-    showCancelButton: true,
-    confirmButtonColor: '#ffb000',
-    cancelButtonColor: '#e0e0e0',
-    confirmButtonText: 'Suggest it!'
-  }).then((result: any) => {
-    if (result.value) {
+  return showDialog(track.name, event.name, 'Track').then((result: any) => {
+    if (result === 'ok') {
       saveTrackSuggestion({
         eventId: event.eventId,
         userId: user.userId,
         type: 'track',
         trackUri: track.uri
       } as ITrackSuggestion)
+      swal(
+        'Thanks for your suggestion!',
+        `You suggested the track ${track.name}`,
+        'success'
+      )
+    }
+  })
+}
+
+function showDialog(itemName: string, eventName: string, type: string) {
+  return swal({
+    title: `Suggest ${type}?`,
+    content: (
+      <span>
+        Suggest <strong>{itemName}</strong> for event{' '}
+        <strong>{eventName}</strong>?
+      </span>
+    ),
+    buttons: {
+      ok: {
+        text: 'Suggest it!',
+        visible: true,
+        closeModal: true
+      },
+      cancel: {
+        text: 'Cancel',
+        visible: true,
+        closeModal: true
+      }
     }
   })
 }

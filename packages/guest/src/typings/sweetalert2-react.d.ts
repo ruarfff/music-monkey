@@ -1,1 +1,1 @@
-declare module 'sweetalert2-react'
+declare module '@sweetalert/with-react'
