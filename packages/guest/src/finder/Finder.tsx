@@ -60,7 +60,7 @@ const Finder = ({
       setEventId(eventId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedEvent, eventId])
+  }, [eventId])
 
   useEffect(() => {
     if (!isEmpty(user) && isEmpty(userPlaylists)) {

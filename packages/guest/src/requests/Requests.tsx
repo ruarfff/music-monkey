@@ -32,7 +32,7 @@ const Requests = ({
       setEventId(eventId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedEvent, eventId])
+  }, [eventId])
 
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
