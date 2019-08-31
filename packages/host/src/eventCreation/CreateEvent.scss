@@ -8,18 +8,18 @@
   padding: 20px;
 }
 
-div[role=option] {
+div[role='option'] {
   line-height: 40px;
   width: 100%;
 }
 
 div.filepicker {
-  background: url("../assets/partycover.png") no-repeat center;
+  background: url('../assets/partycover.png') no-repeat center;
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px dashed #C7C7C7;
+  border: 1px dashed #c7c7c7;
   height: 300px;
   padding: 0;
 }
@@ -34,11 +34,11 @@ div.filepicker {
   height: 300px;
   position: relative;
 
- img {
-   width: 100%;
-   max-height: 300px;
-   height: 100%;
- }
+  img {
+    width: 100%;
+    max-height: 300px;
+    height: 100%;
+  }
 }
 
 .dz-details {
@@ -55,7 +55,8 @@ div.filepicker {
   text-align: center;
 }
 
-.dz-success-mark, .dz-error-mark {
+.dz-success-mark,
+.dz-error-mark {
   display: none;
 }
 
@@ -78,6 +79,13 @@ div.filepicker {
   width: 100%;
   text-align: right;
   padding-right: 10px;
+
+  button: {
+    margin-right: 30px;
+    last-child: {
+      margin-right: 0;
+    }
+  }
 
   .control-btn-text-primary {
     color: #979797;
