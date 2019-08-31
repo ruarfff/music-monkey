@@ -44,16 +44,22 @@ export const fetchPlaylist = async (playlistId: string) => {
 }
 
 export const fetchUsersPlaylists = async (user: IUser) => {
-  const res = await client.get('/users/' + user.userId + '/playlists?limit=50', {
-    withCredentials: true
-  })
+  const res = await client.get(
+    '/users/' + user.userId + '/playlists?limit=50',
+    {
+      withCredentials: true
+    }
+  )
   return res.data
 }
 
 export const fetchMoreUsersPlaylists = async (user: IUser, offset: number) => {
-  const res = await client.get(`/users/${user.userId}/playlists?limit=50&offset=${offset}`, {
-    withCredentials: true
-  })
+  const res = await client.get(
+    `/users/${user.userId}/playlists?limit=50&offset=${offset}`,
+    {
+      withCredentials: true
+    }
+  )
   return res.data
 }
 
@@ -62,7 +68,7 @@ export const createPlaylist = async (name: string, description = '') => {
     withCredentials: true,
     cache: false
   } as any)
-  return res.data.body
+  return res.data
 }
 
 export const replaceTracksInPlaylist = async (

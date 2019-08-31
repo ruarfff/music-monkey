@@ -1,10 +1,16 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import { SET_EVENT_PLAYLIST, UPDATE_PLAYLIST_AFTER_COPY } from '../eventPlaylist/eventPlaylistActions'
+import {
+  SET_EVENT_PLAYLIST,
+  UPDATE_PLAYLIST_AFTER_COPY
+} from '../eventPlaylist/eventPlaylistActions'
 import IAction from '../IAction'
 import IPlaylist from '../playlist/IPlaylist'
 import IPlaylistDetails from '../playlist/IPlaylistDetails'
 import { FETCH_PLAYLISTS } from '../playlist/playlistActions'
-import { createPlaylist, replaceTracksInPlaylist } from '../playlist/playlistClient'
+import {
+  createPlaylist,
+  replaceTracksInPlaylist
+} from '../playlist/playlistClient'
 import IUser from '../user/IUser'
 import {
   EVENT_CONTENT_UPDATED,
@@ -27,7 +33,6 @@ import {
 } from './eventActions'
 import { createEvent, getEvents, updateEvent } from './eventClient'
 import IEvent from './IEvent'
-
 
 const { geocodeByAddress, getLatLng } = require('react-places-autocomplete')
 
@@ -52,7 +57,7 @@ function* createPlaylistFlow(action: IAction) {
         name: playlistDetails.name
       }
     })
-    yield put({type: FETCH_PLAYLISTS, payload: playlistDetails.user})
+    yield put({ type: FETCH_PLAYLISTS, payload: playlistDetails.user })
   } catch (error) {
     yield put({ type: EVENT_PLAYLIST_CREATION_ERROR, payload: error })
   }
@@ -60,10 +65,11 @@ function* createPlaylistFlow(action: IAction) {
 
 function* eventPlaylistCreatedFlow(action: IAction) {
   const playlist: IPlaylist = action.payload
-  yield put({
-    payload: { playlistUrl: playlist.external_urls.spotify },
-    type: EVENT_CONTENT_UPDATED
-  })
+  if (playlist && playlist.external_urls)
+    yield put({
+      payload: { playlistUrl: playlist.external_urls.spotify },
+      type: EVENT_CONTENT_UPDATED
+    })
 }
 
 function fetchLatLng(address: string) {
@@ -103,12 +109,15 @@ function* saveEventFlow(action: IAction) {
       user: {} as IUser
     }
 
-    const isJustCreated = justCreatePlaylists.filter((playlist: any) =>
-      playlist.id === eventPlaylist.id
-    ).length === 1
+    const isJustCreated =
+      justCreatePlaylists.filter(
+        (playlist: any) => playlist.id === eventPlaylist.id
+      ).length === 1
 
     if (eventPlaylist.tracks.items.length > 0 && !isJustCreated) {
-      const tracksToCopy = eventPlaylist.tracks.items.map((item: any) => item.track.uri)
+      const tracksToCopy = eventPlaylist.tracks.items.map(
+        (item: any) => item.track.uri
+      )
 
       copiedPlaylist = yield call(savePlaylist, playlistDetails)
       yield call(replaceTracksInPlaylist, copiedPlaylist.id, tracksToCopy)
@@ -128,7 +137,7 @@ function* saveEventFlow(action: IAction) {
         userId: user.userId
       })
       yield put({ type: UPDATE_PLAYLIST_AFTER_COPY, payload: copiedPlaylist })
-      yield put({ type: FETCH_PLAYLISTS, payload: user})
+      yield put({ type: FETCH_PLAYLISTS, payload: user })
     } else {
       savedEvent = yield call(createEvent, {
         ...event,
@@ -169,12 +178,20 @@ function* updateEventFlow(action: IAction) {
       user: {} as IUser
     }
 
-    const isJustCreated = justCreatePlaylists.filter((playlist: any) =>
-      playlist.id === eventPlaylist.id
-    ).length === 1
+    const isJustCreated =
+      justCreatePlaylists.filter(
+        (playlist: any) => playlist.id === eventPlaylist.id
+      ).length === 1
 
-    if (eventPlaylist.tracks.items.length > 0 && !isJustCreated && currentStep === 0 && isReselected) {
-      const tracksToCopy = eventPlaylist.tracks.items.map((item: any) => item.track.uri)
+    if (
+      eventPlaylist.tracks.items.length > 0 &&
+      !isJustCreated &&
+      currentStep === 0 &&
+      isReselected
+    ) {
+      const tracksToCopy = eventPlaylist.tracks.items.map(
+        (item: any) => item.track.uri
+      )
 
       copiedPlaylist = yield call(savePlaylist, playlistDetails)
 
@@ -191,10 +208,10 @@ function* updateEventFlow(action: IAction) {
     if (copiedPlaylist && currentStep === 0) {
       editedEvent = yield call(updateEvent, {
         ...event,
-        playlistUrl: copiedPlaylist.external_urls.spotify,
+        playlistUrl: copiedPlaylist.external_urls.spotify
       })
-      yield put({type: UPDATE_PLAYLIST_AFTER_COPY, payload: copiedPlaylist})
-      yield put({ type: FETCH_PLAYLISTS, payload: user})
+      yield put({ type: UPDATE_PLAYLIST_AFTER_COPY, payload: copiedPlaylist })
+      yield put({ type: FETCH_PLAYLISTS, payload: user })
     } else {
       editedEvent = yield call(updateEvent, event)
     }
