@@ -1,24 +1,19 @@
 import { push } from 'connected-react-router'
 import { History } from 'history'
-import React, { lazy, Suspense } from 'react'
-import { Route, Switch } from 'react-router'
+import * as React from 'react'
+import { Route } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
-import IRootState from './rootState'
-import LoadingPage from './loading/LoadingPage'
 
-const AccountViewContainer = lazy(() =>
-  import('./accountView/AccountViewContainer')
-)
-const Login = lazy(() => import('./auth/LoginContainer'))
-const CreateEvent = lazy(() => import('./eventCreation/CreateEventContainer'))
-const EventsContainer = lazy(() => import('./eventsView/EventsViewContainer'))
-const EventView = lazy(() => import('./eventView/EventViewContainer'))
-const Home = lazy(() => import('./home/HomeContainer'))
-const InsightsContainer = lazy(() => import('./insights/InsightsContainer'))
-const PlaylistsContainer = lazy(() =>
-  import('./playlistsView/PlaylistsViewContainer')
-)
+import AccountViewContainer from './accountView/AccountViewContainer'
+import Login from './auth/LoginContainer'
+import CreateEvent from './eventCreation/CreateEventContainer'
+import EventsContainer from './eventsView/EventsViewContainer'
+import EventView from './eventView/EventViewContainer'
+import Home from './home/HomeContainer'
+import InsightsContainer from './insights/InsightsContainer'
+import PlaylistsContainer from './playlistsView/PlaylistsViewContainer'
+import IRootState from './rootState'
 
 const locationHelper = locationHelperBuilder({})
 
@@ -122,15 +117,11 @@ interface IRouterProps {
 }
 
 export const Routes: React.SFC<IRouterProps> = ({ history }) => {
-  const fof = () => <div>404</div>
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <Switch>
-        {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-        <Route render={fof} />
-      </Switch>
-    </Suspense>
+    <span>
+      {routes.map((route, i) => (
+        <RouteWithSubRoutes key={i} {...route} />
+      ))}
+    </span>
   )
 }

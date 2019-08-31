@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Images from '../../../../libs/music-monkey-images/img/ImportImg'
+import Images from '../img/ImportImg'
 import './LoadingPage.scss'
 
 const LoadingPage = () => (

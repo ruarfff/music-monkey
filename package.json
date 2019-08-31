@@ -23,7 +23,6 @@
     "lodash": "^4.17.11",
     "moment": "^2.22.1",
     "music-monkey-client": "file:libs/music-monkey-client",
-    "music-monkey-images": "file:libs/music-monkey-images",
     "npm-run-all": "^4.1.5",
     "prop-types": "^15.6.2",
     "pusher-js": "^4.2.2",

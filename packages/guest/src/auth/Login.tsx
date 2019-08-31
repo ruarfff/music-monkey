@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash'
 import * as React from 'react'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
-import Images from '../../../../libs/music-monkey-images/img/ImportImg'
+import Images from '../img/ImportImg'
 import ErrorNotification from '../util/ErrorNotification'
 
 import './Login.scss'

@@ -2,7 +2,7 @@ import { Button, MobileStepper } from '@material-ui/core'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import * as React from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import Images from '../../../../libs/music-monkey-images/img/ImportImg'
+import Images from '../img/ImportImg'
 import LinkButton from '../util/LinkButton'
 
 import { Redirect } from 'react-router'
