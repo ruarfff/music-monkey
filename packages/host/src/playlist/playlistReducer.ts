@@ -1,13 +1,10 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
 import { cloneDeep } from 'lodash'
-import {
-  EVENT_CREATE_PLAYLIST_INITIATED,
-  EVENT_PLAYLIST_CREATED
-} from '../event/eventActions'
 import Action from '../IAction'
 import {
   ADD_TRACK_FAILURE,
-  ADD_TRACK_SUCCESS, CLEAR_JUST_CREATED_PLAYLISTS,
+  ADD_TRACK_SUCCESS,
+  CLEAR_JUST_CREATED_PLAYLISTS,
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
@@ -34,25 +31,11 @@ export default function playlists(
         ...state,
         searchResult: {}
       }
-    case EVENT_CREATE_PLAYLIST_INITIATED:
-      return {
-        ...state,
-        isCreating: true
-      }
     case CLEAR_JUST_CREATED_PLAYLISTS:
       return {
         ...state,
         createdPlaylists: []
       }
-    case EVENT_PLAYLIST_CREATED: {
-      const playlists = cloneDeep(state.createdPlaylists)
-      playlists.push(payload)
-      return {
-        ...state,
-        isCreating: false,
-        createdPlaylists: playlists
-      }
-    }
     case TRACK_FEATURES_SUCCESS:
       return {
         ...state,

@@ -8,8 +8,6 @@ import {
   EVENT_FETCH_BY_ID_ERROR,
   EVENT_FETCH_BY_ID_INITIATED,
   EVENT_FETCHED_BY_ID,
-  EVENT_INVITE_COPIED,
-  EVENT_INVITE_COPY_ACKNOWLEDGED,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
   TOGGLE_DYNAMIC_VOTING,
@@ -24,23 +22,6 @@ describe('eventViewReducer', () => {
   it('should return the initial state when no action matches', () => {
     expect(eventView(undefined, {} as IAction)).toEqual(initialState)
   })
-
-  it('should handle EVENT_INVITE_COPIED', () => {
-    expect(eventView(initialState,
-      {type: EVENT_INVITE_COPIED})
-    ).toEqual({
-      ...initialState,
-      copiedToClipboard: true})
-  })
-
-  it('should handle EVENT_INVITE_COPY_ACKNOWLEDGED', () => {
-    expect(eventView(initialState,
-      {type: EVENT_INVITE_COPY_ACKNOWLEDGED})
-    ).toEqual({
-      ...initialState,
-      copiedToClipboard: false})
-  })
-
   it('should handle EVENT_FETCH_BY_ID_INITIATED', () => {
     expect(
       eventView(initialState, {

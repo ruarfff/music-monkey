@@ -8,6 +8,5 @@ export default {
   } as IEvent,
   loading: false,
   fetchError: {} as Error,
-  deleteSelected: false,
-  copiedToClipboard: false
+  deleteSelected: false
 } as IEventViewState

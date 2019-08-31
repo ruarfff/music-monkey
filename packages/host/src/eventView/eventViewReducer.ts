@@ -1,8 +1,5 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
-import {
-  EVENT_EDIT_FAILURE,
-  EVENT_EDIT_SUCCESS
-} from '../event/eventActions'
+import { EVENT_EDIT_FAILURE, EVENT_EDIT_SUCCESS } from '../event/eventActions'
 import IEventSettings from '../event/IEventSettings'
 import IAction from '../IAction'
 import {
@@ -13,8 +10,6 @@ import {
   EVENT_FETCH_BY_ID_ERROR,
   EVENT_FETCH_BY_ID_INITIATED,
   EVENT_FETCHED_BY_ID,
-  EVENT_INVITE_COPIED,
-  EVENT_INVITE_COPY_ACKNOWLEDGED,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
   TOGGLE_DYNAMIC_VOTING,
@@ -83,16 +78,6 @@ export default function eventView(
       return {
         ...state,
         deleteFailed: true
-      }
-    case EVENT_INVITE_COPIED:
-      return {
-        ...state,
-        copiedToClipboard: true
-      }
-    case EVENT_INVITE_COPY_ACKNOWLEDGED:
-      return {
-        ...state,
-        copiedToClipboard: false
       }
     case TOGGLE_DYNAMIC_VOTING:
       return toggleDynamicVoting(state)

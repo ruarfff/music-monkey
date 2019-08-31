@@ -3,36 +3,25 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   clearSavingEvent,
-  closeExistingPlaylist,
-  createEventPlaylist,
   editEventRequest,
-  eventContentUpdated,
   eventImageUploaded,
   eventImageUploadError,
   eventSavingReset,
   initializeCreateForm,
   locationChanged,
   locationSelected,
-  playlistInputChange,
-  saveEvent,
-  selectCreatePlaylist,
-  selectExistingPlaylist,
-  setStep
+  saveEvent
 } from '../event/eventActions'
 import {
   deselectPlaylist,
   moveItemInEventPlaylist,
-  setEventPlaylist,
   sortPlaylistByVotesDescending
 } from '../eventPlaylist/eventPlaylistActions'
 import {
   acknowledgeEventInviteCopied,
   copyEventInvite,
   deleteEvent,
-  getEventById,
-  toggleAutoAcceptSuggestions,
-  toggleDynamicVoting,
-  toggleSuggestingPlaylists
+  getEventById
 } from '../eventView/eventViewActions'
 import {
   clearJustCreatedPlaylists,
@@ -41,22 +30,18 @@ import {
   tryRemoveTrack
 } from '../playlist/playlistActions'
 import IRootState from '../rootState'
-import { clearMessage } from '../shareEvent/shareActions'
 import { fetchEventVotes } from '../vote/voteActions'
 import CreateEvent from './CreateEvent'
 
 const mapStateToProps = (state: IRootState) => ({
-  votes: state.vote.votes,
-  user: state.user.data,
-  event: state.event.savingEvent,
-  message: state.event.shareEventMessage,
   errors: state.event.errors,
-  playlists: state.playlist.data,
-  selectedPlaylist: state.eventPlaylist.playlist,
+  event: state.event.savingEvent,
   isCreatingPlaylist: state.playlist.isCreating,
-  copiedToClipboard: state.eventView.copiedToClipboard,
+  playlists: state.playlist.data,
   searchResult: state.playlist.searchResult,
-  currentStep: state.event.createEventStep
+  selectedPlaylist: state.eventPlaylist.playlist,
+  user: state.user.data,
+  votes: state.vote.votes
 })
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -66,39 +51,27 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
   ...bindActionCreators(
     {
-      tryRemoveTrack,
-      onPlaylistDragDrop: moveItemInEventPlaylist,
-      setEventPlaylist,
+      acknowledgeEventInviteCopied,
+      clearJustCreatedPlaylists,
+      clearSavingEvent,
+      copyEventInvite,
+      deleteEvent,
       deselectPlaylist,
-      closeExistingPlaylist,
-      createEventPlaylist,
-      eventContentUpdated,
+      editEventRequest,
       eventImageUploadError,
       eventImageUploaded,
+      eventSavingReset,
+      fetchEventVotes,
+      fetchPlaylists,
+      getEventById,
+      getMoreUsersPlaylists,
       initializeCreateForm,
       locationChanged,
       locationSelected,
+      onPlaylistDragDrop: moveItemInEventPlaylist,
       saveEvent,
-      selectCreatePlaylist,
-      selectExistingPlaylist,
-      fetchPlaylists,
-      eventSavingReset,
-      copyEventInvite,
-      acknowledgeEventInviteCopied,
-      editEventRequest,
-      clearMessage,
-      setStep,
-      toggleDynamicVoting,
-      toggleSuggestingPlaylists,
-      toggleAutoAcceptSuggestions,
-      getEventById,
-      deleteEvent,
       sortPlaylistByVotesDescending,
-      fetchEventVotes,
-      getMoreUsersPlaylists,
-      clearSavingEvent,
-      playlistInputChange,
-      clearJustCreatedPlaylists
+      tryRemoveTrack
     },
     dispatch
   )

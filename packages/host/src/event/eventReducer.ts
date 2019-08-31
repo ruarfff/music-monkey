@@ -1,5 +1,4 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
-import moment from 'moment'
 import {
   DESELECT_EVENT_PLAYLIST,
   SET_EVENT_PLAYLIST
@@ -8,17 +7,11 @@ import {
   EVENT_FETCHED_BY_ID,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_DYNAMIC_VOTING,
-  TOGGLE_SUGGESTING_PLAYLISTS,
+  TOGGLE_SUGGESTING_PLAYLISTS
 } from '../eventView/eventViewActions'
 import Action from '../IAction'
 import {
-  CLEAR_MESSAGE,
-  SHARE_EMAIL_FAILURE,
-  SHARE_EMAIL_SUCCESS
-} from '../shareEvent/shareActions'
-import {
   CLEAR_SAVING_EVENT,
-  EVENT_CONTENT_UPDATED,
   EVENT_CREATE_FORM_INITIALIZED,
   EVENT_EDIT_FAILURE,
   EVENT_EDIT_REQUEST,
@@ -28,15 +21,12 @@ import {
   EVENT_LOCATION_CHANGED,
   EVENT_LOCATION_ERROR,
   EVENT_LOCATION_POPULATED,
-  EVENT_PLAYLIST_CREATION_ERROR,
   EVENT_SAVE_ERROR,
   EVENT_SAVED,
   EVENT_SAVING_RESET,
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
-  EVENTS_FETCHED,
-  PLAYLIST_NAME_INPUT_CHANGE,
-  SET_CREATE_EVENT_STEP,
+  EVENTS_FETCHED
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
@@ -46,7 +36,7 @@ import IEventState from './IEventState'
 export default function event(
   state: IEventState = initialState,
   { type, payload }: Action
-) {
+): IEventState {
   switch (type) {
     case CLEAR_SAVING_EVENT:
       return {
@@ -54,7 +44,7 @@ export default function event(
         savingEvent: {
           ...initialState.savingEvent,
           organizer: state.savingEvent.organizer
-        },
+        } as IEvent
       }
     case TOGGLE_AUTO_ACCEPT_SUGGESTIONS:
       return {
@@ -63,8 +53,8 @@ export default function event(
           ...state.savingEvent,
           settings: {
             ...state.savingEvent.settings,
-            autoAcceptSuggestionsEnabled: !state.savingEvent
-              .settings.autoAcceptSuggestionsEnabled
+            autoAcceptSuggestionsEnabled: !state.savingEvent.settings
+              .autoAcceptSuggestionsEnabled
           } as IEventSettings
         }
       }
@@ -75,8 +65,8 @@ export default function event(
           ...state.savingEvent,
           settings: {
             ...state.savingEvent.settings,
-            dynamicVotingEnabled: !state.savingEvent
-              .settings.dynamicVotingEnabled
+            dynamicVotingEnabled: !state.savingEvent.settings
+              .dynamicVotingEnabled
           } as IEventSettings
         }
       }
@@ -87,27 +77,21 @@ export default function event(
           ...state.savingEvent,
           settings: {
             ...state.savingEvent.settings,
-            suggestingPlaylistsEnabled: !state.savingEvent
-              .settings.suggestingPlaylistsEnabled
+            suggestingPlaylistsEnabled: !state.savingEvent.settings
+              .suggestingPlaylistsEnabled
           } as IEventSettings
         }
       }
-    case SET_CREATE_EVENT_STEP:
-      return {
-        ...state,
-        createEventStep: payload,
-      }
     case SET_EVENT_PLAYLIST:
-      const eventName = state.savingEvent.name ? state.savingEvent.name : (state.playlistInput ?
-        state.playlistInput :
-        payload.name)
+      const eventName = state.savingEvent.name
+        ? state.savingEvent.name
+        : payload.name
       return {
         ...state,
         savingEvent: {
           ...state.savingEvent,
-          name: eventName,
-        },
-        playlistReselected: true
+          name: eventName
+        }
       }
     case DESELECT_EVENT_PLAYLIST:
       return {
@@ -116,21 +100,6 @@ export default function event(
           ...state.savingEvent,
           playlistUrl: ''
         }
-      }
-    case CLEAR_MESSAGE:
-      return {
-        ...state,
-        shareEventMessage: ''
-      }
-    case SHARE_EMAIL_SUCCESS:
-      return {
-        ...state,
-        shareEventMessage: payload.data
-      }
-    case SHARE_EMAIL_FAILURE:
-      return {
-        ...state,
-        shareEventMessage: payload.data
       }
     case EVENT_EDIT_REQUEST:
       return state
@@ -141,8 +110,7 @@ export default function event(
     case EVENT_EDIT_SUCCESS:
       return {
         ...state,
-        savingEvent: payload,
-        playlistReselected: false,
+        savingEvent: payload
       }
 
     case EVENT_FETCHED_BY_ID:
@@ -176,26 +144,6 @@ export default function event(
           location: payload
         }
       }
-    case PLAYLIST_NAME_INPUT_CHANGE:
-      return {
-        ...state,
-        playlistInput: payload
-      }
-    case EVENT_CONTENT_UPDATED: {
-      const savingEvent: IEvent = {
-        ...state.savingEvent,
-        ...payload
-      }
-      const startTime = moment(savingEvent.startDateTime)
-      const endTime = moment(savingEvent.endDateTime)
-      if (endTime < startTime) {
-        savingEvent.endDateTime = startTime.add(2, 'hours')
-      }
-      return {
-        ...state,
-        savingEvent
-      }
-    }
     case EVENT_IMAGE_UPLOADED:
       return {
         ...state,
@@ -218,22 +166,18 @@ export default function event(
         ...state,
         savingEvent: {
           ...initialState.savingEvent
-        },
-        showSavedDialogue: false
+        }
       }
     case LOCATION_CHANGE:
       return {
         ...state,
-        errors: {},
-        createEventStep: 0,
-        showSavedDialogue: false
+        errors: {}
       }
     case EVENT_SAVED:
       return {
         ...state,
         events: [...state.events, payload],
-        savingEvent: payload,
-        showSavedDialogue: true
+        savingEvent: payload
       }
     case EVENT_SAVE_ERROR:
       return {
@@ -241,14 +185,6 @@ export default function event(
         errors: {
           ...state.errors,
           saving: payload
-        }
-      }
-    case EVENT_PLAYLIST_CREATION_ERROR:
-      return {
-        ...state,
-        errors: {
-          ...state.errors,
-          playlistCreation: payload
         }
       }
     case EVENT_CREATE_FORM_INITIALIZED:

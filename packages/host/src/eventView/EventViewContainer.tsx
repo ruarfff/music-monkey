@@ -15,7 +15,6 @@ const mapStateToProps = (state: IRootState) => ({
   error: state.eventView.fetchError,
   event: state.eventView.event,
   loading: state.eventView.loading,
-  copiedToClipboard: state.eventView.copiedToClipboard
 })
 
 const mapDispatchToProps = {

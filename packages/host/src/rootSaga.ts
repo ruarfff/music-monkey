@@ -2,8 +2,6 @@ import { all } from 'redux-saga/effects'
 import { watchLogin, watchLogout } from './auth/authSaga'
 import {
   watchCreateEvent,
-  watchCreateEventPlaylist,
-  watchEventPlaylistCreated,
   watchFetchEvents,
   watchUpdateEvent,
   watchUpdateLocationAutoComplete
@@ -51,9 +49,7 @@ export default function* rootSaga() {
     watchFetchPlaylists(),
     watchCreateEvent(),
     watchUpdateLocationAutoComplete(),
-    watchCreateEventPlaylist(),
     watchFetchEventById(),
-    watchEventPlaylistCreated(),
     watchFetchEvents(),
     watchDeleteEvent(),
     watchRefreshEventPlaylist(),
@@ -78,6 +74,6 @@ export default function* rootSaga() {
     watchFetchTrackFeatures(),
     watchFetchRecommendation(),
     watchFetchMorePlaylistsFlow(),
-    watchFetchPlaylistEditDetails(),
+    watchFetchPlaylistEditDetails()
   ])
 }

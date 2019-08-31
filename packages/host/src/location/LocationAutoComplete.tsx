@@ -1,68 +1,75 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import PlacesAutocomplete from 'react-places-autocomplete'
 import match from 'autosuggest-highlight/match'
 import parse from 'autosuggest-highlight/parse'
 import Paper from '@material-ui/core/Paper/Paper'
 import MenuItem from '@material-ui/core/MenuItem/MenuItem'
 import TextField from '@material-ui/core/TextField/TextField'
-import { withStyles } from '@material-ui/core/styles'
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  Theme
+} from '@material-ui/core/styles'
 
-const styles = (theme) => ({
-  container: {
-    flexGrow: 1,
-    position: 'relative'
-  },
-  suggestion: {
-    display: 'block'
-  },
-  suggestionsContainerOpen: {
-    left: 0,
-    listStyleType: 'none',
-    margin: 0,
-    marginTop: theme.spacing.unit,
-    padding: 0,
-    position: 'absolute',
-    right: 0,
-    zIndex: 1
-  },
-  input: {
-    '&:after': {
-      content: 'none'
+const styles = (theme: Theme) =>
+  createStyles({
+    container: {
+      flexGrow: 1,
+      position: 'relative'
     },
-    '&:before': {
-      content: 'none'
+    suggestion: {
+      display: 'block'
     },
-    '&:hover:not($disabled):before': {
-      borderBottom: '1px solid #979797!important'
+    suggestionsContainerOpen: {
+      left: 0,
+      listStyleType: 'none',
+      margin: 0,
+      marginTop: theme.spacing.unit,
+      padding: 0,
+      position: 'absolute',
+      right: 0,
+      zIndex: 1
     },
-    border: '1px solid #979797',
-    borderRadius: '4px',
-    minHeight: '40px',
-    paddingLeft: '16px',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)'
-  },
-  label: {
-    paddingLeft: '16px',
-    '&:hover:not($disabled):before': {
-      borderBottom: 'none!important'
+    input: {
+      '&:after': {
+        content: 'none'
+      },
+      '&:before': {
+        content: 'none'
+      },
+      '&:hover:not($disabled):before': {
+        borderBottom: '1px solid #979797!important'
+      },
+      border: '1px solid #979797',
+      borderRadius: '4px',
+      minHeight: '40px',
+      paddingLeft: '16px',
+      backgroundColor: 'rgba(255, 255, 255, 0.5)'
     },
-    paddingTop: '4px'
-  },
-  formControl: {
-    margin: 0
-  },
-  disabled: {}
-})
+    label: {
+      paddingLeft: '16px',
+      '&:hover:not($disabled):before': {
+        borderBottom: 'none!important'
+      },
+      paddingTop: '4px'
+    },
+    formControl: {
+      margin: 0
+    },
+    disabled: {}
+  })
 
-function renderInput(inputProps, classes) {
-  const {
-    onChange,
-    onBlur,
-    onKeyDown,
-    placeholder,
-    value
-  } = inputProps
+interface LocationAutoCompleteProps extends WithStyles<typeof styles> {
+  formClass: string
+  onChange?: (address: string) => void
+  onSelect?: (address: string) => void
+  placeholder: string
+  value: string
+}
+
+function renderInput(inputProps: any, classes: any) {
+  const { onChange, onBlur, onKeyDown, placeholder, value } = inputProps
   return (
     <TextField
       label="Location *"
@@ -81,8 +88,8 @@ function renderInput(inputProps, classes) {
 }
 
 function renderSuggestion(
-  suggestion,
-  { query, className, getSuggestionItemProps }
+  suggestion: any,
+  { query, className, getSuggestionItemProps }: any
 ) {
   const matches = match(suggestion.description, query)
   const parts = parse(suggestion.description, matches)
@@ -111,7 +118,7 @@ function renderSuggestion(
   )
 }
 
-function renderSuggestionsContainer(options) {
+function renderSuggestionsContainer(options: any) {
   const { className, children } = options
   return (
     <Paper className={className} square>
@@ -127,7 +134,7 @@ const LocationAutoComplete = ({
   placeholder,
   value,
   formClass
-}) => (
+}: LocationAutoCompleteProps) => (
   <div className={classes.container}>
     <PlacesAutocomplete onChange={onChange} onSelect={onSelect} value={value}>
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
@@ -157,14 +164,5 @@ const LocationAutoComplete = ({
     </PlacesAutocomplete>
   </div>
 )
-
-LocationAutoComplete.propTypes = {
-  classes: PropTypes.object.isRequired,
-  formClass: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onSelect: PropTypes.func.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
-}
 
 export default withStyles(styles)(LocationAutoComplete)

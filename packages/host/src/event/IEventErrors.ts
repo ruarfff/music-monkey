@@ -3,5 +3,4 @@ export default interface IEventErrors {
   imageUpload?: Error
   saving?: any
   fetchEvents?: Error
-  playlistCreation?: Error
 }

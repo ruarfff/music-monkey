@@ -36,7 +36,7 @@ const decorate = withStyles(() => ({
     height: '140px'
   },
   btn: {
-    marginLeft: '8px',
+    marginLeft: '8px'
   }
 }))
 
@@ -45,50 +45,49 @@ interface IPlaylistCardProps {
   disableLink?: boolean
 }
 
-class PlaylistCard extends React.Component<IPlaylistCardProps & WithStyles> {
-  public render() {
-    const { classes, playlist, disableLink } = this.props
-
-    const durationSeconds =
-      playlist && playlist.tracks.items.length > 0
-        ? playlist.tracks.items
+const PlaylistCard = ({
+  classes,
+  playlist,
+  disableLink
+}: IPlaylistCardProps & WithStyles) => {
+  const durationSeconds =
+    playlist && playlist.tracks.items.length > 0
+      ? playlist.tracks.items
           .map(item => item.track.duration_ms)
           .reduce((acc, dur) => acc + dur)
-        : 0
+      : 0
 
-    const image =
-      playlist && playlist.images && playlist.images.length > 0
-        ? playlist.images[0].url
-        : '/img/partycover-sm.png'
+  const image =
+    playlist && playlist.images && playlist.images.length > 0
+      ? playlist.images[0].url
+      : '/img/partycover-sm.png'
 
-    return (
-      <Card className={classes.card}>
-        <div className={classes.imgContainer}>
-          <img className={classes.img} src={image} alt="" />
-        </div>
+  return (
+    <Card className={classes.card}>
+      <div className={classes.imgContainer}>
+        <img className={classes.img} src={image} alt="" />
+      </div>
 
-        <Typography className={classes.title}>
-          {playlist && playlist.name}<br/>
-          tracks: {playlist && playlist.tracks.items.length}<br/>
-          time: {formatDuration(durationSeconds)}
-        </Typography>
-        <div>
-          <a
-            href={playlist ? playlist.external_urls.spotify : '/'}
-            target={!disableLink ? '_blank' : ''}
-            className={classes.link}
-          >
-            <Button
-              color="primary"
-              className={classes.btn}
-            >
-              GO TO PLAYLIST
-            </Button>
-          </a>
-        </div>
-      </Card>
-    )
-  }
+      <Typography className={classes.title}>
+        {playlist && playlist.name}
+        <br />
+        tracks: {playlist && playlist.tracks.items.length}
+        <br />
+        time: {formatDuration(durationSeconds)}
+      </Typography>
+      <div>
+        <a
+          href={playlist ? playlist.external_urls.spotify : '/'}
+          target={!disableLink ? '_blank' : ''}
+          className={classes.link}
+        >
+          <Button color="primary" className={classes.btn}>
+            GO TO PLAYLIST
+          </Button>
+        </a>
+      </div>
+    </Card>
+  )
 }
 
 export default decorate(PlaylistCard)

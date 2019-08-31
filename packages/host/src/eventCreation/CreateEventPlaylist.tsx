@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import _ from 'lodash'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
@@ -6,20 +6,17 @@ import EventSearchTracks from '../components/SearchTracks/EventSearchTracksConta
 import PlaylistSelection from './PlaylistSelection'
 import IUser from '../user/IUser'
 import IPlaylist from '../playlist/IPlaylist'
-import ISearch from '../playlist/ISearch'
 import IAction from '../IAction'
 import IEvent from '../event/IEvent'
+import EventInput from '../components/EventInput/EventInput'
+import GenrePicker from '../components/GenrePicker/GenrePicker'
+import { Typography } from '@material-ui/core'
 
 interface CreateEventPlaylistProps {
   event: IEvent
   isEditing: boolean
   user: IUser
   playlists: IPlaylist[]
-  isCreatingPlaylist: boolean
-  searchResult: ISearch
-  selectedPlaylist: IPlaylist
-  deselectPlaylist(): IAction
-  createEventPlaylist(playlistDetails: any): any
   fetchPlaylists(user: IUser): IAction
   getMoreUsersPlaylists(user: IUser, offset: number): void
   onPlaylistDragDrop(
@@ -28,13 +25,9 @@ interface CreateEventPlaylistProps {
     toIndex: number
   ): IAction
   tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
-  handleEventName(name: string): any
-  onPlaylistAdded(playlistUrl: string): any
-  handlePickGenre(content: string): void
-  setEventPlaylist(playlist: IPlaylist): void
   showConfirmationDialog: () => void
   handleCancel: () => void
-  handleSaveEvent: () => void
+  handleSaveEvent: (event: IEvent) => void
 }
 
 const CreateEventPlaylist = ({
@@ -42,64 +35,114 @@ const CreateEventPlaylist = ({
   isEditing,
   user,
   playlists,
-  isCreatingPlaylist,
-  createEventPlaylist,
-  searchResult,
-  selectedPlaylist,
-  deselectPlaylist,
   onPlaylistDragDrop,
   tryRemoveTrack,
   getMoreUsersPlaylists,
   fetchPlaylists,
   showConfirmationDialog,
   handleCancel,
-  handleSaveEvent,
-  handleEventName,
-  onPlaylistAdded,
-  handlePickGenre,
-  setEventPlaylist
+  handleSaveEvent
 }: CreateEventPlaylistProps) => {
+  const currentEvent = event || ({} as IEvent)
+  const [name, setName] = useState(currentEvent.name || '')
+  const [description, setDescription] = useState(currentEvent.description || '')
+  const [genre, setGenre] = useState(currentEvent.genre || 'Alternative Music')
+  const [playlist, setPlaylist] = useState(currentEvent.playlist)
+
   return (
     <Grid container={true} spacing={24} direction="row">
       <div className="control-btn-row">
+        <Typography align="left" variant="h4" component="h4">
+          Add or pick a playlist
+        </Typography>
+
         {isEditing && (
-          <Button variant="contained" onClick={showConfirmationDialog}>
+          <Button
+            className="control-btn"
+            variant="contained"
+            onClick={showConfirmationDialog}
+          >
             <span className="control-btn-text-primary">Delete Event</span>
           </Button>
         )}
-        <Button variant="contained" onClick={handleCancel}>
+        <Button
+          className="control-btn"
+          variant="contained"
+          onClick={handleCancel}
+        >
           <span className="control-btn-text-primary">Cancel</span>
         </Button>
-        <Button onClick={handleSaveEvent} color="secondary" variant="contained">
+        <Button
+          className="control-btn"
+          onClick={() => {
+            handleSaveEvent({
+              ...currentEvent,
+              name,
+              description,
+              playlist
+            })
+          }}
+          color="secondary"
+          variant="contained"
+        >
           <span className="control-btn-text-secondary">
             {!event.eventId ? 'Create Event' : 'Next'}
           </span>
         </Button>
       </div>
       <Grid item={true} xs={12} sm={6}>
-        <PlaylistSelection
-          onPlaylistDragDrop={onPlaylistDragDrop}
-          tryRemoveTrack={tryRemoveTrack}
-          selectedPlaylist={selectedPlaylist}
-          searchResult={searchResult}
-          playlists={playlists}
-          fetchPlaylists={fetchPlaylists}
-          deselectPlaylist={deselectPlaylist}
-          user={user}
-          getMoreUsersPlaylists={getMoreUsersPlaylists}
-          createEventPlaylist={createEventPlaylist}
-          isCreatingPlaylist={isCreatingPlaylist}
-          handleEventName={handleEventName}
-          onPlaylistAdded={onPlaylistAdded}
-          handlePickGenre={handlePickGenre}
-          setEventPlaylist={setEventPlaylist}
-        />
+        <Grid container={true} spacing={24} alignItems="flex-end">
+          <Grid item={true} md={12}>
+            <EventInput
+              onChange={setName}
+              value={name}
+              error={!name}
+              autoFocus={true}
+              errorLabel={'Enter playlist name'}
+              placeholder={'Playlist Name'}
+              label={'Set Playlist Name'}
+            />
+
+            <EventInput
+              onChange={setDescription}
+              value={description}
+              placeholder={'Playlist Description'}
+              label={'Set Playlist Description'}
+            />
+
+            <GenrePicker
+              value={genre}
+              onChange={(genre: string) => {
+                setGenre(genre)
+              }}
+            />
+          </Grid>
+          <Grid item={true} md={12}>
+            <PlaylistSelection
+              playlistName={name}
+              playlistDescription={description}
+              onPlaylistDragDrop={onPlaylistDragDrop}
+              onPlaylistSelected={(playlist: IPlaylist) => {
+                setPlaylist(playlist)
+              }}
+              tryRemoveTrack={tryRemoveTrack}
+              selectedPlaylist={playlist}
+              playlists={playlists}
+              fetchPlaylists={fetchPlaylists}
+              deselectPlaylist={() => {
+                setPlaylist({} as IPlaylist)
+              }}
+              user={user}
+              getMoreUsersPlaylists={getMoreUsersPlaylists}
+            />
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item={true} xs={12} sm={6}>
-        {!_.isEmpty(selectedPlaylist) && (
+        {!_.isEmpty(playlist) && (
           <div>
             <span>Add tracks to playlist</span>
-            <EventSearchTracks playlist={selectedPlaylist} layout={'column'} />
+            <EventSearchTracks playlist={playlist} layout={'column'} />
           </div>
         )}
       </Grid>

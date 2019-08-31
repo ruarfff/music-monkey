@@ -82,6 +82,7 @@ div.filepicker {
 
   button: {
     margin-right: 30px;
+    padding: 1em;
     last-child: {
       margin-right: 0;
     }
@@ -93,5 +94,9 @@ div.filepicker {
 
   .control-btn-text-secondary {
     color: white;
+  }
+
+  .control-btn {
+    margin: 0.5em;
   }
 }

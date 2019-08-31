@@ -1,5 +1,5 @@
 import { Moment } from 'moment'
-import ILocation from '../components/location/ILocation'
+import ILocation from '../location/ILocation'
 import IPlaylist from '../playlist/IPlaylist'
 import IEventGuest from './IEventGuest'
 import IEventSettings from './IEventSettings'
@@ -16,7 +16,7 @@ export default interface IEvent {
   name: string
   organizer: string
   playlistUrl: string
-  playlist?: IPlaylist
+  playlist: IPlaylist
   startDateTime: any
   venue?: string
   invites?: string[]

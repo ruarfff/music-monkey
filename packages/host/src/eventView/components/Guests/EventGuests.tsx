@@ -43,15 +43,13 @@ const decorated = withStyle(() => ({
     marginRight: '20px'
   },
   guestName: {
-    width: '100%',
+    width: '100%'
   }
 }))
 
 interface IEventGuestsProps {
   event: IEvent
-  message: string
   copyEventInvite(): IAction
-  clearMessage(): IAction
 }
 
 class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
@@ -88,8 +86,6 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
           <Grid container={true} justify={'center'}>
             <SharePopup
               event={event}
-              clearMessage={this.props.clearMessage}
-              message={this.props.message}
               inviteId={inviteId}
               onCopyEventInvite={copyEventInvite}
             />
@@ -112,18 +108,13 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
       <div className="EventSuggestions-root">
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={!!this.props.message}
+          open={false}
           ContentProps={{
-            'aria-describedby': 'message-id',
+            'aria-describedby': 'message-id'
           }}
-          message={<span id="message-id">{this.props.message}</span>}
+          message={<span id="message-id"></span>}
           action={
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleCloseMessage}
-            >
+            <IconButton key="close" aria-label="Close" color="inherit">
               <CloseIcon />
             </IconButton>
           }
@@ -150,22 +141,18 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
             <MenuItem onClick={this.handleClickMenuItem}>All</MenuItem>
             <MenuItem onClick={this.handleClickMenuItem}>Pending</MenuItem>
             <MenuItem onClick={this.handleClickMenuItem}>I'm Going</MenuItem>
-            <MenuItem onClick={this.handleClickMenuItem}>I'm not going</MenuItem>
+            <MenuItem onClick={this.handleClickMenuItem}>
+              I'm not going
+            </MenuItem>
             <MenuItem onClick={this.handleClickMenuItem}>Maybe</MenuItem>
           </Menu>
           <SharePopup
             event={event}
-            clearMessage={this.props.clearMessage}
-            message={this.props.message}
             inviteId={inviteId}
             onCopyEventInvite={copyEventInvite}
           />
         </Grid>
-        <Grid
-          container={true}
-          className={classes.guestsContainer}
-          spacing={24}
-        >
+        <Grid container={true} className={classes.guestsContainer} spacing={24}>
           {filteredGuests.map(eventGuest =>
             this.renderEventGuest(eventGuest, classes)
           )}
@@ -185,7 +172,7 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
       <Grid
         key={user.userId}
         className={
-          rsvp.status === 'I\'m Going' ? classes.guestWrapper : classes.pending
+          rsvp.status === "I'm Going" ? classes.guestWrapper : classes.pending
         }
         item={true}
         container={true}
@@ -198,13 +185,9 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
         </Typography>
         <Typography className={classes.guestName} align={'center'}>
           {eventGuest.rsvp.status}
-          </Typography>
+        </Typography>
       </Grid>
     )
-  }
-
-  private handleCloseMessage = () => {
-    this.props.clearMessage()
   }
 }
 

@@ -5,7 +5,6 @@ import Snackbar from '@material-ui/core/Snackbar'
 import CloseIcon from '@material-ui/icons/Close'
 import * as React from 'react'
 import IEvent from '../../event/IEvent'
-import IAction from '../../IAction'
 import EventInput from '../EventInput/EventInput'
 import InviteLink from '../InviteLink/InviteLink'
 import EmailPreview from './EmailPreview'
@@ -15,11 +14,9 @@ interface IShareEventByEmailProps {
   event: IEvent
   inviteId: string
   withPreview?: boolean
-  message: string
   shareByEmails(emails: string[], emailText: string, event: IEvent): void
   togglePopup?(): void
   onCopyEventInvite(): void
-  clearMessage(): IAction
 }
 
 export default class ShareEventByEmail extends React.PureComponent<
@@ -30,12 +27,6 @@ export default class ShareEventByEmail extends React.PureComponent<
     emailText: 'You are invited to a party!',
     validation: false,
     showMessage: false
-  }
-
-  public componentDidUpdate() {
-    if (this.props.withPreview) {
-      this.setState({ showMessage: this.props.message !== '' })
-    }
   }
 
   public renderPopupLayout = () => {
@@ -50,14 +41,9 @@ export default class ShareEventByEmail extends React.PureComponent<
           ContentProps={{
             'aria-describedby': 'message-id'
           }}
-          message={<span id="message-id">{this.props.message}</span>}
+          message={<span id="message-id"></span>}
           action={
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleClose}
-            >
+            <IconButton key="close" aria-label="Close" color="inherit">
               <CloseIcon />
             </IconButton>
           }
@@ -123,14 +109,9 @@ export default class ShareEventByEmail extends React.PureComponent<
           ContentProps={{
             'aria-describedby': 'message-id'
           }}
-          message={<span id="message-id">{this.props.message}</span>}
+          message={<span id="message-id"></span>}
           action={
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleClose}
-            >
+            <IconButton key="close" aria-label="Close" color="inherit">
               <CloseIcon />
             </IconButton>
           }
@@ -234,9 +215,5 @@ export default class ShareEventByEmail extends React.PureComponent<
     if (!!togglePopup) {
       togglePopup()
     }
-  }
-
-  private handleClose = () => {
-    this.props.clearMessage()
   }
 }

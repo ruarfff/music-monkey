@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography/Typography'
 import { isEmpty } from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
-import InviteCopyAlert from '../components/InviteLink/InviteCopyAlert'
 import EventFetchError from '../event/EventFetchError'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
@@ -50,7 +49,6 @@ interface IEventViewProps extends RouteComponentProps<any> {
   error: Error
   event: IEvent
   loading: boolean
-  copiedToClipboard: boolean
   getEventById(eventId: string): IAction
   copyEventInvite(): IAction
   acknowledgeEventInviteCopied(): IAction
@@ -93,13 +91,7 @@ class EventView extends React.Component<
   }
 
   public render() {
-    const {
-      loading,
-      error,
-      event,
-      copiedToClipboard,
-      acknowledgeEventInviteCopied
-    } = this.props
+    const { loading, error, event } = this.props
 
     const shouldShowEvent: boolean = !loading && !isEmpty(event)
 
@@ -110,12 +102,6 @@ class EventView extends React.Component<
           <EventFetchError onTryAgain={this.handleGetEvent} />
         )}
         {shouldShowEvent && this.renderEventView()}
-        {copiedToClipboard && (
-          <InviteCopyAlert
-            message="Copied to Clipboard"
-            onClose={acknowledgeEventInviteCopied}
-          />
-        )}
       </div>
     )
   }

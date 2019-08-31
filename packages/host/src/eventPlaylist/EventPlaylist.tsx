@@ -162,7 +162,6 @@ export default class EventPlaylist extends React.Component<
                   <TrackList
                     removeTrack={this.handleRemoveTrack}
                     tracks={stagedTracks}
-                    showNotification={this.handleShowNotification}
                   />
                 </List>
               )}
@@ -176,7 +175,6 @@ export default class EventPlaylist extends React.Component<
                     votes={votes}
                     onDragEnd={this.handlePlaylistDragDrop}
                     removeTrack={this.handleRemoveTrack}
-                    showNotification={this.handleShowNotification}
                   />
                 </List>
               )}

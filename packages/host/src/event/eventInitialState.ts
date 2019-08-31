@@ -1,17 +1,16 @@
 import moment from 'moment'
 import IEventSettings from './IEventSettings'
 import IEventState from './IEventState'
+import IPlaylist from '../playlist/IPlaylist'
 
 export default {
   errors: {
     location: undefined,
     imageUpload: undefined,
     saving: undefined,
-    fetchEvents: undefined,
-    playlistCreation: undefined
+    fetchEvents: undefined
   },
   events: [],
-  createEventStep: 0,
   savingEvent: {
     description: '',
     dataUrl: '',
@@ -33,11 +32,8 @@ export default {
     venue: '',
     invites: [],
     guests: [],
-    settings: {} as IEventSettings
+    settings: {} as IEventSettings,
+    playlist: {} as IPlaylist
   },
-  eventsLoading: false,
-  showSavedDialogue: false,
-  playlistReselected: false,
-  shareEventMessage: '',
-  playlistInput: ''
+  eventsLoading: false
 } as IEventState

@@ -7,7 +7,7 @@ interface IEventDateTimePickerProps {
   value: any
   label: string
   disablePast?: boolean
-  onChange(value: string): void
+  onChange(value: any): void
 }
 
 const EventDateTimePicker: React.SFC<

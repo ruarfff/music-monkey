@@ -13,11 +13,10 @@ interface ITrackListProps {
   tracksWithFeatures?: ITrackWithFeatures[]
   withVoting?: boolean
   votes?: Map<string, ITrackVoteStatus>
-  onVote?: ((track: ITrack) => void)
-  onTrackSelected?: ((track: ITrack) => void)
-  onDragEnd?: ((result: any) => void)
-  removeTrack?: ((uri: string, position: number) => void)
-  showNotification?: (() => void)
+  onVote?: (track: ITrack) => void
+  onTrackSelected?: (track: ITrack) => void
+  onDragEnd?: (result: any) => void
+  removeTrack?: (uri: string, position: number) => void
   disableRemoveTrack?: boolean
 }
 
@@ -42,8 +41,7 @@ const TrackList = ({
   onTrackSelected = (t: ITrack) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
   removeTrack = (uri: string, position: number) => ({} as any),
-  showNotification = () => ({} as any),
-  disableRemoveTrack = false,
+  disableRemoveTrack = false
 }: ITrackListProps) => (
   <React.Fragment>
     <DragDropContext onDragEnd={onDragEnd}>
@@ -53,12 +51,10 @@ const TrackList = ({
             {tracks.map((track, i) => {
               const trackId = track.uri
               let numberOfVotes = 0
-              let userVoted = false
               if (votes && votes.has(trackId)) {
                 const voteStatus: ITrackVoteStatus =
                   votes.get(trackId) || ({} as ITrackVoteStatus)
                 numberOfVotes = voteStatus.numberOfVotes
-                userVoted = voteStatus.votedByCurrentUser
               }
 
               return (
@@ -77,12 +73,10 @@ const TrackList = ({
                         tracksWithFeature={tracksWithFeatures[i]}
                         track={track}
                         withVoting={withVoting}
-                        currentUserVoted={userVoted}
                         numberOfVotes={numberOfVotes}
                         onTrackSelected={onTrackSelected}
                         onVote={onVote}
                         removeTrack={removeTrack}
-                        handleShowNotification={showNotification}
                         disableRemoveTrack={disableRemoveTrack}
                       />
                     </div>

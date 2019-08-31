@@ -1,13 +1,11 @@
 import Action from '../IAction'
 import {
-  EVENT_CONTENT_UPDATED,
   EVENT_CREATE_FORM_INITIALIZED,
   EVENT_IMAGE_UPLOAD_ERROR,
   EVENT_IMAGE_UPLOADED,
   EVENT_LOCATION_CHANGED,
   EVENT_LOCATION_ERROR,
   EVENT_LOCATION_POPULATED,
-  EVENT_PLAYLIST_CREATION_ERROR,
   EVENT_SAVE_ERROR,
   EVENT_SAVED,
   EVENT_SAVING_RESET,
@@ -125,47 +123,12 @@ describe('eventReducer', () => {
         }
       })
     })
-
-    it('should handle EVENT_CONTENT_UPDATED and add a new value', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_CONTENT_UPDATED,
-          payload: { name: 'test-name' }
-        })
-      ).toEqual({
-        ...initialState,
-        savingEvent: { ...initialState.savingEvent, name: 'test-name' }
-      })
-    })
-
-    it('should handle EVENT_CONTENT_UPDATED and update an existing value', () => {
-      expect(
-        events(
-          {
-            ...initialState,
-            savingEvent: {
-              ...initialState.savingEvent,
-              organizer: 'this-person'
-            }
-          },
-          {
-            type: EVENT_CONTENT_UPDATED,
-            payload: { organizer: 'other' }
-          }
-        )
-      ).toEqual({
-        ...initialState,
-        savingEvent: { ...initialState.savingEvent, organizer: 'other' }
-      })
-    })
-
     it('should handle EVENT_SAVING_RESET', () => {
       expect(
         events(
           {
             ...initialState,
-            savingEvent: { ...initialState.savingEvent, name: 'what-a-name' },
-            showSavedDialogue: true
+            savingEvent: { ...initialState.savingEvent, name: 'what-a-name' }
           },
           {
             type: EVENT_SAVING_RESET
@@ -223,21 +186,6 @@ describe('eventReducer', () => {
           ...initialState.savingEvent,
           userId: 'test-id',
           organizer: 'test user'
-        }
-      })
-    })
-
-    it('should handle EVENT_PLAYLIST_CREATION_ERROR', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_PLAYLIST_CREATION_ERROR,
-          payload: new Error('Error creating playlist')
-        })
-      ).toEqual({
-        ...initialState,
-        errors: {
-          ...initialState.errors,
-          playlistCreation: new Error('Error creating playlist')
         }
       })
     })
