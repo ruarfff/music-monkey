@@ -3,6 +3,6 @@
   "compilerOptions": {
     "outDir": "build/dist"
   },
-  "exclude": ["src/setupTests.ts"],
-  "include": ["src"]
+  "exclude": ["./src/setupTests.ts"],
+  "include": ["./src"]
 }
