@@ -47,7 +47,7 @@ export default function eventPlaylist(
         ...state,
         playlist: payload
       }
-    case ADD_TRACK_SUCCESS:
+    case ADD_TRACK_SUCCESS: {
       const newPlaylist = _.cloneDeep(state.playlist)
       newPlaylist.tracks.items.unshift({
         added_at: `${Date.now()}`,
@@ -55,8 +55,9 @@ export default function eventPlaylist(
       })
       return {
         ...state,
-        playlist: newPlaylist,
+        playlist: newPlaylist
       }
+    }
     case SAVE_EVENT_PLAYLIST:
       return { ...state, savingEventPlaylist: true }
     case SAVE_EVENT_PLAYLIST_SUCCESS:

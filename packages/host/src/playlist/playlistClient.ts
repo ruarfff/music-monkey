@@ -14,7 +14,7 @@ export const addTracksToPlaylist = async (
       cache: false
     } as any
   )
-  return res.data.body
+  return res.data
 }
 
 export const reOrderPlaylist = async (
@@ -33,7 +33,7 @@ export const reOrderPlaylist = async (
       cache: false
     } as any
   )
-  return res.data.body
+  return res.data
 }
 
 export const fetchPlaylist = async (playlistId: string) => {
@@ -83,7 +83,7 @@ export const replaceTracksInPlaylist = async (
       cache: false
     } as any
   )
-  return res.data.body
+  return res.data
 }
 
 export const removeTrackFromPlaylist = async (
