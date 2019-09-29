@@ -7,7 +7,6 @@ const pusher = new Pusher('d7c284d8f17d26f74047', {
 let subscribedToSuggestions = ''
 let subscribedToVotes = ''
 let subscribedToRSVPUpdate = ''
-let subscribedToNotifications = false
 
 export const subscribeToSuggestionsModified = (
   eventId: string,
@@ -67,28 +66,6 @@ export const unSubscribeToVotesModified = (eventId: string) => {
   try {
     pusher.unsubscribe('mm-votes-' + eventId)
     subscribedToVotes = ''
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-export const subscribeToNotificationsUpdated = (
-  userId: string,
-  callback: any
-) => {
-  if (subscribedToNotifications) {
-    const channel = pusher.subscribe('mm-user-notifications-' + userId)
-
-    channel.bind('notifications-saved', callback)
-
-    subscribedToNotifications = true
-  }
-}
-
-export const unSubscribeToNotificationsUpdated = (userId: string) => {
-  try {
-    pusher.unsubscribe('mm-events-' + userId)
-    subscribedToNotifications = false
   } catch (err) {
     console.error(err)
   }

@@ -1,6 +1,6 @@
+import React from 'react'
 import AppBar from '@material-ui/core/AppBar/AppBar'
 import Avatar from '@material-ui/core/Avatar/Avatar'
-import Badge from '@material-ui/core/Badge'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import Menu from '@material-ui/core/Menu/Menu'
@@ -9,18 +9,11 @@ import { withStyles, WithStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar/Toolbar'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import NotificationsIcon from '@material-ui/icons/Notifications'
-import * as React from 'react'
 import { Link } from 'react-router-dom'
-import eventIcon from '../assets/monkey_logo.png'
-import NotificationPopup from '../components/NotificationPopup/NotificationPopup'
-import IEvent from '../event/IEvent'
-import IAction from '../IAction'
-import {
-  INotification,
-  INotificationState
-} from '../notification/notificationInitialState'
-import IUser from '../user/IUser'
+import IAction from 'IAction'
+import eventIcon from 'assets/monkey_logo.png'
+import IEvent from 'event/IEvent'
+import IUser from 'user/IUser'
 
 const decorate = withStyles(({ transitions, zIndex }) => ({
   root: {},
@@ -76,18 +69,13 @@ interface IMainAppBarProps {
   user: IUser
   location: string
   event: IEvent
-  notification: INotificationState
   logout(): IAction
-  getNotifications(id: string): IAction
   handleTitleClicked(): void
-  updateNotification(notification: INotification): IAction
 }
 
 class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
   public state = {
-    notificationAnchor: undefined,
-    anchorEl: undefined,
-    showNotification: false
+    anchorEl: undefined
   }
 
   public handleMenu = (event: any) => {
@@ -96,15 +84,6 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
 
   public handleClose = () => {
     this.setState({ anchorEl: undefined })
-  }
-
-  public componentDidMount() {
-    this.handleGetNotifications()
-  }
-
-  public handleGetNotifications = () => {
-    const { user, getNotifications } = this.props
-    getNotifications(user.userId)
   }
 
   public menuName = (history: string) => {
@@ -132,35 +111,12 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
     }
   }
 
-  public toggleNotification = (event?: any) => {
-    if (event) {
-      if (!this.state.showNotification) {
-        this.props.getNotifications(this.props.user.userId)
-      }
-      this.setState({
-        showNotification: !this.state.showNotification,
-        notificationAnchor: event.currentTarget
-      })
-    }
-  }
-
   public render() {
-    const {
-      classes,
-      user,
-      location,
-      handleTitleClicked,
-      notification,
-      updateNotification
-    } = this.props
+    const { classes, user, location, handleTitleClicked } = this.props
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
     const userHasProfileImage = !!user && !!user.image
     const userHasName = !!user && !!user.displayName
-
-    const unreadNotifications = notification.notifications.filter(
-      n => n.status === 'Unread'
-    )
 
     const profilePic = (
       <div className={classes.profile}>
@@ -177,29 +133,6 @@ class MainAppBar extends React.Component<IMainAppBarProps & WithStyles> {
             </Button>
           </Link>
         )}
-        <IconButton
-          aria-owns={
-            this.state.showNotification ? 'menu-notification' : undefined
-          }
-          aria-haspopup="true"
-          color="inherit"
-          onClick={this.toggleNotification}
-        >
-          <Badge
-            className={classes.notification}
-            badgeContent={unreadNotifications ? unreadNotifications.length : 0}
-            color="secondary"
-          >
-            <NotificationsIcon />
-          </Badge>
-          <NotificationPopup
-            notificationAnchor={this.state.notificationAnchor}
-            toggleNotification={this.toggleNotification}
-            showNotification={this.state.showNotification}
-            notifications={notification.notifications}
-            updateNotification={updateNotification}
-          />
-        </IconButton>
 
         <IconButton
           aria-owns={open ? 'menu-appbar' : undefined}

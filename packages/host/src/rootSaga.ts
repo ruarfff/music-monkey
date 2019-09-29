@@ -23,10 +23,6 @@ import {
   watchToggleSuggestingPlaylists
 } from 'event/eventView/eventViewSaga'
 import {
-  watchFetchNotificationsByUserId,
-  watchUpdateNotification
-} from 'notification/notificationSaga'
-import {
   watchFetchAddTrackToPlaylist,
   watchFetchMorePlaylistsFlow,
   watchFetchPlaylistEditDetails,
@@ -69,12 +65,10 @@ export default function* rootSaga() {
     watchToggleSuggestingPlaylists(),
     watchUpdateEvent(),
     watchUpdateUserFlow(),
-    watchFetchNotificationsByUserId(),
     watchFetchRemoveTrackFromPlaylist(),
     watchFetchShareEmail(),
     watchFetchSearchTracks(),
     watchFetchAddTrackToPlaylist(),
-    watchUpdateNotification(),
     watchFetchTrackFeatures(),
     watchFetchRecommendation(),
     watchFetchMorePlaylistsFlow(),

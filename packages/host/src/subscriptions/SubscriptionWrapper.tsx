@@ -10,14 +10,11 @@ import {
   subscribeToRSVPModified,
   unSubscribeToRSVPModified,
   unSubscribeToVotesModified,
-  subscribeToVotesModified,
-  unSubscribeToNotificationsUpdated,
-  subscribeToNotificationsUpdated
+  subscribeToVotesModified
 } from './pusherGateway'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
 import IUser from '../user/IUser'
-import { getNotifications } from '../notification/notificationActions'
 
 interface ISubscriptionWrapper {
   event: IEvent
@@ -38,7 +35,6 @@ export default ({
 }: ISubscriptionWrapper) => {
   useEffect(() => {
     const eventId = event && event.eventId ? event.eventId : ''
-    const userId = user.userId
     const autoAcceptSuggestionsEnabled =
       event && event.settings && event.settings.autoAcceptSuggestionsEnabled
     const dynamicVotingEnabled =
@@ -63,15 +59,10 @@ export default ({
       }
     })
 
-    subscribeToNotificationsUpdated(userId, () => {
-      getNotifications(userId)
-    })
-
     return () => {
       unSubscribeToSuggestionsModified(eventId)
       unSubscribeToRSVPModified(eventId)
       unSubscribeToVotesModified(eventId)
-      unSubscribeToNotificationsUpdated(eventId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [event])

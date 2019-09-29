@@ -1,19 +1,14 @@
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
-import { logout } from '../auth/authActions'
-import {
-  getNotifications,
-  updateNotification,
-} from '../notification/notificationActions'
-import IRootState from '../rootState'
+import IRootState from 'rootState'
+import { logout } from 'auth/authActions'
 import MainAppBar from './MainAppBar'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.eventView.event,
-  location: state.home.location,
-  notification: state.notification
+  location: state.home.location
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -22,9 +17,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   ...bindActionCreators(
     {
-      logout,
-      getNotifications,
-      updateNotification
+      logout
     },
     dispatch
   )
