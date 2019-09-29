@@ -79,7 +79,7 @@ const EventDetails = ({ event, location }: IEventDetailsProps) => {
           direction="row"
           container={true}
           item={true}
-          spacing={16}
+          spacing={2}
           xs={12}
         >
           <Grid
@@ -87,7 +87,7 @@ const EventDetails = ({ event, location }: IEventDetailsProps) => {
             direction="row"
             container={true}
             item={true}
-            spacing={16}
+            spacing={2}
             xs={12}
           >
             <LinkButton

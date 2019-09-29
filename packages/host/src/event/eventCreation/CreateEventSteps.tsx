@@ -14,23 +14,21 @@ const decorate = withStyles((theme: Theme) => ({
   },
   stepsText: {
     cursor: 'pointer',
-    fontSize: '18px',
+    fontSize: '18px'
   },
   highlight: {
     cursor: 'pointer',
     color: '#FFB000',
-    fontSize: '18px',
+    fontSize: '18px'
   }
 }))
 
 interface ICreateEventStepsProps {
-  step: number,
+  step: number
   pickStep(step: number): void
 }
 
-class EventCard extends React.Component<
-  ICreateEventStepsProps &
-  WithStyles> {
+class EventCard extends React.Component<ICreateEventStepsProps & WithStyles> {
   public setStep = (step: number) => () => {
     this.props.pickStep(step)
   }
@@ -41,7 +39,7 @@ class EventCard extends React.Component<
     return (
       <Grid
         container={true}
-        spacing={24}
+        spacing={3}
         justify="center"
         alignItems="center"
         direction="row"

@@ -37,7 +37,7 @@ interface IEventsProps {
   fetchPlaylists(user: IUser): IAction
 }
 
-interface IDecoratedPlaylist extends IPlaylist{
+interface IDecoratedPlaylist extends IPlaylist {
   eventId: string
 }
 
@@ -48,8 +48,13 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
     }
   }
 
-  public renderPlayList = (playlists: IDecoratedPlaylist[], noEventsMessage: string) => {
-    const filteredPlaylists = playlists.filter((playlist: IDecoratedPlaylist) => playlist.id !== undefined)
+  public renderPlayList = (
+    playlists: IDecoratedPlaylist[],
+    noEventsMessage: string
+  ) => {
+    const filteredPlaylists = playlists.filter(
+      (playlist: IDecoratedPlaylist) => playlist.id !== undefined
+    )
 
     return (
       <React.Fragment>
@@ -66,9 +71,16 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
 
         <div className="eventsList">
           {map(
-            sortBy(filteredPlaylists, (playlist: IDecoratedPlaylist) => playlist.followers),
+            sortBy(
+              filteredPlaylists,
+              (playlist: IDecoratedPlaylist) => playlist.followers
+            ),
             (playlist: any, i) => (
-              <PlaylistCard key={i} playlist={playlist} eventId={playlist.eventId} />
+              <PlaylistCard
+                key={i}
+                playlist={playlist}
+                eventId={playlist.eventId}
+              />
             )
           )}
         </div>
@@ -83,10 +95,13 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
 
     const now = moment()
 
-    const allPlaylists = events.map((event: any) => ({
-        ...event.playlist,
-        eventId: event.eventId
-    }) as IDecoratedPlaylist)
+    const allPlaylists = events.map(
+      (event: any) =>
+        ({
+          ...event.playlist,
+          eventId: event.eventId
+        } as IDecoratedPlaylist)
+    )
     let pastPlaylists: any[] = []
     let upcomingPlaylists: any[] = []
 
@@ -95,10 +110,10 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
         events
           .filter(event => event.startDateTime.isBefore(now))
           .map(event => {
-            if(event.eventId) {
+            if (event.eventId) {
               return {
                 ...event.playlist,
-                eventId:event.eventId
+                eventId: event.eventId
               }
             } else {
               return event.playlist
@@ -110,10 +125,10 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
         events
           .filter(event => event.startDateTime.isAfter(now))
           .map(event => {
-            if(event.eventId) {
+            if (event.eventId) {
               return {
                 ...event.playlist,
-                eventId:event.eventId
+                eventId: event.eventId
               }
             } else {
               return event.playlist
@@ -129,62 +144,60 @@ class PlatlistsView extends React.Component<IEventsProps & WithStyles> {
 
         {!eventsLoading && (!events || events.length < 1) && <NoEvents />}
 
-        {!eventsLoading &&
-          !!events &&
-          events.length > 0 && (
-            <React.Fragment>
-              <Grid container={true} spacing={24} direction="row">
-                <Hidden xsDown={true}>
-                  <Grid item={true} sm={12}>
-                    <Link to="/all-playlists">
-                      <Button
-                        variant="text"
-                        className={
-                          currentPath === '/all-playlists'
-                            ? classes.buttonOrange
-                            : classes.button
-                        }
-                      >
-                        ALL
-                      </Button>
-                    </Link>
-                    <Link to="/past-playlists">
-                      <Button
-                        variant="text"
-                        className={
-                          currentPath === '/past-playlists'
-                            ? classes.buttonOrange
-                            : classes.button
-                        }
-                      >
-                        PAST PLAYLISTS
-                      </Button>
-                    </Link>
-                    <Link to="/upcoming-playlists">
-                      <Button
-                        variant="text"
-                        className={
-                          currentPath === '/upcoming-playlists'
-                            ? classes.buttonOrange
-                            : classes.button
-                        }
-                      >
-                        UPCOMING PLAYLISTS
-                      </Button>
-                    </Link>
-                  </Grid>
-                </Hidden>
-                <Grid item={true} md={12}>
-                  {currentPath === '/all-playlists' &&
-                    this.renderPlayList(allPlaylists, 'no playlists')}
-                  {currentPath === '/past-playlists' &&
-                    this.renderPlayList(pastPlaylists, 'no playlists')}
-                  {currentPath === '/upcoming-playlists' &&
-                    this.renderPlayList(upcomingPlaylists, 'no playlists')}
+        {!eventsLoading && !!events && events.length > 0 && (
+          <React.Fragment>
+            <Grid container={true} spacing={3} direction="row">
+              <Hidden xsDown={true}>
+                <Grid item={true} sm={12}>
+                  <Link to="/all-playlists">
+                    <Button
+                      variant="text"
+                      className={
+                        currentPath === '/all-playlists'
+                          ? classes.buttonOrange
+                          : classes.button
+                      }
+                    >
+                      ALL
+                    </Button>
+                  </Link>
+                  <Link to="/past-playlists">
+                    <Button
+                      variant="text"
+                      className={
+                        currentPath === '/past-playlists'
+                          ? classes.buttonOrange
+                          : classes.button
+                      }
+                    >
+                      PAST PLAYLISTS
+                    </Button>
+                  </Link>
+                  <Link to="/upcoming-playlists">
+                    <Button
+                      variant="text"
+                      className={
+                        currentPath === '/upcoming-playlists'
+                          ? classes.buttonOrange
+                          : classes.button
+                      }
+                    >
+                      UPCOMING PLAYLISTS
+                    </Button>
+                  </Link>
                 </Grid>
+              </Hidden>
+              <Grid item={true} md={12}>
+                {currentPath === '/all-playlists' &&
+                  this.renderPlayList(allPlaylists, 'no playlists')}
+                {currentPath === '/past-playlists' &&
+                  this.renderPlayList(pastPlaylists, 'no playlists')}
+                {currentPath === '/upcoming-playlists' &&
+                  this.renderPlayList(upcomingPlaylists, 'no playlists')}
               </Grid>
-            </React.Fragment>
-          )}
+            </Grid>
+          </React.Fragment>
+        )}
       </div>
     )
   }

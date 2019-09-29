@@ -106,7 +106,7 @@ class Events extends React.Component<IEventsProps> {
 
         {!eventsLoading && !_.isEmpty(events) && events.length > 0 ? (
           <React.Fragment>
-            <Grid container={true} spacing={24} direction="row">
+            <Grid container={true} spacing={3} direction="row">
               <Grid item={true} sm={5} container={true} justify={'center'}>
                 <Link to={'/all-events'} className="eventListShowAll">
                   EVENTS

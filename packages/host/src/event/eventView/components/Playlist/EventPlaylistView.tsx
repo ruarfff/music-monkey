@@ -66,7 +66,7 @@ class EventPlaylistView extends React.Component<IEventPlaylistViewProps> {
     }
 
     return (
-      <Grid container={true} spacing={24} className="EventPlaylistView-root">
+      <Grid container={true} spacing={3} className="EventPlaylistView-root">
         <Grid item={true} sm={12}>
           <EventPlaylistSummary />
         </Grid>
@@ -77,7 +77,7 @@ class EventPlaylistView extends React.Component<IEventPlaylistViewProps> {
               onChange={this.handleTabChange}
               indicatorColor="secondary"
               textColor="secondary"
-              fullWidth={true}
+              variant="fullWidth"
             >
               <Tab label="Event Playlist" />
               <Tab
@@ -91,8 +91,8 @@ class EventPlaylistView extends React.Component<IEventPlaylistViewProps> {
                       Maybe
                     </Badge>
                   ) : (
-                    'Maybe'
-                  )
+                      'Maybe'
+                    )
                 }
               />
               <Tab label="Rejected" />

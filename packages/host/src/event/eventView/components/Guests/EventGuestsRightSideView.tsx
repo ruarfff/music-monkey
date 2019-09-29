@@ -1,5 +1,6 @@
+import React from 'react'
 import { Avatar } from '@material-ui/core'
-import { WithStyles } from '@material-ui/core/es'
+import { WithStyles } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid/Grid'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import Snackbar from '@material-ui/core/Snackbar/Snackbar'
@@ -7,7 +8,6 @@ import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import CloseIcon from '@material-ui/icons/Close'
-import * as React from 'react'
 import IAction from 'IAction'
 import SharePopup from 'components/ShareEvent/SharePopup'
 import IEvent from 'event/IEvent'
@@ -44,7 +44,7 @@ interface IEventGuestsRightSideViewProps {
 
 class EventGuestsRightSideView extends React.PureComponent<
   IEventGuestsRightSideViewProps & WithStyles
-> {
+  > {
   public render() {
     const { event, copyEventInvite, classes } = this.props
 
@@ -52,7 +52,7 @@ class EventGuestsRightSideView extends React.PureComponent<
 
     if (!event || !event.guests || event.guests.length < 1) {
       return (
-        <Grid container={true} justify={'center'} spacing={24}>
+        <Grid container={true} justify={'center'} spacing={3}>
           <Grid className={classes.inviteLink} item={true}>
             <SharePopup
               event={event}
@@ -89,7 +89,7 @@ class EventGuestsRightSideView extends React.PureComponent<
             </IconButton>
           }
         />
-        <Grid container={true} justify={'center'} spacing={24}>
+        <Grid container={true} justify={'center'} spacing={3}>
           <Grid className={classes.inviteLink} item={true}>
             <SharePopup
               event={event}
@@ -148,8 +148,8 @@ class EventGuestsRightSideView extends React.PureComponent<
         {user.image ? (
           <Avatar alt={user.displayName} src={user.image} />
         ) : (
-          <AccountCircle className={classes.noAvatar} />
-        )}
+            <AccountCircle className={classes.noAvatar} />
+          )}
         <Typography className={classes.guestName} align={'center'}>
           {name}
         </Typography>

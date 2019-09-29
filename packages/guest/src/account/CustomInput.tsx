@@ -1,4 +1,4 @@
-import TextField from '@material-ui/core/TextField/TextField'
+import TextField from '@material-ui/core/TextField'
 import * as React from 'react'
 import './CustomInput.scss'
 

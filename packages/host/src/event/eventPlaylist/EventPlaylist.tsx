@@ -102,7 +102,7 @@ export default class EventPlaylist extends React.Component<
       <div className="EventPlaylist-root">
         {saving && <LoadingSpinner />}
         {!saving && (
-          <Grid container={true} spacing={8}>
+          <Grid container={true} spacing={1}>
             <Snackbar
               anchorOrigin={{
                 vertical: 'top',

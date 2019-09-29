@@ -1,7 +1,6 @@
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import { WithStyles } from '@material-ui/core/es'
-import Grid from '@material-ui/core/Grid/Grid'
+import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -10,6 +9,7 @@ import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import CloseIcon from '@material-ui/icons/Close'
+import { WithStyles } from '@material-ui/core'
 import * as React from 'react'
 import IAction from 'IAction'
 import SharePopup from 'components/ShareEvent/SharePopup'
@@ -103,8 +103,9 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
     const filteredGuests =
       this.state.filter !== 'all'
         ? event.guests.filter(
-            guest => guest.rsvp.status.toLocaleLowerCase() === this.state.filter
-          )
+          (guest: any) =>
+            guest.rsvp.status.toLocaleLowerCase() === this.state.filter
+        )
         : event.guests
 
     return (
@@ -131,7 +132,7 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
           container={true}
           className={classes.filter}
           justify={'flex-end'}
-          spacing={24}
+          spacing={3}
         >
           <Button
             aria-owns={anchorEl ? 'simple-menu' : ''}
@@ -162,8 +163,8 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
             onCopyEventInvite={copyEventInvite}
           />
         </Grid>
-        <Grid container={true} className={classes.guestsContainer} spacing={24}>
-          {filteredGuests.map(eventGuest =>
+        <Grid container={true} className={classes.guestsContainer} spacing={3}>
+          {filteredGuests.map((eventGuest: any) =>
             this.renderEventGuest(eventGuest, classes)
           )}
         </Grid>

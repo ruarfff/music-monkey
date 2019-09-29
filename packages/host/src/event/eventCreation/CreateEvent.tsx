@@ -485,13 +485,13 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
           }
           {
             <div hidden={currentStep !== 1}>
-              <Grid container={true} spacing={24} direction="row">
+              <Grid container={true} spacing={3} direction="row">
                 {this.renderSecondStep()}
               </Grid>
             </div>
           }
           {this.props.currentStep === 2 && (
-            <Grid container={true} spacing={24} direction="row">
+            <Grid container={true} spacing={3} direction="row">
               {this.renderThirdStep()}
             </Grid>
           )}

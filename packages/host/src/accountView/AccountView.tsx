@@ -51,7 +51,7 @@ class AccountView extends React.Component<IAccountViewProps & WithStyles> {
     const { tabIndex } = this.state
     const { user, classes, events, updateUserRequest } = this.props
     return (
-      <Grid className={classes.accountWrapper} container={true} spacing={24}>
+      <Grid className={classes.accountWrapper} container={true} spacing={3}>
         <Grid
           container={true}
           item={true}

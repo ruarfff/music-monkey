@@ -27,7 +27,6 @@ interface IInsightsViewProps {
 }
 
 class InsightsView extends React.Component<IInsightsViewProps> {
-
   public componentDidMount() {
     this.props.getEvents()
     if (this.props.user) {
@@ -48,10 +47,8 @@ class InsightsView extends React.Component<IInsightsViewProps> {
 
     return (
       <div className="insightsContainer">
-        <Typography>
-          Tracks Statistic
-        </Typography>
-        <Grid container={true} spacing={24}>
+        <Typography>Tracks Statistic</Typography>
+        <Grid container={true} spacing={3}>
           <Grid item={true} md={6}>
             <MostPopularTracks events={events} />
           </Grid>
@@ -65,19 +62,19 @@ class InsightsView extends React.Component<IInsightsViewProps> {
             />
           </Grid>
         </Grid>
-        <Typography>
-          Guests Statistic
-        </Typography>
-        <Grid container={true} spacing={24}>
+        <Typography>Guests Statistic</Typography>
+        <Grid container={true} spacing={3}>
           <Grid item={true} md={6}>
-            <PieChartWidget filterByEventPick={filterByEventPick} pickedEvent={pickedEvent} events={events} />
+            <PieChartWidget
+              filterByEventPick={filterByEventPick}
+              pickedEvent={pickedEvent}
+              events={events}
+            />
           </Grid>
         </Grid>
       </div>
     )
   }
-
-
 }
 
 export default InsightsView

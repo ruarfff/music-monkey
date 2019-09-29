@@ -17,15 +17,11 @@ const styles = (theme: Theme) =>
       fontSize: 20
     },
     iconVariant: {
-      opacity: 0.9,
-      marginRight: theme.spacing.unit
+      opacity: 0.9
     },
     message: {
       display: 'flex',
       alignItems: 'center'
-    },
-    margin: {
-      margin: theme.spacing.unit
     }
   })
 
@@ -36,7 +32,7 @@ interface IErrorNotificationProps extends WithStyles<typeof styles> {
 
 const ErrorNotification = withStyles(styles)(
   ({ classes, message, onClose }: IErrorNotificationProps) => {
-    const { error, margin } = classes
+    const { error } = classes
     return (
       <Snackbar
         anchorOrigin={{
@@ -47,7 +43,7 @@ const ErrorNotification = withStyles(styles)(
         autoHideDuration={4000}
       >
         <SnackbarContent
-          className={classNames(error, margin)}
+          className={error}
           aria-describedby="client-snackbar"
           message={
             <span id="client-snackbar" className={classes.message}>

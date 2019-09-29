@@ -1,37 +1,34 @@
-import { PaletteOptions } from '@material-ui/core/es/styles/createPalette'
 import { createMuiTheme } from '@material-ui/core/styles'
 import styles from './theme.module.scss'
 
 const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true
-  },
+  spacing: 8,
   overrides: {
     MuiButton: {
       containedPrimary: {
-        color: 'white',
+        color: 'white'
       },
       containedSecondary: {
-        color: 'white',
+        color: 'white'
       }
     },
     MuiBadge: {
       colorPrimary: {
-        color: 'white',
+        color: 'white'
       },
       colorSecondary: {
         color: 'white',
-        backgroundColor: styles.secondaryLight,
-      },
+        backgroundColor: styles.secondaryLight
+      }
     },
     MuiMenuItem: {
       gutters: {
         padding: '0 16px',
         height: '40px',
         display: 'flex!important',
-        alignItems: 'center',
-      },
-    },
+        alignItems: 'center'
+      }
+    }
   },
   palette: {
     primary: {
@@ -41,7 +38,7 @@ const theme = createMuiTheme({
       light: styles.secondaryLight,
       main: styles.secondaryMain
     }
-  } as PaletteOptions
+  }
 })
 
 export default theme

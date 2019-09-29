@@ -165,7 +165,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
     const formattedDuration = formatDuration(durationSeconds)
 
     return (
-      <Grid container={true} spacing={24} alignItems="flex-end">
+      <Grid container={true} spacing={3} alignItems="flex-end">
         <Grid item={true} md={12}>
           <span>Add or pick a playlist</span>
           <EventInput

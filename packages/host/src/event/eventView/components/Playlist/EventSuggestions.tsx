@@ -72,7 +72,7 @@ class EventSuggestions extends React.Component<
 
     return (
       <div className="EventSuggestions-root">
-        <Grid container={true} spacing={24}>
+        <Grid container={true} spacing={3}>
           <Grid item={true} sm={12}>
             {filteredSuggestions.length > 0 &&
               this.renderAcceptButtons(filteredSuggestions)}

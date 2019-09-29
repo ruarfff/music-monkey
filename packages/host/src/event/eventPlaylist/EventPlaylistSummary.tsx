@@ -45,7 +45,7 @@ class EventPlaylistSummary extends React.PureComponent<
     const formattedDuration = formatDuration(durationSeconds)
 
     return (
-      <Grid container={true} spacing={24}>
+      <Grid container={true} spacing={3}>
         <Grid item={true} sm={12} className="EventPlaylistSummary-card">
           <div className="EventPlaylistSummary-container">
             <div className="EventPlaylistSummary-item">

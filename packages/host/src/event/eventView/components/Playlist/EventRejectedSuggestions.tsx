@@ -58,7 +58,7 @@ const EventRejectedSuggestions = ({
 
   return (
     <div className="EvenRejectSuggestion-root">
-      <Grid container={true} spacing={24}>
+      <Grid container={true} spacing={3}>
         <Grid item={true} sm={12}>
           <List>
             {filteredSuggestions.map(({ track, user, suggestion }) => (

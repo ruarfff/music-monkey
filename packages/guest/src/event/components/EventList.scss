@@ -1,16 +1,32 @@
-.EventList-no-events-message {
-  padding-top: 2em;
-}
+.EventList-root {
+  padding: 0 1rem;
 
-.EventList-item {
-  margin: 20px 0;
-}
+  .EventList-no-events-message {
+    padding-top: 2rem;
+  }
 
-.EventList-item-divider {
-  margin-top: 0.6em;
-}
+  .EventList-item {
+    margin: 1.25rem 0;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
 
-.EventList-event-image {
-  width: 4em;
-  height: 4em;
+  .EventList-text {
+    padding: 0 16px;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 1rem;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+  }
+
+  .EventList-item-divider {
+    margin-top: 0.6rem;
+  }
+
+  .EventList-event-image {
+    width: 4rem;
+    height: 4rem;
+  }
 }

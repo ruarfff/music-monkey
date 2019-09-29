@@ -116,7 +116,7 @@ export default class ShareEventByEmail extends React.PureComponent<
     const { emails, emailText, validation, showMessage } = this.state
 
     return (
-      <Grid container={true} spacing={24}>
+      <Grid container={true} spacing={3}>
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={showMessage}

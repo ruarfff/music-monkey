@@ -105,7 +105,7 @@ const TrackListItem = ({
       onClick={handleTrackSelected}
     >
       {trackImage}
-      <Grid container={true} spacing={24}>
+      <Grid container={true} spacing={3}>
         <Grid
           item={true}
           md={12}

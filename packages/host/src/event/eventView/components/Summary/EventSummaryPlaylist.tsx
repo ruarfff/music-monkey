@@ -93,7 +93,7 @@ const EventSummaryPlaylist = ({
   }
 
   return (
-    <Grid className="EventSummaryPlaylist-root" container={true} spacing={16}>
+    <Grid className="EventSummaryPlaylist-root" container={true} spacing={2}>
       {showPopup && (
         <EditPlaylistPopup
           playlist={playlist}

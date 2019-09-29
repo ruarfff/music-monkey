@@ -3,7 +3,8 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
+import omit from 'lodash/omit'
 import * as React from 'react'
 import emailIcon from '../assets/email-icon.svg'
 import facebookIcon from '../assets/facebook.svg'
@@ -49,7 +50,7 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
   }
 
   public componentWillReceiveProps(newProps: IAccountDetailsProps) {
-    if (_.isEqual(newProps.user, this.props.user)) {
+    if (isEqual(newProps.user, this.props.user)) {
       this.setUser()
     }
   }
@@ -85,13 +86,13 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
                 src={user.image}
               />
             ) : (
-              <Avatar
-                onClick={this.toggleEditAvatarModal}
-                className={'Account-avatar-img'}
-              >
-                <AccountCircle className={'Account-avatar-img'} />
-              </Avatar>
-            )}
+                <Avatar
+                  onClick={this.toggleEditAvatarModal}
+                  className={'Account-avatar-img'}
+                >
+                  <AccountCircle className={'Account-avatar-img'} />
+                </Avatar>
+              )}
             <Typography className={'Account-name'}>
               {user.displayName}
             </Typography>
@@ -121,11 +122,11 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
                 {!isEdit ? (
                   user.email
                 ) : (
-                  <EventInput
-                    value={this.state.email}
-                    onChange={this.handleEdit('email')}
-                  />
-                )}
+                    <EventInput
+                      value={this.state.email}
+                      onChange={this.handleEdit('email')}
+                    />
+                  )}
               </Grid>
             </Grid>
           </Grid>
@@ -144,11 +145,11 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
                 {!isEdit ? (
                   user.phone
                 ) : (
-                  <EventInput
-                    value={this.state.phone}
-                    onChange={this.handleEdit('phone')}
-                  />
-                )}
+                    <EventInput
+                      value={this.state.phone}
+                      onChange={this.handleEdit('phone')}
+                    />
+                  )}
               </Grid>
             </Grid>
           </Grid>
@@ -168,11 +169,11 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
                 {!isEdit ? (
                   user.instagramId
                 ) : (
-                  <EventInput
-                    value={this.state.instagramId}
-                    onChange={this.handleEdit('instagramId')}
-                  />
-                )}
+                    <EventInput
+                      value={this.state.instagramId}
+                      onChange={this.handleEdit('instagramId')}
+                    />
+                  )}
               </Grid>
             </Grid>
           </Grid>
@@ -191,11 +192,11 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
                 {!isEdit ? (
                   user.facebookId
                 ) : (
-                  <EventInput
-                    value={this.state.facebookId}
-                    onChange={this.handleEdit('facebookId')}
-                  />
-                )}
+                    <EventInput
+                      value={this.state.facebookId}
+                      onChange={this.handleEdit('facebookId')}
+                    />
+                  )}
               </Grid>
             </Grid>
           </Grid>
@@ -214,11 +215,11 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
                 {!isEdit ? (
                   user.twitterId
                 ) : (
-                  <EventInput
-                    value={this.state.twitterId}
-                    onChange={this.handleEdit('twitterId')}
-                  />
-                )}
+                    <EventInput
+                      value={this.state.twitterId}
+                      onChange={this.handleEdit('twitterId')}
+                    />
+                  )}
               </Grid>
             </Grid>
           </Grid>
@@ -239,15 +240,15 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
                 EDIT CONTACT DETAILS
               </Button>
             ) : (
-              <Button
-                variant="contained"
-                color="secondary"
-                className={'Account-edit-button'}
-                onClick={this.editDetails}
-              >
-                SAVE
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={'Account-edit-button'}
+                  onClick={this.editDetails}
+                >
+                  SAVE
               </Button>
-            )}
+              )}
           </Grid>
         </Grid>
       </React.Fragment>
@@ -258,7 +259,7 @@ class AccountDetails extends React.Component<IAccountDetailsProps> {
     if (this.state.isEdit) {
       const updatedUser = {
         ...this.props.user,
-        ..._.omit(this.state, ['isEdit', 'showAvatarEditor'])
+        ...omit(this.state, ['isEdit', 'showAvatarEditor'])
       }
 
       this.props.updateUserRequest(updatedUser)

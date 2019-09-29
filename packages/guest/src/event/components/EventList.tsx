@@ -1,9 +1,9 @@
+import React from 'react'
 import { Divider, List, ListItem, ListItemText } from '@material-ui/core'
-import * as React from 'react'
 import { Link } from 'react-router-dom'
-import IEvent from '../IEvent'
+import isEmpty from 'lodash/isEmpty'
+import IEvent from 'event/IEvent'
 import './EventList.scss'
-import { isEmpty } from 'lodash'
 
 interface IEventListProps {
   pastEvents: IEvent[]
@@ -12,41 +12,37 @@ interface IEventListProps {
 }
 
 const renderEvents = (events: IEvent[], status: string) => {
-  const listLink = (to: string) => ({ innerRef, ...props }: any) => (
-    <Link {...props} to={to} />
-  )
-
   if (isEmpty(events)) return null
+
+  const getItemText = (event: IEvent, status: string) => {
+    if (status === 'live') return 'Happening Now'
+    if (status === 'upcoming')
+      return `Starts at ${event.startDateTime.format(' Do MMMM, YYYY')}`
+
+    return `Finished at ${event.endDateTime.format(' Do MMMM, YYYY')}`
+  }
 
   return (
     <React.Fragment>
       {events.map((event, index) => (
-        <div className="EventList-item" key={index + status}>
-          <ListItem component={listLink('/events/' + event.eventId)}>
+        <div className="EventList-root" key={index + status}>
+          <ListItem
+            button={true}
+            component={Link}
+            to={'/events/' + event.eventId}
+            className="EventList-item"
+          >
             <img
               alt={event.name}
               src={event.imageUrl || '/img/partycover-sm.png'}
               className="EventList-event-image"
             />
-            {status === 'live' && (
-              <ListItemText primary={event.name} secondary={'Happening Now'} />
-            )}
-            {status === 'upcoming' && (
-              <ListItemText
-                primary={event.name}
-                secondary={`Starts at ${event.startDateTime.format(
-                  ' Do MMMM, YYYY'
-                )}`}
-              />
-            )}
-            {status === 'past' && (
-              <ListItemText
-                primary={event.name}
-                secondary={`Finished at ${event.endDateTime.format(
-                  ' Do MMMM, YYYY'
-                )}`}
-              />
-            )}
+
+            <ListItemText
+              primary={event.name}
+              secondary={getItemText(event, status)}
+              className="EventList-text"
+            />
           </ListItem>
           <li>
             <Divider variant="inset" className="EventList-item-divider" />

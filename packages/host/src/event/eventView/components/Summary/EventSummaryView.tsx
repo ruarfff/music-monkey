@@ -12,10 +12,10 @@ interface IEventSummaryViewProps {
 
 const EventSummaryView = ({ event }: IEventSummaryViewProps) => {
   return (
-    <Grid container={true} spacing={24} className="EventSummary-root">
+    <Grid container={true} spacing={3} className="EventSummary-root">
       <Grid
         container={true}
-        spacing={24}
+        spacing={3}
         item={true}
         direction="column"
         justify="flex-start"
@@ -28,7 +28,7 @@ const EventSummaryView = ({ event }: IEventSummaryViewProps) => {
       </Grid>
       <Grid
         container={true}
-        spacing={24}
+        spacing={3}
         item={true}
         direction="column"
         justify="flex-start"

@@ -92,7 +92,7 @@ class EventsView extends React.Component<IEventsProps & WithStyles> {
 
         {!eventsLoading && !!events && events.length > 0 && (
           <React.Fragment>
-            <Grid container={true} spacing={24} direction="row">
+            <Grid container={true} spacing={3} direction="row">
               <Hidden xsDown={true}>
                 <Grid item={true} sm={12}>
                   <Link to="/all-events">

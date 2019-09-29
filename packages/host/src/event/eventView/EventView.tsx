@@ -1,5 +1,5 @@
 import AppBar from '@material-ui/core/AppBar/AppBar'
-import { WithStyles } from '@material-ui/core/es'
+import { WithStyles } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid/Grid'
 import withStyle from '@material-ui/core/styles/withStyles'
 import Tab from '@material-ui/core/Tab/Tab'
@@ -70,7 +70,7 @@ function TabContainer({ children, dir }: any) {
 class EventView extends React.Component<
   IEventViewProps & WithStyles,
   IEventViewState
-> {
+  > {
   public state = {
     tabIndex: 0
   }
@@ -125,7 +125,7 @@ class EventView extends React.Component<
     const { classes } = this.props
 
     return (
-      <Grid className={classes.content} container={true} spacing={16}>
+      <Grid className={classes.content} container={true} spacing={2}>
         <Grid className={classes.content} item={true} xs={12}>
           <AppBar
             position="static"

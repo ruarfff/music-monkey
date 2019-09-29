@@ -60,7 +60,7 @@ const CreateEventPlaylist = ({
   setEventPlaylist
 }: CreateEventPlaylistProps) => {
   return (
-    <Grid container={true} spacing={24} direction="row">
+    <Grid container={true} spacing={3} direction="row">
       <div className="control-btn-row">
         {isEditing && (
           <Button variant="contained" onClick={showConfirmationDialog}>
