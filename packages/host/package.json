@@ -14,7 +14,6 @@
     "autosuggest-highlight": "^3.1.1",
     "aws-sdk": "^2.369.0",
     "google-map-react": "^1.1.1",
-    "material-ui-pickers": "^2.0.4",
     "nuka-carousel": "^4.4.3",
     "react-beautiful-dnd": "^11.0.3",
     "react-dropzone": "^9.0.0",

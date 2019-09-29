@@ -1,7 +1,6 @@
-import { WithStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField/TextField'
-import * as React from 'react'
-import { decorate } from 'globalStyles/Input'
+import React, { useState } from 'react'
+import TextField from '@material-ui/core/TextField'
+import './EventInput.scss'
 
 interface IEventInputProps {
   value: string
@@ -15,57 +14,49 @@ interface IEventInputProps {
   onChange(value: string): void
 }
 
-class EventInput extends React.Component<IEventInputProps & WithStyles> {
-  public state = {
-    touched: false
+const EventInput = ({
+  label,
+  placeholder,
+  maxRows,
+  value,
+  error,
+  errorLabel,
+  autoFocus,
+  onChange
+}: IEventInputProps) => {
+  const [touched, setTouched] = useState(false)
+
+  const handleChange = (event: any) => {
+    onChange(event.target.value)
   }
 
-  public render() {
-    const {
-      classes,
-      label,
-      placeholder,
-      maxRows,
-      value,
-      error,
-      errorLabel,
-      autoFocus
-    } = this.props
-
-    const { touched } = this.state
-
-    return (
-      <TextField
-        onClick={this.handleClick}
-        label={error && touched ? errorLabel : label}
-        placeholder={placeholder}
-        required={true}
-        autoFocus={autoFocus}
-        fullWidth={true}
-        rowsMax={maxRows}
-        error={error && touched}
-        margin="normal"
-        multiline={!!maxRows}
-        value={value}
-        onChange={this.handleChange}
-        className={classes.formControl}
-        InputProps={
-          maxRows
-            ? { className: classes.textArea }
-            : { className: classes.input }
-        }
-        InputLabelProps={{ className: classes.label }}
-      />
-    )
+  const handleClick = () => {
+    setTouched(true)
   }
 
-  private handleChange = (event: any) => {
-    this.props.onChange(event.target.value)
-  }
-
-  private handleClick = () => {
-    this.setState({ touched: true })
-  }
+  return (
+    <TextField
+      onClick={handleClick}
+      label={error && touched ? errorLabel : label}
+      placeholder={placeholder}
+      required={true}
+      autoFocus={autoFocus}
+      fullWidth={true}
+      rowsMax={maxRows}
+      error={error && touched}
+      margin="normal"
+      multiline={!!maxRows}
+      value={value}
+      onChange={handleChange}
+      className="EventInput-root"
+      InputProps={
+        maxRows
+          ? { className: 'EventInput-text-area' }
+          : { className: 'EventInput-input' }
+      }
+      InputLabelProps={{ className: 'EventInput-label' }}
+    />
+  )
 }
 
-export default decorate(EventInput)
+export default EventInput

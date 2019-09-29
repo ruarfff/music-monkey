@@ -1,0 +1,47 @@
+.EventInput-root {
+  margin: 0;
+
+  .EventInput-label {
+    padding-left: 1rem;
+    &:hover:not($disabled):before {
+      border-bottom: none !important;
+    }
+    padding-top: 0.25rem;
+  }
+
+  .EventInput-input {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.25rem;
+    border: 1px solid #979797;
+    padding-left: 1rem;
+    min-height: 2.5rem;
+    &:hover:not($disabled):before {
+      border-bottom: 1px solid #979797 !important;
+    }
+    &:before {
+      content: none;
+    }
+    &:after {
+      content: none;
+    }
+  }
+
+  .EventInput-text-area {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.25rem;
+    border: 1px solid #979797;
+    padding-left: 1rem;
+    align-items: flex-start;
+    display: flex;
+    min-height: 6.25rem;
+    &:hover:not($disabled):before {
+      border-bottom: 1px solid #979797 !important;
+    }
+    &:before {
+      content: none;
+    }
+    &:after {
+      content: none;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { StylesProvider } from '@material-ui/styles'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
-import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ConnectedRouter } from 'connected-react-router'
 import { History } from 'history'
 import { CookiesProvider } from 'react-cookie'
@@ -12,7 +12,6 @@ import Utils from '@date-io/moment'
 import SubscriptionWrapper from './subscriptions/SubscriptionWrapperContainer'
 import { Routes } from './routes'
 import theme from './theme/theme'
-import './App.scss'
 
 interface IAppProps {
   store: Store
