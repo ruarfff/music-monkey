@@ -1,6 +1,6 @@
 import * as React from 'react'
 import IEvent from 'event/IEvent'
-import EventBigCard from 'eventsView/EventBigCard'
+import EventBigCard from 'event/eventsView/EventBigCard'
 
 interface IMyPlaylistsProps {
   events: IEvent[]

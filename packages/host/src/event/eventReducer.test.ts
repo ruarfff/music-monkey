@@ -1,4 +1,4 @@
-import Action from '../IAction'
+import Action from 'IAction'
 import {
   EVENT_CONTENT_UPDATED,
   EVENT_CREATE_FORM_INITIALIZED,

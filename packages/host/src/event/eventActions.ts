@@ -1,6 +1,6 @@
-import Action from '../IAction'
-import IPlaylistDetails from '../playlist/IPlaylistDetails'
-import IUser from '../user/IUser'
+import Action from 'IAction'
+import IPlaylistDetails from 'playlist/IPlaylistDetails'
+import IUser from 'user/IUser'
 import IEvent from './IEvent'
 
 export const EVENT_LOCATION_CHANGED = 'EVENT_LOCATION_CHANGED'
@@ -38,18 +38,18 @@ export const CLEAR_SAVING_EVENT = 'CLEAR_SAVING_EVENT'
 
 export const PLAYLIST_NAME_INPUT_CHANGE = 'PLAYLIST_NAME_INPUT_CHANGE'
 
-export const playlistInputChange = (name: string):Action => ({
+export const playlistInputChange = (name: string): Action => ({
   type: PLAYLIST_NAME_INPUT_CHANGE,
   payload: name
 })
 
-export const clearSavingEvent = ():Action => ({
+export const clearSavingEvent = (): Action => ({
   type: CLEAR_SAVING_EVENT
 })
 
-export const setStep = (step: number):Action => ({
+export const setStep = (step: number): Action => ({
   type: SET_CREATE_EVENT_STEP,
-  payload: step,
+  payload: step
 })
 
 export const editEventSuccess = (): Action => ({

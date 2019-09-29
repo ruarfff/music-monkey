@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import IRootState from '../rootState'
 import SubscriptionWrapper from './SubscriptionWrapper'
-import { getEventByIdNoLoading } from '../eventView/eventViewActions'
+import { getEventByIdNoLoading } from '../event/eventView/eventViewActions'
 import { fetchEventVotes } from '../vote/voteActions'
 import { getEventSuggestions } from '../suggestion/suggestionActions'
 

@@ -2,16 +2,16 @@ import { call, put, select, takeEvery } from 'redux-saga/effects'
 import {
   SET_EVENT_PLAYLIST,
   UPDATE_PLAYLIST_AFTER_COPY
-} from '../eventPlaylist/eventPlaylistActions'
-import IAction from '../IAction'
-import IPlaylist from '../playlist/IPlaylist'
-import IPlaylistDetails from '../playlist/IPlaylistDetails'
-import { FETCH_PLAYLISTS } from '../playlist/playlistActions'
+} from './eventPlaylist/eventPlaylistActions'
+import IAction from 'IAction'
+import IPlaylist from 'playlist/IPlaylist'
+import IPlaylistDetails from 'playlist/IPlaylistDetails'
+import { FETCH_PLAYLISTS } from 'playlist/playlistActions'
 import {
   createPlaylist,
   replaceTracksInPlaylist
-} from '../playlist/playlistClient'
-import IUser from '../user/IUser'
+} from 'playlist/playlistClient'
+import IUser from 'user/IUser'
 import {
   EVENT_CONTENT_UPDATED,
   EVENT_CREATE_PLAYLIST_INITIATED,

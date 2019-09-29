@@ -1,5 +1,5 @@
 import { all } from 'redux-saga/effects'
-import { watchLogin, watchLogout } from './auth/authSaga'
+import { watchLogin, watchLogout } from 'auth/authSaga'
 import {
   watchCreateEvent,
   watchCreateEventPlaylist,
@@ -7,12 +7,12 @@ import {
   watchFetchEvents,
   watchUpdateEvent,
   watchUpdateLocationAutoComplete
-} from './event/eventSaga'
+} from 'event/eventSaga'
 import {
   watchMoveItemInEventPlaylist,
   watchSaveEventPlaylist,
   watchSortPlaylistByVotesDescending
-} from './eventPlaylist/eventPlaylistSaga'
+} from 'event/eventPlaylist/eventPlaylistSaga'
 import {
   watchDeleteEvent,
   watchFetchEventById,
@@ -21,11 +21,11 @@ import {
   watchToggleAutoAcceptSuggestions,
   watchToggleDynamicVoting,
   watchToggleSuggestingPlaylists
-} from './eventView/eventViewSaga'
+} from 'event/eventView/eventViewSaga'
 import {
   watchFetchNotificationsByUserId,
   watchUpdateNotification
-} from './notification/notificationSaga'
+} from 'notification/notificationSaga'
 import {
   watchFetchAddTrackToPlaylist,
   watchFetchMorePlaylistsFlow,
@@ -34,15 +34,15 @@ import {
   watchFetchRemoveTrackFromPlaylist,
   watchFetchSearchTracks,
   watchFetchTrackFeatures
-} from './playlist/playlistSaga'
-import { watchFetchRecommendation } from './recommendations/recommendationSaga'
-import { watchFetchShareEmail } from './shareEvent/shareSaga'
+} from 'playlist/playlistSaga'
+import { watchFetchRecommendation } from 'recommendations/recommendationSaga'
+import { watchFetchShareEmail } from 'event/shareEvent/shareSaga'
 import {
   watchFetchSuggestions,
   watchRejectSuggestion
-} from './suggestion/suggestionSaga'
-import { watchUpdateUserFlow } from './user/userSaga'
-import { watchFetchEventVotes } from './vote/voteSaga'
+} from 'suggestion/suggestionSaga'
+import { watchUpdateUserFlow } from 'user/userSaga'
+import { watchFetchEventVotes } from 'vote/voteSaga'
 
 export default function* rootSaga() {
   yield all([
@@ -78,6 +78,6 @@ export default function* rootSaga() {
     watchFetchTrackFeatures(),
     watchFetchRecommendation(),
     watchFetchMorePlaylistsFlow(),
-    watchFetchPlaylistEditDetails(),
+    watchFetchPlaylistEditDetails()
   ])
 }

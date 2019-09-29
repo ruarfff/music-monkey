@@ -1,5 +1,5 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import { EVENT_FETCH_BY_ID_INITIATED } from '../eventView/eventViewActions'
+import { EVENT_FETCH_BY_ID_INITIATED } from '../event/eventView/eventViewActions'
 import IAction from '../IAction'
 import {
   ADD_TRACK_REQUEST,

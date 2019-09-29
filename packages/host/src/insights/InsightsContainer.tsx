@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getEvents } from '../event/eventActions'
-import { sortPlaylistByVotesDescending } from '../eventPlaylist/eventPlaylistActions'
+import { sortPlaylistByVotesDescending } from '../event/eventPlaylist/eventPlaylistActions'
 import { fetchPlaylists } from '../playlist/playlistActions'
 import IRootState from '../rootState'
 import { fetchEventVotes } from '../vote/voteActions'

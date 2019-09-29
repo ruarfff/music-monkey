@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import IRootState from '../rootState'
+import IRootState from 'rootState'
 import { getEvents } from './eventActions'
 import Events from './Events'
 

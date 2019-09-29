@@ -1,0 +1,14 @@
+.TrackItem-root {
+  border-bottom: 1px solid #979797;
+
+  .accept-track {
+    background: #27ae60;
+    color: white;
+  }
+
+  .track-image {
+    border-radius: 4px;
+    max-width: 4.5em;
+    max-height: 4.5em;
+  }
+}

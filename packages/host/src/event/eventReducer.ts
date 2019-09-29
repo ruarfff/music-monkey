@@ -3,19 +3,19 @@ import moment from 'moment'
 import {
   DESELECT_EVENT_PLAYLIST,
   SET_EVENT_PLAYLIST
-} from '../eventPlaylist/eventPlaylistActions'
+} from './eventPlaylist/eventPlaylistActions'
 import {
   EVENT_FETCHED_BY_ID,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_DYNAMIC_VOTING,
-  TOGGLE_SUGGESTING_PLAYLISTS,
-} from '../eventView/eventViewActions'
-import Action from '../IAction'
+  TOGGLE_SUGGESTING_PLAYLISTS
+} from './eventView/eventViewActions'
+import Action from 'IAction'
 import {
   CLEAR_MESSAGE,
   SHARE_EMAIL_FAILURE,
   SHARE_EMAIL_SUCCESS
-} from '../shareEvent/shareActions'
+} from './shareEvent/shareActions'
 import {
   CLEAR_SAVING_EVENT,
   EVENT_CONTENT_UPDATED,
@@ -36,7 +36,7 @@ import {
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
   PLAYLIST_NAME_INPUT_CHANGE,
-  SET_CREATE_EVENT_STEP,
+  SET_CREATE_EVENT_STEP
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEvent from './IEvent'
@@ -54,7 +54,7 @@ export default function event(
         savingEvent: {
           ...initialState.savingEvent,
           organizer: state.savingEvent.organizer
-        },
+        }
       }
     case TOGGLE_AUTO_ACCEPT_SUGGESTIONS:
       return {
@@ -63,8 +63,8 @@ export default function event(
           ...state.savingEvent,
           settings: {
             ...state.savingEvent.settings,
-            autoAcceptSuggestionsEnabled: !state.savingEvent
-              .settings.autoAcceptSuggestionsEnabled
+            autoAcceptSuggestionsEnabled: !state.savingEvent.settings
+              .autoAcceptSuggestionsEnabled
           } as IEventSettings
         }
       }
@@ -75,8 +75,8 @@ export default function event(
           ...state.savingEvent,
           settings: {
             ...state.savingEvent.settings,
-            dynamicVotingEnabled: !state.savingEvent
-              .settings.dynamicVotingEnabled
+            dynamicVotingEnabled: !state.savingEvent.settings
+              .dynamicVotingEnabled
           } as IEventSettings
         }
       }
@@ -87,25 +87,27 @@ export default function event(
           ...state.savingEvent,
           settings: {
             ...state.savingEvent.settings,
-            suggestingPlaylistsEnabled: !state.savingEvent
-              .settings.suggestingPlaylistsEnabled
+            suggestingPlaylistsEnabled: !state.savingEvent.settings
+              .suggestingPlaylistsEnabled
           } as IEventSettings
         }
       }
     case SET_CREATE_EVENT_STEP:
       return {
         ...state,
-        createEventStep: payload,
+        createEventStep: payload
       }
     case SET_EVENT_PLAYLIST:
-      const eventName = state.savingEvent.name ? state.savingEvent.name : (state.playlistInput ?
-        state.playlistInput :
-        payload.name)
+      const eventName = state.savingEvent.name
+        ? state.savingEvent.name
+        : state.playlistInput
+        ? state.playlistInput
+        : payload.name
       return {
         ...state,
         savingEvent: {
           ...state.savingEvent,
-          name: eventName,
+          name: eventName
         },
         playlistReselected: true
       }
@@ -142,7 +144,7 @@ export default function event(
       return {
         ...state,
         savingEvent: payload,
-        playlistReselected: false,
+        playlistReselected: false
       }
 
     case EVENT_FETCHED_BY_ID:
