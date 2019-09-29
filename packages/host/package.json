@@ -20,7 +20,7 @@
     "react-dropzone": "^9.0.0",
     "react-dropzone-component": "^3.2.0",
     "react-places-autocomplete": "^7.0.1",
-    "react-select": "^2.1.1",
+    "react-select": "^3.0.5",
     "recharts": "^1.4.1",
     "spotify-uri": "^1.0.0",
     "uuid": "3.3.2"
