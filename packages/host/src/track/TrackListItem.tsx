@@ -1,3 +1,4 @@
+import React from 'react'
 import Badge from '@material-ui/core/Badge'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
@@ -7,8 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { WithStyles } from '@material-ui/core/styles'
 import withStyles from '@material-ui/core/styles/withStyles'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
-import * as React from 'react'
-import { formatDuration } from '../util/formatDuration'
+import formatDuration from 'util/formatDuration'
 import ITrack from './ITrack'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import './TrackListItem.scss'
@@ -18,14 +18,14 @@ import './TrackListItem.scss'
 
 const decorate = withStyles(() => ({
   trackName: {
-    paddingLeft: '10px!important',
+    paddingLeft: '10px!important'
   },
   trackWrapper: {
-    borderBottom: '1px solid #979797',
+    borderBottom: '1px solid #979797'
   },
   img: {
-    borderRadius: '4px',
-  },
+    borderRadius: '4px'
+  }
 }))
 
 interface ITrackListItemProps {
@@ -34,10 +34,10 @@ interface ITrackListItemProps {
   withVoting: boolean
   currentUserVoted: boolean
   numberOfVotes: number
-  onVote: ((track: ITrack) => void)
-  onTrackSelected: ((track: ITrack) => void)
-  removeTrack?: ((uri:string, position: number) => void)
-  handleShowNotification: (() => void)
+  onVote: (track: ITrack) => void
+  onTrackSelected: (track: ITrack) => void
+  removeTrack?: (uri: string, position: number) => void
+  handleShowNotification: () => void
   disableRemoveTrack?: boolean
 }
 
@@ -104,23 +104,43 @@ const TrackListItem = ({
       button={true}
       onClick={handleTrackSelected}
     >
-        {trackImage}
-        <Grid container={true} spacing={24}>
-          <Grid item={true} md={12} container={true} direction={'row'} alignItems={'flex-end'}>
-            <Grid container={true} direction={'column'} justify={'center'} md={3} item={true}>
-              <ListItemText className={classes.trackName} primary={track.album.artists[0].name} />
-              <ListItemText className={classes.trackName} primary={track.name} />
-            </Grid>
-            <ListItemText primary={formatDuration(track.duration_ms)}/>
-            <ListItemText primary={tracksWithFeature && 'tempo ' + Math.round(tracksWithFeature.tempo)} />
-            {!disableRemoveTrack &&
-              <Button onClick={handleRemoveTrack(track.uri, track.track_number)}>
-                REMOVE
-              </Button>
-            }
+      {trackImage}
+      <Grid container={true} spacing={24}>
+        <Grid
+          item={true}
+          md={12}
+          container={true}
+          direction={'row'}
+          alignItems={'flex-end'}
+        >
+          <Grid
+            container={true}
+            direction={'column'}
+            justify={'center'}
+            md={3}
+            item={true}
+          >
+            <ListItemText
+              className={classes.trackName}
+              primary={track.album.artists[0].name}
+            />
+            <ListItemText className={classes.trackName} primary={track.name} />
           </Grid>
+          <ListItemText primary={formatDuration(track.duration_ms)} />
+          <ListItemText
+            primary={
+              tracksWithFeature &&
+              'tempo ' + Math.round(tracksWithFeature.tempo)
+            }
+          />
+          {!disableRemoveTrack && (
+            <Button onClick={handleRemoveTrack(track.uri, track.track_number)}>
+              REMOVE
+            </Button>
+          )}
         </Grid>
-          {votingButton}
+      </Grid>
+      {votingButton}
     </ListItem>
   )
 }

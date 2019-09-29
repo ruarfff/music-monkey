@@ -1,18 +1,18 @@
 import { connect } from 'react-redux'
-import { getEvents } from '../event/eventActions'
-import IRootState from '../rootState'
-import { updateUserRequest } from '../user/userActions'
+import { getEvents } from 'event/eventActions'
+import IRootState from 'rootState'
+import { updateUserRequest } from 'user/userActions'
 import './accountStyles.scss'
 import AccountView from './AccountView'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  events: state.event.events,
+  events: state.event.events
 })
 
 const mapDispatchToProps = {
   updateUserRequest,
-  getEvents,
+  getEvents
 }
 
 const AccountViewContainer = connect(

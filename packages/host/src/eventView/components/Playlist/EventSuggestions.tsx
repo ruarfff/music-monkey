@@ -1,3 +1,4 @@
+import React from 'react'
 import { ListItemIcon } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -5,46 +6,18 @@ import Grid from '@material-ui/core/Grid/Grid'
 import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction/ListItemSecondaryAction'
-import { WithStyles } from '@material-ui/core/styles'
-import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import DoneAll from '@material-ui/icons/DoneAll'
-import classNames from 'classnames'
 import { isEmpty, uniqBy } from 'lodash'
-import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
-import IAction from '../../../IAction'
-import IPlaylist from '../../../playlist/IPlaylist'
-import IDecoratedSuggestion from '../../../suggestion/IDecoratedSuggestion'
-import ISuggestion from '../../../suggestion/ISuggestion'
-import ITrack from '../../../track/ITrack'
-import { formatDuration } from '../../../util/formatDuration'
-import './Styles/EventSuggestions.scss'
-
-const decorate = withStyles(() => ({
-  reject: {
-    background: '#EB5757',
-    color: 'white'
-  },
-  accept: {
-    background: '#27AE60',
-    color: 'white'
-  },
-  trackBand: {
-    padding: 0,
-    fontWeight: 800
-  },
-  trackName: {
-    padding: 0
-  },
-  listItem: {
-    borderBottom: '1px solid #979797'
-  },
-  listItemContent: {
-    maxWidth: '700px'
-  }
-}))
+import IAction from 'IAction'
+import IPlaylist from 'playlist/IPlaylist'
+import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import ISuggestion from 'suggestion/ISuggestion'
+import ITrack from 'track/ITrack'
+import formatDuration from 'util/formatDuration'
+import './EventSuggestions.scss'
 
 interface IEventSuggestionsProps extends RouteComponentProps<any> {
   suggestions: IDecoratedSuggestion[]
@@ -64,10 +37,10 @@ interface IEventSuggestionsState {
 }
 
 class EventSuggestions extends React.Component<
-  IEventSuggestionsProps & WithStyles,
+  IEventSuggestionsProps,
   IEventSuggestionsState
 > {
-  constructor(props: IEventSuggestionsProps & WithStyles) {
+  constructor(props: IEventSuggestionsProps) {
     super(props)
     this.state = { tracksBeingRemoved: {} } as IEventSuggestionsState
   }
@@ -133,76 +106,59 @@ class EventSuggestions extends React.Component<
     index: number
   ) => {
     const { track, user } = decoratedSuggestion
-    const { classes } = this.props
     let trackImage = <span />
     if (track.album && track.album.images && track.album.images.length > 0) {
       trackImage = (
         <ListItemIcon>
           <img
-            className="EventSuggestions-trackImage"
+            className="track-image"
             src={track.album.images[track.album.images.length - 1].url}
             alt={track.name}
           />
         </ListItemIcon>
       )
     }
-    let userAccountIcon = (
-      <AccountCircle className="EventSuggestions-avatar-small" />
-    )
+    let userAccountIcon = <AccountCircle className="avatar-small" />
     if (user.image) {
       userAccountIcon = (
-        <Avatar
-          alt={user.displayName}
-          src={user.image}
-          className="EventSuggestions-avatar"
-        />
+        <Avatar alt={user.displayName} src={user.image} className="avatar" />
       )
     }
 
     return (
       <Grid key={index}>
-        <ListItem className={classes.listItem} dense={true} button={true}>
+        <ListItem className="list-item" dense={true} button={true}>
           {trackImage}
-          <div className={'listItemContent'}>
-            <div className={'listItemTextBlock'}>
-              <div className={'listItemArtist'}>
-                <span className={classes.trackBand}>
+          <div className="list-item-content">
+            <div className="list-item-text-block">
+              <div className="list-item-track-info">
+                <span className="track-artist">
                   {track.album.artists[0].name}
                 </span>
-                <span>{track.name}</span>
+                <span className="track-name">{track.name}</span>
               </div>
-              <span className={'listItemDuration'}>
+              <span className="track-duration">
                 {formatDuration(track.duration_ms)}
               </span>
             </div>
             {track.preview_url ? (
-              <audio
-                src={track.preview_url}
-                controls={true}
-                className="EventSuggestions-audio"
-                preload="none"
-              />
+              <audio src={track.preview_url} controls={true} preload="none" />
             ) : (
-              <audio
-                src={''}
-                controls={true}
-                className="EventSuggestions-audio"
-                preload="none"
-              />
+              <audio src={''} controls={true} preload="none" />
             )}
           </div>
 
           {userAccountIcon}
           <ListItemSecondaryAction>
             <Button
-              className={classes.reject}
+              className="reject"
               variant="contained"
               onClick={this.handleSuggestionRejected(decoratedSuggestion)}
             >
               REJECT
             </Button>
             <Button
-              className={classes.accept}
+              className="accept"
               variant="contained"
               onClick={this.handleSavePlaylist([decoratedSuggestion])}
             >
@@ -213,17 +169,6 @@ class EventSuggestions extends React.Component<
       </Grid>
     )
   }
-
-  // private handleSuggestionAccepted = (
-  //   decoratedSuggestion: IDecoratedSuggestion
-  // ) => () => {
-  //   const { track, suggestion } = decoratedSuggestion
-  //   this.setState({ tracksBeingRemoved: track })
-  //   setTimeout(() => {
-  //     this.setState({ tracksBeingRemoved: {} as ITrack })
-  //     this.props.stageSuggestion(suggestion)
-  //   }, 700)
-  // }
 
   private handleSuggestionRejected = (
     decoratedSuggestion: IDecoratedSuggestion
@@ -236,27 +181,17 @@ class EventSuggestions extends React.Component<
     }, 700)
   }
 
-  // private handleAcceptAllClicked = (filteredSuggestions: IDecoratedSuggestion[]) => () => {
-  //   this.props.stageAllSuggestions(filteredSuggestions)
-  // }
-
   private renderAcceptButtons = (
     filteredSuggestions: IDecoratedSuggestion[]
   ) => {
     return (
       <div>
         <Button
-          className="EventSuggestions-button"
           variant="contained"
           color="primary"
           onClick={this.handleSavePlaylist(filteredSuggestions)}
         >
-          <DoneAll
-            className={classNames(
-              'EventSuggestions-leftIcon',
-              'EventSuggestions-iconSmall'
-            )}
-          />
+          <DoneAll className="left-icon icon-small" />
           Accept All{' '}
         </Button>
       </div>
@@ -264,4 +199,4 @@ class EventSuggestions extends React.Component<
   }
 }
 
-export default withRouter(decorate(EventSuggestions))
+export default withRouter(EventSuggestions)

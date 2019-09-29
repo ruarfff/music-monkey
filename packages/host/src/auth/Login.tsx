@@ -1,8 +1,8 @@
 import * as React from 'react'
-import logo from '../assets/logo-home.png'
-import IAction from '../IAction'
-import LoadingSpinner from '../loading/LoadingSpinner'
-import ErrorNotification from '../util/ErrorNotification'
+import logo from 'assets/logo-home.png'
+import IAction from 'IAction'
+import LoadingSpinner from 'loading/LoadingSpinner'
+import ErrorNotification from 'util/ErrorNotification'
 import IAuthState from './IAuthState'
 import './Login.scss'
 import spotifyLoginButtonImage from './spotify-login.svg'
@@ -55,16 +55,15 @@ class Login extends React.Component<ILoginProps, {}> {
                 </a>
               </div>
 
-              {authError &&
-                authError.errorContext === 'host-login' && (
-                  <ErrorNotification
-                    message={
-                      (authError.response && authError.response.data) ||
-                      authError.message
-                    }
-                    onClose={this.handleErrorAcknowledged}
-                  />
-                )}
+              {authError && authError.errorContext === 'host-login' && (
+                <ErrorNotification
+                  message={
+                    (authError.response && authError.response.data) ||
+                    authError.message
+                  }
+                  onClose={this.handleErrorAcknowledged}
+                />
+              )}
             </div>
           </div>
         </div>

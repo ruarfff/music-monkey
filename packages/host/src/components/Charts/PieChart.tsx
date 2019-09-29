@@ -7,9 +7,9 @@ import Typography from '@material-ui/core/Typography'
 import _ from 'lodash'
 import * as React from 'react'
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts'
-import IEvent from '../../event/IEvent'
-import IAction from '../../IAction'
-import IRsvp from '../../rsvp/IRsvp'
+import IEvent from 'event/IEvent'
+import IAction from 'IAction'
+import IRsvp from 'rsvp/IRsvp'
 
 const decorate = withStyles(() => ({
   title: {
@@ -64,9 +64,11 @@ class PieChartWidget extends React.Component<
             id="simple-menu"
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
-            onClose={this.handleClose({eventId: 'all'} as IEvent)}
+            onClose={this.handleClose({ eventId: 'all' } as IEvent)}
           >
-            <MenuItem onClick={this.handleClose({eventId: 'all'} as IEvent)}>All</MenuItem>
+            <MenuItem onClick={this.handleClose({ eventId: 'all' } as IEvent)}>
+              All
+            </MenuItem>
             {events.map(
               (event, i) =>
                 event.eventId && (

@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { FETCH_USER_SUCCESS } from '../user/userActions'
+import { FETCH_USER_SUCCESS } from 'user/userActions'
 import {
   LOGGED_OUT,
   LOGGING_IN,

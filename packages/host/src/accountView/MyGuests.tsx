@@ -2,8 +2,8 @@ import Avatar from '@material-ui/core/Avatar/Avatar'
 import { AccountCircle } from '@material-ui/icons'
 import { flattenDeep, uniqBy } from 'lodash'
 import * as React from 'react'
-import IEvent from '../event/IEvent'
-import IEventGuest from '../event/IEventGuest'
+import IEvent from 'event/IEvent'
+import IEventGuest from 'event/IEventGuest'
 
 interface IMyGuestsProps {
   events: IEvent[]

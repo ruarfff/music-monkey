@@ -15,7 +15,6 @@ import SharePopup from '../../../components/ShareEvent/SharePopup'
 import IEvent from '../../../event/IEvent'
 import IEventGuest from '../../../event/IEventGuest'
 import IAction from '../../../IAction'
-import '../Playlist/Styles/EventSuggestions.scss'
 
 const decorated = withStyle(() => ({
   filter: {

@@ -4,9 +4,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import * as React from 'react'
-import IAction from '../../IAction'
-import ITrack from '../../track/ITrack'
-import { formatDuration } from '../../util/formatDuration'
+import IAction from 'IAction'
+import ITrack from 'track/ITrack'
+import formatDuration from 'util/formatDuration'
 
 interface ITrackItemProps {
   track: ITrack
@@ -23,13 +23,11 @@ const decorate = withStyles(() => ({
     color: 'white'
   },
   listItem: {
-    borderBottom: '1px solid #979797',
-  },
+    borderBottom: '1px solid #979797'
+  }
 }))
 
-class TrackItem extends React.PureComponent<
-  ITrackItemProps & WithStyles
-  > {
+class TrackItem extends React.PureComponent<ITrackItemProps & WithStyles> {
   public state = {
     searchQuery: ''
   }
@@ -50,31 +48,25 @@ class TrackItem extends React.PureComponent<
     }
 
     return (
-      <ListItem
-        className={classes.listItem}
-        dense={true}
-        button={true}
-      >
+      <ListItem className={classes.listItem} dense={true} button={true}>
         {trackImage}
-        <div className={
-          layout === 'column' ?
-          'listItemContent-column listItemContent' :
-          'listItemContent'
-        }>
-          <div className='trackLeftContent'>
-            <div className='trackNameContainer'>
-            <span className='trackBand'>
-              {track.album.artists[0].name}
-            </span>
-              <span className='trackName'>
-              {track.name}
-            </span>
+        <div
+          className={
+            layout === 'column'
+              ? 'listItemContent-column listItemContent'
+              : 'listItemContent'
+          }
+        >
+          <div className="trackLeftContent">
+            <div className="trackNameContainer">
+              <span className="trackBand">{track.album.artists[0].name}</span>
+              <span className="trackName">{track.name}</span>
             </div>
-            <div className='trackDuration'>
+            <div className="trackDuration">
               {formatDuration(track.duration_ms)}
             </div>
           </div>
-          <div className='trackContainer'>
+          <div className="trackContainer">
             <audio
               src={track.preview_url ? track.preview_url : ''}
               controls={true}
@@ -83,19 +75,17 @@ class TrackItem extends React.PureComponent<
             />
           </div>
         </div>
-        {
-          !disableAddButton && (
-            <ListItemSecondaryAction>
-              <Button
-                className={classes.accept}
-                variant="contained"
-                onClick={this.handleAddTrack(track)}
-              >
-                ADD
-              </Button>
-            </ListItemSecondaryAction>
-          )
-        }
+        {!disableAddButton && (
+          <ListItemSecondaryAction>
+            <Button
+              className={classes.accept}
+              variant="contained"
+              onClick={this.handleAddTrack(track)}
+            >
+              ADD
+            </Button>
+          </ListItemSecondaryAction>
+        )}
       </ListItem>
     )
   }

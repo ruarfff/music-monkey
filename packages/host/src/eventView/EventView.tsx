@@ -104,7 +104,7 @@ class EventView extends React.Component<
     const shouldShowEvent: boolean = !loading && !isEmpty(event)
 
     return (
-      <div className="eventViewWrapper">
+      <div className="EventView-root">
         {loading && <LoadingSpinner />}
         {loading && !isEmpty(error) && (
           <EventFetchError onTryAgain={this.handleGetEvent} />

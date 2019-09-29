@@ -12,7 +12,6 @@ import SharePopup from '../../../components/ShareEvent/SharePopup'
 import IEvent from '../../../event/IEvent'
 import IEventGuest from '../../../event/IEventGuest'
 import IAction from '../../../IAction'
-import '../Playlist/Styles/EventSuggestions.scss'
 
 const decorated = withStyle(() => ({
   noAvatar: {
@@ -26,13 +25,13 @@ const decorated = withStyle(() => ({
     marginBottom: '20px'
   },
   guestName: {
-    width: '100%',
+    width: '100%'
   },
   guestWrapper: {
     width: '70px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   }
 }))
 
@@ -76,7 +75,7 @@ class EventGuestsRightSideView extends React.PureComponent<
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={!!this.props.message}
           ContentProps={{
-            'aria-describedby': 'message-id',
+            'aria-describedby': 'message-id'
           }}
           message={<span id="message-id">{this.props.message}</span>}
           action={
@@ -118,7 +117,6 @@ class EventGuestsRightSideView extends React.PureComponent<
               )}
             </Grid>
           </Grid>
-
         </Grid>
       </div>
     )
@@ -128,7 +126,11 @@ class EventGuestsRightSideView extends React.PureComponent<
     this.props.clearMessage()
   }
 
-  private renderEventGuest = (eventGuest: IEventGuest, classes: any, index: number) => {
+  private renderEventGuest = (
+    eventGuest: IEventGuest,
+    classes: any,
+    index: number
+  ) => {
     const { user } = eventGuest
     const name = !user.displayName
       ? user.isGuest
@@ -143,11 +145,14 @@ class EventGuestsRightSideView extends React.PureComponent<
         key={index}
         direction={'column'}
       >
-        {user.image ?
-          <Avatar alt={user.displayName} src={user.image} /> :
+        {user.image ? (
+          <Avatar alt={user.displayName} src={user.image} />
+        ) : (
           <AccountCircle className={classes.noAvatar} />
-        }
-        <Typography className={classes.guestName} align={'center'}>{name}</Typography>
+        )}
+        <Typography className={classes.guestName} align={'center'}>
+          {name}
+        </Typography>
       </Grid>
     )
   }

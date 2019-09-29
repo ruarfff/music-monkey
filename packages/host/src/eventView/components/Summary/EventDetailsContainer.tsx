@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import IRootState from '../../../rootState'
+import IRootState from 'rootState'
 import EventDetails from './EventDetails'
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.eventView.event
 })
 
-const mapDispatchToProps = {  }
+const mapDispatchToProps = {}
 
 const EventDetailsContainer = connect(
   mapStateToProps,

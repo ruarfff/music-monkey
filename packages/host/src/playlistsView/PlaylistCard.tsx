@@ -6,8 +6,8 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import IPlaylist from '../playlist/IPlaylist'
-import { formatDuration } from '../util/formatDuration'
+import IPlaylist from 'playlist/IPlaylist'
+import formatDuration from 'util/formatDuration'
 
 const decorate = withStyles((theme: Theme) => ({
   card: {
@@ -20,10 +20,10 @@ const decorate = withStyles((theme: Theme) => ({
   title: {
     marginBottom: 24,
     fontSize: '20px',
-    lineHeight: '23px',
+    lineHeight: '23px'
   },
   link: {
-    textDecoration: 'none',
+    textDecoration: 'none'
   },
   eventDescription: {
     color: '#979797',
@@ -43,7 +43,7 @@ const decorate = withStyles((theme: Theme) => ({
     padding: '15px 25px',
     height: 'calc(100% - 250px)',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   trackLength: {
     display: 'flex',
@@ -56,49 +56,43 @@ interface IEventBigCardProps {
   playlist: IPlaylist
 }
 
-class PlaylistCard extends React.Component<
-  IEventBigCardProps & WithStyles> {
-
+class PlaylistCard extends React.Component<IEventBigCardProps & WithStyles> {
   public render() {
     const { classes, playlist, eventId } = this.props
 
     const durationSeconds =
       playlist.tracks.items.length > 0
         ? playlist.tracks.items
-        .map(item => item.track.duration_ms)
-        .reduce((acc, dur) => acc + dur)
+            .map(item => item.track.duration_ms)
+            .reduce((acc, dur) => acc + dur)
         : 0
 
     const image =
-      playlist.images && playlist.images.length ? playlist.images[0].url : '/img/partycover-sm.png'
+      playlist.images && playlist.images.length
+        ? playlist.images[0].url
+        : '/img/partycover-sm.png'
 
     return (
       <Card className={classes.card}>
         <div className={classes.imgContainer}>
-          <img className={classes.img} src={image} alt=""/>
+          <img className={classes.img} src={image} alt="" />
         </div>
-        <Grid container={true} direction='column' justify='space-between' className={classes.cardContent}>
-          <Typography className={classes.title}>
-            {playlist.name}
-          </Typography>
+        <Grid
+          container={true}
+          direction="column"
+          justify="space-between"
+          className={classes.cardContent}
+        >
+          <Typography className={classes.title}>{playlist.name}</Typography>
           <div className={classes.trackLength}>
-            <Typography>
-              {playlist.tracks.total + ' Tracks'}
-            </Typography>
-            <Typography>
-              {formatDuration(durationSeconds)}
-            </Typography>
+            <Typography>{playlist.tracks.total + ' Tracks'}</Typography>
+            <Typography>{formatDuration(durationSeconds)}</Typography>
           </div>
           <div>
             <Link to={`/events/${eventId}/edit`} className={classes.link}>
-              <Button
-                color='secondary'
-              >
-                EDIT EVENT
-              </Button>
+              <Button color="secondary">EDIT EVENT</Button>
             </Link>
           </div>
-
         </Grid>
       </Card>
     )

@@ -1,9 +1,9 @@
 import Button from '@material-ui/core/Button/Button'
 import * as React from 'react'
-import EventInput from '../../../components/EventInput/EventInput'
-import IAction from '../../../IAction'
-import IPlaylist from '../../../playlist/IPlaylist'
-import './Styles/EditPlaylistPopup.scss'
+import EventInput from 'components/EventInput/EventInput'
+import IAction from 'IAction'
+import IPlaylist from 'playlist/IPlaylist'
+import './EditPlaylistPopup.scss'
 
 interface IEditPlaylistPopupProps {
   playlist: IPlaylist
@@ -44,37 +44,31 @@ class EditPlaylistPopup extends React.PureComponent<IEditPlaylistPopupProps> {
   public render() {
     const { name, description } = this.state
     return (
-      <div className='editPlaylistPopupWrapper'>
-        <div className='editPlaylistPopupContainer'>
-          <EventInput
-            label='Playlist name'
-            error={!name}
-            errorLabel={'Name is required'}
-            value={name}
-            onChange={this.handleInputChange('name')}
-          />
-          <EventInput
-            label='Playlist description'
-            value={description}
-            errorLabel={'Description is required'}
-            error={!description}
-            onChange={this.handleInputChange('description')}
-          />
-          <Button
-            color={'default'}
-            variant={'contained'}
-            onClick={this.handleCancel}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={this.handleEditPlaylist}
-            color={'secondary'}
-            variant={'contained'}
-          >
-            Edit
-          </Button>
-        </div>
+      <div className="EditPlaylistPopup-root">
+        <EventInput
+          label="Playlist name"
+          error={!name}
+          errorLabel="Name is required"
+          value={name}
+          onChange={this.handleInputChange('name')}
+        />
+        <EventInput
+          label="Playlist description"
+          value={description}
+          errorLabel="Description is required"
+          error={!description}
+          onChange={this.handleInputChange('description')}
+        />
+        <Button color="default" variant="contained" onClick={this.handleCancel}>
+          Cancel
+        </Button>
+        <Button
+          onClick={this.handleEditPlaylist}
+          color="secondary"
+          variant="contained"
+        >
+          Edit
+        </Button>
       </div>
     )
   }

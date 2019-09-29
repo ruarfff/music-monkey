@@ -1,8 +1,7 @@
-.EventView-title {
-  padding-left: 1em;
-}
-
-.eventViewWrapper {
+.EventView-root {
   height: 100%;
   margin-left: -10px;
+  .EventView-title {
+    padding-left: 1em;
+  }
 }
