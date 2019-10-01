@@ -1,16 +1,17 @@
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography/Typography'
-import * as React from 'react'
 import PieChartWidget from './PieChart'
-import MostPopularTracks from 'components/TraksStatistic/MostPopularTracks'
-import MostVotedTracks from 'components/TraksStatistic/MostVotedTracks'
+import MostPopularTracks from 'insights/MostPopularTracks'
+import MostVotedTracks from 'insights/MostVotedTracks'
 import IEvent from 'event/IEvent'
 import IAction from 'IAction'
 import IPlaylist from 'playlist/IPlaylist'
 import IUser from 'user/IUser'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
+import './Insights.scss'
 
-interface IInsightsViewProps {
+interface IInsightsProps {
   user: IUser
   events: IEvent[]
   pickedEvent: string
@@ -26,7 +27,7 @@ interface IInsightsViewProps {
   fetchEventVotes(eventId: string): IAction
 }
 
-class InsightsView extends React.Component<IInsightsViewProps> {
+class Insights extends React.Component<IInsightsProps> {
   public componentDidMount() {
     this.props.getEvents()
     if (this.props.user) {
@@ -77,4 +78,4 @@ class InsightsView extends React.Component<IInsightsViewProps> {
   }
 }
 
-export default InsightsView
+export default Insights

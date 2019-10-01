@@ -3,11 +3,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Paper from '@material-ui/core/Paper'
 import { isEmpty } from 'lodash'
 import * as React from 'react'
-import IEvent from '../../event/IEvent'
-import IAction from '../../IAction'
-import IPlaylist from '../../playlist/IPlaylist'
-import IPlaylistItem from '../../playlist/IPlaylistItem'
-import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
+import IAction from 'IAction'
+import IEvent from 'event/IEvent'
+import IPlaylist from 'playlist/IPlaylist'
+import IPlaylistItem from 'playlist/IPlaylistItem'
+import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import './MostPopularTracks.scss'
 
 interface IMostPopularTracksProps {
@@ -69,7 +69,7 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
     )
 
     return (
-      <Paper>
+      <Paper className="MostPopularTracks-root">
         <span className="title">Most Voted Tracks</span>
         <span
           aria-owns={anchorEl ? 'simple-menu' : undefined}

@@ -1,8 +1,8 @@
 import Paper from '@material-ui/core/Paper'
 import * as _ from 'lodash'
 import * as React from 'react'
-import IEvent from '../../event/IEvent'
-import ITrack from '../../track/ITrack'
+import IEvent from '../event/IEvent'
+import ITrack from '../track/ITrack'
 import './MostPopularTracks.scss'
 
 interface IMostPopularTracksProps {
@@ -28,8 +28,8 @@ class MostPopularTracks extends React.Component<IMostPopularTracksProps> {
     )
 
     return (
-      <Paper>
-        <span className={'title'}>Most Popular Tracks</span>
+      <Paper className="MostPopularTracks-root">
+        <span className="title">Most Popular Tracks</span>
         <div className="listWrapper">
           {popularTracks &&
             popularTracks
@@ -37,16 +37,16 @@ class MostPopularTracks extends React.Component<IMostPopularTracksProps> {
               .slice(0, 5)
               .map((track: ITrack | undefined, i) => {
                 return track ? (
-                  <div key={i} className={'listItem'}>
-                    <div className={'imgSection'}>
+                  <div key={i} className="listItem">
+                    <div className="imgSection">
                       <img
                         alt="track"
-                        className={'trackImg'}
+                        className="trackImg"
                         src={track.album.images[0].url}
                       />
                     </div>
-                    <div className={'trackNumber'}>{i + 1 + '. '}</div>
-                    <div className={'nameSection'}>
+                    <div className="trackNumber">{i + 1 + '. '}</div>
+                    <div className="nameSection">
                       <span>{track.name}</span>
                       <span className="artistName">
                         {track.album.artists[0].name}
