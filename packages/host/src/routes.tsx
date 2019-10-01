@@ -5,15 +5,16 @@ import { Route } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 
-import AccountViewContainer from './accountView/AccountViewContainer'
-import Login from './auth/LoginContainer'
-import CreateEvent from './event/eventCreation/CreateEventContainer'
-import EventsContainer from './event/eventsView/EventsViewContainer'
-import EventView from './event/eventView/EventViewContainer'
-import Home from './home/HomeContainer'
-import InsightsContainer from './insights/InsightsContainer'
-import PlaylistsContainer from './playlistsView/PlaylistsViewContainer'
-import IRootState from './rootState'
+import IRootState from 'rootState'
+import AccountViewContainer from 'accountView/AccountViewContainer'
+import Login from 'auth/LoginContainer'
+import CreateEvent from 'event/eventCreation/CreateEventContainer'
+import SaveEvent from 'event/saveEvent/SaveEvent'
+import EventsContainer from 'event/eventsView/EventsViewContainer'
+import EventView from 'event/eventView/EventViewContainer'
+import Home from 'home/HomeContainer'
+import InsightsContainer from 'insights/InsightsContainer'
+import PlaylistsContainer from 'playlistsView/PlaylistsViewContainer'
 
 const locationHelper = locationHelperBuilder({})
 
@@ -42,6 +43,10 @@ const routes = [
         component: CreateEvent,
         exact: true,
         path: '/create-event'
+      },
+      {
+        component: SaveEvent,
+        path: '/save-event'
       },
       {
         component: EventView,

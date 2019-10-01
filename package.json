@@ -23,6 +23,8 @@
     "classnames": "2.2.6",
     "connected-react-router": "6.5.2",
     "date-fns": "^2.0.0-beta.5",
+    "formik": "^2.0.1-rc.13",
+    "formik-material-ui": "^0.0.22",
     "guest": "file:packages/guest",
     "host": "file:packages/host",
     "lodash": "4.17.11",
@@ -51,10 +53,13 @@
     "sweetalert": "^2.1.2",
     "sweetalert2": "^8.11.1",
     "sweetalert2-react-content": "^1.0.1",
-    "uuid": "3.3.2"
+    "uuid": "3.3.2",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "@material-ui/codemod": "^1.0.0-rc.0",
+    "@testing-library/jest-dom": "^4.1.0",
+    "@testing-library/react": "^9.2.0",
     "@types/autosuggest-highlight": "^3.1.0",
     "@types/classnames": "^2.2.3",
     "@types/dropzone": "^5.0.2",
