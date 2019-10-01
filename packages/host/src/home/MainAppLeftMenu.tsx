@@ -1,12 +1,12 @@
 import List from '@material-ui/core/List'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import EventIcon from '../../assets/event-icon.svg'
-import settingsIcon from '../../assets/gear-icon.svg'
-import HomeIcon from '../../assets/home-icon.svg'
-import insightsIcon from '../../assets/insights-icon.svg'
-import logo from '../../assets/logo-home.png'
-import playlistIcon from '../../assets/playlist-icon.svg'
+import EventIcon from 'assets/event-icon.svg'
+import settingsIcon from 'assets/gear-icon.svg'
+import HomeIcon from 'assets/home-icon.svg'
+import insightsIcon from 'assets/insights-icon.svg'
+import logo from 'assets/logo-home.png'
+import playlistIcon from 'assets/playlist-icon.svg'
 import LeftMenuItem from './LeftMenuItem'
 
 interface IMainAppLeftMenuProps {

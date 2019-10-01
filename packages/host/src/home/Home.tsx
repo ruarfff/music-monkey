@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash'
 import * as React from 'react'
 import { Route, RouteComponentProps } from 'react-router'
-import MainAppLeftMenu from '../components/LeftMenu/MainAppLeftMenu'
+import MainAppLeftMenu from './MainAppLeftMenu'
 import Events from '../event/EventsContainer'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import { RouteWithSubRoutes } from '../routes'

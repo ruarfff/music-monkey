@@ -1,3 +1,4 @@
+import React from 'react'
 import Collapse from '@material-ui/core/Collapse'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -7,7 +8,6 @@ import { withStyles, WithStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-import * as React from 'react'
 import { Link } from 'react-router-dom'
 
 const decorate = withStyles(() => ({

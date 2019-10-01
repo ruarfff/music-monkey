@@ -1,5 +1,5 @@
 import { Moment } from 'moment'
-import ILocation from 'components/location/ILocation'
+import ILocation from 'location/ILocation'
 import IPlaylist from 'playlist/IPlaylist'
 import IEventGuest from './IEventGuest'
 import IEventSettings from './IEventSettings'

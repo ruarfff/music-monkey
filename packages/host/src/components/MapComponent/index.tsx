@@ -1,6 +1,6 @@
 import GoogleMapReact from 'google-map-react'
 import * as React from 'react'
-import { ILatLng } from '../location/ILocation'
+import { ILatLng } from '../../location/ILocation'
 import './MapComponent.scss'
 import Marker from './Marker'
 
