@@ -1,8 +1,8 @@
+import React from 'react'
 import GoogleMapReact from 'google-map-react'
-import * as React from 'react'
-import { ILatLng } from '../../location/ILocation'
+import ILatLng from './ILatLng'
+import mapMarker from 'assets/location-marker-icon.svg'
 import './MapComponent.scss'
-import Marker from './Marker'
 
 interface IMapComponentProps {
   coords?: ILatLng
@@ -17,12 +17,7 @@ const MapComponent: React.SFC<IMapComponentProps> = props => {
         center={coords}
         defaultZoom={18}
       >
-        {coords &&
-          <Marker
-            lat={coords.lat}
-            lng={coords.lng}
-          />
-        }
+        {coords && <img alt="map marker" src={mapMarker} />}
       </GoogleMapReact>
     </div>
   )
