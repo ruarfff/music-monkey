@@ -1,3 +1,5 @@
+@import 'theme/main';
+
 .MostPopularTracks-root {
   .title {
     display: inline-block;
@@ -8,7 +10,7 @@
   .listItem {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #979797;
+    border-bottom: 1px solid $light-grey;
     padding: 10px;
     margin: 0 5px;
   }
@@ -34,7 +36,7 @@
 
     .artistName {
       font-size: 16px;
-      color: #979797;
+      color: $light-grey;
     }
   }
 

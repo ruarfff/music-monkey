@@ -1,72 +1,73 @@
-.Login {
-  background-color: #fafafa;
-  width: 420px;
-  height: 620px;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
+@import 'theme/main';
 
-.Login-logo {
-  width: 290px;
-}
-
-.Login-overlay {
-  background-color: rgba(81, 89, 166, 0.48);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.Login-background {
+.Login-root {
   background-position-y: center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
   background-image: url('../assets/club.png');
-}
 
-.Login-logo-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 44px;
-  height: 100px;
-}
+  .Login {
+    background-color: $mm-white;
+    width: 420px;
+    height: 620px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.Login-text-section {
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Roboto', 'sans-serif';
-}
+  .Login-logo {
+    width: 290px;
+  }
 
-.Login-title {
-  font-size: 30px;
-  line-height: 20px;
-  text-align: center;
-  font-weight: 400;
-  letter-spacing: 0.25px;
-}
+  .Login-overlay {
+    background-color: $grey-tint;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.Login-subtitle {
-  font-size: 18px;
-  line-height: 20px;
-  text-align: center;
-  letter-spacing: 0.25px;
-  font-weight: 400;
-}
+  .Login-logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 44px;
+    height: 100px;
+  }
 
-.Login-content {
-  text-align: center;
-  margin-top: 4em;
-}
+  .Login-text-section {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.Login-spotify-button {
-  margin-bottom: 8em;
+  .Login-title {
+    font-size: 30px;
+    line-height: 20px;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+  }
+
+  .Login-subtitle {
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: 0.25px;
+    font-weight: 400;
+  }
+
+  .Login-content {
+    text-align: center;
+    margin-top: 4em;
+  }
+
+  .Login-spotify-button {
+    margin-bottom: 8em;
+  }
 }

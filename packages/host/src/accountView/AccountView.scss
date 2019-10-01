@@ -6,7 +6,7 @@
     border-bottom: 1px solid $purple-tint;
 
     .tab-bar-item {
-      background: $main-background;
+      background: $mm-white;
       box-shadow: none;
     }
   }
@@ -14,7 +14,7 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    background: $main-background;
+    background: $mm-white;
     overflow-y: scroll;
     height: 100vh;
     justify-content: space-around;

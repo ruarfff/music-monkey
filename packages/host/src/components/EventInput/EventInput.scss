@@ -1,3 +1,5 @@
+@import 'theme/main';
+
 .EventInput-root {
   margin: 0;
 
@@ -10,13 +12,13 @@
   }
 
   .EventInput-input {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: $light-grey;
     border-radius: 0.25rem;
-    border: 1px solid #979797;
+    border: 1px solid $light-grey;
     padding-left: 1rem;
     min-height: 2.5rem;
     &:hover:not($disabled):before {
-      border-bottom: 1px solid #979797 !important;
+      border-bottom: 1px solid $light-grey !important;
     }
     &:before {
       content: none;
@@ -27,15 +29,15 @@
   }
 
   .EventInput-text-area {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: $light-grey;
     border-radius: 0.25rem;
-    border: 1px solid #979797;
+    border: 1px solid $light-grey;
     padding-left: 1rem;
     align-items: flex-start;
     display: flex;
     min-height: 6.25rem;
     &:hover:not($disabled):before {
-      border-bottom: 1px solid #979797 !important;
+      border-bottom: 1px solid $light-grey !important;
     }
     &:before {
       content: none;

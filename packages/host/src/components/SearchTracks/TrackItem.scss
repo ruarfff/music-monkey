@@ -1,9 +1,11 @@
+@import 'theme/main';
+
 .TrackItem-root {
-  border-bottom: 1px solid #979797;
+  border-bottom: 1px solid $light-grey;
 
   .accept-track {
-    background: #27ae60;
-    color: white;
+    background: $bright-green;
+    color: $mm-white;
   }
 
   .track-image {

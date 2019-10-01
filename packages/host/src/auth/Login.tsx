@@ -4,8 +4,8 @@ import IAction from 'IAction'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import ErrorNotification from 'util/ErrorNotification'
 import IAuthState from './IAuthState'
+import spotifyLoginButtonImage from 'assets/spotify-login.svg'
 import './Login.scss'
-import spotifyLoginButtonImage from './spotify-login.svg'
 
 const serviceUrl = process.env.REACT_APP_MM_API_URL
 const authSuffix = process.env.REACT_APP_AUTH_SUFFIX
@@ -30,7 +30,7 @@ class Login extends React.Component<ILoginProps, {}> {
     const spotifyLoginUrl = serviceUrl + '/auth/spotify-host' + authSuffix
 
     return (
-      <div className="Login-background">
+      <div className="Login-root">
         <div className="Login-overlay">
           <div className="Login">
             <div className="Login-logo-section">

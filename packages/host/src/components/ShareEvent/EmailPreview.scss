@@ -1,3 +1,5 @@
+@import 'theme/main';
+
 .emailPreviewContainer {
   height: 410px;
   margin: 0 auto;
@@ -5,8 +7,8 @@
   width: 100%;
 
   .TopLine {
-    color: white;
-    background: #ffb000;
+    color: $mm-white;
+    background: $secondary-main;
     height: 45px;
     display: flex;
     align-items: center;
@@ -14,7 +16,7 @@
   }
 
   .emailPreviewContent {
-    background: rgba(0, 0, 0, 0.4);
+    background: $black;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,7 +32,7 @@
 
     .emailPreviewEventName {
       font-size: 26px;
-      color: white;
+      color: $mm-white;
     }
 
     .emailPreviewDateWrapper {
@@ -40,8 +42,8 @@
       overflow: hidden;
 
       .emailPreviewDateTop {
-        background: #3AABD1;
-        color: white;
+        background: $secondary-light;
+        color: $mm-white;
         font-size: 14px;
         height: 45px;
         display: flex;
@@ -50,8 +52,8 @@
       }
 
       .emailPreviewDateBot {
-        background: white;
-        color: black;
+        background: $mm-white;
+        color: $black;
         font-size: 14px;
         height: 45px;
         display: flex;
@@ -61,14 +63,14 @@
     }
 
     .emailPreviewText {
-      color: white;
+      color: $mm-white;
       font-size: 14px;
       max-width: 300px;
       word-wrap: break-word;
     }
 
     .emailPreviewLink {
-      color: white;
+      color: $mm-white;
       text-decoration: underline;
       font-size: 14px;
     }

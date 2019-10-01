@@ -1,3 +1,5 @@
+@import 'theme/main';
+
 .SharePopupWrapper {
   position: fixed;
   z-index: 10000;
@@ -8,11 +10,11 @@
   align-items: center;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: $black;
 
   .SharePopupContainer {
     padding: 20px;
-    background: white;
+    background: $mm-white;
     border-radius: 5px;
   }
 
