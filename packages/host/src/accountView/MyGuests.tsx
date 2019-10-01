@@ -1,7 +1,7 @@
+import React from 'react'
 import Avatar from '@material-ui/core/Avatar/Avatar'
 import { AccountCircle } from '@material-ui/icons'
 import { flattenDeep, uniqBy } from 'lodash'
-import * as React from 'react'
 import IEvent from 'event/IEvent'
 import IEventGuest from 'event/IEventGuest'
 
@@ -11,7 +11,7 @@ interface IMyGuestsProps {
 
 const renderGuests = (guest: IEventGuest, key: number) => {
   return (
-    <div key={key} className="guestWrapper">
+    <div key={key} className="guest">
       {guest.user.image && (
         <Avatar alt={guest.user.displayName} src={guest.user.image} />
       )}
@@ -30,7 +30,7 @@ export default ({ events }: IMyGuestsProps) => {
   const uniqueGuests: IEventGuest[] = uniqBy<IEventGuest>(guests, 'userId')
 
   return (
-    <div className="guestsContainer">
+    <div className="MyGuests-root">
       {uniqueGuests.length > 0 ? (
         uniqueGuests.map((guest: IEventGuest, key: number) => {
           if (guest) {

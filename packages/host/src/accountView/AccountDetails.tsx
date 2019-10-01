@@ -1,11 +1,12 @@
+import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { WithStyles } from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography'
-import _ from 'lodash'
-import * as React from 'react'
+import isEqual from 'lodash/isEqual'
+import omit from 'lodash/omit'
 import emailIcon from 'assets/email-icon.svg'
 import facebookIcon from 'assets/facebook.svg'
 import instagramIcon from 'assets/instagram-icom.svg'
@@ -72,7 +73,7 @@ class AccountDetails extends React.Component<
   }
 
   public componentWillReceiveProps(newProps: IAccountDetailsProps) {
-    if (_.isEqual(newProps.user, this.props.user)) {
+    if (isEqual(newProps.user, this.props.user)) {
       this.setState({
         email: this.props.user.email,
         phone: this.props.user.phone,
@@ -91,10 +92,9 @@ class AccountDetails extends React.Component<
     const { isEdit, showAvatarEditor } = this.state
     const { user, classes } = this.props
     return (
-      <React.Fragment>
+      <>
         {showAvatarEditor && (
           <EditAvatar
-            // uploadAvatar={uploadAvatar}
             toggleEditAvatarModal={this.toggleEditAvatarModal}
             url={user.image}
           />
@@ -251,7 +251,7 @@ class AccountDetails extends React.Component<
             </Button>
           )}
         </Grid>
-      </React.Fragment>
+      </>
     )
   }
 
@@ -259,7 +259,7 @@ class AccountDetails extends React.Component<
     if (this.state.isEdit) {
       const updatedUser = {
         ...this.props.user,
-        ..._.omit(this.state, ['isEdit', 'showAvatarEditor'])
+        ...omit(this.state, ['isEdit', 'showAvatarEditor'])
       }
 
       this.props.updateUserRequest(updatedUser)

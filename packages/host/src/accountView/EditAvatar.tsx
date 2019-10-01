@@ -1,33 +1,26 @@
+import React from 'react'
 import Button from '@material-ui/core/Button'
-import withStyles from '@material-ui/core/styles/withStyles'
-import { WithStyles } from '@material-ui/core/styles/withStyles'
-import * as React from 'react'
 import AvatarEditor from 'react-avatar-editor'
-// import IAction from '../IAction'
-
-const decorate = withStyles(() => ({
-
-}))
+import './EditAvatar.scss'
 
 interface IEditAvatarProps {
-  url: string,
-  // uploadAvatar(payload: any): IAction
+  url: string
+
   toggleEditAvatarModal(): void
 }
 
-class EditAvatar extends React.Component<IEditAvatarProps & WithStyles> {
-
+class EditAvatar extends React.Component<IEditAvatarProps> {
   public state = {
     newUrl: this.props.url,
-    zoom: 1,
+    zoom: 1
   }
 
   public editorRef: any
 
   public render() {
     return (
-      <div className='avatarEditWrapper'>
-        <div className='avatarEditContainer'>
+      <div className="EditAvatar-root">
+        <div className="avatarEditContainer">
           <AvatarEditor
             ref={this.setEditorRef}
             width={110}
@@ -38,16 +31,35 @@ class EditAvatar extends React.Component<IEditAvatarProps & WithStyles> {
             rotate={0}
             image={this.state.newUrl}
           />
-          <div className='avatarControls'>
-            <input type='file' onChange={this.setFile}/>
+          <div className="avatarControls">
+            <input type="file" onChange={this.setFile} />
 
             <div>
               <span>zoom</span>
-              <input name='zoom' type='range' min='0.1' max='2' step='0.1' onChange={this.setZoom}/>
+              <input
+                name="zoom"
+                type="range"
+                min="0.1"
+                max="2"
+                step="0.1"
+                onChange={this.setZoom}
+              />
             </div>
             <div>
-              <Button variant='contained' color='primary' onClick={this.onClickSave}>Save</Button>
-              <Button variant='contained' color='secondary' onClick={this.onClickCancel}>Cancel</Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.onClickSave}
+              >
+                Save
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={this.onClickCancel}
+              >
+                Cancel
+              </Button>
             </div>
           </div>
         </div>
@@ -71,16 +83,16 @@ class EditAvatar extends React.Component<IEditAvatarProps & WithStyles> {
   private setFile = (event: any) => {
     const fr = new FileReader()
     fr.onload = (e: any) => {
-      this.setState({newUrl: e.target.result})
+      this.setState({ newUrl: e.target.result })
     }
     fr.readAsDataURL(event.target.files[0])
   }
 
   private setZoom = (e: any) => {
-    this.setState({zoom: e.target.value})
+    this.setState({ zoom: e.target.value })
   }
 
-  private setEditorRef = (editorRef: any) => this.editorRef = editorRef
+  private setEditorRef = (editorRef: any) => (this.editorRef = editorRef)
 }
 
-export default decorate(EditAvatar)
+export default EditAvatar

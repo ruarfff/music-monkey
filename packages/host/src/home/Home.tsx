@@ -25,11 +25,15 @@ const Home = ({
   routes
 }: IHomeProps) => (
   <div className="Home-root">
-    <MainAppLeftMenu path={locationPath} />
+    <nav>
+      <MainAppLeftMenu path={locationPath} />
+    </nav>
     <div className="Home-right-side">
       {!isEmpty(user) && (
-        <React.Fragment>
-          <MainAppBar />
+        <>
+          <header>
+            <MainAppBar />
+          </header>
           <main className="Home-content">
             <div className="Home-toolbar" />
             <Route exact={true} path="/" component={Events} />
@@ -37,7 +41,7 @@ const Home = ({
               <RouteWithSubRoutes key={i} {...route} />
             ))}
           </main>
-        </React.Fragment>
+        </>
       )}
 
       {userLoading && <LoadingSpinner />}

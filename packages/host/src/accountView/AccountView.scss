@@ -1,0 +1,23 @@
+@import 'theme/main';
+
+.AccountView-root {
+  .tab-bar {
+    color: $purple-tint;
+    border-bottom: 1px solid $purple-tint;
+
+    .tab-bar-item {
+      background: $main-background;
+      box-shadow: none;
+    }
+  }
+  .tab {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    background: $main-background;
+    overflow-y: scroll;
+    height: 100vh;
+    justify-content: space-around;
+    padding-bottom: 10px;
+  }
+}

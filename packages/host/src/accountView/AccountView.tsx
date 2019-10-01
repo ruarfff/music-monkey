@@ -1,10 +1,8 @@
+import React, { useState, useEffect } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Grid from '@material-ui/core/Grid'
-import { WithStyles } from '@material-ui/core/styles/withStyles'
-import withStyles from '@material-ui/core/styles/withStyles'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
-import * as React from 'react'
 import IEvent from 'event/IEvent'
 import IAction from 'IAction'
 import IUser from 'user/IUser'
@@ -12,20 +10,8 @@ import AccountDetails from './AccountDetails'
 import MyEvents from './MyEvents'
 import MyGuests from './MyGuests'
 import MyPlaylists from './MyPlaylists'
-
-const decorate = withStyles(() => ({
-  accountWrapper: {},
-  accountLeftSide: {},
-  tabContainer: {
-    background: 'white',
-    boxShadow: 'none'
-  },
-  tab: {},
-  tabs: {
-    color: '#5157ab',
-    borderBottom: '1px solid #5157ab'
-  }
-}))
+import isEmpty from 'lodash/isEmpty'
+import './AccountView.scss'
 
 interface IAccountViewProps {
   user: IUser
@@ -35,73 +21,63 @@ interface IAccountViewProps {
 }
 
 function TabContainer({ children }: any) {
-  return <div className="tabContainer">{children}</div>
+  return <div className="tab">{children}</div>
 }
 
-class AccountView extends React.Component<IAccountViewProps & WithStyles> {
-  public state = {
-    tabIndex: 0
+const AccountView = ({
+  user,
+  events,
+  updateUserRequest,
+  getEvents
+}: IAccountViewProps) => {
+  const [tabIndex, setTabIndex] = useState(0)
+
+  useEffect(() => {
+    if (isEmpty(events)) getEvents()
+  }, [events, getEvents])
+
+  const handleTabChange = (event: any, index: number) => {
+    setTabIndex(index)
   }
 
-  public componentDidMount() {
-    this.props.getEvents()
-  }
-
-  public render() {
-    const { tabIndex } = this.state
-    const { user, classes, events, updateUserRequest } = this.props
-    return (
-      <Grid className={classes.accountWrapper} container={true} spacing={3}>
-        <Grid
-          container={true}
-          item={true}
-          md={3}
-          className={classes.accountLeftSide}
-        >
-          <AccountDetails user={user} updateUserRequest={updateUserRequest} />
-        </Grid>
-        <Grid container={true} item={true} md={9}>
-          <AppBar
-            position="static"
-            color="default"
-            className={classes.tabContainer}
-          >
-            <Tabs
-              value={tabIndex}
-              onChange={this.handleTabChange}
-              TabIndicatorProps={{ className: classes.tabs }}
-              centered={true}
-              className={classes.tabs}
-              variant="fullWidth"
-            >
-              <Tab className={classes.tab} label="My events" />
-              <Tab className={classes.tab} label="My playlists" />
-              <Tab className={classes.tab} label="My guests" />
-            </Tabs>
-          </AppBar>
-          {tabIndex === 0 && (
-            <TabContainer className={classes.content}>
-              <MyEvents events={events} />
-            </TabContainer>
-          )}
-          {tabIndex === 1 && (
-            <TabContainer className={classes.content}>
-              <MyPlaylists events={events} />
-            </TabContainer>
-          )}
-          {tabIndex === 2 && (
-            <TabContainer className={classes.content}>
-              <MyGuests events={events} />
-            </TabContainer>
-          )}
-        </Grid>
+  return (
+    <Grid className="AccountView-root" container={true} spacing={3}>
+      <Grid container={true} item={true} md={3}>
+        <AccountDetails user={user} updateUserRequest={updateUserRequest} />
       </Grid>
-    )
-  }
-
-  private handleTabChange = (event: any, index: number) => {
-    this.setState({ tabIndex: index })
-  }
+      <Grid container={true} item={true} md={9}>
+        <AppBar position="static" color="default" className="tab-bar">
+          <Tabs
+            value={tabIndex}
+            onChange={handleTabChange}
+            TabIndicatorProps={{ className: 'tab-bar-item' }}
+            centered={true}
+            className="tab-bar-item"
+            variant="fullWidth"
+          >
+            <Tab label="My events" />
+            <Tab label="My playlists" />
+            <Tab label="My guests" />
+          </Tabs>
+        </AppBar>
+        {tabIndex === 0 && (
+          <TabContainer>
+            <MyEvents events={events} />
+          </TabContainer>
+        )}
+        {tabIndex === 1 && (
+          <TabContainer>
+            <MyPlaylists events={events} />
+          </TabContainer>
+        )}
+        {tabIndex === 2 && (
+          <TabContainer>
+            <MyGuests events={events} />
+          </TabContainer>
+        )}
+      </Grid>
+    </Grid>
+  )
 }
 
-export default decorate(AccountView)
+export default AccountView
