@@ -1,11 +1,11 @@
+import React from 'react'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Paper from '@material-ui/core/Paper'
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography'
-import _ from 'lodash'
-import * as React from 'react'
+import flattenDeep from 'lodash/flattenDeep'
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts'
 import IEvent from 'event/IEvent'
 import IAction from 'IAction'
@@ -100,7 +100,7 @@ class PieChartWidget extends React.Component<
         ? events.filter(event => event.eventId === eventId)
         : events
 
-    const allGuests = _.flattenDeep<IRsvp>(
+    const allGuests = flattenDeep<IRsvp>(
       selectedEvent
         .filter(event => event.guests && event.guests.length > 0)
         .map(event => event.guests && event.guests.map(guest => guest.rsvp))
