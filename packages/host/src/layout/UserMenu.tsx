@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { IconButton } from '@material-ui/core'
+import { IconButton, Hidden } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Avatar from '@material-ui/core/Avatar/Avatar'
 import Menu from '@material-ui/core/Menu'
@@ -43,7 +43,9 @@ const UserMenu = ({ user, logout }: IUserMenuProps) => {
         )}
       </IconButton>
       {userHasName && (
-        <Typography className="UserMenu-name">{user.displayName}</Typography>
+        <Hidden xsDown implementation="css">
+          <Typography className="UserMenu-name">{user.displayName}</Typography>
+        </Hidden>
       )}
       <Menu
         id="menu-appbar"

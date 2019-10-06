@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import IRootState from '../rootState'
+import withSizes, { Sizes } from 'react-sizes'
+import IRootState from 'rootState'
 import Layout from './Layout'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -10,9 +11,15 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {}
 
+const mapSizesToProps = ({ width, height }: Sizes) => ({
+  isDesktop: width > 1024,
+  width,
+  height
+})
+
 const LayoutContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Layout)
+)(withSizes<Sizes, any>(mapSizesToProps)(Layout))
 
 export default LayoutContainer

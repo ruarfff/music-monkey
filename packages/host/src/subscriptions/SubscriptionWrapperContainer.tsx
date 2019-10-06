@@ -6,8 +6,7 @@ import { fetchEventVotes } from '../vote/voteActions'
 import { getEventSuggestions } from '../suggestion/suggestionActions'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.savingEvent,
-  user: state.user.data
+  event: state.event.savingEvent
 })
 
 const mapDispatchToProps = {

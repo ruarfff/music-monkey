@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link, LinkProps } from 'react-router-dom'
-import { Route } from 'react-router'
 import {
   Typography,
   Toolbar,
@@ -12,19 +11,14 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import Button from '@material-ui/core/Button'
-//import { RouteWithSubRoutes } from 'routes'
-//import Events from 'event/EventsContainer'
 import eventIcon from 'assets/monkey_logo.png'
 import logo from 'assets/logo-home.png'
 import UserMenu from './UserMenuContainer'
 import NavMenu from './NavMenu'
+import Content from './Content'
 import './DesktopLayout.scss'
 
-interface IDesktopLayoutProps {
-  routes: Route[]
-}
-
-const DesktopLayout = ({ routes }: IDesktopLayoutProps) => {
+const DesktopLayout = () => {
   const [navOpen, setNavOpen] = useState(true)
   const handleNavToggle = () => {
     setNavOpen(!navOpen)
@@ -103,11 +97,13 @@ const DesktopLayout = ({ routes }: IDesktopLayoutProps) => {
         <Divider />
         <NavMenu />
       </Drawer>
-      <main className="DesktopLayout-content DesktopLayout-content-shifted">
-        {/* <Route exact={true} path="/" component={Events} />
-        {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))} */}
+      <main
+        className={`DesktopLayout-content ${
+          navOpen ? 'DesktopLayout-content-shifted' : ''
+        }`}
+      >
+        <div className="DesktopLayout-toolbar" />
+        <Content />
       </main>
     </div>
   )

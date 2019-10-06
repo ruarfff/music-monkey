@@ -1,15 +1,13 @@
 import React from 'react'
 import isEmpty from 'lodash/isEmpty'
-import { Route } from 'react-router'
-import withSizes, { Sizes } from 'react-sizes'
+import { Sizes } from 'react-sizes'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import IUser from 'user/IUser'
 import LoginError from './LoginError'
-import MobileMenu from './MobileMenu'
+import MobileMenu from './MobileLayout'
 import DesktopLayout from './DesktopLayout'
 
-interface ILayoutProps extends Sizes {
-  routes: Route[]
+interface ILayoutProps {
   user: IUser
   userLoading: boolean
   userError: Error
@@ -20,23 +18,15 @@ const Layout = ({
   user,
   userLoading,
   userError,
-  routes,
   isDesktop
-}: ILayoutProps) => {
+}: ILayoutProps & Sizes) => {
   return (
     <div>
-      {!isEmpty(user) &&
-        (isDesktop ? <DesktopLayout routes={routes} /> : <MobileMenu />)}
+      {!isEmpty(user) && (isDesktop ? <DesktopLayout /> : <MobileMenu />)}
       {userLoading && <LoadingSpinner />}
       {userError.message && <LoginError />}
     </div>
   )
 }
 
-const mapSizesToProps = ({ width, height }: Sizes) => ({
-  isDesktop: width > 1024,
-  width,
-  height
-})
-
-export default withSizes<Sizes, ILayoutProps>(mapSizesToProps)(Layout)
+export default Layout

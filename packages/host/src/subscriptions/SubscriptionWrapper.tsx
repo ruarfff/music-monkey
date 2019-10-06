@@ -14,11 +14,9 @@ import {
 } from './pusherGateway'
 import IEvent from '../event/IEvent'
 import IAction from '../IAction'
-import IUser from '../user/IUser'
 
 interface ISubscriptionWrapper {
   event: IEvent
-  user: IUser
   children: any
   getEventByIdNoLoading(eventId: string): IAction
   fetchEventVotes(eventId: string): IAction
@@ -27,7 +25,6 @@ interface ISubscriptionWrapper {
 
 export default ({
   event,
-  user,
   children,
   getEventByIdNoLoading,
   fetchEventVotes,

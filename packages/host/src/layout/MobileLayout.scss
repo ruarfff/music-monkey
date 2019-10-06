@@ -1,0 +1,63 @@
+@import 'theme/main';
+
+.MobileLayout-root {
+  width: 100%;
+  display: flex;
+
+  .MobileLayout-app-bar {
+    background-color: white;
+    box-shadow: none;
+
+    .MobileLayout-title {
+      flex: 1;
+      cursor: pointer;
+      font-size: 2rem;
+      line-height: 2.5rem;
+      padding: $spacing - 2;
+      color: black;
+    }
+
+    .MobileLayout-app-bar-menu-button {
+      color: black;
+    }
+  }
+
+  .MobileLayout-app-bar-shifted {
+    margin-left: $nav-menu-width;
+  }
+
+  .MobileLayout-content {
+    flex-grow: 1;
+    .MobileLayout-toolbar {
+      @include toolbar;
+    }
+  }
+}
+
+.MobileLayout-nav {
+  width: $nav-menu-width;
+  background-color: $primary;
+
+  .MobileLayout-nav-menu-header {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 $spacing;
+    @include toolbar;
+  }
+
+  .MobileLayout-nav-logo {
+    height: 10rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding-top: ($spacing * 2) px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: $nav-menu-width - 40px;
+      height: 4rem;
+    }
+  }
+}

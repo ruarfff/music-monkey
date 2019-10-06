@@ -1,24 +1,21 @@
+import React from 'react'
 import { push } from 'connected-react-router'
-import { History } from 'history'
-import * as React from 'react'
 import { Route } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 
 import IRootState from 'rootState'
 import AccountViewContainer from 'accountView/AccountViewContainer'
-import Login from 'auth/LoginContainer'
 import CreateEvent from 'event/eventCreation/CreateEventContainer'
 import SaveEvent from 'event/saveEvent/SaveEvent'
 import EventsContainer from 'event/eventsView/EventsViewContainer'
 import EventView from 'event/eventView/EventViewContainer'
-import Layout from 'layout/LayoutContainer'
 import InsightsContainer from 'insights/InsightsContainer'
 import PlaylistsContainer from 'playlistsView/PlaylistsViewContainer'
 
 const locationHelper = locationHelperBuilder({})
 
-const userIsNotAuthenticated = connectedRouterRedirect({
+export const userIsNotAuthenticated = connectedRouterRedirect({
   allowRedirectBack: false,
   authenticatedSelector: (state: IRootState) => !state.auth.isAuthenticated,
   redirectPath: (state, ownProps) =>
@@ -26,7 +23,7 @@ const userIsNotAuthenticated = connectedRouterRedirect({
   wrapperDisplayName: 'UserIsNotAuthenticated'
 })
 
-const userIsAuthenticated = connectedRouterRedirect({
+export const userIsAuthenticated = connectedRouterRedirect({
   authenticatedSelector: (state: IRootState) =>
     state.auth.isAuthenticated || state.auth.isAuthenticating,
   redirectAction: push,
@@ -34,74 +31,64 @@ const userIsAuthenticated = connectedRouterRedirect({
   wrapperDisplayName: 'UserIsAuthenticated'
 })
 
-const routes = [
+export const routes = [
   {
-    component: userIsAuthenticated(Layout as any),
-    path: '/',
-    routes: [
-      {
-        component: CreateEvent,
-        exact: true,
-        path: '/create-event'
-      },
-      {
-        component: SaveEvent,
-        path: '/save-event'
-      },
-      {
-        component: EventView,
-        exact: true,
-        path: '/events/:eventId'
-      },
-      {
-        component: CreateEvent,
-        path: '/events/:eventId/edit'
-      },
-      {
-        component: EventsContainer,
-        exact: true,
-        path: '/all-events'
-      },
-      {
-        component: EventsContainer,
-        exact: true,
-        path: '/upcoming-events'
-      },
-      {
-        component: EventsContainer,
-        exact: true,
-        path: '/past-events'
-      },
-      {
-        component: PlaylistsContainer,
-        exact: true,
-        path: '/all-playlists'
-      },
-      {
-        component: PlaylistsContainer,
-        exact: true,
-        path: '/upcoming-playlists'
-      },
-      {
-        component: PlaylistsContainer,
-        exact: true,
-        path: '/past-playlists'
-      },
-      {
-        component: AccountViewContainer,
-        exact: true,
-        path: '/account'
-      },
-      {
-        component: InsightsContainer,
-        exact: true,
-        path: '/insights'
-      }
-    ]
+    component: CreateEvent,
+    exact: true,
+    path: '/create-event'
   },
   {
-    component: userIsNotAuthenticated(Login as any),
-    path: '/login'
+    component: SaveEvent,
+    path: '/save-event'
+  },
+  {
+    component: EventView,
+    exact: true,
+    path: '/events/:eventId'
+  },
+  {
+    component: CreateEvent,
+    path: '/events/:eventId/edit'
+  },
+  {
+    component: EventsContainer,
+    exact: true,
+    path: '/all-events'
+  },
+  {
+    component: EventsContainer,
+    exact: true,
+    path: '/upcoming-events'
+  },
+  {
+    component: EventsContainer,
+    exact: true,
+    path: '/past-events'
+  },
+  {
+    component: PlaylistsContainer,
+    exact: true,
+    path: '/all-playlists'
+  },
+  {
+    component: PlaylistsContainer,
+    exact: true,
+    path: '/upcoming-playlists'
+  },
+  {
+    component: PlaylistsContainer,
+    exact: true,
+    path: '/past-playlists'
+  },
+  {
+    component: AccountViewContainer,
+    exact: true,
+    path: '/account'
+  },
+  {
+    component: InsightsContainer,
+    exact: true,
+    path: '/insights'
   }
 ]
 
@@ -116,17 +103,3 @@ export const RouteWithSubRoutes = (route: any) => (
     render={renderSubRoutes(route)}
   />
 )
-
-interface IRouterProps {
-  history: History
-}
-
-export const Routes: React.SFC<IRouterProps> = ({ history }) => {
-  return (
-    <span>
-      {routes.map((route, i) => (
-        <RouteWithSubRoutes key={i} {...route} />
-      ))}
-    </span>
-  )
-}
