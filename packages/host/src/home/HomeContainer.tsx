@@ -1,12 +1,17 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
+import { getEvents } from 'event/eventActions'
 import Home from './Home'
 
 const mapStateToProps = (state: IRootState) => ({
-  user: state.user.data
+  user: state.user.data,
+  events: state.event.events,
+  eventsLoading: state.event.eventsLoading
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  getEvents
+}
 
 const HomeContainer = connect(
   mapStateToProps,

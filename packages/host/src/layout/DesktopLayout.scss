@@ -7,7 +7,7 @@ $width-enter: width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 
 .DesktopLayout-root {
   width: 100%;
-  display: flex;
+  max-width: 100%;
 
   .DesktopLayout-app-bar {
     background-color: white;
@@ -78,10 +78,10 @@ $width-enter: width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 
   .DesktopLayout-content {
     flex-grow: 1;
-    margin-top: ($spacing * 8) px;
-    padding: ($spacing * 3) px;
+    margin-top: 2rem;
+    padding: 2rem;
     transition: $margin-leave;
-    margin-left: -$nav-menu-width;
+    margin-left: 0;
 
     .DesktopLayout-toolbar {
       @include toolbar;
@@ -90,6 +90,6 @@ $width-enter: width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 
   .DesktopLayout-content-shifted {
     transition: margin 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-    margin-left: 0;
+    margin-left: $nav-menu-width;
   }
 }

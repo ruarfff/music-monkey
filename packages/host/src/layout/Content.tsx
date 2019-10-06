@@ -7,7 +7,7 @@ import { RouteContext } from 'RouteContext'
 
 const Content = () => {
   const routes = useContext(RouteContext)
-  console.log(routes)
+
   return (
     <>
       <Route exact={true} path="/" component={Home} />

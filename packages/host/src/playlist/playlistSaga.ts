@@ -5,7 +5,8 @@ import {
   ADD_TRACK_REQUEST,
   addTrackError,
   addTrackSuccess,
-  EDIT_PLAYLIST_REQUEST, EDIT_PLAYLIST_SUCCESS,
+  EDIT_PLAYLIST_REQUEST,
+  EDIT_PLAYLIST_SUCCESS,
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
@@ -44,7 +45,11 @@ function* fetchPlaylistsFlow(action: IAction) {
 
 function* fetchMorePlaylistsFlow(action: IAction) {
   try {
-    const playlists = yield call(fetchMoreUsersPlaylists, action.payload.user, action.payload.offset)
+    const playlists = yield call(
+      fetchMoreUsersPlaylists,
+      action.payload.user,
+      action.payload.offset
+    )
     yield put({ type: LOAD_MORE_PLAYLISTS_SUCCESS, payload: playlists })
   } catch (error) {
     yield put({ type: LOAD_MORE_PLAYLISTS_FAILURE, payload: error })
@@ -60,32 +65,46 @@ function* fetchRemoveTrackFromPlaylist(action: IAction) {
     const justCreatedPlaylists = yield select(getJustCreatedPlaylists)
     const isReselected: boolean = yield select(getIsReselectedPlaylist)
 
-    const isCreateOrEditPage = location.indexOf('create-event') !== -1 || location.indexOf('edit') !== -1
+    const isCreateOrEditPage =
+      location.indexOf('create-event') !== -1 || location.indexOf('edit') !== -1
 
-    const isJustCreated = justCreatedPlaylists.filter((playlist: any) =>
-      playlist.id === action.payload.playlistId
-    ).length === 1
+    const isJustCreated =
+      justCreatedPlaylists.filter(
+        (playlist: any) => playlist.id === action.payload.playlistId
+      ).length === 1
 
     const createPageValidation = isCreateOrEditPage && isJustCreated
     const editPageValidation = isCreateOrEditPage && !isReselected
 
     let newPlaylist
 
-    if ((createPageValidation) || (editPageValidation)) {
-      newPlaylist = yield call(removeTrackFromPlaylist, playlistId, trackUri, trackPosition)
+    if (createPageValidation || editPageValidation) {
+      newPlaylist = yield call(
+        removeTrackFromPlaylist,
+        playlistId,
+        trackUri,
+        trackPosition
+      )
     } else {
       const eventPlaylist = yield select(getEventPlaylist)
       newPlaylist = {
         ...eventPlaylist,
         tracks: {
           ...eventPlaylist.tracks,
-          items: eventPlaylist.tracks.items.filter((i: any) => i.track.uri !== trackUri)
+          items: eventPlaylist.tracks.items.filter(
+            (i: any) => i.track.uri !== trackUri
+          )
         }
       }
     }
 
     if (!isCreateOrEditPage) {
-      newPlaylist = yield call(removeTrackFromPlaylist, playlistId, trackUri, trackPosition)
+      newPlaylist = yield call(
+        removeTrackFromPlaylist,
+        playlistId,
+        trackUri,
+        trackPosition
+      )
     }
 
     yield put(trackRemoved(newPlaylist))
@@ -113,22 +132,28 @@ function* fetchAddTrackToPlaylist(action: IAction) {
     const justCreatedPlaylists = yield select(getJustCreatedPlaylists)
     const isReselected: boolean = yield select(getIsReselectedPlaylist)
 
-    const isCreateOrEditPage = location.indexOf('create-event') !== -1 || location.indexOf('edit') !== -1
+    const isCreateOrEditPage =
+      location.indexOf('create-event') !== -1 || location.indexOf('edit') !== -1
 
-    const isJustCreated = justCreatedPlaylists.filter((playlist: any) =>
-      playlist.id === action.payload.playlistId
-    ).length === 1
+    const isJustCreated =
+      justCreatedPlaylists.filter(
+        (playlist: any) => playlist.id === action.payload.playlistId
+      ).length === 1
 
     const createPageValidation = isCreateOrEditPage && isJustCreated
     const editPageValidation = isCreateOrEditPage && !isReselected
 
-    if ((createPageValidation) || (editPageValidation)) {
-      yield call(addTracksToPlaylist, action.payload.playlistId, [action.payload.track.uri])
+    if (createPageValidation || editPageValidation) {
+      yield call(addTracksToPlaylist, action.payload.playlistId, [
+        action.payload.track.uri
+      ])
       yield call(fetchPlaylist, action.payload.playlistId)
     }
 
     if (!isCreateOrEditPage) {
-      yield call(addTracksToPlaylist, action.payload.playlistId, [action.payload.track.uri])
+      yield call(addTracksToPlaylist, action.payload.playlistId, [
+        action.payload.track.uri
+      ])
       yield call(fetchPlaylist, action.payload.playlistId)
     }
 
@@ -158,7 +183,7 @@ function* fetchPlaylistEditDetails({ payload }: IAction) {
     yield put({ type: EDIT_PLAYLIST_SUCCESS })
     yield put({ type: EVENT_FETCH_BY_ID_INITIATED, payload: eventId })
   } catch (e) {
-    console.log(e.message)
+    console.error(e.message)
   }
 }
 

@@ -7027,7 +7027,7 @@ hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.1.0, hoist-non-react-
     autosuggest-highlight "^3.1.1"
     aws-sdk "^2.369.0"
     google-map-react "^1.1.1"
-    nuka-carousel "^4.4.3"
+    nuka-carousel "4.5.11"
     react-beautiful-dnd "^11.0.3"
     react-dropzone "^9.0.0"
     react-dropzone-component "^3.2.0"
@@ -9811,10 +9811,10 @@ nth-check@^1.0.2, nth-check@~1.0.1:
   dependencies:
     boolbase "~1.0.0"
 
-nuka-carousel@^4.4.3:
-  version "4.5.12"
-  resolved "https://registry.yarnpkg.com/nuka-carousel/-/nuka-carousel-4.5.12.tgz#8ec63838d0390fa99f676daf2c846a713c069275"
-  integrity sha512-pXcxHjD5aesfWuoPHMUD+Vm+axRy+OE081OVMUcK7ATSXz+BHsvDcOYy516NXFuPJ7D1vk4Vv9RuuYfrxk4giA==
+nuka-carousel@4.5.11:
+  version "4.5.11"
+  resolved "https://registry.yarnpkg.com/nuka-carousel/-/nuka-carousel-4.5.11.tgz#4d240631c2c3fb3b289c193f00e572bfeab04d38"
+  integrity sha512-JO2LrCt53nAX1I0eOyHlBMAgWKYhv8C4RyvY33BQ9i1C1qqV/uYEGmIJ4SFvzvjOyOQRNGdvPzhxntrmBAdYyQ==
   dependencies:
     csstype "^2.6.6"
     d3-ease "^1.0.3"
@@ -11618,6 +11618,13 @@ react-dropzone@^9.0.0:
     prop-types "^15.6.2"
     prop-types-extra "^1.1.0"
 
+react-easy-swipe@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/react-easy-swipe/-/react-easy-swipe-0.0.16.tgz#5a3d949a8f975d05be92a818254315d1318a81ea"
+  integrity sha1-Wj2Umo+XXQW+kqgYJUMV0TGKgeo=
+  dependencies:
+    prop-types "^15.5.8"
+
 react-error-overlay@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.2.tgz#642bd6157c6a4b6e9ca4a816f7ed30b868c47f81"
@@ -11653,6 +11660,13 @@ react-google-maps@^9.4.5:
     recompose "^0.26.0"
     scriptjs "^2.5.8"
     warning "^3.0.0"
+
+react-id-swiper@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/react-id-swiper/-/react-id-swiper-2.3.2.tgz#acd35e51f1068b94a8066829b121ff9b29febaaa"
+  integrity sha512-lxlASsBok+M8YmwYICEXUaVj44AyCaGfSc+YGZX5vWCqKLnVj3ceUbFFBfO+G8Glrya7WJhrfvzMae0r77MCSQ==
+  dependencies:
+    object-assign "^4.1.1"
 
 react-input-autosize@^2.2.1:
   version "2.2.1"
@@ -11727,6 +11741,15 @@ react-resize-detector@^2.3.0:
     lodash.throttle "^4.1.1"
     prop-types "^15.6.0"
     resize-observer-polyfill "^1.5.0"
+
+react-responsive-carousel@^3.1.50:
+  version "3.1.50"
+  resolved "https://registry.yarnpkg.com/react-responsive-carousel/-/react-responsive-carousel-3.1.50.tgz#e5255f7760f3b4766efa5cd04361c74df4311960"
+  integrity sha512-f0Il76ykXn/4m49KwYlKanhWf5R5DkgZIIExI+rV8fEgSarOdUpIvS09hi13fgBcqpjzHmBnXazLtmzeQPSZYw==
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.5.8"
+    react-easy-swipe "^0.0.16"
 
 react-router-dom@5.1.1:
   version "5.1.1"
