@@ -7,8 +7,7 @@ import MainAppBar from './MainAppBar'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  event: state.eventView.event,
-  location: state.home.location
+  event: state.eventView.event
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

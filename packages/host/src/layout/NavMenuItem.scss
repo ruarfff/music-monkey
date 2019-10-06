@@ -1,0 +1,41 @@
+@import 'theme/main';
+
+.NavMenuItem {
+  color: $mm-white;
+}
+
+.NavMenuItem-icon {
+  margin-right: -5px;
+}
+
+.NavMenuItem-text {
+  color: $mm-white;
+  text-decoration: none;
+}
+
+.NavMenuItem-highlighted {
+  color: $mm-white;
+  background: $primary-dark;
+  &:before {
+    content: '';
+    background: $secondary-light;
+    position: absolute;
+    padding: 2px;
+    height: 100%;
+    left: 0;
+  }
+}
+
+.NavMenuItem-sub-highlighted {
+  background: $secondary-light;
+}
+
+.NavMenuItem-sub-text {
+  color: $mm-white;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.NavMenuItem-collapse {
+  background: $primary-dark;
+}

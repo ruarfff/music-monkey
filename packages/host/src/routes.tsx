@@ -12,7 +12,7 @@ import CreateEvent from 'event/eventCreation/CreateEventContainer'
 import SaveEvent from 'event/saveEvent/SaveEvent'
 import EventsContainer from 'event/eventsView/EventsViewContainer'
 import EventView from 'event/eventView/EventViewContainer'
-import Home from 'home/HomeContainer'
+import Layout from 'layout/LayoutContainer'
 import InsightsContainer from 'insights/InsightsContainer'
 import PlaylistsContainer from 'playlistsView/PlaylistsViewContainer'
 
@@ -36,7 +36,7 @@ const userIsAuthenticated = connectedRouterRedirect({
 
 const routes = [
   {
-    component: userIsAuthenticated(Home as any),
+    component: userIsAuthenticated(Layout as any),
     path: '/',
     routes: [
       {

@@ -1,0 +1,91 @@
+@import 'theme/main';
+
+$margin-leave: margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+$margin-enter: margin 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+$width-leave: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+$width-enter: width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+
+.DesktopLayout-root {
+  width: 100%;
+  display: flex;
+
+  .DesktopLayout-app-bar {
+    background-color: white;
+    box-shadow: none;
+    transition: $margin-leave, $width-leave;
+
+    .DesktopLayout-title {
+      flex: 1;
+      cursor: pointer;
+      font-size: 2rem;
+      line-height: 2.5rem;
+      padding: $spacing - 2;
+      color: black;
+    }
+
+    .DesktopLayout-event-btn {
+      text-transform: uppercase;
+      padding: 8px 18px;
+      .DesktopLayout-event-icon {
+        margin-right: 5px;
+        height: 20px;
+      }
+    }
+
+    .DesktopLayout-app-bar-menu-button {
+      color: black;
+    }
+  }
+
+  .DesktopLayout-app-bar-shifted {
+    margin-left: $nav-menu-width;
+    width: calc(100% - $nav-menu-width);
+    transition: $margin-enter, $width-enter;
+  }
+
+  .DesktopLayout-nav-drawer-paper {
+    width: $nav-menu-width;
+    background-color: $primary;
+  }
+
+  .DesktopLayout-nav {
+    width: $nav-menu-width;
+    flex-shrink: 0;
+
+    .DesktopLayout-nav-menu-header {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 $spacing;
+      @include toolbar;
+    }
+
+    .DesktopLayout-nav-logo {
+      height: 10rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      padding-top: ($spacing * 2) px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: $nav-menu-width - 40px;
+        height: 4rem;
+      }
+    }
+  }
+
+  .DesktopLayout-content {
+    flex-grow: 1;
+    margin-top: ($spacing * 8) px;
+    padding: ($spacing * 3) px;
+    transition: $margin-leave;
+    margin-left: -$nav-menu-width;
+  }
+
+  .DesktopLayout-content-shifted {
+    transition: margin 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    margin-left: 0;
+  }
+}

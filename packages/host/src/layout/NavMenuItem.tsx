@@ -4,64 +4,26 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import { withStyles, WithStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-import { Link } from 'react-router-dom'
-
-const decorate = withStyles(() => ({
-  listIcon: {
-    marginRight: '-5px'
-  },
-  listItemText: {
-    color: 'white',
-    textDecoration: 'none',
-    fontSize: '14px'
-  },
-  listItem: {
-    color: 'white'
-  },
-  highlightedListItem: {
-    color: 'white',
-    background: '#8300bf',
-    '&:before': {
-      content: '""',
-      background: '#3AABD1',
-      position: 'absolute',
-      padding: '2px',
-      height: '100%',
-      left: 0
-    }
-  },
-  subItemText: {
-    color: 'white',
-    textDecoration: 'none',
-    fontSize: '12px'
-  },
-  collapse: {
-    background: '#8300bf'
-  },
-  subListItemHighlighted: {
-    backgroundColor: '#3AABD1'
-  }
-}))
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
+import './NavMenuItem.scss'
 
 interface ICollapsedList {
   text: string
   link: string
 }
 
-interface ILeftMenuItemProps {
+interface ILeftMenuItemProps extends RouteComponentProps {
   text?: string
   pathName?: string
   icon?: string
   collapsed?: boolean
   collapsedList?: ICollapsedList[]
-  currentPath?: string
 }
 
-class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
+class NavMenuItem extends React.Component<ILeftMenuItemProps> {
   public state = {
     isOpen: false
   }
@@ -71,17 +33,19 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
   }
 
   public renderSubMenuItem = (text: string, link: string) => {
-    const { classes, currentPath } = this.props
+    const { location } = this.props
 
     return (
       <ListItem
-        className={link !== currentPath ? '' : classes.subListItemHighlighted}
+        className={
+          link !== location.pathname ? '' : 'NavMenuItem-sub-highlighted'
+        }
         button={true}
       >
         <ListItemText
           inset={true}
           primary={
-            <Typography className={classes.subItemText}>{text}</Typography>
+            <Typography className="NavMenuItem-sub-text">{text}</Typography>
           }
         />
       </ListItem>
@@ -89,10 +53,10 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
   }
 
   public shouldHighlightList = () => {
-    const { collapsedList, currentPath } = this.props
+    const { collapsedList, location } = this.props
 
     const shouldHighlight = collapsedList
-      ? collapsedList.filter(item => item.link === currentPath).length > 0
+      ? collapsedList.filter(item => item.link === location.pathname).length > 0
       : false
 
     return shouldHighlight
@@ -100,38 +64,35 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
 
   public render() {
     const {
-      classes,
       pathName,
-      currentPath,
       text,
       icon,
       collapsed,
-      collapsedList
+      collapsedList,
+      location
     } = this.props
     const { isOpen } = this.state
-
     const highlightSub = this.shouldHighlightList()
-
-    return (
-      <React.Fragment>
+    const Item = () => (
+      <>
         <ListItem
           className={
-            pathName === currentPath || highlightSub
-              ? classes.highlightedListItem
-              : classes.listItem
+            pathName === location.pathname || highlightSub
+              ? 'NavMenuItem-highlighted'
+              : 'NavMenuItem'
           }
           button={true}
           onClick={this.handleToggleDropdown}
-          selected={pathName === currentPath && true}
+          selected={pathName === location.pathname && true}
         >
-          <ListItemIcon className={classes.listIcon}>
+          <ListItemIcon className="NavMenuItem-icon">
             <img alt="list item" src={icon} />
           </ListItemIcon>
           <ListItemText
             inset={true}
             disableTypography={true}
             primary={
-              <Typography className={classes.listItemText}>{text}</Typography>
+              <Typography className="NavMenuItem-text">{text}</Typography>
             }
           />
           {collapsed ? (
@@ -144,15 +105,15 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
             ''
           )}
         </ListItem>
-        {collapsed ? (
+        {collapsed && (
           <Collapse
             in={isOpen}
             timeout="auto"
             unmountOnExit={true}
-            className={classes.collapse}
+            className="NavMenuItem-collapse"
           >
             <List
-              className={highlightSub ? classes.highlightedListItem : ''}
+              className={highlightSub ? 'NavMenuItem-highlighted' : ''}
               component="article"
               disablePadding={true}
             >
@@ -164,12 +125,17 @@ class LeftMenuItem extends React.Component<ILeftMenuItemProps & WithStyles> {
                 ))}
             </List>
           </Collapse>
-        ) : (
-          ''
         )}
-      </React.Fragment>
+      </>
+    )
+    return !!pathName ? (
+      <Link to={pathName}>
+        <Item />
+      </Link>
+    ) : (
+      <Item />
     )
   }
 }
 
-export default decorate(LeftMenuItem)
+export default withRouter(NavMenuItem)

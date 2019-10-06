@@ -1,0 +1,38 @@
+@import 'theme/main';
+
+.NavigationMenu-root {
+  .nav-drawer {
+    width: $nav-menu-width;
+  }
+
+  .left-menu {
+    width: $nav-menu-width;
+    position: fixed;
+    background-color: $primary;
+    height: 100%;
+    z-index: 10;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.12),
+      0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  .logo-container {
+    height: 166px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: $nav-menu-width - 40px;
+    }
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    padding: 0.2em;
+    justify-content: flex-end;
+    @include toolbar;
+  }
+}
