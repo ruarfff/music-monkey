@@ -1,0 +1,42 @@
+.PlaylistCardSmall-root {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  box-shadow: 0 10px 6px -6px #777;
+  height: 250px;
+
+  .PlaylistCardSmall-link {
+    text-decoration: none;
+  }
+
+  .PlaylistCardSmall-name {
+    color: #979797;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    font-weight: 600;
+  }
+
+  .PlaylistCardSmall-description {
+    color: #979797;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .PlaylistCardSmall-content-wrapper {
+    padding-left: 1em;
+  }
+
+  .PlaylistCardSmall-image {
+    height: 120px;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+
+    img {
+      width: 100%;
+      height: inherit;
+    }
+  }
+}

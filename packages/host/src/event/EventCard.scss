@@ -1,7 +1,10 @@
 .EventCard-root {
   padding-left: 1em;
   padding-right: 1em;
-  min-width: 12rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  box-shadow: 0 10px 6px -6px #777;
+  height: 250px;
 
   .EventCard-link {
     text-decoration: none;

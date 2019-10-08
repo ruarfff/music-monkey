@@ -42,9 +42,7 @@ const MobileLayout = () => {
             variant="h3"
             color="inherit"
             className="MobileLayout-title"
-          >
-            Test
-          </Typography>
+          ></Typography>
           <UserMenu />
         </Toolbar>
       </AppBar>

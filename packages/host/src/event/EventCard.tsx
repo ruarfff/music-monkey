@@ -18,7 +18,7 @@ const EventCard = ({ event }: IEventCardProps) => {
     event.guests && (event.guests.length > 2 ? 3 : event.guests.length)
 
   return (
-    <Card key={event.eventId} className="EventCard-root">
+    <Card className="EventCard-root">
       <Link to={'/events/' + event.eventId} className="EventCard-link">
         <div className="EventCard-image">
           <img src={event.imageUrl} alt={event.name} />

@@ -55,12 +55,7 @@ class Events extends React.Component<IEventsProps> {
       <React.Fragment>
         {/*{!playlist && events.length === 0 && <NoEvents />}*/}
         {playlist && events.length === 0 && (
-          <Typography
-            className="eventsListCaption"
-            align="center"
-            variant="body2"
-            gutterBottom={true}
-          >
+          <Typography align="center" variant="body2" gutterBottom={true}>
             {message}
           </Typography>
         )}
