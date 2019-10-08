@@ -1,21 +1,14 @@
 import React, { useState } from 'react'
-import { Link, LinkProps } from 'react-router-dom'
-import {
-  Typography,
-  Toolbar,
-  AppBar,
-  IconButton,
-  Divider,
-  Drawer
-} from '@material-ui/core'
+import { Link } from 'react-router-dom'
+import { Toolbar, AppBar, IconButton, Divider, Drawer } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import Button from '@material-ui/core/Button'
-import eventIcon from 'assets/monkey_logo.png'
 import logo from 'assets/logo-home.png'
 import UserMenu from './UserMenuContainer'
 import NavMenu from './NavMenu'
 import Content from './Content'
+import Title from './TitleContainer'
+import CreateEventMenuButton from './CreateEventMenuButton'
 import './DesktopLayout.scss'
 
 const DesktopLayout = () => {
@@ -23,10 +16,6 @@ const DesktopLayout = () => {
   const handleNavToggle = () => {
     setNavOpen(!navOpen)
   }
-
-  const ButtonLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
-    (props, ref) => <Link innerRef={ref} {...props} />
-  )
 
   return (
     <div className="DesktopLayout-root">
@@ -46,30 +35,8 @@ const DesktopLayout = () => {
             </IconButton>
           )}
 
-          <Typography
-            variant="h3"
-            color="inherit"
-            className="DesktopLayout-title"
-          >
-            Test
-          </Typography>
-
-          <Button
-            component={ButtonLink}
-            to="/create-event"
-            variant="contained"
-            size="small"
-            color="secondary"
-            className="DesktopLayout-event-btn"
-          >
-            <img
-              className="DesktopLayout-event-icon"
-              src={eventIcon}
-              alt="event icon"
-            />
-            Create new event
-          </Button>
-
+          <Title />
+          <CreateEventMenuButton />
           <UserMenu />
         </Toolbar>
       </AppBar>

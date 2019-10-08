@@ -1,5 +1,5 @@
 import React, { createContext } from 'react'
-import { routes } from 'routes'
+import { routes } from 'routes/routes'
 export const RouteContext = createContext(routes)
 
 interface IRouteContextProviderProps {

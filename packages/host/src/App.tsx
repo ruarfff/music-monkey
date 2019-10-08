@@ -9,13 +9,13 @@ import { CookiesProvider } from 'react-cookie'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
 import Utils from '@date-io/moment'
+import { Route } from 'react-router'
 import SubscriptionWrapper from 'subscriptions/SubscriptionWrapperContainer'
 import theme from 'theme/theme'
 import Layout from 'layout/LayoutContainer'
 import Login from 'auth/LoginContainer'
-import { userIsAuthenticated, userIsNotAuthenticated } from 'routes'
-import RouteContextProvider from 'RouteContext'
-import { Route } from 'react-router'
+import { userIsAuthenticated, userIsNotAuthenticated } from 'routes/routes'
+import RouteContextProvider from 'routes/RouteContext'
 
 interface IAppProps {
   store: Store

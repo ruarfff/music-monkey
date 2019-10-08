@@ -1,0 +1,10 @@
+@import 'theme/main';
+
+.Title {
+  flex: 1;
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  padding: $spacing - 2;
+  color: black;
+}

@@ -1,19 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  Typography,
-  Toolbar,
-  AppBar,
-  IconButton,
-  Divider,
-  Drawer
-} from '@material-ui/core'
+import { Toolbar, AppBar, IconButton, Divider, Drawer } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import logo from 'assets/logo-home.png'
 import UserMenu from './UserMenuContainer'
 import NavMenu from './NavMenu'
 import Content from './Content'
+import Title from './TitleContainer'
 import './MobileLayout.scss'
 
 const MobileLayout = () => {
@@ -38,11 +32,7 @@ const MobileLayout = () => {
             </IconButton>
           )}
 
-          <Typography
-            variant="h3"
-            color="inherit"
-            className="MobileLayout-title"
-          ></Typography>
+          <Title />
           <UserMenu />
         </Toolbar>
       </AppBar>

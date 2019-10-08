@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Route } from 'react-router'
-import { RouteWithSubRoutes } from 'routes'
+import { RouteWithSubRoutes } from 'routes/routes'
 
 import Home from 'home/HomeContainer'
-import { RouteContext } from 'RouteContext'
+import { RouteContext } from 'routes/RouteContext'
 
 const Content = () => {
   const routes = useContext(RouteContext)
