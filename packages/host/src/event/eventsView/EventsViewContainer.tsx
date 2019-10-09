@@ -5,7 +5,8 @@ import { getEvents } from 'event/eventActions'
 import EventsView from './EventsView'
 
 const mapStateToProps = (state: IRootState) => ({
-  events: state.event,
+  eventsLoading: state.event.eventsLoading,
+  events: state.event.events,
   user: state.user
 })
 

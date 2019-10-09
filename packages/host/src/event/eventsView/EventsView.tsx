@@ -1,152 +1,133 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid/Grid'
 import Hidden from '@material-ui/core/Hidden'
-import { WithStyles } from '@material-ui/core/styles'
-import withStyles from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
-import { History } from 'history'
 import sortBy from 'lodash/sortBy'
 import map from 'lodash/map'
+import isEmpty from 'lodash/isEmpty'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router'
 import IAction from 'IAction'
 import IEvent from 'event/IEvent'
-import IEventState from 'event/IEventState'
 import NoEvents from 'event/NoEvents'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import IUserState from 'user/IUserState'
 import EventBigCard from './EventBigCard'
+import './EventsView.scss'
 
-const decorate = withStyles(() => ({
-  buttonGray: {
-    color: '#979797'
-  },
-  buttonOrange: {
-    color: '#FFB000'
-  }
-}))
+const pathToFilter = {
+  '/all-events': 'all',
+  '/past-events': 'past',
+  '/upcoming-events': 'upcoming'
+}
+interface IEventsProps extends RouteComponentProps {
+  events: IEvent[]
 
-interface IEventsProps {
-  events: IEventState
+  eventsLoading: boolean
   user: IUserState
-  history: History
   getEvents(): IAction
 }
 
-class EventsView extends React.Component<IEventsProps & WithStyles> {
-  public componentDidMount() {
-    if (this.props.user) {
-      this.props.getEvents()
-    }
-  }
-
-  public renderEventsList = (events: IEvent[], noEventsMessage: string) => (
-    <React.Fragment>
-      {events.length < 1 && (
-        <Typography
-          className="eventsListCaption"
-          align="center"
-          variant="body2"
-          gutterBottom={true}
-        >
-          {noEventsMessage}
-        </Typography>
-      )}
-
-      <div className="eventsList">
-        {map(
-          sortBy(events, (event: IEvent) =>
-            event.updatedAt ? event.updatedAt : event.createdAt
-          ).reverse(),
-          (event: IEvent) => (
-            <EventBigCard key={event.eventId} event={event} />
-          )
-        )}
-      </div>
-    </React.Fragment>
-  )
-
-  public render() {
-    const { history, classes } = this.props
-    const { events, eventsLoading } = this.props.events
-    const currentPath = history.location.pathname
-
-    const now = moment()
-
-    let allEvents: IEvent[] = []
-    let pastEvents: IEvent[] = []
-    let upcomingEvents: IEvent[] = []
-
-    if (!!events) {
-      pastEvents = events.filter(event => event.startDateTime.isBefore(now))
-      upcomingEvents = events.filter(event => event.startDateTime.isAfter(now))
-      allEvents = events.filter(event => event)
+const EventsView = ({
+  events = [],
+  eventsLoading,
+  getEvents,
+  location
+}: IEventsProps) => {
+  const [visibleEvents, setVisibleEvents] = useState(events)
+  const now = moment()
+  const currentFilter = pathToFilter[location.pathname]
+  useEffect(() => {
+    if (isEmpty(events) && !eventsLoading) {
+      getEvents()
     }
 
-    return (
-      <div className="events">
-        {eventsLoading && <LoadingSpinner />}
+    if (currentFilter === 'all' && visibleEvents !== events) {
+      setVisibleEvents(events)
+    } else if (currentFilter === 'past') {
+      setVisibleEvents(
+        events.filter(event => event.startDateTime.isBefore(now))
+      )
+    } else if (currentFilter === 'upcoming') {
+      setVisibleEvents(events.filter(event => event.startDateTime.isAfter(now)))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [events, eventsLoading, getEvents, currentFilter])
 
-        {!eventsLoading && (!events || events.length < 1) && <NoEvents />}
+  return (
+    <div className="EventsView-root">
+      {eventsLoading && <LoadingSpinner />}
 
-        {!eventsLoading && !!events && events.length > 0 && (
-          <React.Fragment>
-            <Grid container={true} spacing={3} direction="row">
-              <Hidden xsDown={true}>
-                <Grid item={true} sm={12}>
-                  <Link to="/all-events">
-                    <Button
-                      variant="text"
-                      className={
-                        currentPath === '/all-events'
-                          ? classes.buttonOrange
-                          : classes.buttonGray
-                      }
-                    >
-                      ALL
-                    </Button>
-                  </Link>
-                  <Link to="/past-events">
-                    <Button
-                      variant="text"
-                      className={
-                        currentPath === '/past-events'
-                          ? classes.buttonOrange
-                          : classes.buttonGray
-                      }
-                    >
-                      PAST EVENTS
-                    </Button>
-                  </Link>
-                  <Link to="/upcoming-events">
-                    <Button
-                      variant="text"
-                      className={
-                        currentPath === '/upcoming-events'
-                          ? classes.buttonOrange
-                          : classes.buttonGray
-                      }
-                    >
-                      UPCOMING EVENTS
-                    </Button>
-                  </Link>
-                </Grid>
-              </Hidden>
-              <Grid item={true} md={12}>
-                {currentPath === '/all-events' &&
-                  this.renderEventsList(allEvents, 'no events')}
-                {currentPath === '/past-events' &&
-                  this.renderEventsList(pastEvents, 'no events')}
-                {currentPath === '/upcoming-events' &&
-                  this.renderEventsList(upcomingEvents, 'no events')}
+      {!eventsLoading && (!events || events.length < 1) && <NoEvents />}
+
+      {!eventsLoading && !!events && events.length > 0 && (
+        <React.Fragment>
+          <Grid container={true} spacing={3} direction="row">
+            <Hidden xsDown={true}>
+              <Grid item={true} sm={12}>
+                <Link to="/all-events">
+                  <Button
+                    variant="text"
+                    className={
+                      currentFilter === 'all'
+                        ? 'Eventsview-button-orange'
+                        : 'EventsView-button-gray'
+                    }
+                  >
+                    ALL
+                  </Button>
+                </Link>
+                <Link to="/past-events">
+                  <Button
+                    variant="text"
+                    className={
+                      currentFilter === 'past'
+                        ? 'Eventsview-button-orange'
+                        : 'EventsView-button-gray'
+                    }
+                  >
+                    PAST EVENTS
+                  </Button>
+                </Link>
+                <Link to="/upcoming-events">
+                  <Button
+                    variant="text"
+                    className={
+                      currentFilter === 'upcoming'
+                        ? 'Eventsview-button-orange'
+                        : 'EventsView-button-gray'
+                    }
+                  >
+                    UPCOMING EVENTS
+                  </Button>
+                </Link>
               </Grid>
+            </Hidden>
+            <Grid item={true} md={12}>
+              {visibleEvents.length < 1 && (
+                <Typography align="center" variant="body2" gutterBottom={true}>
+                  No Events Yet
+                </Typography>
+              )}
+
+              <div className="Eventsview-list">
+                {map(
+                  sortBy(visibleEvents, (event: IEvent) =>
+                    event.updatedAt ? event.updatedAt : event.createdAt
+                  ).reverse(),
+                  (event: IEvent) => (
+                    <EventBigCard key={event.eventId} event={event} />
+                  )
+                )}
+              </div>
             </Grid>
-          </React.Fragment>
-        )}
-      </div>
-    )
-  }
+          </Grid>
+        </React.Fragment>
+      )}
+    </div>
+  )
 }
 
-export default decorate(EventsView)
+export default EventsView

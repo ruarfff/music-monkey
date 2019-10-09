@@ -18,7 +18,6 @@ interface ITitleProps extends RouteComponentProps {
 }
 
 const Title = ({ location, event }: ITitleProps) => {
-  console.log(event)
   const path = location.pathname
   let title = ''
   if (event && path === `/events/${event.eventId}`) {

@@ -1,0 +1,42 @@
+.EventBigCard-root {
+  height: 390px;
+  margin-top: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+  width: 300px;
+
+  a {
+    text-decoration: none;
+  }
+
+  .EventBigCard-img-container {
+    width: 100%;
+    img {
+      padding: 0.1rem 2rem;
+      width: inherit;
+      height: 190px;
+      border-radius: 5px;
+    }
+  }
+
+  .EventBigCard-content {
+    padding: 15px 25px;
+    height: calc(100% - 194px);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .EventBigCard-title {
+    margin-bottom: 24px;
+    font-size: 20px;
+    line-height: 23px;
+  }
+
+  .EventBigCard-event-description {
+    color: #979797;
+    font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 4px;
+    display: flex;
+  }
+}
