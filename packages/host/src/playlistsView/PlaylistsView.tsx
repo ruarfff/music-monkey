@@ -15,7 +15,6 @@ import NoEvents from '../event/NoEvents'
 import IAction from '../IAction'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import IPlaylist from '../playlist/IPlaylist'
-import IUser from '../user/IUser'
 import IUserState from '../user/IUserState'
 import PlaylistCard from './PlaylistCard'
 
@@ -34,7 +33,6 @@ interface IEventsProps {
   history: History
   playlists: IPlaylist[]
   getEvents(): IAction
-  fetchPlaylists(user: IUser): IAction
 }
 
 interface IDecoratedPlaylist extends IPlaylist {

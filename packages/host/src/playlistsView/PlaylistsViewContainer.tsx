@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { getEvents } from '../event/eventActions'
-import { fetchPlaylists } from '../playlist/playlistActions'
-import IRootState from '../rootState'
+import { getEvents } from 'event/eventActions'
+import IRootState from 'rootState'
 import PlaylistsView from './PlaylistsView'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -12,8 +11,7 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = {
-  getEvents,
-  fetchPlaylists,
+  getEvents
 }
 
 const PlaylistsContainer = withRouter(connect(
