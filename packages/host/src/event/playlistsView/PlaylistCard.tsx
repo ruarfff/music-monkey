@@ -8,12 +8,12 @@ import IPlaylist from 'playlist/IPlaylist'
 import formatDuration from 'util/formatDuration'
 import './PlaylistCard.scss'
 
-interface IEventBigCardProps {
+interface IPlaylistCardProps {
   eventId: string
   playlist: IPlaylist
 }
 
-const PlaylistCard = ({ playlist, eventId }: IEventBigCardProps) => {
+const PlaylistCard = ({ playlist, eventId }: IPlaylistCardProps) => {
   const durationSeconds =
     playlist.tracks.items.length > 0
       ? playlist.tracks.items

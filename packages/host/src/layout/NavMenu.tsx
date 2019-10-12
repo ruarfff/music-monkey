@@ -12,15 +12,15 @@ const NavMenu = () => {
   const eventsSubItems = [
     {
       text: 'Past Events',
-      link: '/past-events'
+      link: '/catalogue/past-events'
     },
     {
       text: 'Upcoming Events',
-      link: '/upcoming-events'
+      link: '/catalogue/upcoming-events'
     },
     {
       text: 'All Events',
-      link: '/all-events'
+      link: '/catalogue/all-events'
     },
     {
       text: 'Create New Event',
@@ -31,15 +31,15 @@ const NavMenu = () => {
   const playlistSubItems = [
     {
       text: 'All Playlists',
-      link: '/all-playlists'
+      link: '/catalogue/all-playlists'
     },
     {
       text: 'Past Playlists',
-      link: '/past-playlists'
+      link: '/catalogue/past-playlists'
     },
     {
       text: 'Upcoming Playlists',
-      link: '/upcoming-playlists'
+      link: '/catalogue/upcoming-playlists'
     }
   ]
 

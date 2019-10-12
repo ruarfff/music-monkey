@@ -2,19 +2,18 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import IRootState from 'rootState'
 import { getEvents } from 'event/eventActions'
-import EventsView from './EventsView'
+import CatalogueBrowser from './CatalogueBrowser'
 
 const mapStateToProps = (state: IRootState) => ({
   eventsLoading: state.event.eventsLoading,
-  events: state.event.events,
-  user: state.user
+  events: state.event.events
 })
 
 const mapDispatchToProps = { getEvents }
 
-const EventsContainer = withRouter(connect(
+const CatalogueBrowserContainer = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(EventsView) as any)
+)(CatalogueBrowser) as any)
 
-export default EventsContainer
+export default CatalogueBrowserContainer

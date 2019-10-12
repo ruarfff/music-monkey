@@ -103,7 +103,7 @@ class Events extends React.Component<IEventsProps> {
           <React.Fragment>
             <Grid container={true} spacing={3} direction="row">
               <Grid item={true} sm={5} container={true} justify={'center'}>
-                <Link to={'/all-events'} className="eventListShowAll">
+                <Link to={'/catalogue/all-events'} className="eventListShowAll">
                   EVENTS
                 </Link>
                 <div className="eventsList">
@@ -133,7 +133,10 @@ class Events extends React.Component<IEventsProps> {
               </Grid>
 
               <Grid item={true} sm={5} container={true} justify={'center'}>
-                <Link to={'/all-playlists'} className="eventListShowAll">
+                <Link
+                  to={'/catalogue/all-playlists'}
+                  className="eventListShowAll"
+                >
                   PLAYLISTS
                 </Link>
                 <div className="eventsList">

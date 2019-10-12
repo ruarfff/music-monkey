@@ -1,4 +1,4 @@
-.EventBigCard-root {
+.CatalogueCard-root {
   height: 390px;
   margin-top: 1em;
   margin-left: 1em;
@@ -9,7 +9,7 @@
     text-decoration: none;
   }
 
-  .EventBigCard-img-container {
+  .CatalogueCard-img-container {
     width: 100%;
     img {
       padding: 0.1rem 2rem;
@@ -19,24 +19,28 @@
     }
   }
 
-  .EventBigCard-content {
+  .CatalogueCard-content {
     padding: 15px 25px;
     height: calc(100% - 194px);
     display: flex;
     justify-content: space-between;
   }
 
-  .EventBigCard-title {
+  .CatalogueCard-title {
     margin-bottom: 24px;
     font-size: 20px;
     line-height: 23px;
   }
 
-  .EventBigCard-event-description {
-    color: #979797;
-    font-size: 12px;
-    line-height: 16px;
-    margin-bottom: 4px;
-    display: flex;
+  .CatalogueCard-description {
+    .CatalogueCard-description-item {
+      font-size: 12px;
+      line-height: 16px;
+      margin-bottom: 4px;
+      display: flex;
+      img {
+        margin-right: 2rem;
+      }
+    }
   }
 }

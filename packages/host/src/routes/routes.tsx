@@ -8,10 +8,9 @@ import IRootState from 'rootState'
 import AccountViewContainer from 'accountView/AccountViewContainer'
 import CreateEvent from 'event/eventCreation/CreateEventContainer'
 import SaveEvent from 'event/saveEvent/SaveEvent'
-import EventsContainer from 'event/eventsView/EventsViewContainer'
 import EventView from 'event/eventView/EventViewContainer'
 import InsightsContainer from 'insights/InsightsContainer'
-import PlaylistsContainer from 'playlistsView/PlaylistsViewContainer'
+import CatalogueBrowser from 'event/catalogue/CatalogueBrowserContainer'
 
 const locationHelper = locationHelperBuilder({})
 
@@ -51,34 +50,8 @@ export const routes = [
     path: '/events/:eventId/edit'
   },
   {
-    component: EventsContainer,
-    exact: true,
-    path: '/all-events'
-  },
-  {
-    component: EventsContainer,
-    exact: true,
-    path: '/upcoming-events'
-  },
-  {
-    component: EventsContainer,
-    exact: true,
-    path: '/past-events'
-  },
-  {
-    component: PlaylistsContainer,
-    exact: true,
-    path: '/all-playlists'
-  },
-  {
-    component: PlaylistsContainer,
-    exact: true,
-    path: '/upcoming-playlists'
-  },
-  {
-    component: PlaylistsContainer,
-    exact: true,
-    path: '/past-playlists'
+    component: CatalogueBrowser,
+    path: '/catalogue'
   },
   {
     component: AccountViewContainer,

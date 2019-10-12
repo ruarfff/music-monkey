@@ -1,6 +1,6 @@
 import React from 'react'
 import IEvent from 'event/IEvent'
-import PlaylistCard from 'playlistsView/PlaylistCard'
+import PlaylistCard from 'event/playlistsView/PlaylistCard'
 
 interface IMyPlaylistsProps {
   events: IEvent[]

@@ -13,29 +13,32 @@ import IAction from 'IAction'
 import IEvent from 'event/IEvent'
 import NoEvents from 'event/NoEvents'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import IUserState from 'user/IUserState'
-import EventBigCard from './EventBigCard'
-import './EventsView.scss'
+import CatalogueCard from 'event/catalogue/CatalogueCard'
+import eventIcon from 'assets/date-icon.svg'
+import locationIcon from 'assets/location-marker-icon.svg'
+import './CatalogueBrowser.scss'
 
 const pathToFilter = {
-  '/all-events': 'all',
-  '/past-events': 'past',
-  '/upcoming-events': 'upcoming'
+  '/catalogue/all-events': 'all',
+  '/catalogue/past-events': 'past',
+  '/catalogue/upcoming-events': 'upcoming',
+  '/catalogue/all-playlists': '',
+  '/catalogue/past-playlists': '',
+  '/catalogue/upcoming-playlists': ''
 }
-interface IEventsProps extends RouteComponentProps {
+interface ICatalogueBrowserProps extends RouteComponentProps {
   events: IEvent[]
 
   eventsLoading: boolean
-  user: IUserState
   getEvents(): IAction
 }
 
-const EventsView = ({
+const CatalogueBrowser = ({
   events = [],
   eventsLoading,
   getEvents,
   location
-}: IEventsProps) => {
+}: ICatalogueBrowserProps) => {
   const [visibleEvents, setVisibleEvents] = useState(events)
   const now = moment()
   const currentFilter = pathToFilter[location.pathname]
@@ -56,8 +59,37 @@ const EventsView = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [events, eventsLoading, getEvents, currentFilter])
 
+  const eventCard = (event: IEvent) => {
+    const descriptionLines = [
+      {
+        image: eventIcon,
+        text: event.startDateTime
+          ? event.startDateTime.format('Do MMMM YYYY')
+          : ''
+      },
+      {
+        image: locationIcon,
+        text: event.location ? event.location.address : ''
+      }
+    ]
+
+    const cardActions = [
+      { link: '/events/' + event.eventId, text: 'GO TO EVENT' },
+      { link: '/events/' + event.eventId + '/edit', text: 'EDIT EVENT' }
+    ]
+    return (
+      <CatalogueCard
+        key={event.eventId}
+        link={'/events/' + event.eventId}
+        imageUrl={event.imageUrl}
+        title={event.name}
+        descriptionLines={descriptionLines}
+        cardActions={cardActions}
+      />
+    )
+  }
   return (
-    <div className="EventsView-root">
+    <div className="CatalogueBrowser-root">
       {eventsLoading && <LoadingSpinner />}
 
       {!eventsLoading && (!events || events.length < 1) && <NoEvents />}
@@ -72,8 +104,8 @@ const EventsView = ({
                     variant="text"
                     className={
                       currentFilter === 'all'
-                        ? 'Eventsview-button-orange'
-                        : 'EventsView-button-gray'
+                        ? 'CatalogueBrowser-button-orange'
+                        : 'CatalogueBrowser-button-gray'
                     }
                   >
                     ALL
@@ -84,8 +116,8 @@ const EventsView = ({
                     variant="text"
                     className={
                       currentFilter === 'past'
-                        ? 'Eventsview-button-orange'
-                        : 'EventsView-button-gray'
+                        ? 'CatalogueBrowser-button-orange'
+                        : 'CatalogueBrowser-button-gray'
                     }
                   >
                     PAST EVENTS
@@ -96,8 +128,8 @@ const EventsView = ({
                     variant="text"
                     className={
                       currentFilter === 'upcoming'
-                        ? 'Eventsview-button-orange'
-                        : 'EventsView-button-gray'
+                        ? 'CatalogueBrowser-button-orange'
+                        : 'CatalogueBrowser-button-gray'
                     }
                   >
                     UPCOMING EVENTS
@@ -112,14 +144,12 @@ const EventsView = ({
                 </Typography>
               )}
 
-              <div className="Eventsview-list">
+              <div className="CatalogueBrowser-list">
                 {map(
                   sortBy(visibleEvents, (event: IEvent) =>
                     event.updatedAt ? event.updatedAt : event.createdAt
                   ).reverse(),
-                  (event: IEvent) => (
-                    <EventBigCard key={event.eventId} event={event} />
-                  )
+                  eventCard
                 )}
               </div>
             </Grid>
@@ -130,4 +160,4 @@ const EventsView = ({
   )
 }
 
-export default EventsView
+export default CatalogueBrowser

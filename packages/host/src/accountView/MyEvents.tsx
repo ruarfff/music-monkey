@@ -1,17 +1,45 @@
 import React from 'react'
 import IEvent from 'event/IEvent'
-import EventBigCard from 'event/eventsView/EventBigCard'
+import CatalogueCard from 'event/catalogue/CatalogueCard'
+import eventIcon from 'assets/date-icon.svg'
+import locationIcon from 'assets/location-marker-icon.svg'
 
-interface IMyPlaylistsProps {
+interface IMyEventsProps {
   events: IEvent[]
 }
 
-const MyPlaylists = ({ events }: IMyPlaylistsProps) => (
+const MyEvents = ({ events }: IMyEventsProps) => (
   <>
-    {events.map((event, key) => (
-      <EventBigCard event={event} key={key} />
-    ))}
+    {events.map(event => {
+      const descriptionLines = [
+        {
+          image: eventIcon,
+          text: event.startDateTime
+            ? event.startDateTime.format('Do MMMM YYYY')
+            : ''
+        },
+        {
+          image: locationIcon,
+          text: event.location ? event.location.address : ''
+        }
+      ]
+
+      const cardActions = [
+        { link: '/events/' + event.eventId, text: 'GO TO EVENT' },
+        { link: '/events/' + event.eventId + '/edit', text: 'EDIT EVENT' }
+      ]
+      return (
+        <CatalogueCard
+          key={event.eventId}
+          link={'/events/' + event.eventId}
+          imageUrl={event.imageUrl}
+          title={event.name}
+          descriptionLines={descriptionLines}
+          cardActions={cardActions}
+        />
+      )
+    })}
   </>
 )
 
-export default MyPlaylists
+export default MyEvents
