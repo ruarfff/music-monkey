@@ -5,10 +5,10 @@ import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 
 import IRootState from 'rootState'
-import AccountViewContainer from 'accountView/AccountViewContainer'
-import CreateEvent from 'event/createEvent/CreateEventContainer'
+import AccountView from 'accountView/AccountViewContainer'
+import SaveEvent from 'event/saveEvent/SaveEventContainer'
 import EventView from 'event/eventView/EventViewContainer'
-import InsightsContainer from 'insights/InsightsContainer'
+import Insights from 'insights/InsightsContainer'
 import CatalogueBrowser from 'catalogue/CatalogueBrowserContainer'
 
 const locationHelper = locationHelperBuilder({})
@@ -31,7 +31,7 @@ export const userIsAuthenticated = connectedRouterRedirect({
 
 export const routes = [
   {
-    component: CreateEvent,
+    component: SaveEvent,
     exact: true,
     path: '/create-event'
   },
@@ -41,7 +41,7 @@ export const routes = [
     path: '/events/:eventId'
   },
   {
-    component: CreateEvent,
+    component: SaveEvent,
     path: '/events/:eventId/edit'
   },
   {
@@ -49,12 +49,12 @@ export const routes = [
     path: '/catalogue'
   },
   {
-    component: AccountViewContainer,
+    component: AccountView,
     exact: true,
     path: '/account'
   },
   {
-    component: InsightsContainer,
+    component: Insights,
     exact: true,
     path: '/insights'
   }

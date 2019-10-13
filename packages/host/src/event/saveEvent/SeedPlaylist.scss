@@ -1,0 +1,22 @@
+@import 'theme/main';
+
+.SeedPlaylist-root {
+  .SeedPlaylist-grid-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
+
+    .SeedPlaylist-grid-list {
+      flex-wrap: nowrap;
+      transform: translateZ(0);
+
+      .SeedPlaylist-playlist {
+        margin: 0.5rem;
+      }
+      .SeedPlaylist-playlist-selected {
+        background-color: $primary;
+      }
+    }
+  }
+}

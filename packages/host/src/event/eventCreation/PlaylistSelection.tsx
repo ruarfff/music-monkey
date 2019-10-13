@@ -256,7 +256,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
                   key={index}
                   onClick={this.handlePlaylistSelected(playlist)}
                 >
-                  <PlaylistCard playlist={playlist} disableLink={true} />
+                  <PlaylistCard playlist={playlist} />
                 </div>
               ))}
               <div className="Plus" onClick={this.handleLoadMore}>

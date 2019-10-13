@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import IRootState from 'rootState'
-import CreateEvent from './CreateEvent'
+import SaveEvent from './SaveEvent'
 
 const mapStateToProps = (state: IRootState) => ({})
 
 const mapDispatchToProps = {}
 
-const CreateEventContainer = withRouter(
+const SaveEventContainer = withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(CreateEvent)
+  )(SaveEvent)
 )
 
-export default CreateEventContainer
+export default SaveEventContainer
