@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     overflow: hidden;
+    min-height: 255px;
 
     .SeedPlaylist-grid-list {
       flex-wrap: nowrap;

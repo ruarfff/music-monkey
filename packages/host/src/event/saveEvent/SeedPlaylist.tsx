@@ -9,6 +9,7 @@ import IAction from 'IAction'
 import IPlaylist from 'playlist/IPlaylist'
 import SmallPlaylistCard from 'catalogue/SmallPlaylistCard'
 import './SeedPlaylist.scss'
+import LoadingSpinner from 'loading/LoadingSpinner'
 
 interface SeedPlaylistProps {
   user: IUser
@@ -43,25 +44,29 @@ const SeedPlaylist = ({
         with an empty playlist.
       </Typography>
       <div className="SeedPlaylist-grid-list-container">
-        <GridList cols={2.5} className="SeedPlaylist-grid-list">
-          {playlists
-            .filter((playlist: IPlaylist) => playlist.tracks.total > 0)
-            .map((playlist: IPlaylist) => (
-              <div
-                key={playlist.id}
-                onClick={() => {
-                  setSelectedPlaylist(playlist)
-                }}
-                className={`SeedPlaylist-playlist ${
-                  !!selectedPlaylist && selectedPlaylist.id === playlist.id
-                    ? 'SeedPlaylist-playlist-selected'
-                    : ''
-                }`}
-              >
-                <SmallPlaylistCard playlist={playlist} />
-              </div>
-            ))}
-        </GridList>
+        {playlistsLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <GridList cols={2.5} className="SeedPlaylist-grid-list">
+            {playlists
+              .filter((playlist: IPlaylist) => playlist.tracks.total > 0)
+              .map((playlist: IPlaylist) => (
+                <div
+                  key={playlist.id}
+                  onClick={() => {
+                    setSelectedPlaylist(playlist)
+                  }}
+                  className={`SeedPlaylist-playlist ${
+                    !!selectedPlaylist && selectedPlaylist.id === playlist.id
+                      ? 'SeedPlaylist-playlist-selected'
+                      : ''
+                  }`}
+                >
+                  <SmallPlaylistCard playlist={playlist} />
+                </div>
+              ))}
+          </GridList>
+        )}
       </div>
 
       <div className="SeedPlaylist-actions">

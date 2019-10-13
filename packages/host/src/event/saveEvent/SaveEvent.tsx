@@ -33,6 +33,7 @@ const steps = [
 const SaveEvent = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [skipped, setSkipped] = useState(new Set<number>())
+  
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step)
