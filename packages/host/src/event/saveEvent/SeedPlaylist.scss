@@ -1,23 +1,30 @@
 @import 'theme/main';
 
 .SeedPlaylist-root {
+  .SeedPlaylist-loading-area {
+    height: 255px;
+  }
   .SeedPlaylist-grid-list-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     overflow: hidden;
-    min-height: 255px;
+    height: 255px;
+  }
+  .SeedPlaylist-grid-list {
+    flex-wrap: nowrap;
+    transform: translateZ(0);
+  }
+  .SeedPlaylist-playlist {
+    margin: 0.5rem;
+  }
 
-    .SeedPlaylist-grid-list {
-      flex-wrap: nowrap;
-      transform: translateZ(0);
+  .SeedPlaylist-playlist-card {
+    width: 260px;
+    height: 250px;
+  }
 
-      .SeedPlaylist-playlist {
-        margin: 0.5rem;
-      }
-      .SeedPlaylist-playlist-selected {
-        background-color: $primary;
-      }
-    }
+  .SeedPlaylist-playlist-selected {
+    background-color: $primary;
   }
 }

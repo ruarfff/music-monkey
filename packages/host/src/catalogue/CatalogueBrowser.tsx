@@ -149,7 +149,6 @@ const CatalogueBrowser = ({
             <div className="CatalogueBrowser-list">
               {map(visibleEvents, (event: IEvent) => {
                 if (currentFilter.type === playlist) {
-                  console.log(event.playlist)
                   return (
                     <PlaylistCard
                       key={event.eventId}

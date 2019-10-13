@@ -4,12 +4,13 @@ import Typography from '@material-ui/core/Typography'
 import FormGroup from '@material-ui/core/FormGroup'
 import Button from '@material-ui/core/Button'
 import GridList from '@material-ui/core/GridList'
+import Divider from '@material-ui/core/Divider'
 import IUser from 'user/IUser'
 import IAction from 'IAction'
 import IPlaylist from 'playlist/IPlaylist'
 import SmallPlaylistCard from 'catalogue/SmallPlaylistCard'
-import './SeedPlaylist.scss'
 import LoadingSpinner from 'loading/LoadingSpinner'
+import './SeedPlaylist.scss'
 
 interface SeedPlaylistProps {
   user: IUser
@@ -43,10 +44,12 @@ const SeedPlaylist = ({
         <Button onClick={() => handleNext()}>Skip this step</Button> to start
         with an empty playlist.
       </Typography>
-      <div className="SeedPlaylist-grid-list-container">
-        {playlistsLoading ? (
+      {playlistsLoading ? (
+        <div className="SeedPlaylist-loading-area">
           <LoadingSpinner />
-        ) : (
+        </div>
+      ) : (
+        <div className="SeedPlaylist-grid-list-container">
           <GridList cols={2.5} className="SeedPlaylist-grid-list">
             {playlists
               .filter((playlist: IPlaylist) => playlist.tracks.total > 0)
@@ -62,16 +65,25 @@ const SeedPlaylist = ({
                       : ''
                   }`}
                 >
-                  <SmallPlaylistCard playlist={playlist} />
+                  <SmallPlaylistCard
+                    playlist={playlist}
+                    classes={{ root: 'SeedPlaylist-playlist-card' }}
+                  />
                 </div>
               ))}
           </GridList>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="SeedPlaylist-actions">
         {!!selectedPlaylist && (
-          <Typography>You have selected {selectedPlaylist.name}</Typography>
+          <div>
+            <Divider variant="fullWidth" />
+            <Typography variant="subtitle1" align="center">
+              You have selected {selectedPlaylist.name}
+            </Typography>
+            <Divider variant="fullWidth" />
+          </div>
         )}
         <FormGroup className="SaveEvent-form-actions">
           {!!selectedPlaylist && (

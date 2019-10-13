@@ -61,7 +61,7 @@ const Home = ({ user, events, eventsLoading, getEvents }: IHomeProps) => {
 
   return (
     <div className="Home-root">
-      <Hidden smUp implementation="css">
+      <Hidden mdUp implementation="css">
         <div className="Home-create-event-small">
           <Link to={'/create-event'}>
             <Button variant="contained" color="secondary">
@@ -73,18 +73,7 @@ const Home = ({ user, events, eventsLoading, getEvents }: IHomeProps) => {
           </Link>
         </div>
       </Hidden>
-      <Hidden xsDown implementation="css">
-        <div className="Home-create-event">
-          <Link to={'/create-event'}>
-            <Button variant={'contained'} color={'secondary'}>
-              <div>
-                <img alt="music monkey logo" src={logo} />
-                <span>CREATE NEW EVENT</span>
-              </div>
-            </Button>
-          </Link>
-        </div>
-      </Hidden>
+
       <div className="Home-shelf">
         <div className="Home-carousel">
           <Typography
@@ -114,6 +103,18 @@ const Home = ({ user, events, eventsLoading, getEvents }: IHomeProps) => {
             )}
           </Carousel>
         </div>
+        <Hidden mdDown implementation="css">
+          <div className="Home-create-event">
+            <Link to={'/create-event'}>
+              <Button variant={'contained'} color={'secondary'}>
+                <div>
+                  <img alt="music monkey logo" src={logo} />
+                  <span>CREATE NEW EVENT</span>
+                </div>
+              </Button>
+            </Link>
+          </div>
+        </Hidden>
         <div className="Home-carousel">
           <Typography
             align="center"

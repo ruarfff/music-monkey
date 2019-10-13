@@ -9,9 +9,13 @@ import './SmallPlaylistCard.scss'
 
 interface ISmallPlaylistCardProps {
   playlist: IPlaylist
+  classes?: { root: string }
 }
 
-const SmallPlaylistCard = ({ playlist }: ISmallPlaylistCardProps) => {
+const SmallPlaylistCard = ({
+  playlist,
+  classes = { root: '' }
+}: ISmallPlaylistCardProps) => {
   const durationSeconds =
     playlist && playlist.tracks.items.length > 0
       ? playlist.tracks.items
@@ -27,7 +31,7 @@ const SmallPlaylistCard = ({ playlist }: ISmallPlaylistCardProps) => {
   if (!playlist) return null
 
   return (
-    <Card className="SmallPlaylistCard-root">
+    <Card className={`SmallPlaylistCard-root ${classes.root}`}>
       <div className="SmallPlaylistCard-image">
         <Image
           src={image}

@@ -14,7 +14,6 @@
     height: 300px;
 
     .Home-carousel-caption {
-      font-family: 'Roboto', sans-serif;
       line-height: 1rem;
       color: $secondary-main;
       font-weight: 500;
@@ -43,12 +42,11 @@
   }
 
   .Home-create-event-small {
-    display: block;
     margin: 0 auto;
-    width: 120px;
+    width: 50%;
     height: 80px;
     padding-bottom: 2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     text-align: center;
 
     img {
