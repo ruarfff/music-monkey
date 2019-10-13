@@ -44,7 +44,9 @@ const CatalogueCard = ({
               {description.image && (
                 <img alt="card line icon" src={description.image} />
               )}
-              <Typography>{description.text}</Typography>
+              <Typography noWrap={true} gutterBottom={true}>
+                {description.text}
+              </Typography>
             </div>
           ))}
         </div>
