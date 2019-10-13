@@ -12,9 +12,9 @@ import logo from 'assets/monkey_logo.png'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import IEvent from 'event/IEvent'
 import IUser from 'user/IUser'
-import EventCard from 'event/EventCard'
+import EventCard from 'catalogue/SmallEventCard'
 import './Home.scss'
-import PlaylistCard from 'event/PlaylistCardSmall'
+import PlaylistCard from 'catalogue/SmallPlaylistCard'
 
 interface IHomeProps {
   events: IEvent[]

@@ -6,38 +6,38 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import eventIcon from 'assets/event-date-icon.svg'
-import IEvent from './IEvent'
-import './EventCard.scss'
+import IEvent from 'event/IEvent'
+import './SmallEventCard.scss'
 
-interface IEventCardProps {
+interface ISmallEventCardProps {
   event: IEvent
 }
 
-const EventCard = ({ event }: IEventCardProps) => {
+const SmallEventCard = ({ event }: ISmallEventCardProps) => {
   const size =
     event.guests && (event.guests.length > 2 ? 3 : event.guests.length)
 
   return (
-    <Card className="EventCard-root">
-      <Link to={'/events/' + event.eventId} className="EventCard-link">
-        <div className="EventCard-image">
+    <Card className="SmallEventCard-root">
+      <Link to={'/events/' + event.eventId} className="SmallEventCard-link">
+        <div className="SmallEventCard-image">
           <img src={event.imageUrl} alt={event.name} />
         </div>
-        <div className="EventCard-content-wrapper">
-          <Typography className="EventCard-time">
+        <div className="SmallEventCard-content-wrapper">
+          <Typography className="SmallEventCard-time">
             <img src={eventIcon} alt="event time" />
             {event.startDateTime ? event.startDateTime.format('LT') : ''}
           </Typography>
-          <Typography className="EventCard-time-big">
+          <Typography className="SmallEventCard-time-big">
             {event.startDateTime
               ? event.startDateTime.format('dddd, MMMM Do')
               : ''}
           </Typography>
-          <Typography className="EventCard-name">
+          <Typography className="SmallEventCard-name">
             {event.name && event.name}
           </Typography>
 
-          <Typography noWrap={true} className="EventCard-description">
+          <Typography noWrap={true} className="SmallEventCard-description">
             {event.location && event.location.address}
           </Typography>
           <Grid container={true} justify={'flex-start'}>
@@ -47,16 +47,16 @@ const EventCard = ({ event }: IEventCardProps) => {
                 .map((guest, i) => (
                   <React.Fragment key={i}>
                     {!guest.user.image ? (
-                      <AccountCircle className="EventCard-no-avatar" />
+                      <AccountCircle className="SmallEventCard-no-avatar" />
                     ) : (
                       <Avatar
                         src={guest.user.image}
-                        className="EventCard-avatar"
+                        className="SmallEventCard-avatar"
                       />
                     )}
                   </React.Fragment>
                 ))}
-            <Avatar className="EventCard-avatar">
+            <Avatar className="SmallEventCard-avatar">
               +{event.guests && (size === 3 ? event.guests.length - 3 : 0)}
             </Avatar>
           </Grid>
@@ -66,4 +66,4 @@ const EventCard = ({ event }: IEventCardProps) => {
   )
 }
 
-export default EventCard
+export default SmallEventCard

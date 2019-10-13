@@ -1,4 +1,4 @@
-.EventCard-root {
+.SmallEventCard-root {
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 0.5rem;
@@ -6,11 +6,11 @@
   box-shadow: 0 10px 6px -6px #777;
   height: 250px;
 
-  .EventCard-link {
+  .SmallEventCard-link {
     text-decoration: none;
   }
 
-  .EventCard-image {
+  .SmallEventCard-image {
     height: 120px;
     width: 100%;
     padding-left: 10%;
@@ -22,11 +22,11 @@
     }
   }
 
-  .EventCard-content-wrapper {
+  .SmallEventCard-content-wrapper {
     padding-left: 1em;
   }
 
-  .EventCard-time {
+  .SmallEventCard-time {
     color: #979797;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -39,34 +39,34 @@
     }
   }
 
-  .EventCard-time-big {
+  .SmallEventCard-time-big {
     font-size: 0.8rem;
     line-height: 1rem;
     color: black;
     font-family: Roboto, sans-sarif;
   }
 
-  .EventCard-name {
+  .SmallEventCard-name {
     color: #979797;
     font-size: 0.8rem;
     line-height: 1rem;
     font-weight: 600;
   }
 
-  .EventCard-description {
+  .SmallEventCard-description {
     color: #979797;
     font-size: 0.75rem;
     line-height: 1rem;
     margin-bottom: 0.2rem;
   }
 
-  .EventCard-avatar {
+  .SmallEventCard-avatar {
     width: 2rem;
     height: 2rem;
     font-size: 10px;
   }
 
-  .EventCard-no-avatar {
+  .SmallEventCard-no-avatar {
     font-size: 2.2rem;
     margin-top: -3px;
   }
