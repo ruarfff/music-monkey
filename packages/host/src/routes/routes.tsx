@@ -10,7 +10,7 @@ import CreateEvent from 'event/eventCreation/CreateEventContainer'
 import SaveEvent from 'event/saveEvent/SaveEvent'
 import EventView from 'event/eventView/EventViewContainer'
 import InsightsContainer from 'insights/InsightsContainer'
-import CatalogueBrowser from 'event/catalogue/CatalogueBrowserContainer'
+import CatalogueBrowser from 'catalogue/CatalogueBrowserContainer'
 
 const locationHelper = locationHelperBuilder({})
 

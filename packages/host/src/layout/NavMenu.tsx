@@ -11,16 +11,16 @@ import './NavMenu.scss'
 const NavMenu = () => {
   const eventsSubItems = [
     {
-      text: 'Past Events',
-      link: '/catalogue/past-events'
+      text: 'All Events',
+      link: '/catalogue/all-events'
     },
     {
       text: 'Upcoming Events',
       link: '/catalogue/upcoming-events'
     },
     {
-      text: 'All Events',
-      link: '/catalogue/all-events'
+      text: 'Past Events',
+      link: '/catalogue/past-events'
     },
     {
       text: 'Create New Event',
@@ -34,12 +34,12 @@ const NavMenu = () => {
       link: '/catalogue/all-playlists'
     },
     {
-      text: 'Past Playlists',
-      link: '/catalogue/past-playlists'
-    },
-    {
       text: 'Upcoming Playlists',
       link: '/catalogue/upcoming-playlists'
+    },
+    {
+      text: 'Past Playlists',
+      link: '/catalogue/past-playlists'
     }
   ]
 

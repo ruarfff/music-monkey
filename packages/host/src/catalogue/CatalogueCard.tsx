@@ -10,7 +10,7 @@ interface ICatalogueCardProps {
   link: string
   imageUrl: string
   title: string
-  descriptionLines: { text: string; image: string }[]
+  descriptionLines: { text: string; image?: string }[]
   cardActions: { link: string; text: string }[]
 }
 
@@ -37,7 +37,10 @@ const CatalogueCard = ({
         <Typography className="CatalogueCard-title">{title}</Typography>
         <div className="CatalogueCard-description">
           {descriptionLines.map(description => (
-            <div className="CatalogueCard-description-item">
+            <div
+              key={description.text}
+              className="CatalogueCard-description-item"
+            >
               {description.image && (
                 <img alt="card line icon" src={description.image} />
               )}
@@ -47,7 +50,7 @@ const CatalogueCard = ({
         </div>
         <div>
           {cardActions.map(action => (
-            <Link to={action.link}>
+            <Link key={action.link} to={action.link}>
               <Button color="secondary">{action.text}</Button>
             </Link>
           ))}

@@ -1,6 +1,6 @@
 import React from 'react'
 import IEvent from 'event/IEvent'
-import PlaylistCard from 'event/playlistsView/PlaylistCard'
+import PlaylistCard from 'catalogue/PlaylistCard'
 
 interface IMyPlaylistsProps {
   events: IEvent[]
@@ -9,13 +9,13 @@ interface IMyPlaylistsProps {
 const MyPlaylists = ({ events }: IMyPlaylistsProps) => (
   <>
     {events.map(
-      (event: IEvent, key) =>
+      (event: IEvent) =>
         event.playlist &&
         event.eventId && (
           <PlaylistCard
+            key={event.eventId}
             eventId={event.eventId}
             playlist={event.playlist}
-            key={key}
           />
         )
     )}
