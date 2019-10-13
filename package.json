@@ -24,7 +24,6 @@
     "connected-react-router": "6.5.2",
     "date-fns": "^2.0.0-beta.5",
     "formik": "^2.0.1-rc.13",
-    "formik-material-ui": "^0.0.22",
     "guest": "file:packages/guest",
     "host": "file:packages/host",
     "lodash": "4.17.11",
