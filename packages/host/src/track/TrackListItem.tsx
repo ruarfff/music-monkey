@@ -5,9 +5,8 @@ import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import { WithStyles } from '@material-ui/core/styles'
-import withStyles from '@material-ui/core/styles/withStyles'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
+import isFunction from 'lodash/isFunction'
 import formatDuration from 'util/formatDuration'
 import ITrack from './ITrack'
 import ITrackWithFeatures from './ITrackWithFeatures'
@@ -16,59 +15,43 @@ import './TrackListItem.scss'
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
 
-const decorate = withStyles(() => ({
-  trackName: {
-    paddingLeft: '10px!important'
-  },
-  trackWrapper: {
-    borderBottom: '1px solid #979797'
-  },
-  img: {
-    borderRadius: '4px'
-  }
-}))
-
 interface ITrackListItemProps {
   track: ITrack
   tracksWithFeature: ITrackWithFeatures
   withVoting: boolean
-  currentUserVoted: boolean
   numberOfVotes: number
-  onVote: (track: ITrack) => void
-  onTrackSelected: (track: ITrack) => void
-  removeTrack?: (uri: string, position: number) => void
-  handleShowNotification: () => void
   disableRemoveTrack?: boolean
+  onVote(track: ITrack): void
+  onTrackSelected?(track: ITrack): void
+  onTrackRemoved?(track: ITrack): void
 }
 
 const TrackListItem = ({
   track,
   tracksWithFeature,
   withVoting,
-  currentUserVoted,
   numberOfVotes,
+  disableRemoveTrack,
   onVote,
   onTrackSelected,
-  removeTrack,
-  classes,
-  handleShowNotification,
-  disableRemoveTrack
-}: ITrackListItemProps & WithStyles) => {
+  onTrackRemoved
+}: ITrackListItemProps) => {
   if (!track) {
     return <span />
   }
   const handleTrackSelected = () => {
-    onTrackSelected(track)
+    if (isFunction(onTrackSelected)) {
+      onTrackSelected(track)
+    }
   }
 
   const handleTrackVote = () => {
     onVote(track)
   }
 
-  const handleRemoveTrack = (uri: string, position: number) => () => {
-    if (!!removeTrack) {
-      removeTrack(uri, position)
-      handleShowNotification()
+  const handleRemoveTrack = (track: ITrack) => () => {
+    if (isFunction(onTrackRemoved)) {
+      onTrackRemoved(track)
     }
   }
 
@@ -76,7 +59,6 @@ const TrackListItem = ({
   if (track.album && track.album.images && track.album.images.length > 0) {
     trackImage = (
       <img
-        className={classes.img}
         src={track.album.images[track.album.images.length - 1].url}
         alt={track.name}
       />
@@ -99,7 +81,7 @@ const TrackListItem = ({
 
   return (
     <ListItem
-      className={classes.trackWrapper}
+      className="TrackListItem-root"
       dense={true}
       button={true}
       onClick={handleTrackSelected}
@@ -121,10 +103,10 @@ const TrackListItem = ({
             item={true}
           >
             <ListItemText
-              className={classes.trackName}
+              className="TrackListItem-name"
               primary={track.album.artists[0].name}
             />
-            <ListItemText className={classes.trackName} primary={track.name} />
+            <ListItemText className="TrackListItem-name" primary={track.name} />
           </Grid>
           <ListItemText primary={formatDuration(track.duration_ms)} />
           <ListItemText
@@ -134,9 +116,7 @@ const TrackListItem = ({
             }
           />
           {!disableRemoveTrack && (
-            <Button onClick={handleRemoveTrack(track.uri, track.track_number)}>
-              REMOVE
-            </Button>
+            <Button onClick={handleRemoveTrack(track)}>REMOVE</Button>
           )}
         </Grid>
       </Grid>
@@ -145,4 +125,4 @@ const TrackListItem = ({
   )
 }
 
-export default decorate(TrackListItem)
+export default TrackListItem

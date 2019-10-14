@@ -5,6 +5,7 @@ import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import Zoom from '@material-ui/core/Zoom'
+import IPlaylist from 'playlist/IPlaylist'
 import EventInitialize from './EventInitialize'
 import SeedPlaylist from './SeedPlaylistContainer'
 import AddTracks from './AddTracks'
@@ -33,7 +34,7 @@ const steps = [
 const SaveEvent = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [skipped, setSkipped] = useState(new Set<number>())
-  
+  const [seedTracks, setSeedTracks] = useState()
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step)
@@ -89,13 +90,21 @@ const SaveEvent = () => {
                 <SeedPlaylist
                   handleNext={handleNext}
                   handleBack={handleBack}
-                  onPlaylistSelected={() => {}}
+                  onPlaylistSelected={(playlist: IPlaylist) => {
+                    setSeedTracks(playlist.tracks.items.map(item => item.track))
+                    handleNext()
+                  }}
                 />
               </Zoom>
             )}
             {activeStep === 2 && (
               <Zoom in={activeStep === 2} timeout={1000}>
-                <AddTracks handleNext={handleNext} handleBack={handleBack} />
+                <AddTracks
+                  handleNext={handleNext}
+                  handleBack={handleBack}
+                  seedTracks={seedTracks}
+                  setSeedTracks={setSeedTracks}
+                />
               </Zoom>
             )}
             {activeStep === 3 && (

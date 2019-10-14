@@ -108,10 +108,6 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
     this.setState({ description })
   }
 
-  public handleShowNotification = () => {
-    this.setState({ isOpen: true })
-  }
-
   public handleCloseNotification = () => {
     this.setState({ isOpen: false })
   }
@@ -234,12 +230,10 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
               </div>
               <List>
                 <TrackList
-                  removeTrack={this.handleRemoveTrack}
                   onDragEnd={this.handlePlaylistDragDrop}
                   tracks={cloneDeep(selectedPlaylist.tracks.items).map(
                     i => i.track
                   )}
-                  showNotification={this.handleShowNotification}
                 />
               </List>
             </React.Fragment>

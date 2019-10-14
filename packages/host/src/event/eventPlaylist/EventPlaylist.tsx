@@ -160,9 +160,8 @@ export default class EventPlaylist extends React.Component<
               {hasStagedTrack && (
                 <List className="EventPlaylist-stagedTracks">
                   <TrackList
-                    removeTrack={this.handleRemoveTrack}
                     tracks={stagedTracks}
-                    showNotification={this.handleShowNotification}
+                    onTrackRemoved={this.handleRemoveTrack}
                   />
                 </List>
               )}
@@ -175,8 +174,7 @@ export default class EventPlaylist extends React.Component<
                     withVoting={true}
                     votes={votes}
                     onDragEnd={this.handlePlaylistDragDrop}
-                    removeTrack={this.handleRemoveTrack}
-                    showNotification={this.handleShowNotification}
+                    onTrackRemoved={this.handleRemoveTrack}
                   />
                 </List>
               )}
@@ -255,8 +253,14 @@ export default class EventPlaylist extends React.Component<
     }
   }
 
-  private handleRemoveTrack = (uri: string, position: number) => {
-    this.props.tryRemoveTrack(this.props.playlist.id, uri, position)
+  private handleRemoveTrack = (track: ITrack) => {
+    this.props.tryRemoveTrack(
+      this.props.playlist.id,
+      track.uri,
+      track.track_number
+    )
+
+    this.handleShowNotification()
   }
 
   private handlePlaylistDragDrop = (result: DropResult) => {
