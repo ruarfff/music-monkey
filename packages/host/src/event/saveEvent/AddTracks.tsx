@@ -1,11 +1,13 @@
-import React from 'react'
-import Typography from '@material-ui/core/Typography'
+import React, { useState } from 'react'
 import List from '@material-ui/core/List'
 import FormGroup from '@material-ui/core/FormGroup'
 import Button from '@material-ui/core/Button'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import remove from 'lodash/remove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
+import SelectTracks from './SelectTracksContainer'
 
 interface AddTracksProps {
   seedTracks: ITrack[]
@@ -20,11 +22,25 @@ const AddTracks = ({
   handleNext,
   handleBack
 }: AddTracksProps) => {
-  console.log(seedTracks)
+  const [tabIndex, setTabIndex] = useState(0)
+
+  const handleTabChange = (event: any, index: number) => {
+    setTabIndex(index)
+  }
+
   return (
     <div>
-      <div>
-        <Typography>Add tracks!</Typography>
+      <Tabs
+        value={tabIndex}
+        onChange={handleTabChange}
+        indicatorColor="primary"
+        textColor="primary"
+        centered
+      >
+        <Tab label="Tracks" />
+        <Tab label="Add Tracks" />
+      </Tabs>
+      {tabIndex === 0 && (
         <List>
           <TrackList
             onTrackRemoved={(track: ITrack) => {
@@ -38,7 +54,10 @@ const AddTracks = ({
             tracks={seedTracks}
           />
         </List>
-      </div>
+      )}
+      {tabIndex === 1 && (
+        <SelectTracks onTrackSelected={() => {}} filterList={seedTracks} />
+      )}
 
       <FormGroup className="SaveEvent-form-actions">
         <Button

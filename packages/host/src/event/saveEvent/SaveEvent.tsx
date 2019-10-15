@@ -12,6 +12,7 @@ import AddTracks from './AddTracks'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
 import './SaveEvent.scss'
+import { Hidden } from '@material-ui/core'
 
 interface SaveEventFormValues {
   eventName: string
@@ -66,19 +67,21 @@ const SaveEvent = () => {
       }}
       render={(formikBag: FormikProps<SaveEventFormValues>) => (
         <div className="SaveEvent-root">
-          <Stepper activeStep={activeStep}>
-            {steps.map((label, index) => {
-              const stepProps: { completed?: boolean } = {}
-              if (isStepSkipped(index)) {
-                stepProps.completed = false
-              }
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              )
-            })}
-          </Stepper>
+          <Hidden smDown implementation="css">
+            <Stepper activeStep={activeStep}>
+              {steps.map((label, index) => {
+                const stepProps: { completed?: boolean } = {}
+                if (isStepSkipped(index)) {
+                  stepProps.completed = false
+                }
+                return (
+                  <Step key={label} {...stepProps}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                )
+              })}
+            </Stepper>
+          </Hidden>
           <Form className="SaveEvent-form">
             {activeStep === 0 && (
               <Zoom in={activeStep === 0} timeout={1000}>

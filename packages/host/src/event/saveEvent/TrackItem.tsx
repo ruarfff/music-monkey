@@ -3,35 +3,25 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import * as React from 'react'
-import IAction from 'IAction'
 import ITrack from 'track/ITrack'
 import formatDuration from 'util/formatDuration'
 import './TrackItem.scss'
 
 interface ITrackItemProps {
   track: ITrack
-  playlistId: string
-  layout?: string
   disableAddButton?: boolean
-  addTrack(playlistId: string, track: ITrack): IAction
-  handleClearSearch?(): void
+  onSelected(track: ITrack): void
 }
 
 const TrackItem = ({
   track,
-  layout,
-  playlistId,
   disableAddButton,
-  handleClearSearch,
-  addTrack
+  onSelected
 }: ITrackItemProps) => {
   let trackImage = <span />
 
   const handleAddTrack = (track: ITrack) => () => {
-    addTrack(playlistId, track)
-    if (handleClearSearch) {
-      handleClearSearch()
-    }
+    onSelected(track)
   }
 
   if (track.album && track.album.images && track.album.images.length > 0) {
