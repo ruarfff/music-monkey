@@ -5,9 +5,11 @@ import Button from '@material-ui/core/Button'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import remove from 'lodash/remove'
+import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
 import SelectTracks from './SelectTracksContainer'
+import { DropResult } from 'react-beautiful-dnd'
 
 interface AddTracksProps {
   seedTracks: ITrack[]
@@ -50,13 +52,26 @@ const AddTracks = ({
                 })
               )
             }}
-            onDragEnd={() => {}}
+            onDragEnd={(result: DropResult) => {
+              if (!result.destination) {
+                return
+              }
+              const tracks = [...seedTracks]
+              arrayMove(tracks, result.source.index, result.destination.index)
+
+              setSeedTracks(tracks)
+            }}
             tracks={seedTracks}
           />
         </List>
       )}
       {tabIndex === 1 && (
-        <SelectTracks onTrackSelected={() => {}} filterList={seedTracks} />
+        <SelectTracks
+          onTrackSelected={(track: ITrack) => {
+            setSeedTracks([...seedTracks, track])
+          }}
+          filterList={seedTracks}
+        />
       )}
 
       <FormGroup className="SaveEvent-form-actions">

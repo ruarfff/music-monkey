@@ -10,7 +10,7 @@ import EventInput from 'components/EventInput/EventInput'
 import TrackItem from './TrackItem'
 import './SelectTracks.scss'
 
-const WAIT_INTERVAL = 400
+const WAIT_INTERVAL = 200
 
 interface SelectTracksProps {
   searchResult: ISearch

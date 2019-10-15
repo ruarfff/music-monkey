@@ -27,10 +27,8 @@ const EventTextInput = ({
   multiline,
   type = 'text'
 }: EventTextInputProps) => (
-  <Field
-    autoFocus
-    name={name}
-    render={({ field, form: { touched, errors } }: FieldProps) => {
+  <Field autoFocus name={name}>
+    {({ field, form: { touched, errors } }: FieldProps) => {
       const inputProps: InputProps = {
         ...field,
         type
@@ -67,7 +65,7 @@ const EventTextInput = ({
         </FormControl>
       )
     }}
-  />
+  </Field>
 )
 
 export default EventTextInput
