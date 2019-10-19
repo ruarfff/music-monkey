@@ -9,6 +9,7 @@ import IPlaylist from 'playlist/IPlaylist'
 import EventInitialize from './EventInitialize'
 import SeedPlaylist from './SeedPlaylistContainer'
 import AddTracks from './AddTracks'
+import AddTracksDesktop from './AddTracksDesktop'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
 import './SaveEvent.scss'
@@ -17,6 +18,10 @@ import { Hidden } from '@material-ui/core'
 interface SaveEventFormValues {
   eventName: string
   eventDescription: string
+}
+
+interface SaveEventProps {
+  isDesktop: boolean
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -32,9 +37,10 @@ const steps = [
   'Summary'
 ]
 
-const SaveEvent = () => {
+const SaveEvent = ({ isDesktop }: SaveEventProps) => {
   const [activeStep, setActiveStep] = useState(0)
   const [skipped, setSkipped] = useState(new Set<number>())
+  const [seedPlaylist, setSeedPlaylist] = useState()
   const [seedTracks, setSeedTracks] = useState()
 
   const isStepSkipped = (step: number) => {
@@ -93,21 +99,37 @@ const SaveEvent = () => {
                 <SeedPlaylist
                   handleNext={handleNext}
                   handleBack={handleBack}
+                  seedPlaylist={seedPlaylist}
                   onPlaylistSelected={(playlist: IPlaylist) => {
-                    setSeedTracks(playlist.tracks.items.map(item => item.track))
-                    handleNext()
+                    setSeedPlaylist(playlist)
+                    if (!!playlist) {
+                      setSeedTracks(
+                        playlist.tracks.items.map(item => item.track)
+                      )
+                    } else {
+                      setSeedTracks([])
+                    }
                   }}
                 />
               </Zoom>
             )}
             {activeStep === 2 && (
               <Zoom in={activeStep === 2} timeout={1000}>
-                <AddTracks
-                  handleNext={handleNext}
-                  handleBack={handleBack}
-                  seedTracks={seedTracks}
-                  setSeedTracks={setSeedTracks}
-                />
+                {isDesktop ? (
+                  <AddTracksDesktop
+                    handleNext={handleNext}
+                    handleBack={handleBack}
+                    seedTracks={seedTracks}
+                    setSeedTracks={setSeedTracks}
+                  />
+                ) : (
+                  <AddTracks
+                    handleNext={handleNext}
+                    handleBack={handleBack}
+                    seedTracks={seedTracks}
+                    setSeedTracks={setSeedTracks}
+                  />
+                )}
               </Zoom>
             )}
             {activeStep === 3 && (

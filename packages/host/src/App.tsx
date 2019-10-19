@@ -1,7 +1,6 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { StylesProvider } from '@material-ui/styles'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { StylesProvider, ThemeProvider } from '@material-ui/styles'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { ConnectedRouter } from 'connected-react-router'
 import { History } from 'history'
@@ -25,7 +24,7 @@ interface IAppProps {
 const App = ({ store, history }: IAppProps) => (
   <StylesProvider injectFirst>
     <CssBaseline />
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={Utils}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
@@ -43,7 +42,7 @@ const App = ({ store, history }: IAppProps) => (
           </ConnectedRouter>
         </Provider>
       </MuiPickersUtilsProvider>
-    </MuiThemeProvider>
+    </ThemeProvider>
   </StylesProvider>
 )
 

@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import Search from '@material-ui/icons/Search'
-import { debounce, isEmpty } from 'lodash'
+import {
+  FormControl,  
+  Input,
+  InputLabel
+} from '@material-ui/core'
+import isEmpty from 'lodash/isEmpty'
 import IAction from 'IAction'
 import ISearch from 'playlist/ISearch'
 import ITrack from 'track/ITrack'
-import EventInput from 'components/EventInput/EventInput'
 import TrackItem from './TrackItem'
+import useDebounce from 'util/useDebounce'
 import './SelectTracks.scss'
 
 const WAIT_INTERVAL = 200
@@ -30,23 +35,21 @@ const SelectTracks = ({
   getRecommendations
 }: SelectTracksProps) => {
   const [searchQuery, setSearchQuery] = useState('')
-  const timer: any = debounce(() => triggerChange(), WAIT_INTERVAL)
-  const handleSearchChange = (searchQuery: string) => {
-    setSearchQuery(searchQuery)
-    timer()
-  }
-  const triggerChange = () => {
-    if (searchQuery !== '') {
-      searchTrack(searchQuery)
-    }
-  }
+  const debouncedSearchQuery = useDebounce(searchQuery, WAIT_INTERVAL);
+
   const existingTracks = filterList.map(track => track.uri)
 
   useEffect(() => {
     if (isEmpty(recommendedTracks)) {
       getRecommendations()
     }
-  }, [getRecommendations, recommendedTracks])
+
+    if (debouncedSearchQuery) {
+      searchTrack(searchQuery)
+    } 
+
+    // eslint-disable-next-line
+  }, [searchQuery, debouncedSearchQuery])
 
   let tracks: ITrack[] = []
 
@@ -63,11 +66,23 @@ const SelectTracks = ({
   return (
     <div className="SelectTracks-root">
       <div className="SelectTracks-section">
-        <EventInput
-          value={searchQuery}
-          label="Search"
-          onChange={handleSearchChange}
-        />
+      <FormControl fullWidth>
+          <InputLabel
+            htmlFor="search-tracks"            
+          >
+            Search
+          </InputLabel>
+
+          <Input
+            id="search-tracks"
+            aria-describedby="Search Tracks"
+            autoFocus                                    
+            onChange={(event: any) => {              
+              setSearchQuery(event.target.value)
+            }}
+            value={searchQuery}
+          />          
+        </FormControl>
         <Button
           onClick={() => {
             searchTrack(searchQuery)

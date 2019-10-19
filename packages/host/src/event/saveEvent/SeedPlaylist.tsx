@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import isEmpty from 'lodash/isEmpty'
 import Typography from '@material-ui/core/Typography'
 import FormGroup from '@material-ui/core/FormGroup'
 import Button from '@material-ui/core/Button'
 import GridList from '@material-ui/core/GridList'
-import Divider from '@material-ui/core/Divider'
 import IUser from 'user/IUser'
 import IAction from 'IAction'
 import IPlaylist from 'playlist/IPlaylist'
@@ -14,16 +13,18 @@ import './SeedPlaylist.scss'
 
 interface SeedPlaylistProps {
   user: IUser
+  seedPlaylist: IPlaylist
   playlists: IPlaylist[]
   playlistsLoading: boolean
   fetchPlaylists(user: IUser): IAction
   handleNext(): void
   handleBack(): void
-  onPlaylistSelected(playlist: IPlaylist): void
+  onPlaylistSelected(playlist: IPlaylist | undefined): void
 }
 
 const SeedPlaylist = ({
   user,
+  seedPlaylist,
   playlists,
   playlistsLoading,
   fetchPlaylists,
@@ -31,18 +32,20 @@ const SeedPlaylist = ({
   handleBack,
   handleNext
 }: SeedPlaylistProps) => {
-  const [selectedPlaylist, setSelectedPlaylist] = useState()
+  const playlistSelected = !!seedPlaylist
+  const handlePlaylistSelected = (playlist: IPlaylist | undefined) => {
+    onPlaylistSelected(playlist)
+  }
   useEffect(() => {
     if (isEmpty(playlists) && !playlistsLoading) {
       fetchPlaylists(user)
     }
   }, [fetchPlaylists, playlists, playlistsLoading, user])
+
   return (
     <div className="SeedPlaylist-root">
-      <Typography>
-        Select a playlist to seed the Event. You can{' '}
-        <Button onClick={() => handleNext()}>Skip this step</Button> to start
-        with an empty playlist.
+      <Typography variant="h5" align="center">
+        Select a playlist
       </Typography>
       {playlistsLoading ? (
         <div className="SeedPlaylist-loading-area">
@@ -57,10 +60,10 @@ const SeedPlaylist = ({
                 <div
                   key={playlist.id}
                   onClick={() => {
-                    setSelectedPlaylist(playlist)
+                    handlePlaylistSelected(playlist)
                   }}
                   className={`SeedPlaylist-playlist ${
-                    !!selectedPlaylist && selectedPlaylist.id === playlist.id
+                    playlistSelected && seedPlaylist.id === playlist.id
                       ? 'SeedPlaylist-playlist-selected'
                       : ''
                   }`}
@@ -76,27 +79,7 @@ const SeedPlaylist = ({
       )}
 
       <div className="SeedPlaylist-actions">
-        {!!selectedPlaylist && (
-          <div>
-            <Divider variant="fullWidth" />
-            <Typography variant="subtitle1" align="center">
-              You have selected {selectedPlaylist.name}
-            </Typography>
-            <Divider variant="fullWidth" />
-          </div>
-        )}
         <FormGroup className="SaveEvent-form-actions">
-          {!!selectedPlaylist && (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                setSelectedPlaylist(undefined)
-              }}
-            >
-              Clear Selection
-            </Button>
-          )}
           <Button
             variant="contained"
             color="secondary"
@@ -110,15 +93,22 @@ const SeedPlaylist = ({
             variant="contained"
             color="primary"
             onClick={() => {
-              if (!!selectedPlaylist) {
-                onPlaylistSelected(selectedPlaylist)
-              } else {
-                handleNext()
-              }
+              handleNext()
             }}
           >
-            Next
+            {playlistSelected ? 'Next' : 'Skip'}
           </Button>
+          {playlistSelected && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handlePlaylistSelected(undefined)
+              }}
+            >
+              Clear Selection
+            </Button>
+          )}
         </FormGroup>
       </div>
     </div>

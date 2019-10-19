@@ -1,10 +1,13 @@
+import React from 'react'
 import Button from '@material-ui/core/Button'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import * as React from 'react'
 import ITrack from 'track/ITrack'
+import head from 'lodash/head'
+import sortBy from 'lodash/sortBy'
 import formatDuration from 'util/formatDuration'
+import IImage from 'playlist/IImage'
 import './TrackItem.scss'
 
 interface ITrackItemProps {
@@ -24,12 +27,18 @@ const TrackItem = ({
     onSelected(track)
   }
 
-  if (track.album && track.album.images && track.album.images.length > 0) {
+  if (track.album && track.album.images && track.album.images.length > 0) {    
+    const imageUrl = track.album.images.length > 0
+              ? (
+                  head(sortBy(track.album.images, 'height')) ||
+                  ({} as IImage)
+                ).url
+              : '/img/partycover-sm.png'
     trackImage = (
       <ListItemIcon>
         <img
           className="TrackItem-track-image"
-          src={track.album.images[0].url}
+          src={imageUrl}
           alt={track.name}
         />
       </ListItemIcon>
