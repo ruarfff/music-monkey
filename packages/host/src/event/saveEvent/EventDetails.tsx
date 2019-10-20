@@ -30,7 +30,7 @@ const EventDetails = ({ handleNext, handleBack }: EventDetailsProps) => {
   const [endDateTime, setEndDateTime] = useState()
 
   return (
-    <Grid container={true} direction="column">
+    <Grid container>
       <Typography>Event details!</Typography>
       <span>Party modes</span>
       <FormGroup row={true}>
