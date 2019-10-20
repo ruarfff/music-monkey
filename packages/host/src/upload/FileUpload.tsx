@@ -1,9 +1,8 @@
+import React, { useState } from 'react'
 import * as AWS from 'aws-sdk'
-import * as React from 'react'
 import { DropzoneComponent } from 'react-dropzone-component'
 import uuidv1 from 'uuid/v1'
-import Action from '../IAction'
-import LoadingSpinner from '../loading/LoadingSpinner'
+import LoadingSpinner from 'loading/LoadingSpinner'
 
 const bucket = 'musicmonkey-uploads'
 const bucketRegion = 'eu-west-1'
@@ -26,9 +25,7 @@ const djsConfig = {
   autoProcessQueue: false,
   dictDefaultMessage: 'Add Image',
   maxFiles: 1,
-  paramName: 'event-image',
-  thumbnailWidth: 300,
-  thumbnailHeight: 300
+  paramName: 'event-image'
 }
 
 function upload(file: any) {
@@ -65,43 +62,40 @@ const componentConfig = {
 }
 
 interface IFileUploadProps {
-  onUpload(value: any): Action
-  onUploadError(error: Error): Action
+  width: number,
+  height: number,
+  onUpload(value: any): void
+  onUploadError(error: Error): void
 }
 
-class FileUpload extends React.Component<IFileUploadProps, {}> {
-  public state = {
-    showLoading: false
-  }
-  public toggleLoading = () => {
-    this.setState({showLoading: !this.state.showLoading})
-  }
+const FileUpload = ({ width, height, onUpload, onUploadError }: IFileUploadProps) => {
+  const [loading, setLoading] = useState(false)
 
-  public render() {
-    const { onUpload, onUploadError } = this.props
-    const eventHandlers = {
-      addedfile: async (file: any) => {
-        this.toggleLoading()
-        await upload(file)
-          .then(onUpload)
-          .catch(onUploadError)
-        this.toggleLoading()
+  const eventHandlers = {
+    addedfile: async (file: any) => {
+      setLoading(true)
+      try {
+        const res = await upload(file)
+        onUpload(res)
+      } catch (err) {
+        onUploadError(err)
+        console.error(err)
       }
+      setLoading(false)
     }
-
-    return (
-      <React.Fragment>
-        {this.state.showLoading && (
-          <LoadingSpinner/>
-        )}
-        <DropzoneComponent
-          config={componentConfig}
-          eventHandlers={eventHandlers}
-          djsConfig={djsConfig}
-        />
-      </React.Fragment>
-    )
   }
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
+
+  return (
+    <DropzoneComponent
+      config={componentConfig}
+      eventHandlers={eventHandlers}
+      djsConfig={{...djsConfig, thumbnailWidth: width, thumbnailHeight: height}}
+    />
+  )
 }
 
 export default FileUpload

@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
-import Typography from '@material-ui/core/Typography'
 import FormGroup from '@material-ui/core/FormGroup'
 import { Grid, FormControlLabel, Switch } from '@material-ui/core'
 import FileUpload from 'upload/FileUpload'
-import {
-  eventImageUploaded,
-  eventImageUploadError,
-  locationSelected
-} from 'event/eventActions'
-import EventInput from 'components/EventInput/EventInput'
+import { locationSelected } from 'event/eventActions'
 import LocationAutoComplete from 'location/LocationAutoComplete'
 import EventDateTimePicker from 'event/eventCreation/EventDateTimePicker'
 import LinkButton from 'components/LinkButton'
+import EventTextInput from './EventTextInput'
+import './EventDetails.scss'
 
 interface EventDetailsProps {
   nextPath: string
@@ -24,16 +20,30 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
     autoAcceptSuggestionsEnabled: false,
     dynamicVotingEnabled: false
   })
-  const [organiser, setOrganiser] = useState()
   const [location, setLocation] = useState()
   const [startDateTime, setStartDateTime] = useState()
   const [endDateTime, setEndDateTime] = useState()
+  const [eventImage, setEventImage] = useState()
+  const [uploadError, setUploadError] = useState()
+
+  console.log(eventImage)
+  console.log(uploadError)
 
   return (
-    <Grid container>
-      <Typography>Event details!</Typography>
-      <span>Party modes</span>
-      <FormGroup row={true}>
+    <Grid container className="EventDetails-root">
+      <Grid item xs={12} className="EventDetails-image">
+        <FileUpload
+          width={200}
+          height={200}
+          onUpload={image => {
+            setEventImage(image)
+          }}
+          onUploadError={err => {
+            setUploadError(err)
+          }}
+        />
+      </Grid>
+      <Grid item xs={12} alignContent="center" alignItems="center" className="EventDetails-party-settings">
         <FormControlLabel
           control={
             <Switch
@@ -79,28 +89,13 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
           }
           label="Dynamic Voting"
         />
-      </FormGroup>
-
-      <Grid item={true} xs={12} sm={6}>
-        <FileUpload
-          onUpload={eventImageUploaded}
-          onUploadError={eventImageUploadError}
-        />
       </Grid>
 
-      <Grid item={true} xs={12} sm={6}>
-        <EventInput
-          label="Organizer"
-          placeholder="Who is organising this event?"
-          value={organiser}
-          error={!organiser}
-          errorLabel="Required"
-          onChange={(value: string) => {
-            setOrganiser(value)
-          }}
-        />
+      <Grid item xs={12}>
+        <EventTextInput name="organizer" label="Organizer" />
       </Grid>
-      <Grid item={true} xs={12} sm={6}>
+
+      <Grid item xs={12}>
         <LocationAutoComplete
           value={location ? location.address || '' : ''}
           onSelect={locationSelected}
@@ -108,11 +103,10 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
             setLocation(location)
           }}
           placeholder="Search for place"
-          formClass="CreateEvent-formItem"
         />
       </Grid>
 
-      <Grid item={true} xs={12} sm={6}>
+      <Grid item xs={12}>
         <EventDateTimePicker
           disablePast={true}
           value={startDateTime}
@@ -123,7 +117,7 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
         />
       </Grid>
 
-      <Grid item={true} xs={12} sm={6}>
+      <Grid item xs={12}>
         <EventDateTimePicker
           disablePast={true}
           value={endDateTime}
@@ -133,7 +127,8 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
           label="Finishing At"
         />
       </Grid>
-      <Grid item={true} xs={12}>
+
+      <Grid item xs={12}>
         <FormGroup className="SaveEvent-form-actions">
           <LinkButton to={backPath} variant="contained" color="secondary">
             Back

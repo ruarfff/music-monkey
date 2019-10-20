@@ -333,6 +333,8 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
 
         <Grid item={true} xs={12} sm={6}>
           <FileUpload
+            width={300}
+            height={300}
             onUpload={eventImageUploaded}
             onUploadError={eventImageUploadError}
           />

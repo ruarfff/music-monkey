@@ -17,6 +17,7 @@ import './SaveEvent.scss'
 interface SaveEventFormValues {
   eventName: string
   eventDescription: string
+  organizer: string
 }
 
 interface SaveEventProps extends RouteComponentProps {
@@ -25,7 +26,8 @@ interface SaveEventProps extends RouteComponentProps {
 
 const ValidationSchema = Yup.object().shape({
   eventName: Yup.string().required('Event name is required'),
-  eventDescription: Yup.string().required('Event description is required')
+  eventDescription: Yup.string().required('Event description is required'),
+  organizer: Yup.string().required('Event organizer is required')
 })
 
 const steps = [
@@ -51,7 +53,7 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
 
   return (
     <Formik
-      initialValues={{ eventName: '', eventDescription: '' }}
+      initialValues={{ eventName: '', eventDescription: '', organizer: '' }}
       validationSchema={ValidationSchema}
       onSubmit={(values: SaveEventFormValues, actions) => {
         console.log({ values, actions })
