@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import List from '@material-ui/core/List'
+import { DropResult } from 'react-beautiful-dnd'
+import { Typography, Hidden, List } from '@material-ui/core'
 import FormGroup from '@material-ui/core/FormGroup'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -11,10 +12,9 @@ import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
 import SelectTracks from './SelectTracksContainer'
-import { DropResult } from 'react-beautiful-dnd'
-import { Typography } from '@material-ui/core'
 
 interface AddTracksProps {
+  isDesktop: boolean
   seedTracks: ITrack[]
   setSeedTracks(seedTracks: ITrack[]): void
   handleNext(): void
@@ -22,6 +22,7 @@ interface AddTracksProps {
 }
 
 const AddTracks = ({
+  isDesktop,
   seedTracks = [],
   setSeedTracks,
   handleNext,
@@ -29,8 +30,38 @@ const AddTracks = ({
 }: AddTracksProps) => {
   const [tabIndex, setTabIndex] = useState(0)
 
-  const handleTabChange = (event: any, index: number) => {
+  const handleTabChange = (_: any, index: number) => {
     setTabIndex(index)
+  }
+
+  const Playlist = () => {
+    return (isEmpty(seedTracks) ? (
+    <Typography variant="h5" align="center">
+      No tracks yet
+    </Typography>
+    ) : (
+    <List>
+      <TrackList
+        onTrackRemoved={(track: ITrack) => {
+          setSeedTracks(
+            remove(seedTracks, seedTrack => {
+              return seedTrack.id !== track.id
+            })
+          )
+        }}
+        onDragEnd={(result: DropResult) => {
+          if (!result.destination) {
+            return
+          }
+          const tracks = [...seedTracks]
+          arrayMove(tracks, result.source.index, result.destination.index)
+
+          setSeedTracks(tracks)
+        }}
+        tracks={seedTracks}
+      />
+    </List>
+    ))
   }
 
   return (
@@ -57,55 +88,37 @@ const AddTracks = ({
           </Button>
         </FormGroup>
       </Grid>
-      <Grid item xs={12}>
-        <Tabs
-          value={tabIndex}
-          onChange={handleTabChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
-          <Tab label="Playlist" />
-          <Tab label="Add Tracks" />
-        </Tabs>
-      </Grid>
-      <Grid item xs={12}>
-        {tabIndex === 0 && (isEmpty(seedTracks) ? (
-          <Typography variant="h5" align="center">
-            No tracks yet
-          </Typography>
-        ) : (
-          <List>
-            <TrackList
-              onTrackRemoved={(track: ITrack) => {
-                setSeedTracks(
-                  remove(seedTracks, seedTrack => {
-                    return seedTrack.id !== track.id
-                  })
-                )
-              }}
-              onDragEnd={(result: DropResult) => {
-                if (!result.destination) {
-                  return
-                }
-                const tracks = [...seedTracks]
-                arrayMove(tracks, result.source.index, result.destination.index)
 
-                setSeedTracks(tracks)
-              }}
-              tracks={seedTracks}
-            />
-          </List>
-        ))}
-        {tabIndex === 1 && (
+      <Hidden smUp>
+        <Grid item xs={12}>
+          <Tabs
+            value={tabIndex}
+            onChange={handleTabChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab label="Playlist" />
+            <Tab label="Add Tracks" />
+          </Tabs>
+        </Grid>
+      </Hidden>
+
+      {(isDesktop || tabIndex === 0) && (
+        <Grid item xs={isDesktop ? 6 : 12}>
+          <Playlist />
+        </Grid>
+      )}
+      {(isDesktop || tabIndex === 1) && (
+        <Grid item xs={isDesktop ? 6 : 12}>
           <SelectTracks
             onTrackSelected={(track: ITrack) => {
               setSeedTracks([...seedTracks, track])
             }}
             filterList={seedTracks}
           />
-        )}
-      </Grid>
+        </Grid>
+      )}
     </Grid>
   )
 }

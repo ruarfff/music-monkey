@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Formik, FormikProps, Form } from 'formik'
 import * as Yup from 'yup'
+import { Hidden } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
@@ -9,11 +10,9 @@ import IPlaylist from 'playlist/IPlaylist'
 import EventInitialize from './EventInitialize'
 import SeedPlaylist from './SeedPlaylistContainer'
 import AddTracks from './AddTracks'
-import AddTracksDesktop from './AddTracksDesktop'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
 import './SaveEvent.scss'
-import { Hidden } from '@material-ui/core'
 
 interface SaveEventFormValues {
   eventName: string
@@ -115,21 +114,13 @@ const SaveEvent = ({ isDesktop }: SaveEventProps) => {
             )}
             {activeStep === 2 && (
               <Zoom in={activeStep === 2} timeout={1000}>
-                {isDesktop ? (
-                  <AddTracksDesktop
-                    handleNext={handleNext}
-                    handleBack={handleBack}
-                    seedTracks={seedTracks}
-                    setSeedTracks={setSeedTracks}
-                  />
-                ) : (
-                  <AddTracks
-                    handleNext={handleNext}
-                    handleBack={handleBack}
-                    seedTracks={seedTracks}
-                    setSeedTracks={setSeedTracks}
-                  />
-                )}
+                <AddTracks
+                  isDesktop={isDesktop}
+                  handleNext={handleNext}
+                  handleBack={handleBack}
+                  seedTracks={seedTracks}
+                  setSeedTracks={setSeedTracks}
+                />
               </Zoom>
             )}
             {activeStep === 3 && (

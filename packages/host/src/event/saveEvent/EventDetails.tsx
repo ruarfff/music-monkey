@@ -30,133 +30,132 @@ const EventDetails = ({ handleNext, handleBack }: EventDetailsProps) => {
   const [endDateTime, setEndDateTime] = useState()
 
   return (
-    <div>
+    <Grid container={true} direction="column">
       <Typography>Event details!</Typography>
-      <Grid container={true} direction="column">
-        <span>Party modes</span>
-        <FormGroup row={true}>
-          <FormControlLabel
-            control={
-              <Switch
-                value="Suggesting Playlists Enabled"
-                checked={settings.suggestingPlaylistsEnabled}
-                onChange={() => {
-                  setSettings({
-                    ...settings,
-                    suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
-                  })
-                }}
-              />
-            }
-            label="Allow Playlist Suggestions"
-          />
-          <FormControlLabel
-            control={
-              <Switch
-                value="Auto Accept Suggestions Enabled"
-                checked={settings.autoAcceptSuggestionsEnabled}
-                onChange={() => {
-                  setSettings({
-                    ...settings,
-                    autoAcceptSuggestionsEnabled: !settings.autoAcceptSuggestionsEnabled
-                  })
-                }}
-              />
-            }
-            label="Auto Accept Suggestions"
-          />
-          <FormControlLabel
-            control={
-              <Switch
-                value="dynamic Voting Enabled"
-                checked={settings.dynamicVotingEnabled}
-                onChange={() => {
-                  setSettings({
-                    ...settings,
-                    dynamicVotingEnabled: !settings.dynamicVotingEnabled
-                  })
-                }}
-              />
-            }
-            label="Dynamic Voting"
-          />
-        </FormGroup>
+      <span>Party modes</span>
+      <FormGroup row={true}>
+        <FormControlLabel
+          control={
+            <Switch
+              value="Suggesting Playlists Enabled"
+              checked={settings.suggestingPlaylistsEnabled}
+              onChange={() => {
+                setSettings({
+                  ...settings,
+                  suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
+                })
+              }}
+            />
+          }
+          label="Allow Playlist Suggestions"
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              value="Auto Accept Suggestions Enabled"
+              checked={settings.autoAcceptSuggestionsEnabled}
+              onChange={() => {
+                setSettings({
+                  ...settings,
+                  autoAcceptSuggestionsEnabled: !settings.autoAcceptSuggestionsEnabled
+                })
+              }}
+            />
+          }
+          label="Auto Accept Suggestions"
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              value="dynamic Voting Enabled"
+              checked={settings.dynamicVotingEnabled}
+              onChange={() => {
+                setSettings({
+                  ...settings,
+                  dynamicVotingEnabled: !settings.dynamicVotingEnabled
+                })
+              }}
+            />
+          }
+          label="Dynamic Voting"
+        />
+      </FormGroup>
 
-        <Grid item={true} xs={12} sm={6}>
-          <FileUpload
-            onUpload={eventImageUploaded}
-            onUploadError={eventImageUploadError}
-          />
-        </Grid>
-
-        <Grid item={true} xs={12} sm={6}>
-          <EventInput
-            label="Organizer"
-            placeholder="Who is organising this event?"
-            value={organiser}
-            error={!organiser}
-            errorLabel="Required"
-            onChange={(value: string) => {
-              setOrganiser(value)
-            }}
-          />
-        </Grid>
-        <Grid item={true} xs={12} sm={6}>
-          <LocationAutoComplete
-            value={location ? location.address || '' : ''}
-            onSelect={locationSelected}
-            onChange={(location: string) => {
-              setLocation(location)
-            }}
-            placeholder="Search for place"
-            formClass="CreateEvent-formItem"
-          />
-        </Grid>
-
-        <Grid item={true} xs={12} sm={6}>
-          <EventDateTimePicker
-            disablePast={true}
-            value={startDateTime}
-            onChange={(value: string) => {
-              setStartDateTime(value)
-            }}
-            label="Starting At"
-          />
-        </Grid>
-
-        <Grid item={true} xs={12} sm={6}>
-          <EventDateTimePicker
-            disablePast={true}
-            value={endDateTime}
-            onChange={(value: string) => {
-              setEndDateTime(value)
-            }}
-            label="Finishing At"
-          />
-        </Grid>
+      <Grid item={true} xs={12} sm={6}>
+        <FileUpload
+          onUpload={eventImageUploaded}
+          onUploadError={eventImageUploadError}
+        />
       </Grid>
 
-      <FormGroup className="SaveEvent-form-actions">
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            handleBack()
+      <Grid item={true} xs={12} sm={6}>
+        <EventInput
+          label="Organizer"
+          placeholder="Who is organising this event?"
+          value={organiser}
+          error={!organiser}
+          errorLabel="Required"
+          onChange={(value: string) => {
+            setOrganiser(value)
           }}
-        >
-          Back
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            handleNext()
+        />
+      </Grid>
+      <Grid item={true} xs={12} sm={6}>
+        <LocationAutoComplete
+          value={location ? location.address || '' : ''}
+          onSelect={locationSelected}
+          onChange={(location: string) => {
+            setLocation(location)
           }}
-        >
-          Next
-        </Button>
-      </FormGroup>
-    </div>
+          placeholder="Search for place"
+          formClass="CreateEvent-formItem"
+        />
+      </Grid>
+
+      <Grid item={true} xs={12} sm={6}>
+        <EventDateTimePicker
+          disablePast={true}
+          value={startDateTime}
+          onChange={(value: string) => {
+            setStartDateTime(value)
+          }}
+          label="Starting At"
+        />
+      </Grid>
+
+      <Grid item={true} xs={12} sm={6}>
+        <EventDateTimePicker
+          disablePast={true}
+          value={endDateTime}
+          onChange={(value: string) => {
+            setEndDateTime(value)
+          }}
+          label="Finishing At"
+        />
+      </Grid>
+      <Grid item={true} xs={12}>
+        <FormGroup className="SaveEvent-form-actions">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              handleBack()
+            }}
+          >
+            Back
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleNext()
+            }}
+          >
+            Next
+          </Button>
+        </FormGroup>
+      </Grid>
+    </Grid>
   )
 }
 
