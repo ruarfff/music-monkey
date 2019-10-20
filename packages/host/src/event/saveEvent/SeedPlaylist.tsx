@@ -9,6 +9,7 @@ import IAction from 'IAction'
 import IPlaylist from 'playlist/IPlaylist'
 import SmallPlaylistCard from 'catalogue/SmallPlaylistCard'
 import LoadingSpinner from 'loading/LoadingSpinner'
+import LinkButton from 'components/LinkButton'
 import './SeedPlaylist.scss'
 
 interface SeedPlaylistProps {
@@ -16,9 +17,9 @@ interface SeedPlaylistProps {
   seedPlaylist: IPlaylist
   playlists: IPlaylist[]
   playlistsLoading: boolean
+  nextPath: string
+  backPath: string
   fetchPlaylists(user: IUser): IAction
-  handleNext(): void
-  handleBack(): void
   onPlaylistSelected(playlist: IPlaylist | undefined): void
 }
 
@@ -29,8 +30,8 @@ const SeedPlaylist = ({
   playlistsLoading,
   fetchPlaylists,
   onPlaylistSelected,
-  handleBack,
-  handleNext
+  backPath,
+  nextPath
 }: SeedPlaylistProps) => {
   const playlistSelected = !!seedPlaylist
   const handlePlaylistSelected = (playlist: IPlaylist | undefined) => {
@@ -80,24 +81,12 @@ const SeedPlaylist = ({
 
       <div className="SeedPlaylist-actions">
         <FormGroup className="SaveEvent-form-actions">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              handleBack()
-            }}
-          >
+          <LinkButton variant="contained" color="secondary" to={backPath}>
             Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleNext()
-            }}
-          >
+          </LinkButton>
+          <LinkButton variant="contained" color="primary" to={nextPath}>
             {playlistSelected ? 'Next' : 'Skip'}
-          </Button>
+          </LinkButton>
           {playlistSelected && (
             <Button
               variant="contained"

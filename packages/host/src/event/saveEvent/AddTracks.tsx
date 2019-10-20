@@ -3,11 +3,11 @@ import { DropResult } from 'react-beautiful-dnd'
 import { Typography, Hidden, List } from '@material-ui/core'
 import FormGroup from '@material-ui/core/FormGroup'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import remove from 'lodash/remove'
 import isEmpty from 'lodash/isEmpty'
+import LinkButton from 'components/LinkButton'
 import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
@@ -17,16 +17,16 @@ interface AddTracksProps {
   isDesktop: boolean
   seedTracks: ITrack[]
   setSeedTracks(seedTracks: ITrack[]): void
-  handleNext(): void
-  handleBack(): void
+  nextPath: string
+  backPath: string
 }
 
 const AddTracks = ({
   isDesktop,
   seedTracks = [],
   setSeedTracks,
-  handleNext,
-  handleBack
+  nextPath,
+  backPath
 }: AddTracksProps) => {
   const [tabIndex, setTabIndex] = useState(0)
 
@@ -35,60 +35,47 @@ const AddTracks = ({
   }
 
   const Playlist = () => {
-    return (isEmpty(seedTracks) ? (
-    <Typography variant="h5" align="center">
-      No tracks yet
-    </Typography>
+    return isEmpty(seedTracks) ? (
+      <Typography variant="h5" align="center">
+        No tracks yet
+      </Typography>
     ) : (
-    <List>
-      <TrackList
-        onTrackRemoved={(track: ITrack) => {
-          setSeedTracks(
-            remove(seedTracks, seedTrack => {
-              return seedTrack.id !== track.id
-            })
-          )
-        }}
-        onDragEnd={(result: DropResult) => {
-          if (!result.destination) {
-            return
-          }
-          const tracks = [...seedTracks]
-          arrayMove(tracks, result.source.index, result.destination.index)
+      <List>
+        <TrackList
+          onTrackRemoved={(track: ITrack) => {
+            setSeedTracks(
+              remove(seedTracks, seedTrack => {
+                return seedTrack.id !== track.id
+              })
+            )
+          }}
+          onDragEnd={(result: DropResult) => {
+            if (!result.destination) {
+              return
+            }
+            const tracks = [...seedTracks]
+            arrayMove(tracks, result.source.index, result.destination.index)
 
-          setSeedTracks(tracks)
-        }}
-        tracks={seedTracks}
-      />
-    </List>
-    ))
+            setSeedTracks(tracks)
+          }}
+          tracks={seedTracks}
+        />
+      </List>
+    )
   }
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <FormGroup className="SaveEvent-form-actions">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              handleBack()
-            }}
-          >
+          <LinkButton to={backPath} variant="contained" color="secondary">
             Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleNext()
-            }}
-          >
+          </LinkButton>
+          <LinkButton to={nextPath} variant="contained" color="primary">
             Next
-          </Button>
+          </LinkButton>
         </FormGroup>
       </Grid>
-
       <Hidden smUp>
         <Grid item xs={12}>
           <Tabs

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Formik, FormikProps, Form } from 'formik'
 import * as Yup from 'yup'
+import { Route, Switch, RouteComponentProps } from 'react-router-dom'
 import { Hidden } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
-import Zoom from '@material-ui/core/Zoom'
 import IPlaylist from 'playlist/IPlaylist'
 import EventInitialize from './EventInitialize'
 import SeedPlaylist from './SeedPlaylistContainer'
@@ -19,7 +19,7 @@ interface SaveEventFormValues {
   eventDescription: string
 }
 
-interface SaveEventProps {
+interface SaveEventProps extends RouteComponentProps {
   isDesktop: boolean
 }
 
@@ -36,30 +36,18 @@ const steps = [
   'Summary'
 ]
 
-const SaveEvent = ({ isDesktop }: SaveEventProps) => {
-  const [activeStep, setActiveStep] = useState(0)
-  const [skipped, setSkipped] = useState(new Set<number>())
+const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
   const [seedPlaylist, setSeedPlaylist] = useState()
   const [seedTracks, setSeedTracks] = useState()
-
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step)
+  const path = '/create-event'
+  const pathToStep = {
+    [path]: 0,
+    [path + '/playlist']: 1,
+    [path + '/tracks']: 2,
+    [path + '/details']: 3,
+    [path + '/summary']: 4
   }
-
-  const handleNext = () => {
-    let newSkipped = skipped
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values())
-      newSkipped.delete(activeStep)
-    }
-
-    setActiveStep(prevActiveStep => prevActiveStep + 1)
-    setSkipped(newSkipped)
-  }
-
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1)
-  }
+  const activeStep = pathToStep[location.pathname] || 0
 
   return (
     <Formik
@@ -76,9 +64,6 @@ const SaveEvent = ({ isDesktop }: SaveEventProps) => {
             <Stepper activeStep={activeStep}>
               {steps.map((label, index) => {
                 const stepProps: { completed?: boolean } = {}
-                if (isStepSkipped(index)) {
-                  stepProps.completed = false
-                }
                 return (
                   <Step key={label} {...stepProps}>
                     <StepLabel>{label}</StepLabel>
@@ -88,16 +73,14 @@ const SaveEvent = ({ isDesktop }: SaveEventProps) => {
             </Stepper>
           </Hidden>
           <Form className="SaveEvent-form">
-            {activeStep === 0 && (
-              <Zoom in={activeStep === 0} timeout={1000}>
-                <EventInitialize handleNext={handleNext} />
-              </Zoom>
-            )}
-            {activeStep === 1 && (
-              <Zoom in={activeStep === 1} timeout={1000}>
+            <Switch>
+              <Route path={path} exact={true}>
+                <EventInitialize nextPath={path + '/playlist'} />
+              </Route>
+              <Route path={path + '/playlist'} exact={true}>
                 <SeedPlaylist
-                  handleNext={handleNext}
-                  handleBack={handleBack}
+                  nextPath={path + '/tracks'}
+                  backPath={path}
                   seedPlaylist={seedPlaylist}
                   onPlaylistSelected={(playlist: IPlaylist) => {
                     setSeedPlaylist(playlist)
@@ -110,29 +93,28 @@ const SaveEvent = ({ isDesktop }: SaveEventProps) => {
                     }
                   }}
                 />
-              </Zoom>
-            )}
-            {activeStep === 2 && (
-              <Zoom in={activeStep === 2} timeout={1000}>
+              </Route>
+
+              <Route path={path + '/tracks'} exact={true}>
                 <AddTracks
                   isDesktop={isDesktop}
-                  handleNext={handleNext}
-                  handleBack={handleBack}
+                  nextPath={path + '/details'}
+                  backPath={path + '/playlist'}
                   seedTracks={seedTracks}
                   setSeedTracks={setSeedTracks}
                 />
-              </Zoom>
-            )}
-            {activeStep === 3 && (
-              <Zoom in={activeStep === 3} timeout={1000}>
-                <EventDetails handleNext={handleNext} handleBack={handleBack} />
-              </Zoom>
-            )}
-            {activeStep === 4 && (
-              <Zoom in={activeStep === 4} timeout={1000}>
-                <Summary handleNext={handleNext} handleBack={handleBack} />
-              </Zoom>
-            )}
+              </Route>
+
+              <Route path={path + '/details'} exact={true}>
+                <EventDetails
+                  nextPath={path + '/summary'}
+                  backPath={path + '/tracks'}
+                />
+              </Route>
+              <Route path={path + '/summary'} exact={true}>
+                <Summary backPath={path + '/details'} />
+              </Route>
+            </Switch>
           </Form>
         </div>
       )}

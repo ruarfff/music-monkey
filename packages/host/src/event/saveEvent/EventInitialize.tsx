@@ -1,14 +1,13 @@
 import React from 'react'
-import FormGroup from '@material-ui/core/FormGroup'
-import { Grid } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
+import { Grid, FormGroup } from '@material-ui/core'
+import LinkButton from 'components/LinkButton'
 import EventTextInput from './EventTextInput'
 
 interface EventInitializeProps {
-  handleNext(): void
+  nextPath: string
 }
 
-const EventInitialize = ({ handleNext }: EventInitializeProps) => {
+const EventInitialize = ({ nextPath }: EventInitializeProps) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -27,9 +26,9 @@ const EventInitialize = ({ handleNext }: EventInitializeProps) => {
       </Grid>
       <Grid item xs={12}>
         <FormGroup className="SaveEvent-form-actions">
-          <Button variant="contained" color="primary" onClick={handleNext}>
+          <LinkButton to={nextPath} variant="contained" color="primary">
             Next
-          </Button>
+          </LinkButton>
         </FormGroup>
       </Grid>
     </Grid>

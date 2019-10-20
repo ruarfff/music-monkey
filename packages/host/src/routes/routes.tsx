@@ -31,8 +31,7 @@ export const userIsAuthenticated = connectedRouterRedirect({
 
 export const routes = [
   {
-    component: SaveEvent,
-    exact: true,
+    component: SaveEvent,      
     path: '/create-event'
   },
   {

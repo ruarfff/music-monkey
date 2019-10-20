@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import FormGroup from '@material-ui/core/FormGroup'
-import Button from '@material-ui/core/Button'
 import { Grid, FormControlLabel, Switch } from '@material-ui/core'
 import FileUpload from 'upload/FileUpload'
 import {
@@ -12,13 +11,14 @@ import {
 import EventInput from 'components/EventInput/EventInput'
 import LocationAutoComplete from 'location/LocationAutoComplete'
 import EventDateTimePicker from 'event/eventCreation/EventDateTimePicker'
+import LinkButton from 'components/LinkButton'
 
 interface EventDetailsProps {
-  handleNext(): void
-  handleBack(): void
+  nextPath: string
+  backPath: string
 }
 
-const EventDetails = ({ handleNext, handleBack }: EventDetailsProps) => {
+const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
   const [settings, setSettings] = useState({
     suggestingPlaylistsEnabled: false,
     autoAcceptSuggestionsEnabled: false,
@@ -135,24 +135,12 @@ const EventDetails = ({ handleNext, handleBack }: EventDetailsProps) => {
       </Grid>
       <Grid item={true} xs={12}>
         <FormGroup className="SaveEvent-form-actions">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              handleBack()
-            }}
-          >
+          <LinkButton to={backPath} variant="contained" color="secondary">
             Back
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleNext()
-            }}
-          >
+          </LinkButton>
+          <LinkButton to={nextPath} variant="contained" color="primary">
             Next
-          </Button>
+          </LinkButton>
         </FormGroup>
       </Grid>
     </Grid>

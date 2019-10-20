@@ -1,28 +1,20 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import FormGroup from '@material-ui/core/FormGroup'
-import Button from '@material-ui/core/Button'
+import LinkButton from 'components/LinkButton'
 
 interface SummaryProps {
-  handleNext(): void
-  handleBack(): void
+  backPath: string
 }
 
-const Summary = ({ handleNext, handleBack }: SummaryProps) => {
+const Summary = ({ backPath }: SummaryProps) => {
   return (
     <div>
       <Typography>Summary!</Typography>
-
       <FormGroup className="SaveEvent-form-actions">
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            handleBack()
-          }}
-        >
+        <LinkButton to={backPath} variant="contained" color="secondary">
           Back
-        </Button>
+        </LinkButton>
       </FormGroup>
     </div>
   )
