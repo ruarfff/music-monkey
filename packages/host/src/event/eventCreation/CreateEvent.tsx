@@ -11,7 +11,6 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import IAction from 'IAction'
 import EventInput from 'components/EventInput/EventInput'
-import LocationAutoComplete from 'location/LocationAutoComplete'
 import MapComponent from 'location/MapComponent'
 import IEvent from 'event/IEvent'
 import IEventErrors from 'event/IEventErrors'
@@ -259,8 +258,6 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
   public renderSecondStep = () => {
     const {
       event,
-      locationChanged,
-      locationSelected,
       eventImageUploaded,
       eventImageUploadError,
       currentStep,
@@ -350,15 +347,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
             onChange={this.handleContentUpdated('organizer')}
           />
         </Grid>
-        <Grid item={true} xs={12} sm={6}>
-          <LocationAutoComplete
-            value={event.location ? event.location.address || '' : ''}
-            onSelect={locationSelected}
-            onChange={locationChanged}
-            placeholder="Search for place"
-            formClass="CreateEvent-formItem"
-          />
-        </Grid>
+        
         {event.location && this.renderMap(event.location.latLng)}
 
         <Grid item={true} xs={12} sm={6}>

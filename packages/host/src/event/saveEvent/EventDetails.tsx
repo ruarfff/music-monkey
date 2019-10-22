@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import FormGroup from '@material-ui/core/FormGroup'
 import { Grid, FormControlLabel, Switch } from '@material-ui/core'
 import FileUpload from 'upload/FileUpload'
-import { locationSelected } from 'event/eventActions'
 import LocationAutoComplete from 'location/LocationAutoComplete'
-import EventDateTimePicker from 'event/eventCreation/EventDateTimePicker'
 import LinkButton from 'components/LinkButton'
+import EventDateTimePicker from './EventDateTimePicker'
 import EventTextInput from './EventTextInput'
+import ILocation from 'location/ILocation'
+import MapComponent from 'location/MapComponent'
 import './EventDetails.scss'
 
 interface EventDetailsProps {
@@ -20,7 +21,9 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
     autoAcceptSuggestionsEnabled: false,
     dynamicVotingEnabled: false
   })
-  const [location, setLocation] = useState()
+  const [location, setLocation] = useState({
+    latLng: { lat: 0, lng: 0 }
+  } as ILocation)
   const [startDateTime, setStartDateTime] = useState()
   const [endDateTime, setEndDateTime] = useState()
   const [eventImage, setEventImage] = useState()
@@ -43,7 +46,7 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
           }}
         />
       </Grid>
-      <Grid item xs={12} alignContent="center" alignItems="center" className="EventDetails-party-settings">
+      <Grid item xs={12} className="EventDetails-party-settings">
         <FormControlLabel
           control={
             <Switch
@@ -98,12 +101,18 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
       <Grid item xs={12}>
         <LocationAutoComplete
           value={location ? location.address || '' : ''}
-          onSelect={locationSelected}
-          onChange={(location: string) => {
+          onSelect={(location: any) => {
             setLocation(location)
+          }}
+          onChange={(location: string) => {
+            setLocation({ address: location })
           }}
           placeholder="Search for place"
         />
+      </Grid>
+
+      <Grid item xs={12}>
+        <MapComponent coords={location.latLng} />
       </Grid>
 
       <Grid item xs={12}>

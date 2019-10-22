@@ -1,0 +1,51 @@
+.LocationAutoComplete-root {
+  flex-grow: 1;
+  position: relative;
+
+  .suggestion {
+    display: block;
+  }
+
+  .suggestionsContainerOpen {
+    left: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+  }
+
+  input {
+    &:after {
+      content: none;
+    }
+
+    &:before {
+      content: none;
+    }
+
+    &:hover:not($disabled):before {
+      border-bottom: 1px solid #979797 !important;
+    }
+
+    border: 1px solid #979797;
+    border-radius: 4px;
+    min-height: 40px;
+    padding-left: 16px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .label {
+    padding-left: 16px;
+    &:hover:not($disabled):before {
+      border-bottom: none !important;
+    }
+
+    padding-top: 4px;
+  }
+
+  .formControl {
+    margin: 0;
+  }
+}
