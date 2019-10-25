@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Formik, FormikProps, Form } from 'formik'
 import * as Yup from 'yup'
 import { Route, Switch, RouteComponentProps } from 'react-router-dom'
-import { Hidden } from '@material-ui/core'
+import { Hidden, Grid, FormGroup, Button } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
@@ -12,12 +12,23 @@ import SeedPlaylist from './SeedPlaylistContainer'
 import AddTracks from './AddTracks'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
+import ITrack from 'track/ITrack'
+import LinkButton from 'components/LinkButton'
+import IEventSettings from 'event/IEventSettings'
+import ILocation from 'location/ILocation'
 import './SaveEvent.scss'
 
-interface SaveEventFormValues {
+export interface SaveEventFormValues {
   eventName: string
   eventDescription: string
   organizer: string
+  tracks: ITrack[]
+  imageUrl: string
+  genre: string
+  location: ILocation
+  settings: IEventSettings
+  startDateTime: Date
+  endDateTime: Date
 }
 
 interface SaveEventProps extends RouteComponentProps {
@@ -27,7 +38,14 @@ interface SaveEventProps extends RouteComponentProps {
 const ValidationSchema = Yup.object().shape({
   eventName: Yup.string().required('Event name is required'),
   eventDescription: Yup.string().required('Event description is required'),
-  organizer: Yup.string().required('Event organizer is required')
+  organizer: Yup.string().required('Event organizer is required'),
+  tracks: Yup.array(),
+  imageUrl: Yup.string(),
+  genre: Yup.string(),
+  location: Yup.object(),
+  settings: Yup.object(),
+  startDateTime: Yup.date(),
+  endDateTime: Yup.date()
 })
 
 const steps = [
@@ -53,18 +71,33 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
 
   return (
     <Formik
-      initialValues={{ eventName: '', eventDescription: '', organizer: '' }}
+      initialValues={{
+        eventName: '',
+        eventDescription: '',
+        organizer: '',
+        tracks: [] as ITrack[],
+        imageUrl: '',
+        genre: 'none',
+        location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
+        settings: {
+          dynamicVotingEnabled: false,
+          autoAcceptSuggestionsEnabled: false,
+          suggestingPlaylistsEnabled: false
+        },
+        startDateTime: new Date(),
+        endDateTime: new Date()
+      }}
       validationSchema={ValidationSchema}
       onSubmit={(values: SaveEventFormValues, actions) => {
         console.log({ values, actions })
         alert(JSON.stringify(values, null, 2))
         actions.setSubmitting(false)
       }}
-      render={(formikBag: FormikProps<SaveEventFormValues>) => (
+      render={({ isSubmitting, errors }: FormikProps<SaveEventFormValues>) => (
         <div className="SaveEvent-root">
           <Hidden smDown implementation="css">
             <Stepper activeStep={activeStep}>
-              {steps.map((label, index) => {
+              {steps.map(label => {
                 const stepProps: { completed?: boolean } = {}
                 return (
                   <Step key={label} {...stepProps}>
@@ -96,7 +129,6 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
                   }}
                 />
               </Route>
-
               <Route path={path + '/tracks'} exact={true}>
                 <AddTracks
                   isDesktop={isDesktop}
@@ -106,12 +138,39 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
                   setSeedTracks={setSeedTracks}
                 />
               </Route>
-
               <Route path={path + '/details'} exact={true}>
-                <EventDetails
-                  nextPath={path + '/summary'}
-                  backPath={path + '/tracks'}
-                />
+                <Grid container>
+                  <EventDetails />
+                  <Grid item xs={12}>
+                    <p>{errors.eventName}</p>
+                    <p>{errors.eventDescription}</p>
+                    <p>{errors.organizer}</p>
+                    <p>{errors.tracks}</p>
+                    <p>{errors.genre}</p>
+                    <p>{errors.imageUrl}</p>
+                    <p>{errors.location}</p>
+                    <p>{errors.settings}</p>
+                    <p>{errors.endDateTime}</p>
+                    <p>{errors.startDateTime}</p>
+                    <FormGroup className="SaveEvent-form-actions">
+                      <LinkButton
+                        to={path + '/tracks'}
+                        variant="contained"
+                        color="secondary"
+                      >
+                        Back
+                      </LinkButton>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        disabled={isSubmitting}
+                      >
+                        Create Event
+                      </Button>
+                    </FormGroup>
+                  </Grid>
+                </Grid>
               </Route>
               <Route path={path + '/summary'} exact={true}>
                 <Summary backPath={path + '/details'} />

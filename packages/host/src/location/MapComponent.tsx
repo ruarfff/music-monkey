@@ -5,8 +5,10 @@ import mapMarker from 'assets/location-marker-icon.svg'
 import './MapComponent.scss'
 
 interface IMapComponentProps {
-  coords?: ILatLng
+  coords: ILatLng
 }
+
+const Marker = (_: any) => <img alt="map marker" src={mapMarker} />
 
 const MapComponent: React.SFC<IMapComponentProps> = props => {
   const { coords } = props
@@ -14,10 +16,10 @@ const MapComponent: React.SFC<IMapComponentProps> = props => {
     <div className="map-wrapper">
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAW6WugUsDtlV9lImEB6cE5PtZqPtKSM3o' }}
-        center={coords}
+        defaultCenter={coords}
         defaultZoom={18}
       >
-        {coords && <img alt="map marker" src={mapMarker} />}
+        <Marker lat={coords.lat} lng={coords.lng} />
       </GoogleMapReact>
     </div>
   )

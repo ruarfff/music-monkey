@@ -1,24 +1,24 @@
 import React, { useState } from 'react'
-import { DropResult } from 'react-beautiful-dnd'
-import { Typography, Hidden, List } from '@material-ui/core'
+import { Hidden } from '@material-ui/core'
 import FormGroup from '@material-ui/core/FormGroup'
 import Grid from '@material-ui/core/Grid'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import { Field, FieldProps } from 'formik'
 import remove from 'lodash/remove'
 import isEmpty from 'lodash/isEmpty'
+import differenceBy from 'lodash/differenceBy'
 import LinkButton from 'components/LinkButton'
-import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
-import TrackList from 'track/TrackList'
 import SelectTracks from './SelectTracksContainer'
+import Playlist from './Playlist'
 
 interface AddTracksProps {
   isDesktop: boolean
   seedTracks: ITrack[]
-  setSeedTracks(seedTracks: ITrack[]): void
   nextPath: string
   backPath: string
+  setSeedTracks(seedTracks: ITrack[]): void
 }
 
 const AddTracks = ({
@@ -32,36 +32,6 @@ const AddTracks = ({
 
   const handleTabChange = (_: any, index: number) => {
     setTabIndex(index)
-  }
-
-  const Playlist = () => {
-    return isEmpty(seedTracks) ? (
-      <Typography variant="h5" align="center">
-        No tracks yet
-      </Typography>
-    ) : (
-      <List>
-        <TrackList
-          onTrackRemoved={(track: ITrack) => {
-            setSeedTracks(
-              remove(seedTracks, seedTrack => {
-                return seedTrack.id !== track.id
-              })
-            )
-          }}
-          onDragEnd={(result: DropResult) => {
-            if (!result.destination) {
-              return
-            }
-            const tracks = [...seedTracks]
-            arrayMove(tracks, result.source.index, result.destination.index)
-
-            setSeedTracks(tracks)
-          }}
-          tracks={seedTracks}
-        />
-      </List>
-    )
   }
 
   return (
@@ -91,21 +61,45 @@ const AddTracks = ({
         </Grid>
       </Hidden>
 
-      {(isDesktop || tabIndex === 0) && (
-        <Grid item xs={isDesktop ? 6 : 12}>
-          <Playlist />
-        </Grid>
-      )}
-      {(isDesktop || tabIndex === 1) && (
-        <Grid item xs={isDesktop ? 6 : 12}>
-          <SelectTracks
-            onTrackSelected={(track: ITrack) => {
-              setSeedTracks([...seedTracks, track])
-            }}
-            filterList={seedTracks}
-          />
-        </Grid>
-      )}
+      <Field name="tracks" value={seedTracks}>
+        {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
+          if (!isEmpty(differenceBy(value, seedTracks, 'id'))) {
+            setFieldValue('tracks', seedTracks)
+          }
+          return (
+            <>
+              {(isDesktop || tabIndex === 0) && (
+                <Grid item xs={isDesktop ? 6 : 12}>
+                  <Playlist
+                    tracks={seedTracks}
+                    onTrackOrderChanged={(tracks: ITrack[]) => {
+                      setSeedTracks(tracks)
+                    }}
+                    onTrackRemoved={(track: ITrack) => {
+                      setSeedTracks(
+                        remove(seedTracks, seedTrack => {
+                          return seedTrack.id !== track.id
+                        })
+                      )
+                    }}
+                  />
+                </Grid>
+              )}
+
+              {(isDesktop || tabIndex === 1) && (
+                <Grid item xs={isDesktop ? 6 : 12}>
+                  <SelectTracks
+                    onTrackSelected={(track: ITrack) => {
+                      setSeedTracks([...seedTracks, track])
+                    }}
+                    filterList={seedTracks}
+                  />
+                </Grid>
+              )}
+            </>
+          )
+        }}
+      </Field>
     </Grid>
   )
 }

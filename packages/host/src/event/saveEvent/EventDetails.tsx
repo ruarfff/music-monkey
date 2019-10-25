@@ -1,97 +1,93 @@
 import React, { useState } from 'react'
-import FormGroup from '@material-ui/core/FormGroup'
 import { Grid, FormControlLabel, Switch } from '@material-ui/core'
+import { Field, FieldProps } from 'formik'
 import FileUpload from 'upload/FileUpload'
 import LocationAutoComplete from 'location/LocationAutoComplete'
-import LinkButton from 'components/LinkButton'
 import EventDateTimePicker from './EventDateTimePicker'
 import EventTextInput from './EventTextInput'
 import ILocation from 'location/ILocation'
 import MapComponent from 'location/MapComponent'
+import IEventSettings from 'event/IEventSettings'
 import './EventDetails.scss'
 
-interface EventDetailsProps {
-  nextPath: string
-  backPath: string
-}
-
-const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
-  const [settings, setSettings] = useState({
-    suggestingPlaylistsEnabled: false,
-    autoAcceptSuggestionsEnabled: false,
-    dynamicVotingEnabled: false
-  })
+const EventDetails = () => {
   const [location, setLocation] = useState({
     latLng: { lat: 0, lng: 0 }
   } as ILocation)
-  const [startDateTime, setStartDateTime] = useState()
-  const [endDateTime, setEndDateTime] = useState()
-  const [eventImage, setEventImage] = useState()
-  const [uploadError, setUploadError] = useState()
-
-  console.log(eventImage)
-  console.log(uploadError)
-
   return (
     <Grid container className="EventDetails-root">
       <Grid item xs={12} className="EventDetails-image">
-        <FileUpload
-          width={200}
-          height={200}
-          onUpload={image => {
-            setEventImage(image)
-          }}
-          onUploadError={err => {
-            setUploadError(err)
-          }}
-        />
+        <Field name="imageUrl">
+          {({ form: { setFieldValue, setFieldError } }: FieldProps) => (
+            <FileUpload
+              width={200}
+              height={200}
+              onUpload={image => {
+                setFieldValue('imageUrl', image)
+              }}
+              onUploadError={err => {
+                setFieldError('imageUrl', 'Failed to upload event image')
+                console.error(err)
+              }}
+            />
+          )}
+        </Field>
       </Grid>
       <Grid item xs={12} className="EventDetails-party-settings">
-        <FormControlLabel
-          control={
-            <Switch
-              value="Suggesting Playlists Enabled"
-              checked={settings.suggestingPlaylistsEnabled}
-              onChange={() => {
-                setSettings({
-                  ...settings,
-                  suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
-                })
-              }}
-            />
-          }
-          label="Allow Playlist Suggestions"
-        />
-        <FormControlLabel
-          control={
-            <Switch
-              value="Auto Accept Suggestions Enabled"
-              checked={settings.autoAcceptSuggestionsEnabled}
-              onChange={() => {
-                setSettings({
-                  ...settings,
-                  autoAcceptSuggestionsEnabled: !settings.autoAcceptSuggestionsEnabled
-                })
-              }}
-            />
-          }
-          label="Auto Accept Suggestions"
-        />
-        <FormControlLabel
-          control={
-            <Switch
-              value="dynamic Voting Enabled"
-              checked={settings.dynamicVotingEnabled}
-              onChange={() => {
-                setSettings({
-                  ...settings,
-                  dynamicVotingEnabled: !settings.dynamicVotingEnabled
-                })
-              }}
-            />
-          }
-          label="Dynamic Voting"
-        />
+        <Field name="settings">
+          {({ field, form: { setFieldValue, setFieldError } }: FieldProps) => {
+            const settings: IEventSettings = field.value
+            return (
+              <>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      value="Suggesting Playlists Enabled"
+                      checked={settings.suggestingPlaylistsEnabled}
+                      onChange={() => {
+                        setFieldValue('settings', {
+                          ...settings,
+                          suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
+                        })
+                      }}
+                    />
+                  }
+                  label="Allow Playlist Suggestions"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      value="Auto Accept Suggestions Enabled"
+                      checked={settings.autoAcceptSuggestionsEnabled}
+                      onChange={() => {
+                        setFieldValue('settings', {
+                          ...settings,
+                          autoAcceptSuggestionsEnabled: !settings.autoAcceptSuggestionsEnabled
+                        })
+                      }}
+                    />
+                  }
+                  label="Auto Accept Suggestions"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      value="dynamic Voting Enabled"
+                      checked={settings.dynamicVotingEnabled}
+                      onChange={() => {
+                        setFieldValue('settings', {
+                          ...settings,
+                          dynamicVotingEnabled: !settings.dynamicVotingEnabled
+                        })
+                      }}
+                    />
+                  }
+                  label="Dynamic Voting"
+                />
+              </>
+            )
+          }}
+        </Field>
       </Grid>
 
       <Grid item xs={12}>
@@ -99,16 +95,20 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
       </Grid>
 
       <Grid item xs={12}>
-        <LocationAutoComplete
-          value={location ? location.address || '' : ''}
-          onSelect={(location: any) => {
-            setLocation(location)
-          }}
-          onChange={(location: string) => {
-            setLocation({ address: location })
-          }}
-          placeholder="Search for place"
-        />
+        <Field name="location" value={location}>
+          {() => (
+            <LocationAutoComplete
+              value={location ? location.address || '' : ''}
+              onSelect={(location: any) => {
+                setLocation(location)
+              }}
+              onChange={(address: string) => {
+                setLocation({ address, latLng: { lat: 0, lng: 0 } })
+              }}
+              placeholder="Search for place"
+            />
+          )}
+        </Field>
       </Grid>
 
       <Grid item xs={12}>
@@ -116,36 +116,36 @@ const EventDetails = ({ nextPath, backPath }: EventDetailsProps) => {
       </Grid>
 
       <Grid item xs={12}>
-        <EventDateTimePicker
-          disablePast={true}
-          value={startDateTime}
-          onChange={(value: string) => {
-            setStartDateTime(value)
+        <Field name="startDateTime">
+          {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
+            console.log('Heloooooooooooooo', value)
+            return (
+              <EventDateTimePicker
+                disablePast={true}
+                value={value}
+                onChange={(startDateTime: any) => {
+                  setFieldValue('startDateTime', startDateTime)
+                }}
+                label="Starting At"
+              />
+            )
           }}
-          label="Starting At"
-        />
+        </Field>
       </Grid>
 
       <Grid item xs={12}>
-        <EventDateTimePicker
-          disablePast={true}
-          value={endDateTime}
-          onChange={(value: string) => {
-            setEndDateTime(value)
-          }}
-          label="Finishing At"
-        />
-      </Grid>
-
-      <Grid item xs={12}>
-        <FormGroup className="SaveEvent-form-actions">
-          <LinkButton to={backPath} variant="contained" color="secondary">
-            Back
-          </LinkButton>
-          <LinkButton to={nextPath} variant="contained" color="primary">
-            Next
-          </LinkButton>
-        </FormGroup>
+        <Field name="endDateTime">
+          {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
+            <EventDateTimePicker
+              disablePast={true}
+              value={value}
+              onChange={(endDateTime: any) => {
+                setFieldValue('endDateTime', endDateTime)
+              }}
+              label="Finishing At"
+            />
+          )}
+        </Field>
       </Grid>
     </Grid>
   )

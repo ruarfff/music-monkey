@@ -6,12 +6,12 @@ interface IEventDateTimePickerProps {
   value: any
   label: string
   disablePast?: boolean
-  onChange(value: string): void
+  onChange(value: any): void
 }
 
 const EventDateTimePicker: React.SFC<IEventDateTimePickerProps> = props => {
-  const handleChange = (event: any) => {
-    props.onChange(event)
+  const handleChange = (eventDate: any) => {
+    props.onChange(eventDate)
   }
   const { label, value, disablePast } = props
 
