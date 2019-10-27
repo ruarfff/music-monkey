@@ -5,9 +5,10 @@ import EventTextInput from './EventTextInput'
 
 interface EventInitializeProps {
   nextPath: string
+  formValid: boolean
 }
 
-const EventInitialize = ({ nextPath }: EventInitializeProps) => {
+const EventInitialize = ({ nextPath, formValid }: EventInitializeProps) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -26,7 +27,12 @@ const EventInitialize = ({ nextPath }: EventInitializeProps) => {
       </Grid>
       <Grid item xs={12}>
         <FormGroup className="SaveEvent-form-actions">
-          <LinkButton to={nextPath} variant="contained" color="primary">
+          <LinkButton
+            to={nextPath}
+            variant="contained"
+            color="primary"
+            disabled={!formValid}
+          >
             Next
           </LinkButton>
         </FormGroup>

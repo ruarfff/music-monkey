@@ -1,27 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Grid, FormControlLabel, Switch } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import FileUpload from 'upload/FileUpload'
 import LocationAutoComplete from 'location/LocationAutoComplete'
 import EventDateTimePicker from './EventDateTimePicker'
 import EventTextInput from './EventTextInput'
-import ILocation from 'location/ILocation'
 import MapComponent from 'location/MapComponent'
 import IEventSettings from 'event/IEventSettings'
 import './EventDetails.scss'
 
 const EventDetails = () => {
-  const [location, setLocation] = useState({
-    latLng: { lat: 0, lng: 0 }
-  } as ILocation)
   return (
     <Grid container className="EventDetails-root">
       <Grid item xs={12} className="EventDetails-image">
         <Field name="imageUrl">
-          {({ form: { setFieldValue, setFieldError } }: FieldProps) => (
+          {({
+            field: { value },
+            form: { setFieldValue, setFieldError }
+          }: FieldProps) => (
             <FileUpload
               width={200}
               height={200}
+              backgroundImage={value}
               onUpload={image => {
                 setFieldValue('imageUrl', image)
               }}
@@ -94,31 +94,34 @@ const EventDetails = () => {
         <EventTextInput name="organizer" label="Organizer" />
       </Grid>
 
-      <Grid item xs={12}>
-        <Field name="location" value={location}>
-          {() => (
-            <LocationAutoComplete
-              value={location ? location.address || '' : ''}
-              onSelect={(location: any) => {
-                setLocation(location)
-              }}
-              onChange={(address: string) => {
-                setLocation({ address, latLng: { lat: 0, lng: 0 } })
-              }}
-              placeholder="Search for place"
-            />
-          )}
-        </Field>
-      </Grid>
-
-      <Grid item xs={12}>
-        <MapComponent coords={location.latLng} />
-      </Grid>
+      <Field name="location">
+        {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
+          <>
+            <Grid item xs={12}>
+              <LocationAutoComplete
+                value={value ? value.address || '' : ''}
+                onSelect={(location: any) => {
+                  setFieldValue('location', location)
+                }}
+                onChange={(address: string) => {
+                  setFieldValue('location', {
+                    address,
+                    latLng: { lat: 0, lng: 0 }
+                  })
+                }}
+                placeholder="Search for place"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <MapComponent coords={value.latLng} />
+            </Grid>
+          </>
+        )}
+      </Field>
 
       <Grid item xs={12}>
         <Field name="startDateTime">
           {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
-            console.log('Heloooooooooooooo', value)
             return (
               <EventDateTimePicker
                 disablePast={true}

@@ -330,6 +330,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
 
         <Grid item={true} xs={12} sm={6}>
           <FileUpload
+            backgroundImage="test"
             width={300}
             height={300}
             onUpload={eventImageUploaded}
@@ -347,7 +348,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
             onChange={this.handleContentUpdated('organizer')}
           />
         </Grid>
-        
+
         {event.location && this.renderMap(event.location.latLng)}
 
         <Grid item={true} xs={12} sm={6}>

@@ -110,7 +110,10 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
           <Form className="SaveEvent-form">
             <Switch>
               <Route path={path} exact={true}>
-                <EventInitialize nextPath={path + '/playlist'} />
+                <EventInitialize
+                  nextPath={path + '/playlist'}
+                  formValid={!errors.eventName && !errors.eventDescription}
+                />
               </Route>
               <Route path={path + '/playlist'} exact={true}>
                 <SeedPlaylist

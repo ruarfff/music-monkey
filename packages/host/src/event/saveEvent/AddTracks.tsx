@@ -63,7 +63,8 @@ const AddTracks = ({
 
       <Field name="tracks" value={seedTracks}>
         {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
-          if (!isEmpty(differenceBy(value, seedTracks, 'id'))) {
+          const diff = differenceBy(seedTracks, value, 'id')
+          if (!isEmpty(diff)) {
             setFieldValue('tracks', seedTracks)
           }
           return (
