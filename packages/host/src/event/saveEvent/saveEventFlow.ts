@@ -6,19 +6,22 @@ import { createEvent } from 'event/eventClient'
 import SaveEventFormValues from './SaveEventFormValues'
 import IPlaylist from 'playlist/IPlaylist'
 
-const saveEventFlow = async ({
-  user,
-  eventName,
-  eventDescription,
-  organizer,
-  tracks,
-  image,
-  genre,
-  location,
-  settings,
-  startDateTime,
-  endDateTime
-}: SaveEventFormValues) => {
+const saveEventFlow = async (
+  {
+    user,
+    eventName,
+    eventDescription,
+    organizer,
+    tracks,
+    image,
+    genre,
+    location,
+    settings,
+    startDateTime,
+    endDateTime
+  }: SaveEventFormValues,
+  isEditing: boolean
+) => {
   let imageUrl = ''
   try {
     const uploadResponse = await uploadImage(image.name, image.data)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik, FormikProps, Form } from 'formik'
 import * as Yup from 'yup'
 import { Route, Switch, RouteComponentProps } from 'react-router-dom'
@@ -6,6 +6,8 @@ import { Hidden, Grid, FormGroup, Button } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
+import moment from 'moment'
+import isEmpty from 'lodash/isEmpty'
 import IUser from 'user/IUser'
 import IPlaylist from 'playlist/IPlaylist'
 import EventInitialize from './EventInitialize'
@@ -18,6 +20,10 @@ import LinkButton from 'components/LinkButton'
 import backgroundImg from 'assets/partycover.jpg'
 import SaveEventFormValues from './SaveEventFormValues'
 import saveEventFlow from './saveEventFlow'
+import IEvent from 'event/IEvent'
+import IAction from 'IAction'
+import LoadingSpinner from 'loading/LoadingSpinner'
+import locationResolver from './locationResolver'
 import './SaveEvent.scss'
 
 export interface EventImage {
@@ -27,7 +33,9 @@ export interface EventImage {
 }
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
+  event: IEvent
   isDesktop: boolean
+  getEventById(id: string): IAction
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -51,38 +59,90 @@ const steps = [
   'Summary'
 ]
 
-const SaveEvent = ({ user, isDesktop, location, history }: SaveEventProps) => {
+const SaveEvent = ({
+  user,
+  isDesktop,
+  location,
+  history,
+  match,
+  getEventById,
+  event = {} as IEvent
+}: SaveEventProps) => {
+  const isEditing =
+    location.pathname.startsWith('/events') &&
+    location.pathname.includes('/edit')
   const [seedPlaylist, setSeedPlaylist] = useState()
   const [seedTracks, setSeedTracks] = useState()
-  const path = '/create-event'
+
+  useEffect(() => {
+    if (isEditing) {
+      const eventIdFromPath = match.params['eventId']
+      if (event.eventId !== eventIdFromPath) {
+        getEventById(eventIdFromPath)
+      }
+    }
+    // eslint-disable-next-line
+  }, [event])
+
+  let initialValues =
+    isEditing && !!event
+      ? {
+          user,
+          eventName: event.name,
+          eventDescription: event.description,
+          organizer: event.organizer,
+          tracks: [] as ITrack[],
+          image: { name: 'event.jpg', data: null, url: event.imageUrl },
+          genre: event.genre,
+          location: event.location,
+          settings: event.settings,
+          startDateTime: event.startDateTime,
+          endDateTime: event.endDateTime
+        }
+      : {
+          user,
+          eventName: '',
+          eventDescription: '',
+          organizer: user.displayName,
+          tracks: [] as ITrack[],
+          image: { name: 'event.jpg', data: null, url: backgroundImg },
+          genre: 'none',
+          location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
+          settings: {
+            dynamicVotingEnabled: false,
+            autoAcceptSuggestionsEnabled: false,
+            suggestingPlaylistsEnabled: false
+          },
+          startDateTime: moment()
+            .utc()
+            .add(2, 'hours')
+            .startOf('hour'),
+          endDateTime: moment()
+            .utc()
+            .add(3, 'hours')
+            .startOf('hour')
+        }
+
+  if (isEditing && isEmpty(event.eventId)) {
+    return <LoadingSpinner />
+  }
+
+  const paths = isEditing ? locationResolver(event) : locationResolver()
+
+  console.log(paths)
   const pathToStep = {
-    [path]: 0,
-    [path + '/playlist']: 1,
-    [path + '/tracks']: 2,
-    [path + '/details']: 3,
-    [path + '/summary']: 4
+    [paths[0]]: 0,
+    [paths[1]]: 1,
+    [paths[2]]: 2,
+    [paths[3]]: 3,
+    [paths[4]]: 4
   }
   const activeStep = pathToStep[location.pathname] || 0
 
+  console.log(initialValues)
   return (
     <Formik
-      initialValues={{
-        user,
-        eventName: '',
-        eventDescription: '',
-        organizer: user.displayName,
-        tracks: [] as ITrack[],
-        image: { name: 'event.jpg', data: null, url: backgroundImg },
-        genre: 'none',
-        location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
-        settings: {
-          dynamicVotingEnabled: false,
-          autoAcceptSuggestionsEnabled: false,
-          suggestingPlaylistsEnabled: false
-        },
-        startDateTime: new Date(),
-        endDateTime: new Date()
-      }}
+      initialValues={initialValues}
       validationSchema={ValidationSchema}
       onSubmit={async (
         values: SaveEventFormValues,
@@ -90,14 +150,14 @@ const SaveEvent = ({ user, isDesktop, location, history }: SaveEventProps) => {
       ) => {
         setSubmitting(true)
         try {
-          const event = await saveEventFlow(values)
+          const event = await saveEventFlow(values, isEditing)
           setStatus({ formState: 'success', event })
         } catch (err) {
           console.error(err)
           setStatus({ formState: 'error' })
         }
         setSubmitting(false)
-        history.push(path + '/summary')
+        history.push(location.pathname.replace('/ details', '/summary'))
       }}
       render={({
         isSubmitting,
@@ -119,16 +179,16 @@ const SaveEvent = ({ user, isDesktop, location, history }: SaveEventProps) => {
           </Hidden>
           <Form className="SaveEvent-form">
             <Switch>
-              <Route path={path} exact={true}>
+              <Route path={paths[0]} exact={true}>
                 <EventInitialize
-                  nextPath={path + '/playlist'}
+                  nextPath={paths[1]}
                   formValid={!errors.eventName && !errors.eventDescription}
                 />
               </Route>
-              <Route path={path + '/playlist'} exact={true}>
+              <Route path={paths[1]} exact={true}>
                 <SeedPlaylist
-                  nextPath={path + '/tracks'}
-                  backPath={path}
+                  nextPath={paths[2]}
+                  backPath={paths[0]}
                   seedPlaylist={seedPlaylist}
                   onPlaylistSelected={(playlist: IPlaylist) => {
                     setSeedPlaylist(playlist)
@@ -142,16 +202,16 @@ const SaveEvent = ({ user, isDesktop, location, history }: SaveEventProps) => {
                   }}
                 />
               </Route>
-              <Route path={path + '/tracks'} exact={true}>
+              <Route path={paths[2]} exact={true}>
                 <AddTracks
                   isDesktop={isDesktop}
-                  nextPath={path + '/details'}
-                  backPath={path + '/playlist'}
+                  nextPath={paths[3]}
+                  backPath={paths[1]}
                   seedTracks={seedTracks}
                   setSeedTracks={setSeedTracks}
                 />
               </Route>
-              <Route path={path + '/details'} exact={true}>
+              <Route path={paths[3]} exact={true}>
                 <Grid container>
                   <EventDetails />
                   <Grid item xs={12}>
@@ -167,7 +227,7 @@ const SaveEvent = ({ user, isDesktop, location, history }: SaveEventProps) => {
                     <p>{errors.startDateTime}</p>
                     <FormGroup className="SaveEvent-form-actions">
                       <LinkButton
-                        to={path + '/tracks'}
+                        to={paths[2]}
                         variant="contained"
                         color="secondary"
                       >
@@ -179,15 +239,15 @@ const SaveEvent = ({ user, isDesktop, location, history }: SaveEventProps) => {
                         type="submit"
                         disabled={isSubmitting}
                       >
-                        Create Event
+                        {isEditing ? 'Save Event' : 'Create Event'}
                       </Button>
                     </FormGroup>
                   </Grid>
                 </Grid>
               </Route>
-              <Route path={path + '/summary'} exact={true}>
+              <Route path={paths[4]} exact={true}>
                 <Summary
-                  backPath={path + '/details'}
+                  backPath={paths[3]}
                   status={status.formStatus}
                   event={status.event}
                 />
