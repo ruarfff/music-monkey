@@ -51,7 +51,7 @@ const steps = [
   'Summary'
 ]
 
-const SaveEvent = ({ user, isDesktop, location }: SaveEventProps) => {
+const SaveEvent = ({ user, isDesktop, location, history }: SaveEventProps) => {
   const [seedPlaylist, setSeedPlaylist] = useState()
   const [seedTracks, setSeedTracks] = useState()
   const path = '/create-event'
@@ -84,17 +84,26 @@ const SaveEvent = ({ user, isDesktop, location }: SaveEventProps) => {
         endDateTime: new Date()
       }}
       validationSchema={ValidationSchema}
-      onSubmit={async (values: SaveEventFormValues, actions) => {
-        actions.setSubmitting(true)
+      onSubmit={async (
+        values: SaveEventFormValues,
+        { setSubmitting, setStatus }
+      ) => {
+        setSubmitting(true)
         try {
           const event = await saveEventFlow(values)
-          console.log(JSON.stringify(event, null, 4))
+          setStatus({ formState: 'success', event })
         } catch (err) {
-          console.log(err)
+          console.error(err)
+          setStatus({ formState: 'error' })
         }
-        actions.setSubmitting(false)
+        setSubmitting(false)
+        history.push(path + '/summary')
       }}
-      render={({ isSubmitting, errors }: FormikProps<SaveEventFormValues>) => (
+      render={({
+        isSubmitting,
+        errors,
+        status = {}
+      }: FormikProps<SaveEventFormValues>) => (
         <div className="SaveEvent-root">
           <Hidden smDown implementation="css">
             <Stepper activeStep={activeStep}>
@@ -177,7 +186,11 @@ const SaveEvent = ({ user, isDesktop, location }: SaveEventProps) => {
                 </Grid>
               </Route>
               <Route path={path + '/summary'} exact={true}>
-                <Summary backPath={path + '/details'} />
+                <Summary
+                  backPath={path + '/details'}
+                  status={status.formStatus}
+                  event={status.event}
+                />
               </Route>
             </Switch>
           </Form>
