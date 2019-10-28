@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, FormControlLabel, Switch } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
-import FileUpload from 'upload/FileUpload'
+import ImageEditor from 'imageEdit/ImageEditor'
 import LocationAutoComplete from 'location/LocationAutoComplete'
 import EventDateTimePicker from './EventDateTimePicker'
 import EventTextInput from './EventTextInput'
@@ -13,21 +13,13 @@ const EventDetails = () => {
   return (
     <Grid container className="EventDetails-root">
       <Grid item xs={12} className="EventDetails-image">
-        <Field name="imageUrl">
-          {({
-            field: { value },
-            form: { setFieldValue, setFieldError }
-          }: FieldProps) => (
-            <FileUpload
-              width={200}
-              height={200}
-              backgroundImage={value}
-              onUpload={image => {
-                setFieldValue('imageUrl', image)
-              }}
-              onUploadError={err => {
-                setFieldError('imageUrl', 'Failed to upload event image')
-                console.error(err)
+        <Field name="image">
+          {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
+            <ImageEditor
+              image={value}
+              onImageChanged={image => {
+                console.log('Image:   ', image)
+                setFieldValue('image', image)
               }}
             />
           )}

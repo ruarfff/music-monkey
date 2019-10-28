@@ -2,6 +2,7 @@ import React from 'react'
 import IPlaylist from 'playlist/IPlaylist'
 import formatDuration from 'util/formatDuration'
 import CatalogueCard from './CatalogueCard'
+import backgroundImg from 'assets/partycover.jpg'
 
 interface PlaylistCardProps {
   eventId: string
@@ -19,7 +20,7 @@ const PlaylistCard = ({ playlist, eventId }: PlaylistCardProps) => {
   const imageUrl =
     playlist.images && playlist.images.length
       ? playlist.images[0].url
-      : '/img/partycover-sm.png'
+      : backgroundImg
 
   const descriptionLines = [
     {

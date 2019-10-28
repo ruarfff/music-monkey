@@ -17,7 +17,6 @@ import IEventErrors from 'event/IEventErrors'
 import IPlaylist from 'playlist/IPlaylist'
 import IPlaylistDetails from 'playlist/IPlaylistDetails'
 import ISearch from 'playlist/ISearch'
-import FileUpload from 'upload/FileUpload'
 import IUser from 'user/IUser'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import CreateEventSteps from './CreateEventSteps'
@@ -256,13 +255,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
   }
 
   public renderSecondStep = () => {
-    const {
-      event,
-      eventImageUploaded,
-      eventImageUploadError,
-      currentStep,
-      history
-    } = this.props
+    const { event, currentStep, history } = this.props
 
     const { organizer, showSaveDialog, name, description } = this.state
 
@@ -328,15 +321,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
           </Grid>
         </Grid>
 
-        <Grid item={true} xs={12} sm={6}>
-          <FileUpload
-            backgroundImage="test"
-            width={300}
-            height={300}
-            onUpload={eventImageUploaded}
-            onUploadError={eventImageUploadError}
-          />
-        </Grid>
+        <Grid item={true} xs={12} sm={6}></Grid>
 
         <Grid item={true} xs={12} sm={6}>
           <EventInput

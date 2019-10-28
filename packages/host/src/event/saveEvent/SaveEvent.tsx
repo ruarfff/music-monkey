@@ -14,33 +14,26 @@ import EventDetails from './EventDetails'
 import Summary from './Summary'
 import ITrack from 'track/ITrack'
 import LinkButton from 'components/LinkButton'
-import IEventSettings from 'event/IEventSettings'
-import ILocation from 'location/ILocation'
+import backgroundImg from 'assets/partycover.jpg'
+import SaveEventFormValues from './SaveEventFormValues'
+import saveEventFlow from './saveEventFlow'
 import './SaveEvent.scss'
 
-export interface SaveEventFormValues {
-  eventName: string
-  eventDescription: string
-  organizer: string
-  tracks: ITrack[]
-  imageUrl: string
-  genre: string
-  location: ILocation
-  settings: IEventSettings
-  startDateTime: Date
-  endDateTime: Date
+export interface EventImage {
+  name: string
+  url: string
+  data: any
 }
-
 interface SaveEventProps extends RouteComponentProps {
   isDesktop: boolean
 }
 
 const ValidationSchema = Yup.object().shape({
-  eventName: Yup.string().required('Event name is required'),
-  eventDescription: Yup.string().required('Event description is required'),
-  organizer: Yup.string().required('Event organizer is required'),
+  eventName: Yup.string(), //.required('Event name is required'),
+  eventDescription: Yup.string(), //.required('Event description is required'),
+  organizer: Yup.string(), //.required('Event organizer is required'),
   tracks: Yup.array(),
-  imageUrl: Yup.string(),
+  image: Yup.object(),
   genre: Yup.string(),
   location: Yup.object(),
   settings: Yup.object(),
@@ -76,7 +69,7 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
         eventDescription: '',
         organizer: '',
         tracks: [] as ITrack[],
-        imageUrl: '',
+        image: { name: 'event.jpg', data: null, url: backgroundImg },
         genre: 'none',
         location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
         settings: {
@@ -89,8 +82,7 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
       }}
       validationSchema={ValidationSchema}
       onSubmit={(values: SaveEventFormValues, actions) => {
-        console.log({ values, actions })
-        alert(JSON.stringify(values, null, 2))
+        saveEventFlow(values)
         actions.setSubmitting(false)
       }}
       render={({ isSubmitting, errors }: FormikProps<SaveEventFormValues>) => (
@@ -150,7 +142,7 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
                     <p>{errors.organizer}</p>
                     <p>{errors.tracks}</p>
                     <p>{errors.genre}</p>
-                    <p>{errors.imageUrl}</p>
+                    <p>{errors.image}</p>
                     <p>{errors.location}</p>
                     <p>{errors.settings}</p>
                     <p>{errors.endDateTime}</p>

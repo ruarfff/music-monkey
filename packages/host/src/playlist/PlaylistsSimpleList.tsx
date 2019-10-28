@@ -1,11 +1,12 @@
+import React from 'react'
 import Avatar from '@material-ui/core/Avatar/Avatar'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemText from '@material-ui/core/ListItemText'
-import * as React from 'react'
 import IUser from '../user/IUser'
 import IPlaylist from './IPlaylist'
+import backgroundImg from 'assets/partycover.jpg'
 
 interface IPlaylistsSimpleListProps {
   playlists: IPlaylist[]
@@ -48,7 +49,7 @@ export default class PlaylistsSimpleList extends React.PureComponent<
                     src={
                       playlist.images.length > 0
                         ? playlist.images[0].url
-                        : '/img/partycover-sm.png'
+                        : backgroundImg
                     }
                   />
                 </ListItemAvatar>

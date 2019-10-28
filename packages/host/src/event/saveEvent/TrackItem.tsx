@@ -8,6 +8,8 @@ import head from 'lodash/head'
 import sortBy from 'lodash/sortBy'
 import formatDuration from 'util/formatDuration'
 import IImage from 'playlist/IImage'
+import backgroundImg from 'assets/partycover.jpg'
+
 import './TrackItem.scss'
 
 interface ITrackItemProps {
@@ -27,13 +29,11 @@ const TrackItem = ({
     onSelected(track)
   }
 
-  if (track.album && track.album.images && track.album.images.length > 0) {    
-    const imageUrl = track.album.images.length > 0
-              ? (
-                  head(sortBy(track.album.images, 'height')) ||
-                  ({} as IImage)
-                ).url
-              : '/img/partycover-sm.png'
+  if (track.album && track.album.images && track.album.images.length > 0) {
+    const imageUrl =
+      track.album.images.length > 0
+        ? (head(sortBy(track.album.images, 'height')) || ({} as IImage)).url
+        : backgroundImg
     trackImage = (
       <ListItemIcon>
         <img

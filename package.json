@@ -42,7 +42,7 @@
     "query-string": "^6.1.0",
     "react": "16.10.1",
     "react-autosuggest": "^9.3.4",
-    "react-avatar-editor": "^11.0.4",
+    "react-avatar-editor": "^11.0.7",
     "react-beautiful-dnd": "^11.0.3",
     "react-cookie": "^4.0.0",
     "react-copy-to-clipboard": "^5.0.1",
