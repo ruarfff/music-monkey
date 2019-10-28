@@ -4,7 +4,7 @@ import withSizes, { Sizes } from 'react-sizes'
 import IRootState from 'rootState'
 import SaveEvent from './SaveEvent'
 
-const mapStateToProps = (state: IRootState) => ({})
+const mapStateToProps = (state: IRootState) => ({ user: state.user.data })
 
 const mapDispatchToProps = {}
 

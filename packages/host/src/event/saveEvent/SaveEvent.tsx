@@ -6,6 +6,7 @@ import { Hidden, Grid, FormGroup, Button } from '@material-ui/core'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
+import IUser from 'user/IUser'
 import IPlaylist from 'playlist/IPlaylist'
 import EventInitialize from './EventInitialize'
 import SeedPlaylist from './SeedPlaylistContainer'
@@ -25,20 +26,21 @@ export interface EventImage {
   data: any
 }
 interface SaveEventProps extends RouteComponentProps {
+  user: IUser
   isDesktop: boolean
 }
 
 const ValidationSchema = Yup.object().shape({
-  eventName: Yup.string(), //.required('Event name is required'),
-  eventDescription: Yup.string(), //.required('Event description is required'),
-  organizer: Yup.string(), //.required('Event organizer is required'),
+  eventName: Yup.string().required('Event name is required'),
+  eventDescription: Yup.string().required('Event description is required'),
+  organizer: Yup.string().required('Event organizer is required'),
   tracks: Yup.array(),
   image: Yup.object(),
   genre: Yup.string(),
   location: Yup.object(),
   settings: Yup.object(),
-  startDateTime: Yup.date(),
-  endDateTime: Yup.date()
+  startDateTime: Yup.date().required('Please specify a start date'),
+  endDateTime: Yup.date().required('Please specify an end date')
 })
 
 const steps = [
@@ -49,7 +51,7 @@ const steps = [
   'Summary'
 ]
 
-const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
+const SaveEvent = ({ user, isDesktop, location }: SaveEventProps) => {
   const [seedPlaylist, setSeedPlaylist] = useState()
   const [seedTracks, setSeedTracks] = useState()
   const path = '/create-event'
@@ -65,9 +67,10 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
   return (
     <Formik
       initialValues={{
+        user,
         eventName: '',
         eventDescription: '',
-        organizer: '',
+        organizer: user.displayName,
         tracks: [] as ITrack[],
         image: { name: 'event.jpg', data: null, url: backgroundImg },
         genre: 'none',
@@ -81,8 +84,14 @@ const SaveEvent = ({ isDesktop, location }: SaveEventProps) => {
         endDateTime: new Date()
       }}
       validationSchema={ValidationSchema}
-      onSubmit={(values: SaveEventFormValues, actions) => {
-        saveEventFlow(values)
+      onSubmit={async (values: SaveEventFormValues, actions) => {
+        actions.setSubmitting(true)
+        try {
+          const event = await saveEventFlow(values)
+          console.log(JSON.stringify(event, null, 4))
+        } catch (err) {
+          console.log(err)
+        }
         actions.setSubmitting(false)
       }}
       render={({ isSubmitting, errors }: FormikProps<SaveEventFormValues>) => (

@@ -18,7 +18,6 @@ const EventDetails = () => {
             <ImageEditor
               image={value}
               onImageChanged={image => {
-                console.log('Image:   ', image)
                 setFieldValue('image', image)
               }}
             />

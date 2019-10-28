@@ -20,7 +20,6 @@ const ImageEditor = ({
       const canvas = imageEditor.current!.getImage()
       const url = canvas.toDataURL()
       canvas.toBlob(blob => {
-        console.log(blob)
         onImageChanged({ ...image, url, data: blob })
       })
     }

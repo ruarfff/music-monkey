@@ -23,7 +23,7 @@ const renderGuests = (guest: IEventGuest, key: number) => {
 
 export default ({ events }: IMyGuestsProps) => {
   const guests: IEventGuest[] = flattenDeep<IEventGuest>(
-    events.map(event => event.guests)
+    events.map(event => event.guests || [])
   )
 
   // TODO: We should guarantee uniqueness from api

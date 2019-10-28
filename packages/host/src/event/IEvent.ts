@@ -1,4 +1,3 @@
-import { Moment } from 'moment'
 import ILocation from 'location/ILocation'
 import IPlaylist from 'playlist/IPlaylist'
 import IEventGuest from './IEventGuest'
@@ -7,9 +6,7 @@ import IEventSettings from './IEventSettings'
 export default interface IEvent {
   eventId?: string
   description: string
-  dataUrl: string
-  endDateTime: Moment
-  eventCode: string
+  endDateTime: any
   imageUrl: string
   genre: string
   location: ILocation
@@ -20,7 +17,7 @@ export default interface IEvent {
   startDateTime: any
   venue?: string
   invites?: string[]
-  guests: IEventGuest[]
+  guests?: IEventGuest[]
   settings: IEventSettings
   createdAt?: string
   updatedAt?: string

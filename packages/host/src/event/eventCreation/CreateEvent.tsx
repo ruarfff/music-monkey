@@ -501,24 +501,19 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
       if (currentStep === 0 && !!event.playlistUrl) {
         if (!!event.createdAt) {
           editEventRequest({
-            ...event,
-            dataUrl: ''
+            ...event
           })
           setStep(currentStep + 1)
         } else {
           saveEvent({
             ...event,
-            organizer: event.organizer,
-            dataUrl: ''
+            organizer: event.organizer
           })
         }
       } else if (currentStep === 0 && !event.playlistUrl) {
         this.showErrorDialog('Pick or create a playlist')
       } else {
-        editEventRequest({
-          ...event,
-          dataUrl: ''
-        })
+        editEventRequest(event)
         setStep(currentStep + 1)
       }
     }

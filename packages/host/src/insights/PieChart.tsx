@@ -7,6 +7,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography'
 import flattenDeep from 'lodash/flattenDeep'
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts'
+import isEmpty from 'lodash/isEmpty'
 import IEvent from 'event/IEvent'
 import IAction from 'IAction'
 import IRsvp from 'rsvp/IRsvp'
@@ -102,8 +103,8 @@ class PieChartWidget extends React.Component<
 
     const allGuests = flattenDeep<IRsvp>(
       selectedEvent
-        .filter(event => event.guests && event.guests.length > 0)
-        .map(event => event.guests && event.guests.map(guest => guest.rsvp))
+        .filter(event => !isEmpty(event.guests))
+        .map(event => (event.guests || []).map(guest => guest.rsvp))
     )
 
     const pendingGuest = allGuests.filter(
