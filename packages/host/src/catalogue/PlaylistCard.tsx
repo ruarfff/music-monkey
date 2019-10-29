@@ -36,8 +36,8 @@ const PlaylistCard = ({ playlist, eventId }: PlaylistCardProps) => {
       link: playlist.external_urls.spotify,
       text: 'GO TO PLAYLIST',
       isHref: true
-    },
-    { link: '/events/' + eventId + '/edit', text: 'EDIT EVENT' }
+    }
+    // { link: '/events/' + eventId + '/edit', text: 'EDIT EVENT' }
   ]
   return (
     <CatalogueCard

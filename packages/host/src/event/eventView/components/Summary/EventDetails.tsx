@@ -6,7 +6,6 @@ import eventIcon from 'assets/date-icon.svg'
 import locationIcon from 'assets/location-marker-icon.svg'
 import MapItem from 'location/MapComponent'
 import IEvent from 'event/IEvent'
-import LinkButton from 'components/LinkButton'
 import './EventDetails.scss'
 
 interface IEventDetailsProps extends RouteComponentProps<any> {
@@ -90,13 +89,13 @@ const EventDetails = ({ event, location }: IEventDetailsProps) => {
             spacing={2}
             xs={12}
           >
-            <LinkButton
+            {/* <LinkButton
               variant="contained"
               color="secondary"
               to={location.pathname + '/edit'}
             >
               Edit Event
-            </LinkButton>
+            </LinkButton> */}
           </Grid>
           {showMap && event.location && event.location.latLng && (
             <MapItem coords={event.location && event.location.latLng} />

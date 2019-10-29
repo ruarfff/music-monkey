@@ -23,8 +23,8 @@ const EventCard = ({ event }: EventCardProps) => {
   ]
 
   const cardActions = [
-    { link: '/events/' + event.eventId, text: 'GO TO EVENT' },
-    { link: '/events/' + event.eventId + '/edit', text: 'EDIT EVENT' }
+    { link: '/events/' + event.eventId, text: 'GO TO EVENT' }
+    // { link: '/events/' + event.eventId + '/edit', text: 'EDIT EVENT' }
   ]
   return (
     <CatalogueCard
