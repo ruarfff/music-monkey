@@ -3,7 +3,7 @@ import ITrack from 'track/ITrack'
 import IEventSettings from 'event/IEventSettings'
 import ILocation from 'location/ILocation'
 import { EventImage } from './SaveEvent'
-import { Moment } from 'moment'
+
 export default interface SaveEventFormValues {
   user: IUser
   eventName: string
@@ -14,6 +14,6 @@ export default interface SaveEventFormValues {
   genre: string
   location: ILocation
   settings: IEventSettings
-  startDateTime: Moment
-  endDateTime: Moment
+  startDateTime: Date
+  endDateTime: Date
 }

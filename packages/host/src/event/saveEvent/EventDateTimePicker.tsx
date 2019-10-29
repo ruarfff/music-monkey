@@ -3,7 +3,7 @@ import { DateTimePicker } from '@material-ui/pickers'
 import './EventDateTimePicker.scss'
 
 interface IEventDateTimePickerProps {
-  value: any
+  value: Date
   label: string
   disablePast?: boolean
   onChange(value: any): void

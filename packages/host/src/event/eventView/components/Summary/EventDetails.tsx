@@ -6,6 +6,9 @@ import eventIcon from 'assets/date-icon.svg'
 import locationIcon from 'assets/location-marker-icon.svg'
 import MapItem from 'location/MapComponent'
 import IEvent from 'event/IEvent'
+import Image from 'components/Image'
+import backgroundImg from 'assets/partycover.jpg'
+
 import './EventDetails.scss'
 
 interface IEventDetailsProps extends RouteComponentProps<any> {
@@ -24,7 +27,12 @@ const EventDetails = ({ event, location }: IEventDetailsProps) => {
           </Typography>
         </Grid>
         <Grid item={true} xs={12}>
-          <img className="event-img" src={event.imageUrl} alt={event.name} />
+          <Image
+            className="event-img"
+            src={event.imageUrl}
+            alt={event.name}
+            fallbackSrc={backgroundImg}
+          />
         </Grid>
 
         <Grid item={true} xs={12}>

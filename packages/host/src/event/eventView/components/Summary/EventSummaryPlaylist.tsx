@@ -14,6 +14,9 @@ import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import formatDuration from 'util/formatDuration'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import EditPlaylistPopup from './EditPlaylistPopup'
+import Image from 'components/Image'
+import backgroundImg from 'assets/partycover.jpg'
+
 import './EventSummaryPlaylist.scss'
 
 interface IEventSummaryPlaylistProps {
@@ -142,7 +145,12 @@ const EventSummaryPlaylist = ({
             <Grid item={true} xs={6}>
               {image && (
                 <ButtonBase>
-                  <img className="playlist-image" alt="complex" src={image} />
+                  <Image
+                    className="playlist-image"
+                    src={image}
+                    alt="Playlist"
+                    fallbackSrc={backgroundImg}
+                  />
                 </ButtonBase>
               )}
             </Grid>

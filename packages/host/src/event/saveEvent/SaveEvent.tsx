@@ -49,9 +49,7 @@ const ValidationSchema = Yup.object().shape({
   image: Yup.object(),
   genre: Yup.string(),
   location: Yup.object(),
-  settings: Yup.object(),
-  startDateTime: Yup.date().required('Please specify a start date'),
-  endDateTime: Yup.date().required('Please specify an end date')
+  settings: Yup.object()
 })
 
 const steps = ['Setup Event', 'Playlist', 'Add Tracks', 'Event Details']
