@@ -50,11 +50,22 @@
 
     .SeedPlaylist-playlist-card {
       height: 180px;
+      width: 160px;
     }
 
     .SeedPlaylist-playlist-selected {
+      border: 2px solid $primary;
       background-color: $primary;
       --box-shadow-color: $primary;
     }
+  }
+
+  .SeedPlaylist-clear {
+    margin: 0px;
+    top: 77px;
+    right: 20px;
+    bottom: auto;
+    left: auto;
+    position: fixed;
   }
 }

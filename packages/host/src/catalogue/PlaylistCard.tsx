@@ -32,6 +32,11 @@ const PlaylistCard = ({ playlist, eventId }: PlaylistCardProps) => {
   ]
 
   const cardActions = [
+    {
+      link: playlist.external_urls.spotify,
+      text: 'GO TO PLAYLIST',
+      isHref: true
+    },
     { link: '/events/' + eventId + '/edit', text: 'EDIT EVENT' }
   ]
   return (

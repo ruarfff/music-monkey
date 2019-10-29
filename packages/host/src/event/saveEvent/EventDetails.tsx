@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, FormControlLabel, Switch } from '@material-ui/core'
+import { Grid, FormControlLabel, Switch, Typography } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import ImageEditor from 'imageEdit/ImageEditor'
 import EventDateTimePicker from './EventDateTimePicker'
@@ -10,6 +10,9 @@ const EventDetails = () => {
   return (
     <Grid container className="EventDetails-root">
       <Grid item xs={12} className="EventDetails-image">
+        <Typography variant="h6" align="center" gutterBottom>
+          Event Image
+        </Typography>
         <Field name="image">
           {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
             <ImageEditor

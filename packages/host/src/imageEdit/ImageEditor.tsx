@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
-import { Grid, Button } from '@material-ui/core'
+import { Grid, Button, Typography } from '@material-ui/core'
 
 interface IImageEditorProps {
   image: any
@@ -46,39 +46,54 @@ const ImageEditor = ({
         {({ getRootProps, getInputProps }) => (
           <section>
             <Grid container>
-              <Grid item xs={12} sm={6}>
-                <div
-                  {...getRootProps({
-                    onClick: event => {
-                      event.stopPropagation()
-                    }
-                  })}
+              <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  color="primary"
+                  onClick={getRootProps().onClick}
                 >
-                  <AvatarEditor
-                    ref={imageEditor}
-                    image={image.url}
-                    width={250}
-                    height={250}
-                    border={50}
-                    color={[255, 255, 255, 0.6]} // RGBA
-                    scale={1.2}
-                    rotate={0}
-                    onImageReady={handlePreviewChange}
-                    onImageChange={handlePreviewChange}
-                  />
-                  <input {...getInputProps()} />
-
-                  <Button onClick={getRootProps().onClick}>Click</Button>
-                </div>
+                  Upload New Image
+                </Button>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <h5>Preview</h5>
-                <img
-                  alt=""
-                  style={{ width: '200px', height: '200px' }}
-                  src={preview}
-                />
-                <Button onClick={handleSave}>Save</Button>
+                <Typography align="center" component="div">
+                  <div
+                    {...getRootProps({
+                      onClick: event => {
+                        event.stopPropagation()
+                      }
+                    })}
+                  >
+                    <AvatarEditor
+                      ref={imageEditor}
+                      image={image.url}
+                      width={200}
+                      height={200}
+                      border={50}
+                      color={[255, 255, 255, 0.6]} // RGBA
+                      scale={1.2}
+                      rotate={0}
+                      onImageReady={handlePreviewChange}
+                      onImageChange={handlePreviewChange}
+                    />
+                    <input {...getInputProps()} />
+                  </div>
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="subtitle2" align="center" gutterBottom>
+                  Preview
+                </Typography>
+                <Typography align="center" component="div">
+                  <img
+                    alt=""
+                    style={{ width: '200px', height: '200px' }}
+                    src={preview}
+                  />
+                </Typography>
+                <Button fullWidth color="primary" onClick={handleSave}>
+                  Save
+                </Button>
               </Grid>
             </Grid>
           </section>

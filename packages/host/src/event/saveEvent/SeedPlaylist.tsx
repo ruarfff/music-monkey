@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import isEmpty from 'lodash/isEmpty'
+import Fab from '@material-ui/core/Fab'
 import chunk from 'lodash/chunk'
+import ClearIcon from '@material-ui/icons/Clear'
 import { Hidden } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import FormGroup from '@material-ui/core/FormGroup'
@@ -66,15 +68,17 @@ const SeedPlaylist = ({
       <Hidden smUp>
         <FormGroup className="SaveEvent-form-actions">
           {playlistSelected && (
-            <Button
-              variant="contained"
+            <Fab
               color="primary"
+              aria-label="add"
+              size="small"
+              className="SeedPlaylist-clear"
               onClick={() => {
                 handlePlaylistSelected(undefined)
               }}
             >
-              Clear Selection
-            </Button>
+              <ClearIcon />
+            </Fab>
           )}
         </FormGroup>
       </Hidden>

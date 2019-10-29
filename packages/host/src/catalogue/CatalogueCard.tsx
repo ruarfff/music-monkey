@@ -4,6 +4,8 @@ import Card from '@material-ui/core/Card/Card'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography/Typography'
 import { Link } from 'react-router-dom'
+import Image from 'components/Image'
+import backgroundImg from 'assets/partycover.jpg'
 import './CatalogueCard.scss'
 
 interface ICatalogueCardProps {
@@ -11,7 +13,7 @@ interface ICatalogueCardProps {
   imageUrl: string
   title: string
   descriptionLines: { text: string; image?: string }[]
-  cardActions: { link: string; text: string }[]
+  cardActions: { link: string; text: string; isHref?: boolean }[]
 }
 
 const CatalogueCard = ({
@@ -25,7 +27,11 @@ const CatalogueCard = ({
     <Card className="CatalogueCard-root">
       <Link to={link}>
         <div className="CatalogueCard-img-container">
-          <img src={imageUrl} alt="Catalogue card cover" />
+          <Image
+            src={imageUrl}
+            alt="Catalogue card cover"
+            fallbackSrc={backgroundImg}
+          />
         </div>
       </Link>
       <Grid
@@ -51,11 +57,23 @@ const CatalogueCard = ({
           ))}
         </div>
         <div>
-          {cardActions.map(action => (
-            <Link key={action.link} to={action.link}>
-              <Button color="secondary">{action.text}</Button>
-            </Link>
-          ))}
+          {cardActions.map(action => {
+            return action.isHref ? (
+              <a
+                key={action.link}
+                href={action.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {' '}
+                <Button color="secondary">{action.text}</Button>
+              </a>
+            ) : (
+              <Link key={action.link} to={action.link}>
+                <Button color="secondary">{action.text}</Button>
+              </Link>
+            )
+          })}
         </div>
       </Grid>
     </Card>

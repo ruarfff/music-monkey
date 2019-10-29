@@ -43,7 +43,7 @@ interface SaveEventProps extends RouteComponentProps {
 
 const ValidationSchema = Yup.object().shape({
   eventName: Yup.string().required('Event name is required'),
-  eventDescription: Yup.string().required('Event description is required'),
+  eventDescription: Yup.string(),
   organizer: Yup.string().required('Event organizer is required'),
   tracks: Yup.array(),
   image: Yup.object(),
@@ -146,12 +146,12 @@ const SaveEvent = ({
         try {
           const event = await saveEventFlow(values, isEditing)
           setStatus({ formState: 'success', event })
+          setSubmitting(false)
+          history.push(`/events/${event.eventId}`)
         } catch (err) {
           console.error(err)
           setStatus({ formState: 'error' })
         }
-        setSubmitting(false)
-        history.push(location.pathname.replace('/ details', '/summary'))
       }}
       render={({
         isSubmitting,
@@ -229,14 +229,20 @@ const SaveEvent = ({
                           Back
                         </LinkButton>
                       </Hidden>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        disabled={isSubmitting}
-                      >
-                        {isEditing ? 'Save Event' : 'Create Event'}
-                      </Button>
+                      {isSubmitting ? (
+                        <div className="SaveEvent-loading">
+                          <LoadingSpinner />
+                        </div>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                          disabled={isSubmitting}
+                        >
+                          {isEditing ? 'Save Event' : 'Create Event'}
+                        </Button>
+                      )}
                     </FormGroup>
                   </Grid>
                 </Grid>
@@ -264,7 +270,12 @@ const SaveEvent = ({
                       : paths[steps.length - 1]
                   }
                   size="small"
-                  disabled={activeStep === steps.length - 1}
+                  disabled={
+                    activeStep === steps.length - 1 ||
+                    (activeStep === 0 &&
+                      !!errors.eventName &&
+                      !!errors.eventDescription)
+                  }
                 >
                   Next
                   <KeyboardArrowRight />
