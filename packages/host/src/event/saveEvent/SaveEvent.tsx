@@ -215,8 +215,6 @@ const SaveEvent = ({
                     <p>{errors.image}</p>
                     <p>{errors.location}</p>
                     <p>{errors.settings}</p>
-                    <p>{errors.endDateTime}</p>
-                    <p>{errors.startDateTime}</p>
                     <FormGroup className="SaveEvent-form-actions">
                       <Hidden smDown implementation="js">
                         <LinkButton
