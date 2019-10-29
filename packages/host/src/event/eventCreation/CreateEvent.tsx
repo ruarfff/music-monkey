@@ -11,14 +11,12 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import IAction from 'IAction'
 import EventInput from 'components/EventInput/EventInput'
-import LocationAutoComplete from 'location/LocationAutoComplete'
 import MapComponent from 'location/MapComponent'
 import IEvent from 'event/IEvent'
 import IEventErrors from 'event/IEventErrors'
 import IPlaylist from 'playlist/IPlaylist'
 import IPlaylistDetails from 'playlist/IPlaylistDetails'
 import ISearch from 'playlist/ISearch'
-import FileUpload from 'upload/FileUpload'
 import IUser from 'user/IUser'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import CreateEventSteps from './CreateEventSteps'
@@ -257,15 +255,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
   }
 
   public renderSecondStep = () => {
-    const {
-      event,
-      locationChanged,
-      locationSelected,
-      eventImageUploaded,
-      eventImageUploadError,
-      currentStep,
-      history
-    } = this.props
+    const { event, currentStep, history } = this.props
 
     const { organizer, showSaveDialog, name, description } = this.state
 
@@ -331,12 +321,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
           </Grid>
         </Grid>
 
-        <Grid item={true} xs={12} sm={6}>
-          <FileUpload
-            onUpload={eventImageUploaded}
-            onUploadError={eventImageUploadError}
-          />
-        </Grid>
+        <Grid item={true} xs={12} sm={6}></Grid>
 
         <Grid item={true} xs={12} sm={6}>
           <EventInput
@@ -348,15 +333,7 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
             onChange={this.handleContentUpdated('organizer')}
           />
         </Grid>
-        <Grid item={true} xs={12} sm={6}>
-          <LocationAutoComplete
-            value={event.location ? event.location.address || '' : ''}
-            onSelect={locationSelected}
-            onChange={locationChanged}
-            placeholder="Search for place"
-            formClass="CreateEvent-formItem"
-          />
-        </Grid>
+
         {event.location && this.renderMap(event.location.latLng)}
 
         <Grid item={true} xs={12} sm={6}>
@@ -524,24 +501,19 @@ class CreateEvent extends React.PureComponent<ICreateEventProps> {
       if (currentStep === 0 && !!event.playlistUrl) {
         if (!!event.createdAt) {
           editEventRequest({
-            ...event,
-            dataUrl: ''
+            ...event
           })
           setStep(currentStep + 1)
         } else {
           saveEvent({
             ...event,
-            organizer: event.organizer,
-            dataUrl: ''
+            organizer: event.organizer
           })
         }
       } else if (currentStep === 0 && !event.playlistUrl) {
         this.showErrorDialog('Pick or create a playlist')
       } else {
-        editEventRequest({
-          ...event,
-          dataUrl: ''
-        })
+        editEventRequest(event)
         setStep(currentStep + 1)
       }
     }

@@ -31,8 +31,6 @@ Other commands:
 
 `yarn test` - run all tests in all projects
 
-`yarn lint` - lint all code in all projects
-
 ## Deploying
 
 This app is deployed to AWS using Codeship.

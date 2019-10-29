@@ -1,17 +1,17 @@
 import React from 'react'
 import IEvent from 'event/IEvent'
-import EventBigCard from 'event/eventsView/EventBigCard'
+import EventCard from 'catalogue/EventCard'
 
-interface IMyPlaylistsProps {
+interface IMyEventsProps {
   events: IEvent[]
 }
 
-const MyPlaylists = ({ events }: IMyPlaylistsProps) => (
+const MyEvents = ({ events }: IMyEventsProps) => (
   <>
-    {events.map((event, key) => (
-      <EventBigCard event={event} key={key} />
+    {events.map(event => (
+      <EventCard key={event.eventId} event={event} />
     ))}
   </>
 )
 
-export default MyPlaylists
+export default MyEvents

@@ -3,12 +3,38 @@
 .TrackItem-root {
   border-bottom: 1px solid $light-grey;
 
-  .accept-track {
+  .TrackItem-content {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .TrackItem-left-content {
+    display: flex;
+    align-items: center;
+
+    .TrackItem-name-container {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+    }
+
+    .TrackItem-band {
+      font-weight: 800;
+    }
+
+    .TrackItem-duration {
+      width: 80px;
+    }
+  }
+
+  .TrackItem-accept-track {
     background: $bright-green;
     color: $mm-white;
   }
 
-  .track-image {
+  .TrackItem-track-image {
     border-radius: 4px;
     max-width: 4.5em;
     max-height: 4.5em;

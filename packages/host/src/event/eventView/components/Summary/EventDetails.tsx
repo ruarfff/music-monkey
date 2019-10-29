@@ -6,7 +6,7 @@ import eventIcon from 'assets/date-icon.svg'
 import locationIcon from 'assets/location-marker-icon.svg'
 import MapItem from 'location/MapComponent'
 import IEvent from 'event/IEvent'
-import LinkButton from 'util/LinkButton'
+import LinkButton from 'components/LinkButton'
 import './EventDetails.scss'
 
 interface IEventDetailsProps extends RouteComponentProps<any> {

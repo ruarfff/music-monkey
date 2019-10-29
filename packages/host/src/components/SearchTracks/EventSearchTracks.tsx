@@ -7,14 +7,14 @@ import CloseIcon from '@material-ui/icons/Close'
 import Search from '@material-ui/icons/Search'
 import { debounce, isEmpty } from 'lodash'
 import * as React from 'react'
-import IAction from '../../IAction'
-import IPlaylist from '../../playlist/IPlaylist'
-import ISearch from '../../playlist/ISearch'
-import Recommendations from '../../recommendations/RecommendationsContainer'
-import ITrack from '../../track/ITrack'
-import EventInput from '../EventInput/EventInput'
-import './EventSearchTracks.scss'
+import IAction from 'IAction'
+import IPlaylist from 'playlist/IPlaylist'
+import ISearch from 'playlist/ISearch'
+import Recommendations from 'recommendations/RecommendationsContainer'
+import ITrack from 'track/ITrack'
+import EventInput from 'components/EventInput/EventInput'
 import TrackItem from './TrackItem'
+import './EventSearchTracks.scss'
 
 const WAIT_INTERVAL = 400
 
@@ -29,13 +29,13 @@ interface IEventSearchTracksProps {
 
 const decorate = withStyles(() => ({
   btn: {
-    marginTop: '16px',
+    marginTop: '16px'
   }
 }))
 
 class EventSearchTracks extends React.PureComponent<
   IEventSearchTracksProps & WithStyles
-  > {
+> {
   public state = {
     searchQuery: '',
     isOpen: false
@@ -54,7 +54,7 @@ class EventSearchTracks extends React.PureComponent<
   }
 
   public handleClearSearch = () => {
-    this.setState({searchQuery: ''})
+    this.setState({ searchQuery: '' })
   }
 
   public triggerChange = () => {
@@ -71,11 +71,11 @@ class EventSearchTracks extends React.PureComponent<
   }
 
   public handleShowNotification = () => {
-    this.setState({isOpen: true})
+    this.setState({ isOpen: true })
   }
 
   public handleClose = () => {
-    this.setState({isOpen: false})
+    this.setState({ isOpen: false })
   }
 
   public render() {
@@ -88,27 +88,28 @@ class EventSearchTracks extends React.PureComponent<
       layout
     } = this.props
 
-    const playlistTracks = playlist.tracks.items.map((track) => track.track.uri)
+    const playlistTracks = playlist.tracks.items.map(track => track.track.uri)
 
     let filteredSearch
 
-    if(!isEmpty(searchResult)) {
-      filteredSearch = searchResult.items
-        .filter((searchedTrack) => playlistTracks.indexOf(searchedTrack.uri) === -1)
+    if (!isEmpty(searchResult)) {
+      filteredSearch = searchResult.items.filter(
+        searchedTrack => playlistTracks.indexOf(searchedTrack.uri) === -1
+      )
     }
 
     return (
-      <div>
+      <div className="">
         <Snackbar
           anchorOrigin={{
             vertical: 'top',
-            horizontal: 'center',
+            horizontal: 'center'
           }}
           autoHideDuration={4000}
           open={this.state.isOpen}
           onClose={this.handleClose}
           ContentProps={{
-            'aria-describedby': 'message-id',
+            'aria-describedby': 'message-id'
           }}
           message={<span id="message-id">{notification}</span>}
           action={[
@@ -128,30 +129,27 @@ class EventSearchTracks extends React.PureComponent<
             label={'search'}
             onChange={this.handleSearchChange}
           />
-          <Button
-            className={classes.btn}
-            onClick={this.handleSearchSubmit}
-          >
-            <Search/>
+          <Button className={classes.btn} onClick={this.handleSearchSubmit}>
+            <Search />
           </Button>
         </div>
 
         <div className="SearchResults">
           <List>
-            {filteredSearch ? filteredSearch.map((track, index) => (
-              <TrackItem
-                layout={layout}
-                handleClearSearch={this.handleClearSearch}
-                playlistId={playlist.id}
-                addTrack={addTrack}
-                track={track}
-                key={index}
-              />
-            )) :
-              <Recommendations
-                playlist={playlist}
-                layout={layout}
-              />}
+            {filteredSearch ? (
+              filteredSearch.map((track, index) => (
+                <TrackItem
+                  layout={layout}
+                  handleClearSearch={this.handleClearSearch}
+                  playlistId={playlist.id}
+                  addTrack={addTrack}
+                  track={track}
+                  key={index}
+                />
+              ))
+            ) : (
+              <Recommendations playlist={playlist} layout={layout} />
+            )}
           </List>
         </div>
       </div>

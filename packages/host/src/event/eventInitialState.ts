@@ -14,8 +14,6 @@ export default {
   createEventStep: 0,
   savingEvent: {
     description: '',
-    dataUrl: '',
-    eventCode: '',
     imageUrl: '',
     genre: 'None',
     location: { address: '', latLng: { lat: 0, lng: 0 } },

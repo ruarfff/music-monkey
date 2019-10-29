@@ -38,7 +38,7 @@ const TrackItem = ({
     trackImage = (
       <ListItemIcon>
         <img
-          className="track-image"
+          className="TrackItem-track-image"
           src={track.album.images[0].url}
           alt={track.name}
         />
@@ -49,35 +49,28 @@ const TrackItem = ({
   return (
     <ListItem className="TrackItem-root" dense={true} button={true}>
       {trackImage}
-      <div
-        className={
-          layout === 'column'
-            ? 'listItemContent-column listItemContent'
-            : 'listItemContent'
-        }
-      >
-        <div className="trackLeftContent">
-          <div className="trackNameContainer">
-            <span className="trackBand">{track.album.artists[0].name}</span>
-            <span className="trackName">{track.name}</span>
+      <div className="TrackItem-content">
+        <div className="TrackItem-left-content">
+          <div className="TrackItem-name-container">
+            <span className="TrackItem-band">
+              {track.album.artists[0].name}
+            </span>
+            <span>{track.name}</span>
           </div>
-          <div className="trackDuration">
+          <div className="TrackItem-duration">
             {formatDuration(track.duration_ms)}
           </div>
         </div>
-        <div className="trackContainer">
-          <audio
-            src={track.preview_url ? track.preview_url : ''}
-            controls={true}
-            className="EventSuggestions-audio"
-            preload="none"
-          />
-        </div>
+        <audio
+          src={track.preview_url ? track.preview_url : ''}
+          controls={true}
+          preload="none"
+        />
       </div>
       {!disableAddButton && (
         <ListItemSecondaryAction>
           <Button
-            className="accept-track"
+            className="TrackItem-accept-track"
             variant="contained"
             onClick={handleAddTrack(track)}
           >

@@ -1,19 +1,21 @@
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import IRootState from '../rootState'
+import IRootState from 'rootState'
+import { getEvents } from 'event/eventActions'
 import Home from './Home'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  userLoading: state.user.isLoading,
-  userError: state.user.error,
-  locationPath: state.home.location
+  events: state.event.events,
+  eventsLoading: state.event.eventsLoading
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  getEvents
+}
 
-const HomeContainer = withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Home)
-)
+const HomeContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)
 
 export default HomeContainer

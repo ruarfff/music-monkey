@@ -1,0 +1,72 @@
+.SmallEventCard-root {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  box-shadow: 0 10px 6px -6px #777;
+
+  .SmallEventCard-link {
+    text-decoration: none;
+  }
+
+  .SmallEventCard-image {
+    height: 120px;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+
+    img {
+      width: 100%;
+      height: inherit;
+    }
+  }
+
+  .SmallEventCard-content-wrapper {
+    padding-left: 1em;
+  }
+
+  .SmallEventCard-time {
+    color: #979797;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+
+    img {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  .SmallEventCard-time-big {
+    font-size: 0.8rem;
+    line-height: 1rem;
+    color: black;
+    font-family: Roboto, sans-sarif;
+  }
+
+  .SmallEventCard-name {
+    color: #979797;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    font-weight: 600;
+  }
+
+  .SmallEventCard-description {
+    color: #979797;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .SmallEventCard-avatar {
+    width: 2rem;
+    height: 2rem;
+    font-size: 10px;
+  }
+
+  .SmallEventCard-no-avatar {
+    font-size: 2.2rem;
+    margin-top: -3px;
+  }
+}

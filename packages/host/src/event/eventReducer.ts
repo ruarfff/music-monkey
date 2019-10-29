@@ -203,8 +203,7 @@ export default function event(
         ...state,
         savingEvent: {
           ...state.savingEvent,
-          imageUrl: payload.imgUrl,
-          dataUrl: payload.dataUrl
+          imageUrl: payload.imgUrl
         }
       }
     case EVENT_IMAGE_UPLOAD_ERROR:

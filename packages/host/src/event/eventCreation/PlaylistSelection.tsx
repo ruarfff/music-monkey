@@ -12,10 +12,10 @@ import { DropResult } from 'react-beautiful-dnd'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import IAction from 'IAction'
-import partyImg from 'assets/partycover.png'
+import partyImg from 'assets/partycover.jpg'
 import EventInput from 'components/EventInput/EventInput'
 import GenrePicker from 'event/eventCreation/GenrePicker'
-import PlaylistCard from 'event/PlaylistCardSmall'
+import PlaylistCard from 'catalogue/SmallPlaylistCard'
 import notification from 'notification/notificationReducer'
 import IPlaylist from 'playlist/IPlaylist'
 import ISearch from 'playlist/ISearch'
@@ -106,10 +106,6 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
 
   public handlePlaylistDescriptionChange = (description: string) => {
     this.setState({ description })
-  }
-
-  public handleShowNotification = () => {
-    this.setState({ isOpen: true })
   }
 
   public handleCloseNotification = () => {
@@ -234,12 +230,10 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
               </div>
               <List>
                 <TrackList
-                  removeTrack={this.handleRemoveTrack}
                   onDragEnd={this.handlePlaylistDragDrop}
                   tracks={cloneDeep(selectedPlaylist.tracks.items).map(
                     i => i.track
                   )}
-                  showNotification={this.handleShowNotification}
                 />
               </List>
             </React.Fragment>
@@ -256,7 +250,7 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
                   key={index}
                   onClick={this.handlePlaylistSelected(playlist)}
                 >
-                  <PlaylistCard playlist={playlist} disableLink={true} />
+                  <PlaylistCard playlist={playlist} />
                 </div>
               ))}
               <div className="Plus" onClick={this.handleLoadMore}>

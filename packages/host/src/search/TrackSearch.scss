@@ -1,0 +1,20 @@
+.TrackSearch-root {
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  width: 400;
+
+  .TrackSearch-input {
+    margin-left: 8px;
+    flex: 1;
+  }
+
+  .TrackSearch-icon-button {
+    padding: 10;
+  }
+
+  .divider {
+    height: 28px;
+    margin: 4px;
+  }
+}

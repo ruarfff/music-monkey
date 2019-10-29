@@ -1,7 +1,6 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { StylesProvider } from '@material-ui/styles'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { StylesProvider, ThemeProvider } from '@material-ui/styles'
 import { ConnectedRouter } from 'connected-react-router'
 import { History } from 'history'
 import { CookiesProvider } from 'react-cookie'
@@ -21,7 +20,7 @@ interface IAppProps {
 const App = ({ store, history }: IAppProps) => (
   <StylesProvider injectFirst>
     <CssBaseline />
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <CookiesProvider>
@@ -33,8 +32,7 @@ const App = ({ store, history }: IAppProps) => (
           </CookiesProvider>
         </ConnectedRouter>
       </Provider>
-    </MuiThemeProvider>
-
+    </ThemeProvider>
   </StylesProvider>
 )
 

@@ -1,0 +1,19 @@
+.SaveEvent-root {
+  width: 100%;
+  .SaveEvent-form {
+    padding: 2em;
+    margin-bottom: 64px;
+
+    .SaveEvent-form-actions {
+      margin-top: 2em;
+      button {
+        margin: 0.5rem;
+      }
+    }
+  }
+
+  .SaveEvent-loading {
+    height: 40px;
+    margin: 0;
+  }
+}

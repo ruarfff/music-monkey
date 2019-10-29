@@ -5,7 +5,6 @@ import auth from './auth/authReducer'
 import event from './event/eventReducer'
 import eventPlaylist from './event/eventPlaylist/eventPlaylistReducer'
 import eventView from './event/eventView/eventViewReducer'
-import home from './home/homeReducer'
 import insights from './insights/insightsReducer'
 import playlist from './playlist/playlistReducer'
 import recommendation from './recommendations/recommendationReducer'
@@ -20,7 +19,6 @@ export default (history: History) =>
     event,
     eventPlaylist,
     eventView,
-    home,
     playlist,
     suggestion,
     user,

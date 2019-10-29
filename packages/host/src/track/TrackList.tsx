@@ -11,14 +11,13 @@ import TrackListItem from './TrackListItem'
 interface ITrackListProps {
   tracks: ITrack[]
   tracksWithFeatures?: ITrackWithFeatures[]
+  disableRemoveTrack?: boolean
   withVoting?: boolean
   votes?: Map<string, ITrackVoteStatus>
-  onVote?: ((track: ITrack) => void)
-  onTrackSelected?: ((track: ITrack) => void)
-  onDragEnd?: ((result: any) => void)
-  removeTrack?: ((uri: string, position: number) => void)
-  showNotification?: (() => void)
-  disableRemoveTrack?: boolean
+  onVote?(track: ITrack): void
+  onTrackSelected?(track: ITrack): void
+  onDragEnd?(result: any): void
+  onTrackRemoved?(track: ITrack): void
 }
 
 const getItemStyle = (isDragging: any, draggableStyle: any) => {
@@ -41,9 +40,8 @@ const TrackList = ({
   onVote = (t: ITrack) => ({} as any),
   onTrackSelected = (t: ITrack) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
-  removeTrack = (uri: string, position: number) => ({} as any),
-  showNotification = () => ({} as any),
-  disableRemoveTrack = false,
+  onTrackRemoved = (track: ITrack) => ({} as any),
+  disableRemoveTrack = false
 }: ITrackListProps) => (
   <React.Fragment>
     <DragDropContext onDragEnd={onDragEnd}>
@@ -53,12 +51,10 @@ const TrackList = ({
             {tracks.map((track, i) => {
               const trackId = track.uri
               let numberOfVotes = 0
-              let userVoted = false
               if (votes && votes.has(trackId)) {
                 const voteStatus: ITrackVoteStatus =
                   votes.get(trackId) || ({} as ITrackVoteStatus)
                 numberOfVotes = voteStatus.numberOfVotes
-                userVoted = voteStatus.votedByCurrentUser
               }
 
               return (
@@ -74,16 +70,14 @@ const TrackList = ({
                       )}
                     >
                       <TrackListItem
-                        tracksWithFeature={tracksWithFeatures[i]}
                         track={track}
+                        tracksWithFeature={tracksWithFeatures[i]}
+                        disableRemoveTrack={disableRemoveTrack}
                         withVoting={withVoting}
-                        currentUserVoted={userVoted}
                         numberOfVotes={numberOfVotes}
                         onTrackSelected={onTrackSelected}
                         onVote={onVote}
-                        removeTrack={removeTrack}
-                        handleShowNotification={showNotification}
-                        disableRemoveTrack={disableRemoveTrack}
+                        onTrackRemoved={onTrackRemoved}
                       />
                     </div>
                   )}

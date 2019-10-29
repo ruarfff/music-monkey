@@ -123,7 +123,7 @@ function* saveEventFlow(action: IAction) {
       yield call(replaceTracksInPlaylist, copiedPlaylist.id, tracksToCopy)
     }
   } catch (err) {
-    console.log(err.message)
+    console.error(err.message)
   }
 
   try {
@@ -198,7 +198,7 @@ function* updateEventFlow(action: IAction) {
       yield call(replaceTracksInPlaylist, copiedPlaylist.id, tracksToCopy)
     }
   } catch (err) {
-    console.log(err.message)
+    console.error(err.message)
   }
 
   try {

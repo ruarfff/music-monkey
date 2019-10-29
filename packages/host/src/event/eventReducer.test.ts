@@ -97,16 +97,14 @@ describe('eventReducer', () => {
         events(initialState, {
           type: EVENT_IMAGE_UPLOADED,
           payload: {
-            imgUrl: 'image_url',
-            dataUrl: 'data_url'
+            imgUrl: 'image_url'
           }
         })
       ).toEqual({
         ...initialState,
         savingEvent: {
           ...initialState.savingEvent,
-          imageUrl: 'image_url',
-          dataUrl: 'data_url'
+          imageUrl: 'image_url'
         }
       })
     })

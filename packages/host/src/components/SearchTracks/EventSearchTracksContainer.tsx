@@ -1,9 +1,6 @@
 import { connect } from 'react-redux'
-import {
-  addTrack,
-  searchTrack,
-} from '../../playlist/playlistActions'
-import IRootState from '../../rootState'
+import { addTrack, searchTrack } from 'playlist/playlistActions'
+import IRootState from 'rootState'
 import EventSearchTracks from './EventSearchTracks'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -13,7 +10,7 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   searchTrack,
-  addTrack,
+  addTrack
 }
 
 const EventSearchTracksContainer = connect(
