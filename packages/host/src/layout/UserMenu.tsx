@@ -61,6 +61,9 @@ const UserMenu = ({ user, logout }: IUserMenuProps) => {
         open={menuOpen}
         onClose={handleClose}
       >
+        <a href="https://guests.musicmonkey.io/">
+          <MenuItem>Guest Mode</MenuItem>
+        </a>
         <Link to={'/account'}>
           <MenuItem onClick={handleClose}>My Account</MenuItem>
         </Link>
