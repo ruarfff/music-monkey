@@ -21,7 +21,7 @@ $width-enter: width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 
   .DesktopLayout-app-bar-shifted {
     margin-left: $nav-menu-width;
-    width: calc(100% - $nav-menu-width);
+    width: calc(100% - #{$nav-menu-width});
     transition: $margin-enter, $width-enter;
   }
 
