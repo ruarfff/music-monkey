@@ -37,14 +37,16 @@ const AddTracks = ({
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <FormGroup className="SaveEvent-form-actions">
-          <LinkButton to={backPath} variant="contained" color="secondary">
-            Back
-          </LinkButton>
-          <LinkButton to={nextPath} variant="contained" color="primary">
-            Next
-          </LinkButton>
-        </FormGroup>
+        <Hidden smDown implementation="css">
+          <FormGroup className="SaveEvent-form-actions">
+            <LinkButton to={backPath} variant="contained" color="secondary">
+              Back
+            </LinkButton>
+            <LinkButton to={nextPath} variant="contained" color="primary">
+              Next
+            </LinkButton>
+          </FormGroup>
+        </Hidden>
       </Grid>
       <Hidden smUp>
         <Grid item xs={12}>
@@ -72,7 +74,7 @@ const AddTracks = ({
               {(isDesktop || tabIndex === 0) && (
                 <Grid item xs={isDesktop ? 6 : 12}>
                   <Playlist
-                    tracks={seedTracks}
+                    tracks={value}
                     onTrackOrderChanged={(tracks: ITrack[]) => {
                       setSeedTracks(tracks)
                     }}
@@ -93,7 +95,7 @@ const AddTracks = ({
                     onTrackSelected={(track: ITrack) => {
                       setSeedTracks([...seedTracks, track])
                     }}
-                    filterList={seedTracks}
+                    filterList={value}
                   />
                 </Grid>
               )}

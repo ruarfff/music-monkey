@@ -1,6 +1,7 @@
 @import 'theme/main';
 
 .SeedPlaylist-root {
+  height: 100%;
   .SeedPlaylist-loading-area {
     height: 255px;
   }
@@ -10,21 +11,50 @@
     justify-content: space-around;
     overflow: hidden;
     height: 255px;
-  }
-  .SeedPlaylist-grid-list {
-    flex-wrap: nowrap;
-    transform: translateZ(0);
-  }
-  .SeedPlaylist-playlist {
-    margin: 0.5rem;
+
+    .SeedPlaylist-grid-list {
+      flex-wrap: nowrap;
+      transform: translateZ(0);
+    }
+    .SeedPlaylist-playlist {
+      margin: 0.5rem;
+    }
+
+    .SeedPlaylist-playlist-card {
+      width: 260px;
+      height: 250px;
+    }
+
+    .SeedPlaylist-playlist-selected {
+      background-color: $primary;
+    }
   }
 
-  .SeedPlaylist-playlist-card {
-    width: 260px;
-    height: 250px;
-  }
+  .SeedPlaylist-grid-list-container-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
 
-  .SeedPlaylist-playlist-selected {
-    background-color: $primary;
+    .SeedPlaylist-grid-list-col {
+      display: flex;
+      flex-direction: column;
+      flex-basis: 100%;
+      flex: 1;
+    }
+    .SeedPlaylist-playlist {
+      margin: 0.5rem;
+    }
+
+    .SeedPlaylist-playlist-card {
+      height: 180px;
+    }
+
+    .SeedPlaylist-playlist-selected {
+      background-color: $primary;
+      --box-shadow-color: $primary;
+    }
   }
 }

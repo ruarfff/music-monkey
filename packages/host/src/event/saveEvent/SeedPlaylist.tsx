@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import isEmpty from 'lodash/isEmpty'
+import chunk from 'lodash/chunk'
+import { Hidden } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import FormGroup from '@material-ui/core/FormGroup'
 import Button from '@material-ui/core/Button'
@@ -43,16 +45,41 @@ const SeedPlaylist = ({
     }
   }, [fetchPlaylists, playlists, playlistsLoading, user])
 
+  if (playlistsLoading) {
+    return (
+      <div className="SeedPlaylist-root">
+        <Typography variant="h5" align="center">
+          Select a playlist
+        </Typography>
+
+        <div className="SeedPlaylist-loading-area">
+          <LoadingSpinner />
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="SeedPlaylist-root">
       <Typography variant="h5" align="center">
         Select a playlist
       </Typography>
-      {playlistsLoading ? (
-        <div className="SeedPlaylist-loading-area">
-          <LoadingSpinner />
-        </div>
-      ) : (
+      <Hidden smUp>
+        <FormGroup className="SaveEvent-form-actions">
+          {playlistSelected && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handlePlaylistSelected(undefined)
+              }}
+            >
+              Clear Selection
+            </Button>
+          )}
+        </FormGroup>
+      </Hidden>
+
+      <Hidden smDown implementation="css">
         <div className="SeedPlaylist-grid-list-container">
           <GridList cols={2.5} className="SeedPlaylist-grid-list">
             {playlists
@@ -77,29 +104,67 @@ const SeedPlaylist = ({
               ))}
           </GridList>
         </div>
-      )}
-
-      <div className="SeedPlaylist-actions">
-        <FormGroup className="SaveEvent-form-actions">
-          <LinkButton variant="contained" color="secondary" to={backPath}>
-            Back
-          </LinkButton>
-          <LinkButton variant="contained" color="primary" to={nextPath}>
-            {playlistSelected ? 'Next' : 'Skip'}
-          </LinkButton>
-          {playlistSelected && (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                handlePlaylistSelected(undefined)
-              }}
+      </Hidden>
+      <Hidden smUp>
+        <div className="SeedPlaylist-grid-list-container-mobile">
+          {chunk(
+            playlists.filter(
+              (playlist: IPlaylist) => playlist.tracks.total > 0
+            ),
+            playlists.length / 2
+          ).map((playlists: IPlaylist[], index) => (
+            <GridList
+              key={index}
+              cellHeight={180}
+              cols={1}
+              className="SeedPlaylist-grid-list-col"
             >
-              Clear Selection
-            </Button>
-          )}
-        </FormGroup>
-      </div>
+              {playlists.map((playlist: IPlaylist) => (
+                <div
+                  key={playlist.id}
+                  onClick={() => {
+                    handlePlaylistSelected(playlist)
+                  }}
+                  className={`SeedPlaylist-playlist ${
+                    playlistSelected && seedPlaylist.id === playlist.id
+                      ? 'SeedPlaylist-playlist-selected'
+                      : ''
+                  }`}
+                >
+                  <SmallPlaylistCard
+                    playlist={playlist}
+                    classes={{ root: 'SeedPlaylist-playlist-card' }}
+                  />
+                </div>
+              ))}
+            </GridList>
+          ))}
+        </div>
+      </Hidden>
+
+      <Hidden smDown implementation="css">
+        <div className="SeedPlaylist-actions">
+          <FormGroup className="SaveEvent-form-actions">
+            <LinkButton variant="contained" color="secondary" to={backPath}>
+              Back
+            </LinkButton>
+            <LinkButton variant="contained" color="primary" to={nextPath}>
+              {playlistSelected ? 'Next' : 'Skip'}
+            </LinkButton>
+            {playlistSelected && (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  handlePlaylistSelected(undefined)
+                }}
+              >
+                Clear Selection
+              </Button>
+            )}
+          </FormGroup>
+        </div>
+      </Hidden>
     </div>
   )
 }

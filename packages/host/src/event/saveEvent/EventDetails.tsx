@@ -2,10 +2,7 @@ import React from 'react'
 import { Grid, FormControlLabel, Switch } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import ImageEditor from 'imageEdit/ImageEditor'
-import LocationAutoComplete from 'location/LocationAutoComplete'
 import EventDateTimePicker from './EventDateTimePicker'
-import EventTextInput from './EventTextInput'
-import MapComponent from 'location/MapComponent'
 import IEventSettings from 'event/IEventSettings'
 import './EventDetails.scss'
 
@@ -80,35 +77,6 @@ const EventDetails = () => {
           }}
         </Field>
       </Grid>
-
-      <Grid item xs={12}>
-        <EventTextInput name="organizer" label="Organizer" />
-      </Grid>
-
-      <Field name="location">
-        {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
-          <>
-            <Grid item xs={12}>
-              <LocationAutoComplete
-                value={value ? value.address || '' : ''}
-                onSelect={(location: any) => {
-                  setFieldValue('location', location)
-                }}
-                onChange={(address: string) => {
-                  setFieldValue('location', {
-                    address,
-                    latLng: { lat: 0, lng: 0 }
-                  })
-                }}
-                placeholder="Search for place"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <MapComponent coords={value.latLng} />
-            </Grid>
-          </>
-        )}
-      </Field>
 
       <Grid item xs={12}>
         <Field name="startDateTime">

@@ -3,9 +3,12 @@ import { Formik, FormikProps, Form } from 'formik'
 import * as Yup from 'yup'
 import { Route, Switch, RouteComponentProps } from 'react-router-dom'
 import { Hidden, Grid, FormGroup, Button } from '@material-ui/core'
+import MobileStepper from '@material-ui/core/MobileStepper'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 import moment from 'moment'
 import isEmpty from 'lodash/isEmpty'
 import IUser from 'user/IUser'
@@ -51,13 +54,7 @@ const ValidationSchema = Yup.object().shape({
   endDateTime: Yup.date().required('Please specify an end date')
 })
 
-const steps = [
-  'Setup Event',
-  'Playlist',
-  'Add Tracks',
-  'Event Details',
-  'Summary'
-]
+const steps = ['Setup Event', 'Playlist', 'Add Tracks', 'Event Details']
 
 const SaveEvent = ({
   user,
@@ -129,17 +126,14 @@ const SaveEvent = ({
 
   const paths = isEditing ? locationResolver(event) : locationResolver()
 
-  console.log(paths)
   const pathToStep = {
     [paths[0]]: 0,
     [paths[1]]: 1,
     [paths[2]]: 2,
-    [paths[3]]: 3,
-    [paths[4]]: 4
+    [paths[3]]: 3
   }
   const activeStep = pathToStep[location.pathname] || 0
 
-  console.log(initialValues)
   return (
     <Formik
       initialValues={initialValues}
@@ -226,13 +220,15 @@ const SaveEvent = ({
                     <p>{errors.endDateTime}</p>
                     <p>{errors.startDateTime}</p>
                     <FormGroup className="SaveEvent-form-actions">
-                      <LinkButton
-                        to={paths[2]}
-                        variant="contained"
-                        color="secondary"
-                      >
-                        Back
-                      </LinkButton>
+                      <Hidden smDown implementation="js">
+                        <LinkButton
+                          to={paths[2]}
+                          variant="contained"
+                          color="secondary"
+                        >
+                          Back
+                        </LinkButton>
+                      </Hidden>
                       <Button
                         variant="contained"
                         color="primary"
@@ -254,6 +250,38 @@ const SaveEvent = ({
               </Route>
             </Switch>
           </Form>
+          <Hidden smUp implementation="css">
+            <MobileStepper
+              steps={steps.length}
+              position="bottom"
+              variant="text"
+              activeStep={activeStep}
+              nextButton={
+                <LinkButton
+                  to={
+                    activeStep < steps.length - 1
+                      ? paths[activeStep + 1]
+                      : paths[steps.length - 1]
+                  }
+                  size="small"
+                  disabled={activeStep === steps.length - 1}
+                >
+                  Next
+                  <KeyboardArrowRight />
+                </LinkButton>
+              }
+              backButton={
+                <LinkButton
+                  to={activeStep > 0 ? paths[activeStep - 1] : paths[0]}
+                  size="small"
+                  disabled={activeStep === 0}
+                >
+                  <KeyboardArrowLeft />
+                  Back
+                </LinkButton>
+              }
+            />
+          </Hidden>
         </div>
       )}
     />

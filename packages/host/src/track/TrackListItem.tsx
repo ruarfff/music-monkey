@@ -1,16 +1,19 @@
 import React from 'react'
 import Badge from '@material-ui/core/Badge'
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
+import Fab from '@material-ui/core/Fab'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import ListItem from '@material-ui/core/ListItem/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import isFunction from 'lodash/isFunction'
 import formatDuration from 'util/formatDuration'
 import ITrack from './ITrack'
 import ITrackWithFeatures from './ITrackWithFeatures'
+import Remove from '@material-ui/icons/Remove'
 import './TrackListItem.scss'
+import { Typography } from '@material-ui/core'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
@@ -86,41 +89,39 @@ const TrackListItem = ({
       button={true}
       onClick={handleTrackSelected}
     >
-      {trackImage}
-      <Grid container={true} spacing={3}>
-        <Grid
-          item={true}
-          md={12}
-          container={true}
-          direction={'row'}
-          alignItems={'flex-end'}
-        >
-          <Grid
-            container={true}
-            direction={'column'}
-            justify={'center'}
-            md={3}
-            item={true}
+      <ListItemIcon>{trackImage}</ListItemIcon>
+      <ListItemText>
+        <div className="TrackItem-content">
+          <Typography variant="h6" gutterBottom noWrap>
+            {track.name}
+          </Typography>
+          <Typography variant="subtitle1" display="inline" align="left" noWrap>
+            {track.album.artists[0].name}
+          </Typography>
+          <Typography variant="subtitle2" display="block" align="right">
+            {formatDuration(track.duration_ms)}
+          </Typography>
+        </div>
+      </ListItemText>
+      {/* <ListItemText
+        primary={
+          tracksWithFeature && 'tempo ' + Math.round(tracksWithFeature.tempo)
+        }
+      /> */}
+
+      <ListItemSecondaryAction>
+        {!disableRemoveTrack && (
+          <Fab
+            color="primary"
+            aria-label="add"
+            size="small"
+            onClick={handleRemoveTrack(track)}
           >
-            <ListItemText
-              className="TrackListItem-name"
-              primary={track.album.artists[0].name}
-            />
-            <ListItemText className="TrackListItem-name" primary={track.name} />
-          </Grid>
-          <ListItemText primary={formatDuration(track.duration_ms)} />
-          <ListItemText
-            primary={
-              tracksWithFeature &&
-              'tempo ' + Math.round(tracksWithFeature.tempo)
-            }
-          />
-          {!disableRemoveTrack && (
-            <Button onClick={handleRemoveTrack(track)}>REMOVE</Button>
-          )}
-        </Grid>
-      </Grid>
-      {votingButton}
+            <Remove />
+          </Fab>
+        )}
+        {votingButton}
+      </ListItemSecondaryAction>
     </ListItem>
   )
 }

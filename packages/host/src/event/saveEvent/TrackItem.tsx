@@ -1,8 +1,10 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
+import Fab from '@material-ui/core/Fab'
 import ListItem from '@material-ui/core/ListItem'
+import { ListItemText, Typography } from '@material-ui/core'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import AddIcon from '@material-ui/icons/Add'
 import ITrack from 'track/ITrack'
 import head from 'lodash/head'
 import sortBy from 'lodash/sortBy'
@@ -35,48 +37,42 @@ const TrackItem = ({
         ? (head(sortBy(track.album.images, 'height')) || ({} as IImage)).url
         : backgroundImg
     trackImage = (
-      <ListItemIcon>
-        <img
-          className="TrackItem-track-image"
-          src={imageUrl}
-          alt={track.name}
-        />
-      </ListItemIcon>
+      <img className="TrackItem-track-image" src={imageUrl} alt={track.name} />
     )
   }
 
   return (
     <ListItem className="TrackItem-root" dense={true} button={true}>
-      {trackImage}
-      <div className="TrackItem-content">
-        <div className="TrackItem-left-content">
-          <div className="TrackItem-name-container">
-            <span className="TrackItem-band">
-              {track.album.artists[0].name}
-            </span>
-            <span>{track.name}</span>
-          </div>
-          <div className="TrackItem-duration">
+      <ListItemIcon>{trackImage}</ListItemIcon>
+      <ListItemText>
+        <div className="TrackItem-content">
+          <Typography variant="h6" gutterBottom noWrap>
+            {track.name}
+          </Typography>
+          <Typography variant="subtitle1" display="inline" align="left" noWrap>
+            {track.album.artists[0].name}
+          </Typography>
+          <Typography variant="subtitle2" display="block" align="right">
             {formatDuration(track.duration_ms)}
-          </div>
+          </Typography>
         </div>
-        <audio
+        {/* <audio
           src={track.preview_url ? track.preview_url : ''}
           controls={true}
           preload="none"
-        />
-      </div>
-      {!disableAddButton && (
-        <ListItemSecondaryAction>
-          <Button
-            className="TrackItem-accept-track"
-            variant="contained"
-            onClick={handleAddTrack(track)}
-          >
-            ADD
-          </Button>
-        </ListItemSecondaryAction>
-      )}
+        /> */}
+      </ListItemText>
+      <ListItemSecondaryAction>
+        <Fab
+          color="primary"
+          aria-label="add"
+          size="small"
+          className="TrackItem-accept-track"
+          onClick={handleAddTrack(track)}
+        >
+          <AddIcon />
+        </Fab>
+      </ListItemSecondaryAction>
     </ListItem>
   )
 }
