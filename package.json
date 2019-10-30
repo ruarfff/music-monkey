@@ -37,7 +37,7 @@
     "prop-types": "^15.6.2",
     "pusher-js": "5.0.2",
     "query-string": "^6.1.0",
-    "react": "16.10.1",
+    "react": "16.11.0",
     "react-autosuggest": "^9.3.4",
     "react-avatar-editor": "^11.0.7",
     "react-beautiful-dnd": "^11.0.3",
