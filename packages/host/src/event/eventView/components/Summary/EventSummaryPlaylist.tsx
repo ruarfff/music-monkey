@@ -16,6 +16,8 @@ import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import EditPlaylistPopup from './EditPlaylistPopup'
 import Image from 'components/Image'
 import backgroundImg from 'assets/partycover.jpg'
+import getPlaylistImage from 'playlist/getPlaylistImage'
+import getPlaylistDuration from 'playlist/getPlaylistDuration'
 
 import './EventSummaryPlaylist.scss'
 
@@ -79,20 +81,13 @@ const EventSummaryPlaylist = ({
   const numTracks =
     playlist.tracks && playlist.tracks.items ? playlist.tracks.items.length : 0
 
-  const durationSeconds =
-    numTracks > 0
-      ? playlist.tracks.items
-          .map(item => item.track.duration_ms)
-          .reduce((acc, dur) => acc + dur)
-      : 0
-
+  const durationSeconds = getPlaylistDuration(playlist)
   const formattedDuration = formatDuration(durationSeconds)
 
   let image = eventImg && eventImg
 
   if (!eventImg) {
-    image =
-      playlist.images && playlist.images.length ? playlist.images[0].url : ''
+    image = getPlaylistImage(playlist)
   }
 
   return (

@@ -10,8 +10,8 @@ import isEmpty from 'lodash/isEmpty'
 import differenceBy from 'lodash/differenceBy'
 import LinkButton from 'components/LinkButton'
 import ITrack from 'track/ITrack'
-import SelectTracks from './SelectTracksContainer'
-import Playlist from './Playlist'
+import SelectTracks from './RecommendationsContainer'
+import Playlist from './EventTracks'
 
 interface AddTracksProps {
   isDesktop: boolean

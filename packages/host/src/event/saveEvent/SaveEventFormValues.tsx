@@ -2,7 +2,7 @@ import IUser from 'user/IUser'
 import ITrack from 'track/ITrack'
 import IEventSettings from 'event/IEventSettings'
 import ILocation from 'location/ILocation'
-import { EventImage } from './SaveEvent'
+import EventImage from './EventImage'
 
 export default interface SaveEventFormValues {
   user: IUser

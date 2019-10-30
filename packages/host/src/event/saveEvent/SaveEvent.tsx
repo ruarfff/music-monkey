@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Formik, FormikProps, Form } from 'formik'
-import * as Yup from 'yup'
+import React, { useEffect } from 'react'
+import { Formik, FormikProps, Form, FormikHelpers } from 'formik'
 import { Route, Switch, RouteComponentProps } from 'react-router-dom'
 import { Hidden, Grid, FormGroup, Button } from '@material-ui/core'
 import MobileStepper from '@material-ui/core/MobileStepper'
@@ -9,31 +8,23 @@ import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import moment from 'moment'
 import isEmpty from 'lodash/isEmpty'
 import IUser from 'user/IUser'
-import IPlaylist from 'playlist/IPlaylist'
+import IEvent from 'event/IEvent'
 import EventInitialize from './EventInitialize'
-import SeedPlaylist from './SeedPlaylistContainer'
-import AddTracks from './AddTracks'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
-import ITrack from 'track/ITrack'
 import LinkButton from 'components/LinkButton'
-import backgroundImg from 'assets/partycover.jpg'
 import SaveEventFormValues from './SaveEventFormValues'
 import saveEventFlow from './saveEventFlow'
-import IEvent from 'event/IEvent'
 import IAction from 'IAction'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import locationResolver from './locationResolver'
+import FormValidationSchema from './FormValidationSchema'
+import getInitialFormValues from './getInitialFormValues'
+
 import './SaveEvent.scss'
 
-export interface EventImage {
-  name: string
-  url: string
-  data: any
-}
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
   event: IEvent
@@ -41,18 +32,7 @@ interface SaveEventProps extends RouteComponentProps {
   getEventById(id: string): IAction
 }
 
-const ValidationSchema = Yup.object().shape({
-  eventName: Yup.string().required('Event name is required'),
-  eventDescription: Yup.string(),
-  organizer: Yup.string().required('Event organizer is required'),
-  tracks: Yup.array(),
-  image: Yup.object(),
-  genre: Yup.string(),
-  location: Yup.object(),
-  settings: Yup.object()
-})
-
-const steps = ['Setup Event', 'Playlist', 'Add Tracks', 'Event Details']
+const steps = ['Setup Event', 'Playlist', 'Add Tracks']
 
 const SaveEvent = ({
   user,
@@ -66,57 +46,16 @@ const SaveEvent = ({
   const isEditing =
     location.pathname.startsWith('/events') &&
     location.pathname.includes('/edit')
-  const [seedPlaylist, setSeedPlaylist] = useState()
-  const [seedTracks, setSeedTracks] = useState()
+  const eventIdFromPath = match.params['eventId']
 
   useEffect(() => {
     if (isEditing) {
-      const eventIdFromPath = match.params['eventId']
       if (event.eventId !== eventIdFromPath) {
         getEventById(eventIdFromPath)
       }
     }
     // eslint-disable-next-line
-  }, [event])
-
-  let initialValues =
-    isEditing && !!event
-      ? {
-          user,
-          eventName: event.name,
-          eventDescription: event.description,
-          organizer: event.organizer,
-          tracks: [] as ITrack[],
-          image: { name: 'event.jpg', data: null, url: event.imageUrl },
-          genre: event.genre,
-          location: event.location,
-          settings: event.settings,
-          startDateTime: event.startDateTime,
-          endDateTime: event.endDateTime
-        }
-      : {
-          user,
-          eventName: '',
-          eventDescription: '',
-          organizer: user.displayName,
-          tracks: [] as ITrack[],
-          image: { name: 'event.jpg', data: null, url: backgroundImg },
-          genre: 'none',
-          location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
-          settings: {
-            dynamicVotingEnabled: false,
-            autoAcceptSuggestionsEnabled: false,
-            suggestingPlaylistsEnabled: false
-          },
-          startDateTime: moment()
-            .utc()
-            .add(2, 'hours')
-            .startOf('hour'),
-          endDateTime: moment()
-            .utc()
-            .add(3, 'hours')
-            .startOf('hour')
-        }
+  }, [event, eventIdFromPath])
 
   if (isEditing && isEmpty(event.eventId)) {
     return <LoadingSpinner />
@@ -127,47 +66,89 @@ const SaveEvent = ({
   const pathToStep = {
     [paths[0]]: 0,
     [paths[1]]: 1,
-    [paths[2]]: 2,
-    [paths[3]]: 3
+    [paths[2]]: 2
   }
   const activeStep = pathToStep[location.pathname] || 0
 
+  const handleSubmit = async (
+    values: SaveEventFormValues,
+    { setSubmitting, setStatus }: FormikHelpers<SaveEventFormValues>
+  ) => {
+    setSubmitting(true)
+    try {
+      const event = await saveEventFlow(values, isEditing)
+      setStatus({ formState: 'success', event })
+      setSubmitting(false)
+      history.push(`/events/${event.eventId}`)
+    } catch (err) {
+      console.error(err)
+      setStatus({ formState: 'error' })
+    }
+  }
+
+  const MobileNav = () => (
+    <MobileStepper
+      steps={steps.length}
+      position="static"
+      variant="dots"
+      activeStep={activeStep}
+      nextButton={
+        <LinkButton
+          to={
+            activeStep < steps.length - 1
+              ? paths[activeStep + 1]
+              : paths[steps.length - 1]
+          }
+          size="small"
+          disabled={activeStep === steps.length - 1}
+        >
+          Next
+          <KeyboardArrowRight />
+        </LinkButton>
+      }
+      backButton={
+        <LinkButton
+          to={activeStep > 0 ? paths[activeStep - 1] : paths[0]}
+          size="small"
+          disabled={activeStep === 0}
+        >
+          <KeyboardArrowLeft />
+          Back
+        </LinkButton>
+      }
+    />
+  )
+
+  const LargeScreenNav = () => (
+    <Stepper activeStep={activeStep}>
+      {steps.map(label => {
+        const stepProps: { completed?: boolean } = {}
+        return (
+          <Step key={label} {...stepProps}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        )
+      })}
+    </Stepper>
+  )
+
   return (
     <Formik
-      initialValues={initialValues}
-      validationSchema={ValidationSchema}
-      onSubmit={async (
-        values: SaveEventFormValues,
-        { setSubmitting, setStatus }
-      ) => {
-        setSubmitting(true)
-        try {
-          const event = await saveEventFlow(values, isEditing)
-          setStatus({ formState: 'success', event })
-          setSubmitting(false)
-          history.push(`/events/${event.eventId}`)
-        } catch (err) {
-          console.error(err)
-          setStatus({ formState: 'error' })
-        }
-      }}
-      render={({
+      initialValues={getInitialFormValues(user, event, isEditing)}
+      validationSchema={FormValidationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({
         isSubmitting,
         errors,
         status = {}
       }: FormikProps<SaveEventFormValues>) => (
         <div className="SaveEvent-root">
           <Hidden smDown implementation="css">
-            <Stepper activeStep={activeStep}>
-              {steps.map(label => {
-                const stepProps: { completed?: boolean } = {}
-                return (
-                  <Step key={label} {...stepProps}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                )
-              })}
-            </Stepper>
+            <LargeScreenNav />
+          </Hidden>
+          <Hidden smUp implementation="css">
+            <MobileNav />
           </Hidden>
           <Form className="SaveEvent-form">
             <Switch>
@@ -177,32 +158,8 @@ const SaveEvent = ({
                   formValid={!errors.eventName && !errors.eventDescription}
                 />
               </Route>
-              <Route path={paths[1]} exact={true}>
-                <SeedPlaylist
-                  nextPath={paths[2]}
-                  backPath={paths[0]}
-                  seedPlaylist={seedPlaylist}
-                  onPlaylistSelected={(playlist: IPlaylist) => {
-                    setSeedPlaylist(playlist)
-                    if (!!playlist) {
-                      setSeedTracks(
-                        playlist.tracks.items.map(item => item.track)
-                      )
-                    } else {
-                      setSeedTracks([])
-                    }
-                  }}
-                />
-              </Route>
-              <Route path={paths[2]} exact={true}>
-                <AddTracks
-                  isDesktop={isDesktop}
-                  nextPath={paths[3]}
-                  backPath={paths[1]}
-                  seedTracks={seedTracks}
-                  setSeedTracks={setSeedTracks}
-                />
-              </Route>
+              <Route path={paths[1]} exact={true}></Route>
+              <Route path={paths[2]} exact={true}></Route>
               <Route path={paths[3]} exact={true}>
                 <Grid container>
                   <EventDetails />
@@ -252,46 +209,9 @@ const SaveEvent = ({
               </Route>
             </Switch>
           </Form>
-          <Hidden smUp implementation="css">
-            <MobileStepper
-              steps={steps.length}
-              position="bottom"
-              variant="text"
-              activeStep={activeStep}
-              nextButton={
-                <LinkButton
-                  to={
-                    activeStep < steps.length - 1
-                      ? paths[activeStep + 1]
-                      : paths[steps.length - 1]
-                  }
-                  size="small"
-                  disabled={
-                    activeStep === steps.length - 1 ||
-                    (activeStep === 0 &&
-                      !!errors.eventName &&
-                      !!errors.eventDescription)
-                  }
-                >
-                  Next
-                  <KeyboardArrowRight />
-                </LinkButton>
-              }
-              backButton={
-                <LinkButton
-                  to={activeStep > 0 ? paths[activeStep - 1] : paths[0]}
-                  size="small"
-                  disabled={activeStep === 0}
-                >
-                  <KeyboardArrowLeft />
-                  Back
-                </LinkButton>
-              }
-            />
-          </Hidden>
         </div>
       )}
-    />
+    </Formik>
   )
 }
 

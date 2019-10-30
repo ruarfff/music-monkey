@@ -2,7 +2,8 @@ import React from 'react'
 import IPlaylist from 'playlist/IPlaylist'
 import formatDuration from 'util/formatDuration'
 import CatalogueCard from './CatalogueCard'
-import backgroundImg from 'assets/partycover.jpg'
+import getPlaylistImage from 'playlist/getPlaylistImage'
+import getPlaylistDuration from 'playlist/getPlaylistDuration'
 
 interface PlaylistCardProps {
   eventId: string
@@ -10,17 +11,9 @@ interface PlaylistCardProps {
 }
 
 const PlaylistCard = ({ playlist, eventId }: PlaylistCardProps) => {
-  const durationSeconds =
-    playlist.tracks.items.length > 0
-      ? playlist.tracks.items
-          .map(item => item.track.duration_ms)
-          .reduce((acc, dur) => acc + dur)
-      : 0
+  const durationSeconds = getPlaylistDuration(playlist)
 
-  const imageUrl =
-    playlist.images && playlist.images.length
-      ? playlist.images[0].url
-      : backgroundImg
+  const imageUrl = getPlaylistImage(playlist)
 
   const descriptionLines = [
     {

@@ -7,10 +7,15 @@ interface ILoadingSpinner {
   width?: number
 }
 
-const LoadingSpinner = ({height, width}:ILoadingSpinner) => {
+const LoadingSpinner = ({ height, width }: ILoadingSpinner) => {
   return (
     <div className="LoadingSpinner">
-      <ReactLoading type="cylon" color="#AF00FF" height={height ? height : 400} width={width ? width : 400} />
+      <ReactLoading
+        type="spokes"
+        color="#AF00FF"
+        height={height ? height : 400}
+        width={width ? width : 400}
+      />
     </div>
   )
 }

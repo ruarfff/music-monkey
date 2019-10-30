@@ -1,25 +1,27 @@
 import React from 'react'
 import { DropResult } from 'react-beautiful-dnd'
-import { Typography, List } from '@material-ui/core'
+import { Typography, List, Paper } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
 
-interface PlaylistProps {
+interface EventTracksProps {
   tracks: ITrack[]
   onTrackRemoved(track: ITrack): void
   onTrackOrderChanged(tracks: ITrack[]): void
 }
-const Playlist = ({
+const EventTracks = ({
   tracks,
   onTrackOrderChanged,
   onTrackRemoved
-}: PlaylistProps) => {
+}: EventTracksProps) => {
   return isEmpty(tracks) ? (
-    <Typography variant="h5" align="center">
-      No tracks yet
-    </Typography>
+    <Paper>
+      <Typography variant="subtitle2" align="center" gutterBottom>
+        No tracks yet
+      </Typography>
+    </Paper>
   ) : (
     <List>
       <TrackList
@@ -39,4 +41,4 @@ const Playlist = ({
   )
 }
 
-export default Playlist
+export default EventTracks

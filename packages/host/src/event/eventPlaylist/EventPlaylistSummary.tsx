@@ -9,6 +9,7 @@ import IPlaylist from 'playlist/IPlaylist'
 import formatDuration from 'util/formatDuration'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import './EventPlaylistSummary.scss'
+import getPlaylistDuration from 'playlist/getPlaylistDuration'
 
 interface IEventPlaylistSummaryProps {
   event: IEvent
@@ -30,18 +31,7 @@ class EventPlaylistSummary extends React.PureComponent<
     const playlist: IPlaylist = this.props.playlist || ({} as IPlaylist)
     const event: IEvent = this.props.event || ({} as IEvent)
 
-    const numTracks =
-      playlist.tracks && playlist.tracks.items
-        ? playlist.tracks.items.length
-        : 0
-
-    const durationSeconds =
-      numTracks > 0
-        ? playlist.tracks.items
-            .map(item => item.track.duration_ms)
-            .reduce((acc, dur) => acc + dur)
-        : 0
-
+    const durationSeconds = getPlaylistDuration(playlist)
     const formattedDuration = formatDuration(durationSeconds)
 
     return (

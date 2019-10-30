@@ -4,6 +4,8 @@ import { Field, FieldProps } from 'formik'
 import ImageEditor from 'imageEdit/ImageEditor'
 import EventDateTimePicker from './EventDateTimePicker'
 import IEventSettings from 'event/IEventSettings'
+import EventTextInput from './EventTextInput'
+import EventLocationInput from './EventLocationInput'
 import './EventDetails.scss'
 
 const EventDetails = () => {
@@ -88,7 +90,7 @@ const EventDetails = () => {
               <EventDateTimePicker
                 disablePast={true}
                 value={value}
-                onChange={(startDateTime: any) => {
+                onChange={(startDateTime: Date) => {
                   setFieldValue('startDateTime', startDateTime)
                 }}
                 label="Starting At"
@@ -104,13 +106,19 @@ const EventDetails = () => {
             <EventDateTimePicker
               disablePast={true}
               value={value}
-              onChange={(endDateTime: any) => {
+              onChange={(endDateTime: Date) => {
                 setFieldValue('endDateTime', endDateTime)
               }}
               label="Finishing At"
             />
           )}
         </Field>
+      </Grid>
+      <Grid item xs={12}>
+        <EventTextInput name="organizer" label="Organizer" />
+      </Grid>
+      <Grid item xs={12}>
+        <EventLocationInput />
       </Grid>
     </Grid>
   )

@@ -5,7 +5,7 @@
   max-width: 100%;
 
   .MobileLayout-app-bar {
-    background-color: white;
+    background-color: $primary;
     box-shadow: none;
 
     .MobileLayout-title {
@@ -14,11 +14,11 @@
       font-size: 2rem;
       line-height: 2.5rem;
       padding: $spacing - 2;
-      color: black;
+      color: $mm-white;
     }
 
     .MobileLayout-app-bar-menu-button {
-      color: black;
+      color: $mm-white;
     }
   }
 

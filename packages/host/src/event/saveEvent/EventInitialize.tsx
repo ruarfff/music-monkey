@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, FormGroup, Hidden } from '@material-ui/core'
 import LinkButton from 'components/LinkButton'
 import EventTextInput from './EventTextInput'
-import EventLocationInput from './EventLocationInput'
+import SeedPlaylist from './SeedPlaylistContainer'
 
 interface EventInitializeProps {
   nextPath: string
@@ -13,21 +13,19 @@ const EventInitialize = ({ nextPath, formValid }: EventInitializeProps) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <EventTextInput name="eventName" label="Event Name" autoFocus={true} />
+        <EventTextInput name="eventName" label="Name" autoFocus={true} />
       </Grid>
       <Grid item xs={12}>
         <EventTextInput
           name="eventDescription"
           multiline={true}
-          label="Event Description"
+          label="Description"
         />
       </Grid>
       <Grid item xs={12}>
-        <EventTextInput name="organizer" label="Organizer" />
+        <SeedPlaylist />
       </Grid>
-      <Grid item xs={12}>
-        <EventLocationInput />
-      </Grid>
+
       <Grid item xs={12}>
         <Hidden smDown implementation="css">
           <FormGroup className="SaveEvent-form-actions">

@@ -1,19 +1,19 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
-import SelectTracks from './SelectTracks'
+import Recommendations from './Recommendations'
 import { getRecommendations } from 'recommendations/recommendationActions'
 
-const mapStateToProps = (state: IRootState) => ({  
+const mapStateToProps = (state: IRootState) => ({
   recommendedTracks: state.recommendation.tracks
 })
 
-const mapDispatchToProps = {  
+const mapDispatchToProps = {
   getRecommendations
 }
 
-const SelectTracksContainer = connect(
+const RecommendationsContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectTracks)
+)(Recommendations)
 
-export default SelectTracksContainer
+export default RecommendationsContainer

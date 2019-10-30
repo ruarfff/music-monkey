@@ -7,7 +7,10 @@ import Typography from '@material-ui/core/Typography'
 import IPlaylist from 'playlist/IPlaylist'
 import formatDuration from 'util/formatDuration'
 import Image from 'components/Image'
+import getPlaylistImage from 'playlist/getPlaylistImage'
 import backgroundImg from 'assets/partycover.jpg'
+import getPlaylistDuration from 'playlist/getPlaylistDuration'
+
 import './SmallPlaylistCard.scss'
 
 interface ISmallPlaylistCardProps {
@@ -19,17 +22,8 @@ const SmallPlaylistCard = ({
   playlist,
   classes = { root: '' }
 }: ISmallPlaylistCardProps) => {
-  const durationSeconds =
-    playlist && playlist.tracks.items.length > 0
-      ? playlist.tracks.items
-          .map(item => item.track.duration_ms)
-          .reduce((acc, dur) => acc + dur)
-      : 0
-
-  const image =
-    playlist && playlist.images && playlist.images.length > 0
-      ? playlist.images[0].url
-      : backgroundImg
+  const durationSeconds = getPlaylistDuration(playlist)
+  const image = getPlaylistImage(playlist)
 
   if (!playlist) return null
 

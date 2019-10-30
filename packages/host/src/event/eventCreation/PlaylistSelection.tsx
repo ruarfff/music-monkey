@@ -12,7 +12,6 @@ import { DropResult } from 'react-beautiful-dnd'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import IAction from 'IAction'
-import partyImg from 'assets/partycover.jpg'
 import EventInput from 'components/EventInput/EventInput'
 import GenrePicker from 'event/eventCreation/GenrePicker'
 import PlaylistCard from 'catalogue/SmallPlaylistCard'
@@ -22,6 +21,9 @@ import ISearch from 'playlist/ISearch'
 import TrackList from 'track/TrackList'
 import IUser from 'user/IUser'
 import formatDuration from 'util/formatDuration'
+import getPlaylistImage from 'playlist/getPlaylistImage'
+import getPlaylistDuration from 'playlist/getPlaylistDuration'
+
 import './PlaylistSelection.scss'
 
 interface IPlaylistSelectionProps {
@@ -146,17 +148,8 @@ class PlaylistSelection extends React.Component<IPlaylistSelectionProps> {
         ? selectedPlaylist.tracks.items.length
         : 0
 
-    const durationSeconds =
-      numTracks > 0
-        ? selectedPlaylist.tracks.items
-            .map(item => item.track.duration_ms)
-            .reduce((acc, dur) => acc + dur)
-        : 0
-
-    const img =
-      !isEmpty(selectedPlaylist) && selectedPlaylist.images[0]
-        ? selectedPlaylist.images[0].url
-        : partyImg
+    const durationSeconds = getPlaylistDuration(selectedPlaylist)
+    const img = getPlaylistImage(selectedPlaylist)
 
     const formattedDuration = formatDuration(durationSeconds)
 
