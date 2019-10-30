@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import isEmpty from 'lodash/isEmpty'
-import { Grid, Tabs, Tab } from '@material-ui/core'
+import { Grid, Tabs, Tab, Badge } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import IUser from 'user/IUser'
 import LoadingSpinner from 'loading/LoadingSpinner'
@@ -41,7 +41,17 @@ const SeedPlaylist = ({ user }: SeedPlaylistProps) => {
           textColor="primary"
           centered
         >
-          <Tab label="Tracks" />
+          <Tab
+            label={
+              !isEmpty(tracks) ? (
+                <Badge color="primary" badgeContent={tracks.length}>
+                  Tracks
+                </Badge>
+              ) : (
+                'Tracks'
+              )
+            }
+          />
           <Tab label="Recommendations" />
           <Tab label="Playlists" />
         </Tabs>
@@ -60,13 +70,15 @@ const SeedPlaylist = ({ user }: SeedPlaylistProps) => {
             onTrackSelected={handleAddTrack}
           />
         )}
-        {tabIndex === 2 && <Playlists />}
+        {tabIndex === 2 && (
+          <Playlists filterList={tracks} onTrackSelected={handleAddTrack} />
+        )}
       </Grid>
     </>
   )
 
   return (
-    <Grid container className="SeedPlaylist-root">
+    <Grid container className="SeedPlaylist-root" spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h6" align="center" gutterBottom>
           Add Tracks

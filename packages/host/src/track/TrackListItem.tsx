@@ -7,16 +7,28 @@ import ListItem from '@material-ui/core/ListItem/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
+import isEmpty from 'lodash/isEmpty'
+import head from 'lodash/head'
+import sortBy from 'lodash/sortBy'
 import isFunction from 'lodash/isFunction'
 import formatDuration from 'util/formatDuration'
+import IImage from 'playlist/IImage'
+import Image from 'components/Image'
+import backgroundImg from 'assets/partycover.jpg'
 import ITrack from './ITrack'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import Remove from '@material-ui/icons/Remove'
-import './TrackListItem.scss'
 import { Typography } from '@material-ui/core'
+import './TrackListItem.scss'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
+
+/* <ListItemText
+        primary={
+          tracksWithFeature && 'tempo ' + Math.round(tracksWithFeature.tempo)
+        }
+      /> */
 
 interface ITrackListItemProps {
   track: ITrack
@@ -58,15 +70,15 @@ const TrackListItem = ({
     }
   }
 
-  let trackImage = <span />
-  if (track.album && track.album.images && track.album.images.length > 0) {
-    trackImage = (
-      <img
-        src={track.album.images[track.album.images.length - 1].url}
-        alt={track.name}
-      />
-    )
-  }
+  const imageUrl =
+    track.album && !isEmpty(track.album.images)
+      ? (head(sortBy(track.album.images, 'height')) || ({} as IImage)).url
+      : backgroundImg
+
+  const trackImage = (
+    <Image src={imageUrl} alt={track.name} fallbackSrc={backgroundImg} />
+  )
+
   let votingButton = <span />
   if (withVoting) {
     votingButton = (
@@ -85,29 +97,24 @@ const TrackListItem = ({
   return (
     <ListItem
       className="TrackListItem-root"
-      dense={true}
-      button={true}
+      alignItems="flex-start"
+      dense
+      button
       onClick={handleTrackSelected}
     >
       <ListItemIcon>{trackImage}</ListItemIcon>
-      <ListItemText>
-        <div className="TrackItem-content">
-          <Typography variant="h6" gutterBottom noWrap>
-            {track.name}
-          </Typography>
-          <Typography variant="subtitle1" display="inline" align="left" noWrap>
-            {track.album.artists[0].name}
-          </Typography>
-          <Typography variant="subtitle2" display="block" align="right">
-            {formatDuration(track.duration_ms)}
-          </Typography>
-        </div>
-      </ListItemText>
-      {/* <ListItemText
-        primary={
-          tracksWithFeature && 'tempo ' + Math.round(tracksWithFeature.tempo)
+      <ListItemText
+        className="TrackItem-content"
+        primary={track.name}
+        secondary={
+          <>
+            <Typography component="span" variant="body2" color="textPrimary">
+              {track.album.artists[0].name}
+            </Typography>
+            {` —  ${formatDuration(track.duration_ms)}`}
+          </>
         }
-      /> */}
+      />
 
       <ListItemSecondaryAction>
         {!disableRemoveTrack && (

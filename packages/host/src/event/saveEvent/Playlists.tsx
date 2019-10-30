@@ -11,28 +11,36 @@ import {
   Divider,
   ListItemSecondaryAction,
   IconButton,
-  Typography
+  Typography,
+  Collapse,
+  ListItemIcon
 } from '@material-ui/core'
-import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
+import { ChevronRight, KeyboardArrowDown, Queue } from '@material-ui/icons'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
 import backgroundImg from 'assets/partycover.jpg'
 import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
 import getNumberOfPlaylistTracks from 'playlist/getNumberOfPlaylistTracks'
 import LoadingSpinner from 'loading/LoadingSpinner'
+import SearchResults from './SearchResults'
+import ITrack from 'track/ITrack'
 
 interface PlaylistsProps {
   user: IUser
   playlists: IPlaylist[]
   playlistsLoading: boolean
+  filterList: ITrack[]
   fetchPlaylists(user: IUser): IAction
+  onTrackSelected(track: ITrack): void
 }
 
 const Playlists = ({
   user,
   playlists,
   playlistsLoading,
-  fetchPlaylists
+  filterList,
+  fetchPlaylists,
+  onTrackSelected
 }: PlaylistsProps) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState()
   useEffect(() => {
@@ -101,6 +109,25 @@ const Playlists = ({
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
+            <Collapse
+              in={selectedPlaylist === playlist}
+              timeout="auto"
+              unmountOnExit
+            >
+              <List component="div" disablePadding>
+                <ListItem button>
+                  <ListItemIcon>
+                    <Queue />
+                  </ListItemIcon>
+                  <ListItemText primary="Add All" />
+                </ListItem>
+              </List>
+              <SearchResults
+                searchedTracks={playlist.tracks.items.map(item => item.track)}
+                filterList={filterList}
+                onTrackSelected={onTrackSelected}
+              />
+            </Collapse>
             <Divider variant="inset" component="li" />
           </React.Fragment>
         ))}
