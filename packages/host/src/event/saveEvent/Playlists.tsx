@@ -32,6 +32,7 @@ interface PlaylistsProps {
   filterList: ITrack[]
   fetchPlaylists(user: IUser): IAction
   onTrackSelected(track: ITrack): void
+  onAddAll(tracks: ITrack[]): void
 }
 
 const Playlists = ({
@@ -40,7 +41,8 @@ const Playlists = ({
   playlistsLoading,
   filterList,
   fetchPlaylists,
-  onTrackSelected
+  onTrackSelected,
+  onAddAll
 }: PlaylistsProps) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState()
   useEffect(() => {
@@ -115,7 +117,12 @@ const Playlists = ({
               unmountOnExit
             >
               <List component="div" disablePadding>
-                <ListItem button>
+                <ListItem
+                  button
+                  onClick={() => {
+                    onAddAll(playlist.tracks.items.map(item => item.track))
+                  }}
+                >
                   <ListItemIcon>
                     <Queue />
                   </ListItemIcon>

@@ -31,6 +31,10 @@ const SeedPlaylist = ({ user }: SeedPlaylistProps) => {
     setTracks([track, ...tracks])
   }
 
+  const handleAddManyTracks = (someTracks: ITrack[]) => {
+    setTracks([...someTracks, ...tracks])
+  }
+
   const CatalogueView = () => (
     <>
       <Grid item xs={12}>
@@ -71,7 +75,11 @@ const SeedPlaylist = ({ user }: SeedPlaylistProps) => {
           />
         )}
         {tabIndex === 2 && (
-          <Playlists filterList={tracks} onTrackSelected={handleAddTrack} />
+          <Playlists
+            filterList={tracks}
+            onTrackSelected={handleAddTrack}
+            onAddAll={handleAddManyTracks}
+          />
         )}
       </Grid>
     </>
