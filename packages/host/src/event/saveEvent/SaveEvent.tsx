@@ -1,29 +1,54 @@
-import React, { useEffect } from 'react'
-import { Formik, FormikProps, Form, FormikHelpers } from 'formik'
-import { Route, Switch, RouteComponentProps } from 'react-router-dom'
-import { Hidden, Grid, FormGroup, Button } from '@material-ui/core'
-import MobileStepper from '@material-ui/core/MobileStepper'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import React, { useEffect, useState } from 'react'
+import { Formik, FormikProps, FormikHelpers } from 'formik'
+import { RouteComponentProps } from 'react-router-dom'
+import {
+  FormGroup,
+  Button,
+  Typography,
+  Box,
+  AppBar,
+  Tabs,
+  Tab
+} from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import IUser from 'user/IUser'
 import IEvent from 'event/IEvent'
 import EventInitialize from './EventInitialize'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
-import LinkButton from 'components/LinkButton'
 import SaveEventFormValues from './SaveEventFormValues'
 import saveEventFlow from './saveEventFlow'
 import IAction from 'IAction'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import locationResolver from './locationResolver'
 import FormValidationSchema from './FormValidationSchema'
 import getInitialFormValues from './getInitialFormValues'
+import SwipeableViews from 'react-swipeable-views'
 
 import './SaveEvent.scss'
+
+interface TabPanelProps {
+  children?: React.ReactNode
+  dir?: string
+  index: any
+  value: any
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`save-event-tabpanel-${index}`}
+      aria-labelledby={`save-event--tab-${index}`}
+      {...other}
+    >
+      <Box p={3}>{children}</Box>
+    </Typography>
+  )
+}
 
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
@@ -32,11 +57,8 @@ interface SaveEventProps extends RouteComponentProps {
   getEventById(id: string): IAction
 }
 
-const steps = ['Setup Event', 'Playlist', 'Add Tracks']
-
 const SaveEvent = ({
   user,
-  isDesktop,
   location,
   history,
   match,
@@ -48,6 +70,7 @@ const SaveEvent = ({
     location.pathname.includes('/edit')
   const eventIdFromPath = match.params['eventId']
 
+  const [value, setValue] = useState(0)
   useEffect(() => {
     if (isEditing) {
       if (event.eventId !== eventIdFromPath) {
@@ -61,14 +84,13 @@ const SaveEvent = ({
     return <LoadingSpinner />
   }
 
-  const paths = isEditing ? locationResolver(event) : locationResolver()
-
-  const pathToStep = {
-    [paths[0]]: 0,
-    [paths[1]]: 1,
-    [paths[2]]: 2
+  const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue)
   }
-  const activeStep = pathToStep[location.pathname] || 0
+
+  const handleChangeIndex = (index: number) => {
+    setValue(index)
+  }
 
   const handleSubmit = async (
     values: SaveEventFormValues,
@@ -86,50 +108,28 @@ const SaveEvent = ({
     }
   }
 
-  const MobileNav = () => (
-    <MobileStepper
-      steps={steps.length}
-      position="static"
-      variant="dots"
-      activeStep={activeStep}
-      nextButton={
-        <LinkButton
-          to={
-            activeStep < steps.length - 1
-              ? paths[activeStep + 1]
-              : paths[steps.length - 1]
-          }
-          size="small"
-          disabled={activeStep === steps.length - 1}
-        >
-          Next
-          <KeyboardArrowRight />
-        </LinkButton>
-      }
-      backButton={
-        <LinkButton
-          to={activeStep > 0 ? paths[activeStep - 1] : paths[0]}
-          size="small"
-          disabled={activeStep === 0}
-        >
-          <KeyboardArrowLeft />
-          Back
-        </LinkButton>
-      }
-    />
-  )
+  function a11yProps(index: any) {
+    return {
+      id: `save-event-tab-${index}`,
+      'aria-controls': `save-event-tabpanel-${index}`
+    }
+  }
 
-  const LargeScreenNav = () => (
-    <Stepper activeStep={activeStep}>
-      {steps.map(label => {
-        const stepProps: { completed?: boolean } = {}
-        return (
-          <Step key={label} {...stepProps}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        )
-      })}
-    </Stepper>
+  const Nav = () => (
+    <AppBar position="static" color="default">
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        variant="fullWidth"
+        aria-label="save event"
+      >
+        <Tab label="Playlist" {...a11yProps(0)} />
+        <Tab label="Details" {...a11yProps(1)} />
+        <Tab label="Invite" {...a11yProps(2)} />
+      </Tabs>
+    </AppBar>
   )
 
   return (
@@ -144,71 +144,46 @@ const SaveEvent = ({
         status = {}
       }: FormikProps<SaveEventFormValues>) => (
         <div className="SaveEvent-root">
-          <Hidden smDown implementation="css">
-            <LargeScreenNav />
-          </Hidden>
-          <Hidden smUp implementation="css">
-            <MobileNav />
-          </Hidden>
-          <Form className="SaveEvent-form">
-            <Switch>
-              <Route path={paths[0]} exact={true}>
-                <EventInitialize
-                  nextPath={paths[1]}
-                  formValid={!errors.eventName && !errors.eventDescription}
-                />
-              </Route>
-              <Route path={paths[1]} exact={true}></Route>
-              <Route path={paths[2]} exact={true}></Route>
-              <Route path={paths[3]} exact={true}>
-                <Grid container>
-                  <EventDetails />
-                  <Grid item xs={12}>
-                    <p>{errors.eventName}</p>
-                    <p>{errors.eventDescription}</p>
-                    <p>{errors.organizer}</p>
-                    <p>{errors.tracks}</p>
-                    <p>{errors.genre}</p>
-                    <p>{errors.image}</p>
-                    <p>{errors.location}</p>
-                    <p>{errors.settings}</p>
-                    <FormGroup className="SaveEvent-form-actions">
-                      <Hidden smDown implementation="js">
-                        <LinkButton
-                          to={paths[2]}
-                          variant="contained"
-                          color="secondary"
-                        >
-                          Back
-                        </LinkButton>
-                      </Hidden>
-                      {isSubmitting ? (
-                        <div className="SaveEvent-loading">
-                          <LoadingSpinner />
-                        </div>
-                      ) : (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          type="submit"
-                          disabled={isSubmitting}
-                        >
-                          {isEditing ? 'Save Event' : 'Create Event'}
-                        </Button>
-                      )}
-                    </FormGroup>
-                  </Grid>
-                </Grid>
-              </Route>
-              <Route path={paths[4]} exact={true}>
-                <Summary
-                  backPath={paths[3]}
-                  status={status.formStatus}
-                  event={status.event}
-                />
-              </Route>
-            </Switch>
-          </Form>
+          <Nav />
+          <SwipeableViews
+            axis={'x'}
+            index={value}
+            onChangeIndex={handleChangeIndex}
+          >
+            <TabPanel value={value} index={0} dir={'ltr'}>
+              <EventInitialize />
+            </TabPanel>
+            <TabPanel value={value} index={1} dir={'ltr'}>
+              <EventDetails />
+              <p>{errors.eventName}</p>
+              <p>{errors.eventDescription}</p>
+              <p>{errors.organizer}</p>
+              <p>{errors.tracks}</p>
+              <p>{errors.genre}</p>
+              <p>{errors.image}</p>
+              <p>{errors.location}</p>
+              <p>{errors.settings}</p>
+              <FormGroup className="SaveEvent-form-actions">
+                {isSubmitting ? (
+                  <div className="SaveEvent-loading">
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isEditing ? 'Save Event' : 'Create Event'}
+                  </Button>
+                )}
+              </FormGroup>
+            </TabPanel>
+            <TabPanel value={value} index={2} dir={'ltr'}>
+              <Summary status={status.formStatus} event={status.event} />
+            </TabPanel>
+          </SwipeableViews>
         </div>
       )}
     </Formik>

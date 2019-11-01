@@ -1,5 +1,7 @@
 @import 'theme/main';
 
+$base-shadow: rgba(0, 0, 0, 0.12);
+
 .SeedPlaylist-root {
   height: 100%;
   width: 100%;
@@ -11,7 +13,6 @@
   .SeedPlaylist-loading-area {
     height: 255px;
   }
-
   .SeedPlaylist-clear {
     margin: 0px;
     top: 77px;
@@ -26,7 +27,55 @@
     width: 4em;
   }
 
+  .SeedPlaylist-image-marvin {
+    padding-top: 0.5em;
+    padding-bottom: 0.75em;
+    height: 4em;
+    width: 4em;
+  }
+
   .SeedPlaylist-item-text {
     padding-left: 2em;
+  }
+
+  .SeedPlaylist-select-playlist {
+    background-color: $secondary-main;
+    border-radius: 20px;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    transition: all 0.4s;
+    box-shadow: 0 14px 26px -12px $primary, 0 4px 23px 0px $base-shadow,
+      0 8px 10px -5px $primary-dark;
+
+    .SeedPlaylist-select-playlist-icon {
+      color: white;
+    }
+
+    .MuiListItemText-primary {
+      color: white;
+      font-weight: 700;
+    }
+  }
+
+  .SeedPlaylist-track {
+    margin-right: 0.5em;
+    margin-left: 2em;
+    height: 4.5em;
+    padding: 1em;
+    padding-bottom: 2em;
+    margin-bottom: 1em;
+
+    .SeedPlaylist-track-image {
+      border-radius: 4px;
+      max-width: 3.5em;
+      max-height: 3.5em;
+    }
+
+    .SeedPlaylist-track-content {
+      padding-left: 1.5em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 }

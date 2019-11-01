@@ -1,10 +1,10 @@
-import IImage from './IImage'
+import Image from 'image/Image'
 
 export interface IArtist {
-  name: string;
+  name: string
 }
 
 export default interface IAlbum {
-  images: IImage[];
-  artists: IArtist[];
+  images: Image[]
+  artists: IArtist[]
 }

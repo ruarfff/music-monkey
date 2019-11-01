@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import ReactLoading from 'react-loading'
 import './LoadingSpinner.scss'
 
@@ -11,7 +11,7 @@ const LoadingSpinner = ({ height, width }: ILoadingSpinner) => {
   return (
     <div className="LoadingSpinner">
       <ReactLoading
-        type="spokes"
+        type="bubbles"
         color="#AF00FF"
         height={height ? height : 400}
         width={width ? width : 400}

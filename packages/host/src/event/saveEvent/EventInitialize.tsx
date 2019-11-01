@@ -1,17 +1,17 @@
-import React from 'react'
-import { Grid, FormGroup, Hidden } from '@material-ui/core'
-import LinkButton from 'components/LinkButton'
+import React, { useState } from 'react'
+import { Grid } from '@material-ui/core'
+import isEmpty from 'lodash/isEmpty'
+import IPlaylist from 'playlist/IPlaylist'
 import EventTextInput from './EventTextInput'
 import SeedPlaylist from './SeedPlaylistContainer'
+import AddTracks from './AddTracks'
 
-interface EventInitializeProps {
-  nextPath: string
-  formValid: boolean
-}
+const EventInitialize = () => {
+  const [seedPlaylist, setSeedPlaylist] = useState<IPlaylist>()
 
-const EventInitialize = ({ nextPath, formValid }: EventInitializeProps) => {
+  console.log(seedPlaylist)
   return (
-    <Grid container spacing={2}>
+    <Grid container>
       <Grid item xs={12}>
         <EventTextInput name="eventName" label="Name" autoFocus={true} />
       </Grid>
@@ -23,22 +23,11 @@ const EventInitialize = ({ nextPath, formValid }: EventInitializeProps) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <SeedPlaylist />
-      </Grid>
-
-      <Grid item xs={12}>
-        <Hidden smDown implementation="css">
-          <FormGroup className="SaveEvent-form-actions">
-            <LinkButton
-              to={nextPath}
-              variant="contained"
-              color="primary"
-              disabled={!formValid}
-            >
-              Next
-            </LinkButton>
-          </FormGroup>
-        </Hidden>
+        {isEmpty(seedPlaylist) ? (
+          <SeedPlaylist onPlaylistSelected={setSeedPlaylist} />
+        ) : (
+          <AddTracks seedPlaylist={seedPlaylist} />
+        )}
       </Grid>
     </Grid>
   )

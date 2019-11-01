@@ -10,34 +10,31 @@ import {
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import AddIcon from '@material-ui/icons/Add'
 import ITrack from 'track/ITrack'
-import head from 'lodash/head'
-import sortBy from 'lodash/sortBy'
 import formatDuration from 'util/formatDuration'
 import Image from 'components/Image'
-import IImage from 'playlist/IImage'
 import backgroundImg from 'assets/partycover.jpg'
-import isEmpty from 'lodash/isEmpty'
+import getTrackImage from 'track/getTrackImage'
 
 import './TrackItem.scss'
 
 interface ITrackItemProps {
   track: ITrack
+  addEnabled?: boolean
   onSelected(track: ITrack): void
 }
 
-const TrackItem = ({ track, onSelected }: ITrackItemProps) => {
+const TrackItem = ({
+  track,
+  onSelected,
+  addEnabled = false
+}: ITrackItemProps) => {
   const handleAddTrack = (track: ITrack) => () => {
     onSelected(track)
   }
 
-  const imageUrl =
-    track.album && !isEmpty(track.album.images)
-      ? (head(sortBy(track.album.images, 'height')) || ({} as IImage)).url
-      : backgroundImg
-
   const trackImage = (
     <Image
-      src={imageUrl}
+      src={getTrackImage(track)}
       alt={track.name}
       fallbackSrc={backgroundImg}
       className="TrackItem-track-image"
@@ -61,15 +58,17 @@ const TrackItem = ({ track, onSelected }: ITrackItemProps) => {
           }
         />
         <ListItemSecondaryAction>
-          <Fab
-            color="primary"
-            aria-label="add"
-            size="small"
-            className="TrackItem-accept-track"
-            onClick={handleAddTrack(track)}
-          >
-            <AddIcon />
-          </Fab>
+          {addEnabled && (
+            <Fab
+              color="secondary"
+              aria-label="add"
+              size="small"
+              className="TrackItem-accept-track"
+              onClick={handleAddTrack(track)}
+            >
+              <AddIcon />
+            </Fab>
+          )}
         </ListItemSecondaryAction>
       </ListItem>
       <Divider variant="inset" component="li" />

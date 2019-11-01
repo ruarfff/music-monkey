@@ -1,108 +1,117 @@
 import React, { useState } from 'react'
-import { Hidden } from '@material-ui/core'
-import FormGroup from '@material-ui/core/FormGroup'
-import Grid from '@material-ui/core/Grid'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import { Field, FieldProps } from 'formik'
-import remove from 'lodash/remove'
+import { Grid, Tabs, Tab, Badge } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 import isEmpty from 'lodash/isEmpty'
-import differenceBy from 'lodash/differenceBy'
-import LinkButton from 'components/LinkButton'
+import LoadingSpinner from 'loading/LoadingSpinner'
+import IPlaylist from 'playlist/IPlaylist'
+import TrackSearch from 'search/TrackSearch'
 import ITrack from 'track/ITrack'
-import SelectTracks from './RecommendationsContainer'
-import Playlist from './EventTracks'
+import Recommendations from './RecommendationsContainer'
+import TrackList from './TrackList'
+import EventTracks from './EventTracks'
+
+import './AddTracks.scss'
 
 interface AddTracksProps {
-  isDesktop: boolean
-  seedTracks: ITrack[]
-  nextPath: string
-  backPath: string
-  setSeedTracks(seedTracks: ITrack[]): void
+  seedPlaylist?: IPlaylist
 }
 
-const AddTracks = ({
-  isDesktop,
-  seedTracks = [],
-  setSeedTracks,
-  nextPath,
-  backPath
-}: AddTracksProps) => {
+const AddTracks = ({ seedPlaylist }: AddTracksProps) => {
+  const [tracks, setTracks] = useState<ITrack[]>(
+    isEmpty(seedPlaylist)
+      ? []
+      : seedPlaylist!.tracks.items.map(item => item.track)
+  )
   const [tabIndex, setTabIndex] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [searchedTracks, setSearchedTracks] = useState([] as ITrack[])
 
   const handleTabChange = (_: any, index: number) => {
     setTabIndex(index)
   }
 
-  return (
-    <Grid container spacing={2}>
+  const handleAddTrack = (track: ITrack) => {
+    setTracks([track, ...tracks])
+  }
+
+  const CatalogueView = () => (
+    <>
       <Grid item xs={12}>
-        <Hidden smDown implementation="css">
-          <FormGroup className="SaveEvent-form-actions">
-            <LinkButton to={backPath} variant="contained" color="secondary">
-              Back
-            </LinkButton>
-            <LinkButton to={nextPath} variant="contained" color="primary">
-              Next
-            </LinkButton>
-          </FormGroup>
-        </Hidden>
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+        >
+          <Tab
+            label={
+              !isEmpty(tracks) ? (
+                <Badge
+                  color="primary"
+                  anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+                  badgeContent={tracks.length}
+                >
+                  Current Playlist
+                </Badge>
+              ) : (
+                'Current Playlist'
+              )
+            }
+          />
+          <Tab label="Suggested" />
+          <Tab label="Playlists" />
+        </Tabs>
       </Grid>
-      <Hidden smUp>
+      <Grid item xs={12}>
+        {tabIndex === 0 && (
+          <EventTracks
+            tracks={tracks}
+            onTrackOrderChanged={() => {}}
+            onTrackRemoved={() => {}}
+          />
+        )}
+        {tabIndex === 1 && (
+          <Recommendations
+            filterList={tracks}
+            onTrackSelected={handleAddTrack}
+          />
+        )}
+      </Grid>
+    </>
+  )
+
+  return (
+    <Grid container className="AddTracks-root" spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant="h6" align="center" gutterBottom>
+          Add Playlist
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <TrackSearch
+          onSearchResult={(tracks: ITrack[]) => {
+            setSearchedTracks(tracks)
+            setIsLoading(false)
+          }}
+          onSearchStart={() => {
+            setIsLoading(true)
+          }}
+        />
+      </Grid>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : !isEmpty(searchedTracks) ? (
         <Grid item xs={12}>
-          <Tabs
-            value={tabIndex}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
-            <Tab label="Playlist" />
-            <Tab label="Add Tracks" />
-          </Tabs>
+          <TrackList
+            tracks={searchedTracks}
+            filterList={tracks}
+            onTrackSelected={handleAddTrack}
+          />
         </Grid>
-      </Hidden>
-
-      <Field name="tracks" value={seedTracks}>
-        {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
-          const diff = differenceBy(seedTracks, value, 'id')
-          if (!isEmpty(diff)) {
-            setFieldValue('tracks', seedTracks)
-          }
-          return (
-            <>
-              {(isDesktop || tabIndex === 0) && (
-                <Grid item xs={isDesktop ? 6 : 12}>
-                  <Playlist
-                    tracks={value}
-                    onTrackOrderChanged={(tracks: ITrack[]) => {
-                      setSeedTracks(tracks)
-                    }}
-                    onTrackRemoved={(track: ITrack) => {
-                      setSeedTracks(
-                        remove(seedTracks, seedTrack => {
-                          return seedTrack.id !== track.id
-                        })
-                      )
-                    }}
-                  />
-                </Grid>
-              )}
-
-              {(isDesktop || tabIndex === 1) && (
-                <Grid item xs={isDesktop ? 6 : 12}>
-                  <SelectTracks
-                    onTrackSelected={(track: ITrack) => {
-                      setSeedTracks([...seedTracks, track])
-                    }}
-                    filterList={value}
-                  />
-                </Grid>
-              )}
-            </>
-          )
-        }}
-      </Field>
+      ) : (
+        <CatalogueView />
+      )}
     </Grid>
   )
 }

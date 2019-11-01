@@ -1,5 +1,5 @@
 import * as React from 'react'
-import logo from 'assets/monkey_logo.png'
+import logo from 'assets/marvin.png'
 import backgroundImg from 'assets/partycover.jpg'
 import IEvent from 'event/IEvent'
 import './EmailPreview.scss'

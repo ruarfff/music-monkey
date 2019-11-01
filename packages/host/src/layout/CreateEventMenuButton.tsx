@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import { Link, LinkProps } from 'react-router-dom'
-import eventIcon from 'assets/monkey_logo.png'
+import logo from 'assets/marvin.png'
 import { withRouter, RouteComponentProps } from 'react-router'
 import './CreateEventMenuButton.scss'
 
@@ -24,7 +24,7 @@ const Title = ({ location }: RouteComponentProps) => {
       color="secondary"
       className="CreateEventMenuButton"
     >
-      <img src={eventIcon} alt="event icon" />
+      <img src={logo} alt="event icon" />
       Create new event
     </Button>
   )

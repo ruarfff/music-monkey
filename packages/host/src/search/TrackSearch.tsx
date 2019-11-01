@@ -24,7 +24,7 @@ const TrackSearch = ({ onSearchStart, onSearchResult }: TrackSearchProps) => {
       } else {
         try {
           onSearchStart()
-          const searchResult: TrackSearchResult = await searchTracks(searchTerm)          
+          const searchResult: TrackSearchResult = await searchTracks(searchTerm)
           onSearchResult(searchResult.items)
         } catch (err) {
           onSearchResult([])
@@ -40,6 +40,7 @@ const TrackSearch = ({ onSearchStart, onSearchResult }: TrackSearchProps) => {
   return (
     <Paper className="TrackSearch-root">
       <InputBase
+        fullWidth
         className="TrackSearch-input"
         placeholder="Search For Tracks"
         inputProps={{ 'aria-label': 'search for tracks' }}

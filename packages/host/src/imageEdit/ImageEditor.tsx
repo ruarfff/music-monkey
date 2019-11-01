@@ -3,7 +3,7 @@ import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
 import { Grid, Button, Typography } from '@material-ui/core'
 
-interface IImageEditorProps {
+interface ImageEditorProps {
   image: any
   onImageChanged?(data: any): void
 }
@@ -11,7 +11,7 @@ interface IImageEditorProps {
 const ImageEditor = ({
   image,
   onImageChanged = (_: any) => {}
-}: IImageEditorProps) => {
+}: ImageEditorProps) => {
   const [preview, setPreview] = useState()
   const imageEditor = useRef<AvatarEditor>(null)
 

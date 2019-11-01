@@ -1,11 +1,6 @@
 import React from 'react'
 import { Field, FieldProps } from 'formik'
-import {
-  FormControl,
-  FormHelperText,
-  Input,
-  InputLabel
-} from '@material-ui/core'
+import { FormControl, Input, InputLabel } from '@material-ui/core'
 import { InputProps } from '@material-ui/core/Input'
 
 type InputType = 'email' | 'text'
@@ -56,12 +51,6 @@ const EventTextInput = ({
             inputProps={{ 'data-testid': testid }}
             {...inputProps}
           />
-
-          {hasError && (
-            <FormHelperText data-testid={testid + '-error'}>
-              {errors[field.name]}
-            </FormHelperText>
-          )}
         </FormControl>
       )
     }}
