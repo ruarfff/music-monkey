@@ -6,12 +6,14 @@ import EventTextInput from './EventTextInput'
 import SeedPlaylist from './SeedPlaylistContainer'
 import AddTracks from './AddTracks'
 
+import './EventInitialize.scss'
+
 const EventInitialize = () => {
   const [seedPlaylist, setSeedPlaylist] = useState<IPlaylist>()
 
   console.log(seedPlaylist)
   return (
-    <Grid container>
+    <Grid container className="EventInitialize-root">
       <Grid item xs={12}>
         <EventTextInput name="eventName" label="Name" autoFocus={true} />
       </Grid>
@@ -22,7 +24,7 @@ const EventInitialize = () => {
           label="Description"
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className="EventInitialize-playlist">
         {isEmpty(seedPlaylist) ? (
           <SeedPlaylist onPlaylistSelected={setSeedPlaylist} />
         ) : (

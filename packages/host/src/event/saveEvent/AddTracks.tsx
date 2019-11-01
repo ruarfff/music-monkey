@@ -59,8 +59,7 @@ const AddTracks = ({ seedPlaylist }: AddTracksProps) => {
               )
             }
           />
-          <Tab label="Suggested" />
-          <Tab label="Playlists" />
+          <Tab label="Recommendations" />
         </Tabs>
       </Grid>
       <Grid item xs={12}>
@@ -85,7 +84,7 @@ const AddTracks = ({ seedPlaylist }: AddTracksProps) => {
     <Grid container className="AddTracks-root" spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h6" align="center" gutterBottom>
-          Add Playlist
+          Add Tracks
         </Typography>
       </Grid>
       <Grid item xs={12}>
