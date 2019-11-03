@@ -1,11 +1,12 @@
 @import 'theme/main';
 
 .TrackItem-root {
-  border-bottom: 1px solid $light-grey;
-
   .TrackItem-content {
     padding-left: 1em;
     padding-right: 2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .TrackItem-accept-track {

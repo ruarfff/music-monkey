@@ -15,7 +15,7 @@ interface EventTracksProps {
 }
 const EventTracks = ({ tracks, onTracksChanged }: EventTracksProps) => {
   const handleTrackRemoved = (trackToRemove: ITrack) => {
-    onTracksChanged(remove(tracks, track => track.id === trackToRemove.id))
+    onTracksChanged(remove(tracks, track => track.id !== trackToRemove.id))
   }
 
   return isEmpty(tracks) ? (

@@ -8,13 +8,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import isFunction from 'lodash/isFunction'
-import formatDuration from 'util/formatDuration'
 import Image from 'components/Image'
 import backgroundImg from 'assets/partycover.jpg'
 import ITrack from './ITrack'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import Remove from '@material-ui/icons/Remove'
-import { Typography } from '@material-ui/core'
+import { Divider } from '@material-ui/core'
 import getTrackImage from 'track/getTrackImage'
 import './TrackListItem.scss'
 
@@ -72,6 +71,7 @@ const TrackListItem = ({
       src={getTrackImage(track)}
       alt={track.name}
       fallbackSrc={backgroundImg}
+      className="TrackListItem-track-image"
     />
   )
 
@@ -91,41 +91,41 @@ const TrackListItem = ({
   }
 
   return (
-    <ListItem
-      className="TrackListItem-root"
-      alignItems="flex-start"
-      dense
-      button
-      onClick={handleTrackSelected}
-    >
-      <ListItemIcon>{trackImage}</ListItemIcon>
-      <ListItemText
-        className="TrackItem-content"
-        primary={track.name}
-        secondary={
-          <>
-            <Typography component="span" variant="body2" color="textPrimary">
-              {track.album.artists[0].name}
-            </Typography>
-            {` —  ${formatDuration(track.duration_ms)}`}
-          </>
-        }
-      />
+    <>
+      <ListItem
+        className="TrackListItem-root"
+        alignItems="flex-start"
+        button
+        onClick={handleTrackSelected}
+      >
+        <ListItemIcon>{trackImage}</ListItemIcon>
+        <ListItemText
+          className="TrackListItem-content"
+          primary={track.name}
+          primaryTypographyProps={{ noWrap: true }}
+          secondary={track.album.artists[0].name}
+          secondaryTypographyProps={{
+            variant: 'body2',
+            noWrap: true
+          }}
+        />
 
-      <ListItemSecondaryAction>
-        {!disableRemoveTrack && (
-          <Fab
-            color="secondary"
-            aria-label="add"
-            size="small"
-            onClick={handleRemoveTrack(track)}
-          >
-            <Remove />
-          </Fab>
-        )}
-        {votingButton}
-      </ListItemSecondaryAction>
-    </ListItem>
+        <ListItemSecondaryAction>
+          {!disableRemoveTrack && (
+            <Fab
+              color="secondary"
+              aria-label="add"
+              size="small"
+              onClick={handleRemoveTrack(track)}
+            >
+              <Remove />
+            </Fab>
+          )}
+          {votingButton}
+        </ListItemSecondaryAction>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+    </>
   )
 }
 

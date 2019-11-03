@@ -1,24 +1,20 @@
-.TrackListItem-root {
-  border-bottom: 1px solid #979797;
+@import 'theme/main';
 
-  .TrackItem-content {
+.TrackListItem-root {
+  .TrackListItem-content {
     padding-left: 1em;
     padding-right: 2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .TrackListItem-voting .badge {
     right: -15px;
   }
-  .TrackListItem-audio {
-    display: block;
-    max-width: 0.2em;
-    width: 20px;
-  }
 
-  .TrackListItem-name {
-    padding-left: 10px !important;
-  }
-
-  img: {
+  .TrackListItem-track-image {
     border-radius: 4px;
+    max-width: 4.5em;
+    max-height: 4.5em;
   }
 }

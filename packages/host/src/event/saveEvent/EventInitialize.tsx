@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import IPlaylist from 'playlist/IPlaylist'
 import EventTextInput from './EventTextInput'
 import SeedPlaylist from './SeedPlaylistContainer'
-import AddTracks from './AddTracks'
+import AddTracks from './AddTracksContainer'
 
 import './EventInitialize.scss'
 

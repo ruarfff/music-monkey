@@ -1,16 +1,10 @@
 import React from 'react'
 import Fab from '@material-ui/core/Fab'
 import ListItem from '@material-ui/core/ListItem'
-import {
-  ListItemText,
-  Typography,
-  ListItemAvatar,
-  Divider
-} from '@material-ui/core'
+import { ListItemText, ListItemIcon, Divider } from '@material-ui/core'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import AddIcon from '@material-ui/icons/Add'
 import ITrack from 'track/ITrack'
-import formatDuration from 'util/formatDuration'
 import Image from 'components/Image'
 import backgroundImg from 'assets/partycover.jpg'
 import getTrackImage from 'track/getTrackImage'
@@ -38,19 +32,17 @@ const TrackItem = ({ track, onSelected }: ITrackItemProps) => {
 
   return (
     <>
-      <ListItem className="TrackItem-root" alignItems="flex-start" dense>
-        <ListItemAvatar>{trackImage}</ListItemAvatar>
+      <ListItem className="TrackItem-root" alignItems="flex-start" button>
+        <ListItemIcon>{trackImage}</ListItemIcon>
         <ListItemText
           className="TrackItem-content"
           primary={track.name}
-          secondary={
-            <>
-              <Typography component="span" variant="body2" color="textPrimary">
-                {track.album.artists[0].name}
-              </Typography>
-              {` —  ${formatDuration(track.duration_ms)}`}
-            </>
-          }
+          primaryTypographyProps={{ noWrap: true }}
+          secondary={track.album.artists[0].name}
+          secondaryTypographyProps={{
+            variant: 'body2',
+            noWrap: true
+          }}
         />
         <ListItemSecondaryAction>
           <Fab
