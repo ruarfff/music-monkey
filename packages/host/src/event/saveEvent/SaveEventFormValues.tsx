@@ -9,7 +9,7 @@ export default interface SaveEventFormValues {
   eventName: string
   eventDescription: string
   organizer: string
-  tracks: ITrack[]
+  tracks?: ITrack[]
   image: EventImage
   genre: string
   location: ILocation

@@ -3,6 +3,7 @@ import { Grid, Tabs, Tab, Badge } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import isEmpty from 'lodash/isEmpty'
 import LoadingSpinner from 'loading/LoadingSpinner'
+import { FieldProps, Field } from 'formik'
 import IAction from 'IAction'
 import IPlaylist from 'playlist/IPlaylist'
 import TrackSearch from 'search/TrackSearch'
@@ -11,6 +12,7 @@ import TrackList from './TrackList'
 import EventTracks from './EventTracks'
 
 import './AddTracks.scss'
+import isUndefined from 'lodash/isUndefined'
 
 interface AddTracksProps {
   seedPlaylist?: IPlaylist
@@ -18,16 +20,15 @@ interface AddTracksProps {
   getRecommendations(): IAction
 }
 
+interface CatalogueViewProps {
+  searchedTracks: ITrack[]
+}
+
 const AddTracks = ({
   seedPlaylist,
   recommendedTracks,
   getRecommendations
 }: AddTracksProps) => {
-  const [tracks, setTracks] = useState<ITrack[]>(
-    isEmpty(seedPlaylist)
-      ? []
-      : seedPlaylist!.tracks.items.map(item => item.track)
-  )
   const [tabIndex, setTabIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [searchedTracks, setSearchedTracks] = useState([] as ITrack[])
@@ -46,57 +47,89 @@ const AddTracks = ({
     setTabIndex(index)
   }
 
-  const handleAddTrack = (track: ITrack) => {
-    setTracks([track, ...tracks])
-  }
+  const CatalogueView = ({ searchedTracks }: CatalogueViewProps) => (
+    <Field name="tracks">
+      {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
+        if (isUndefined(value)) {
+          setFieldValue(
+            'tracks',
+            seedPlaylist!.tracks.items.map(item => item.track)
+          )
+        }
 
-  const handleAddSearchedTrack = (track: ITrack) => {
-    setTracks([track, ...tracks])
-    setSearchedTracks([])
-  }
+        const handleAddTrack = (track: ITrack) => {
+          setFieldValue('tracks', [track, ...value])
+        }
 
-  const CatalogueView = () => (
-    <>
-      <Grid item xs={12}>
-        <Tabs
-          value={tabIndex}
-          onChange={handleTabChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-        >
-          <Tab
-            label={
-              !isEmpty(tracks) ? (
-                <Badge
-                  overlap="circle"
-                  color="primary"
-                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                  badgeContent={tracks.length}
-                >
-                  Current Playlist
-                </Badge>
-              ) : (
-                'Current Playlist'
-              )
-            }
-          />
-          <Tab label="Recommendations" />
-        </Tabs>
-      </Grid>
-      <Grid item xs={12}>
-        {tabIndex === 0 && (
-          <EventTracks tracks={tracks} onTracksChanged={setTracks} />
-        )}
-        {tabIndex === 1 && (
-          <TrackList
-            tracks={recommendedTracks}
-            filterList={tracks}
-            onTrackSelected={handleAddTrack}
-          />
-        )}
-      </Grid>
-    </>
+        const handleAddSearchedTrack = (track: ITrack) => {
+          setFieldValue('tracks', [track, ...value])
+          setSearchedTracks([])
+        }
+
+        const handleTracksChanges = (tracks: ITrack[]) => {
+          setFieldValue('tracks', tracks)
+        }
+
+        if (!isEmpty(searchedTracks)) {
+          return (
+            <Grid item xs={12}>
+              <TrackList
+                tracks={searchedTracks}
+                filterList={value}
+                onTrackSelected={handleAddSearchedTrack}
+              />
+            </Grid>
+          )
+        }
+
+        return (
+          <>
+            <Grid item xs={12}>
+              <Tabs
+                value={tabIndex}
+                onChange={handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                variant="fullWidth"
+              >
+                <Tab
+                  label={
+                    !isEmpty(value) ? (
+                      <Badge
+                        overlap="circle"
+                        color="primary"
+                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                        badgeContent={value.length}
+                      >
+                        Current Playlist
+                      </Badge>
+                    ) : (
+                      'Current Playlist'
+                    )
+                  }
+                />
+                <Tab label="Recommendations" />
+              </Tabs>
+            </Grid>
+            <Grid item xs={12}>
+              {tabIndex === 0 && (
+                <EventTracks
+                  tracks={value}
+                  onTracksChanged={handleTracksChanges}
+                />
+              )}
+              {tabIndex === 1 && (
+                <TrackList
+                  tracks={recommendedTracks}
+                  filterList={value}
+                  onTrackSelected={handleAddTrack}
+                />
+              )}
+            </Grid>
+          </>
+        )
+      }}
+    </Field>
   )
 
   return (
@@ -120,16 +153,8 @@ const AddTracks = ({
       </Grid>
       {isLoading ? (
         <LoadingSpinner />
-      ) : !isEmpty(searchedTracks) ? (
-        <Grid item xs={12}>
-          <TrackList
-            tracks={searchedTracks}
-            filterList={tracks}
-            onTrackSelected={handleAddSearchedTrack}
-          />
-        </Grid>
       ) : (
-        <CatalogueView />
+        <CatalogueView searchedTracks={searchedTracks} />
       )}
     </Grid>
   )

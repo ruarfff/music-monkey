@@ -11,6 +11,7 @@ import {
   Tab
 } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
+import isUndefined from 'lodash/isUndefined'
 import IUser from 'user/IUser'
 import IEvent from 'event/IEvent'
 import EventInitialize from './EventInitialize'
@@ -108,23 +109,6 @@ const SaveEvent = ({
     }
   }
 
-  const Nav = () => (
-    <AppBar position="static" color="default">
-      <Tabs
-        value={tabIndex}
-        onChange={handleChange}
-        indicatorColor="primary"
-        textColor="primary"
-        variant="fullWidth"
-        aria-label="save event"
-      >
-        <Tab label="Playlist" {...a11yProps(0)} />
-        <Tab label="Details" {...a11yProps(1)} />
-        <Tab label="Invite" {...a11yProps(2)} />
-      </Tabs>
-    </AppBar>
-  )
-
   return (
     <Formik
       initialValues={getInitialFormValues(user, event, isEditing)}
@@ -134,52 +118,79 @@ const SaveEvent = ({
       {({
         isSubmitting,
         errors,
-        status = {}
-      }: FormikProps<SaveEventFormValues>) => (
-        <div className="SaveEvent-root">
-          <Nav />
+        touched,
+        status = {},
+        values
+      }: FormikProps<SaveEventFormValues>) => {
+        const hasTracks = !isUndefined(values.tracks)
+        const eventInitValid = !errors.eventName && !errors.tracks
+        return (
+          <div className="SaveEvent-root">
+            <AppBar position="static" color="default">
+              <Tabs
+                value={tabIndex}
+                onChange={handleChange}
+                indicatorColor="primary"
+                textColor="primary"
+                variant="fullWidth"
+                aria-label="save event"
+              >
+                <Tab label="Playlist" {...a11yProps(0)} />
+                <Tab
+                  label="Details"
+                  {...a11yProps(1)}
+                  disabled={!eventInitValid}
+                />
+                <Tab
+                  label="Invite"
+                  {...a11yProps(2)}
+                  disabled={!eventInitValid}
+                />
+              </Tabs>
+            </AppBar>
 
-          {tabIndex === 0 && (
-            <TabPanel index={0} dir={'ltr'}>
-              <EventInitialize />
-            </TabPanel>
-          )}
-          {tabIndex === 1 && (
-            <TabPanel index={1} dir={'ltr'}>
-              <EventDetails />
-              <p>{errors.eventName}</p>
-              <p>{errors.eventDescription}</p>
-              <p>{errors.organizer}</p>
-              <p>{errors.tracks}</p>
-              <p>{errors.genre}</p>
-              <p>{errors.image}</p>
-              <p>{errors.location}</p>
-              <p>{errors.settings}</p>
-              <FormGroup className="SaveEvent-form-actions">
-                {isSubmitting ? (
-                  <div className="SaveEvent-loading">
-                    <LoadingSpinner />
-                  </div>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    {isEditing ? 'Save Event' : 'Create Event'}
-                  </Button>
-                )}
-              </FormGroup>
-            </TabPanel>
-          )}
-          {tabIndex === 2 && (
-            <TabPanel index={2} dir={'ltr'}>
-              <Summary status={status.formStatus} event={status.event} />
-            </TabPanel>
-          )}
-        </div>
-      )}
+            {tabIndex === 0 && (
+              <TabPanel index={0} dir={'ltr'}>
+                <EventInitialize hasTracks={hasTracks} />
+              </TabPanel>
+            )}
+            {tabIndex === 1 && (
+              <TabPanel index={1} dir={'ltr'}>
+                <EventDetails />
+                <p>{errors.eventName}</p>
+                <p>{errors.eventDescription}</p>
+                <p>{errors.organizer}</p>
+                <p>{errors.tracks}</p>
+                <p>{errors.genre}</p>
+                <p>{errors.image}</p>
+                <p>{errors.location}</p>
+                <p>{errors.settings}</p>
+                <FormGroup className="SaveEvent-form-actions">
+                  {isSubmitting ? (
+                    <div className="SaveEvent-loading">
+                      <LoadingSpinner />
+                    </div>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      {isEditing ? 'Save Event' : 'Create Event'}
+                    </Button>
+                  )}
+                </FormGroup>
+              </TabPanel>
+            )}
+            {tabIndex === 2 && (
+              <TabPanel index={2} dir={'ltr'}>
+                <Summary status={status.formStatus} event={status.event} />
+              </TabPanel>
+            )}
+          </div>
+        )
+      }}
     </Formik>
   )
 }

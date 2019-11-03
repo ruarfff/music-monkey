@@ -33,7 +33,7 @@ const saveEventFlow = async (
   const playlist: IPlaylist = await createPlaylist(eventName, eventDescription)
 
   if (!isEmpty(tracks)) {
-    addTracksToPlaylist(playlist.id, tracks.map(track => track.uri))
+    addTracksToPlaylist(playlist.id, tracks!.map(track => track.uri))
   }
   let eventDetails: IEvent = {
     userId: user.userId,

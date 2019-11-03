@@ -8,7 +8,11 @@ import AddTracks from './AddTracksContainer'
 
 import './EventInitialize.scss'
 
-const EventInitialize = () => {
+interface EventInitializeProps {
+  hasTracks: boolean
+}
+
+const EventInitialize = ({ hasTracks }: EventInitializeProps) => {
   const [seedPlaylist, setSeedPlaylist] = useState<IPlaylist>()
   return (
     <Grid container className="EventInitialize-root">
@@ -23,7 +27,7 @@ const EventInitialize = () => {
         />
       </Grid>
       <Grid item xs={12} className="EventInitialize-playlist">
-        {isEmpty(seedPlaylist) ? (
+        {isEmpty(seedPlaylist) && !hasTracks ? (
           <SeedPlaylist onPlaylistSelected={setSeedPlaylist} />
         ) : (
           <AddTracks seedPlaylist={seedPlaylist} />

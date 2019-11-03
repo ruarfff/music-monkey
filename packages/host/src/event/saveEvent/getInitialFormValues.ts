@@ -1,7 +1,6 @@
 import moment from 'moment'
 import IUser from 'user/IUser'
 import IEvent from 'event/IEvent'
-import ITrack from 'track/ITrack'
 import backgroundImg from 'assets/partycover.jpg'
 
 const getInitialFormValues = (
@@ -15,7 +14,7 @@ const getInitialFormValues = (
         eventName: event.name,
         eventDescription: event.description,
         organizer: event.organizer,
-        tracks: [] as ITrack[],
+        tracks: undefined,
         image: { name: 'event.jpg', data: null, url: event.imageUrl },
         genre: event.genre,
         location: event.location,
@@ -28,7 +27,7 @@ const getInitialFormValues = (
         eventName: '',
         eventDescription: '',
         organizer: user.displayName,
-        tracks: [] as ITrack[],
+        tracks: undefined,
         image: { name: 'event.jpg', data: null, url: backgroundImg },
         genre: 'none',
         location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },

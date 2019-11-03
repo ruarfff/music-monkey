@@ -22,7 +22,7 @@ const EventTextInput = ({
   multiline,
   type = 'text'
 }: EventTextInputProps) => (
-  <Field autoFocus name={name}>
+  <Field autoFocus={autoFocus} name={name}>
     {({ field, form: { touched, errors } }: FieldProps) => {
       const inputProps: InputProps = {
         ...field,
