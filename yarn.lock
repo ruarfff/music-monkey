@@ -2507,9 +2507,9 @@
   integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
 
 "@types/react-autosuggest@^9.3.4":
-  version "9.3.11"
-  resolved "https://registry.yarnpkg.com/@types/react-autosuggest/-/react-autosuggest-9.3.11.tgz#2b554a4ac350da5bcd50ad368972f2e80e879232"
-  integrity sha512-OY0N0BZ2MiD4W3oTquRvpqYucExiLNgXgu4JkXZ2gKs4lONiS7B+fSotiQnjLdGIy+4sW3tzTvfbQfPgTZGInA==
+  version "9.3.13"
+  resolved "https://registry.yarnpkg.com/@types/react-autosuggest/-/react-autosuggest-9.3.13.tgz#0a943bf78e432e32d0e48e2ecfaa4422f67a6ced"
+  integrity sha512-J1RB5KAIk6vOJ+TkIE+EqjCWBjXxjobzeA6D9KrS64kzrt6ixC6uSoKMFnG6ByeWoC+1g0756NILCpIpTV62dw==
   dependencies:
     "@types/react" "*"
 
@@ -2520,7 +2520,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-beautiful-dnd@^11.0.2":
+"@types/react-beautiful-dnd@11.0.3":
   version "11.0.3"
   resolved "https://registry.yarnpkg.com/@types/react-beautiful-dnd/-/react-beautiful-dnd-11.0.3.tgz#51d9f37942dd18cc4aa10da98a5c883664e7ee46"
   integrity sha512-7ZbT/7mNJu+uRrUGdTQ1hAINtqg909L4NHrXyspV42fvVgBgda6ysiBzoDUMENmQ/RlRJdpyrcp8Dtd/77bp9Q==
