@@ -10,8 +10,6 @@ import './EventInitialize.scss'
 
 const EventInitialize = () => {
   const [seedPlaylist, setSeedPlaylist] = useState<IPlaylist>()
-
-  console.log(seedPlaylist)
   return (
     <Grid container className="EventInitialize-root">
       <Grid item xs={12}>

@@ -22,7 +22,6 @@ import IAction from 'IAction'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import FormValidationSchema from './FormValidationSchema'
 import getInitialFormValues from './getInitialFormValues'
-import SwipeableViews from 'react-swipeable-views'
 
 import './SaveEvent.scss'
 
@@ -30,17 +29,15 @@ interface TabPanelProps {
   children?: React.ReactNode
   dir?: string
   index: any
-  value: any
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
+  const { children, index, ...other } = props
 
   return (
     <Typography
       component="div"
       role="tabpanel"
-      hidden={value !== index}
       id={`save-event-tabpanel-${index}`}
       aria-labelledby={`save-event--tab-${index}`}
       {...other}
@@ -70,7 +67,7 @@ const SaveEvent = ({
     location.pathname.includes('/edit')
   const eventIdFromPath = match.params['eventId']
 
-  const [value, setValue] = useState(0)
+  const [tabIndex, setTabIndex] = useState(0)
   useEffect(() => {
     if (isEditing) {
       if (event.eventId !== eventIdFromPath) {
@@ -85,11 +82,7 @@ const SaveEvent = ({
   }
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue)
-  }
-
-  const handleChangeIndex = (index: number) => {
-    setValue(index)
+    setTabIndex(newValue)
   }
 
   const handleSubmit = async (
@@ -118,7 +111,7 @@ const SaveEvent = ({
   const Nav = () => (
     <AppBar position="static" color="default">
       <Tabs
-        value={value}
+        value={tabIndex}
         onChange={handleChange}
         indicatorColor="primary"
         textColor="primary"
@@ -145,15 +138,14 @@ const SaveEvent = ({
       }: FormikProps<SaveEventFormValues>) => (
         <div className="SaveEvent-root">
           <Nav />
-          <SwipeableViews
-            axis={'x'}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-          >
-            <TabPanel value={value} index={0} dir={'ltr'}>
+
+          {tabIndex === 0 && (
+            <TabPanel index={0} dir={'ltr'}>
               <EventInitialize />
             </TabPanel>
-            <TabPanel value={value} index={1} dir={'ltr'}>
+          )}
+          {tabIndex === 1 && (
+            <TabPanel index={1} dir={'ltr'}>
               <EventDetails />
               <p>{errors.eventName}</p>
               <p>{errors.eventDescription}</p>
@@ -180,10 +172,12 @@ const SaveEvent = ({
                 )}
               </FormGroup>
             </TabPanel>
-            <TabPanel value={value} index={2} dir={'ltr'}>
+          )}
+          {tabIndex === 2 && (
+            <TabPanel index={2} dir={'ltr'}>
               <Summary status={status.formStatus} event={status.event} />
             </TabPanel>
-          </SwipeableViews>
+          )}
         </div>
       )}
     </Formik>

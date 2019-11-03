@@ -1,7 +1,8 @@
 import React from 'react'
 import { DropResult } from 'react-beautiful-dnd'
-import { Typography, List, Paper } from '@material-ui/core'
+import { Typography, Paper, List } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
+import remove from 'lodash/remove'
 import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
@@ -10,14 +11,13 @@ import './EventTracks.scss'
 
 interface EventTracksProps {
   tracks: ITrack[]
-  onTrackRemoved(track: ITrack): void
-  onTrackOrderChanged(tracks: ITrack[]): void
+  onTracksChanged(tracks: ITrack[]): void
 }
-const EventTracks = ({
-  tracks,
-  onTrackOrderChanged,
-  onTrackRemoved
-}: EventTracksProps) => {
+const EventTracks = ({ tracks, onTracksChanged }: EventTracksProps) => {
+  const handleTrackRemoved = (trackToRemove: ITrack) => {
+    onTracksChanged(remove(tracks, track => track.id === trackToRemove.id))
+  }
+
   return isEmpty(tracks) ? (
     <Paper className="EventTracks-no-tracks">
       <Typography variant="h5" align="center" gutterBottom>
@@ -30,15 +30,18 @@ const EventTracks = ({
   ) : (
     <List>
       <TrackList
-        onTrackRemoved={onTrackRemoved}
+        onTrackRemoved={handleTrackRemoved}
         onDragEnd={(result: DropResult) => {
           if (!result.destination) {
             return
           }
           const reorderedTracks = [...tracks]
-          arrayMove(tracks, result.source.index, result.destination.index)
-
-          onTrackOrderChanged(reorderedTracks)
+          arrayMove(
+            reorderedTracks,
+            result.source.index,
+            result.destination.index
+          )
+          onTracksChanged(reorderedTracks)
         }}
         tracks={tracks}
       />

@@ -37,6 +37,7 @@ const AddTracks = ({ seedPlaylist }: AddTracksProps) => {
   const handleAddSearchedTrack = (track: ITrack) => {
     setTracks([track, ...tracks])
     setSearchedTracks([])
+    setTabIndex(1)
   }
 
   const CatalogueView = () => (
@@ -70,11 +71,7 @@ const AddTracks = ({ seedPlaylist }: AddTracksProps) => {
       </Grid>
       <Grid item xs={12}>
         {tabIndex === 0 && (
-          <EventTracks
-            tracks={tracks}
-            onTrackOrderChanged={() => {}}
-            onTrackRemoved={() => {}}
-          />
+          <EventTracks tracks={tracks} onTracksChanged={setTracks} />
         )}
         {tabIndex === 1 && (
           <Recommendations
