@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, FormikProps, FormikHelpers } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
-import {
-  FormGroup,
-  Button,
-  Typography,
-  Box,
-  AppBar,
-  Tabs,
-  Tab
-} from '@material-ui/core'
+import { FormGroup, Button, AppBar, Tabs, Tab } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import isUndefined from 'lodash/isUndefined'
 import IUser from 'user/IUser'
@@ -22,31 +14,10 @@ import saveEventFlow from './saveEventFlow'
 import IAction from 'IAction'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import FormValidationSchema from './FormValidationSchema'
+import TabPanel from './TabPanel'
 import getInitialFormValues from './getInitialFormValues'
 
 import './SaveEvent.scss'
-
-interface TabPanelProps {
-  children?: React.ReactNode
-  dir?: string
-  index: any
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, index, ...other } = props
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      id={`save-event-tabpanel-${index}`}
-      aria-labelledby={`save-event--tab-${index}`}
-      {...other}
-    >
-      <Box p={3}>{children}</Box>
-    </Typography>
-  )
-}
 
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
@@ -123,7 +94,7 @@ const SaveEvent = ({
         values
       }: FormikProps<SaveEventFormValues>) => {
         const hasTracks = !isUndefined(values.tracks)
-        const eventInitValid = !errors.eventName && !errors.tracks
+        const eventInitValid = !errors.eventName && hasTracks
         return (
           <div className="SaveEvent-root">
             <AppBar position="static" color="default">
@@ -150,12 +121,12 @@ const SaveEvent = ({
             </AppBar>
 
             {tabIndex === 0 && (
-              <TabPanel index={0} dir={'ltr'}>
+              <TabPanel value={tabIndex} index={0}>
                 <EventInitialize hasTracks={hasTracks} />
               </TabPanel>
             )}
             {tabIndex === 1 && (
-              <TabPanel index={1} dir={'ltr'}>
+              <TabPanel value={tabIndex} index={1}>
                 <EventDetails />
                 <p>{errors.eventName}</p>
                 <p>{errors.eventDescription}</p>
@@ -184,7 +155,7 @@ const SaveEvent = ({
               </TabPanel>
             )}
             {tabIndex === 2 && (
-              <TabPanel index={2} dir={'ltr'}>
+              <TabPanel value={tabIndex} index={2}>
                 <Summary status={status.formStatus} event={status.event} />
               </TabPanel>
             )}
