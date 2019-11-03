@@ -34,6 +34,11 @@ const AddTracks = ({ seedPlaylist }: AddTracksProps) => {
     setTracks([track, ...tracks])
   }
 
+  const handleAddSearchedTrack = (track: ITrack) => {
+    setTracks([track, ...tracks])
+    setSearchedTracks([])
+  }
+
   const CatalogueView = () => (
     <>
       <Grid item xs={12}>
@@ -48,8 +53,9 @@ const AddTracks = ({ seedPlaylist }: AddTracksProps) => {
             label={
               !isEmpty(tracks) ? (
                 <Badge
+                  overlap="circle"
                   color="primary"
-                  anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                   badgeContent={tracks.length}
                 >
                   Current Playlist
@@ -105,7 +111,7 @@ const AddTracks = ({ seedPlaylist }: AddTracksProps) => {
           <TrackList
             tracks={searchedTracks}
             filterList={tracks}
-            onTrackSelected={handleAddTrack}
+            onTrackSelected={handleAddSearchedTrack}
           />
         </Grid>
       ) : (

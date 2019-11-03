@@ -6,6 +6,8 @@ import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
 
+import './EventTracks.scss'
+
 interface EventTracksProps {
   tracks: ITrack[]
   onTrackRemoved(track: ITrack): void
@@ -17,9 +19,12 @@ const EventTracks = ({
   onTrackRemoved
 }: EventTracksProps) => {
   return isEmpty(tracks) ? (
-    <Paper>
-      <Typography variant="subtitle2" align="center" gutterBottom>
+    <Paper className="EventTracks-no-tracks">
+      <Typography variant="h5" align="center" gutterBottom>
         No tracks yet
+      </Typography>
+      <Typography variant="body2" align="center" gutterBottom>
+        Search for track or pick from your recommendations
       </Typography>
     </Paper>
   ) : (

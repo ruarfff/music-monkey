@@ -1,7 +1,5 @@
 @import 'theme/main';
 
-$base-shadow: rgba(0, 0, 0, 0.12);
-
 .SeedPlaylist-root {
   height: 100%;
   width: 100%;
@@ -39,8 +37,7 @@ $base-shadow: rgba(0, 0, 0, 0.12);
   }
 
   .SeedPlaylist-select-playlist {
-    opacity: 0.55;
-    background-color: $secondary-main;
+    background-color: rgba(255, 176, 0, 0.75);
     backdrop-filter: blur(5px);
     border-radius: 20px;
     padding-top: 0.75em;

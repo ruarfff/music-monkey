@@ -20,7 +20,6 @@ const TrackList = ({ tracks, filterList, onTrackSelected }: TrackListProps) => {
             onSelected={onTrackSelected}
             track={track}
             key={track.uri}
-            addEnabled={true}
           />
         ))}
     </List>

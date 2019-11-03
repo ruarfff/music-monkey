@@ -19,15 +19,10 @@ import './TrackItem.scss'
 
 interface ITrackItemProps {
   track: ITrack
-  addEnabled?: boolean
   onSelected(track: ITrack): void
 }
 
-const TrackItem = ({
-  track,
-  onSelected,
-  addEnabled = false
-}: ITrackItemProps) => {
+const TrackItem = ({ track, onSelected }: ITrackItemProps) => {
   const handleAddTrack = (track: ITrack) => () => {
     onSelected(track)
   }
@@ -58,17 +53,15 @@ const TrackItem = ({
           }
         />
         <ListItemSecondaryAction>
-          {addEnabled && (
-            <Fab
-              color="secondary"
-              aria-label="add"
-              size="small"
-              className="TrackItem-accept-track"
-              onClick={handleAddTrack(track)}
-            >
-              <AddIcon />
-            </Fab>
-          )}
+          <Fab
+            color="secondary"
+            aria-label="add"
+            size="small"
+            className="TrackItem-accept-track"
+            onClick={handleAddTrack(track)}
+          >
+            <AddIcon />
+          </Fab>
         </ListItemSecondaryAction>
       </ListItem>
       <Divider variant="inset" component="li" />
