@@ -16,10 +16,10 @@ const EventDetails = () => {
           Event Image
         </Typography>
         <Field name="image">
-          {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
+          {({ form: { setFieldValue } }: FieldProps) => (
             <ImageEditor
-              image={value}
               onImageChanged={image => {
+                console.log(image)
                 setFieldValue('image', image)
               }}
             />
@@ -27,8 +27,11 @@ const EventDetails = () => {
         </Field>
       </Grid>
       <Grid item xs={12} className="EventDetails-party-settings">
+        <Typography variant="h6" align="center" gutterBottom>
+          Event Settings
+        </Typography>
         <Field name="settings">
-          {({ field, form: { setFieldValue, setFieldError } }: FieldProps) => {
+          {({ field, form: { setFieldValue } }: FieldProps) => {
             const settings: IEventSettings = field.value
             return (
               <>

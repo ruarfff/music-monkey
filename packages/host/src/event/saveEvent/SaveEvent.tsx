@@ -128,6 +128,11 @@ const SaveEvent = ({
             {tabIndex === 1 && (
               <TabPanel value={tabIndex} index={1}>
                 <EventDetails />
+              </TabPanel>
+            )}
+            {tabIndex === 2 && (
+              <TabPanel value={tabIndex} index={2}>
+                <Summary status={status.formStatus} event={status.event} />
                 <p>{errors.eventName}</p>
                 <p>{errors.eventDescription}</p>
                 <p>{errors.organizer}</p>
@@ -152,11 +157,6 @@ const SaveEvent = ({
                     </Button>
                   )}
                 </FormGroup>
-              </TabPanel>
-            )}
-            {tabIndex === 2 && (
-              <TabPanel value={tabIndex} index={2}>
-                <Summary status={status.formStatus} event={status.event} />
               </TabPanel>
             )}
           </div>
