@@ -1,5 +1,13 @@
+@import 'theme/main';
+
 .SaveEvent-root {
   width: 100%;
+
+  .MuiTab-textColorPrimary.Mui-selected {
+    color: $mm-white;
+    background-color: $primary;
+  }
+
   .SaveEvent-form {
     padding: 1em;
     margin-bottom: 64px;
@@ -18,18 +26,22 @@
 .SaveEvent-loading {
   position: fixed;
   width: 80%;
-  bottom: 0px;
+  top: 120px;
   left: 0;
   right: 0;
   height: 40px;
   margin: 10% auto;
 }
 
-.SaveEvent-save-button {
+.SaveEvent-save-button-xxx {
   position: fixed;
   width: 80%;
   bottom: 0px;
   left: 0;
   right: 0;
   margin: 1% auto;
+}
+
+.SaveEvent-actions {
+  margin-top: 0.5em;
 }

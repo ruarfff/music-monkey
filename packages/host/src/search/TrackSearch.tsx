@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { Paper, InputBase, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
+import ClearIcon from '@material-ui/icons/Clear'
+import isEmpty from 'lodash/isEmpty'
 import ITrack from 'track/ITrack'
 import useDebounce from 'util/useDebounce'
 import { searchTracks } from 'search/searchClient'
 import TrackSearchResult from './TrackSearchResult'
 import './TrackSearch.scss'
-import isEmpty from 'lodash/isEmpty'
 
 interface TrackSearchProps {
+  onFocus(): void
   onSearchStart(): void
   onSearchResult(tracks: ITrack[]): void
 }
 
-const TrackSearch = ({ onSearchStart, onSearchResult }: TrackSearchProps) => {
+const TrackSearch = ({
+  onSearchStart,
+  onSearchResult,
+  onFocus
+}: TrackSearchProps) => {
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 400)
 
@@ -48,10 +54,19 @@ const TrackSearch = ({ onSearchStart, onSearchResult }: TrackSearchProps) => {
           const query = !!event.target ? event.target.value : ''
           setSearchQuery(query)
         }}
+        onFocus={onFocus}
         value={searchQuery}
       />
       <IconButton className="TrackSearch-icon-button" aria-label="search">
-        <SearchIcon />
+        {!!searchQuery ? (
+          <ClearIcon
+            onClick={() => {
+              setSearchQuery('')
+            }}
+          />
+        ) : (
+          <SearchIcon />
+        )}
       </IconButton>
     </Paper>
   )

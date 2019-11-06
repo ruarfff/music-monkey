@@ -110,12 +110,12 @@ const TrackListItem = ({
           }}
         />
 
-        <ListItemSecondaryAction>
+        <ListItemSecondaryAction className="TrackListItem-actions">
           {!disableRemoveTrack && (
             <Fab
-              color="secondary"
-              aria-label="add"
+              aria-label="remove"
               size="small"
+              color="primary"
               onClick={handleRemoveTrack(track)}
             >
               <Remove />

@@ -5,18 +5,16 @@ import {
   AppBar,
   Tabs,
   Tab,
-  Fab,
   Slide,
   ButtonGroup,
-  Button
+  Button,
+  Icon
 } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
 import isEmpty from 'lodash/isEmpty'
 import isUndefined from 'lodash/isUndefined'
 import IUser from 'user/IUser'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import { getEventById } from 'event/eventClient'
-import LinkButton from 'components/LinkButton'
 import EventInitialize from './EventInitialize'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
@@ -114,55 +112,43 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
                 variant="fullWidth"
                 aria-label="save event"
               >
-                <Tab label="Playlist" {...a11yProps(0)} />
-                <Tab label="Details" {...a11yProps(1)} disabled={!hasEvent} />
-                <Tab label="Invite" {...a11yProps(2)} disabled={!hasEvent} />
+                <Tab label="1 Music" {...a11yProps(0)} />
+                <Tab label="2 Details" {...a11yProps(1)} disabled={!hasEvent} />
+                <Tab label="3 Share" {...a11yProps(2)} disabled={!hasEvent} />
               </Tabs>
             </AppBar>
-            {eventInitValid && hasEvent && (
-              <ButtonGroup
-                fullWidth
-                aria-label="full width outlined button group"
+            {isSubmitting ? (
+              <div className="SaveEvent-loading">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <Slide
+                direction="left"
+                in={eventInitValid && !hasEvent}
+                mountOnEnter
+                unmountOnExit
               >
-                <LinkButton
-                  to={'/events/' + savingEvent.eventId}
-                  color="secondary"
+                <ButtonGroup
+                  fullWidth
+                  aria-label="event edit actions"
+                  className="SaveEvent-actions"
                 >
-                  Go to Event
-                </LinkButton>
-                {tabIndex !== 2 && <Button color="primary">Save</Button>}
-              </ButtonGroup>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                    endIcon={<Icon>send</Icon>}
+                    onClick={submitForm}
+                  >
+                    Save & Continue
+                  </Button>
+                </ButtonGroup>
+              </Slide>
             )}
+
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>
                 <EventInitialize hasTracks={hasTracks} />
-
-                {isSubmitting ? (
-                  <div className="SaveEvent-loading">
-                    <LoadingSpinner />
-                  </div>
-                ) : (
-                  <Slide
-                    direction="up"
-                    in={eventInitValid && !hasEvent}
-                    mountOnEnter
-                    unmountOnExit
-                  >
-                    <Fab
-                      size="large"
-                      color="secondary"
-                      variant="extended"
-                      aria-label="Save and Continue"
-                      className="SaveEvent-save-button"
-                      type="submit"
-                      disabled={isSubmitting || !isValid}
-                      onClick={submitForm}
-                    >
-                      <AddIcon />
-                      Save & Continue
-                    </Fab>
-                  </Slide>
-                )}
               </TabPanel>
             )}
             {tabIndex === 1 && (

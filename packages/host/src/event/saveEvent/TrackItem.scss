@@ -9,14 +9,16 @@
     text-overflow: ellipsis;
   }
 
-  .TrackItem-accept-track {
-    color: $mm-white;
-    background-color: $mm-white;
-  }
-
   .TrackItem-track-image {
     border-radius: 4px;
     max-width: 4.5em;
     max-height: 4.5em;
+  }
+}
+
+.TrackItem-accept-track {
+  .MuiFab-primary {
+    background-color: $nice-green;
+    opacity: 0.9;
   }
 }

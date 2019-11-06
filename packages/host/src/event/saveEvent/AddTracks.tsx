@@ -144,6 +144,8 @@ const AddTracks = ({
           }}
           onSearchStart={() => {
             setIsLoading(true)
+          }}
+          onFocus={() => {
             setTabIndex(1)
           }}
         />

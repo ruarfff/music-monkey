@@ -18,3 +18,9 @@
     max-height: 4.5em;
   }
 }
+.TrackListItem-actions {
+  .MuiFab-primary {
+    background-color: $danger-red;
+    opacity: 0.9;
+  }
+}
