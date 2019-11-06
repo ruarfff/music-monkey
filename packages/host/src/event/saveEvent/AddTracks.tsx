@@ -149,7 +149,9 @@ const AddTracks = ({
         />
       </Grid>
       {isLoading ? (
-        <LoadingSpinner />
+        <div className="AddTracks-search-loading">
+          <LoadingSpinner />
+        </div>
       ) : (
         <CatalogueView searchedTracks={searchedTracks} />
       )}

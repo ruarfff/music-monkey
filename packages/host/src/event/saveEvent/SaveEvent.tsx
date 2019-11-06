@@ -136,17 +136,18 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>
                 <EventInitialize hasTracks={hasTracks} />
-                <Slide
-                  direction="up"
-                  in={eventInitValid && !hasEvent}
-                  mountOnEnter
-                  unmountOnExit
-                >
-                  {isSubmitting ? (
-                    <div className="SaveEvent-loading">
-                      <LoadingSpinner />
-                    </div>
-                  ) : (
+
+                {isSubmitting ? (
+                  <div className="SaveEvent-loading">
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  <Slide
+                    direction="up"
+                    in={eventInitValid && !hasEvent}
+                    mountOnEnter
+                    unmountOnExit
+                  >
                     <Fab
                       size="large"
                       color="secondary"
@@ -160,8 +161,8 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
                       <AddIcon />
                       Save & Continue
                     </Fab>
-                  )}
-                </Slide>
+                  </Slide>
+                )}
               </TabPanel>
             )}
             {tabIndex === 1 && (
