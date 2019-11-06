@@ -6,12 +6,18 @@ import Slider from '@material-ui/core/Slider'
 import backgroundImg from 'assets/partycover.jpg'
 
 interface ImageEditorProps {
+  initialImage: any
   onImageChanged?(data: any): void
 }
 
-const ImageEditor = ({ onImageChanged = (_: any) => {} }: ImageEditorProps) => {
+const ImageEditor = ({
+  initialImage,
+  onImageChanged = (_: any) => {}
+}: ImageEditorProps) => {
   const [imageZoom, setImageZoom] = useState(1)
-  const [image, setImage] = useState<any>({ url: backgroundImg })
+  const [image, setImage] = useState<any>(
+    initialImage || { url: backgroundImg }
+  )
   const imageEditor = useRef<AvatarEditor>(null)
 
   const handleChange = (_?: any) => {

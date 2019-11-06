@@ -2,11 +2,11 @@ import isEmpty from 'lodash/isEmpty'
 import uploadImage from 'upload/uploadImage'
 import IEvent from 'event/IEvent'
 import { createPlaylist, addTracksToPlaylist } from 'playlist/playlistClient'
-import { createEvent } from 'event/eventClient'
-import SaveEventFormValues from './SaveEventFormValues'
+import { updateEvent } from 'event/eventClient'
 import IPlaylist from 'playlist/IPlaylist'
+import SaveEventFormValues from './SaveEventFormValues'
 
-const saveEventFlow = async ({
+const updateEventFlow = async ({
   user,
   eventName,
   eventDescription,
@@ -47,9 +47,9 @@ const saveEventFlow = async ({
     playlistUrl: playlist.external_urls.spotify
   }
 
-  const savedEvent = await createEvent(eventDetails)
+  const savedEvent = await updateEvent(eventDetails)
 
   return savedEvent
 }
 
-export default saveEventFlow
+export default updateEventFlow

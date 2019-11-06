@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, FormikProps, FormikHelpers } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
-import { FormGroup, Button, AppBar, Tabs, Tab } from '@material-ui/core'
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Fab,
+  Slide,
+  ButtonGroup,
+  Button
+} from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
 import isEmpty from 'lodash/isEmpty'
 import isUndefined from 'lodash/isUndefined'
 import IUser from 'user/IUser'
-import IEvent from 'event/IEvent'
+import LoadingSpinner from 'loading/LoadingSpinner'
+import { getEventById } from 'event/eventClient'
+import LinkButton from 'components/LinkButton'
 import EventInitialize from './EventInitialize'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
 import SaveEventFormValues from './SaveEventFormValues'
 import saveEventFlow from './saveEventFlow'
-import IAction from 'IAction'
-import LoadingSpinner from 'loading/LoadingSpinner'
 import FormValidationSchema from './FormValidationSchema'
 import TabPanel from './TabPanel'
 import getInitialFormValues from './getInitialFormValues'
@@ -21,35 +30,32 @@ import './SaveEvent.scss'
 
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
-  event: IEvent
-  isDesktop: boolean
-  getEventById(id: string): IAction
 }
 
-const SaveEvent = ({
-  user,
-  location,
-  history,
-  match,
-  getEventById,
-  event = {} as IEvent
-}: SaveEventProps) => {
+const SaveEvent = ({ user, location, match }: SaveEventProps) => {
+  const [savingEvent, setSavingEvent] = useState()
+  const hasEvent = !isEmpty(savingEvent)
   const isEditing =
     location.pathname.startsWith('/events') &&
     location.pathname.includes('/edit')
   const eventIdFromPath = match.params['eventId']
-
   const [tabIndex, setTabIndex] = useState(0)
+
   useEffect(() => {
-    if (isEditing) {
-      if (event.eventId !== eventIdFromPath) {
-        getEventById(eventIdFromPath)
+    const getEventIfEditing = async () => {
+      if (
+        isEditing &&
+        (!!savingEvent && savingEvent.eventId !== eventIdFromPath)
+      ) {
+        const event = await getEventById(eventIdFromPath)
+        setSavingEvent(event)
       }
     }
+    getEventIfEditing()
     // eslint-disable-next-line
   }, [event, eventIdFromPath])
 
-  if (isEditing && isEmpty(event.eventId)) {
+  if (isEditing && isEmpty(savingEvent)) {
     return <LoadingSpinner />
   }
 
@@ -63,10 +69,11 @@ const SaveEvent = ({
   ) => {
     setSubmitting(true)
     try {
-      const event = await saveEventFlow(values, isEditing)
+      const event = await saveEventFlow(values)
       setStatus({ formState: 'success', event })
       setSubmitting(false)
-      history.push(`/events/${event.eventId}`)
+      setSavingEvent(event)
+      setTabIndex(1)
     } catch (err) {
       console.error(err)
       setStatus({ formState: 'error' })
@@ -82,14 +89,15 @@ const SaveEvent = ({
 
   return (
     <Formik
-      initialValues={getInitialFormValues(user, event, isEditing)}
+      initialValues={getInitialFormValues(user, savingEvent, isEditing)}
       validationSchema={FormValidationSchema}
       onSubmit={handleSubmit}
     >
       {({
         isSubmitting,
+        submitForm,
+        isValid,
         errors,
-        touched,
         status = {},
         values
       }: FormikProps<SaveEventFormValues>) => {
@@ -107,22 +115,53 @@ const SaveEvent = ({
                 aria-label="save event"
               >
                 <Tab label="Playlist" {...a11yProps(0)} />
-                <Tab
-                  label="Details"
-                  {...a11yProps(1)}
-                  disabled={!eventInitValid}
-                />
-                <Tab
-                  label="Invite"
-                  {...a11yProps(2)}
-                  disabled={!eventInitValid}
-                />
+                <Tab label="Details" {...a11yProps(1)} disabled={!hasEvent} />
+                <Tab label="Invite" {...a11yProps(2)} disabled={!hasEvent} />
               </Tabs>
             </AppBar>
-
+            {eventInitValid && hasEvent && (
+              <ButtonGroup
+                fullWidth
+                aria-label="full width outlined button group"
+              >
+                <LinkButton
+                  to={'/events/' + savingEvent.eventId}
+                  color="secondary"
+                >
+                  Go to Event
+                </LinkButton>
+                {tabIndex !== 2 && <Button color="primary">Save</Button>}
+              </ButtonGroup>
+            )}
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>
                 <EventInitialize hasTracks={hasTracks} />
+                <Slide
+                  direction="up"
+                  in={eventInitValid && !hasEvent}
+                  mountOnEnter
+                  unmountOnExit
+                >
+                  {isSubmitting ? (
+                    <div className="SaveEvent-loading">
+                      <LoadingSpinner />
+                    </div>
+                  ) : (
+                    <Fab
+                      size="large"
+                      color="secondary"
+                      variant="extended"
+                      aria-label="Save and Continue"
+                      className="SaveEvent-save-button"
+                      type="submit"
+                      disabled={isSubmitting || !isValid}
+                      onClick={submitForm}
+                    >
+                      <AddIcon />
+                      Save & Continue
+                    </Fab>
+                  )}
+                </Slide>
               </TabPanel>
             )}
             {tabIndex === 1 && (
@@ -141,22 +180,6 @@ const SaveEvent = ({
                 <p>{errors.image}</p>
                 <p>{errors.location}</p>
                 <p>{errors.settings}</p>
-                <FormGroup className="SaveEvent-form-actions">
-                  {isSubmitting ? (
-                    <div className="SaveEvent-loading">
-                      <LoadingSpinner />
-                    </div>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      {isEditing ? 'Save Event' : 'Create Event'}
-                    </Button>
-                  )}
-                </FormGroup>
               </TabPanel>
             )}
           </div>

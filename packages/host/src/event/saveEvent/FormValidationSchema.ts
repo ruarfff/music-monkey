@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 export default Yup.object().shape({
   eventName: Yup.string().required('Event name is required'),
   eventDescription: Yup.string(),
-  organizer: Yup.string().required('Event organizer is required'),
+  organizer: Yup.string(),
   tracks: Yup.array(),
   image: Yup.object(),
   genre: Yup.string(),

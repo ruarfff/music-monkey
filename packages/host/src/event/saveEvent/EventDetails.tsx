@@ -7,8 +7,10 @@ import IEventSettings from 'event/IEventSettings'
 import EventTextInput from './EventTextInput'
 import EventLocationInput from './EventLocationInput'
 import './EventDetails.scss'
+import { isEmpty } from 'lodash'
 
 const EventDetails = () => {
+  let initialImage: any
   return (
     <Grid container className="EventDetails-root">
       <Grid item xs={12} className="EventDetails-image">
@@ -16,14 +18,20 @@ const EventDetails = () => {
           Event Image
         </Typography>
         <Field name="image">
-          {({ form: { setFieldValue } }: FieldProps) => (
-            <ImageEditor
-              onImageChanged={image => {
-                console.log(image)
-                setFieldValue('image', image)
-              }}
-            />
-          )}
+          {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
+            if (isEmpty(initialImage)) {
+              initialImage = { ...value }
+            }
+            return (
+              <ImageEditor
+                initialImage={initialImage}
+                onImageChanged={image => {
+                  console.log(image)
+                  setFieldValue('image', image)
+                }}
+              />
+            )
+          }}
         </Field>
       </Grid>
       <Grid item xs={12} className="EventDetails-party-settings">

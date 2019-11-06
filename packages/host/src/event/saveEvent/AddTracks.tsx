@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Grid, Tabs, Tab, Badge } from '@material-ui/core'
+import { FieldProps, Field } from 'formik'
 import Typography from '@material-ui/core/Typography'
 import isEmpty from 'lodash/isEmpty'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import { FieldProps, Field } from 'formik'
 import IAction from 'IAction'
 import IPlaylist from 'playlist/IPlaylist'
 import TrackSearch from 'search/TrackSearch'
 import ITrack from 'track/ITrack'
+import isUndefined from 'lodash/isUndefined'
 import TrackList from './TrackList'
 import EventTracks from './EventTracks'
 
 import './AddTracks.scss'
-import isUndefined from 'lodash/isUndefined'
 
 interface AddTracksProps {
   seedPlaylist?: IPlaylist
@@ -36,9 +36,6 @@ const AddTracks = ({
   useEffect(() => {
     if (isEmpty(recommendedTracks)) {
       getRecommendations()
-      setIsLoading(true)
-    } else {
-      setIsLoading(false)
     }
     // eslint-disable-next-line
   }, [recommendedTracks])
