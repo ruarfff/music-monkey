@@ -123,7 +123,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
               </div>
             ) : (
               <Slide
-                direction="left"
+                direction="right"
                 in={eventInitValid && !hasEvent}
                 mountOnEnter
                 unmountOnExit
