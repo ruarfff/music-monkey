@@ -1,39 +1,15 @@
 import React from 'react'
 import { Grid, FormControlLabel, Switch, Typography } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
-import ImageEditor from 'imageEdit/ImageEditor'
 import EventDateTimePicker from './EventDateTimePicker'
 import IEventSettings from 'event/IEventSettings'
 import EventTextInput from './EventTextInput'
 import EventLocationInput from './EventLocationInput'
 import './EventDetails.scss'
-import { isEmpty } from 'lodash'
 
 const EventDetails = () => {
-  let initialImage: any
   return (
     <Grid container className="EventDetails-root">
-      <Grid item xs={12} className="EventDetails-image">
-        <Typography variant="h6" align="center" gutterBottom>
-          Event Image
-        </Typography>
-        <Field name="image">
-          {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
-            if (isEmpty(initialImage)) {
-              initialImage = { ...value }
-            }
-            return (
-              <ImageEditor
-                initialImage={initialImage}
-                onImageChanged={image => {
-                  console.log(image)
-                  setFieldValue('image', image)
-                }}
-              />
-            )
-          }}
-        </Field>
-      </Grid>
       <Grid item xs={12} className="EventDetails-party-settings">
         <Typography variant="h6" align="center" gutterBottom>
           Event Settings

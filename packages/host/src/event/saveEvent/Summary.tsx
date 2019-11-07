@@ -1,20 +1,44 @@
 import React from 'react'
+import { Grid, Typography } from '@material-ui/core'
+import { Field, FieldProps } from 'formik'
 import IEvent from 'event/IEvent'
 import ShareEventByEmail from './ShareEventByEmailContainer'
 import IAction from 'IAction'
+import ImageEditor from 'imageEdit/ImageEditor'
+import { isEmpty } from 'lodash'
+
+import './Summary.scss'
 
 interface SummaryProps {
-  status: string
   event: IEvent
 }
 
-const Summary = ({ status, event }: SummaryProps) => {
-  if (status === 'failure') {
-    return <div>Oh shit</div>
-  }
+const Summary = ({ event }: SummaryProps) => {
+  let initialImage: any
 
   return (
-    <div>
+    <Grid container className="Summary-root">
+      <Grid item xs={12} className="Event-image">
+        <Typography variant="h6" align="center" gutterBottom>
+          Event Image
+        </Typography>
+        <Field name="image">
+          {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
+            if (isEmpty(initialImage)) {
+              initialImage = { ...value }
+            }
+            return (
+              <ImageEditor
+                initialImage={initialImage}
+                onImageChanged={image => {
+                  console.log(image)
+                  setFieldValue('image', image)
+                }}
+              />
+            )
+          }}
+        </Field>
+      </Grid>
       <ShareEventByEmail
         clearMessage={() => {
           console.log('Clear Message')
@@ -28,7 +52,7 @@ const Summary = ({ status, event }: SummaryProps) => {
           console.log('event invite')
         }}
       />
-    </div>
+    </Grid>
   )
 }
 

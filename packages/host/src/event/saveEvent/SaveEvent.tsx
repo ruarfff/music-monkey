@@ -158,7 +158,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
             )}
             {tabIndex === 2 && (
               <TabPanel value={tabIndex} index={2}>
-                <Summary status={status.formStatus} event={status.event} />
+                <Summary event={status.event} />
                 <p>{errors.eventName}</p>
                 <p>{errors.eventDescription}</p>
                 <p>{errors.organizer}</p>
