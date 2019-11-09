@@ -1,8 +1,7 @@
 import React from 'react'
-import { Grid, FormControlLabel, Switch, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import EventDateTimePicker from './EventDateTimePicker'
-import IEventSettings from 'event/IEventSettings'
 import EventTextInput from './EventTextInput'
 import EventLocationInput from './EventLocationInput'
 import './EventDetails.scss'
@@ -10,66 +9,6 @@ import './EventDetails.scss'
 const EventDetails = () => {
   return (
     <Grid container className="EventDetails-root">
-      <Grid item xs={12} className="EventDetails-party-settings">
-        <Typography variant="h6" align="center" gutterBottom>
-          Event Settings
-        </Typography>
-        <Field name="settings">
-          {({ field, form: { setFieldValue } }: FieldProps) => {
-            const settings: IEventSettings = field.value
-            return (
-              <>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      value="Suggesting Playlists Enabled"
-                      checked={settings.suggestingPlaylistsEnabled}
-                      onChange={() => {
-                        setFieldValue('settings', {
-                          ...settings,
-                          suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
-                        })
-                      }}
-                    />
-                  }
-                  label="Allow Playlist Suggestions"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      value="Auto Accept Suggestions Enabled"
-                      checked={settings.autoAcceptSuggestionsEnabled}
-                      onChange={() => {
-                        setFieldValue('settings', {
-                          ...settings,
-                          autoAcceptSuggestionsEnabled: !settings.autoAcceptSuggestionsEnabled
-                        })
-                      }}
-                    />
-                  }
-                  label="Auto Accept Suggestions"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      value="dynamic Voting Enabled"
-                      checked={settings.dynamicVotingEnabled}
-                      onChange={() => {
-                        setFieldValue('settings', {
-                          ...settings,
-                          dynamicVotingEnabled: !settings.dynamicVotingEnabled
-                        })
-                      }}
-                    />
-                  }
-                  label="Dynamic Voting"
-                />
-              </>
-            )
-          }}
-        </Field>
-      </Grid>
-
       <Grid item xs={12}>
         <Field name="startDateTime">
           {({ field: { value }, form: { setFieldValue } }: FieldProps) => {

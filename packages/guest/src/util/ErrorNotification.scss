@@ -1,0 +1,13 @@
+.ErrorNotification-root {
+  background-color: #8300bf;
+
+  .ErrorNotification-icon {
+    font-size: 20px;
+    opacity: 0.9;
+  }
+
+  .ErrorNotification-message {
+    display: flex;
+    align-items: center;
+  }
+}

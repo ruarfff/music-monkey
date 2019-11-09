@@ -25,6 +25,7 @@ import TabPanel from './TabPanel'
 import getInitialFormValues from './getInitialFormValues'
 
 import './SaveEvent.scss'
+import EventSettingsDialog from './EventSettingsDialog'
 
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
@@ -38,6 +39,11 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
     location.pathname.includes('/edit')
   const eventIdFromPath = match.params['eventId']
   const [tabIndex, setTabIndex] = useState(0)
+  const [settingsDialogOpen, setSettingsDialogOpen] = useState(false)
+
+  const handleSettingsClickOpen = () => {
+    setSettingsDialogOpen(true)
+  }
 
   useEffect(() => {
     const getEventIfEditing = async () => {
@@ -94,7 +100,6 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
       {({
         isSubmitting,
         submitForm,
-        isValid,
         errors,
         status = {},
         values
@@ -103,6 +108,13 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
         const eventInitValid = !errors.eventName && hasTracks
         return (
           <div className="SaveEvent-root">
+            <EventSettingsDialog
+              open={settingsDialogOpen}
+              handleClose={() => {
+                setSettingsDialogOpen(false)
+                submitForm()
+              }}
+            />
             <AppBar position="static" color="default">
               <Tabs
                 value={tabIndex}
@@ -138,7 +150,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
                     color="secondary"
                     type="submit"
                     endIcon={<Icon>send</Icon>}
-                    onClick={submitForm}
+                    onClick={handleSettingsClickOpen}
                   >
                     Save & Continue
                   </Button>
@@ -148,7 +160,10 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
 
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>
-                <EventInitialize hasTracks={hasTracks} />
+                <EventInitialize
+                  hasSavedEvent={hasEvent}
+                  hasTracks={hasTracks}
+                />
               </TabPanel>
             )}
             {tabIndex === 1 && (
