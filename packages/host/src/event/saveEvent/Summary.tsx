@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography, Button } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import IEvent from 'event/IEvent'
 import ShareEventByEmail from './ShareEventByEmailContainer'
@@ -38,6 +38,33 @@ const Summary = ({ event }: SummaryProps) => {
             )
           }}
         </Field>
+      </Grid>
+      <Grid item xs={12}>
+        <Button
+          onClick={() => {
+            console.log(event)
+            let nav: any = window.navigator
+            if (nav && nav.share) {
+              let invite = (event && event.invites && event.invites[0]) || ''
+              const url = `https://guests.musicmonkey.io/invite/${invite}`
+
+              nav
+                .share({
+                  title: event.name,
+                  text: event.description,
+                  url
+                })
+                .then(() => {
+                  console.log('Thanks for sharing!')
+                })
+                .catch(console.error)
+            } else {
+              console.log('cannot share')
+            }
+          }}
+        >
+          Share
+        </Button>
       </Grid>
       <ShareEventByEmail
         clearMessage={() => {

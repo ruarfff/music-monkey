@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { IconButton, Hidden } from '@material-ui/core'
-import Typography from '@material-ui/core/Typography'
+import { IconButton } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -18,7 +17,6 @@ const UserMenu = ({ user, logout }: IUserMenuProps) => {
   const [anchorEl, setAnchorEl] = useState(undefined)
   const menuOpen = Boolean(anchorEl)
   const userHasProfileImage = !!user && !!user.image
-  const userHasName = !!user && !!user.displayName
 
   const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget)
@@ -42,11 +40,7 @@ const UserMenu = ({ user, logout }: IUserMenuProps) => {
           <AccountCircle />
         )}
       </IconButton>
-      {userHasName && (
-        <Hidden xsDown implementation="css">
-          <Typography className="UserMenu-name">{user.displayName}</Typography>
-        </Hidden>
-      )}
+
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}

@@ -94,9 +94,10 @@ const AddTracks = ({
                     !isEmpty(value) ? (
                       <Badge
                         overlap="circle"
-                        color="primary"
+                        color={tabIndex === 0 ? 'secondary' : 'primary'}
                         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                         badgeContent={value.length}
+                        className="AddTracks-playlist-count"
                       >
                         Current Playlist
                       </Badge>

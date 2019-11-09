@@ -13,3 +13,11 @@
     margin-bottom: 5em;
   }
 }
+
+.AddTracks-playlist-count {
+  .MuiBadge-badge {
+    @include media('>sm') {
+      right: -20%;
+    }
+  }
+}

@@ -14,12 +14,12 @@ interface EventInitializeProps {
 
 const EventInitialize = ({ hasTracks }: EventInitializeProps) => {
   const [seedPlaylist, setSeedPlaylist] = useState<IPlaylist>()
+  const noPlaylist = isEmpty(seedPlaylist) && !hasTracks
+
   return (
     <Grid container className="EventInitialize-root">
       <Grid item xs={12}>
         <EventTextInput name="eventName" label="Name" autoFocus={true} />
-      </Grid>
-      <Grid item xs={12}>
         <EventTextInput
           name="eventDescription"
           multiline={true}
@@ -27,7 +27,7 @@ const EventInitialize = ({ hasTracks }: EventInitializeProps) => {
         />
       </Grid>
       <Grid item xs={12} className="EventInitialize-playlist">
-        {isEmpty(seedPlaylist) && !hasTracks ? (
+        {noPlaylist ? (
           <SeedPlaylist onPlaylistSelected={setSeedPlaylist} />
         ) : (
           <AddTracks seedPlaylist={seedPlaylist} />
