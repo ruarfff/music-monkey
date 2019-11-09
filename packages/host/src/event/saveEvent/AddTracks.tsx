@@ -105,7 +105,8 @@ const AddTracks = ({
                     )
                   }
                 />
-                <Tab label="Recommendations" />
+                <Tab label="Suggested" />
+                <Tab label="My Playlists" />
               </Tabs>
             </Grid>
             <Grid item xs={12}>

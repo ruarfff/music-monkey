@@ -3,8 +3,8 @@ import uploadImage from 'upload/uploadImage'
 import IEvent from 'event/IEvent'
 import { createPlaylist, addTracksToPlaylist } from 'playlist/playlistClient'
 import { createEvent } from 'event/eventClient'
-import SaveEventFormValues from './SaveEventFormValues'
 import IPlaylist from 'playlist/IPlaylist'
+import SaveEventFormValues from './SaveEventFormValues'
 
 const saveEventFlow = async ({
   user,

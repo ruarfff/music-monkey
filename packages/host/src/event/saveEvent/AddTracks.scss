@@ -16,6 +16,7 @@
 
 .AddTracks-playlist-count {
   .MuiBadge-badge {
+    right: -3%;
     @include media('>sm') {
       right: -20%;
     }

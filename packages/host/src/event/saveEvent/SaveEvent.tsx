@@ -19,7 +19,7 @@ import EventInitialize from './EventInitialize'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
 import SaveEventFormValues from './SaveEventFormValues'
-import saveEventFlow from './saveEventFlow'
+import saveEventFlow from './mockSaveEvent'
 import FormValidationSchema from './FormValidationSchema'
 import TabPanel from './TabPanel'
 import getInitialFormValues from './getInitialFormValues'
@@ -73,7 +73,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
   ) => {
     setSubmitting(true)
     try {
-      const event = await saveEventFlow(values)
+      const event = saveEventFlow(values)
       setStatus({ formState: 'success', event })
       setSubmitting(false)
       setSavingEvent(event)
