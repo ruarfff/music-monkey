@@ -129,42 +129,44 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
                 <Tab label="3 Share" {...a11yProps(2)} disabled={!hasEvent} />
               </Tabs>
             </AppBar>
-            {isSubmitting ? (
-              <div className="SaveEvent-loading">
-                <LoadingSpinner />
-              </div>
-            ) : (
-              <Slide
-                direction="right"
-                in={eventInitValid && !hasEvent}
-                mountOnEnter
-                unmountOnExit
-              >
-                <ButtonGroup
-                  fullWidth
-                  aria-label="event edit actions"
-                  className="SaveEvent-actions"
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    type="submit"
-                    endIcon={<Icon>send</Icon>}
-                    onClick={handleSettingsClickOpen}
-                  >
-                    Save & Continue
-                  </Button>
-                </ButtonGroup>
-              </Slide>
-            )}
-
             {tabIndex === 0 && (
-              <TabPanel value={tabIndex} index={0}>
-                <EventInitialize
-                  hasSavedEvent={hasEvent}
-                  hasTracks={hasTracks}
-                />
-              </TabPanel>
+              <>
+                {isSubmitting ? (
+                  <div className="SaveEvent-loading">
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  <Slide
+                    direction="right"
+                    in={eventInitValid && !hasEvent}
+                    mountOnEnter
+                    unmountOnExit
+                  >
+                    <ButtonGroup
+                      fullWidth
+                      aria-label="event edit actions"
+                      className="SaveEvent-actions"
+                    >
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        type="submit"
+                        endIcon={<Icon>send</Icon>}
+                        onClick={handleSettingsClickOpen}
+                      >
+                        Save & Continue
+                      </Button>
+                    </ButtonGroup>
+                  </Slide>
+                )}
+
+                <TabPanel value={tabIndex} index={0}>
+                  <EventInitialize
+                    hasSavedEvent={hasEvent}
+                    hasTracks={hasTracks}
+                  />
+                </TabPanel>
+              </>
             )}
             {tabIndex === 1 && (
               <TabPanel value={tabIndex} index={1}>

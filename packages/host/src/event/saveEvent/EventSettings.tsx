@@ -80,7 +80,7 @@ const EventSettings = () => {
           return (
             <FormGroup>
               <List>
-                <ListItem button>
+                <ListItem>
                   <FormControlLabel
                     control={
                       <IOSSwitch
@@ -98,7 +98,7 @@ const EventSettings = () => {
                   />
                 </ListItem>
                 <Divider />
-                <ListItem button>
+                <ListItem>
                   <FormControlLabel
                     control={
                       <IOSSwitch
@@ -116,7 +116,7 @@ const EventSettings = () => {
                   />
                 </ListItem>
                 <Divider />
-                <ListItem button>
+                <ListItem>
                   <FormControlLabel
                     control={
                       <IOSSwitch

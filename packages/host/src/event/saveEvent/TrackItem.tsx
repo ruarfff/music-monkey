@@ -44,13 +44,11 @@ const TrackItem = ({ track, onSelected }: ITrackItemProps) => {
             noWrap: true
           }}
         />
-        <ListItemSecondaryAction className="TrackItem-accept-track">
-          <Fab
-            color="primary"
-            aria-label="add"
-            size="small"
-            onClick={handleAddTrack(track)}
-          >
+        <ListItemSecondaryAction
+          className="TrackItem-accept-track"
+          onClick={handleAddTrack(track)}
+        >
+          <Fab color="primary" aria-label="add" size="small">
             <AddIcon />
           </Fab>
         </ListItemSecondaryAction>

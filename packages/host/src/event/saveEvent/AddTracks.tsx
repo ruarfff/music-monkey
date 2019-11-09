@@ -60,7 +60,6 @@ const AddTracks = ({
 
         const handleAddSearchedTrack = (track: ITrack) => {
           setFieldValue('tracks', [track, ...value])
-          setSearchedTracks([])
         }
 
         const handleTracksChanges = (tracks: ITrack[]) => {

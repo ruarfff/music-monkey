@@ -57,16 +57,14 @@ const TrackSearch = ({
         onFocus={onFocus}
         value={searchQuery}
       />
-      <IconButton className="TrackSearch-icon-button" aria-label="search">
-        {!!searchQuery ? (
-          <ClearIcon
-            onClick={() => {
-              setSearchQuery('')
-            }}
-          />
-        ) : (
-          <SearchIcon />
-        )}
+      <IconButton
+        className="TrackSearch-icon-button"
+        aria-label="search"
+        onClick={() => {
+          if (!!searchQuery) setSearchQuery('')
+        }}
+      >
+        {!!searchQuery ? <ClearIcon /> : <SearchIcon />}
       </IconButton>
     </Paper>
   )
