@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { Grid, Collapse } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import IPlaylist from 'playlist/IPlaylist'
 import EventTextInput from './EventTextInput'
 import SeedPlaylist from './SeedPlaylistContainer'
+import EventSettings from './EventSettings'
 import AddTracks from './AddTracksContainer'
 
 import './EventInitialize.scss'
-import EventSettings from './EventSettings'
 
 interface EventInitializeProps {
   hasSavedEvent: boolean
@@ -36,11 +36,9 @@ const EventInitialize = ({
         />
       </Grid>
       <Grid item xs={12}>
-        <Collapse in={hasSavedEvent}>
-          <EventSettings />
-        </Collapse>
+        <EventSettings />
       </Grid>
-      <Grid item xs={12} className="EventInitialize-playlist">
+      <Grid container item xs={12}>
         {noPlaylist ? (
           <SeedPlaylist onPlaylistSelected={setSeedPlaylist} />
         ) : (

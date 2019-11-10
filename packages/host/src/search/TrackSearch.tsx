@@ -7,6 +7,7 @@ import ITrack from 'track/ITrack'
 import useDebounce from 'util/useDebounce'
 import { searchTracks } from 'search/searchClient'
 import TrackSearchResult from './TrackSearchResult'
+
 import './TrackSearch.scss'
 
 interface TrackSearchProps {

@@ -73,7 +73,7 @@ const SeedPlaylist = ({
   }
 
   return (
-    <Grid container className="SeedPlaylist-root" spacing={2}>
+    <Grid container className="SeedPlaylist-root">
       <Grid item xs={12}>
         <Typography variant="h6" align="center" gutterBottom>
           Add Playlist

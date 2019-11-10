@@ -2,7 +2,6 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import EventDateTimePicker from './EventDateTimePicker'
-import EventTextInput from './EventTextInput'
 import EventLocationInput from './EventLocationInput'
 import './EventDetails.scss'
 
@@ -40,9 +39,9 @@ const EventDetails = () => {
           )}
         </Field>
       </Grid>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <EventTextInput name="organizer" label="Organizer" />
-      </Grid>
+      </Grid> */}
       <Grid item xs={12}>
         <EventLocationInput />
       </Grid>

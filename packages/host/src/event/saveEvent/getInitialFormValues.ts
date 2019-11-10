@@ -1,20 +1,22 @@
 import moment from 'moment'
+import isEmpty from 'lodash/isEmpty'
+import backgroundImg from 'assets/partycover.jpg'
 import IUser from 'user/IUser'
 import IEvent from 'event/IEvent'
-import backgroundImg from 'assets/partycover.jpg'
+import getPlaylistTracks from 'playlist/getPlaylistTracks'
+import SaveEventFormValues from './SaveEventFormValues'
 
 const getInitialFormValues = (
   user: IUser,
-  event: IEvent,
-  isEditing: boolean
-) => {
-  return isEditing && !!event
+  event: IEvent
+): SaveEventFormValues => {
+  return !isEmpty(event)
     ? {
         user,
         eventName: event.name,
         eventDescription: event.description,
         organizer: event.organizer,
-        tracks: undefined,
+        tracks: getPlaylistTracks(event.playlist!),
         image: { name: 'event.jpg', data: null, url: event.imageUrl },
         genre: event.genre,
         location: event.location,
@@ -32,9 +34,9 @@ const getInitialFormValues = (
         genre: 'none',
         location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
         settings: {
-          dynamicVotingEnabled: false,
-          autoAcceptSuggestionsEnabled: false,
-          suggestingPlaylistsEnabled: false
+          dynamicVotingEnabled: true,
+          autoAcceptSuggestionsEnabled: true,
+          suggestingPlaylistsEnabled: true
         },
         startDateTime: moment()
           .utc()

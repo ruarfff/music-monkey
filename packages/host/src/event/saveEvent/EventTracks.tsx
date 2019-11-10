@@ -1,11 +1,12 @@
 import React from 'react'
 import { DropResult } from 'react-beautiful-dnd'
-import { Typography, Paper, List } from '@material-ui/core'
+import { Typography, Paper, List, ListSubheader } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import remove from 'lodash/remove'
 import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
+import formatDuration from 'util/formatDuration'
 
 import './EventTracks.scss'
 
@@ -13,7 +14,13 @@ interface EventTracksProps {
   tracks: ITrack[]
   onTracksChanged(tracks: ITrack[]): void
 }
-const EventTracks = ({ tracks, onTracksChanged }: EventTracksProps) => {
+const EventTracks = ({ tracks = [], onTracksChanged }: EventTracksProps) => {
+  const duration = isEmpty(tracks)
+    ? 0
+    : tracks.map(track => track.duration_ms).reduce((acc, dur) => acc + dur)
+
+  const numTracks = tracks.length
+
   const handleTrackRemoved = (trackToRemove: ITrack) => {
     onTracksChanged(remove(tracks, track => track.id !== trackToRemove.id))
   }
@@ -28,7 +35,13 @@ const EventTracks = ({ tracks, onTracksChanged }: EventTracksProps) => {
       </Typography>
     </Paper>
   ) : (
-    <List>
+    <List
+      subheader={
+        <ListSubheader component="div">
+          {numTracks} tracks : {formatDuration(duration)}
+        </ListSubheader>
+      }
+    >
       <TrackList
         onTrackRemoved={handleTrackRemoved}
         onDragEnd={(result: DropResult) => {

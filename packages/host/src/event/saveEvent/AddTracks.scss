@@ -22,3 +22,21 @@
     }
   }
 }
+
+.AddTracks-action {
+  text-align: center;
+
+  .AddTracks-action-button {
+    widows: 80%;
+  }
+}
+
+.AddTracks-dialog-title {
+  background-color: $primary;
+  color: $mm-white;
+  text-align: center;
+}
+
+.AddTracks-dialog {
+  width: 100%;
+}
