@@ -22,7 +22,7 @@ import EventInitialize from './EventInitialize'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
 import SaveEventFormValues from './SaveEventFormValues'
-import saveEventFlow from './mockSaveEvent'
+import saveEventFlow from './saveEventFlow'
 import FormValidationSchema from './FormValidationSchema'
 import TabPanel from './TabPanel'
 import getInitialFormValues from './getInitialFormValues'
@@ -30,6 +30,7 @@ import eventWillBeModified from './eventWillBeModified'
 
 import './SaveEvent.scss'
 import LinkButton from 'components/LinkButton'
+import updateEventFlow from './updateEventFlow'
 
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
@@ -72,11 +73,16 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
   ) => {
     setSubmitting(true)
     try {
-      const event = saveEventFlow(values)
+      let event: IEvent
+      if (isEmpty(savingEvent)) {
+        event = await saveEventFlow(values)
+        setTabIndex(1)
+      } else {
+        event = await updateEventFlow(savingEvent!, values)
+      }
       setStatus({ formState: 'success', event })
       setSubmitting(false)
       setSavingEvent(event)
-      setTabIndex(1)
     } catch (err) {
       console.error(err)
       setStatus({ formState: 'error' })
@@ -129,7 +135,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
             )}
             <Slide
               direction="right"
-              in={!isEmpty(savingEvent) && !shouldSave}
+              in={!isEmpty(savingEvent) && !shouldSave && !isSubmitting}
               mountOnEnter
               unmountOnExit
             >
@@ -146,7 +152,12 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
                 </LinkButton>
               </ButtonGroup>
             </Slide>
-            <Slide direction="right" in={shouldSave} mountOnEnter unmountOnExit>
+            <Slide
+              direction="right"
+              in={shouldSave && !isSubmitting}
+              mountOnEnter
+              unmountOnExit
+            >
               <ButtonGroup
                 fullWidth
                 aria-label="event edit actions"
@@ -165,7 +176,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
             </Slide>
             <Slide
               direction="right"
-              in={eventInitValid && !hasEvent}
+              in={eventInitValid && !hasEvent && !isSubmitting}
               mountOnEnter
               unmountOnExit
             >

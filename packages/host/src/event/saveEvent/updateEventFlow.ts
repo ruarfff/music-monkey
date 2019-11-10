@@ -1,53 +1,35 @@
-import isEmpty from 'lodash/isEmpty'
 import uploadImage from 'upload/uploadImage'
 import IEvent from 'event/IEvent'
-import { createPlaylist, addTracksToPlaylist } from 'playlist/playlistClient'
 import { updateEvent } from 'event/eventClient'
-import IPlaylist from 'playlist/IPlaylist'
 import SaveEventFormValues from './SaveEventFormValues'
 
-const updateEventFlow = async ({
-  user,
-  eventName,
-  eventDescription,
-  organizer,
-  tracks,
-  image,
-  genre,
-  location,
-  settings,
-  startDateTime,
-  endDateTime
-}: SaveEventFormValues) => {
-  let imageUrl = ''
-  try {
-    const uploadResponse = await uploadImage(image.name, image.data)
-    imageUrl = uploadResponse.imgUrl
-  } catch (err) {
-    console.error(err)
-  }
-
-  const playlist: IPlaylist = await createPlaylist(eventName, eventDescription)
-
-  if (!isEmpty(tracks)) {
-    addTracksToPlaylist(playlist.id, tracks!.map(track => track.uri))
-  }
-  let eventDetails: IEvent = {
-    userId: user.userId,
-    name: eventName,
-    description: eventDescription,
-    startDateTime,
-    endDateTime,
+const updateEventFlow = async (
+  event: IEvent,
+  {
+    user,
+    eventName,
+    eventDescription,
     organizer,
+    tracks,
+    image,
     genre,
     location,
     settings,
-    imageUrl,
-    playlist,
-    playlistUrl: playlist.external_urls.spotify
+    startDateTime,
+    endDateTime
+  }: SaveEventFormValues
+) => {
+  let imageUrl = event.imageUrl
+  if (imageUrl !== image.url) {
+    try {
+      const uploadResponse = await uploadImage(image.name, image.data)
+      imageUrl = uploadResponse.imgUrl
+    } catch (err) {
+      console.error(err)
+    }
   }
 
-  const savedEvent = await updateEvent(eventDetails)
+  const savedEvent = await updateEvent({ ...event, imageUrl })
 
   return savedEvent
 }

@@ -7,11 +7,13 @@ import backgroundImg from 'assets/partycover.jpg'
 
 interface ImageEditorProps {
   initialImage: any
+  onTouched(): void
   onImageChanged?(data: any): void
 }
 
 const ImageEditor = ({
   initialImage,
+  onTouched,
   onImageChanged = (_: any) => {}
 }: ImageEditorProps) => {
   const [imageZoom, setImageZoom] = useState(1)
@@ -32,6 +34,7 @@ const ImageEditor = ({
   }
 
   const onImageDrop = (files: any) => {
+    onTouched()
     const reader = new FileReader()
     reader.addEventListener('load', () => {
       setImage({ ...image, url: reader.result, name: files[0].name })
@@ -45,16 +48,17 @@ const ImageEditor = ({
   }
 
   const handleZoom = (_: any, newValue: number | number[]) => {
+    onTouched()
     setImageZoom(newValue as number)
   }
 
   return (
-    <div>
+    <div className="ImageEditor-root">
       <Dropzone multiple={false} accept="image/*" onDrop={onImageDrop}>
         {({ getRootProps, getInputProps }) => (
           <section>
             <Grid container>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <Typography align="center" component="div">
                   <div
                     {...getRootProps({

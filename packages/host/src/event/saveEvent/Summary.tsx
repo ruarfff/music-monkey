@@ -1,8 +1,8 @@
-import React from 'react'
-import { Grid, Typography, Button } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Grid, Typography } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import IEvent from 'event/IEvent'
-import ShareEventByEmail from './ShareEventByEmailContainer'
+import ShareEvent from './ShareEventContainer'
 import IAction from 'IAction'
 import ImageEditor from 'imageEdit/ImageEditor'
 import { isEmpty } from 'lodash'
@@ -14,72 +14,56 @@ interface SummaryProps {
 }
 
 const Summary = ({ event }: SummaryProps) => {
+  const [imageUrl, setImageUrl] = useState()
+  const [imageTouched, setImageTouched] = useState(false)
   let initialImage: any
 
   return (
-    <Grid container className="Summary-root">
-      <Grid item xs={12} className="Event-image">
-        <Typography variant="h6" align="center" gutterBottom>
-          Event Image
-        </Typography>
-        <Field name="image">
-          {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
-            if (isEmpty(initialImage)) {
-              initialImage = { ...value }
-            }
-            return (
+    <Field name="image">
+      {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
+        if (isEmpty(initialImage)) {
+          initialImage = { ...value }
+          setImageUrl(initialImage.url)
+        }
+        return (
+          <Grid container className="Summary-root">
+            <Grid item xs={12} className="Summary-image">
+              <Typography variant="h6" align="center" gutterBottom>
+                Event Image
+              </Typography>
+
               <ImageEditor
                 initialImage={initialImage}
                 onImageChanged={image => {
-                  console.log(image)
-                  setFieldValue('image', image)
+                  if (imageTouched) {
+                    setFieldValue('image', image)
+                  }
+                  setImageUrl(image.url)
+                }}
+                onTouched={() => {
+                  if (!imageTouched) setImageTouched(true)
                 }}
               />
-            )
-          }}
-        </Field>
-      </Grid>
-      <Grid item xs={12}>
-        <Button
-          onClick={() => {
-            console.log(event)
-            let nav: any = window.navigator
-            if (nav && nav.share) {
-              let invite = (event && event.invites && event.invites[0]) || ''
-              const url = `https://guests.musicmonkey.io/invite/${invite}`
-
-              nav
-                .share({
-                  title: event.name,
-                  text: event.description,
-                  url
-                })
-                .then(() => {
-                  console.log('Thanks for sharing!')
-                })
-                .catch(console.error)
-            } else {
-              console.log('cannot share')
-            }
-          }}
-        >
-          Share
-        </Button>
-      </Grid>
-      <ShareEventByEmail
-        clearMessage={() => {
-          console.log('Clear Message')
-          return {} as IAction
-        }}
-        message="test message"
-        withPreview={true}
-        event={event}
-        inviteId={event && event.invites ? event.invites[0] : ''}
-        onCopyEventInvite={() => {
-          console.log('event invite')
-        }}
-      />
-    </Grid>
+            </Grid>
+            <Grid item container xs={12}>
+              <ShareEvent
+                image={imageUrl}
+                clearMessage={() => {
+                  console.log('Clear Message')
+                  return {} as IAction
+                }}
+                message="test message"
+                event={event}
+                inviteId={event && event.invites ? event.invites[0] : ''}
+                onCopyEventInvite={() => {
+                  console.log('event invite')
+                }}
+              />
+            </Grid>
+          </Grid>
+        )
+      }}
+    </Field>
   )
 }
 

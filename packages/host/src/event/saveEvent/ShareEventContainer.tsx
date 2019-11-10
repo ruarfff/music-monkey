@@ -1,15 +1,15 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
 import { shareByEmails } from 'event/shareEvent/shareActions'
-import ShareEventByEmail from './ShareEventByEmail'
+import ShareEvent from './ShareEvent'
 
 const mapStateToProps = (state: IRootState) => ({})
 
 const mapDispatchToProps = { shareByEmails }
 
-const EventsContainer = connect(
+const ShareEventContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ShareEventByEmail)
+)(ShareEvent)
 
-export default EventsContainer
+export default ShareEventContainer

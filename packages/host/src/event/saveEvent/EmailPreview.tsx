@@ -1,21 +1,22 @@
 import React from 'react'
 import logo from 'assets/marvin.png'
-import backgroundImg from 'assets/partycover.jpg'
 import IEvent from 'event/IEvent'
 import './EmailPreview.scss'
 
 interface IEmailPreviewProps {
   event: IEvent
   emailText: string
+  image: string
 }
 
-const EmailPreview = ({ event, emailText }: IEmailPreviewProps) => {
-  const bg = !event.imageUrl ? backgroundImg : event.imageUrl
-
+const EmailPreview = ({ event, emailText, image }: IEmailPreviewProps) => {
   return (
     <div
       className="EmailPreview-root"
-      style={{ background: `url(${bg}) center`, backgroundSize: 'cover' }}
+      style={{
+        background: `no-repeat url(${image}) center`,
+        backgroundSize: 'cover'
+      }}
     >
       <div className="EmailPreview-title">
         <span>MusicMonkey</span>

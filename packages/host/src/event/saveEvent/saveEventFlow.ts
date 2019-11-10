@@ -47,7 +47,7 @@ const saveEventFlow = async ({
     playlistUrl: playlist.external_urls.spotify
   }
 
-  const savedEvent = await createEvent(eventDetails)
+  const savedEvent: IEvent = await createEvent(eventDetails)
 
   return savedEvent
 }

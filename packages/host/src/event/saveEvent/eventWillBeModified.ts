@@ -25,12 +25,14 @@ const eventWillBeModified = (
     description: formValue.eventDescription,
     organizer: formValue.organizer,
     genre: formValue.genre,
-    imageUrl: formValue.image.url,
     address: formValue.location.address,
     settings: formValue.settings,
     start: formValue.startDateTime.toDate().getDate(),
     end: formValue.endDateTime.toDate().getDate()
   }
+
+  console.log(a)
+  console.log(b)
   return !isEqual(a, b)
 }
 
