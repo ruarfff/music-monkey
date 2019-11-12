@@ -23,6 +23,9 @@ const ShareEvent = ({
   message,
   image
 }: IShareEventProps) => {
+  if (!event) {
+    return null
+  }
   return (
     <>
       <Grid item={true} xs={12}>

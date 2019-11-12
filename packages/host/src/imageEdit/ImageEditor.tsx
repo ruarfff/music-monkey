@@ -3,42 +3,53 @@ import { Grid, Button, Typography } from '@material-ui/core'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
 import Slider from '@material-ui/core/Slider'
-import backgroundImg from 'assets/partycover.jpg'
 
 interface ImageEditorProps {
   initialImage: any
-  onTouched(): void
   onImageChanged?(data: any): void
 }
 
 const ImageEditor = ({
   initialImage,
-  onTouched,
   onImageChanged = (_: any) => {}
 }: ImageEditorProps) => {
+  const [image, setImage] = useState(initialImage)
   const [imageZoom, setImageZoom] = useState(1)
-  const [image, setImage] = useState<any>(
-    initialImage || { url: backgroundImg }
-  )
   const imageEditor = useRef<AvatarEditor>(null)
 
+  let imageUrl =
+    image.url && image.url.startsWith('data')
+      ? image.url
+      : image.url + '?' + new Date().getSeconds()
+
+  //console.log(imageUrl)
   const handleChange = (_?: any) => {
-    if (imageEditor) {
-      const canvas = imageEditor.current!.getImage()
-      const url = canvas.toDataURL()
-      canvas.toBlob(blob => {
-        const updatedImage = { ...image, url, data: blob }
-        onImageChanged(updatedImage)
-      })
+    if (imageEditor && imageEditor.current) {
+      try {
+        const canvas = imageEditor.current!.getImage()
+        const url = canvas.toDataURL()
+        if (url === imageUrl) {
+          canvas.toBlob(blob => {
+            const updatedImage = { ...initialImage, url, data: blob }
+            onImageChanged(updatedImage)
+          })
+        }
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
   const onImageDrop = (files: any) => {
-    onTouched()
     const reader = new FileReader()
     reader.addEventListener('load', () => {
-      setImage({ ...image, url: reader.result, name: files[0].name })
-      onImageChanged({ ...image, url: reader.result, name: files[0].name })
+      const newImage = {
+        ...initialImage,
+        url: reader.result,
+        name: files[0].name
+      }
+      setImage(newImage)
+      onImageChanged(newImage)
     })
     reader.readAsDataURL(files[0])
   }
@@ -48,7 +59,6 @@ const ImageEditor = ({
   }
 
   const handleZoom = (_: any, newValue: number | number[]) => {
-    onTouched()
     setImageZoom(newValue as number)
   }
 
@@ -68,8 +78,9 @@ const ImageEditor = ({
                     })}
                   >
                     <AvatarEditor
+                      crossOrigin="anonymous"
                       ref={imageEditor}
-                      image={image.url}
+                      image={imageUrl}
                       width={200}
                       height={200}
                       border={50}
@@ -77,7 +88,6 @@ const ImageEditor = ({
                       scale={imageZoom}
                       rotate={0}
                       onImageChange={handleChange}
-                      onImageReady={handleChange}
                     />
                     <input {...getInputProps()} />
                   </div>

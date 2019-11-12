@@ -2,18 +2,25 @@ import IEvent from 'event/IEvent'
 import SaveEventFormValues from './SaveEventFormValues'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
+import backgroundImg from 'assets/partycover.jpg'
 
 const eventWillBeModified = (
   event: IEvent,
   formValue: SaveEventFormValues
 ): boolean => {
+  if (event) {
+    if (formValue.image.url !== backgroundImg) {
+      if (event.imageUrl !== formValue.image.url) {
+        return true
+      }
+    }
+  }
   if (isEmpty(event)) return false
   const a = {
     name: event.name,
-    description: event.description,
+    description: event.description || '',
     organizer: event.organizer,
     genre: event.genre,
-    imageUrl: event.imageUrl,
     address: event.location.address,
     settings: event.settings,
     start: event.startDateTime.toDate().getDate(),
@@ -31,8 +38,6 @@ const eventWillBeModified = (
     end: formValue.endDateTime.toDate().getDate()
   }
 
-  console.log(a)
-  console.log(b)
   return !isEqual(a, b)
 }
 

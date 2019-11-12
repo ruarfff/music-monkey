@@ -47,17 +47,14 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
 
   useEffect(() => {
     const getEventIfEditing = async () => {
-      if (
-        isEditing &&
-        (!!savingEvent && savingEvent.eventId !== eventIdFromPath)
-      ) {
+      if (isEditing) {
         const event = await getEventById(eventIdFromPath)
         setSavingEvent(event)
       }
     }
     getEventIfEditing()
     // eslint-disable-next-line
-  }, [event, eventIdFromPath])
+  }, [eventIdFromPath])
 
   if (isEditing && isEmpty(savingEvent)) {
     return <LoadingSpinner />
@@ -80,12 +77,10 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
       } else {
         event = await updateEventFlow(savingEvent!, values)
       }
-      setStatus({ formState: 'success', event })
       setSubmitting(false)
       setSavingEvent(event)
     } catch (err) {
       console.error(err)
-      setStatus({ formState: 'error' })
     }
   }
 
@@ -98,6 +93,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
 
   return (
     <Formik
+      enableReinitialize
       initialValues={getInitialFormValues(user, savingEvent!)}
       validationSchema={FormValidationSchema}
       onSubmit={handleSubmit}
@@ -106,7 +102,6 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
         isSubmitting,
         submitForm,
         errors,
-        status = {},
         values
       }: FormikProps<SaveEventFormValues>) => {
         const hasTracks = !isUndefined(values.tracks)
@@ -212,7 +207,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
             )}
             {tabIndex === 2 && (
               <TabPanel value={tabIndex} index={2}>
-                <Summary event={status.event} />
+                <Summary event={savingEvent!} />
                 <p>{errors.eventName}</p>
                 <p>{errors.eventDescription}</p>
                 <p>{errors.organizer}</p>

@@ -21,8 +21,10 @@ const saveEventFlow = async ({
 }: SaveEventFormValues) => {
   let imageUrl = ''
   try {
-    const uploadResponse = await uploadImage(image.name, image.data)
-    imageUrl = uploadResponse.imgUrl
+    if (!!image && !!image.data) {
+      const uploadResponse = await uploadImage(image.name, image.data)
+      imageUrl = uploadResponse.imgUrl
+    }
   } catch (err) {
     console.error(err)
   }

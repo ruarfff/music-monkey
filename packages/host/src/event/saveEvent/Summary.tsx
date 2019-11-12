@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import IEvent from 'event/IEvent'
@@ -14,16 +14,13 @@ interface SummaryProps {
 }
 
 const Summary = ({ event }: SummaryProps) => {
-  const [imageUrl, setImageUrl] = useState()
-  const [imageTouched, setImageTouched] = useState(false)
   let initialImage: any
 
   return (
     <Field name="image">
       {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
         if (isEmpty(initialImage)) {
-          initialImage = { ...value }
-          setImageUrl(initialImage.url)
+          initialImage = { url: event.imageUrl }
         }
         return (
           <Grid container className="Summary-root">
@@ -35,19 +32,14 @@ const Summary = ({ event }: SummaryProps) => {
               <ImageEditor
                 initialImage={initialImage}
                 onImageChanged={image => {
-                  if (imageTouched) {
-                    setFieldValue('image', image)
-                  }
-                  setImageUrl(image.url)
-                }}
-                onTouched={() => {
-                  if (!imageTouched) setImageTouched(true)
+                  console.log(image)
+                  setFieldValue('image', image)
                 }}
               />
             </Grid>
             <Grid item container xs={12}>
               <ShareEvent
-                image={imageUrl}
+                image={value.url}
                 clearMessage={() => {
                   console.log('Clear Message')
                   return {} as IAction

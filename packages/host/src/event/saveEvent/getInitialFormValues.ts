@@ -10,7 +10,6 @@ const getInitialFormValues = (
   user: IUser,
   event: IEvent
 ): SaveEventFormValues => {
-  console.log('Init: ', event)
   return !isEmpty(event)
     ? {
         user,
@@ -18,7 +17,11 @@ const getInitialFormValues = (
         eventDescription: event.description || '',
         organizer: event.organizer,
         tracks: getPlaylistTracks(event.playlist!),
-        image: { name: 'event.jpg', data: null, url: event.imageUrl },
+        image: {
+          name: 'event.jpg',
+          data: null,
+          url: event.imageUrl || backgroundImg
+        },
         genre: event.genre,
         location: event.location,
         settings: event.settings,
