@@ -11,8 +11,11 @@ import {
   Divider,
   ListItemSecondaryAction,
   IconButton,
-  Typography
+  Typography,
+  Collapse,
+  ListItemIcon
 } from '@material-ui/core'
+import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
@@ -20,6 +23,10 @@ import backgroundImg from 'assets/partycover.jpg'
 import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
 import getNumberOfPlaylistTracks from 'playlist/getNumberOfPlaylistTracks'
 import LoadingSpinner from 'loading/LoadingSpinner'
+
+import './Playlists.scss'
+import { onPlaylistSelected } from 'playlist/playlistActions'
+import getTrackImage from 'track/getTrackImage'
 
 interface PlaylistsProps {
   user: IUser
@@ -54,15 +61,14 @@ const Playlists = ({
   }
 
   return (
-    <List>
+    <List className="Playlists-root">
       {playlists
-        .filter(
-          (playlist: IPlaylist) =>
-            playlist.tracks.total > 0 &&
-            (isEmpty(selectedPlaylist) || playlist === selectedPlaylist)
-        )
+        .filter((playlist: IPlaylist) => playlist.tracks.total > 0)
         .map((playlist: IPlaylist) => (
-          <React.Fragment key={playlist.id}>
+          <Collapse
+            in={isEmpty(selectedPlaylist) || playlist === selectedPlaylist}
+            key={playlist.id}
+          >
             <ListItem
               alignItems="flex-start"
               button
@@ -73,11 +79,11 @@ const Playlists = ({
                   alt={playlist.name}
                   src={getPlaylistImage(playlist)}
                   fallbackSrc={backgroundImg}
-                  className="SeedPlaylist-image"
+                  className="Playlists-image"
                 />
               </ListItemAvatar>
               <ListItemText
-                className="SeedPlaylist-item-text"
+                className="Playlists-item-text"
                 primary={playlist.name}
                 secondary={
                   <React.Fragment>
@@ -101,8 +107,60 @@ const Playlists = ({
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
+            <Collapse
+              in={selectedPlaylist === playlist}
+              timeout="auto"
+              unmountOnExit
+            >
+              <List component="div" disablePadding>
+                <ListItem
+                  button
+                  className="Playlists-select-playlist"
+                  onClick={() => {
+                    onPlaylistSelected(playlist)
+                  }}
+                >
+                  <ListItemIcon>
+                    <QueueMusicIcon className="Playlists-select-playlist-icon" />
+                  </ListItemIcon>
+                  <ListItemText primary="Add all tracks" />
+                </ListItem>
+              </List>
+              <List>
+                {playlist.tracks.items
+                  .map(item => item.track)
+                  .map(track => (
+                    <React.Fragment key={track.id}>
+                      <ListItem
+                        alignItems="flex-start"
+                        className="Playlists-track"
+                      >
+                        <ListItemAvatar>
+                          <Image
+                            src={getTrackImage(track)}
+                            alt={track.name}
+                            fallbackSrc={backgroundImg}
+                            className="Playlists-track-image"
+                          />
+                        </ListItemAvatar>
+                        <ListItemText
+                          className="Playlists-track-content"
+                          primary={track.name}
+                          primaryTypographyProps={{ noWrap: true }}
+                          secondary={track.album.artists[0].name}
+                          secondaryTypographyProps={{
+                            variant: 'body2',
+                            noWrap: true
+                          }}
+                        />
+                      </ListItem>
+                      <Divider variant="inset" component="li" />
+                    </React.Fragment>
+                  ))}
+              </List>
+            </Collapse>
             <Divider variant="inset" component="li" />
-          </React.Fragment>
+          </Collapse>
         ))}
     </List>
   )
