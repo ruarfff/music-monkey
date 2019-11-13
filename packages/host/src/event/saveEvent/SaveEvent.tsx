@@ -27,23 +27,25 @@ import FormValidationSchema from './FormValidationSchema'
 import TabPanel from './TabPanel'
 import getInitialFormValues from './getInitialFormValues'
 import eventWillBeModified from './eventWillBeModified'
-
-import './SaveEvent.scss'
 import LinkButton from 'components/LinkButton'
 import updateEventFlow from './updateEventFlow'
+import EventInitializeDialog from './EventInitializeDialog'
+
+import './SaveEvent.scss'
 
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
 }
 
-const SaveEvent = ({ user, location, match }: SaveEventProps) => {
+const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
   const [savingEvent, setSavingEvent] = useState<IEvent>()
+  const [tabIndex, setTabIndex] = useState(0)
+  const [openInitDialog, setOpenInitDialog] = useState(true)
   const hasEvent = !isEmpty(savingEvent)
   const isEditing =
     location.pathname.startsWith('/events') &&
     location.pathname.includes('/edit')
   const eventIdFromPath = match.params['eventId']
-  const [tabIndex, setTabIndex] = useState(0)
 
   useEffect(() => {
     const getEventIfEditing = async () => {
@@ -66,7 +68,7 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
 
   const handleSubmit = async (
     values: SaveEventFormValues,
-    { setSubmitting, setStatus }: FormikHelpers<SaveEventFormValues>
+    { setSubmitting }: FormikHelpers<SaveEventFormValues>
   ) => {
     setSubmitting(true)
     try {
@@ -109,6 +111,16 @@ const SaveEvent = ({ user, location, match }: SaveEventProps) => {
         const shouldSave = eventWillBeModified(savingEvent!, values)
         return (
           <div className="SaveEvent-root">
+            <EventInitializeDialog
+              open={openInitDialog}
+              isValid={!errors.eventName}
+              onCancel={() => {
+                history.goBack()
+              }}
+              onContinue={() => {
+                setOpenInitDialog(false)
+              }}
+            />
             <AppBar position="static" color="default">
               <Tabs
                 value={tabIndex}
