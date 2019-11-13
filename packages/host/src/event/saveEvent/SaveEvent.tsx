@@ -30,6 +30,7 @@ import eventWillBeModified from './eventWillBeModified'
 import LinkButton from 'components/LinkButton'
 import updateEventFlow from './updateEventFlow'
 import EventInitializeDialog from './EventInitializeDialog'
+import EventSettingsDialog from './EventSettingsDialog'
 
 import './SaveEvent.scss'
 
@@ -39,6 +40,7 @@ interface SaveEventProps extends RouteComponentProps {
 
 const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
   const [savingEvent, setSavingEvent] = useState<IEvent>()
+  const [settingsDialogOpen, setSettingsDialogOpen] = useState(false)
   const [tabIndex, setTabIndex] = useState(0)
   const [openInitDialog, setOpenInitDialog] = useState(true)
   const hasEvent = !isEmpty(savingEvent)
@@ -60,6 +62,10 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
 
   if (isEditing && isEmpty(savingEvent)) {
     return <LoadingSpinner />
+  }
+
+  const handleSettingsClickOpen = () => {
+    setSettingsDialogOpen(true)
   }
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
@@ -119,6 +125,13 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
               }}
               onContinue={() => {
                 setOpenInitDialog(false)
+              }}
+            />
+            <EventSettingsDialog
+              open={settingsDialogOpen}
+              handleClose={() => {
+                setSettingsDialogOpen(false)
+                submitForm()
               }}
             />
             <AppBar position="static" color="default">
@@ -197,7 +210,7 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
                   color="secondary"
                   type="submit"
                   endIcon={<Icon>send</Icon>}
-                  onClick={submitForm}
+                  onClick={handleSettingsClickOpen}
                 >
                   Save & Continue
                 </Button>
