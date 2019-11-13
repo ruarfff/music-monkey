@@ -2,7 +2,7 @@ import isEmpty from 'lodash/isEmpty'
 import uploadImage from 'upload/uploadImage'
 import IEvent from 'event/IEvent'
 import { createPlaylist, addTracksToPlaylist } from 'playlist/playlistClient'
-import { createEvent } from 'event/eventClient'
+import { createEvent, getEventById } from 'event/eventClient'
 import IPlaylist from 'playlist/IPlaylist'
 import SaveEventFormValues from './SaveEventFormValues'
 
@@ -32,7 +32,10 @@ const saveEventFlow = async ({
   const playlist: IPlaylist = await createPlaylist(eventName, eventDescription)
 
   if (!isEmpty(tracks)) {
-    addTracksToPlaylist(playlist.id, tracks!.map(track => track.uri))
+    addTracksToPlaylist(
+      playlist.id,
+      tracks!.map(track => track.uri)
+    )
   }
   let eventDetails: IEvent = {
     userId: user.userId,
@@ -50,8 +53,7 @@ const saveEventFlow = async ({
   }
 
   const savedEvent: IEvent = await createEvent(eventDetails)
-
-  return savedEvent
+  return await getEventById(savedEvent.eventId!)
 }
 
 export default saveEventFlow

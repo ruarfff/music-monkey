@@ -10,7 +10,8 @@ const getInitialFormValues = (
   user: IUser,
   event: IEvent
 ): SaveEventFormValues => {
-  return !isEmpty(event)
+  console.log(event)
+  const vals = !isEmpty(event)
     ? {
         user,
         eventName: event.name,
@@ -51,6 +52,8 @@ const getInitialFormValues = (
           .add(3, 'hours')
           .startOf('hour')
       }
+  console.log(vals)
+  return vals
 }
 
 export default getInitialFormValues

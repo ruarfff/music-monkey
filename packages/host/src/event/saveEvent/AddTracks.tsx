@@ -72,55 +72,54 @@ const AddTracks = ({
                     setIsLoading(true)
                   }}
                   onFocus={() => {
-                    setTabIndex(0)
+                    setTabIndex(1)
                   }}
                 />
               </Grid>
-              {isLoading ? (
-                <div className="AddTracks-search-loading">
-                  <LoadingSpinner />
-                </div>
-              ) : (
-                <>
-                  <Grid item xs={12}>
-                    <Tabs
-                      value={tabIndex}
-                      onChange={handleTabChange}
-                      indicatorColor="primary"
-                      textColor="primary"
-                      variant="fullWidth"
-                    >
-                      <Tab
-                        label={
-                          !isEmpty(value) ? (
-                            <Badge
-                              className="AddTracks-playlist-count"
-                              overlap="circle"
-                              color={tabIndex === 0 ? 'secondary' : 'primary'}
-                              anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right'
-                              }}
-                              badgeContent={value.length}
-                            >
-                              Current Playlist
-                            </Badge>
-                          ) : (
-                            'Current Playlist'
-                          )
-                        }
-                      />
-                      <Tab
-                        label={
-                          isEmpty(searchedTracks)
-                            ? 'Suggested'
-                            : 'Search Results'
-                        }
-                      />
-                      <Tab label="My Playlists" />
-                    </Tabs>
-                  </Grid>
-                  <Grid item xs={12}>
+
+              <Grid item xs={12}>
+                <Tabs
+                  value={tabIndex}
+                  onChange={handleTabChange}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  variant="fullWidth"
+                >
+                  <Tab
+                    label={
+                      !isEmpty(value) ? (
+                        <Badge
+                          className="AddTracks-playlist-count"
+                          overlap="circle"
+                          color={'secondary'}
+                          anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right'
+                          }}
+                          badgeContent={value.length}
+                        >
+                          Current Playlist
+                        </Badge>
+                      ) : (
+                        'Current Playlist'
+                      )
+                    }
+                  />
+                  <Tab
+                    label={
+                      isEmpty(searchedTracks) ? 'Suggested' : 'Search Results'
+                    }
+                  />
+                  <Tab label="My Playlists" />
+                </Tabs>
+              </Grid>
+              <Grid item xs={12}>
+                {isLoading ? (
+                  <div className="AddTracks-search-loading">
+                    <LoadingSpinner />
+                  </div>
+                ) : (
+                  <>
                     {tabIndex === 0 && (
                       <EventTracks
                         tracks={value}
@@ -139,9 +138,9 @@ const AddTracks = ({
                       />
                     )}
                     {tabIndex === 2 && <Playlists />}
-                  </Grid>
-                </>
-              )}
+                  </>
+                )}
+              </Grid>
             </Grid>
           )
         }}
