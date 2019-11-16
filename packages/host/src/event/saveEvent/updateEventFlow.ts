@@ -7,10 +7,10 @@ const updateEventFlow = async (
   event: IEvent,
   {
     user,
+    tracks,
     eventName,
     eventDescription,
     organizer,
-    tracks,
     image,
     genre,
     location,
@@ -29,7 +29,18 @@ const updateEventFlow = async (
     }
   }
 
-  const savedEvent = await updateEvent({ ...event, imageUrl })
+  const savedEvent = await updateEvent({
+    ...event,
+    imageUrl,
+    location,
+    genre,
+    settings,
+    startDateTime,
+    endDateTime,
+    organizer,
+    description: eventDescription,
+    name: eventName
+  })
 
   return savedEvent
 }

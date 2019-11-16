@@ -1,36 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, FormikProps, FormikHelpers } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
-import {
-  AppBar,
-  Tabs,
-  Tab,
-  Slide,
-  ButtonGroup,
-  Button,
-  Icon
-} from '@material-ui/core'
-import SaveAltIcon from '@material-ui/icons/SaveAlt'
+import { AppBar, Tabs, Tab, ButtonGroup } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import isEmpty from 'lodash/isEmpty'
-import isUndefined from 'lodash/isUndefined'
 import IUser from 'user/IUser'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import { getEventById } from 'event/eventClient'
 import IEvent from 'event/IEvent'
-import EventInitialize from './EventInitialize'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
 import SaveEventFormValues from './SaveEventFormValues'
-import saveEventFlow from './saveEventFlow'
 import FormValidationSchema from './FormValidationSchema'
 import TabPanel from './TabPanel'
-import getInitialFormValues from './getInitialFormValues'
+import saveEventInitialFormValues from './saveEventInitialFormValues'
 import eventWillBeModified from './eventWillBeModified'
 import LinkButton from 'components/LinkButton'
 import updateEventFlow from './updateEventFlow'
-import EventInitializeDialog from './EventInitializeDialog'
-import EventSettingsDialog from './EventSettingsDialog'
+import AddTracks from './AddTracksContainer'
 
 import './SaveEvent.scss'
 
@@ -39,36 +26,21 @@ interface SaveEventProps extends RouteComponentProps {
 }
 
 const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
-  const [savingEvent, setSavingEvent] = useState<IEvent>()
-  const [settingsDialogOpen, setSettingsDialogOpen] = useState(false)
+  const [eventToEdit, setEventToEdit] = useState<IEvent>()
   const [tabIndex, setTabIndex] = useState(0)
-  const [openInitDialog, setOpenInitDialog] = useState(true)
-  const hasEvent = !isEmpty(savingEvent)
-  const isEditing =
-    location.pathname.startsWith('/events') &&
-    location.pathname.includes('/edit')
+  const hasEvent = !isEmpty(eventToEdit)
   const eventIdFromPath = match.params['eventId']
 
   useEffect(() => {
     const getEventIfEditing = async () => {
-      if (isEditing) {
-        const event = await getEventById(eventIdFromPath)
-        setSavingEvent(event)
-      }
+      const event = await getEventById(eventIdFromPath)
+      setEventToEdit(event)
     }
     getEventIfEditing()
     // eslint-disable-next-line
   }, [eventIdFromPath])
 
-  if (isEditing && isEmpty(savingEvent)) {
-    return <LoadingSpinner />
-  }
-
-  const handleSettingsClickOpen = () => {
-    setSettingsDialogOpen(true)
-  }
-
-  const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
+  const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue)
   }
 
@@ -76,17 +48,13 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
     values: SaveEventFormValues,
     { setSubmitting }: FormikHelpers<SaveEventFormValues>
   ) => {
-    setSubmitting(true)
     try {
-      let event: IEvent
-      if (isEmpty(savingEvent)) {
-        event = await saveEventFlow(values)
-        setTabIndex(1)
-      } else {
-        event = await updateEventFlow(savingEvent!, values)
+      if (eventWillBeModified(eventToEdit!, values)) {
+        setSubmitting(true)
+        const event = await updateEventFlow(eventToEdit!, values)
+        setEventToEdit(event)
+        setSubmitting(false)
       }
-      setSubmitting(false)
-      setSavingEvent(event)
     } catch (err) {
       console.error(err)
     }
@@ -102,7 +70,7 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
   return (
     <Formik
       enableReinitialize
-      initialValues={getInitialFormValues(user, savingEvent!)}
+      initialValues={saveEventInitialFormValues(user, eventToEdit!)}
       validationSchema={FormValidationSchema}
       onSubmit={handleSubmit}
     >
@@ -112,32 +80,12 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
         errors,
         values
       }: FormikProps<SaveEventFormValues>) => {
-        const hasTracks = !isUndefined(values.tracks)
-        const eventInitValid = !errors.eventName && hasTracks
-        const shouldSave = eventWillBeModified(savingEvent!, values)
         return (
           <div className="SaveEvent-root">
-            <EventInitializeDialog
-              open={openInitDialog}
-              isValid={!errors.eventName}
-              onCancel={() => {
-                history.goBack()
-              }}
-              onContinue={() => {
-                setOpenInitDialog(false)
-              }}
-            />
-            <EventSettingsDialog
-              open={settingsDialogOpen}
-              handleClose={() => {
-                setSettingsDialogOpen(false)
-                submitForm()
-              }}
-            />
             <AppBar position="static" color="default">
               <Tabs
                 value={tabIndex}
-                onChange={handleChange}
+                onChange={handleTabChange}
                 indicatorColor="primary"
                 textColor="primary"
                 variant="fullWidth"
@@ -153,76 +101,22 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
                 <LoadingSpinner />
               </div>
             )}
-            <Slide
-              direction="right"
-              in={!isEmpty(savingEvent) && !shouldSave && !isSubmitting}
-              mountOnEnter
-              unmountOnExit
+            <ButtonGroup
+              fullWidth
+              aria-label="event edit actions"
+              className="SaveEvent-actions"
             >
-              <ButtonGroup
-                fullWidth
-                aria-label="event edit actions"
-                className="SaveEvent-actions"
+              <LinkButton
+                to={`/events/${hasEvent ? eventToEdit!.eventId : ''}`}
+                endIcon={<NavigateNextIcon />}
               >
-                <LinkButton
-                  to={`/events/${hasEvent ? savingEvent!.eventId : ''}`}
-                  endIcon={<NavigateNextIcon />}
-                >
-                  Go to event
-                </LinkButton>
-              </ButtonGroup>
-            </Slide>
-            <Slide
-              direction="right"
-              in={shouldSave && !isSubmitting}
-              mountOnEnter
-              unmountOnExit
-            >
-              <ButtonGroup
-                fullWidth
-                aria-label="event edit actions"
-                className="SaveEvent-actions"
-              >
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                  endIcon={<SaveAltIcon />}
-                  onClick={submitForm}
-                >
-                  Save
-                </Button>
-              </ButtonGroup>
-            </Slide>
-            <Slide
-              direction="right"
-              in={eventInitValid && !hasEvent && !isSubmitting}
-              mountOnEnter
-              unmountOnExit
-            >
-              <ButtonGroup
-                fullWidth
-                aria-label="event edit actions"
-                className="SaveEvent-actions"
-              >
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                  endIcon={<Icon>send</Icon>}
-                  onClick={handleSettingsClickOpen}
-                >
-                  Save & Continue
-                </Button>
-              </ButtonGroup>
-            </Slide>
+                Go to event
+              </LinkButton>
+            </ButtonGroup>
 
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>
-                <EventInitialize
-                  hasSavedEvent={hasEvent}
-                  hasTracks={hasTracks}
-                />
+                <AddTracks />
               </TabPanel>
             )}
             {tabIndex === 1 && (
@@ -232,15 +126,7 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
             )}
             {tabIndex === 2 && (
               <TabPanel value={tabIndex} index={2}>
-                <Summary event={savingEvent!} />
-                <p>{errors.eventName}</p>
-                <p>{errors.eventDescription}</p>
-                <p>{errors.organizer}</p>
-                <p>{errors.tracks}</p>
-                <p>{errors.genre}</p>
-                <p>{errors.image}</p>
-                <p>{errors.location}</p>
-                <p>{errors.settings}</p>
+                <Summary event={eventToEdit!} />
               </TabPanel>
             )}
           </div>

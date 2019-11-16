@@ -16,6 +16,8 @@ import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import EventRejectedSuggestions from './EventRejectedSuggestionsContainer'
 import EventSuggestions from './EventSuggestionsContainer'
 
+import './EventPlaylistView.scss'
+
 interface IEventPlaylistViewProps {
   event: IEvent
   playlist: IPlaylist
@@ -91,8 +93,8 @@ class EventPlaylistView extends React.Component<IEventPlaylistViewProps> {
                       Maybe
                     </Badge>
                   ) : (
-                      'Maybe'
-                    )
+                    'Maybe'
+                  )
                 }
               />
               <Tab label="Rejected" />

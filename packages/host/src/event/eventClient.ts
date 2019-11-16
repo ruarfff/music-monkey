@@ -1,6 +1,7 @@
 import moment from 'moment'
 import client from 'music-monkey-client'
 import IEvent from './IEvent'
+import ILocation from 'location/ILocation'
 
 export const getEvents = async () => {
   const response = await client.get('/events', {
@@ -27,20 +28,13 @@ export const deleteEvent = (eventId: string) => {
 }
 
 export const createEvent = async (event: IEvent) => {
-  const address =
-    event.location && event.location.address
-      ? event.location.address
-      : 'Nowhere'
   const response = await client.post(
     '/events',
     {
       ...event,
       invites: undefined,
+      location: getValidLocation(event.location),
       endDateTime: event.endDateTime.toISOString(),
-      location: {
-        ...event.location,
-        address
-      },
       startDateTime: event.startDateTime.toISOString()
     },
     { withCredentials: true }
@@ -53,6 +47,14 @@ export const updateEvent = async (event: IEvent) => {
     withCredentials: true
   })
   return parseEventResponse(response)
+}
+
+function getValidLocation(location: ILocation): ILocation {
+  const address = location && location.address ? location.address : 'Nowhere'
+  const latLng =
+    location && location.latLng ? location.latLng : { lat: 0, lng: 0 }
+
+  return { address, latLng }
 }
 
 function parseEventResponse(response: any) {

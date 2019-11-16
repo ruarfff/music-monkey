@@ -5,10 +5,8 @@ import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import IAction from 'IAction'
-import IPlaylist from 'playlist/IPlaylist'
 import TrackSearch from 'search/TrackSearch'
 import ITrack from 'track/ITrack'
-import isUndefined from 'lodash/isUndefined'
 import TrackList from './TrackList'
 import EventTracks from './EventTracks'
 import Playlists from './PlaylistsContainer'
@@ -16,13 +14,11 @@ import Playlists from './PlaylistsContainer'
 import './AddTracks.scss'
 
 interface AddTracksProps {
-  seedPlaylist?: IPlaylist
   recommendedTracks: ITrack[]
   getRecommendations(): IAction
 }
 
 const AddTracks = ({
-  seedPlaylist,
   recommendedTracks,
   getRecommendations
 }: AddTracksProps) => {
@@ -45,13 +41,6 @@ const AddTracks = ({
     <Grid container className="AddTracks-root" spacing={2}>
       <Field name="tracks">
         {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
-          if (isUndefined(value)) {
-            setFieldValue(
-              'tracks',
-              seedPlaylist!.tracks.items.map(item => item.track)
-            )
-          }
-
           const handleAddTrack = (track: ITrack) => {
             setFieldValue('tracks', [track, ...value])
           }

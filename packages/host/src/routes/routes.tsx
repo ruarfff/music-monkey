@@ -7,6 +7,7 @@ import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from 'rootState'
 import AccountView from 'accountView/AccountViewContainer'
 import SaveEvent from 'event/saveEvent/SaveEventContainer'
+import CreateEvent from 'event/saveEvent/CreateEventContainer'
 import EventView from 'event/eventView/EventViewContainer'
 import Insights from 'insights/InsightsContainer'
 import CatalogueBrowser from 'catalogue/CatalogueBrowserContainer'
@@ -31,7 +32,7 @@ export const userIsAuthenticated = connectedRouterRedirect({
 
 export const routes = [
   {
-    component: SaveEvent,      
+    component: CreateEvent,
     path: '/create-event'
   },
   {

@@ -1,0 +1,15 @@
+@import 'theme/main';
+
+.CreateEvent-root {
+  width: 100%;
+}
+
+.CreateEvent-loading {
+  position: fixed;
+  width: 80%;
+  top: 120px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  margin: 10% auto;
+}

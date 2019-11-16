@@ -6,7 +6,7 @@ import IEvent from 'event/IEvent'
 import getPlaylistTracks from 'playlist/getPlaylistTracks'
 import SaveEventFormValues from './SaveEventFormValues'
 
-const getInitialFormValues = (
+const saveEventInitialFormValues = (
   user: IUser,
   event: IEvent
 ): SaveEventFormValues => {
@@ -56,4 +56,4 @@ const getInitialFormValues = (
   return vals
 }
 
-export default getInitialFormValues
+export default saveEventInitialFormValues

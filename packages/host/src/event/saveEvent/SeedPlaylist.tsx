@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import IAction from 'IAction'
 import isEmpty from 'lodash/isEmpty'
-import IUser from 'user/IUser'
 import IPlaylist from 'playlist/IPlaylist'
 import {
   Grid,
@@ -18,6 +16,8 @@ import {
 } from '@material-ui/core'
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
+import IUser from 'user/IUser'
+import IAction from 'IAction'
 import marvin from 'assets/marvin.png'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'

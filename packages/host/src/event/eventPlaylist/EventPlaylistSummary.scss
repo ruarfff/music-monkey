@@ -17,7 +17,6 @@
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  height: 100%;
 }
 
 .EventPlaylistSummary-content {
@@ -48,7 +47,7 @@
 .EventPlaylist-spotifyLink a {
   font-size: 16px;
   text-transform: uppercase;
-  color: #FFB000;
+  color: #ffb000;
 }
 
 .EventPlaylist-cohost {
@@ -60,7 +59,8 @@
   width: 2em;
 }
 
-.EventPlaylistSummary-status, .EventPlaylistSummary-time {
+.EventPlaylistSummary-status,
+.EventPlaylistSummary-time {
   font-size: 20px;
   margin-right: 10px;
 
