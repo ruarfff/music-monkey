@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import IAction from 'IAction'
 import isEmpty from 'lodash/isEmpty'
-import IUser from 'user/IUser'
-import IPlaylist from 'playlist/IPlaylist'
 import {
   List,
   ListItem,
@@ -17,21 +14,25 @@ import {
 } from '@material-ui/core'
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
+import IAction from 'IAction'
+import IUser from 'user/IUser'
+import IPlaylist from 'playlist/IPlaylist'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
 import backgroundImg from 'assets/partycover.jpg'
 import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
 import getNumberOfPlaylistTracks from 'playlist/getNumberOfPlaylistTracks'
 import LoadingSpinner from 'loading/LoadingSpinner'
+import ITrack from 'track/ITrack'
+import TrackItem from './TrackItem'
 
 import './Playlists.scss'
-import { onPlaylistSelected } from 'playlist/playlistActions'
-import getTrackImage from 'track/getTrackImage'
 
 interface PlaylistsProps {
   user: IUser
   playlists: IPlaylist[]
   playlistsLoading: boolean
+  onAddTracks(tracks: ITrack[]): void
   fetchPlaylists(user: IUser): IAction
 }
 
@@ -39,7 +40,8 @@ const Playlists = ({
   user,
   playlists,
   playlistsLoading,
-  fetchPlaylists
+  fetchPlaylists,
+  onAddTracks
 }: PlaylistsProps) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState()
   useEffect(() => {
@@ -54,6 +56,14 @@ const Playlists = ({
     } else {
       setSelectedPlaylist(playlist)
     }
+  }
+
+  const handlePlaylistTracksSelected = (playlist: IPlaylist) => () => {
+    onAddTracks(playlist.tracks.items.map(item => item.track))
+  }
+
+  const handleTrackSelected = (track: ITrack) => () => {
+    onAddTracks([track])
   }
 
   if (playlistsLoading) {
@@ -116,9 +126,7 @@ const Playlists = ({
                 <ListItem
                   button
                   className="Playlists-select-playlist"
-                  onClick={() => {
-                    onPlaylistSelected(playlist)
-                  }}
+                  onClick={handlePlaylistTracksSelected(playlist)}
                 >
                   <ListItemIcon>
                     <QueueMusicIcon className="Playlists-select-playlist-icon" />
@@ -131,29 +139,10 @@ const Playlists = ({
                   .map(item => item.track)
                   .map(track => (
                     <React.Fragment key={track.id}>
-                      <ListItem
-                        alignItems="flex-start"
-                        className="Playlists-track"
-                      >
-                        <ListItemAvatar>
-                          <Image
-                            src={getTrackImage(track)}
-                            alt={track.name}
-                            fallbackSrc={backgroundImg}
-                            className="Playlists-track-image"
-                          />
-                        </ListItemAvatar>
-                        <ListItemText
-                          className="Playlists-track-content"
-                          primary={track.name}
-                          primaryTypographyProps={{ noWrap: true }}
-                          secondary={track.album.artists[0].name}
-                          secondaryTypographyProps={{
-                            variant: 'body2',
-                            noWrap: true
-                          }}
-                        />
-                      </ListItem>
+                      <TrackItem
+                        track={track}
+                        onSelected={handleTrackSelected(track)}
+                      />
                       <Divider variant="inset" component="li" />
                     </React.Fragment>
                   ))}

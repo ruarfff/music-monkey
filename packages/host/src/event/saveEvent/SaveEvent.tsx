@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, FormikProps, FormikHelpers } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
-import { AppBar, Tabs, Tab, ButtonGroup } from '@material-ui/core'
+import { AppBar, Tabs, Tab, ButtonGroup, Button } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import isEmpty from 'lodash/isEmpty'
 import IUser from 'user/IUser'
 import LoadingSpinner from 'loading/LoadingSpinner'
+import LinkButton from 'components/LinkButton'
 import { getEventById } from 'event/eventClient'
 import IEvent from 'event/IEvent'
+import IAction from 'IAction'
+import IPlaylist from 'playlist/IPlaylist'
 import EventDetails from './EventDetails'
 import Summary from './Summary'
 import SaveEventFormValues from './SaveEventFormValues'
@@ -15,7 +18,6 @@ import FormValidationSchema from './FormValidationSchema'
 import TabPanel from './TabPanel'
 import saveEventInitialFormValues from './saveEventInitialFormValues'
 import eventWillBeModified from './eventWillBeModified'
-import LinkButton from 'components/LinkButton'
 import updateEventFlow from './updateEventFlow'
 import AddTracks from './AddTracksContainer'
 
@@ -23,9 +25,16 @@ import './SaveEvent.scss'
 
 interface SaveEventProps extends RouteComponentProps {
   user: IUser
+  deleteEvent(eventId: string): IAction
 }
 
-const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
+const SaveEvent = ({
+  user,
+  deleteEvent,
+  location,
+  match,
+  history
+}: SaveEventProps) => {
   const [eventToEdit, setEventToEdit] = useState<IEvent>()
   const [tabIndex, setTabIndex] = useState(0)
   const hasEvent = !isEmpty(eventToEdit)
@@ -112,11 +121,23 @@ const SaveEvent = ({ user, location, match, history }: SaveEventProps) => {
               >
                 Go to event
               </LinkButton>
+              <Button
+                onClick={() => {
+                  deleteEvent(eventIdFromPath)
+                  history.push('/catalogue/all-events')
+                }}
+              >
+                Delete
+              </Button>
             </ButtonGroup>
 
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>
-                <AddTracks />
+                <AddTracks
+                  playlist={
+                    !!eventToEdit ? eventToEdit.playlist! : ({} as IPlaylist)
+                  }
+                />
               </TabPanel>
             )}
             {tabIndex === 1 && (

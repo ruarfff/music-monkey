@@ -3,10 +3,13 @@ import { Grid, Tabs, Tab, Badge } from '@material-ui/core'
 import { FieldProps, Field } from 'formik'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
+import { useSnackbar } from 'notistack'
 import LoadingSpinner from 'loading/LoadingSpinner'
+import { addTracksToPlaylist } from 'playlist/playlistClient'
 import IAction from 'IAction'
 import TrackSearch from 'search/TrackSearch'
 import ITrack from 'track/ITrack'
+import IPlaylist from 'playlist/IPlaylist'
 import TrackList from './TrackList'
 import EventTracks from './EventTracks'
 import Playlists from './PlaylistsContainer'
@@ -14,14 +17,17 @@ import Playlists from './PlaylistsContainer'
 import './AddTracks.scss'
 
 interface AddTracksProps {
+  playlist: IPlaylist
   recommendedTracks: ITrack[]
   getRecommendations(): IAction
 }
 
 const AddTracks = ({
+  playlist,
   recommendedTracks,
   getRecommendations
 }: AddTracksProps) => {
+  const { enqueueSnackbar } = useSnackbar()
   const [tabIndex, setTabIndex] = useState(0)
   const [searchedTracks, setSearchedTracks] = useState([] as ITrack[])
   const [isLoading, setIsLoading] = useState(false)
@@ -42,7 +48,18 @@ const AddTracks = ({
       <Field name="tracks">
         {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
           const handleAddTrack = (track: ITrack) => {
-            setFieldValue('tracks', [track, ...value])
+            addTracksToPlaylist(playlist.id, [track.uri])
+            setFieldValue('tracks', [...value, track])
+            enqueueSnackbar('Track Added', { variant: 'success' })
+          }
+
+          const handleAddTracks = (tracks: ITrack[]) => {
+            addTracksToPlaylist(
+              playlist.id,
+              tracks.map(track => track.uri)
+            )
+            setFieldValue('tracks', [...value, ...tracks])
+            enqueueSnackbar('Tracks Added', { variant: 'success' })
           }
 
           const handleTracksChanges = (tracks: ITrack[]) => {
@@ -111,6 +128,7 @@ const AddTracks = ({
                   <>
                     {tabIndex === 0 && (
                       <EventTracks
+                        playlist={playlist}
                         tracks={value}
                         onTracksChanged={handleTracksChanges}
                       />
@@ -126,7 +144,9 @@ const AddTracks = ({
                         onTrackSelected={handleAddTrack}
                       />
                     )}
-                    {tabIndex === 2 && <Playlists />}
+                    {tabIndex === 2 && (
+                      <Playlists onAddTracks={handleAddTracks} />
+                    )}
                   </>
                 )}
               </Grid>

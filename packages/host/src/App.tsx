@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { Store } from 'redux'
 import Utils from '@date-io/moment'
 import { Route } from 'react-router'
+import { SnackbarProvider } from 'notistack'
 import SubscriptionWrapper from 'subscriptions/SubscriptionWrapperContainer'
 import theme from 'theme/theme'
 import Layout from 'layout/LayoutContainer'
@@ -26,21 +27,27 @@ const App = ({ store, history }: IAppProps) => (
     <CssBaseline />
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={Utils}>
-        <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <CookiesProvider>
-              <SubscriptionWrapper>
-                <RouteContextProvider>
-                  <Route path="/" component={userIsAuthenticated(Layout)} />
-                  <Route
-                    path="/login"
-                    component={userIsNotAuthenticated(Login)}
-                  />
-                </RouteContextProvider>
-              </SubscriptionWrapper>
-            </CookiesProvider>
-          </ConnectedRouter>
-        </Provider>
+        <SnackbarProvider
+          maxSnack={3}
+          preventDuplicate={true}
+          autoHideDuration={1000}
+        >
+          <Provider store={store}>
+            <ConnectedRouter history={history}>
+              <CookiesProvider>
+                <SubscriptionWrapper>
+                  <RouteContextProvider>
+                    <Route path="/" component={userIsAuthenticated(Layout)} />
+                    <Route
+                      path="/login"
+                      component={userIsNotAuthenticated(Login)}
+                    />
+                  </RouteContextProvider>
+                </SubscriptionWrapper>
+              </CookiesProvider>
+            </ConnectedRouter>
+          </Provider>
+        </SnackbarProvider>
       </MuiPickersUtilsProvider>
     </ThemeProvider>
   </StylesProvider>

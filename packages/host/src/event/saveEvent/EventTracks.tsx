@@ -7,14 +7,24 @@ import arrayMove from 'util/arrayMove'
 import ITrack from 'track/ITrack'
 import TrackList from 'track/TrackList'
 import formatDuration from 'util/formatDuration'
+import IPlaylist from 'playlist/IPlaylist'
+import {
+  reOrderPlaylist,
+  removeTrackFromPlaylist
+} from 'playlist/playlistClient'
 
 import './EventTracks.scss'
 
 interface EventTracksProps {
+  playlist: IPlaylist
   tracks: ITrack[]
   onTracksChanged(tracks: ITrack[]): void
 }
-const EventTracks = ({ tracks = [], onTracksChanged }: EventTracksProps) => {
+const EventTracks = ({
+  tracks = [],
+  playlist,
+  onTracksChanged
+}: EventTracksProps) => {
   const duration = isEmpty(tracks)
     ? 0
     : tracks.map(track => track.duration_ms).reduce((acc, dur) => acc + dur)
@@ -22,6 +32,8 @@ const EventTracks = ({ tracks = [], onTracksChanged }: EventTracksProps) => {
   const numTracks = tracks.length
 
   const handleTrackRemoved = (trackToRemove: ITrack) => {
+    const position = tracks.indexOf(trackToRemove)
+    removeTrackFromPlaylist(playlist.id, trackToRemove.uri, position)
     onTracksChanged(remove(tracks, track => track.id !== trackToRemove.id))
   }
 
@@ -51,6 +63,11 @@ const EventTracks = ({ tracks = [], onTracksChanged }: EventTracksProps) => {
           const reorderedTracks = [...tracks]
           arrayMove(
             reorderedTracks,
+            result.source.index,
+            result.destination.index
+          )
+          reOrderPlaylist(
+            playlist,
             result.source.index,
             result.destination.index
           )
