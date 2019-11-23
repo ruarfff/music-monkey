@@ -4,7 +4,7 @@ import { Sizes } from 'react-sizes'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import IUser from 'user/IUser'
 import LoginError from './LoginError'
-import MobileMenu from './MobileLayout'
+import MobileLayout from './MobileLayout'
 import DesktopLayout from './DesktopLayout'
 
 interface ILayoutProps {
@@ -22,7 +22,7 @@ const Layout = ({
 }: ILayoutProps & Sizes) => {
   return (
     <div>
-      {!isEmpty(user) && (isDesktop ? <DesktopLayout /> : <MobileMenu />)}
+      {!isEmpty(user) && (isDesktop ? <DesktopLayout /> : <MobileLayout />)}
       {userLoading && <LoadingSpinner />}
       {userError.message && <LoginError />}
     </div>

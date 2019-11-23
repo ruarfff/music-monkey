@@ -1,0 +1,14 @@
+.UserMenu {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  a {
+    text-decoration: none;
+  }
+  .profile-image {
+    margin-left: 12px;
+    width: 25px;
+    height: 25px;
+  }
+}

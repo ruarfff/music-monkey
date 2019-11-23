@@ -3,6 +3,7 @@
 .MobileLayout-root {
   width: 100%;
   max-width: 100%;
+  overflow: hidden;
 
   .MobileLayout-app-bar {
     background-color: $primary;
@@ -28,9 +29,8 @@
 
   .MobileLayout-content {
     flex-grow: 1;
-    .MobileLayout-toolbar {
-      @include toolbar;
-    }
+    padding-top: 48px;
+    padding-bottom: 130px;
   }
 }
 
