@@ -22,11 +22,7 @@ const checkLocation = (pathname: string, path: string) => {
 const BottomBar = ({ location, event }: IBottomBar) => {
   const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
-  const eventsLink = isHostMode
-    ? '/catalogue/all-events'
-    : eventId
-    ? `/events/${eventId}`
-    : '/'
+  const eventsLink = eventId ? `/events/${eventId}` : '/'
   const playlistsLink = isHostMode
     ? '/catalogue/all-playlists'
     : eventId

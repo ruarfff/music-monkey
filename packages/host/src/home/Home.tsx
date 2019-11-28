@@ -1,10 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '@material-ui/core'
 import IAction from 'IAction'
-import logo from 'assets/marvin.png'
 import IEvent from 'event/IEvent'
 import IUser from 'user/IUser'
+import EventListView from 'event/EventListViewContainer'
 
 import './Home.scss'
 
@@ -18,16 +16,7 @@ interface IHomeProps {
 const Home = ({ user }: IHomeProps) => {
   return (
     <div className="Home-root">
-      <div className="Home-create-event">
-        <Link to={'/create-event'}>
-          <Button variant="contained" color="secondary">
-            <div>
-              <img alt="music monkey logo" src={logo} />
-              <span>CREATE NEW EVENT</span>
-            </div>
-          </Button>
-        </Link>
-      </div>
+      <EventListView />
     </div>
   )
 }

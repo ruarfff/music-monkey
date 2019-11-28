@@ -50,7 +50,6 @@ const pathToFilter = {
 }
 interface ICatalogueBrowserProps extends RouteComponentProps {
   events: IEvent[]
-
   eventsLoading: boolean
   getEvents(): IAction
 }
