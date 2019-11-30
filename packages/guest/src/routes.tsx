@@ -1,18 +1,18 @@
+import React, { lazy, Suspense } from 'react'
 import { push } from 'connected-react-router'
 import { History } from 'history'
-import React, { lazy, Suspense } from 'react'
 import { Route, Switch } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from './rootState'
 import LoadingPage from './loading/LoadingPage'
 
-const Account = lazy(() => import('./account/AccountContainer'))
-const Login = lazy(() => import('./auth/LoginContainer'))
-const SignUp = lazy(() => import('./auth/SignUpContainer'))
-const Event = lazy(() => import('./event/components/EventContainer'))
+const Account = lazy(() => import('account/AccountContainer'))
+const Login = lazy(() => import('auth/LoginContainer'))
+const SignUp = lazy(() => import('auth/SignUpContainer'))
+const Event = lazy(() => import('event/components/EventContainer'))
 const EventListView = lazy(() =>
-  import('./event/components/EventListViewContainer')
+  import('event/components/EventListViewContainer')
 )
 const Finder = lazy(() => import('./finder/FinderContainer'))
 const Invite = lazy(() => import('./invite/components/InviteContainer'))

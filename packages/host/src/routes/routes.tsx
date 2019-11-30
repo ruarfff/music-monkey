@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import { push } from 'connected-react-router'
 import { Route } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
-
 import IRootState from 'rootState'
-import AccountView from 'accountView/AccountViewContainer'
-import SaveEvent from 'event/saveEvent/SaveEventContainer'
-import CreateEvent from 'event/saveEvent/CreateEventContainer'
-import EventView from 'event/eventView/EventViewContainer'
-import Insights from 'insights/InsightsContainer'
-import CatalogueBrowser from 'catalogue/CatalogueBrowserContainer'
-import PlaylistListView from 'playlist/PlaylistListViewContainer'
+
+const AccountView = lazy(() => import('accountView/AccountViewContainer'))
+const CreateEvent = lazy(() => import('event/saveEvent/CreateEventContainer'))
+const CatalogueBrowser = lazy(() =>
+  import('catalogue/CatalogueBrowserContainer')
+)
+const EventView = lazy(() => import('event/eventView/EventViewContainer'))
+const Insights = lazy(() => import('insights/InsightsContainer'))
+const PlaylistListView = lazy(() =>
+  import('playlist/PlaylistListViewContainer')
+)
+const SaveEvent = lazy(() => import('event/saveEvent/SaveEventContainer'))
 
 const locationHelper = locationHelperBuilder({})
 
