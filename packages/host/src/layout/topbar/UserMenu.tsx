@@ -36,8 +36,8 @@ const UserMenu = ({ user, onLogout }: IUserMenuProps) => {
         open={isOpen}
         onClose={handleMenuClose}
       >
-        <a href="https://hosts.musicmonkey.io/">
-          <MenuItem>Host Mode</MenuItem>
+        <a href="https://guests.musicmonkey.io/">
+          <MenuItem>Guest Mode</MenuItem>
         </a>
         <MenuItem onClick={onLogout}>Logout</MenuItem>
       </Menu>

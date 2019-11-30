@@ -3,7 +3,6 @@ import IPlaylist from './IPlaylist'
 import ITrack from 'track/ITrack'
 
 const getPlaylistTracks = (playlist: IPlaylist): ITrack[] => {
-  console.log('playlist: ', playlist)
   if (
     isEmpty(playlist) ||
     isEmpty(playlist.tracks) ||

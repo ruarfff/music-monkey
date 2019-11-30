@@ -11,6 +11,7 @@ import CreateEvent from 'event/saveEvent/CreateEventContainer'
 import EventView from 'event/eventView/EventViewContainer'
 import Insights from 'insights/InsightsContainer'
 import CatalogueBrowser from 'catalogue/CatalogueBrowserContainer'
+import PlaylistListView from 'playlist/PlaylistListViewContainer'
 
 const locationHelper = locationHelperBuilder({})
 
@@ -43,6 +44,11 @@ export const routes = [
   {
     component: SaveEvent,
     path: '/events/:eventId/edit'
+  },
+  {
+    component: PlaylistListView,
+    exact: true,
+    path: '/playlists'
   },
   {
     component: CatalogueBrowser,

@@ -23,11 +23,7 @@ const BottomBar = ({ location, event }: IBottomBar) => {
   const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
   const eventsLink = eventId ? `/events/${eventId}` : '/'
-  const playlistsLink = isHostMode
-    ? '/catalogue/all-playlists'
-    : eventId
-    ? `/playlists/${eventId}`
-    : '/playlists'
+  const playlistsLink = '/playlists'
   const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
   const finderLink = eventId ? `/finder/${eventId}` : '/finder'
   const accountLink = '/account'
