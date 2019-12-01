@@ -43,7 +43,7 @@ const EventTracks = ({
         No tracks yet
       </Typography>
       <Typography variant="body2" align="center" gutterBottom>
-        Search for track or pick from your recommendations
+        Search for tracks or pick from your recommendations
       </Typography>
     </Paper>
   ) : (

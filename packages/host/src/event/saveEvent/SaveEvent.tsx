@@ -28,13 +28,7 @@ interface SaveEventProps extends RouteComponentProps {
   deleteEvent(eventId: string): IAction
 }
 
-const SaveEvent = ({
-  user,
-  deleteEvent,
-  location,
-  match,
-  history
-}: SaveEventProps) => {
+const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
   const [eventToEdit, setEventToEdit] = useState<IEvent>()
   const [tabIndex, setTabIndex] = useState(0)
   const hasEvent = !isEmpty(eventToEdit)
@@ -83,12 +77,7 @@ const SaveEvent = ({
       validationSchema={FormValidationSchema}
       onSubmit={handleSubmit}
     >
-      {({
-        isSubmitting,
-        submitForm,
-        errors,
-        values
-      }: FormikProps<SaveEventFormValues>) => {
+      {({ isSubmitting }: FormikProps<SaveEventFormValues>) => {
         return (
           <div className="SaveEvent-root">
             <AppBar position="static" color="default">
@@ -101,8 +90,8 @@ const SaveEvent = ({
                 aria-label="save event"
               >
                 <Tab label="1 Music" {...a11yProps(0)} />
-                <Tab label="2 Details" {...a11yProps(1)} disabled={!hasEvent} />
-                <Tab label="3 Share" {...a11yProps(2)} disabled={!hasEvent} />
+                <Tab label="2 Details" {...a11yProps(1)} />
+                <Tab label="3 Share" {...a11yProps(2)} />
               </Tabs>
             </AppBar>
             {isSubmitting && (

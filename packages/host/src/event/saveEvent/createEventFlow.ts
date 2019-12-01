@@ -10,8 +10,7 @@ const createEventFlow = async ({
   user,
   eventName,
   eventDescription,
-  tracks,
-  settings
+  tracks
 }: CreateEventFormValues) => {
   const playlist: IPlaylist = await createPlaylist(eventName, eventDescription)
 
@@ -35,8 +34,7 @@ const createEventFlow = async ({
     endDateTime: moment()
       .utc()
       .add(3, 'hours')
-      .startOf('hour'),
-    settings
+      .startOf('hour')
   } as IEvent
 
   const savedEvent: IEvent = await createEvent(eventDetails)

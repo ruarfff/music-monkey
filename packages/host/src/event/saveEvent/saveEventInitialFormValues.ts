@@ -10,8 +10,13 @@ const saveEventInitialFormValues = (
   user: IUser,
   event: IEvent
 ): SaveEventFormValues => {
-  console.log(event)
-  const vals = !isEmpty(event)
+  const defaultSettings = {
+    dynamicVotingEnabled: false,
+    autoAcceptSuggestionsEnabled: false,
+    suggestingPlaylistsEnabled: false
+  }
+
+  return !isEmpty(event)
     ? {
         user,
         eventName: event.name,
@@ -25,7 +30,7 @@ const saveEventInitialFormValues = (
         },
         genre: event.genre,
         location: event.location,
-        settings: event.settings,
+        settings: event.settings || defaultSettings,
         startDateTime: event.startDateTime,
         endDateTime: event.endDateTime
       }
@@ -38,11 +43,7 @@ const saveEventInitialFormValues = (
         image: { name: 'event.jpg', data: null, url: backgroundImg },
         genre: 'none',
         location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
-        settings: {
-          dynamicVotingEnabled: true,
-          autoAcceptSuggestionsEnabled: true,
-          suggestingPlaylistsEnabled: true
-        },
+        settings: defaultSettings,
         startDateTime: moment()
           .utc()
           .add(2, 'hours')
@@ -52,8 +53,6 @@ const saveEventInitialFormValues = (
           .add(3, 'hours')
           .startOf('hour')
       }
-  console.log(vals)
-  return vals
 }
 
 export default saveEventInitialFormValues
