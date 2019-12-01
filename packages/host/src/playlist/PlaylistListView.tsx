@@ -6,7 +6,6 @@ import LoadingSpinner from 'loading/LoadingSpinner'
 import IEvent from 'event/IEvent'
 import PlaylistList from './PlaylistList'
 import sortEvents from 'event/sortEvents'
-import IPlaylist from './IPlaylist'
 
 interface PlaylistListViewProps {
   events: IEvent[]
@@ -30,11 +29,11 @@ const PlaylistListView = ({
 
   const { pastEvents, upcomingEvents, liveEvents } = sortEvents(events)
 
-  const playlists: IPlaylist[] = uniqBy(
+  const playlists = uniqBy(
     [...liveEvents, ...upcomingEvents, ...pastEvents]
       .filter((event: IEvent) => event.playlistUrl && event.playlist)
       .map(event => {
-        return event.playlist!
+        return { ...event.playlist!, eventId: event.eventId! }
       }),
     'id'
   )

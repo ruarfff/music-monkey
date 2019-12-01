@@ -9,8 +9,11 @@ import getPlaylistImage from './getPlaylistImage'
 import getPlaylistTracks from './getPlaylistTracks'
 import './PlaylistList.scss'
 
+interface PlaylistWithEventId extends IPlaylist {
+  eventId: string
+}
 interface IPlaylistListProps {
-  playlists: IPlaylist[]
+  playlists: PlaylistWithEventId[]
 }
 
 const PlaylistList = ({ playlists }: IPlaylistListProps) => {
@@ -22,7 +25,7 @@ const PlaylistList = ({ playlists }: IPlaylistListProps) => {
           <ListItem
             button={true}
             component={Link}
-            to={'/playlists/' + playlist.id}
+            to={'/events/' + playlist.eventId}
             className="PlaylistList-item"
           >
             <Image
