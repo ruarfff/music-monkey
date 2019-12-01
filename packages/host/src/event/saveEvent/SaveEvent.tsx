@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, FormikProps, FormikHelpers } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
-import { AppBar, Tabs, Tab, ButtonGroup, Button } from '@material-ui/core'
-import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import isEmpty from 'lodash/isEmpty'
+import { AppBar, Tabs, Tab } from '@material-ui/core'
 import IUser from 'user/IUser'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import LinkButton from 'components/LinkButton'
 import { getEventById } from 'event/eventClient'
 import IEvent from 'event/IEvent'
 import IAction from 'IAction'
@@ -31,7 +28,6 @@ interface SaveEventProps extends RouteComponentProps {
 const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
   const [eventToEdit, setEventToEdit] = useState<IEvent>()
   const [tabIndex, setTabIndex] = useState(0)
-  const hasEvent = !isEmpty(eventToEdit)
   const eventIdFromPath = match.params['eventId']
 
   useEffect(() => {
@@ -99,7 +95,7 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
                 <LoadingSpinner />
               </div>
             )}
-            <ButtonGroup
+            {/* <ButtonGroup
               fullWidth
               aria-label="event edit actions"
               className="SaveEvent-actions"
@@ -118,7 +114,7 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
               >
                 Delete
               </Button>
-            </ButtonGroup>
+            </ButtonGroup> */}
 
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>

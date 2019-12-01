@@ -29,7 +29,6 @@ const ShareEvent = ({
   return (
     <>
       <Grid item={true} xs={12}>
-        Invite Preview
         <EmailPreview event={event} emailText={message} image={image} />
       </Grid>
       <Grid item={true} xs={12}>

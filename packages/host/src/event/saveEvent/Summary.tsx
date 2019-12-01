@@ -1,10 +1,9 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import IEvent from 'event/IEvent'
 import ShareEvent from './ShareEventContainer'
 import IAction from 'IAction'
-import ImageEditor from 'imageEdit/ImageEditor'
 import { isEmpty } from 'lodash'
 
 import './Summary.scss'
@@ -25,17 +24,13 @@ const Summary = ({ event }: SummaryProps) => {
         return (
           <Grid container className="Summary-root">
             <Grid item xs={12} className="Summary-image">
-              <Typography variant="h6" align="center" gutterBottom>
-                Event Image
-              </Typography>
-
-              <ImageEditor
+              {/* <ImageEditor
                 initialImage={initialImage}
                 onImageChanged={image => {
                   console.log(image)
                   setFieldValue('image', image)
                 }}
-              />
+              /> */}
             </Grid>
             <Grid item container xs={12}>
               <ShareEvent
