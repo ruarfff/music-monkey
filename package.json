@@ -4,8 +4,9 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "start": "lerna run start --parallel",
-    "start:host": "lerna run --scope host start --stream",
     "start:local": "lerna run start:local --parallel",
+    "start:host": "lerna run --scope host start --stream",
+    "start:host:local": "lerna run start:local --scope host start --stream",
     "build": "lerna run build --parallel",
     "test": "lerna run test --stream --",
     "clean": "lerna clean",
