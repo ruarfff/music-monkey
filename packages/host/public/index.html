@@ -8,7 +8,7 @@
     ></script>
     <script>
       // Google analytics
-      if (window.location.host.indexOf('musicmonkey.io') === -1) {
+      if (window.location.host.indexOf('musicmonkey.io') !== -1) {
         window.dataLayer = window.dataLayer || []
         function gtag() {
           dataLayer.push(arguments)
@@ -20,7 +20,7 @@
     </script>
     <script>
       // Full story
-      if (window.location.host.indexOf('musicmonkey.io') === -1) {
+      if (window.location.host.indexOf('musicmonkey.io') !== -1) {
         window['_fs_debug'] = false
         window['_fs_host'] = 'fullstory.com'
         window['_fs_org'] = 'BRMJH'
@@ -74,7 +74,7 @@
     </script>
     <script>
       // Rollbar
-      if (window.location.host.indexOf('musicmonkey.io') === -1) {
+      if (window.location.host.indexOf('musicmonkey.io') !== -1) {
         var _rollbarConfig = {
           accessToken: '5970668220af452ebe2a49861b26b2f0',
           captureUncaught: true,
