@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Tabs, Tab, Badge, Button } from '@material-ui/core'
-import SettingsIcon from '@material-ui/icons/Settings'
+import { Grid, Tabs, Tab, Badge } from '@material-ui/core'
 import { FieldProps, Field } from 'formik'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
@@ -14,7 +13,6 @@ import IPlaylist from 'playlist/IPlaylist'
 import TrackList from './TrackList'
 import EventTracks from './EventTracks'
 import Playlists from './PlaylistsContainer'
-import EventSettingsDialog from './EventSettingsDialog'
 
 import './AddTracks.scss'
 
@@ -30,7 +28,6 @@ const AddTracks = ({
   getRecommendations
 }: AddTracksProps) => {
   const { enqueueSnackbar } = useSnackbar()
-  const [settingsDialogOpen, setSettingsDialogOpen] = useState(false)
   const [tabIndex, setTabIndex] = useState(0)
   const [searchedTracks, setSearchedTracks] = useState([] as ITrack[])
   const [isLoading, setIsLoading] = useState(false)
@@ -48,12 +45,6 @@ const AddTracks = ({
 
   return (
     <Grid container className="AddTracks-root" spacing={2}>
-      <EventSettingsDialog
-        open={settingsDialogOpen}
-        handleClose={() => {
-          setSettingsDialogOpen(false)
-        }}
-      />
       <Field name="tracks">
         {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
           const handleAddTrack = (track: ITrack) => {
@@ -76,19 +67,6 @@ const AddTracks = ({
           }
           return (
             <Grid container>
-              <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  color="secondary"
-                  endIcon={<SettingsIcon />}
-                  onClick={() => {
-                    setSettingsDialogOpen(true)
-                  }}
-                >
-                  Party Settings
-                </Button>
-              </Grid>
               <Grid item xs={12}>
                 <TrackSearch
                   onSearchResult={(results: ITrack[]) => {
@@ -114,6 +92,7 @@ const AddTracks = ({
                   variant="fullWidth"
                 >
                   <Tab
+                    className="AddTracks-tab"
                     label={
                       !isEmpty(value) ? (
                         <Badge
@@ -134,11 +113,12 @@ const AddTracks = ({
                     }
                   />
                   <Tab
+                    className="AddTracks-tab"
                     label={
                       isEmpty(searchedTracks) ? 'Suggested' : 'Search Results'
                     }
                   />
-                  <Tab label="My Playlists" />
+                  <Tab label="My Playlists" className="AddTracks-tab" />
                 </Tabs>
               </Grid>
               <Grid item xs={12}>

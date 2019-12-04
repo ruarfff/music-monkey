@@ -75,8 +75,13 @@ const SeedPlaylist = ({
   return (
     <Grid container className="SeedPlaylist-root">
       <Grid item xs={12}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Add Playlist
+        <Typography
+          className="SeedPlaylist-title"
+          variant="h6"
+          align="center"
+          gutterBottom
+        >
+          Select a playlist to start adding music!
         </Typography>
       </Grid>
       <Grid item xs={12}>

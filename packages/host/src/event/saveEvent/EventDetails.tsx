@@ -43,9 +43,6 @@ const EventDetails = () => {
           )}
         </Field>
       </Grid>
-      {/* <Grid item xs={12}>
-        <EventTextInput name="organizer" label="Organizer" />
-      </Grid> */}
       <Grid item xs={12}>
         <EventLocationInput />
       </Grid>
