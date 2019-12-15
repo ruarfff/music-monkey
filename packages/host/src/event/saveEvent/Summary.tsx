@@ -34,7 +34,6 @@ const Summary = ({ event }: SummaryProps) => {
             </Grid>
             <Grid item container xs={12}>
               <ShareEvent
-                image={value.url}
                 clearMessage={() => {
                   console.log('Clear Message')
                   return {} as IAction
