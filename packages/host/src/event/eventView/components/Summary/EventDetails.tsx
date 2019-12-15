@@ -7,7 +7,7 @@ import locationIcon from 'assets/location-marker-icon.svg'
 import MapItem from 'location/MapComponent'
 import IEvent from 'event/IEvent'
 import Image from 'components/Image'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 
 import './EventDetails.scss'
 
@@ -31,7 +31,7 @@ const EventDetails = ({ event, location }: IEventDetailsProps) => {
             className="event-img"
             src={event.imageUrl}
             alt={event.name}
-            fallbackSrc={backgroundImg}
+            fallbackSrc={backgroundImage}
           />
         </Grid>
 

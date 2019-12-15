@@ -151,6 +151,7 @@ const SaveEvent = ({
                 Delete
               </Button>
             </ButtonGroup>
+            <div className="sharethis-inline-share-buttons"></div>
 
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>

@@ -1,6 +1,6 @@
 import moment from 'moment'
 import isEmpty from 'lodash/isEmpty'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import IUser from 'user/IUser'
 import IEvent from 'event/IEvent'
 import getPlaylistTracks from 'playlist/getPlaylistTracks'
@@ -26,7 +26,7 @@ const saveEventInitialFormValues = (
         image: {
           name: 'event.jpg',
           data: null,
-          url: event.imageUrl || backgroundImg
+          url: event.imageUrl || backgroundImage
         },
         genre: event.genre,
         location: event.location,
@@ -40,7 +40,7 @@ const saveEventInitialFormValues = (
         eventDescription: '',
         organizer: user.displayName,
         tracks: undefined,
-        image: { name: 'event.jpg', data: null, url: backgroundImg },
+        image: { name: 'event.jpg', data: null, url: backgroundImage },
         genre: 'none',
         location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
         settings: defaultSettings,

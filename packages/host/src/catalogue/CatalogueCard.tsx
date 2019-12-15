@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography/Typography'
 import { Link } from 'react-router-dom'
 import Image from 'components/Image'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import './CatalogueCard.scss'
 
 interface ICatalogueCardProps {
@@ -30,7 +30,7 @@ const CatalogueCard = ({
           <Image
             src={imageUrl}
             alt="Catalogue card cover"
-            fallbackSrc={backgroundImg}
+            fallbackSrc={backgroundImage}
           />
         </div>
       </Link>

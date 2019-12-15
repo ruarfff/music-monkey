@@ -14,6 +14,7 @@ import ITrack from '../track/ITrack'
 import IUser from '../user/IUser'
 import React, { useEffect, useState } from 'react'
 import TrackList from '../track/TrackList'
+import backgroundImage from 'assets/music-monkey.jpg'
 import IPlaylistImage from '../playlist/IPlaylistImage'
 
 interface IMyPlaylistsTabProps {
@@ -70,7 +71,7 @@ const MyPlaylistsTab = ({
                   head(sortBy(playlist.images, 'height')) ||
                   ({} as IPlaylistImage)
                 ).url
-              : '/img/partycover-sm.png'
+              : backgroundImage
 
           const playlistDisabled = playlist.tracks.total < 1
           return (

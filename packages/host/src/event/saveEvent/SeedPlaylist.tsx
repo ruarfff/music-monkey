@@ -21,7 +21,7 @@ import IAction from 'IAction'
 import marvin from 'assets/marvin.png'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
 import getNumberOfPlaylistTracks from 'playlist/getNumberOfPlaylistTracks'
 import LoadingSpinner from 'loading/LoadingSpinner'
@@ -134,7 +134,7 @@ const SeedPlaylist = ({
                     <Image
                       alt={playlist.name}
                       src={getPlaylistImage(playlist)}
-                      fallbackSrc={backgroundImg}
+                      fallbackSrc={backgroundImage}
                       className="SeedPlaylist-image"
                     />
                   </ListItemAvatar>
@@ -198,7 +198,7 @@ const SeedPlaylist = ({
                               <Image
                                 src={getTrackImage(track)}
                                 alt={track.name}
-                                fallbackSrc={backgroundImg}
+                                fallbackSrc={backgroundImage}
                                 className="SeedPlaylist-track-image"
                               />
                             </ListItemAvatar>

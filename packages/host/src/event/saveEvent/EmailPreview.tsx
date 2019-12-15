@@ -6,15 +6,15 @@ import './EmailPreview.scss'
 interface IEmailPreviewProps {
   event: IEvent
   emailText: string
-  image: string
 }
 
-const EmailPreview = ({ event, emailText, image }: IEmailPreviewProps) => {
+const EmailPreview = ({ event, emailText }: IEmailPreviewProps) => {
   return (
     <div
       className="EmailPreview-root"
       style={{
-        background: `no-repeat url(${image}) center`,
+        background: `no-repeat url(${event.imageUrl ||
+          'https://musicmonkey.io/img/music-monkey.jpg'}) center`,
         backgroundSize: 'cover'
       }}
     >

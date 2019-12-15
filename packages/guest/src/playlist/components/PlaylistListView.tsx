@@ -16,6 +16,7 @@ import IPlaylist from 'playlist/IPlaylist'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import IAction from 'IAction'
 import sortEvents from 'event/sortEvents'
+import backgroundImage from 'assets/music-monkey.jpg'
 import './PlaylistListView.scss'
 
 interface IPlaylistListViewProps {
@@ -81,7 +82,7 @@ const PlaylistListView = ({
                   src={
                     playlist.images.length > 0
                       ? playlist.images[0].url
-                      : '/img/partycover-sm.png'
+                      : backgroundImage
                   }
                 />
               </ListItemAvatar>

@@ -8,7 +8,7 @@ import IPlaylist from 'playlist/IPlaylist'
 import formatDuration from 'util/formatDuration'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import getPlaylistDuration from 'playlist/getPlaylistDuration'
 
 import './SmallPlaylistCard.scss'
@@ -31,7 +31,7 @@ const SmallPlaylistCard = ({
     <Card className={`SmallPlaylistCard-root ${classes.root}`}>
       <CardContent>
         <div className="SmallPlaylistCard-image">
-          <Image src={image} alt="Playlist" fallbackSrc={backgroundImg} />
+          <Image src={image} alt="Playlist" fallbackSrc={backgroundImage} />
         </div>
         <div className="SmallPlaylistCard-content-wrapper">
           <Typography className="SmallPlaylistCard-name">

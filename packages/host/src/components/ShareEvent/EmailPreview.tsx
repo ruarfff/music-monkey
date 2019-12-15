@@ -1,6 +1,6 @@
 import * as React from 'react'
 import logo from 'assets/marvin.png'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import IEvent from 'event/IEvent'
 import './EmailPreview.scss'
 
@@ -10,7 +10,7 @@ interface IEmailPreviewProps {
 }
 
 export default ({ event, emailText }: IEmailPreviewProps) => {
-  const bg = !event.imageUrl ? backgroundImg : event.imageUrl
+  const bg = !event.imageUrl ? backgroundImage : event.imageUrl
 
   return (
     <div

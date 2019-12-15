@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Avatar,
   Divider,
@@ -5,7 +6,6 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import * as React from 'react'
 import ITrack from '../track/ITrack'
 import './TrackListItem.scss'
 
@@ -17,8 +17,8 @@ interface ITrackListItemProps {
   withVoting: boolean
   currentUserVoted: boolean
   numberOfVotes: number
-  onVote: ((track: ITrack) => void)
-  onTrackSelected: ((track: ITrack) => void)
+  onVote: (track: ITrack) => void
+  onTrackSelected: (track: ITrack) => void
   withSuggestingEnabled: boolean
   eventName?: string
 }
@@ -79,10 +79,7 @@ const TrackListItem = ({
 
   return (
     <div className="event-list-item">
-      <ListItem
-        dense={true}
-        button={true}
-      >
+      <ListItem dense={true} button={true}>
         {trackImage}
         <div className="event-list-name" onClick={handleTrackSelected}>
           <ListItemText
@@ -101,7 +98,7 @@ const TrackListItem = ({
           ''
         )}
       </ListItem>
-      <Divider variant='inset' />
+      <Divider variant="inset" />
     </div>
   )
 }

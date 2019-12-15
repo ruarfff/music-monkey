@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import isFunction from 'lodash/isFunction'
 import Image from 'components/Image'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import ITrack from './ITrack'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import Remove from '@material-ui/icons/Remove'
@@ -70,7 +70,7 @@ const TrackListItem = ({
     <Image
       src={getTrackImage(track)}
       alt={track.name}
-      fallbackSrc={backgroundImg}
+      fallbackSrc={backgroundImage}
       className="TrackListItem-track-image"
     />
   )

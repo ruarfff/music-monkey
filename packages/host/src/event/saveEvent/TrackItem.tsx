@@ -6,7 +6,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import AddIcon from '@material-ui/icons/Add'
 import ITrack from 'track/ITrack'
 import Image from 'components/Image'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import getTrackImage from 'track/getTrackImage'
 
 import './TrackItem.scss'
@@ -25,7 +25,7 @@ const TrackItem = ({ track, onSelected }: ITrackItemProps) => {
     <Image
       src={getTrackImage(track)}
       alt={track.name}
-      fallbackSrc={backgroundImg}
+      fallbackSrc={backgroundImage}
       className="TrackItem-track-image"
     />
   )

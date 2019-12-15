@@ -3,7 +3,7 @@ import { Divider, List, ListItem, ListItemText } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import Image from 'components/Image'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import IPlaylist from './IPlaylist'
 import getPlaylistImage from './getPlaylistImage'
 import getPlaylistTracks from './getPlaylistTracks'
@@ -31,7 +31,7 @@ const PlaylistList = ({ playlists }: IPlaylistListProps) => {
             <Image
               src={getPlaylistImage(playlist)}
               alt="Playlist icon"
-              fallbackSrc={backgroundImg}
+              fallbackSrc={backgroundImage}
               className="PlaylistList-playlist-image"
             />
 

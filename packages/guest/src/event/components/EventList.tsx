@@ -34,7 +34,7 @@ const renderEvents = (events: IEvent[], status: string) => {
           >
             <img
               alt={event.name}
-              src={event.imageUrl || '/img/partycover-sm.png'}
+              src={event.imageUrl || '/img/music-monkey.jpg'}
               className="EventList-event-image"
             />
 

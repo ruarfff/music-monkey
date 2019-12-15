@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -6,10 +7,11 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import * as React from 'react'
+import backgroundImage from 'assets/music-monkey.jpg'
 import IEvent from '../IEvent'
+import IAction from 'IAction'
+
 import './EventPicker.scss'
-import IAction from '../../IAction'
 
 interface IEventPickerProps {
   events: IEvent[]
@@ -35,7 +37,7 @@ const EventPicker = ({ events, selectEvent }: IEventPickerProps) => {
                 >
                   <img
                     alt={event.name}
-                    src={event.imageUrl || '/img/partycover-sm.png'}
+                    src={event.imageUrl || backgroundImage}
                     className="EventPicker-event-image"
                   />
 

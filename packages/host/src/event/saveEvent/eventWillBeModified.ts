@@ -2,14 +2,14 @@ import IEvent from 'event/IEvent'
 import SaveEventFormValues from './SaveEventFormValues'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 
 const eventWillBeModified = (
   event: IEvent,
   formValue: SaveEventFormValues
 ): boolean => {
   if (event) {
-    if (formValue.image.url !== backgroundImg) {
+    if (formValue.image.url !== backgroundImage) {
       if (event.imageUrl !== formValue.image.url) {
         return true
       }

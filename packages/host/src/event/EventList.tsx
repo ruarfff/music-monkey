@@ -3,7 +3,7 @@ import { Divider, List, ListItem, ListItemText } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import Image from 'components/Image'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import IEvent from 'event/IEvent'
 import './EventList.scss'
 
@@ -35,9 +35,9 @@ const renderEvents = (events: IEvent[], status: string) => {
             className="EventList-item"
           >
             <Image
-              src={event.imageUrl || backgroundImg}
+              src={event.imageUrl || backgroundImage}
               alt="Event icon"
-              fallbackSrc={backgroundImg}
+              fallbackSrc={backgroundImage}
               className="EventList-event-image"
             />
 

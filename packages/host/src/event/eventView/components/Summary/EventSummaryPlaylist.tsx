@@ -15,7 +15,7 @@ import formatDuration from 'util/formatDuration'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import EditPlaylistPopup from './EditPlaylistPopup'
 import Image from 'components/Image'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import getPlaylistImage from 'playlist/getPlaylistImage'
 import getPlaylistDuration from 'playlist/getPlaylistDuration'
 
@@ -144,7 +144,7 @@ const EventSummaryPlaylist = ({
                     className="playlist-image"
                     src={image}
                     alt="Playlist"
-                    fallbackSrc={backgroundImg}
+                    fallbackSrc={backgroundImage}
                   />
                 </ButtonBase>
               )}

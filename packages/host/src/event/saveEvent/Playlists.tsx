@@ -19,7 +19,7 @@ import IUser from 'user/IUser'
 import IPlaylist from 'playlist/IPlaylist'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
-import backgroundImg from 'assets/partycover.jpg'
+import backgroundImage from 'assets/music-monkey.jpg'
 import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
 import getNumberOfPlaylistTracks from 'playlist/getNumberOfPlaylistTracks'
 import LoadingSpinner from 'loading/LoadingSpinner'
@@ -88,7 +88,7 @@ const Playlists = ({
                 <Image
                   alt={playlist.name}
                   src={getPlaylistImage(playlist)}
-                  fallbackSrc={backgroundImg}
+                  fallbackSrc={backgroundImage}
                   className="Playlists-image"
                 />
               </ListItemAvatar>
