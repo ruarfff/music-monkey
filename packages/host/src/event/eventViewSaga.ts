@@ -4,8 +4,6 @@ import IAction from 'IAction'
 import { deleteEvent, getEventById, updateEvent } from 'event/eventClient'
 import IEventSettings from 'event/IEventSettings'
 import { EVENT_PLAYLIST_FETCHED } from 'event/eventPlaylist/eventPlaylistActions'
-import IPlaylistItem from 'playlist/IPlaylistItem'
-import { getTracksFeatures } from 'playlist/playlistActions'
 import {
   EVENT_DELETE_FAILED,
   EVENT_DELETE_INITIATED,
@@ -32,15 +30,6 @@ function* fetchEventByIdFlow(action: IAction) {
     }
     yield put({ type: EVENT_FETCHED_BY_ID, payload: omit(event, ['playlist']) })
     yield put({ type: EVENT_PLAYLIST_FETCHED, payload: playlist })
-    const trackIds = [] as string[]
-    if (playlist.tracks.items.length > 0) {
-      playlist.tracks.items.forEach((track: IPlaylistItem) => {
-        trackIds.push(track.track.id)
-      })
-      if (trackIds.length > 0) {
-        yield put(getTracksFeatures(trackIds))
-      }
-    }
   } catch (err) {
     yield put({ type: EVENT_FETCH_BY_ID_ERROR, payload: err })
   }

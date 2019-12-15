@@ -28,10 +28,7 @@ const mapDispatchToProps = {
 }
 
 const EventViewContainer = withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(EventView)
+  connect(mapStateToProps, mapDispatchToProps)(EventView)
 )
 
 export default EventViewContainer

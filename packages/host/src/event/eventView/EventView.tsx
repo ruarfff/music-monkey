@@ -1,3 +1,4 @@
+import React from 'react'
 import AppBar from '@material-ui/core/AppBar/AppBar'
 import { WithStyles } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid/Grid'
@@ -6,7 +7,6 @@ import Tab from '@material-ui/core/Tab/Tab'
 import Tabs from '@material-ui/core/Tabs/Tabs'
 import Typography from '@material-ui/core/Typography/Typography'
 import isEmpty from 'lodash/isEmpty'
-import * as React from 'react'
 import { RouteComponentProps } from 'react-router'
 import IAction from 'IAction'
 import InviteCopyAlert from 'components/InviteLink/InviteCopyAlert'
@@ -70,7 +70,7 @@ function TabContainer({ children, dir }: any) {
 class EventView extends React.Component<
   IEventViewProps & WithStyles,
   IEventViewState
-  > {
+> {
   public state = {
     tabIndex: 0
   }
