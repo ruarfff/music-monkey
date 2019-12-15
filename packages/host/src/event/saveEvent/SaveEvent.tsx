@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Formik,
-  FormikProps,
-  FormikHelpers,
-  useFormikContext,
-  Form
-} from 'formik'
+import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import { AppBar, Tabs, Tab, ButtonGroup, Button } from '@material-ui/core'
 import debounce from 'just-debounce-it'
+import { useSnackbarAlert } from 'notification/alert'
 import IUser from 'user/IUser'
 import { getEventById } from 'event/eventClient'
 import IEvent from 'event/IEvent'
@@ -35,6 +30,7 @@ interface SaveEventProps extends RouteComponentProps {
 const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
   const [eventToEdit, setEventToEdit] = useState<IEvent>()
   const [tabIndex, setTabIndex] = useState(0)
+  const { showSuccess, showError } = useSnackbarAlert()
   const eventIdFromPath = match.params['eventId']
 
   useEffect(() => {
@@ -61,9 +57,11 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
           updateEventFlow(eventToEdit!, values)
             .then(event => {
               setEventToEdit(event)
+              showSuccess('Event Saved')
               console.log('Success')
             })
             .catch(err => {
+              showError('Could not save event')
               console.error(err)
             })
             .finally(() => {
@@ -88,13 +86,12 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
 
   const AutoSave = ({ debounceMs }: { debounceMs: number }) => {
     const formik = useFormikContext()
-    const [lastSaved, setLastSaved] = React.useState<string>('')
     const debouncedSubmit = React.useCallback(
       debounce(() => {
         console.log('deb')
         if (!formik.isSubmitting && !!eventToEdit) {
           console.log('! sub deb')
-          formik.submitForm().then(() => setLastSaved(new Date().toISOString()))
+          formik.submitForm()
         }
       }, debounceMs),
       [debounceMs, formik.submitForm]
@@ -104,15 +101,7 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
       debouncedSubmit()
     }, [debouncedSubmit, formik.values])
 
-    return (
-      <>
-        {!!formik.isSubmitting
-          ? 'saving...'
-          : lastSaved !== ''
-          ? `Last Saved: ${lastSaved}`
-          : null}
-      </>
-    )
+    return <></>
   }
 
   return (
@@ -122,7 +111,7 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
       validationSchema={FormValidationSchema}
       onSubmit={handleSubmit}
     >
-      {({}: FormikProps<SaveEventFormValues>) => {
+      {() => {
         return (
           <Form className="SaveEvent-root">
             <AutoSave debounceMs={1000} />

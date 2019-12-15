@@ -3,9 +3,9 @@ import { Grid, Tabs, Tab, Badge } from '@material-ui/core'
 import { FieldProps, Field } from 'formik'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
-import { useSnackbar } from 'notistack'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import { addTracksToPlaylist } from 'playlist/playlistClient'
+import { useSnackbarAlert } from 'notification/alert'
 import IAction from 'IAction'
 import TrackSearch from 'search/TrackSearch'
 import ITrack from 'track/ITrack'
@@ -27,10 +27,10 @@ const AddTracks = ({
   recommendedTracks,
   getRecommendations
 }: AddTracksProps) => {
-  const { enqueueSnackbar } = useSnackbar()
   const [tabIndex, setTabIndex] = useState(0)
   const [searchedTracks, setSearchedTracks] = useState([] as ITrack[])
   const [isLoading, setIsLoading] = useState(false)
+  const { showSuccess, showError } = useSnackbarAlert()
 
   useEffect(() => {
     if (isEmpty(recommendedTracks)) {
@@ -47,19 +47,29 @@ const AddTracks = ({
     <Grid container className="AddTracks-root" spacing={2}>
       <Field name="tracks">
         {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
-          const handleAddTrack = (track: ITrack) => {
-            addTracksToPlaylist(playlist.id, [track.uri])
-            setFieldValue('tracks', [...value, track])
-            enqueueSnackbar('Track Added', { variant: 'success' })
+          const handleAddTrack = async (track: ITrack) => {
+            try {
+              await addTracksToPlaylist(playlist.id, [track.uri])
+              setFieldValue('tracks', [...value, track])
+              showSuccess('Track Added')
+            } catch (err) {
+              console.log(err)
+              showError('Failed to add track')
+            }
           }
 
           const handleAddTracks = (tracks: ITrack[]) => {
-            addTracksToPlaylist(
-              playlist.id,
-              tracks.map(track => track.uri)
-            )
-            setFieldValue('tracks', [...value, ...tracks])
-            enqueueSnackbar('Tracks Added', { variant: 'success' })
+            try {
+              addTracksToPlaylist(
+                playlist.id,
+                tracks.map(track => track.uri)
+              )
+              setFieldValue('tracks', [...value, ...tracks])
+              showSuccess('Track Added')
+            } catch (err) {
+              console.log(err)
+              showError('Failed to add track')
+            }
           }
 
           const handleTracksChanges = (tracks: ITrack[]) => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Formik, FormikProps, FormikHelpers, Field, FieldProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import * as Yup from 'yup'
+import { useSnackbarAlert } from 'notification/alert'
 import IUser from 'user/IUser'
 import createEventFlow from './createEventFlow'
 import EventInitializeDialog from './EventInitializeDialog'
@@ -18,17 +19,18 @@ interface CreateEventProps extends RouteComponentProps {
 
 const CreateEvent = ({ user, history }: CreateEventProps) => {
   const [openInitDialog, setOpenInitDialog] = useState(true)
+  const { showSuccess, showError } = useSnackbarAlert()
 
   const handleSubmit = async (
     values: CreateEventFormValues,
     { setSubmitting }: FormikHelpers<CreateEventFormValues>
   ) => {
-    setSubmitting(true)
     try {
       const event = await createEventFlow(values)
       setSubmitting(false)
       history.push('/events/' + event.eventId + '/edit')
     } catch (err) {
+      showError('Could not create event')
       console.error(err)
     }
   }
@@ -79,6 +81,7 @@ const CreateEvent = ({ user, history }: CreateEventProps) => {
                         playlist.tracks.items.map(item => item.track)
                       )
                       submitForm()
+                      showSuccess('Event Saved')
                     }}
                   />
                 )

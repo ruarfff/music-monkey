@@ -29,6 +29,8 @@ const updateEventFlow = async (
     }
   }
 
+  const cachedPlaylist = event.playlist
+
   const savedEvent = await updateEvent({
     ...event,
     imageUrl,
@@ -43,7 +45,7 @@ const updateEventFlow = async (
     playlist: undefined
   })
 
-  return savedEvent
+  return { ...savedEvent, playlist: cachedPlaylist }
 }
 
 export default updateEventFlow
