@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Formik, FormikProps, FormikHelpers } from 'formik'
+import {
+  Formik,
+  FormikProps,
+  FormikHelpers,
+  useFormikContext,
+  Form
+} from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
-import { AppBar, Tabs, Tab } from '@material-ui/core'
+import { AppBar, Tabs, Tab, ButtonGroup, Button } from '@material-ui/core'
+import debounce from 'just-debounce-it'
 import IUser from 'user/IUser'
-import LoadingSpinner from 'loading/LoadingSpinner'
 import { getEventById } from 'event/eventClient'
 import IEvent from 'event/IEvent'
 import IAction from 'IAction'
@@ -14,9 +20,10 @@ import SaveEventFormValues from './SaveEventFormValues'
 import FormValidationSchema from './FormValidationSchema'
 import TabPanel from './TabPanel'
 import saveEventInitialFormValues from './saveEventInitialFormValues'
+import AddTracks from './AddTracksContainer'
 import eventWillBeModified from './eventWillBeModified'
 import updateEventFlow from './updateEventFlow'
-import AddTracks from './AddTracksContainer'
+import LinkButton from 'components/LinkButton'
 
 import './SaveEvent.scss'
 
@@ -43,20 +50,33 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
     setTabIndex(newValue)
   }
 
-  const handleSubmit = async (
+  const handleSubmit = (
     values: SaveEventFormValues,
     { setSubmitting }: FormikHelpers<SaveEventFormValues>
   ) => {
-    try {
-      if (eventWillBeModified(eventToEdit!, values)) {
-        setSubmitting(true)
-        const event = await updateEventFlow(eventToEdit!, values)
-        setEventToEdit(event)
-        setSubmitting(false)
-      }
-    } catch (err) {
-      console.error(err)
-    }
+    return new Promise(resolve =>
+      setTimeout(() => {
+        if (eventWillBeModified(eventToEdit!, values)) {
+          console.log('submit called')
+          updateEventFlow(eventToEdit!, values)
+            .then(event => {
+              setEventToEdit(event)
+              console.log('Success')
+            })
+            .catch(err => {
+              console.error(err)
+            })
+            .finally(() => {
+              console.log('done')
+              setSubmitting(false)
+              resolve()
+            })
+        } else {
+          console.log('no modification')
+          setSubmitting(false)
+        }
+      }, 1000)
+    )
   }
 
   function a11yProps(index: any) {
@@ -66,6 +86,35 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
     }
   }
 
+  const AutoSave = ({ debounceMs }: { debounceMs: number }) => {
+    const formik = useFormikContext()
+    const [lastSaved, setLastSaved] = React.useState<string>('')
+    const debouncedSubmit = React.useCallback(
+      debounce(() => {
+        console.log('deb')
+        if (!formik.isSubmitting && !!eventToEdit) {
+          console.log('! sub deb')
+          formik.submitForm().then(() => setLastSaved(new Date().toISOString()))
+        }
+      }, debounceMs),
+      [debounceMs, formik.submitForm]
+    )
+
+    React.useEffect(() => {
+      debouncedSubmit()
+    }, [debouncedSubmit, formik.values])
+
+    return (
+      <>
+        {!!formik.isSubmitting
+          ? 'saving...'
+          : lastSaved !== ''
+          ? `Last Saved: ${lastSaved}`
+          : null}
+      </>
+    )
+  }
+
   return (
     <Formik
       enableReinitialize
@@ -73,9 +122,10 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
       validationSchema={FormValidationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }: FormikProps<SaveEventFormValues>) => {
+      {({}: FormikProps<SaveEventFormValues>) => {
         return (
-          <div className="SaveEvent-root">
+          <Form className="SaveEvent-root">
+            <AutoSave debounceMs={1000} />
             <AppBar position="static" color="default">
               <Tabs
                 value={tabIndex}
@@ -90,19 +140,14 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
                 <Tab label="3 Share" {...a11yProps(2)} />
               </Tabs>
             </AppBar>
-            {isSubmitting && (
-              <div className="SaveEvent-loading">
-                <LoadingSpinner />
-              </div>
-            )}
-            {/* <ButtonGroup
+
+            <ButtonGroup
               fullWidth
               aria-label="event edit actions"
               className="SaveEvent-actions"
             >
               <LinkButton
-                to={`/events/${hasEvent ? eventToEdit!.eventId : ''}`}
-                endIcon={<NavigateNextIcon />}
+                to={`/events/${!!eventToEdit ? eventToEdit!.eventId : ''}`}
               >
                 Go to event
               </LinkButton>
@@ -114,7 +159,7 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
               >
                 Delete
               </Button>
-            </ButtonGroup> */}
+            </ButtonGroup>
 
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>
@@ -135,7 +180,7 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
                 <Summary event={eventToEdit!} />
               </TabPanel>
             )}
-          </div>
+          </Form>
         )
       }}
     </Formik>

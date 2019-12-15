@@ -27,6 +27,11 @@ const createEventFlow = async ({
     description: eventDescription,
     playlist,
     playlistUrl: playlist.external_urls.spotify,
+    settings: {
+      dynamicVotingEnabled: false,
+      autoAcceptSuggestionsEnabled: false,
+      suggestingPlaylistsEnabled: false
+    },
     startDateTime: moment()
       .utc()
       .add(2, 'hours')

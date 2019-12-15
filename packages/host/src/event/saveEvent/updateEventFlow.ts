@@ -39,7 +39,8 @@ const updateEventFlow = async (
     endDateTime,
     organizer,
     description: eventDescription,
-    name: eventName
+    name: eventName,
+    playlist: undefined
   })
 
   return savedEvent
