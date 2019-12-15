@@ -110,13 +110,13 @@ export const searchForTracks = async (searchTerm: string) => {
 }
 
 export const getTracksFeatures = async (trackIds: string[]) => {
-  const response = await client.get(
-    `/tracks/audio-features?trackUris=${trackIds.join(',')}`,
-    {
-      withCredentials: true
-    }
-  )
-  return response.data
+  //   const response = await client.get(
+  //     `/tracks/audio-features?trackUris=${trackIds.join(',')}`,
+  //     {
+  //       withCredentials: true
+  //     }
+  //   )
+  return []
 }
 
 export const updatePlaylistDetails = async (

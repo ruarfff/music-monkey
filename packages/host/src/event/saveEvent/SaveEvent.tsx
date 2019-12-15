@@ -143,7 +143,7 @@ const SaveEvent = ({ user, deleteEvent, match, history }: SaveEventProps) => {
               <Button
                 onClick={() => {
                   deleteEvent(eventIdFromPath)
-                  history.push('/catalogue/all-events')
+                  history.push('/')
                 }}
               >
                 Delete

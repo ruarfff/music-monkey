@@ -20,7 +20,7 @@ import {
   TOGGLE_DYNAMIC_VOTING,
   TOGGLE_DYNAMIC_VOTING_ERROR,
   TOGGLE_SUGGESTING_PLAYLISTS
-} from './eventViewActions'
+} from './eventView/eventViewActions'
 
 function* fetchEventByIdFlow(action: IAction) {
   const eventId: string = action.payload
@@ -57,7 +57,7 @@ export function* watchFetchEventByIdNoLoading() {
 function* deleteEventFlow(action: IAction) {
   try {
     yield call(deleteEvent, action.payload)
-    yield put({ type: EVENT_DELETE_SUCCESSFUL })
+    yield put({ type: EVENT_DELETE_SUCCESSFUL, eventId: action.payload })
   } catch (err) {
     yield put({ type: EVENT_DELETE_FAILED, payload: err })
   }

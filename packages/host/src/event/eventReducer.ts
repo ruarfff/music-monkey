@@ -8,7 +8,8 @@ import {
   EVENT_FETCHED_BY_ID,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_DYNAMIC_VOTING,
-  TOGGLE_SUGGESTING_PLAYLISTS
+  TOGGLE_SUGGESTING_PLAYLISTS,
+  EVENT_DELETE_SUCCESSFUL
 } from './eventView/eventViewActions'
 import Action from 'IAction'
 import {
@@ -228,6 +229,11 @@ export default function event(
         errors: {},
         createEventStep: 0,
         showSavedDialogue: false
+      }
+    case EVENT_DELETE_SUCCESSFUL:
+      return {
+        ...state,
+        events: state.events.filter(item => item.eventId !== payload)
       }
     case EVENT_SAVED:
       return {

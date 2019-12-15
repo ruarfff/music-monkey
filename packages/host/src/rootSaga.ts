@@ -21,7 +21,7 @@ import {
   watchToggleAutoAcceptSuggestions,
   watchToggleDynamicVoting,
   watchToggleSuggestingPlaylists
-} from 'event/eventView/eventViewSaga'
+} from 'event/eventViewSaga'
 import {
   watchFetchAddTrackToPlaylist,
   watchFetchMorePlaylistsFlow,
