@@ -72,7 +72,7 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
-    "@material-ui/codemod": "^1.0.0-rc.0",
+    "@material-ui/codemod": "^4.5.0",
     "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.2.0",
     "@types/autosuggest-highlight": "^3.1.0",
