@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
-import { AppBar, Tabs, Tab, ButtonGroup, Button } from '@material-ui/core'
+import { AppBar, Tabs, Tab } from '@material-ui/core'
 import debounce from 'just-debounce-it'
 import { useSnackbarAlert } from 'notification/alert'
 import IUser from 'user/IUser'
@@ -15,7 +15,6 @@ import saveEventInitialFormValues from './saveEventInitialFormValues'
 import AddTracks from './AddTracksContainer'
 import eventWillBeModified from './eventWillBeModified'
 import updateEventFlow from './updateEventFlow'
-import LinkButton from 'components/LinkButton'
 import ShareEvent from './ShareEventContainer'
 
 import './SaveEvent.scss'
@@ -126,23 +125,6 @@ const SaveEvent = ({
               </Tabs>
             </AppBar>
 
-            <ButtonGroup
-              fullWidth
-              aria-label="event edit actions"
-              className="SaveEvent-actions"
-            >
-              <LinkButton to={`/events/${eventIdFromPath}`}>
-                Go to event
-              </LinkButton>
-              <Button
-                onClick={() => {
-                  deleteEvent(eventIdFromPath)
-                  history.push('/')
-                }}
-              >
-                Delete
-              </Button>
-            </ButtonGroup>
             {tabIndex === 0 && (
               <TabPanel value={tabIndex} index={0}>
                 <AddTracks playlist={event.playlist!} />

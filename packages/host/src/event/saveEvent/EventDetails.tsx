@@ -26,12 +26,17 @@ const EventDetails = () => {
       </Grid>
       <Grid item xs={12}>
         <Field name="startDateTime">
-          {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
+          {({
+            field: { value },
+            form: { setFieldValue, values }
+          }: FieldProps) => {
             return (
               <EventDateTimePicker
-                disablePast={true}
                 value={value}
                 onChange={(startDateTime: Date) => {
+                  if (startDateTime > values.endDateTime) {
+                    setFieldValue('endDateTime', startDateTime)
+                  }
                   setFieldValue('startDateTime', startDateTime)
                 }}
                 label="Starting At"
@@ -43,11 +48,16 @@ const EventDetails = () => {
 
       <Grid item xs={12}>
         <Field name="endDateTime">
-          {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
+          {({
+            field: { value },
+            form: { setFieldValue, values }
+          }: FieldProps) => (
             <EventDateTimePicker
-              disablePast={true}
               value={value}
               onChange={(endDateTime: Date) => {
+                if (endDateTime < values.startDateTime) {
+                  setFieldValue('startDateTime', endDateTime)
+                }
                 setFieldValue('endDateTime', endDateTime)
               }}
               label="Finishing At"

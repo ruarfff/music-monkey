@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Input, Button, LinearProgress, ButtonGroup } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import { Field, FieldProps } from 'formik'
 import CopyToClipboard from 'react-copy-to-clipboard'
@@ -6,7 +7,7 @@ import uploadImage from 'upload/uploadImage'
 import { useSnackbarAlert } from 'notification/alert'
 import IEvent from 'event/IEvent'
 import EmailPreview from './EmailPreview'
-import { Input, Button, LinearProgress } from '@material-ui/core'
+import LinkButton from 'components/LinkButton'
 
 import './ShareEvent.scss'
 
@@ -27,7 +28,16 @@ const ShareEvent = ({ inviteId, event }: IShareEventProps) => {
   const inviteUrl = `https://guests.musicmonkey.io/invite/${inviteId}`
 
   return (
-    <Grid item container xs={12}>
+    <Grid item container xs={12} spacing={1}>
+      <Grid item={true} xs={12}>
+        <ButtonGroup
+          fullWidth
+          aria-label="event edit actions"
+          className="SaveEvent-actions"
+        >
+          <LinkButton to={`/events/${event.eventId}`}>Go to event</LinkButton>
+        </ButtonGroup>
+      </Grid>
       <Grid item={true} xs={12}>
         <Field name="imageUrl">
           {({ form: { setFieldValue } }: FieldProps) => {
