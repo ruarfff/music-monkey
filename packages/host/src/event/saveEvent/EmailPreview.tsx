@@ -1,26 +1,27 @@
 import React from 'react'
 import logo from 'assets/marvin.png'
 import IEvent from 'event/IEvent'
+import { isEmpty } from 'lodash'
 import './EmailPreview.scss'
 
 interface IEmailPreviewProps {
   event: IEvent
-  emailText: string
 }
 
-const EmailPreview = ({ event, emailText }: IEmailPreviewProps) => {
+const EmailPreview = ({ event }: IEmailPreviewProps) => {
+  const bgStyle = `no-repeat url('${event.imageUrl ||
+    'https://musicmonkey.io/img/music-monkey.jpg'}') center`
+  if (isEmpty(event)) {
+    return null
+  }
   return (
     <div
       className="EmailPreview-root"
       style={{
-        background: `no-repeat url(${event.imageUrl ||
-          'https://musicmonkey.io/img/music-monkey.jpg'}) center`,
+        background: bgStyle,
         backgroundSize: 'cover'
       }}
     >
-      <div className="EmailPreview-title">
-        <span>MusicMonkey</span>
-      </div>
       <div className="EmailPreview-content">
         <div className="EmailPreview-logo">
           <img src={logo} alt="monkey logo" />
@@ -35,7 +36,7 @@ const EmailPreview = ({ event, emailText }: IEmailPreviewProps) => {
             {event.startDateTime.format('D')}
           </div>
         </div>
-        <div className="EmailPreview-text">{emailText}</div>
+        <div className="EmailPreview-text">{event.description}</div>
       </div>
     </div>
   )

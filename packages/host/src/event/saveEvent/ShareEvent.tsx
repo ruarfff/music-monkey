@@ -1,27 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid'
+import { Field, FieldProps } from 'formik'
+import CopyToClipboard from 'react-copy-to-clipboard'
+import uploadImage from 'upload/uploadImage'
+import { useSnackbarAlert } from 'notification/alert'
 import IEvent from 'event/IEvent'
-import IAction from 'IAction'
-import InviteLink from 'components/InviteLink/InviteLink'
 import EmailPreview from './EmailPreview'
+import { Input, Button, LinearProgress } from '@material-ui/core'
 
 import './ShareEvent.scss'
 
 interface IShareEventProps {
   event: IEvent
   inviteId: string
-  message: string
   shareByEmails(emails: string[], emailText: string, event: IEvent): void
-  onCopyEventInvite(): void
-  clearMessage(): IAction
 }
 
-const ShareEvent = ({
-  inviteId,
-  onCopyEventInvite,
-  event,
-  message
-}: IShareEventProps) => {
+const ShareEvent = ({ inviteId, event }: IShareEventProps) => {
+  const [loading, setLoading] = useState(false)
+  const { showError, showSuccess } = useSnackbarAlert()
   if (!event) {
     return null
   }
@@ -30,7 +27,61 @@ const ShareEvent = ({
   const inviteUrl = `https://guests.musicmonkey.io/invite/${inviteId}`
 
   return (
-    <>
+    <Grid item container xs={12}>
+      <Grid item={true} xs={12}>
+        <Field name="imageUrl">
+          {({ form: { setFieldValue } }: FieldProps) => {
+            const onFileDialog = async (e: any) => {
+              const files: any[] = Array.from(e.target.files)
+
+              if (files.length > 1) {
+                const msg = 'Only 1 images can be uploaded at a time'
+                showError(msg)
+                return
+              }
+
+              const types = ['image/png', 'image/jpeg', 'image/gif']
+              const file = files[0]
+
+              if (types.every(type => file.type !== type)) {
+                showError(`'${file.type}' is not a supported format`)
+                return
+              }
+
+              setLoading(true)
+              try {
+                const uploadResponse = await uploadImage(file.name, file)
+                setFieldValue('imageUrl', uploadResponse.imgUrl)
+              } catch (err) {
+                console.error(err)
+                showError(`'Failed to upload image`)
+              }
+              setLoading(false)
+            }
+
+            return loading ? (
+              <LinearProgress variant="query" color="secondary" />
+            ) : (
+              <Button
+                variant="contained"
+                component="label"
+                color="secondary"
+                fullWidth
+              >
+                Upload new image
+                <Input
+                  type="file"
+                  onChange={onFileDialog}
+                  style={{ display: 'none' }}
+                />
+              </Button>
+            )
+          }}
+        </Field>
+      </Grid>
+      <Grid item={true} xs={12}>
+        <EmailPreview event={event} />
+      </Grid>
       <Grid item={true} xs={12}>
         <a
           className="resp-sharing-button__link"
@@ -95,12 +146,27 @@ const ShareEvent = ({
         </a>
       </Grid>
       <Grid item={true} xs={12}>
-        <EmailPreview event={event} emailText={message} />
+        <CopyToClipboard text={inviteUrl} onCopy={() => showSuccess('Copied')}>
+          <div className="resp-sharing-button__link">
+            <div className="resp-sharing-button resp-sharing-button--email resp-sharing-button--large">
+              <div
+                aria-hidden="true"
+                className="resp-sharing-button__icon resp-sharing-button__icon--solid"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 561 561">
+                  <path
+                    d="M395.25,0h-306c-28.05,0-51,22.95-51,51v357h51V51h306V0z M471.75,102h-280.5c-28.05,0-51,22.95-51,51v357
+			c0,28.05,22.95,51,51,51h280.5c28.05,0,51-22.95,51-51V153C522.75,124.95,499.8,102,471.75,102z M471.75,510h-280.5V153h280.5V510
+			z"
+                  />
+                </svg>
+              </div>
+              Copy Link
+            </div>
+          </div>
+        </CopyToClipboard>
       </Grid>
-      <Grid item={true} xs={12}>
-        <InviteLink inviteId={inviteId} onCopyEventInvite={onCopyEventInvite} />
-      </Grid>
-    </>
+    </Grid>
   )
 }
 

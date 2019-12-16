@@ -23,11 +23,7 @@ const saveEventInitialFormValues = (
         eventDescription: event.description || '',
         organizer: event.organizer,
         tracks: getPlaylistTracks(event.playlist!),
-        image: {
-          name: 'event.jpg',
-          data: null,
-          url: event.imageUrl || backgroundImage
-        },
+        imageUrl: event.imageUrl || backgroundImage,
         genre: event.genre,
         location: event.location,
         settings: event.settings || defaultSettings,
@@ -40,7 +36,7 @@ const saveEventInitialFormValues = (
         eventDescription: '',
         organizer: user.displayName,
         tracks: undefined,
-        image: { name: 'event.jpg', data: null, url: backgroundImage },
+        imageUrl: backgroundImage,
         genre: 'none',
         location: { address: 'Nowhere', latLng: { lat: 0, lng: 0 } },
         settings: defaultSettings,

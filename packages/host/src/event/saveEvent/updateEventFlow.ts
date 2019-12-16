@@ -1,4 +1,3 @@
-import uploadImage from 'upload/uploadImage'
 import IEvent from 'event/IEvent'
 import { updateEvent } from 'event/eventClient'
 import SaveEventFormValues from './SaveEventFormValues'
@@ -11,7 +10,7 @@ const updateEventFlow = async (
     eventName,
     eventDescription,
     organizer,
-    image,
+    imageUrl,
     genre,
     location,
     settings,
@@ -19,18 +18,7 @@ const updateEventFlow = async (
     endDateTime
   }: SaveEventFormValues
 ) => {
-  let imageUrl = event.imageUrl
-  if (imageUrl !== image.url) {
-    try {
-      const uploadResponse = await uploadImage(image.name, image.data)
-      imageUrl = uploadResponse.imgUrl
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   const cachedPlaylist = event.playlist
-
   const savedEvent = await updateEvent({
     ...event,
     imageUrl,

@@ -8,7 +8,6 @@ import IUser from 'user/IUser'
 import IEvent from 'event/IEvent'
 import IAction from 'IAction'
 import EventDetails from './EventDetails'
-import Summary from './Summary'
 import SaveEventFormValues from './SaveEventFormValues'
 import FormValidationSchema from './FormValidationSchema'
 import TabPanel from './TabPanel'
@@ -17,6 +16,7 @@ import AddTracks from './AddTracksContainer'
 import eventWillBeModified from './eventWillBeModified'
 import updateEventFlow from './updateEventFlow'
 import LinkButton from 'components/LinkButton'
+import ShareEvent from './ShareEventContainer'
 
 import './SaveEvent.scss'
 
@@ -40,9 +40,7 @@ const SaveEvent = ({
   const [tabIndex, setTabIndex] = useState(0)
   const { showSuccess, showError } = useSnackbarAlert()
   const eventIdFromPath = match.params['eventId']
-  console.log(JSON.stringify(event, null, 4))
   useEffect(() => {
-    console.log('get   ' + eventIdFromPath)
     getEventById(eventIdFromPath)
     // eslint-disable-next-line
   }, [eventIdFromPath])
@@ -57,24 +55,20 @@ const SaveEvent = ({
   ) => {
     return new Promise(resolve => {
       if (eventWillBeModified(event, values)) {
-        console.log('submit called')
         updateEventFlow(event, values)
           .then(event => {
             getEventById(eventIdFromPath)
             showSuccess('Event Saved')
-            console.log('Success')
           })
           .catch(err => {
             showError('Could not save event')
             console.error(err)
           })
           .finally(() => {
-            console.log('done')
             setSubmitting(false)
             resolve()
           })
       } else {
-        console.log('no modification')
         setSubmitting(false)
         resolve()
       }
@@ -92,9 +86,7 @@ const SaveEvent = ({
     const formik = useFormikContext()
     const debouncedSubmit = React.useCallback(
       debounce(() => {
-        console.log('deb')
         if (!formik.isSubmitting) {
-          console.log('! sub deb')
           formik.submitForm()
         }
       }, debounceMs),
@@ -163,7 +155,10 @@ const SaveEvent = ({
             )}
             {tabIndex === 2 && (
               <TabPanel value={tabIndex} index={2}>
-                <Summary event={event} />
+                <ShareEvent
+                  event={event}
+                  inviteId={event && event.invites ? event.invites[0] : ''}
+                />
               </TabPanel>
             )}
           </Form>

@@ -53,7 +53,7 @@ const AddTracks = ({
               setFieldValue('tracks', [...value, track])
               showSuccess('Track Added')
             } catch (err) {
-              console.log(err)
+              console.error(err)
               showError('Failed to add track')
             }
           }
@@ -67,7 +67,7 @@ const AddTracks = ({
               setFieldValue('tracks', [...value, ...tracks])
               showSuccess('Track Added')
             } catch (err) {
-              console.log(err)
+              console.error(err)
               showError('Failed to add track')
             }
           }
