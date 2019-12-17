@@ -12,6 +12,7 @@ const CatalogueBrowser = lazy(() =>
 )
 const EventView = lazy(() => import('event/eventView/EventViewContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
+const Requests = lazy(() => import('requests/RequestsContainer'))
 const PlaylistListView = lazy(() =>
   import('playlist/PlaylistListViewContainer')
 )
@@ -62,6 +63,11 @@ export const routes = [
     component: AccountView,
     exact: true,
     path: '/account'
+  },
+  {
+    component: Requests,
+    exact: true,
+    path: '/requests'
   },
   {
     component: Insights,

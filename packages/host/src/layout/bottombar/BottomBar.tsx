@@ -22,9 +22,9 @@ const checkLocation = (pathname: string, path: string) => {
 const BottomBar = ({ location, event }: IBottomBar) => {
   const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
-  const eventsLink = eventId ? `/events/${eventId}` : '/'
+  const eventsLink = '/' //eventId ? `/events/${eventId}` : '/'
   const playlistsLink = '/playlists'
-  const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
+  const requestsLink = '/requests' //eventId ? `/requests/${eventId}` : '/requests'
   const finderLink = eventId ? `/finder/${eventId}` : '/finder'
   const accountLink = '/account'
   const createLink = '/create-event'
