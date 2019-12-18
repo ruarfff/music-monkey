@@ -10,14 +10,16 @@ import CreateEventFormValues from './CreateEventFormValues'
 import SeedPlaylist from './SeedPlaylistContainer'
 import IPlaylist from 'playlist/IPlaylist'
 import LoadingSpinner from 'loading/LoadingSpinner'
+import IAction from 'IAction'
 
 import './CreateEvent.scss'
 
 interface CreateEventProps extends RouteComponentProps {
   user: IUser
+  getEvents(): IAction
 }
 
-const CreateEvent = ({ user, history }: CreateEventProps) => {
+const CreateEvent = ({ user, history, getEvents }: CreateEventProps) => {
   const [openInitDialog, setOpenInitDialog] = useState(true)
   const { showSuccess, showError } = useSnackbarAlert()
 
@@ -27,6 +29,7 @@ const CreateEvent = ({ user, history }: CreateEventProps) => {
   ) => {
     try {
       const event = await createEventFlow(values)
+      getEvents()
       setSubmitting(false)
       history.push('/events/' + event.eventId + '/edit')
     } catch (err) {
