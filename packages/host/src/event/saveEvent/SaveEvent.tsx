@@ -36,7 +36,6 @@ const SaveEvent = ({
   match,
   history
 }: SaveEventProps) => {
-  const [tabIndex, setTabIndex] = useState(0)
   const { showSuccess, showError } = useSnackbarAlert()
   const eventIdFromPath = match.params['eventId']
   useEffect(() => {
@@ -44,6 +43,7 @@ const SaveEvent = ({
     // eslint-disable-next-line
   }, [eventIdFromPath])
 
+  const [tabIndex, setTabIndex] = useState(0)
   const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue)
   }
