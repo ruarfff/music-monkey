@@ -6,6 +6,7 @@ import LoadingSpinner from 'loading/LoadingSpinner'
 import IEvent from './IEvent'
 import EventList from './EventList'
 import sortEvents from './sortEvents'
+import { Link } from 'react-router-dom'
 
 interface IEventListViewProps {
   events: IEvent[]
@@ -31,7 +32,8 @@ const EventListView = ({
     return (
       <div>
         <Typography align={'center'} variant={'h6'}>
-          It looks like you don't have any events yet :(
+          It looks like you don't have any events yet :({' '}
+          <Link to="/create-event">Create one?</Link>
         </Typography>
       </div>
     )

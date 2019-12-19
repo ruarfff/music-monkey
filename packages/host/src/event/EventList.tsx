@@ -6,7 +6,8 @@ import {
   ListItemText,
   AppBar,
   Tabs,
-  Tab
+  Tab,
+  Typography
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
@@ -30,7 +31,13 @@ function a11yProps(index: any) {
 }
 
 const renderEvents = (events: IEvent[], status: string) => {
-  if (isEmpty(events)) return null
+  if (isEmpty(events))
+    return (
+      <Typography align={'center'} variant={'h6'}>
+        It looks like you don't have any {status} events :({' '}
+        <Link to="/create-event">Create one?</Link>
+      </Typography>
+    )
 
   const getItemText = (event: IEvent, status: string) => {
     if (status === 'live') return 'Happening Now'
