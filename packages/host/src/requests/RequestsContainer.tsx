@@ -1,15 +1,16 @@
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import IRootState from 'rootState'
-import { getEvents } from 'event/eventActions'
 import Requests from './Requests'
 
 const mapStateToProps = (state: IRootState) => ({
-  events: state.event.events,
-  eventsLoading: state.event.eventsLoading
+  selectedEvent: state.eventView.event
 })
 
-const mapDispatchToProps = { getEvents }
+const mapDispatchToProps = {}
 
-const RequestsContainer = connect(mapStateToProps, mapDispatchToProps)(Requests)
+const RequestsContainer = withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Requests)
+)
 
 export default RequestsContainer

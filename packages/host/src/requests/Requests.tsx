@@ -1,75 +1,71 @@
 import React, { useEffect } from 'react'
+import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
+import { RouteComponentProps } from 'react-router'
+import SwipeableViews from 'react-swipeable-views'
 import IEvent from 'event/IEvent'
-import sortBy from 'lodash/sortBy'
-import uniqBy from 'lodash/uniqBy'
-import isEmpty from 'lodash/isEmpty'
-import flattenDeep from 'lodash/flattenDeep'
-import LoadingSpinner from 'loading/LoadingSpinner'
-import ITrack from 'track/ITrack'
-import { Paper } from '@material-ui/core'
-import IAction from 'IAction'
-
+import useSwipeTabsIndex from 'util/useSwipeTabsIndex'
+import AcceptedTracks from './AcceptedTracksContainer'
+import MaybeTracks from './MaybeTracksContainer'
+import RejectedTracks from './RejectedTracksContainer'
 import './Requests.scss'
 
-interface RequestsProps {
-  events: IEvent[]
-  eventsLoading: boolean
-  getEvents(): IAction
+interface IRequestsProps extends RouteComponentProps<any> {
+  selectedEvent: IEvent
 }
 
-const Requests = ({ events, eventsLoading, getEvents }: RequestsProps) => {
+const Requests = ({ selectedEvent, match }: IRequestsProps) => {
+  const eventId = match.params.eventId
   useEffect(() => {
-    if (isEmpty(events) && !eventsLoading) {
-      getEvents()
+    const selectedEventId = selectedEvent ? selectedEvent.eventId : ''
+    if (eventId && selectedEventId !== eventId) {
+      // setEventId(eventId)
     }
-  })
-  if (eventsLoading) {
-    return <LoadingSpinner />
-  }
-  const popularTracks = sortBy(
-    uniqBy(
-      flattenDeep<ITrack>(
-        events.map(event =>
-          event.playlist
-            ? event.playlist.tracks.items.map(track => track.track)
-            : []
-        )
-      ),
-      'uri'
-    ),
-    'popularity'
-  )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventId])
+
+  const [tabIndex, handleTabChange] = useSwipeTabsIndex()
+
   return (
-    <Paper className="Requests-root">
-      <div className="listWrapper">
-        {popularTracks &&
-          popularTracks
-            .reverse()
-            .slice(0, 10)
-            .map((track: ITrack | undefined, i) => {
-              return track ? (
-                <div key={i} className="listItem">
-                  <div className="imgSection">
-                    <img
-                      alt="track"
-                      className="trackImg"
-                      src={track.album.images[0].url}
-                    />
-                  </div>
-                  <div className="trackNumber">{i + 1 + '. '}</div>
-                  <div className="nameSection">
-                    <span>{track.name}</span>
-                    <span className="artistName">
-                      {track.album.artists[0].name}
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div key={i} />
-              )
-            })}
-      </div>
-    </Paper>
+    <div>
+      <Divider variant="inset" className="Requests-divider" />
+      <AppBar position="static" color="default">
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          indicatorColor="secondary"
+          textColor="secondary"
+          variant="fullWidth"
+          classes={{ indicator: 'indicator-color' }}
+        >
+          <Tab label="APPROVED" />
+          <Tab label="MAYBE" />
+          <Tab label="DECLINED" />
+        </Tabs>
+      </AppBar>
+      <SwipeableViews axis="x" index={tabIndex} onChangeIndex={handleTabChange}>
+        {tabIndex === 0 ? (
+          <Typography component="div" dir="0">
+            <AcceptedTracks />
+          </Typography>
+        ) : (
+          <div />
+        )}
+        {tabIndex === 1 ? (
+          <Typography component="div" dir="1">
+            <MaybeTracks />
+          </Typography>
+        ) : (
+          <div />
+        )}
+        {tabIndex === 2 ? (
+          <Typography component="div" dir="2">
+            <RejectedTracks />
+          </Typography>
+        ) : (
+          <div />
+        )}
+      </SwipeableViews>
+    </div>
   )
 }
 

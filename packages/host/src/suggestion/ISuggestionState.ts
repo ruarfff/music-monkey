@@ -2,10 +2,11 @@ import IDecoratedSuggestion from './IDecoratedSuggestion'
 import ISuggestion from './ISuggestion'
 
 export default interface ISuggestionState {
+  suggestions: IDecoratedSuggestion[]
   acceptedSuggestions: IDecoratedSuggestion[]
   pendingSuggestions: IDecoratedSuggestion[]
   rejectedSuggestions: IDecoratedSuggestion[]
-  stagedSuggestions:  IDecoratedSuggestion[]
+  stagedSuggestions: IDecoratedSuggestion[]
   savedSuggestion?: ISuggestion
   deletedSuggestion?: ISuggestion
   deletingSuggestion: boolean

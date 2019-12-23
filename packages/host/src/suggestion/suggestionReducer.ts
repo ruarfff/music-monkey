@@ -40,6 +40,7 @@ export default function suggestion(
 
       return {
         ...state,
+        suggestions,
         fetchingSuggestions: false,
         pendingSuggestions,
         rejectedSuggestions,
