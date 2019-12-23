@@ -1,6 +1,6 @@
 import moment from 'moment'
-import IEventSettings from './IEventSettings'
-import IEventState from './IEventState'
+import IEventSettings from 'event/IEventSettings'
+import IEventState from 'event/IEventState'
 
 export default {
   errors: {
@@ -12,7 +12,7 @@ export default {
   },
   events: [],
   createEventStep: 0,
-  savingEvent: {
+  event: {
     description: '',
     imageUrl: '',
     genre: 'None',
@@ -37,5 +37,10 @@ export default {
   showSavedDialogue: false,
   playlistReselected: false,
   shareEventMessage: '',
-  playlistInput: ''
+  playlistInput: '',
+  loading: false,
+  fetchError: {} as Error,
+  copiedToClipboard: false,
+  pendingSuggestions: [],
+  rejectedSuggestions: []
 } as IEventState

@@ -1,6 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import { EVENT_FETCH_BY_ID_INITIATED } from '../event/eventViewActions'
-import IAction from '../IAction'
+import { EVENT_FETCH_BY_ID_INITIATED } from 'event/eventActions'
+import IAction from 'IAction'
 import {
   ADD_TRACK_REQUEST,
   addTrackError,
@@ -172,7 +172,7 @@ function* fetchTracksFeatures({ payload }: IAction) {
   }
 }
 
-const getEventId = (state: any) => state.eventView.event.eventId
+const getEventId = (state: any) => state.event.event.eventId
 
 function* fetchPlaylistEditDetails({ payload }: IAction) {
   try {

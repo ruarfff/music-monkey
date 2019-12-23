@@ -4,7 +4,7 @@ import IRootState from 'rootState'
 import BottomBar from './BottomBar'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.eventView.event
+  event: state.event.event
 })
 
 const mapDispatchToProps = {}

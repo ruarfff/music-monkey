@@ -4,12 +4,12 @@ import {
   toggleAutoAcceptSuggestions,
   toggleDynamicVoting,
   toggleSuggestingPlaylists
-} from 'event/eventViewActions'
+} from 'event/eventActions'
 import { sortPlaylistByVotesDescending } from './eventPlaylistActions'
 import EventPlaylistSummary from './EventPlaylistSummary'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.eventView.event,
+  event: state.event.event,
   playlist: state.eventPlaylist.playlist,
   votes: state.vote.votes
 })

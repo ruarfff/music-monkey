@@ -1,12 +1,12 @@
 import { all } from 'redux-saga/effects'
 import { watchLogin, watchLogout } from 'auth/authSaga'
-import { watchFetchEvents } from 'event/eventSaga'
 import {
   watchMoveItemInEventPlaylist,
   watchSaveEventPlaylist,
   watchSortPlaylistByVotesDescending
 } from 'event/eventPlaylist/eventPlaylistSaga'
 import {
+  watchFetchEvents,
   watchDeleteEvent,
   watchFetchEventById,
   watchFetchEventByIdNoLoading,
@@ -14,7 +14,7 @@ import {
   watchToggleAutoAcceptSuggestions,
   watchToggleDynamicVoting,
   watchToggleSuggestingPlaylists
-} from 'event/eventViewSaga'
+} from 'event/eventSaga'
 import {
   watchFetchAddTrackToPlaylist,
   watchFetchMorePlaylistsFlow,

@@ -2,12 +2,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import IRootState from 'rootState'
 import SaveEvent from './SaveEvent'
-import { deleteEvent, getEventById } from 'event/eventViewActions'
+import { deleteEvent, getEventById } from 'event/eventActions'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  event: { ...state.eventView.event, playlist: state.eventPlaylist.playlist },
-  loading: state.eventView.loading
+  event: { ...state.event.event, playlist: state.eventPlaylist.playlist },
+  loading: state.event.loading
 })
 
 const mapDispatchToProps = { deleteEvent, getEventById }

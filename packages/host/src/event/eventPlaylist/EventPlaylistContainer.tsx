@@ -10,7 +10,7 @@ import {
 } from './eventPlaylistActions'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.eventView.event,
+  event: state.event.event,
   playlist: state.eventPlaylist.playlist,
   notification: state.playlist.notification,
   saving: state.eventPlaylist.savingEventPlaylist,

@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import IAction from 'IAction'
-import { EVENT_FETCH_BY_ID_INITIATED } from 'event/eventViewActions'
+import { EVENT_FETCH_BY_ID_INITIATED } from 'event/eventActions'
 import IPlaylist from 'playlist/IPlaylist'
 import IPlaylistItem from 'playlist/IPlaylistItem'
 import {

@@ -6,15 +6,15 @@ import {
   toggleAutoAcceptSuggestions,
   toggleDynamicVoting,
   toggleSuggestingPlaylists
-} from 'event/eventViewActions'
+} from 'event/eventActions'
 import EventSummaryPlaylist from './EventSummaryPlaylist'
 
 const mapStateToProps = (state: IRootState) => ({
   playlist: state.eventPlaylist.playlist,
   suggestion: state.suggestion.acceptedSuggestions,
-  genre: state.eventView.event.genre,
-  eventImg: state.eventView.event.imageUrl,
-  event: state.eventView.event,
+  genre: state.event.event.genre,
+  eventImg: state.event.event.imageUrl,
+  event: state.event.event,
   votes: state.vote.votes
 })
 

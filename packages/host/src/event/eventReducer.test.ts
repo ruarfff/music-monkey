@@ -1,250 +1,33 @@
 import Action from 'IAction'
 import {
-  EVENT_CONTENT_UPDATED,
-  EVENT_CREATE_FORM_INITIALIZED,
-  EVENT_IMAGE_UPLOAD_ERROR,
-  EVENT_IMAGE_UPLOADED,
-  EVENT_LOCATION_CHANGED,
-  EVENT_LOCATION_ERROR,
-  EVENT_LOCATION_POPULATED,
-  EVENT_PLAYLIST_CREATION_ERROR,
-  EVENT_SAVE_ERROR,
-  EVENT_SAVED,
-  EVENT_SAVING_RESET,
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
-  EVENTS_FETCHED
+  EVENTS_FETCHED,
+  EVENT_FETCH_BY_ID_INITIATED,
+  EVENT_FETCHED_BY_ID,
+  EVENT_INVITE_COPIED,
+  EVENT_INVITE_COPY_ACKNOWLEDGED,
+  TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
+  TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
+  TOGGLE_DYNAMIC_VOTING,
+  TOGGLE_DYNAMIC_VOTING_ERROR,
+  TOGGLE_SUGGESTING_PLAYLISTS,
+  TOGGLE_SUGGESTING_PLAYLISTS_ERROR,
+  EVENT_FETCH_BY_ID_ERROR
 } from './eventActions'
 import initialState from './eventInitialState'
-import events from './eventReducer'
+import event from './eventReducer'
 import IEvent from './IEvent'
 
 describe('eventReducer', () => {
   it('should return the initial state when no action matches', () => {
-    expect(events(undefined, {} as Action)).toEqual(initialState)
-  })
-
-  describe('event creation', () => {
-    it('should handle EVENT_LOCATION_CHANGED', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_LOCATION_CHANGED,
-          payload: 'test'
-        })
-      ).toEqual({
-        ...initialState,
-        savingEvent: {
-          ...initialState.savingEvent,
-          location: { address: 'test', latLng: { lat: 0, lng: 0 } }
-        }
-      })
-    })
-
-    it('should reset errors when EVENT_LOCATION_CHANGED', () => {
-      expect(
-        events(
-          { ...initialState, errors: { location: new Error('wut') } },
-          {
-            type: EVENT_LOCATION_CHANGED,
-            payload: 'test'
-          }
-        )
-      ).toEqual({
-        ...initialState,
-        savingEvent: {
-          ...initialState.savingEvent,
-          location: { address: 'test', latLng: { lat: 0, lng: 0 } }
-        },
-        errors: { location: undefined }
-      })
-    })
-
-    it('should handle EVENT_LOCATION_POPULATED', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_LOCATION_POPULATED,
-          payload: {
-            address: 'test-address',
-            latLng: { lat: '123', lng: '456' }
-          }
-        })
-      ).toEqual({
-        ...initialState,
-        savingEvent: {
-          ...initialState.savingEvent,
-          location: {
-            address: 'test-address',
-            latLng: { lat: '123', lng: '456' }
-          }
-        }
-      })
-    })
-
-    it('should handle EVENT_LOCATION_ERROR', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_LOCATION_ERROR,
-          payload: new Error('so bad')
-        })
-      ).toEqual({
-        ...initialState,
-        errors: { ...initialState.errors, location: new Error('so bad') }
-      })
-    })
-
-    it('should handle EVENT_IMAGE_UPLOADED', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_IMAGE_UPLOADED,
-          payload: {
-            imgUrl: 'image_url'
-          }
-        })
-      ).toEqual({
-        ...initialState,
-        savingEvent: {
-          ...initialState.savingEvent,
-          imageUrl: 'image_url'
-        }
-      })
-    })
-
-    it('should handle EVENT_IMAGE_UPLOAD_ERROR', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_IMAGE_UPLOAD_ERROR,
-          payload: new Error('how could this happen?')
-        })
-      ).toEqual({
-        ...initialState,
-        errors: {
-          ...initialState.errors,
-          imageUpload: new Error('how could this happen?')
-        }
-      })
-    })
-
-    it('should handle EVENT_CONTENT_UPDATED and add a new value', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_CONTENT_UPDATED,
-          payload: { name: 'test-name' }
-        })
-      ).toEqual({
-        ...initialState,
-        savingEvent: { ...initialState.savingEvent, name: 'test-name' }
-      })
-    })
-
-    it('should handle EVENT_CONTENT_UPDATED and update an existing value', () => {
-      expect(
-        events(
-          {
-            ...initialState,
-            savingEvent: {
-              ...initialState.savingEvent,
-              organizer: 'this-person'
-            }
-          },
-          {
-            type: EVENT_CONTENT_UPDATED,
-            payload: { organizer: 'other' }
-          }
-        )
-      ).toEqual({
-        ...initialState,
-        savingEvent: { ...initialState.savingEvent, organizer: 'other' }
-      })
-    })
-
-    it('should handle EVENT_SAVING_RESET', () => {
-      expect(
-        events(
-          {
-            ...initialState,
-            savingEvent: { ...initialState.savingEvent, name: 'what-a-name' },
-            showSavedDialogue: true
-          },
-          {
-            type: EVENT_SAVING_RESET
-          }
-        )
-      ).toEqual({ ...initialState })
-    })
-
-    it('should handle EVENT_SAVED', () => {
-      const savingEvent = initialState.savingEvent
-      const event = { ...savingEvent, name: 'save-me' }
-      expect(
-        events(initialState, {
-          type: EVENT_SAVED,
-          payload: event
-        })
-      ).toEqual({
-        ...initialState,
-        events: [...initialState.events, event],
-        savingEvent: event,
-        showSavedDialogue: true
-      })
-    })
-
-    it('should handle EVENT_SAVE_ERROR', () => {
-      expect(
-        events(initialState, {
-          payload: new Error('oh the humanity'),
-          type: EVENT_SAVE_ERROR
-        })
-      ).toEqual({
-        ...initialState,
-        errors: {
-          ...initialState.errors,
-          saving: new Error('oh the humanity')
-        }
-      })
-    })
-
-    it('should handle EVENT_CREATE_FORM_INITIALIZED', () => {
-      expect(
-        events(
-          { ...initialState },
-          {
-            payload: {
-              event: initialState.savingEvent,
-              user: { userId: 'test-id', displayName: 'test user' }
-            },
-            type: EVENT_CREATE_FORM_INITIALIZED
-          }
-        )
-      ).toEqual({
-        ...initialState,
-        savingEvent: {
-          ...initialState.savingEvent,
-          userId: 'test-id',
-          organizer: 'test user'
-        }
-      })
-    })
-
-    it('should handle EVENT_PLAYLIST_CREATION_ERROR', () => {
-      expect(
-        events(initialState, {
-          type: EVENT_PLAYLIST_CREATION_ERROR,
-          payload: new Error('Error creating playlist')
-        })
-      ).toEqual({
-        ...initialState,
-        errors: {
-          ...initialState.errors,
-          playlistCreation: new Error('Error creating playlist')
-        }
-      })
-    })
+    expect(event(undefined, {} as Action)).toEqual(initialState)
   })
 
   describe('fetching events', () => {
     it('should handle EVENTS_FETCH_INITIATED', () => {
       expect(
-        events(initialState, {
+        event(initialState, {
           type: EVENTS_FETCH_INITIATED
         })
       ).toEqual({
@@ -255,7 +38,7 @@ describe('eventReducer', () => {
 
     it('should handle EVENTS_FETCHED', () => {
       expect(
-        events(
+        event(
           { ...initialState, eventsLoading: true },
           {
             type: EVENTS_FETCHED,
@@ -271,7 +54,7 @@ describe('eventReducer', () => {
 
     it('should handle EVENTS_FETCH_ERROR', () => {
       expect(
-        events(initialState, {
+        event(initialState, {
           type: EVENTS_FETCH_ERROR,
           payload: new Error('events err')
         })
@@ -282,6 +65,188 @@ describe('eventReducer', () => {
           fetchEvents: new Error('events err')
         }
       })
+    })
+  })
+
+  it('should return the initial state when no action matches', () => {
+    expect(event(undefined, {} as Action)).toEqual(initialState)
+  })
+
+  it('should handle EVENT_INVITE_COPIED', () => {
+    expect(event(initialState, { type: EVENT_INVITE_COPIED })).toEqual({
+      ...initialState,
+      copiedToClipboard: true
+    })
+  })
+
+  it('should handle EVENT_INVITE_COPY_ACKNOWLEDGED', () => {
+    expect(
+      event(initialState, { type: EVENT_INVITE_COPY_ACKNOWLEDGED })
+    ).toEqual({
+      ...initialState,
+      copiedToClipboard: false
+    })
+  })
+
+  it('should handle EVENT_FETCH_BY_ID_INITIATED', () => {
+    expect(
+      event(initialState, {
+        type: EVENT_FETCH_BY_ID_INITIATED
+      })
+    ).toEqual({
+      ...initialState,
+      loading: true
+    })
+  })
+
+  it('should handle EVENT_FETCHED_BY_ID', () => {
+    expect(
+      event(
+        { ...initialState, loading: true },
+        {
+          type: EVENT_FETCHED_BY_ID,
+          payload: {} as IEvent
+        }
+      )
+    ).toEqual({
+      ...initialState,
+      loading: false,
+      event: {} as IEvent
+    })
+  })
+
+  it('should handle EVENT_FETCH_BY_ID_ERROR', () => {
+    expect(
+      event(initialState, {
+        type: EVENT_FETCH_BY_ID_ERROR,
+        payload: new Error('event err')
+      })
+    ).toEqual({
+      ...initialState,
+      fetchError: new Error('event err')
+    })
+  })
+
+  it('should handle TOGGLE_DYNAMIC_VOTING', () => {
+    const updatedEvent = { settings: { dynamicVotingEnabled: false } } as IEvent
+    expect(
+      event(
+        { ...initialState, event: updatedEvent },
+        { type: TOGGLE_DYNAMIC_VOTING }
+      )
+    ).toEqual({
+      ...initialState,
+      event: {
+        ...updatedEvent,
+        settings: { ...updatedEvent.settings, dynamicVotingEnabled: true }
+      }
+    })
+  })
+
+  it('should handle TOGGLE_DYNAMIC_VOTING_ERROR', () => {
+    const updatedEvent = { settings: { dynamicVotingEnabled: true } } as IEvent
+    expect(
+      event(
+        { ...initialState, event: updatedEvent },
+        { type: TOGGLE_DYNAMIC_VOTING_ERROR }
+      )
+    ).toEqual({
+      ...initialState,
+      event: {
+        ...updatedEvent,
+        settings: { ...updatedEvent.settings, dynamicVotingEnabled: false }
+      }
+    })
+  })
+
+  it('should handle TOGGLE_AUTO_ACCEPT_SUGGESTIONS', () => {
+    const updatedEvent = {
+      settings: {
+        dynamicVotingEnabled: false,
+        autoAcceptSuggestionsEnabled: false
+      }
+    } as IEvent
+    expect(
+      event(
+        { ...initialState, event: updatedEvent },
+        { type: TOGGLE_AUTO_ACCEPT_SUGGESTIONS }
+      )
+    ).toEqual({
+      ...initialState,
+      event: {
+        ...updatedEvent,
+        settings: {
+          ...updatedEvent.settings,
+          autoAcceptSuggestionsEnabled: true
+        }
+      }
+    })
+  })
+
+  it('should handle TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR', () => {
+    const updatedEvent = {
+      settings: {
+        dynamicVotingEnabled: false,
+        autoAcceptSuggestionsEnabled: true
+      }
+    } as IEvent
+    expect(
+      event(
+        { ...initialState, event: updatedEvent },
+        { type: TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR }
+      )
+    ).toEqual({
+      ...initialState,
+      event: {
+        ...updatedEvent,
+        settings: {
+          ...updatedEvent.settings,
+          autoAcceptSuggestionsEnabled: false
+        }
+      }
+    })
+  })
+
+  it('should handle TOGGLE_SUGGESTING_PLAYLISTS', () => {
+    const updatedEvent = {
+      settings: {
+        suggestingPlaylistsEnabled: false
+      }
+    } as IEvent
+    expect(
+      event(
+        { ...initialState, event: updatedEvent },
+        { type: TOGGLE_SUGGESTING_PLAYLISTS }
+      )
+    ).toEqual({
+      ...initialState,
+      event: {
+        ...updatedEvent,
+        settings: { ...updatedEvent.settings, suggestingPlaylistsEnabled: true }
+      }
+    })
+  })
+
+  it('should handle TOGGLE_SUGGESTING_PLAYLISTS_ERROR', () => {
+    const updatedEvent = {
+      settings: {
+        suggestingPlaylistsEnabled: true
+      }
+    } as IEvent
+    expect(
+      event(
+        { ...initialState, event: updatedEvent },
+        { type: TOGGLE_SUGGESTING_PLAYLISTS_ERROR }
+      )
+    ).toEqual({
+      ...initialState,
+      event: {
+        ...updatedEvent,
+        settings: {
+          ...updatedEvent.settings,
+          suggestingPlaylistsEnabled: false
+        }
+      }
     })
   })
 })

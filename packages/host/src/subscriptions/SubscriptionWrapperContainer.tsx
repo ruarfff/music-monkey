@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import IRootState from '../rootState'
+import IRootState from 'rootState'
 import SubscriptionWrapper from './SubscriptionWrapper'
-import { getEventByIdNoLoading } from '../event/eventViewActions'
-import { fetchEventVotes } from '../vote/voteActions'
-import { getEventSuggestions } from '../suggestion/suggestionActions'
+import { getEventByIdNoLoading } from '../event/eventActions'
+import { fetchEventVotes } from 'vote/voteActions'
+import { getEventSuggestions } from 'suggestion/suggestionActions'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.savingEvent
+  event: state.event.event
 })
 
 const mapDispatchToProps = {

@@ -3,7 +3,7 @@ import IRootState from 'rootState'
 import EventSummaryView from './EventSummaryView'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.eventView.event
+  event: state.event.event
 })
 
 const mapDispatchToProps = {}

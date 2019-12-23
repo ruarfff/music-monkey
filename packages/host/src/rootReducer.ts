@@ -4,7 +4,6 @@ import { combineReducers } from 'redux'
 import auth from './auth/authReducer'
 import event from './event/eventReducer'
 import eventPlaylist from './event/eventPlaylist/eventPlaylistReducer'
-import eventView from './event/eventViewReducer'
 import insights from './insights/insightsReducer'
 import playlist from './playlist/playlistReducer'
 import recommendation from './recommendations/recommendationReducer'
@@ -18,7 +17,6 @@ export default (history: History) =>
     auth,
     event,
     eventPlaylist,
-    eventView,
     playlist,
     suggestion,
     user,
