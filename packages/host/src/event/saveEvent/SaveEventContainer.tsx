@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import IRootState from 'rootState'
 import SaveEvent from './SaveEvent'
-import { deleteEvent, getEventById } from 'event/eventView/eventViewActions'
+import { deleteEvent, getEventById } from 'event/eventViewActions'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,

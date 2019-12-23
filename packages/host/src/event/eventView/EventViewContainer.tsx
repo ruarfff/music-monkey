@@ -4,12 +4,12 @@ import IRootState from 'rootState'
 import { getEventSuggestions } from 'suggestion/suggestionActions'
 import { fetchEventVotes } from 'vote/voteActions'
 import EventView from './EventView'
-import { getEventByIdNoLoading } from './eventViewActions'
+import { getEventByIdNoLoading } from '../eventViewActions'
 import {
   acknowledgeEventInviteCopied,
   copyEventInvite,
   getEventById
-} from './eventViewActions'
+} from '../eventViewActions'
 
 const mapStateToProps = (state: IRootState) => ({
   error: state.eventView.fetchError,

@@ -4,7 +4,7 @@ import {
   toggleAutoAcceptSuggestions,
   toggleDynamicVoting,
   toggleSuggestingPlaylists
-} from 'event/eventView/eventViewActions'
+} from 'event/eventViewActions'
 import { sortPlaylistByVotesDescending } from './eventPlaylistActions'
 import EventPlaylistSummary from './EventPlaylistSummary'
 

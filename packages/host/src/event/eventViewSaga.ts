@@ -18,7 +18,7 @@ import {
   TOGGLE_DYNAMIC_VOTING,
   TOGGLE_DYNAMIC_VOTING_ERROR,
   TOGGLE_SUGGESTING_PLAYLISTS
-} from './eventView/eventViewActions'
+} from './eventViewActions'
 
 function* fetchEventByIdFlow(action: IAction) {
   const eventId: string = action.payload

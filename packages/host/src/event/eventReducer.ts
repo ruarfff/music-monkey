@@ -9,7 +9,7 @@ import {
   TOGGLE_DYNAMIC_VOTING,
   TOGGLE_SUGGESTING_PLAYLISTS,
   EVENT_DELETE_SUCCESSFUL
-} from './eventView/eventViewActions'
+} from './eventViewActions'
 import Action from 'IAction'
 import {
   CLEAR_MESSAGE,

@@ -1,7 +1,7 @@
 import IAuthState from './auth/IAuthState'
 import IEventState from './event/IEventState'
 import IEventPlaylistState from './event/eventPlaylist/IEventPlaylistState'
-import IEventViewState from './event/eventView/IEventViewState'
+import IEventViewState from './event/IEventViewState'
 import { IInsightsInitialState } from './insights/insightsInitialState'
 import IPlaylistState from './playlist/IPlaylistState'
 import IRecommendationsState from './recommendations/IRecommendationState'
