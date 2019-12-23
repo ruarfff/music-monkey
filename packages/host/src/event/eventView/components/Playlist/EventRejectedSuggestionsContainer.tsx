@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { saveEventPlaylist } from 'event/eventPlaylist/eventPlaylistActions'
+import { saveEventPlaylist } from 'event/eventActions'
 import IRootState from 'rootState'
 import { stageSuggestion } from 'suggestion/suggestionActions'
 import EventRejectedSuggestions from './EventRejectedSuggestions'

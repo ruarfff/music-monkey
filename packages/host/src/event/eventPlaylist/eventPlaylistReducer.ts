@@ -16,7 +16,7 @@ import {
   SAVE_EVENT_PLAYLIST_SUCCESS,
   SET_EVENT_PLAYLIST,
   UPDATE_PLAYLIST_AFTER_COPY
-} from './eventPlaylistActions'
+} from 'event/eventActions'
 import initialState from './eventPlaylistInitialState'
 import IEventPlaylistState from './IEventPlaylistState'
 

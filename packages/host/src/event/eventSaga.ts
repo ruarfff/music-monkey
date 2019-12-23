@@ -3,7 +3,7 @@ import { omit } from 'lodash'
 import IAction from 'IAction'
 import { deleteEvent, getEventById, updateEvent } from 'event/eventClient'
 import IEventSettings from 'event/IEventSettings'
-import { EVENT_PLAYLIST_FETCHED } from 'event/eventPlaylist/eventPlaylistActions'
+import { EVENT_PLAYLIST_FETCHED } from 'event/eventActions'
 import {
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,

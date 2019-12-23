@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
-import { sortPlaylistByVotesDescending } from 'event/eventPlaylist/eventPlaylistActions'
 import { editPlaylist } from 'playlist/playlistActions'
 import {
+  sortPlaylistByVotesDescending,
   toggleAutoAcceptSuggestions,
   toggleDynamicVoting,
   toggleSuggestingPlaylists

@@ -1,6 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import IAction from 'IAction'
-import { EVENT_FETCH_BY_ID_INITIATED } from 'event/eventActions'
 import IPlaylist from 'playlist/IPlaylist'
 import IPlaylistItem from 'playlist/IPlaylistItem'
 import {
@@ -13,13 +12,14 @@ import { CLEAR_STAGED_SUGGESTIONS } from 'suggestion/suggestionActions'
 import { acceptSuggestions } from 'suggestion/suggestionClient'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import {
+  EVENT_FETCH_BY_ID_INITIATED,
   MOVE_ITEM_IN_EVENT_PLAYLIST,
   PLAYLIST_SORTED_BY_VOTES_DESCENDING,
   SAVE_EVENT_PLAYLIST,
   SAVE_EVENT_PLAYLIST_ERROR,
   SAVE_EVENT_PLAYLIST_SUCCESS,
   SORT_PLAYLIST_BY_VOTES_DESCENDING
-} from './eventPlaylistActions'
+} from 'event/eventActions'
 
 interface ISavePlaylistArgs {
   eventId: string

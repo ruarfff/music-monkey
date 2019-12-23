@@ -1,5 +1,8 @@
 import Action from 'IAction'
 import IEvent from './IEvent'
+import IPlaylist from 'playlist/IPlaylist'
+import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 
 export const EVENTS_FETCH_INITIATED = 'EVENTS_FETCH_INITIATED'
 export const EVENTS_FETCHED = 'EVENTS_FETCHED'
@@ -30,6 +33,23 @@ export const TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR =
 export const TOGGLE_SUGGESTING_PLAYLISTS = 'TOGGLE_SUGGESTING_PLAYLISTS'
 export const TOGGLE_SUGGESTING_PLAYLISTS_ERROR =
   'TOGGLE_SUGGESTING_PLAYLISTS_ERROR'
+
+export const SAVE_EVENT_PLAYLIST = 'SAVE_EVENT_PLAYLIST'
+export const SAVE_EVENT_PLAYLIST_SUCCESS = 'SAVE_EVENT_PLAYLIST_SUCCESS'
+export const SAVE_EVENT_PLAYLIST_ERROR = 'SAVE_EVENT_PLAYLIST_ERROR'
+
+export const EVENT_PLAYLIST_FETCHED = 'EVENT_PLAYLIST_FETCHED'
+
+export const MOVE_ITEM_IN_EVENT_PLAYLIST = 'MOVE_ITEM_IN_EVENT_PLAYLIST'
+
+export const SET_EVENT_PLAYLIST = 'SET_EVENT_PLAYLIST'
+export const UPDATE_PLAYLIST_AFTER_COPY = 'UPDATE_PLAYLIST_AFTER_COPY'
+export const DESELECT_EVENT_PLAYLIST = 'DESELECT_EVENT_PLAYLIST'
+
+export const SORT_PLAYLIST_BY_VOTES_DESCENDING =
+  'SORT_PLAYLIST_BY_VOTES_DESCENDING'
+export const PLAYLIST_SORTED_BY_VOTES_DESCENDING =
+  'PLAYLIST_SORTED_BY_VOTES_DESCENDING'
 
 export const getEventById = (eventId: string): Action => ({
   payload: eventId,
@@ -79,4 +99,44 @@ export const toggleSuggestingPlaylists = (event: IEvent): Action => ({
 
 export const getEvents = (): Action => ({
   type: EVENTS_FETCH_INITIATED
+})
+
+export const updatePlaylistAfterCopy = (playlist: IPlaylist): Action => ({
+  type: UPDATE_PLAYLIST_AFTER_COPY,
+  payload: playlist
+})
+
+export const deselectPlaylist = (): Action => ({
+  type: DESELECT_EVENT_PLAYLIST
+})
+
+export const setEventPlaylist = (playlist: IPlaylist): Action => ({
+  type: SET_EVENT_PLAYLIST,
+  payload: playlist
+})
+
+export const saveEventPlaylist = (
+  eventId: string,
+  playlist: IPlaylist,
+  suggestions: Map<string, IDecoratedSuggestion>
+): Action => ({
+  type: SAVE_EVENT_PLAYLIST,
+  payload: { eventId, playlist, suggestions }
+})
+
+export const moveItemInEventPlaylist = (
+  playlist: IPlaylist,
+  fromIndex: number,
+  toIndex: number
+): Action => ({
+  type: MOVE_ITEM_IN_EVENT_PLAYLIST,
+  payload: { playlist, fromIndex, toIndex }
+})
+
+export const sortPlaylistByVotesDescending = (
+  playlist: IPlaylist,
+  votes: Map<string, ITrackVoteStatus>
+): Action => ({
+  type: SORT_PLAYLIST_BY_VOTES_DESCENDING,
+  payload: { playlist, votes }
 })

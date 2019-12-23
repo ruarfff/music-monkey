@@ -1,8 +1,4 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
-import {
-  DESELECT_EVENT_PLAYLIST,
-  SET_EVENT_PLAYLIST
-} from './eventPlaylist/eventPlaylistActions'
 import Action from 'IAction'
 import {
   CLEAR_MESSAGE,
@@ -10,6 +6,8 @@ import {
   SHARE_EMAIL_SUCCESS
 } from './shareEvent/shareActions'
 import {
+  DESELECT_EVENT_PLAYLIST,
+  SET_EVENT_PLAYLIST,
   EVENT_FETCHED_BY_ID,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_DYNAMIC_VOTING,

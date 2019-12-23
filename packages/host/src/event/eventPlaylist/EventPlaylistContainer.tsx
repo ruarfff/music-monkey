@@ -7,7 +7,7 @@ import {
   moveItemInEventPlaylist,
   saveEventPlaylist,
   sortPlaylistByVotesDescending
-} from './eventPlaylistActions'
+} from 'event/eventActions'
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.event.event,

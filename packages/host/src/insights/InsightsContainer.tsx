@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-import { getEvents } from 'event/eventActions'
-import { sortPlaylistByVotesDescending } from 'event/eventPlaylist/eventPlaylistActions'
+import { sortPlaylistByVotesDescending, getEvents } from 'event/eventActions'
 import { fetchPlaylists } from 'playlist/playlistActions'
 import IRootState from 'rootState'
 import { fetchEventVotes } from 'vote/voteActions'
@@ -23,9 +22,6 @@ const mapDispatchToProps = {
   fetchEventVotes
 }
 
-const insightsContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Insights)
+const insightsContainer = connect(mapStateToProps, mapDispatchToProps)(Insights)
 
 export default insightsContainer
