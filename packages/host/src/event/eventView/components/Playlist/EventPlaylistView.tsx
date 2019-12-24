@@ -11,7 +11,6 @@ import EventSearchTracksContainer from 'components/SearchTracks/EventSearchTrack
 import IEvent from 'event/IEvent'
 import EventPlaylist from 'event/eventPlaylist/EventPlaylistContainer'
 import EventPlaylistSummary from 'event/eventPlaylist/EventPlaylistSummaryContainer'
-import IPlaylist from 'playlist/IPlaylist'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import EventRejectedSuggestions from './EventRejectedSuggestionsContainer'
 import EventSuggestions from './EventSuggestionsContainer'
@@ -20,7 +19,6 @@ import './EventPlaylistView.scss'
 
 interface IEventPlaylistViewProps {
   event: IEvent
-  playlist: IPlaylist
   acceptedSuggestions: IDecoratedSuggestion[]
   stagedSuggestions: IDecoratedSuggestion[]
   pendingSuggestions: IDecoratedSuggestion[]
@@ -51,9 +49,11 @@ class EventPlaylistView extends React.Component<IEventPlaylistViewProps> {
 
   public render() {
     const { tabIndex } = this.state
-    const { pendingSuggestions, playlist } = this.props
+    const { pendingSuggestions, event } = this.props
 
-    const playlistTracks = playlist.tracks.items.map(track => track.track.uri)
+    const playlistTracks = event.playlist!.tracks.items.map(
+      track => track.track.uri
+    )
 
     let filteredSuggestions = pendingSuggestions
 
@@ -118,7 +118,7 @@ class EventPlaylistView extends React.Component<IEventPlaylistViewProps> {
           )}
           {tabIndex === 3 && (
             <TabContainer dir={'x'}>
-              <EventSearchTracksContainer playlist={playlist} />
+              <EventSearchTracksContainer playlist={event.playlist!} />
             </TabContainer>
           )}
         </Grid>

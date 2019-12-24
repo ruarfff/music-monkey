@@ -13,7 +13,6 @@ import getPlaylistDuration from 'playlist/getPlaylistDuration'
 
 interface IEventPlaylistSummaryProps {
   event: IEvent
-  playlist: IPlaylist
   votes: Map<string, ITrackVoteStatus>
   sortPlaylistByVotesDescending(
     playlist: IPlaylist,
@@ -28,7 +27,7 @@ class EventPlaylistSummary extends React.PureComponent<
   IEventPlaylistSummaryProps
 > {
   public render() {
-    const playlist: IPlaylist = this.props.playlist || ({} as IPlaylist)
+    const playlist: IPlaylist = this.props.event.playlist || ({} as IPlaylist)
     const event: IEvent = this.props.event || ({} as IEvent)
 
     const durationSeconds = getPlaylistDuration(playlist)
@@ -116,11 +115,10 @@ class EventPlaylistSummary extends React.PureComponent<
       event,
       toggleDynamicVoting,
       votes,
-      playlist,
       sortPlaylistByVotesDescending
     } = this.props
     toggleDynamicVoting(event)
-    sortPlaylistByVotesDescending(playlist, votes)
+    sortPlaylistByVotesDescending(event.playlist!, votes)
   }
 
   private autoAcceptSuggestionsToggled = () => {

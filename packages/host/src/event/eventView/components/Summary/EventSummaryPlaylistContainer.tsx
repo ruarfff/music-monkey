@@ -10,7 +10,6 @@ import {
 import EventSummaryPlaylist from './EventSummaryPlaylist'
 
 const mapStateToProps = (state: IRootState) => ({
-  playlist: state.eventPlaylist.playlist,
   suggestion: state.suggestion.acceptedSuggestions,
   genre: state.event.event.genre,
   eventImg: state.event.event.imageUrl,

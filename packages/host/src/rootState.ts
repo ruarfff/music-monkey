@@ -1,6 +1,5 @@
 import IAuthState from './auth/IAuthState'
 import IEventState from './event/IEventState'
-import IEventPlaylistState from './event/eventPlaylist/IEventPlaylistState'
 import { IInsightsInitialState } from './insights/insightsInitialState'
 import IPlaylistState from './playlist/IPlaylistState'
 import IRecommendationsState from './recommendations/IRecommendationState'
@@ -13,7 +12,6 @@ export default interface IRootState {
   user: IUserState
   playlist: IPlaylistState
   event: IEventState
-  eventPlaylist: IEventPlaylistState
   suggestion: ISuggestionState
   vote: IVoteState
   insights: IInsightsInitialState

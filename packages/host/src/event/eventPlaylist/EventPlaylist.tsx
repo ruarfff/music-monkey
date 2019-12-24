@@ -1,3 +1,4 @@
+import React from 'react'
 import Button from '@material-ui/core/Button/Button'
 import Grid from '@material-ui/core/Grid/Grid'
 import IconButton from '@material-ui/core/IconButton'
@@ -10,7 +11,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import DoneAll from '@material-ui/icons/DoneAll'
 import Undo from '@material-ui/icons/Undo'
 import classNames from 'classnames'
-import * as React from 'react'
 import { DropResult } from 'react-beautiful-dnd'
 import IAction from 'IAction'
 import IEvent from 'event/IEvent'
@@ -27,7 +27,6 @@ import './EventPlaylist.scss'
 interface IEventPlaylistProps {
   event: IEvent
   tracksWithFeatures: ITrackWithFeatures[]
-  playlist: IPlaylist
   notification: string
   stagedSuggestions: IDecoratedSuggestion[]
   saving: boolean
@@ -66,7 +65,7 @@ export default class EventPlaylist extends React.Component<
   public handleClose = (type: string) => () => {
     if (type === 'vote') {
       this.props.sortPlaylistByVotesDescending(
-        this.props.playlist,
+        this.props.event.playlist!,
         this.props.votes
       )
     }
@@ -79,7 +78,7 @@ export default class EventPlaylist extends React.Component<
 
   public render() {
     const {
-      playlist,
+      event,
       stagedSuggestions,
       saving,
       votes,
@@ -88,9 +87,10 @@ export default class EventPlaylist extends React.Component<
     } = this.props
     let stagedTracks: ITrack[] = []
 
-    if (!playlist) {
+    if (!event.playlist) {
       return <span />
     }
+    const playlist = event.playlist!
 
     if (stagedSuggestions && stagedSuggestions.length > 0) {
       stagedTracks = stagedSuggestions.map(s => s.track)
@@ -230,10 +230,12 @@ export default class EventPlaylist extends React.Component<
   }
 
   private handleGetTrackFeatures = () => {
-    const { playlist } = this.props
+    const {
+      event: { playlist }
+    } = this.props
     const trackIds = [] as string[]
-    if (playlist.tracks.items.length > 0) {
-      playlist.tracks.items.forEach((track: IPlaylistItem) => {
+    if (playlist!.tracks.items.length > 0) {
+      playlist!.tracks.items.forEach((track: IPlaylistItem) => {
         trackIds.push(track.track.id)
       })
       if (trackIds.length > 0) {
@@ -243,22 +245,19 @@ export default class EventPlaylist extends React.Component<
   }
 
   private handleSavePlaylist = () => {
-    const { event, playlist, stagedSuggestions, saveEventPlaylist } = this.props
+    const { event, stagedSuggestions, saveEventPlaylist } = this.props
     if (stagedSuggestions && stagedSuggestions.length > 0) {
       const suggestionMap = new Map()
       stagedSuggestions.forEach((ds: IDecoratedSuggestion) => {
         suggestionMap.set(ds.track.uri, ds)
       })
-      saveEventPlaylist(event.eventId || '', playlist, suggestionMap)
+      saveEventPlaylist(event.eventId || '', event.playlist!, suggestionMap)
     }
   }
 
   private handleRemoveTrack = (track: ITrack) => {
-    this.props.tryRemoveTrack(
-      this.props.playlist.id,
-      track.uri,
-      track.track_number
-    )
+    const playlist = this.props.event.playlist!
+    this.props.tryRemoveTrack(playlist.id, track.uri, track.track_number)
 
     this.handleShowNotification()
   }
@@ -268,9 +267,10 @@ export default class EventPlaylist extends React.Component<
     if (!result.destination) {
       return
     }
+    const playlist = this.props.event.playlist!
 
     this.props.onPlaylistDragDrop(
-      this.props.playlist,
+      playlist,
       result.source.index,
       result.destination.index
     )

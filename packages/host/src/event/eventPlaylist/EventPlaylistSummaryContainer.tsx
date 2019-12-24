@@ -10,7 +10,6 @@ import EventPlaylistSummary from './EventPlaylistSummary'
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.event.event,
-  playlist: state.eventPlaylist.playlist,
   votes: state.vote.votes
 })
 

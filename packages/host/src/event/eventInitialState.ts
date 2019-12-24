@@ -42,5 +42,6 @@ export default {
   fetchError: {} as Error,
   copiedToClipboard: false,
   pendingSuggestions: [],
-  rejectedSuggestions: []
+  rejectedSuggestions: [],
+  savingEventPlaylist: false
 } as IEventState

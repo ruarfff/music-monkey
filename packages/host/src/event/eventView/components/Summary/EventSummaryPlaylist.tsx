@@ -25,7 +25,6 @@ interface IEventSummaryPlaylistProps {
   event: IEvent
   genre?: string
   eventImg?: string
-  playlist: IPlaylist
   suggestion: IDecoratedSuggestion[]
   votes: Map<string, ITrackVoteStatus>
   sortPlaylistByVotesDescending(
@@ -40,7 +39,6 @@ interface IEventSummaryPlaylistProps {
 
 const EventSummaryPlaylist = ({
   event,
-  playlist,
   suggestion,
   genre,
   eventImg,
@@ -52,6 +50,7 @@ const EventSummaryPlaylist = ({
   votes
 }: IEventSummaryPlaylistProps) => {
   const [showPopup, setShowPopup] = useState(false)
+  const playlist = event.playlist!
 
   const togglePopup = () => {
     setShowPopup(!showPopup)

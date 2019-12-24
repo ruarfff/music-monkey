@@ -13,10 +13,10 @@ import './Insights.scss'
 
 interface IInsightsProps {
   user: IUser
+  event: IEvent
   events: IEvent[]
   pickedEvent: string
   votes: Map<string, ITrackVoteStatus>
-  playlist: IPlaylist
   getEvents(): IAction
   fetchPlaylists(user: IUser): IAction
   filterByEventPick(id: any): IAction
@@ -37,10 +37,10 @@ class Insights extends React.Component<IInsightsProps> {
 
   public render() {
     const {
+      event,
       events,
       pickedEvent,
       votes,
-      playlist,
       filterByEventPick,
       sortPlaylistByVotesDescending,
       fetchEventVotes
@@ -59,7 +59,7 @@ class Insights extends React.Component<IInsightsProps> {
               votes={votes}
               sortPlaylistByVotesDescending={sortPlaylistByVotesDescending}
               fetchEventVotes={fetchEventVotes}
-              playlist={playlist}
+              playlist={event.playlist!}
             />
           </Grid>
         </Grid>

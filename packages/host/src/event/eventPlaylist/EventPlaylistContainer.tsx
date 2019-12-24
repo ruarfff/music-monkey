@@ -11,9 +11,8 @@ import {
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.event.event,
-  playlist: state.eventPlaylist.playlist,
   notification: state.playlist.notification,
-  saving: state.eventPlaylist.savingEventPlaylist,
+  saving: state.event.savingEventPlaylist,
   stagedSuggestions: state.suggestion.stagedSuggestions,
   votes: state.vote.votes,
   tracksWithFeatures: state.playlist.tracksWithFeatures

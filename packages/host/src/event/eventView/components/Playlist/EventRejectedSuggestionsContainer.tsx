@@ -6,7 +6,7 @@ import EventRejectedSuggestions from './EventRejectedSuggestions'
 
 const mapStateToProps = (state: IRootState) => ({
   suggestions: state.suggestion.rejectedSuggestions,
-  playlist: state.eventPlaylist.playlist
+  playlist: state.event.event.playlist!
 })
 
 const mapDispatchToProps = {

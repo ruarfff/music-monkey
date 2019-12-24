@@ -12,6 +12,8 @@ export default interface IEventState {
   shareEventMessage: string
   playlistReselected: boolean
   playlistInput: string
+  savingEventPlaylist: boolean
+  saveEventPlaylistError?: Error
   loading: boolean
   fetchError: Error
   copiedToClipboard: boolean

@@ -8,10 +8,10 @@ import Insights from './Insights'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
+  event: state.event.event,
   events: state.event.events,
   pickedEvent: state.insights.eventId,
-  votes: state.vote.votes,
-  playlist: state.eventPlaylist.playlist
+  votes: state.vote.votes
 })
 
 const mapDispatchToProps = {

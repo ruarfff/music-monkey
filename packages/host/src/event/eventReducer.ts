@@ -22,11 +22,24 @@ import {
   EVENT_INVITE_COPY_ACKNOWLEDGED,
   TOGGLE_DYNAMIC_VOTING_ERROR,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
-  TOGGLE_SUGGESTING_PLAYLISTS_ERROR
+  TOGGLE_SUGGESTING_PLAYLISTS_ERROR,
+  UPDATE_PLAYLIST_AFTER_COPY,
+  SAVE_EVENT_PLAYLIST,
+  SAVE_EVENT_PLAYLIST_SUCCESS,
+  SAVE_EVENT_PLAYLIST_ERROR,
+  MOVE_ITEM_IN_EVENT_PLAYLIST,
+  PLAYLIST_SORTED_BY_VOTES_DESCENDING
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEventSettings from './IEventSettings'
 import IEventState from './IEventState'
+import IPlaylist from 'playlist/IPlaylist'
+import {
+  ADD_TRACK_SUCCESS,
+  REMOVE_TRACK_SUCCESS
+} from 'playlist/playlistActions'
+import { cloneDeep } from 'lodash'
+import arrayMove from 'util/arrayMove'
 
 export default function event(
   state: IEventState = initialState,
@@ -34,26 +47,14 @@ export default function event(
 ) {
   switch (type) {
     case SET_EVENT_PLAYLIST:
-      const eventName = state.event.name
-        ? state.event.name
-        : state.playlistInput
-        ? state.playlistInput
-        : payload.name
       return {
         ...state,
-        event: {
-          ...state.event,
-          name: eventName
-        },
-        playlistReselected: true
+        playlist: payload
       }
     case DESELECT_EVENT_PLAYLIST:
       return {
         ...state,
-        event: {
-          ...state.event,
-          playlistUrl: ''
-        }
+        playlist: {} as IPlaylist
       }
     case CLEAR_MESSAGE:
       return {
@@ -142,6 +143,73 @@ export default function event(
       return toggleSuggestPlaylists(state)
     case TOGGLE_SUGGESTING_PLAYLISTS_ERROR:
       return toggleSuggestPlaylists(state)
+    case UPDATE_PLAYLIST_AFTER_COPY:
+      return {
+        ...state,
+        event: {
+          ...state.event,
+          playlist: {
+            ...state.event.playlist,
+            id: payload.id,
+            uri: payload.uri,
+            name: payload.name,
+            external_urls: payload.external_urls,
+            href: payload.href
+          }
+        }
+      }
+    case ADD_TRACK_SUCCESS:
+      const newPlaylist = cloneDeep(state.event.playlist!)
+      newPlaylist.tracks.items.unshift({
+        added_at: `${Date.now()}`,
+        track: payload
+      })
+      return {
+        ...state,
+        event: {
+          ...state.event,
+          playlist: newPlaylist
+        }
+      }
+    case SAVE_EVENT_PLAYLIST:
+      return { ...state, savingEventPlaylist: true }
+    case SAVE_EVENT_PLAYLIST_SUCCESS:
+      return { ...state, savingEventPlaylist: false }
+    case SAVE_EVENT_PLAYLIST_ERROR:
+      return {
+        ...state,
+        savingEventPlaylist: false,
+        saveEventPlaylistError: payload
+      }
+    case REMOVE_TRACK_SUCCESS:
+      return {
+        ...state,
+        playlist: payload
+      }
+    case MOVE_ITEM_IN_EVENT_PLAYLIST: {
+      try {
+        const { fromIndex, toIndex } = payload
+        const playlist = { ...payload.playlist }
+        const playlistItems = [...playlist.tracks.items]
+        arrayMove(playlistItems, fromIndex, toIndex)
+        return {
+          ...state,
+          playlist: {
+            ...playlist,
+            tracks: { ...playlist.tracks, items: playlistItems }
+          }
+        }
+      } catch (err) {
+        console.error(err)
+        return state
+      }
+    }
+    case PLAYLIST_SORTED_BY_VOTES_DESCENDING: {
+      return {
+        ...state,
+        playlist: payload
+      }
+    }
     default:
       return state
   }

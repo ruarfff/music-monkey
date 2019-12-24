@@ -3,9 +3,7 @@ import { watchLogin, watchLogout } from 'auth/authSaga'
 import {
   watchMoveItemInEventPlaylist,
   watchSaveEventPlaylist,
-  watchSortPlaylistByVotesDescending
-} from 'event/eventPlaylist/eventPlaylistSaga'
-import {
+  watchSortPlaylistByVotesDescending,
   watchFetchEvents,
   watchDeleteEvent,
   watchFetchEventById,

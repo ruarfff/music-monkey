@@ -3,7 +3,6 @@ import { History } from 'history'
 import { combineReducers } from 'redux'
 import auth from './auth/authReducer'
 import event from './event/eventReducer'
-import eventPlaylist from './event/eventPlaylist/eventPlaylistReducer'
 import insights from './insights/insightsReducer'
 import playlist from './playlist/playlistReducer'
 import recommendation from './recommendations/recommendationReducer'
@@ -16,7 +15,6 @@ export default (history: History) =>
     router: connectRouter(history),
     auth,
     event,
-    eventPlaylist,
     playlist,
     suggestion,
     user,
