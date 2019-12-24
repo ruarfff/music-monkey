@@ -73,6 +73,7 @@ describe('suggestionReducer', () => {
     ).toEqual({
       ...initialState,
       fetchingSuggestions: false,
+      suggestions,
       pendingSuggestions: [suggestions[0]],
       rejectedSuggestions: [suggestions[1]],
       acceptedSuggestions: [suggestions[2]]
@@ -164,7 +165,7 @@ describe('suggestionReducer', () => {
     expect(
       suggestion(
         {
-          ...initialState,
+          ...initialState
         },
         {
           type: STAGE_ALL_SUGGESTIONS,

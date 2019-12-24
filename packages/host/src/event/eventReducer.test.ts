@@ -256,6 +256,7 @@ describe('eventReducer', () => {
       }
     })
   })
+
   it('should return the initial state when no action matches', () => {
     expect(event(undefined, {} as Action)).toEqual(initialState)
   })
@@ -327,6 +328,9 @@ describe('eventReducer', () => {
         },
         moveItemInEventPlaylist(originalPlaylist, 0, 1)
       )
-    ).toEqual({ ...initialState, playlist: reOrderedPlaylist })
+    ).toEqual({
+      ...initialState,
+      event: { ...initialState.event, playlist: reOrderedPlaylist }
+    })
   })
 })

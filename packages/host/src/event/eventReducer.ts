@@ -194,9 +194,12 @@ export default function event(
         arrayMove(playlistItems, fromIndex, toIndex)
         return {
           ...state,
-          playlist: {
-            ...playlist,
-            tracks: { ...playlist.tracks, items: playlistItems }
+          event: {
+            ...state.event,
+            playlist: {
+              ...playlist,
+              tracks: { ...playlist.tracks, items: playlistItems }
+            }
           }
         }
       } catch (err) {
