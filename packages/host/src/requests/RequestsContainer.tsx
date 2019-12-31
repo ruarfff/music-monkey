@@ -4,7 +4,7 @@ import IRootState from 'rootState'
 import Requests from './Requests'
 
 const mapStateToProps = (state: IRootState) => ({
-  selectedEvent: state.event.event
+  event: state.event.event
 })
 
 const mapDispatchToProps = {}

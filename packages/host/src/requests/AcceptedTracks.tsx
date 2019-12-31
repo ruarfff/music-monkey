@@ -25,7 +25,9 @@ const AcceptedTracks = ({ user, suggestions }: IAcceptedTracksProps) => {
 
   return (
     <List>
-      {!isEmpty(acceptedTracks) && <TrackList tracks={acceptedTracks} />}
+      {!isEmpty(acceptedTracks) && (
+        <TrackList tracks={acceptedTracks} disableRemoveTrack={true} />
+      )}
       {isEmpty(acceptedTracks) && (
         <ListItem>
           <span className="noTracks">No accepted suggestions yet</span>

@@ -38,7 +38,9 @@ const MaybeTracks = ({
 
   return (
     <List>
-      {!isEmpty(maybeTracks) && <TrackList tracks={maybeTracks} />}
+      {!isEmpty(maybeTracks) && (
+        <TrackList tracks={maybeTracks} disableRemoveTrack={true} />
+      )}
       {isEmpty(maybeTracks) && (
         <ListItem>
           <span className="noTracks">No suggestions yet</span>

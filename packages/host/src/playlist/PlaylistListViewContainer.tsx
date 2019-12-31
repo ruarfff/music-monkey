@@ -1,14 +1,12 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
-import { getEvents } from 'event/eventActions'
 import EventListView from './PlaylistListView'
 
 const mapStateToProps = ({ event }: IRootState) => ({
-  events: event.events,
-  eventsLoading: event.eventsLoading
+  events: event.events
 })
 
-const mapDispatchToProps = { getEvents }
+const mapDispatchToProps = {}
 
 const EventListViewContainer = connect(
   mapStateToProps,

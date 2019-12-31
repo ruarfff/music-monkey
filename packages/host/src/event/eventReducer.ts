@@ -6,8 +6,6 @@ import {
   SHARE_EMAIL_SUCCESS
 } from './shareEvent/shareActions'
 import {
-  DESELECT_EVENT_PLAYLIST,
-  SET_EVENT_PLAYLIST,
   EVENT_FETCHED_BY_ID,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_DYNAMIC_VOTING,
@@ -23,17 +21,16 @@ import {
   TOGGLE_DYNAMIC_VOTING_ERROR,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
   TOGGLE_SUGGESTING_PLAYLISTS_ERROR,
-  UPDATE_PLAYLIST_AFTER_COPY,
   SAVE_EVENT_PLAYLIST,
   SAVE_EVENT_PLAYLIST_SUCCESS,
   SAVE_EVENT_PLAYLIST_ERROR,
   MOVE_ITEM_IN_EVENT_PLAYLIST,
-  PLAYLIST_SORTED_BY_VOTES_DESCENDING
+  PLAYLIST_SORTED_BY_VOTES_DESCENDING,
+  EVENT_SELECTED
 } from './eventActions'
 import initialState from './eventInitialState'
 import IEventSettings from './IEventSettings'
 import IEventState from './IEventState'
-import IPlaylist from 'playlist/IPlaylist'
 import {
   ADD_TRACK_SUCCESS,
   REMOVE_TRACK_SUCCESS
@@ -46,16 +43,6 @@ export default function event(
   { type, payload }: Action
 ) {
   switch (type) {
-    case SET_EVENT_PLAYLIST:
-      return {
-        ...state,
-        playlist: payload
-      }
-    case DESELECT_EVENT_PLAYLIST:
-      return {
-        ...state,
-        playlist: {} as IPlaylist
-      }
     case CLEAR_MESSAGE:
       return {
         ...state,
@@ -143,21 +130,6 @@ export default function event(
       return toggleSuggestPlaylists(state)
     case TOGGLE_SUGGESTING_PLAYLISTS_ERROR:
       return toggleSuggestPlaylists(state)
-    case UPDATE_PLAYLIST_AFTER_COPY:
-      return {
-        ...state,
-        event: {
-          ...state.event,
-          playlist: {
-            ...state.event.playlist,
-            id: payload.id,
-            uri: payload.uri,
-            name: payload.name,
-            external_urls: payload.external_urls,
-            href: payload.href
-          }
-        }
-      }
     case ADD_TRACK_SUCCESS:
       const newPlaylist = cloneDeep(state.event.playlist!)
       newPlaylist.tracks.items.unshift({
@@ -211,6 +183,12 @@ export default function event(
       return {
         ...state,
         playlist: payload
+      }
+    }
+    case EVENT_SELECTED: {
+      return {
+        ...state,
+        event: payload
       }
     }
     default:

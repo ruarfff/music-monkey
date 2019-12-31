@@ -1,32 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Typography } from '@material-ui/core'
 import { isEmpty, uniqBy } from 'lodash'
-import IAction from 'IAction'
-import LoadingSpinner from 'loading/LoadingSpinner'
 import IEvent from 'event/IEvent'
 import PlaylistList from './PlaylistList'
 import sortEvents from 'event/sortEvents'
 
 interface PlaylistListViewProps {
   events: IEvent[]
-  eventsLoading: boolean
-  getEvents(): IAction
 }
 
-const PlaylistListView = ({
-  events,
-  eventsLoading,
-  getEvents
-}: PlaylistListViewProps) => {
-  useEffect(() => {
-    if (isEmpty(events) && !eventsLoading) {
-      getEvents()
-    }
-  })
-  if (eventsLoading) {
-    return <LoadingSpinner />
-  }
-
+const PlaylistListView = ({ events }: PlaylistListViewProps) => {
   const { pastEvents, upcomingEvents, liveEvents } = sortEvents(events)
 
   const playlists = uniqBy(

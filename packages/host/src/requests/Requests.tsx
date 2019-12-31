@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from 'event/IEvent'
+import EventPicker from 'event/EventPickerContainer'
+import SelectedEvent from 'event/SelectedEvent'
+import checkEventIsLoaded from 'event/checkEventIsLoaded'
 import useSwipeTabsIndex from 'util/useSwipeTabsIndex'
 import AcceptedTracks from './AcceptedTracksContainer'
 import MaybeTracks from './MaybeTracksContainer'
@@ -10,23 +13,30 @@ import RejectedTracks from './RejectedTracksContainer'
 import './Requests.scss'
 
 interface IRequestsProps extends RouteComponentProps<any> {
-  selectedEvent: IEvent
+  event: IEvent
 }
 
-const Requests = ({ selectedEvent, match }: IRequestsProps) => {
-  const eventId = match.params.eventId
-  useEffect(() => {
-    const selectedEventId = selectedEvent ? selectedEvent.eventId : ''
-    if (eventId && selectedEventId !== eventId) {
-      // setEventId(eventId)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId])
-
+const Requests = ({ event }: IRequestsProps) => {
+  const eventLoaded = checkEventIsLoaded(event)
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
+  const [eventPickerOpen, setEventPickerOpen] = useState(!eventLoaded)
 
   return (
     <div>
+      <EventPicker
+        isOpen={eventPickerOpen}
+        onClose={() => {
+          setEventPickerOpen(false)
+        }}
+      />
+      {eventLoaded && (
+        <SelectedEvent
+          event={event}
+          onClick={() => {
+            setEventPickerOpen(true)
+          }}
+        />
+      )}
       <Divider variant="inset" className="Requests-divider" />
       <AppBar position="static" color="default">
         <Tabs

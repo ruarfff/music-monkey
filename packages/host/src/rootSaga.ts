@@ -8,7 +8,6 @@ import {
   watchDeleteEvent,
   watchFetchEventById,
   watchFetchEventByIdNoLoading,
-  watchRefreshEventPlaylist,
   watchToggleAutoAcceptSuggestions,
   watchToggleDynamicVoting,
   watchToggleSuggestingPlaylists
@@ -39,7 +38,6 @@ export default function* rootSaga() {
     watchFetchEventById(),
     watchFetchEvents(),
     watchDeleteEvent(),
-    watchRefreshEventPlaylist(),
     watchFetchSuggestions(),
     watchRejectSuggestion(),
     watchSaveEventPlaylist(),

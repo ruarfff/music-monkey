@@ -20,7 +20,8 @@ import {
   TOGGLE_DYNAMIC_VOTING_ERROR,
   TOGGLE_SUGGESTING_PLAYLISTS,
   TOGGLE_SUGGESTING_PLAYLISTS_ERROR,
-  EVENT_FETCH_BY_ID_ERROR
+  EVENT_FETCH_BY_ID_ERROR,
+  EVENT_SELECTED
 } from './eventActions'
 import initialState from './eventInitialState'
 import event from './eventReducer'
@@ -75,8 +76,14 @@ describe('eventReducer', () => {
     })
   })
 
-  it('should return the initial state when no action matches', () => {
-    expect(event(undefined, {} as Action)).toEqual(initialState)
+  it('should handle EVENT_SELECTED', () => {
+    const newEvent = { ...initialState.event, eventId: 'new-event' }
+    expect(
+      event(initialState, {
+        type: EVENT_SELECTED,
+        payload: newEvent
+      })
+    ).toEqual({ ...initialState, event: newEvent })
   })
 
   it('should handle EVENT_INVITE_COPIED', () => {

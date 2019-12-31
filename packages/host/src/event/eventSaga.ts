@@ -6,14 +6,12 @@ import {
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
-  EVENT_DELETE_FAILED,
   EVENT_DELETE_INITIATED,
   EVENT_DELETE_SUCCESSFUL,
   EVENT_FETCH_BY_ID_ERROR,
   EVENT_FETCH_BY_ID_INITIATED,
   EVENT_FETCH_BY_ID_NO_LOADING_INITIATED,
   EVENT_FETCHED_BY_ID,
-  REFRESH_EVENT_PLAYLIST,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
   TOGGLE_DYNAMIC_VOTING,
@@ -84,16 +82,12 @@ function* deleteEventFlow(action: IAction) {
     yield call(deleteEvent, action.payload)
     yield put({ type: EVENT_DELETE_SUCCESSFUL, eventId: action.payload })
   } catch (err) {
-    yield put({ type: EVENT_DELETE_FAILED, payload: err })
+    console.error(err)
   }
 }
 
 export function* watchDeleteEvent() {
   yield takeEvery(EVENT_DELETE_INITIATED, deleteEventFlow)
-}
-
-export function* watchRefreshEventPlaylist() {
-  yield takeEvery(REFRESH_EVENT_PLAYLIST, fetchEventByIdFlow)
 }
 
 function* toggleDynamicVotingFlow(action: IAction) {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { sortPlaylistByVotesDescending, getEvents } from 'event/eventActions'
+import { sortPlaylistByVotesDescending } from 'event/eventActions'
 import { fetchPlaylists } from 'playlist/playlistActions'
 import IRootState from 'rootState'
 import { fetchEventVotes } from 'vote/voteActions'
@@ -15,7 +15,6 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = {
-  getEvents,
   filterByEventPick,
   sortPlaylistByVotesDescending,
   fetchPlaylists,

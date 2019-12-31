@@ -1,5 +1,5 @@
 import React from 'react'
-import Content from './Content'
+import Content from './ContentContainer'
 import TopBar from './topbar/TopBarContainer'
 import BottomBar from './bottombar/BottomBarContainer'
 import './MobileLayout.scss'

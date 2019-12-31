@@ -17,7 +17,6 @@ interface IInsightsProps {
   events: IEvent[]
   pickedEvent: string
   votes: Map<string, ITrackVoteStatus>
-  getEvents(): IAction
   fetchPlaylists(user: IUser): IAction
   filterByEventPick(id: any): IAction
   sortPlaylistByVotesDescending(
@@ -29,7 +28,6 @@ interface IInsightsProps {
 
 class Insights extends React.Component<IInsightsProps> {
   public componentDidMount() {
-    this.props.getEvents()
     if (this.props.user) {
       this.props.fetchPlaylists(this.props.user)
     }

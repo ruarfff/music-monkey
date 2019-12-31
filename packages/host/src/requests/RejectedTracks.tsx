@@ -24,7 +24,9 @@ const RejectedTracks = ({ user, suggestions }: IRejectedTracksProps) => {
 
   return (
     <List>
-      {!isEmpty(rejectedTracks) && <TrackList tracks={rejectedTracks} />}
+      {!isEmpty(rejectedTracks) && (
+        <TrackList tracks={rejectedTracks} disableRemoveTrack={true} />
+      )}
       {isEmpty(rejectedTracks) && (
         <ListItem>
           <span className="noTracks">No rejected suggestions yet</span>

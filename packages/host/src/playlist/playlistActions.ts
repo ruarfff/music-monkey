@@ -35,7 +35,11 @@ export const EDIT_PLAYLIST_FAILURE = 'EDIT_PLAYLIST_FAILURE'
 
 export const CLEAR_JUST_CREATED_PLAYLISTS = 'CLEAR_JUST_CREATED_PLAYLISTS'
 
-export const editPlaylist = (playlistId: string, name: string, description: string):IAction => ({
+export const editPlaylist = (
+  playlistId: string,
+  name: string,
+  description: string
+): IAction => ({
   type: EDIT_PLAYLIST_REQUEST,
   payload: {
     playlistId,
@@ -44,11 +48,11 @@ export const editPlaylist = (playlistId: string, name: string, description: stri
   }
 })
 
-export const editPlaylistSuccess = ():IAction => ({
+export const editPlaylistSuccess = (): IAction => ({
   type: EDIT_PLAYLIST_SUCCESS
 })
 
-export const editPlaylistFailure = ():IAction => ({
+export const editPlaylistFailure = (): IAction => ({
   type: EDIT_PLAYLIST_FAILURE
 })
 
@@ -56,7 +60,10 @@ export const clearJustCreatedPlaylists = () => ({
   type: CLEAR_JUST_CREATED_PLAYLISTS
 })
 
-export const getMoreUsersPlaylists = (user: IUser, offset: number): IAction => ({
+export const getMoreUsersPlaylists = (
+  user: IUser,
+  offset: number
+): IAction => ({
   type: LOAD_MORE_PLAYLISTS_REQUEST,
   payload: {
     user,
@@ -64,11 +71,12 @@ export const getMoreUsersPlaylists = (user: IUser, offset: number): IAction => (
   }
 })
 
-export const getMoreUsersPlaylistsSuccess = (playlists: IPlaylist[]): IAction => ({
+export const getMoreUsersPlaylistsSuccess = (
+  playlists: IPlaylist[]
+): IAction => ({
   type: LOAD_MORE_PLAYLISTS_SUCCESS,
   payload: playlists
 })
-
 
 export const getTracksFeatures = (trackIds: string[]): IAction => {
   return {
@@ -95,25 +103,29 @@ export const addTrack = (playlistId: string, track: ITrack): IAction => ({
   type: ADD_TRACK_REQUEST,
   payload: {
     playlistId,
-    track,
+    track
   }
 })
 
 export const addTrackSuccess = (track: ITrack): IAction => ({
   type: ADD_TRACK_SUCCESS,
-  payload: track,
+  payload: track
 })
 
 export const addTrackError = (): IAction => ({
-  type: ADD_TRACK_FAILURE,
+  type: ADD_TRACK_FAILURE
 })
 
-export const tryRemoveTrack = (playlistId: string, trackUri: string, trackPosition: number): IAction => ({
+export const tryRemoveTrack = (
+  playlistId: string,
+  trackUri: string,
+  trackPosition: number
+): IAction => ({
   type: REMOVE_TRACK_REQUEST,
   payload: {
     playlistId,
     trackUri,
-    trackPosition,
+    trackPosition
   }
 })
 
@@ -123,7 +135,7 @@ export const trackRemoved = (playlist: IPlaylist): IAction => ({
 })
 
 export const removeTrackError = (): IAction => ({
-  type: REMOVE_TRACK_FAILURE,
+  type: REMOVE_TRACK_FAILURE
 })
 
 export const fetchPlaylists = (user: IUser): IAction => ({
@@ -143,24 +155,20 @@ export const fetchPlaylistsError = (error: Error): IAction => ({
 
 export const searchTrack = (text: string): IAction => ({
   type: SEARCH_TRACKS_REQUEST,
-  payload: text,
+  payload: text
 })
 
 export const searchTrackSuccess = (res: any): IAction => ({
   type: SEARCH_TRACKS_SUCCESS,
-  payload: res,
+  payload: res
 })
 
 export const searchTrackFailure = (error: string): IAction => ({
   type: SEARCH_TRACKS_FAILURE,
-  payload: error,
+  payload: error
 })
 
 export const onPlaylistSelected = (playlist: IPlaylist): IAction => ({
   type: PLAYLIST_SELECTED,
   payload: playlist
-})
-
-export const deselectPlaylist = (): IAction => ({
-  type: PLAYLIST_DESELECTED
 })
