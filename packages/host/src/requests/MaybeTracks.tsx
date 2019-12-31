@@ -1,12 +1,13 @@
-import List from '@material-ui/core/List/List'
-import ListItem from '@material-ui/core/ListItem/ListItem'
-import { isEmpty, uniqBy } from 'lodash'
 import React from 'react'
-import IDecoratedSuggestion from '../suggestion/IDecoratedSuggestion'
-import TrackList from '../track/TrackList'
-import IUser from '../user/IUser'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import { isEmpty } from 'lodash'
+import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import SuggestionList from 'suggestion/SuggestionList'
+import IUser from 'user/IUser'
+import IEvent from 'event/IEvent'
+import IPlaylistItem from 'playlist/IPlaylistItem'
 import './MaybeTracks.scss'
-import IEvent from '../event/IEvent'
 
 interface IMaybeTracksProps {
   user: IUser
@@ -19,29 +20,33 @@ const MaybeTracks = ({
   suggestions,
   selectedEvent
 }: IMaybeTracksProps) => {
-  const maybeSuggestions =
-    !isEmpty(suggestions) && !isEmpty(user)
-      ? suggestions.filter(
-          s => s.suggestion && !s.suggestion.rejected && !s.suggestion.accepted
-        )
-      : []
   const playlistTracks =
     !isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)
-      ? selectedEvent!.playlist!.tracks.items.map(track => track.track.uri)
+      ? selectedEvent!.playlist!.tracks.items.map(
+          (track: IPlaylistItem) => track.track.uri
+        )
       : []
-  const maybeTracks = uniqBy(
-    maybeSuggestions
-      .map(s => s.track)
-      .filter(track => playlistTracks.indexOf(track.uri) === -1),
-    'id'
-  )
+  const maybeSuggestions =
+    !isEmpty(suggestions) && !isEmpty(user)
+      ? suggestions
+          .filter(
+            s =>
+              s.suggestion && !s.suggestion.rejected && !s.suggestion.accepted
+          )
+          .filter(
+            suggestion => playlistTracks.indexOf(suggestion.track.uri) === -1
+          )
+      : []
 
   return (
     <List>
-      {!isEmpty(maybeTracks) && (
-        <TrackList tracks={maybeTracks} disableRemoveTrack={true} />
+      {!isEmpty(maybeSuggestions) && (
+        <SuggestionList
+          suggestions={maybeSuggestions}
+          disableRemoveTrack={true}
+        />
       )}
-      {isEmpty(maybeTracks) && (
+      {isEmpty(maybeSuggestions) && (
         <ListItem>
           <span className="noTracks">No suggestions yet</span>
         </ListItem>

@@ -14,6 +14,7 @@ interface ITrackListProps {
   disableRemoveTrack?: boolean
   withVoting?: boolean
   votes?: Map<string, ITrackVoteStatus>
+  avatar?: string
   onVote?(track: ITrack): void
   onTrackSelected?(track: ITrack): void
   onDragEnd?(result: any): void
@@ -37,6 +38,7 @@ const TrackList = ({
   tracksWithFeatures = [],
   withVoting = false,
   votes = new Map(),
+  avatar = undefined,
   onVote = (t: ITrack) => ({} as any),
   onTrackSelected = (t: ITrack) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
@@ -78,6 +80,7 @@ const TrackList = ({
                         onTrackSelected={onTrackSelected}
                         onVote={onVote}
                         onTrackRemoved={onTrackRemoved}
+                        avatar={avatar}
                       />
                     </div>
                   )}

@@ -10,25 +10,16 @@ import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import isFunction from 'lodash/isFunction'
 import Image from 'components/Image'
 import backgroundImage from 'assets/music-monkey.jpg'
-import ITrack from './ITrack'
-import ITrackWithFeatures from './ITrackWithFeatures'
 import Remove from '@material-ui/icons/Remove'
 import { Divider, Avatar } from '@material-ui/core'
 import getTrackImage from 'track/getTrackImage'
-import './TrackListItem.scss'
+import IDecoratedSuggestion from './IDecoratedSuggestion'
+import ITrack from 'track/ITrack'
+import IUser from 'user/IUser'
+import './SuggestionListItem.scss'
 
-// TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
-// Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
-
-/* <ListItemText
-        primary={
-          tracksWithFeature && 'tempo ' + Math.round(tracksWithFeature.tempo)
-        }
-      /> */
-
-interface ITrackListItemProps {
-  track: ITrack
-  tracksWithFeature: ITrackWithFeatures
+interface SuggestionListItemProps {
+  suggestion: IDecoratedSuggestion
   withVoting: boolean
   numberOfVotes: number
   disableRemoveTrack?: boolean
@@ -38,20 +29,28 @@ interface ITrackListItemProps {
   onTrackRemoved?(track: ITrack): void
 }
 
-const TrackListItem = ({
-  track,
-  tracksWithFeature,
+const SuggestionListItem = ({
+  suggestion,
   withVoting,
   numberOfVotes,
   disableRemoveTrack,
   onVote,
   onTrackSelected,
-  onTrackRemoved,
-  avatar
-}: ITrackListItemProps) => {
-  if (!track) {
+  onTrackRemoved
+}: SuggestionListItemProps) => {
+  if (!suggestion) {
     return <span />
   }
+
+  const track: ITrack = suggestion.track
+  const user: IUser = suggestion.user
+  let initials: any = 'G'
+
+  if (user && user.displayName) {
+    initials = user.displayName.match(/\b\w/g) || []
+    initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+  }
+
   const handleTrackSelected = () => {
     if (isFunction(onTrackSelected)) {
       onTrackSelected(track)
@@ -73,7 +72,7 @@ const TrackListItem = ({
       src={getTrackImage(track)}
       alt={track.name}
       fallbackSrc={backgroundImage}
-      className="TrackListItem-track-image"
+      className="SuggestionListItem-track-image"
     />
   )
 
@@ -84,7 +83,7 @@ const TrackListItem = ({
         <Badge
           badgeContent={numberOfVotes}
           color="secondary"
-          className="TrackListItem-voting"
+          className="SuggestionListItem-voting"
         >
           <FavouriteIcon />
         </Badge>
@@ -95,14 +94,14 @@ const TrackListItem = ({
   return (
     <>
       <ListItem
-        className="TrackListItem-root"
+        className="SuggestionListItem-root"
         alignItems="flex-start"
         button
         onClick={handleTrackSelected}
       >
         <ListItemIcon>{trackImage}</ListItemIcon>
         <ListItemText
-          className="TrackListItem-content"
+          className="SuggestionListItem-content"
           primary={track.name}
           primaryTypographyProps={{ noWrap: true }}
           secondary={track.album.artists[0].name}
@@ -112,10 +111,14 @@ const TrackListItem = ({
           }}
         />
 
-        <ListItemSecondaryAction className="TrackListItem-actions">
-          {!!avatar && (
-            <Avatar alt="user avatar" src={avatar} className="avatar" />
+        <ListItemSecondaryAction className="SuggestionListItem-actions">
+          {!!user.image && (
+            <Avatar alt="user avatar" src={user.image} className="avatar" />
           )}
+          {!user.image && (
+            <Avatar className="EventGuests-avatar">{initials}</Avatar>
+          )}
+
           {!disableRemoveTrack && (
             <Fab
               aria-label="remove"
@@ -134,4 +137,4 @@ const TrackListItem = ({
   )
 }
 
-export default TrackListItem
+export default SuggestionListItem
