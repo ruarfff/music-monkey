@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ITrack from '../track/ITrack'
 import IEvent from './IEvent'
 
@@ -19,34 +19,34 @@ export const FETCH_USERS_EVENTS_ERROR = 'FETCH_USERS_EVENTS_ERROR'
 
 export const EVENT_ID_SET = 'EVENT_ID_SET'
 
-export const setEventId = (eventId: string): IAction => ({
+export const setEventId = (eventId: string): Action => ({
   payload: eventId,
   type: EVENT_ID_SET
 })
 
-export const selectEvent = (event: IEvent): IAction => ({
+export const selectEvent = (event: IEvent): Action => ({
   payload: event,
   type: EVENT_SELECTED
 })
 
-export const deselectEvent = (): IAction => ({
+export const deselectEvent = (): Action => ({
   type: DESELECT_EVENT
 })
 
-export const getEvent = (eventId: string): IAction => ({
+export const getEvent = (eventId: string): Action => ({
   payload: eventId,
   type: EVENT_FETCH_INITIATED
 })
 
-export const selectSuggestion = (track: ITrack): IAction => ({
+export const selectSuggestion = (track: ITrack): Action => ({
   payload: track,
   type: EVENT_SUGGESTION_SELECTED
 })
 
-export const deselectSuggestion = (): IAction => ({
+export const deselectSuggestion = (): Action => ({
   type: EVENT_SUGGESTION_DESELECTED
 })
 
-export const fetchUsersEvents = (): IAction => ({
+export const fetchUsersEvents = (): Action => ({
   type: FETCH_USERS_EVENTS
 })

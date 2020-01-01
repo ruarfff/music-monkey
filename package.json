@@ -34,7 +34,7 @@
     "lodash": "4.17.11",
     "moment": "2.24.0",
     "mm-client": "file:libs/mm-client",
-    "mm-shared": "file:libs/mm-shared",
+    "mm-shared": "file:packages/mm-shared",
     "mm-suggestions": "file:libs/mm-suggestions",
     "notistack": "^0.9.5",
     "npm-run-all": "4.1.5",

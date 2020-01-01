@@ -1,4 +1,4 @@
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import {
   LOGGED_OUT,
   LOGGING_IN,

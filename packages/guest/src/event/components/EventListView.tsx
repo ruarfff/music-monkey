@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { Redirect } from 'react-router'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import localStorage from 'storage/localStorage'
@@ -14,7 +14,7 @@ interface IEventListViewProps {
   selectedEvent: IEvent
   events: IEvent[]
   eventsLoading: boolean
-  deselectEvent(): IAction
+  deselectEvent(): Action
 }
 
 const EventListView = ({

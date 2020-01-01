@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash'
 import * as React from 'react'
-import IAction from '../../IAction'
+import { Action } from 'mm-shared'
 import ITrack from '../../track/ITrack'
 import TrackList from '../../track/TrackList'
 import IUser from '../../user/IUser'
@@ -13,8 +13,8 @@ interface IEventDetailsProps {
   event: IEvent
   user: IUser
   votes: Map<string, ITrackVoteStatus>
-  createVote(vote: IVote): IAction
-  deleteVote(voteId: string): IAction
+  createVote(vote: IVote): Action
+  deleteVote(voteId: string): Action
 }
 
 class EventDetails extends React.PureComponent<IEventDetailsProps> {

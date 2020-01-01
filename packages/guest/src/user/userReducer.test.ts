@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import {
   FETCH_USER,
   FETCH_USER_ERROR,
@@ -8,7 +8,7 @@ import { emptyUser } from './userInitialState'
 import user from './userReducer'
 
 it('should return the initial state when no action matches', () => {
-  expect(user(undefined, {} as IAction)).toEqual(emptyUser)
+  expect(user(undefined, {} as Action)).toEqual(emptyUser)
 })
 
 it('should handle FETCH_USER', () => {

@@ -1,4 +1,4 @@
-import Action from 'IAction'
+import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import IPlaylistItem from 'playlist/IPlaylistItem'
 import IPlaylistTracks from 'playlist/IPlaylistTracks'

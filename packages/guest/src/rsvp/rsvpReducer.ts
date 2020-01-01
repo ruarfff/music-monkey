@@ -1,4 +1,4 @@
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import {
   FETCH_OR_CREATE_RSVP_INITIATED,
   FETCH_OR_CREATE_RSVP_SUCCESS,

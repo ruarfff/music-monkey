@@ -1,13 +1,13 @@
 import List from '@material-ui/core/List/List'
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ITrack from '../track/ITrack'
 import TrackList from '../track/TrackList'
 
 interface IRecommendationsProps {
   tracks: ITrack[]
-  getRecommendations(): IAction
+  getRecommendations(): Action
   onRecommendationSelected?(track: ITrack): void
 }
 

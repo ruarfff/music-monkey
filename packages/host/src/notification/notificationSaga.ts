@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import {
   actionedNotification,
   getNotificationsFailure,
@@ -15,7 +15,7 @@ import {
   updateNotification
 } from './notificationClient'
 
-function* fetchNotificationsByUserId({ payload }: IAction) {
+function* fetchNotificationsByUserId({ payload }: Action) {
   try {
     const notifications = yield call(getNotifications, payload)
     yield put(getNotificationsSuccess(notifications))
@@ -24,7 +24,7 @@ function* fetchNotificationsByUserId({ payload }: IAction) {
   }
 }
 
-function* fetchUpdateNotification({ payload }: IAction) {
+function* fetchUpdateNotification({ payload }: Action) {
   try {
     yield call(updateNotification, payload)
     yield put(updateNotificationSuccess())

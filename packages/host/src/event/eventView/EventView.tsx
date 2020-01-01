@@ -8,7 +8,7 @@ import Tabs from '@material-ui/core/Tabs/Tabs'
 import Typography from '@material-ui/core/Typography/Typography'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps } from 'react-router'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import InviteCopyAlert from 'components/InviteLink/InviteCopyAlert'
 import EventFetchError from 'event/EventFetchError'
 import IEvent from 'event/IEvent'
@@ -51,12 +51,12 @@ interface IEventViewProps extends RouteComponentProps<any> {
   event: IEvent
   loading: boolean
   copiedToClipboard: boolean
-  getEventById(eventId: string): IAction
-  copyEventInvite(): IAction
-  acknowledgeEventInviteCopied(): IAction
-  getEventSuggestions(eventId: string): IAction
-  fetchEventVotes(eventId: string): IAction
-  getEventByIdNoLoading(eventId: string): IAction
+  getEventById(eventId: string): Action
+  copyEventInvite(): Action
+  acknowledgeEventInviteCopied(): Action
+  getEventSuggestions(eventId: string): Action
+  fetchEventVotes(eventId: string): Action
+  getEventByIdNoLoading(eventId: string): Action
 }
 
 function TabContainer({ children, dir }: any) {

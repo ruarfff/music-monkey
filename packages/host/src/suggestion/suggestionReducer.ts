@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
 import ISuggestion from './ISuggestion'
 import ISuggestionState from './ISuggestionState'
@@ -17,7 +17,7 @@ import initialState from './suggestionInitialState'
 
 export default function suggestion(
   state: ISuggestionState = initialState,
-  { type, payload }: IAction
+  { type, payload }: Action
 ) {
   switch (type) {
     case FETCH_SUGGESTIONS_INITIATED:

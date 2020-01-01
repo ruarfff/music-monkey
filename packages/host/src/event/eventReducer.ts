@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
-import Action from 'IAction'
+import { Action } from 'mm-shared'
 import {
   CLEAR_MESSAGE,
   SHARE_EMAIL_FAILURE,

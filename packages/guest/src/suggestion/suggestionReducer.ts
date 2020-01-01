@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ISuggestionState from './ISuggestionState'
 import {
   CLEAR_SAVED_SUGGESTION,
@@ -18,7 +18,7 @@ import initialState from './suggestionInitialState'
 
 export default function suggestion(
   state: ISuggestionState = initialState,
-  { type, payload }: IAction
+  { type, payload }: Action
 ) {
   switch (type) {
     case SAVE_TRACK_SUGGESTION_INITIATED:

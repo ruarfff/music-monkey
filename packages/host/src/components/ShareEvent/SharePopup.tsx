@@ -1,6 +1,6 @@
 import Button from '@material-ui/core/Button'
 import * as React from 'react'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IEvent from 'event/IEvent'
 import ShareEventByEmail from './ShareEventByEmailContainer'
 import './SharePopup.scss'
@@ -10,7 +10,7 @@ interface ISharePopupProps {
   inviteId: string
   event: IEvent
   onCopyEventInvite(): void
-  clearMessage(): IAction
+  clearMessage(): Action
 }
 
 class SharePopup extends React.PureComponent<ISharePopupProps> {

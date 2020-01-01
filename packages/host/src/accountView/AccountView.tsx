@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 import IEvent from 'event/IEvent'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IUser from 'user/IUser'
 import AccountDetails from './AccountDetails'
 import MyEvents from './MyEvents'
@@ -16,8 +16,8 @@ import './AccountView.scss'
 interface IAccountViewProps {
   user: IUser
   events: IEvent[]
-  updateUserRequest(user: IUser): IAction
-  getEvents(): IAction
+  updateUserRequest(user: IUser): Action
+  getEvents(): Action
 }
 
 function TabContainer({ children }: any) {

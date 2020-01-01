@@ -1,11 +1,11 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ITrack from '../track/ITrack'
 import { SEARCH_SUCCESS } from './searchActions'
 import initialState from './searchInitialState'
 import search from './searchReducer'
 
 it('should return the initial state when no action matches', () => {
-  expect(search(undefined, {} as IAction)).toEqual(initialState)
+  expect(search(undefined, {} as Action)).toEqual(initialState)
 })
 
 it('should handle SEARCH_SUCCESS', () => {

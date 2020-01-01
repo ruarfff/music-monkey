@@ -1,5 +1,5 @@
 import IEvent from '../event/IEvent'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IUser from '../user/IUser'
 import IPlaylist from './IPlaylist'
 
@@ -29,22 +29,22 @@ export const fetchMorePlaylistsError = (error: Error) => ({
   payload: error
 })
 
-export const fetchPlaylists = (user: IUser): IAction => ({
+export const fetchPlaylists = (user: IUser): Action => ({
   type: FETCH_PLAYLISTS,
   payload: user
 })
 
-export const fetchPlaylistsSuccess = (data: IPlaylist): IAction => ({
+export const fetchPlaylistsSuccess = (data: IPlaylist): Action => ({
   payload: data,
   type: FETCH_PLAYLISTS_SUCCESS
 })
 
-export const fetchPlaylistsError = (error: Error): IAction => ({
+export const fetchPlaylistsError = (error: Error): Action => ({
   payload: error,
   type: FETCH_PLAYLISTS_ERROR
 })
 
-export const loadEventPlaylists = (events: IEvent[]): IAction => ({
+export const loadEventPlaylists = (events: IEvent[]): Action => ({
   type: EVENT_PLAYLISTS_LOADED,
   payload: events
 })

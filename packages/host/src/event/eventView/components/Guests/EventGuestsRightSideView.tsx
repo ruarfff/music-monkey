@@ -8,7 +8,7 @@ import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import CloseIcon from '@material-ui/icons/Close'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import SharePopup from 'components/ShareEvent/SharePopup'
 import IEvent from 'event/IEvent'
 import IEventGuest from 'event/IEventGuest'
@@ -38,8 +38,8 @@ const decorated = withStyle(() => ({
 interface IEventGuestsRightSideViewProps {
   message: string
   event: IEvent
-  copyEventInvite(): IAction
-  clearMessage(): IAction
+  copyEventInvite(): Action
+  clearMessage(): Action
 }
 
 class EventGuestsRightSideView extends React.PureComponent<

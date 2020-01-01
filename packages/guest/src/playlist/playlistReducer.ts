@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash'
 import IEvent from '../event/IEvent'
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import {
   EVENT_PLAYLISTS_LOADED,
   FETCH_MORE_PLAYLISTS_REQUEST,

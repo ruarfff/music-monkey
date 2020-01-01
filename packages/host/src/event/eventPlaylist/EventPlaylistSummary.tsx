@@ -4,7 +4,7 @@ import FormGroup from '@material-ui/core/FormGroup/FormGroup'
 import Grid from '@material-ui/core/Grid/Grid'
 import Switch from '@material-ui/core/Switch/Switch'
 import IEvent from 'event/IEvent'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import formatDuration from 'util/formatDuration'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
@@ -17,10 +17,10 @@ interface IEventPlaylistSummaryProps {
   sortPlaylistByVotesDescending(
     playlist: IPlaylist,
     votes: Map<string, ITrackVoteStatus>
-  ): IAction
-  toggleDynamicVoting(event: IEvent): IAction
-  toggleAutoAcceptSuggestions(event: IEvent): IAction
-  toggleSuggestingPlaylists(event: IEvent): IAction
+  ): Action
+  toggleDynamicVoting(event: IEvent): Action
+  toggleAutoAcceptSuggestions(event: IEvent): Action
+  toggleSuggestingPlaylists(event: IEvent): Action
 }
 
 class EventPlaylistSummary extends React.PureComponent<

@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
 import ISuggestion from './ISuggestion'
 import ISuggestionState from './ISuggestionState'
@@ -17,7 +17,7 @@ import suggestion from './suggestionReducer'
 
 describe('suggestionReducer', () => {
   it('should return the initial state when no action matches', () => {
-    expect(suggestion(undefined, {} as IAction)).toEqual(initialState)
+    expect(suggestion(undefined, {} as Action)).toEqual(initialState)
   })
 
   it('should handle FETCH_SUGGESTIONS_INITIATED', () => {

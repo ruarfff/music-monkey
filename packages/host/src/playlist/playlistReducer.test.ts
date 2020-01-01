@@ -1,4 +1,4 @@
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import IPlaylist from './IPlaylist'
 import {
   ADD_TRACK_FAILURE,

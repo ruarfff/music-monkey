@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ITrackSuggestion from './IPlaylistSuggestion'
 import IPlaylistSuggestion from './IPlaylistSuggestion'
 import ISuggestion from './ISuggestion'
@@ -20,7 +20,7 @@ import suggestion from './suggestionReducer'
 
 describe('suggestionReducer', () => {
   it('should return the initial state when no action matches', () => {
-    expect(suggestion(undefined, {} as IAction)).toEqual(initialState)
+    expect(suggestion(undefined, {} as Action)).toEqual(initialState)
   })
 
   it('should handle SAVE_TRACK_SUGGESTION_INITIATED', () => {

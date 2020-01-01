@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../../event/IEvent'
-import IAction from '../../IAction'
+import { Action } from 'mm-shared'
 import ITrack from '../../track/ITrack'
 import IUser from '../../user/IUser'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
@@ -22,9 +22,9 @@ interface IPlayListProps extends RouteComponentProps<any> {
   event: IEvent
   votes: Map<string, ITrackVoteStatus>
   suggestions: IDecoratedSuggestion[]
-  createVote(vote: IVote): IAction
-  deleteVote(voteId: string): IAction
-  setEventId(eventId: string): IAction
+  createVote(vote: IVote): Action
+  deleteVote(voteId: string): Action
+  setEventId(eventId: string): Action
 }
 
 const Playlist = ({

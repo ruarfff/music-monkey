@@ -13,14 +13,14 @@ import {
   subscribeToVotesModified
 } from './pusherGateway'
 import IEvent from '../event/IEvent'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 
 interface ISubscriptionWrapper {
   event: IEvent
   children: any
-  getEventByIdNoLoading(eventId: string): IAction
-  fetchEventVotes(eventId: string): IAction
-  getEventSuggestions(eventId: string): IAction
+  getEventByIdNoLoading(eventId: string): Action
+  fetchEventVotes(eventId: string): Action
+  getEventSuggestions(eventId: string): Action
 }
 
 export default ({

@@ -11,7 +11,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import CloseIcon from '@material-ui/icons/Close'
 import { WithStyles } from '@material-ui/core'
 import * as React from 'react'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import SharePopup from 'components/ShareEvent/SharePopup'
 import IEvent from 'event/IEvent'
 import IEventGuest from 'event/IEventGuest'
@@ -49,8 +49,8 @@ const decorated = withStyle(() => ({
 interface IEventGuestsProps {
   event: IEvent
   message: string
-  copyEventInvite(): IAction
-  clearMessage(): IAction
+  copyEventInvite(): Action
+  clearMessage(): Action
 }
 
 class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {

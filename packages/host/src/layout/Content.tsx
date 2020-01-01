@@ -4,14 +4,14 @@ import { RouteContext } from 'routes/RouteContext'
 import { RouteWithSubRoutes } from 'routes/routes'
 import EventListView from 'event/EventListViewContainer'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IEvent from 'event/IEvent'
 import isEmpty from 'lodash/isEmpty'
 
 interface ContentProps {
   events: IEvent[]
   eventsLoading: boolean
-  getEvents(): IAction
+  getEvents(): Action
 }
 
 const Content = ({ events, eventsLoading, getEvents }: ContentProps) => {

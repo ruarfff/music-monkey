@@ -1,4 +1,4 @@
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import IUser from './IUser'
 
 export const FETCH_USER = 'FETCH_USER'

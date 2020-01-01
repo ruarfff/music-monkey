@@ -7,7 +7,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import IAction from '../../IAction'
+import { Action } from 'mm-shared'
 import IRsvp from '../../rsvp/IRsvp'
 import IUser from '../../user/IUser'
 import IEvent from '../IEvent'
@@ -17,7 +17,7 @@ import './EventResponseMenu.scss'
 interface IEventResponseMenu {
   event: IEvent
   user: IUser
-  updateRsvp(rsvp: IRsvp): IAction
+  updateRsvp(rsvp: IRsvp): Action
 }
 
 const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {

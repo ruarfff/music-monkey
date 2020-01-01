@@ -1,6 +1,6 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
 import { cloneDeep } from 'lodash'
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import {
   ADD_TRACK_FAILURE,
   ADD_TRACK_SUCCESS,

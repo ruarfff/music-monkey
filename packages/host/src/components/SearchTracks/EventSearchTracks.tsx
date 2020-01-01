@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import Search from '@material-ui/icons/Search'
 import { debounce, isEmpty } from 'lodash'
 import * as React from 'react'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import ISearch from 'playlist/ISearch'
 import Recommendations from 'recommendations/RecommendationsContainer'
@@ -23,8 +23,8 @@ interface IEventSearchTracksProps {
   playlist: IPlaylist
   notification: string
   layout?: string
-  searchTrack(text: string): IAction
-  addTrack(playlistId: string, track: ITrack): IAction
+  searchTrack(text: string): Action
+  addTrack(playlistId: string, track: ITrack): Action
 }
 
 const decorate = withStyles(() => ({

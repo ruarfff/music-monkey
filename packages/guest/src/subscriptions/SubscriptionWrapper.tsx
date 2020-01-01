@@ -17,14 +17,14 @@ import {
   subscribeToPlaylistModified
 } from './pusherGateway'
 import IEvent from '../event/IEvent'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 
 interface ISubscriptionWrapper {
   event: IEvent
   children: any
-  getEvent(eventId: string): IAction
-  fetchEventVotes(eventId: string): IAction
-  getSuggestions(eventId: string): IAction
+  getEvent(eventId: string): Action
+  fetchEventVotes(eventId: string): Action
+  getSuggestions(eventId: string): Action
 }
 
 const SubscriptionWrapper = ({

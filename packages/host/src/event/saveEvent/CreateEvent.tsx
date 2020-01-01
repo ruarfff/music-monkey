@@ -10,13 +10,13 @@ import CreateEventFormValues from './CreateEventFormValues'
 import SeedPlaylist from './SeedPlaylistContainer'
 import IPlaylist from 'playlist/IPlaylist'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 
 import './CreateEvent.scss'
 
 interface CreateEventProps extends RouteComponentProps {
   user: IUser
-  getEvents(): IAction
+  getEvents(): Action
 }
 
 const CreateEvent = ({ user, history, getEvents }: CreateEventProps) => {

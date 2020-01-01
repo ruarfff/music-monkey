@@ -5,7 +5,7 @@ import PieChartWidget from './PieChart'
 import MostPopularTracks from 'insights/MostPopularTracks'
 import MostVotedTracks from 'insights/MostVotedTracks'
 import IEvent from 'event/IEvent'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import IUser from 'user/IUser'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
@@ -17,13 +17,13 @@ interface IInsightsProps {
   events: IEvent[]
   pickedEvent: string
   votes: Map<string, ITrackVoteStatus>
-  fetchPlaylists(user: IUser): IAction
-  filterByEventPick(id: any): IAction
+  fetchPlaylists(user: IUser): Action
+  filterByEventPick(id: any): Action
   sortPlaylistByVotesDescending(
     playlist: IPlaylist,
     votes: Map<string, ITrackVoteStatus>
-  ): IAction
-  fetchEventVotes(eventId: string): IAction
+  ): Action
+  fetchEventVotes(eventId: string): Action
 }
 
 class Insights extends React.Component<IInsightsProps> {

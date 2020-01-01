@@ -2,7 +2,7 @@ import { isEmpty, find } from 'lodash'
 import { Route, RouteComponentProps } from 'react-router'
 import BottomBar from '../bottombar/BottomBarContainer'
 import IEvent from '../event/IEvent'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import { RouteWithSubRoutes } from '../routes'
 import TopBar from '../topbar/TopBarContainer'
 import './MainLayout.scss'
@@ -19,10 +19,10 @@ interface IMainLayoutProps extends RouteComponentProps<any> {
   eventsLoading: boolean
   inviteEvent: IEvent
   fetchingRsvp: boolean
-  fetchUsersEvents(): IAction
-  getEvent(eventId: string): IAction
-  getSuggestions(eventId: string): IAction
-  fetchEventVotes(eventId: string): IAction
+  fetchUsersEvents(): Action
+  getEvent(eventId: string): Action
+  getSuggestions(eventId: string): Action
+  fetchEventVotes(eventId: string): Action
 }
 
 const MainLayout = ({

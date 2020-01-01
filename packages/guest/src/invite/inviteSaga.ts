@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IInvite from './IInvite'
 import {
   FETCHING_INVITE,
@@ -8,7 +8,7 @@ import {
 } from './inviteActions'
 import { getInviteById } from './inviteClient'
 
-function* fetchInviteFlow(action: IAction) {
+function* fetchInviteFlow(action: Action) {
   try {
     const inviteId = action.payload
     const invite: IInvite = yield call(getInviteById, inviteId)

@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import {
   SHARE_EMAIL_REQUEST,
   shareByEmailsFailure,
@@ -7,7 +7,7 @@ import {
 } from './shareActions'
 import { sendEmails } from './shareClient'
 
-function* fetchShareEmail({ payload }: IAction) {
+function* fetchShareEmail({ payload }: Action) {
   try {
     const { event, emails, emailText } = payload
     const res = yield call(sendEmails, emails, emailText, event)

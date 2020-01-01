@@ -6,7 +6,7 @@ import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../event/IEvent'
 import EventPicker from '../event/components/EventPickerContainer'
 import SelectedEvent from '../event/components/SelectedEvent'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
 import AcceptedTracks from './AcceptedTracksContainer'
 import MaybeTracks from './MaybeTracksContainer'
@@ -15,8 +15,8 @@ import './Requests.scss'
 
 interface IRequestsProps extends RouteComponentProps<any> {
   selectedEvent: IEvent
-  deselectEvent(): IAction
-  setEventId(eventId: string): IAction
+  deselectEvent(): Action
+  setEventId(eventId: string): Action
 }
 
 const Requests = ({

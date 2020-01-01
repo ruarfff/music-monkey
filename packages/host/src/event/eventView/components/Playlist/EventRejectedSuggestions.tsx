@@ -9,7 +9,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { RouteComponentProps, withRouter } from 'react-router'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import formatDuration from 'util/formatDuration'
@@ -23,7 +23,7 @@ interface IEventRejectedSuggestionsProps extends RouteComponentProps<any> {
     eventId: string,
     playlist: IPlaylist,
     suggestions: Map<string, IDecoratedSuggestion>
-  ): IAction
+  ): Action
 }
 
 const trackHasImage = (track: ITrack) => {

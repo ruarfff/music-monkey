@@ -3,7 +3,7 @@ import Input from '@material-ui/core/Input/Input'
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik'
 import * as React from 'react'
 import { object, ref, string } from 'yup'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ErrorNotification from '../util/ErrorNotification'
 import LinkButton from '../util/LinkButton'
 import './SignUp.scss'
@@ -11,8 +11,8 @@ import './SignUp.scss'
 interface ISignUpProps {
   isAuthenticating: boolean
   authError: any
-  clearAuthError(): IAction
-  signUp(email: string, password: string): IAction
+  clearAuthError(): Action
+  signUp(email: string, password: string): Action
 }
 
 interface ISignUpFormValues {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import IUserState from './IUserState'
 
 interface IUserProps {

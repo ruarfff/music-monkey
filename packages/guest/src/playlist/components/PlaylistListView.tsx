@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 import IEvent from 'event/IEvent'
 import IPlaylist from 'playlist/IPlaylist'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import sortEvents from 'event/sortEvents'
 import backgroundImage from 'assets/music-monkey.jpg'
 import './PlaylistListView.scss'
@@ -23,7 +23,7 @@ interface IPlaylistListViewProps {
   selectedEvent: IEvent
   events: IEvent[]
   eventsLoading?: boolean
-  deselectEvent(): IAction
+  deselectEvent(): Action
 }
 
 const PlaylistListView = ({

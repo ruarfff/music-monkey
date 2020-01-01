@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ITrack from '../track/ITrack'
 import IUser from '../user/IUser'
 import IPlaylist from './IPlaylist'
@@ -39,7 +39,7 @@ export const editPlaylist = (
   playlistId: string,
   name: string,
   description: string
-): IAction => ({
+): Action => ({
   type: EDIT_PLAYLIST_REQUEST,
   payload: {
     playlistId,
@@ -48,11 +48,11 @@ export const editPlaylist = (
   }
 })
 
-export const editPlaylistSuccess = (): IAction => ({
+export const editPlaylistSuccess = (): Action => ({
   type: EDIT_PLAYLIST_SUCCESS
 })
 
-export const editPlaylistFailure = (): IAction => ({
+export const editPlaylistFailure = (): Action => ({
   type: EDIT_PLAYLIST_FAILURE
 })
 
@@ -63,7 +63,7 @@ export const clearJustCreatedPlaylists = () => ({
 export const getMoreUsersPlaylists = (
   user: IUser,
   offset: number
-): IAction => ({
+): Action => ({
   type: LOAD_MORE_PLAYLISTS_REQUEST,
   payload: {
     user,
@@ -73,33 +73,33 @@ export const getMoreUsersPlaylists = (
 
 export const getMoreUsersPlaylistsSuccess = (
   playlists: IPlaylist[]
-): IAction => ({
+): Action => ({
   type: LOAD_MORE_PLAYLISTS_SUCCESS,
   payload: playlists
 })
 
-export const getTracksFeatures = (trackIds: string[]): IAction => {
+export const getTracksFeatures = (trackIds: string[]): Action => {
   return {
     type: TRACK_FEATURES_REQUEST,
     payload: trackIds
   }
 }
 
-export const getTracksFeaturesSuccess = (trackWithFeatures: any[]): IAction => {
+export const getTracksFeaturesSuccess = (trackWithFeatures: any[]): Action => {
   return {
     type: TRACK_FEATURES_SUCCESS,
     payload: trackWithFeatures
   }
 }
 
-export const getTracksFeaturesFailure = (error: string): IAction => {
+export const getTracksFeaturesFailure = (error: string): Action => {
   return {
     type: TRACK_FEATURES_FAILURE,
     payload: error
   }
 }
 
-export const addTrack = (playlistId: string, track: ITrack): IAction => ({
+export const addTrack = (playlistId: string, track: ITrack): Action => ({
   type: ADD_TRACK_REQUEST,
   payload: {
     playlistId,
@@ -107,12 +107,12 @@ export const addTrack = (playlistId: string, track: ITrack): IAction => ({
   }
 })
 
-export const addTrackSuccess = (track: ITrack): IAction => ({
+export const addTrackSuccess = (track: ITrack): Action => ({
   type: ADD_TRACK_SUCCESS,
   payload: track
 })
 
-export const addTrackError = (): IAction => ({
+export const addTrackError = (): Action => ({
   type: ADD_TRACK_FAILURE
 })
 
@@ -120,7 +120,7 @@ export const tryRemoveTrack = (
   playlistId: string,
   trackUri: string,
   trackPosition: number
-): IAction => ({
+): Action => ({
   type: REMOVE_TRACK_REQUEST,
   payload: {
     playlistId,
@@ -129,46 +129,46 @@ export const tryRemoveTrack = (
   }
 })
 
-export const trackRemoved = (playlist: IPlaylist): IAction => ({
+export const trackRemoved = (playlist: IPlaylist): Action => ({
   type: REMOVE_TRACK_SUCCESS,
   payload: playlist
 })
 
-export const removeTrackError = (): IAction => ({
+export const removeTrackError = (): Action => ({
   type: REMOVE_TRACK_FAILURE
 })
 
-export const fetchPlaylists = (user: IUser): IAction => ({
+export const fetchPlaylists = (user: IUser): Action => ({
   type: FETCH_PLAYLISTS,
   payload: user
 })
 
-export const fetchPlaylistsSuccess = (data: IPlaylist): IAction => ({
+export const fetchPlaylistsSuccess = (data: IPlaylist): Action => ({
   payload: data,
   type: FETCH_PLAYLISTS_SUCCESS
 })
 
-export const fetchPlaylistsError = (error: Error): IAction => ({
+export const fetchPlaylistsError = (error: Error): Action => ({
   payload: error,
   type: FETCH_PLAYLISTS_ERROR
 })
 
-export const searchTrack = (text: string): IAction => ({
+export const searchTrack = (text: string): Action => ({
   type: SEARCH_TRACKS_REQUEST,
   payload: text
 })
 
-export const searchTrackSuccess = (res: any): IAction => ({
+export const searchTrackSuccess = (res: any): Action => ({
   type: SEARCH_TRACKS_SUCCESS,
   payload: res
 })
 
-export const searchTrackFailure = (error: string): IAction => ({
+export const searchTrackFailure = (error: string): Action => ({
   type: SEARCH_TRACKS_FAILURE,
   payload: error
 })
 
-export const onPlaylistSelected = (playlist: IPlaylist): IAction => ({
+export const onPlaylistSelected = (playlist: IPlaylist): Action => ({
   type: PLAYLIST_SELECTED,
   payload: playlist
 })

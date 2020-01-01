@@ -12,7 +12,7 @@ import DoneAll from '@material-ui/icons/DoneAll'
 import uniqBy from 'lodash/uniqBy'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, withRouter } from 'react-router'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import ISuggestion from 'suggestion/ISuggestion'
@@ -27,10 +27,10 @@ interface IEventSuggestionsProps extends RouteComponentProps<any> {
     eventId: string,
     playlist: IPlaylist,
     suggestions: Map<string, IDecoratedSuggestion>
-  ): IAction
-  stageAllSuggestions(suggestions: IDecoratedSuggestion[]): IAction
-  stageSuggestion(suggestion: ISuggestion): IAction
-  rejectSuggestion(suggestion: ISuggestion): IAction
+  ): Action
+  stageAllSuggestions(suggestions: IDecoratedSuggestion[]): Action
+  stageSuggestion(suggestion: ISuggestion): Action
+  rejectSuggestion(suggestion: ISuggestion): Action
 }
 
 interface IEventSuggestionsState {

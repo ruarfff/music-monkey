@@ -1,4 +1,4 @@
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import {
   EVENT_PLAYLISTS_LOADED,
   FETCH_PLAYLISTS,

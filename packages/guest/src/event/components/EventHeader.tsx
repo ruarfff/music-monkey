@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import { Moment } from 'moment'
 import { ProfileImage } from '../../topbar/ProfileImage'
-import IAction from '../../IAction'
+import { Action } from 'mm-shared'
 import IEvent from '../IEvent'
 import EventResponseMenu from './EventResponseMenuContainer'
 import './EventHeader.scss'
 
 interface IEventHeaderProps {
   event: IEvent
-  deselectEvent(): IAction
+  deselectEvent(): Action
 }
 
 const EventHeader = ({ event, deselectEvent }: IEventHeaderProps) => {

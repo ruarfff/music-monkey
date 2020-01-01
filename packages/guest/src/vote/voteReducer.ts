@@ -1,11 +1,11 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IVoteState from './IVoteState'
 import { FETCH_EVENT_VOTES_INITIATED, FETCH_EVENT_VOTES_SUCCESS } from './voteActions'
 import initialState from './voteInitialState'
 
 export default function vote(
   state: IVoteState = initialState,
-  { type, payload }: IAction
+  { type, payload }: Action
 ) {
   switch (type) {
     case FETCH_EVENT_VOTES_INITIATED:

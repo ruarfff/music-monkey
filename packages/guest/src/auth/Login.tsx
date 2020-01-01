@@ -2,7 +2,7 @@ import { Button, Divider, Icon, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import * as React from 'react'
 import IEvent from '../event/IEvent'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import Images from '../img/ImportImg'
 import ErrorNotification from '../util/ErrorNotification'
 
@@ -14,9 +14,9 @@ const authSuffix = process.env.REACT_APP_AUTH_SUFFIX
 interface ILoginProps {
   authError: any
   inviteEvent: IEvent
-  clearAuthError(): IAction
-  loginAsGuest(): IAction
-  loginWithPassword(email: string, password: string): IAction
+  clearAuthError(): Action
+  loginAsGuest(): Action
+  loginWithPassword(email: string, password: string): Action
 }
 
 class Login extends React.PureComponent<ILoginProps> {

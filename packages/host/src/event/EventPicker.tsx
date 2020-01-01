@@ -7,7 +7,7 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import Action from 'IAction'
+import { Action } from 'mm-shared'
 import backgroundImage from 'assets/music-monkey.jpg'
 import IEvent from './IEvent'
 

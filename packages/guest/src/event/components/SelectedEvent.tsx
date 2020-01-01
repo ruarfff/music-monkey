@@ -1,12 +1,12 @@
 import { ListItemText } from '@material-ui/core'
 import IEvent from '../IEvent'
-import IAction from '../../IAction'
+import { Action } from 'mm-shared'
 import './SelectedEvent.scss'
 import React from 'react'
 
 interface ISelectedEventProps {
   event: IEvent
-  deselectEvent(): IAction
+  deselectEvent(): Action
 }
 
 const SelectedEvent = ({ event, deselectEvent }: ISelectedEventProps) => {

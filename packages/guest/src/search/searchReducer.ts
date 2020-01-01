@@ -1,6 +1,6 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
 import { cloneDeep } from 'lodash'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ISearchState from './ISearchState'
 import {
   CLEAR_SEARCH,
@@ -13,7 +13,7 @@ import initialState from './searchInitialState'
 
 export default function search(
   state: ISearchState = initialState,
-  { type, payload }: IAction
+  { type, payload }: Action
 ) {
   switch (type) {
     case LOCATION_CHANGE:

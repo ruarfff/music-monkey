@@ -1,6 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { EVENT_FETCH_BY_ID_INITIATED } from 'event/eventActions'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import {
   ADD_TRACK_REQUEST,
   addTrackError,
@@ -34,7 +34,7 @@ import {
   updatePlaylistDetails
 } from './playlistClient'
 
-function* fetchPlaylistsFlow(action: IAction) {
+function* fetchPlaylistsFlow(action: Action) {
   try {
     const playlists = yield call(fetchUsersPlaylists, action.payload)
     yield put({ type: FETCH_PLAYLISTS_SUCCESS, payload: playlists })
@@ -43,7 +43,7 @@ function* fetchPlaylistsFlow(action: IAction) {
   }
 }
 
-function* fetchMorePlaylistsFlow(action: IAction) {
+function* fetchMorePlaylistsFlow(action: Action) {
   try {
     const playlists = yield call(
       fetchMoreUsersPlaylists,
@@ -58,7 +58,7 @@ function* fetchMorePlaylistsFlow(action: IAction) {
 
 const getEventPlaylist = (state: any) => state.eventPlaylist.playlist
 
-function* fetchRemoveTrackFromPlaylist(action: IAction) {
+function* fetchRemoveTrackFromPlaylist(action: Action) {
   const { playlistId, trackUri, trackPosition } = action.payload
   try {
     const location = yield select(getCurrentLocation)
@@ -113,7 +113,7 @@ function* fetchRemoveTrackFromPlaylist(action: IAction) {
   }
 }
 
-function* fetchSearchedTracks(action: IAction) {
+function* fetchSearchedTracks(action: Action) {
   try {
     const res = yield call(searchForTracks, action.payload)
     yield put(searchTrackSuccess(res))
@@ -126,7 +126,7 @@ const getCurrentLocation = (state: any) => state.router.location.pathname
 const getJustCreatedPlaylists = (state: any) => state.playlist.createdPlaylists
 const getIsReselectedPlaylist = (state: any) => state.event.playlistReselected
 
-function* fetchAddTrackToPlaylist(action: IAction) {
+function* fetchAddTrackToPlaylist(action: Action) {
   try {
     const location = yield select(getCurrentLocation)
     const justCreatedPlaylists = yield select(getJustCreatedPlaylists)
@@ -163,7 +163,7 @@ function* fetchAddTrackToPlaylist(action: IAction) {
   }
 }
 
-function* fetchTracksFeatures({ payload }: IAction) {
+function* fetchTracksFeatures({ payload }: Action) {
   try {
     const tracksWithFeatures = yield call(getTracksFeatures, payload)
     yield put(getTracksFeaturesSuccess(tracksWithFeatures))
@@ -174,7 +174,7 @@ function* fetchTracksFeatures({ payload }: IAction) {
 
 const getEventId = (state: any) => state.event.event.eventId
 
-function* fetchPlaylistEditDetails({ payload }: IAction) {
+function* fetchPlaylistEditDetails({ payload }: Action) {
   try {
     const { playlistId, name, description } = payload
     yield call(updatePlaylistDetails, playlistId, name, description)

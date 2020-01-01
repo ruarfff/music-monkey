@@ -5,7 +5,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 import CloseIcon from '@material-ui/icons/Close'
 import * as React from 'react'
 import IEvent from 'event/IEvent'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import EventInput from 'components/EventInput/EventInput'
 import InviteLink from 'components/InviteLink/InviteLink'
 import EmailPreview from './EmailPreview'
@@ -19,7 +19,7 @@ interface IShareEventByEmailProps {
   shareByEmails(emails: string[], emailText: string, event: IEvent): void
   togglePopup?(): void
   onCopyEventInvite(): void
-  clearMessage(): IAction
+  clearMessage(): Action
 }
 
 export default class ShareEventByEmail extends React.PureComponent<

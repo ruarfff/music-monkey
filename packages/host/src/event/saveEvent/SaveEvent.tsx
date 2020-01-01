@@ -6,7 +6,7 @@ import debounce from 'just-debounce-it'
 import { useSnackbarAlert } from 'notification/alert'
 import IUser from 'user/IUser'
 import IEvent from 'event/IEvent'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import EventDetails from './EventDetails'
 import SaveEventFormValues from './SaveEventFormValues'
 import FormValidationSchema from './FormValidationSchema'
@@ -23,8 +23,8 @@ interface SaveEventProps extends RouteComponentProps {
   user: IUser
   event: IEvent
   loading: boolean
-  getEventById(eventId: string): IAction
-  deleteEvent(eventId: string): IAction
+  getEventById(eventId: string): Action
+  deleteEvent(eventId: string): Action
 }
 
 const SaveEvent = ({

@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import {
   EVENT_FETCH_ERROR,
   EVENT_FETCH_INITIATED,
@@ -12,7 +12,7 @@ import { getEventById, getUsersInvitedEvents } from './eventClient'
 import IEvent from './IEvent'
 import { sortBy } from 'lodash'
 
-function* fetchEventFlow(action: IAction) {
+function* fetchEventFlow(action: Action) {
   const eventId: string = action.payload
   try {
     const event = yield call(getEventById, eventId)

@@ -3,7 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Paper from '@material-ui/core/Paper'
 import { isEmpty } from 'lodash'
 import * as React from 'react'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IEvent from 'event/IEvent'
 import IPlaylist from 'playlist/IPlaylist'
 import IPlaylistItem from 'playlist/IPlaylistItem'
@@ -17,8 +17,8 @@ interface IMostPopularTracksProps {
   sortPlaylistByVotesDescending(
     playlist: IPlaylist,
     votes: Map<string, ITrackVoteStatus>
-  ): IAction
-  fetchEventVotes(eventId: string): IAction
+  ): Action
+  fetchEventVotes(eventId: string): Action
 }
 
 class MostVotedTracks extends React.Component<IMostPopularTracksProps> {

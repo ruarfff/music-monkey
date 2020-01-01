@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import {
   FETCH_OR_CREATE_RSVP_FAILURE,
   FETCH_OR_CREATE_RSVP_INITIATED,
@@ -29,7 +29,7 @@ async function createRsvp({ inviteId, userId, eventId }: IRsvpArgs) {
   return await rsvpInvite(inviteId, userId, eventId)
 }
 
-function* fetchOrCreateRsvpFlow({ payload }: IAction) {
+function* fetchOrCreateRsvpFlow({ payload }: Action) {
   try {
     let rsvp = yield call(fetchRsvp, payload)
     if (!rsvp) {
@@ -42,7 +42,7 @@ function* fetchOrCreateRsvpFlow({ payload }: IAction) {
   }
 }
 
-function* fetchUpdateRsvp({ payload }: IAction) {
+function* fetchUpdateRsvp({ payload }: Action) {
   try {
     yield call(updateRsvp, payload)
     yield put({ type: UPDATE_RSVP_SUCCESS, payload })

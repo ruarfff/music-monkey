@@ -1,11 +1,11 @@
 import * as React from 'react'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import LoadingPage from '../loading/LoadingPage'
 import './Login.scss'
 
 interface IAuthLoader {
   isAuthenticating: boolean
-  login(): IAction
+  login(): Action
 }
 
 class AuthLoader extends React.PureComponent<IAuthLoader> {

@@ -1,4 +1,4 @@
-import Action from 'IAction'
+import { Action } from 'mm-shared'
 import { FILTER_BY_EVENT } from './insightsConstants'
 
 export const filterByEventPick = (payload: any): Action => {

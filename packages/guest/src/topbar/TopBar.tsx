@@ -2,7 +2,7 @@ import { AppBar, Toolbar } from '@material-ui/core'
 import * as React from 'react'
 import { ReactCookieProps } from 'react-cookie'
 import { RouteComponentProps } from 'react-router-dom'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IUser from '../user/IUser'
 import SideMenu from './SideMenuContainer'
 import './TopBar.scss'
@@ -10,7 +10,7 @@ import UserMenu from './UserMenu'
 
 interface ITopBarProps extends RouteComponentProps<any>, ReactCookieProps {
   user: IUser
-  logout(): IAction
+  logout(): Action
 }
 
 const TopAppBar = ({ user, cookies, logout }: ITopBarProps) => {

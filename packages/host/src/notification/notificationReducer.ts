@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import moment from 'moment'
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import {
   ACTIONED_NOTIFICATION,
   NOTIFICATION_FETCH_FAILURE,

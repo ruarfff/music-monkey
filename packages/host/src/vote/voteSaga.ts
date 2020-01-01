@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import {
   FETCH_EVENT_VOTES_FAILURE,
   FETCH_EVENT_VOTES_INITIATED,
@@ -7,7 +7,7 @@ import {
 } from './voteActions'
 import { fetchEventVotes } from './voteClient'
 
-function* fetchEventVotesFlow({ payload }: IAction) {
+function* fetchEventVotesFlow({ payload }: Action) {
   try {
     const votes = yield call(fetchEventVotes, payload)
     yield put({ type: FETCH_EVENT_VOTES_SUCCESS, payload: votes })

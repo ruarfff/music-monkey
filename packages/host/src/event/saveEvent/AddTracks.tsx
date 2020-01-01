@@ -6,7 +6,7 @@ import isEqual from 'lodash/isEqual'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import { addTracksToPlaylist } from 'playlist/playlistClient'
 import { useSnackbarAlert } from 'notification/alert'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import TrackSearch from 'search/TrackSearch'
 import ITrack from 'track/ITrack'
 import IPlaylist from 'playlist/IPlaylist'
@@ -19,7 +19,7 @@ import './AddTracks.scss'
 interface AddTracksProps {
   playlist: IPlaylist
   recommendedTracks: ITrack[]
-  getRecommendations(): IAction
+  getRecommendations(): Action
 }
 
 const AddTracks = ({

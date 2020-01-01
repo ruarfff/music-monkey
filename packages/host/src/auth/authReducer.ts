@@ -1,4 +1,4 @@
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import {
   CLEAR_AUTH_ERROR,
   LOGGED_OUT,

@@ -7,7 +7,7 @@ import {
   Avatar,
   ListItemText
 } from '@material-ui/core'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import { isEmpty, sortBy, head } from 'lodash'
 import IPlaylist from '../playlist/IPlaylist'
 import ITrack from '../track/ITrack'
@@ -23,7 +23,7 @@ interface IMyPlaylistsTabProps {
   playlistsEnabled: boolean
   onTrackSelected(track: ITrack): any
   savePlaylistSuggestion(suggestions: IPlaylist): any
-  fetchMorePlaylists(user: IUser): IAction
+  fetchMorePlaylists(user: IUser): Action
 }
 
 const MyPlaylistsTab = ({

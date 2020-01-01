@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import { deleteEvent, getEventById, updateEvent } from 'event/eventClient'
 import IEventSettings from 'event/IEventSettings'
 import {
@@ -56,7 +56,7 @@ export function* watchFetchEvents() {
   yield takeEvery(EVENTS_FETCH_INITIATED, fetchEventsFlow)
 }
 
-function* fetchEventByIdFlow(action: IAction) {
+function* fetchEventByIdFlow(action: Action) {
   const eventId: string = action.payload
   try {
     const event = yield call(getEventById, eventId)
@@ -77,7 +77,7 @@ export function* watchFetchEventByIdNoLoading() {
   yield takeEvery(EVENT_FETCH_BY_ID_NO_LOADING_INITIATED, fetchEventByIdFlow)
 }
 
-function* deleteEventFlow(action: IAction) {
+function* deleteEventFlow(action: Action) {
   try {
     yield call(deleteEvent, action.payload)
     yield put({ type: EVENT_DELETE_SUCCESSFUL, eventId: action.payload })
@@ -90,7 +90,7 @@ export function* watchDeleteEvent() {
   yield takeEvery(EVENT_DELETE_INITIATED, deleteEventFlow)
 }
 
-function* toggleDynamicVotingFlow(action: IAction) {
+function* toggleDynamicVotingFlow(action: Action) {
   try {
     const event = action.payload
     yield call(updateEvent, {
@@ -109,7 +109,7 @@ export function* watchToggleDynamicVoting() {
   yield takeEvery(TOGGLE_DYNAMIC_VOTING, toggleDynamicVotingFlow)
 }
 
-function* toggleAutoAcceptSuggestions(action: IAction) {
+function* toggleAutoAcceptSuggestions(action: Action) {
   try {
     const event = action.payload
     yield call(updateEvent, {
@@ -129,7 +129,7 @@ export function* watchToggleAutoAcceptSuggestions() {
   yield takeEvery(TOGGLE_AUTO_ACCEPT_SUGGESTIONS, toggleAutoAcceptSuggestions)
 }
 
-function* toggleSuggestingPlaylists(action: IAction) {
+function* toggleSuggestingPlaylists(action: Action) {
   try {
     const event = action.payload
     yield call(updateEvent, {
@@ -181,7 +181,7 @@ async function saveEventPlaylist({
   return eventId
 }
 
-function* saveEventPlaylistFlow(action: IAction) {
+function* saveEventPlaylistFlow(action: Action) {
   try {
     const eventId = yield call(saveEventPlaylist, action.payload)
     yield put({ type: SAVE_EVENT_PLAYLIST_SUCCESS })
@@ -196,7 +196,7 @@ export function* watchSaveEventPlaylist() {
   yield takeEvery(SAVE_EVENT_PLAYLIST, saveEventPlaylistFlow)
 }
 
-function moveItemInEventPlaylistFlow(action: IAction) {
+function moveItemInEventPlaylistFlow(action: Action) {
   try {
     const { playlist, fromIndex, toIndex } = action.payload
     reOrderPlaylist(playlist, fromIndex, toIndex)
@@ -238,7 +238,7 @@ function sortPlaylistByVotesDescending(
   }
 }
 
-function* sortPlaylistByVotesDescendingFlow({ payload }: IAction) {
+function* sortPlaylistByVotesDescendingFlow({ payload }: Action) {
   const { playlist, votes } = payload
   const sortedPlaylist: IPlaylist = sortPlaylistByVotesDescending(
     playlist,

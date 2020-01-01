@@ -17,7 +17,7 @@ import {
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
 import IUser from 'user/IUser'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import marvin from 'assets/marvin.png'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
@@ -33,7 +33,7 @@ interface PlaylistsProps {
   user: IUser
   playlists: IPlaylist[]
   playlistsLoading: boolean
-  fetchPlaylists(user: IUser): IAction
+  fetchPlaylists(user: IUser): Action
   onPlaylistSelected(playlist: IPlaylist): void
 }
 

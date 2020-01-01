@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IVote from './IVote'
 
 export const FETCH_EVENT_VOTES_INITIATED = 'FETCH_EVENT_VOTES_INITIATED'
@@ -15,16 +15,16 @@ export const fetchEventVotes = (eventId: string) =>
   ({
     type: FETCH_EVENT_VOTES_INITIATED,
     payload: eventId
-  } as IAction)
+  } as Action)
 
 export const createVote = (vote: IVote) =>
   ({
     type: VOTE_CREATE_INITIATED,
     payload: vote
-  } as IAction)
+  } as Action)
 
 export const deleteVote = (voteId: string) =>
   ({
     type: VOTE_DELETE_INITIATED,
     payload: voteId
-  } as IAction)
+  } as Action)

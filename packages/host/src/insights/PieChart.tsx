@@ -9,7 +9,7 @@ import flattenDeep from 'lodash/flattenDeep'
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts'
 import isEmpty from 'lodash/isEmpty'
 import IEvent from 'event/IEvent'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IRsvp from 'rsvp/IRsvp'
 
 const decorate = withStyles(() => ({
@@ -22,7 +22,7 @@ const decorate = withStyles(() => ({
 interface IPieChartWidgetProps {
   events: IEvent[]
   pickedEvent: string
-  filterByEventPick(id: any): IAction
+  filterByEventPick(id: any): Action
 }
 
 class PieChartWidget extends React.Component<

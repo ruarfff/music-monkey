@@ -1,5 +1,5 @@
 import IEvent from '../event/IEvent'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IInvite from './IInvite'
 import { FETCHING_INVITE_ERROR, FETCHING_INVITE_SUCCESS } from './inviteActions'
 import initialState from './inviteInitialState'
@@ -7,7 +7,7 @@ import invite from './inviteReducer'
 
 describe('inviteReducer', () => {
   it('should return the initial state when no action matches', () => {
-    expect(invite(undefined, {} as IAction)).toEqual(initialState)
+    expect(invite(undefined, {} as Action)).toEqual(initialState)
   })
 
   it('should handle FETCHING_INVITE_ERROR ', () => {

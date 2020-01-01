@@ -11,7 +11,7 @@ import facebookIcon from '../assets/facebook.svg'
 import instagramIcon from '../assets/instagram-icom.svg'
 import phoneIcon from '../assets/phone-icon.svg'
 import twitterIcon from '../assets/twitter.svg'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IUser from '../user/IUser'
 import EventInput from './CustomInput'
 import EditAvatar from './EditAvatar'
@@ -19,7 +19,7 @@ import './Account.scss'
 
 interface IAccountDetailsProps {
   user: IUser
-  updateUserRequest(user: IUser): IAction
+  updateUserRequest(user: IUser): Action
 }
 
 class AccountDetails extends React.Component<IAccountDetailsProps> {

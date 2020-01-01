@@ -1,5 +1,5 @@
 import { cloneDeep, findIndex } from 'lodash'
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import { UPDATE_RSVP_SUCCESS } from '../rsvp/rsvpActions'
 import {
   DESELECT_EVENT,

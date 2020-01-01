@@ -1,6 +1,6 @@
 import * as React from 'react'
 import logo from 'assets/logo-home.png'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import ErrorNotification from 'util/ErrorNotification'
 import IAuthState from './IAuthState'
@@ -12,8 +12,8 @@ const authSuffix = process.env.REACT_APP_AUTH_SUFFIX
 
 interface ILoginProps {
   auth: IAuthState
-  clearAuthError(): IAction
-  login(): IAction
+  clearAuthError(): Action
+  login(): Action
 }
 
 class Login extends React.Component<ILoginProps, {}> {

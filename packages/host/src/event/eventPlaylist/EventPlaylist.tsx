@@ -12,7 +12,7 @@ import DoneAll from '@material-ui/icons/DoneAll'
 import Undo from '@material-ui/icons/Undo'
 import classNames from 'classnames'
 import { DropResult } from 'react-beautiful-dnd'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IEvent from 'event/IEvent'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import IPlaylist from 'playlist/IPlaylist'
@@ -31,23 +31,23 @@ interface IEventPlaylistProps {
   stagedSuggestions: IDecoratedSuggestion[]
   saving: boolean
   votes: Map<string, ITrackVoteStatus>
-  getTracksFeatures(trackIds: string[]): IAction
+  getTracksFeatures(trackIds: string[]): Action
   saveEventPlaylist(
     eventId: string,
     playlist: IPlaylist,
     suggestions: Map<string, IDecoratedSuggestion>
-  ): IAction
-  resetStagedSuggestions(): IAction
+  ): Action
+  resetStagedSuggestions(): Action
   onPlaylistDragDrop(
     playlist: IPlaylist,
     fromIndex: number,
     toIndex: number
-  ): IAction
-  tryRemoveTrack(playlistId: string, uri: string, position: number): IAction
+  ): Action
+  tryRemoveTrack(playlistId: string, uri: string, position: number): Action
   sortPlaylistByVotesDescending(
     playlist: IPlaylist,
     votes: Map<string, ITrackVoteStatus>
-  ): IAction
+  ): Action
 }
 
 export default class EventPlaylist extends React.Component<

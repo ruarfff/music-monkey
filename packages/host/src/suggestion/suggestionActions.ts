@@ -1,4 +1,4 @@
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
 import ISuggestion from './ISuggestion'
 
@@ -16,33 +16,33 @@ export const REJECT_SUGGESTION = 'REJECT_SUGGESTION'
 export const REJECT_SUGGESTION_SUCCESS = 'REJECT_SUGGESTION_SUCCESS'
 export const REJECT_SUGGESTION_FAILED = 'REJECT_SUGGESTION_FAILED'
 
-export const getEventSuggestions = (eventId: string): IAction => ({
+export const getEventSuggestions = (eventId: string): Action => ({
   type: FETCH_SUGGESTIONS_INITIATED,
   payload: eventId
 })
 
-export const stageSuggestion = (suggestion: ISuggestion): IAction => ({
+export const stageSuggestion = (suggestion: ISuggestion): Action => ({
   type: STAGE_SUGGESTION,
   payload: suggestion
 })
 
 export const stageMultipleSuggestions = (
   suggestions: ISuggestion[]
-): IAction => ({
+): Action => ({
   type: STAGE_MULTIPLE_SUGGESTIONS,
   payload: suggestions
 })
 
-export const stageAllSuggestions = (suggestions: IDecoratedSuggestion[]): IAction => ({
+export const stageAllSuggestions = (suggestions: IDecoratedSuggestion[]): Action => ({
   type: STAGE_ALL_SUGGESTIONS,
   payload: suggestions
 })
 
-export const resetStagedSuggestions = (): IAction => ({
+export const resetStagedSuggestions = (): Action => ({
   type: RESET_STAGED_SUGGESTIONS
 })
 
-export const rejectSuggestion = (suggestion: ISuggestion): IAction => ({
+export const rejectSuggestion = (suggestion: ISuggestion): Action => ({
   type: REJECT_SUGGESTION,
   payload: suggestion
 })

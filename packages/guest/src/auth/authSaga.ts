@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { EVENT_CLEAR } from '../event/eventActions'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import { PLAYLIST_CLEAR } from '../playlist/playlistActions'
 import { RECOMMENDATIONS_CLEAR } from '../recommendation/recommendationsActions'
 import { CLEAR_SEARCH } from '../search/searchActions'
@@ -60,7 +60,7 @@ export function* watchLogout() {
   yield takeEvery(LOGGING_OUT, logoutFlow)
 }
 
-export function* signUpFlow(action: IAction) {
+export function* signUpFlow(action: Action) {
   try {
     yield call(signUp, action.payload)
     yield put({ type: SIGN_UP_SUCCESS })
@@ -74,7 +74,7 @@ export function* watchSignUp() {
   yield takeEvery(SIGNING_UP, signUpFlow)
 }
 
-export function* loginWithPasswordFlow(action: IAction) {
+export function* loginWithPasswordFlow(action: Action) {
   try {
     yield call(loginWithCredentials, action.payload)
     yield loginFlow()

@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IUser from './IUser'
 import {
   UPDATE_USER_FAILURE,
@@ -8,7 +8,7 @@ import {
 } from './userActions'
 import { updateUserById } from './userClient'
 
-function* updateUserFlow(action: IAction) {
+function* updateUserFlow(action: Action) {
   const user: IUser = action.payload
 
   try {

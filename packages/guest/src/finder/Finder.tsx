@@ -6,7 +6,7 @@ import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../event/IEvent'
 import EventPicker from '../event/components/EventPickerContainer'
 import SelectedEvent from '../event/components/SelectedEvent'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import IPlaylist from '../playlist/IPlaylist'
 import Search from '../search/SearchContainer'
 import IPlaylistSuggestion from '../suggestion/IPlaylistSuggestion'
@@ -27,12 +27,12 @@ interface IFinderProps extends RouteComponentProps<any> {
   selectedEvent: IEvent
   searching: boolean
   searchResults: ITrack[]
-  deselectEvent(): IAction
-  saveTrackSuggestion(suggestions: ITrackSuggestion): IAction
-  fetchPlaylists(user: IUser): IAction
-  savePlaylistSuggestion(suggestions: IPlaylistSuggestion): IAction
-  fetchMorePlaylists(user: IUser): IAction
-  setEventId(eventId: string): IAction
+  deselectEvent(): Action
+  saveTrackSuggestion(suggestions: ITrackSuggestion): Action
+  fetchPlaylists(user: IUser): Action
+  savePlaylistSuggestion(suggestions: IPlaylistSuggestion): Action
+  fetchMorePlaylists(user: IUser): Action
+  setEventId(eventId: string): Action
 }
 
 const Finder = ({

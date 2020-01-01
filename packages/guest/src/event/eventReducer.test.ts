@@ -1,4 +1,4 @@
-import Action from '../IAction'
+import { Action } from 'mm-shared'
 import {
   EVENT_FETCH_ERROR,
   EVENT_FETCH_INITIATED,

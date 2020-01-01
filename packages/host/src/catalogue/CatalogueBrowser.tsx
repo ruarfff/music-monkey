@@ -8,7 +8,7 @@ import isEmpty from 'lodash/isEmpty'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
-import IAction from 'IAction'
+import { Action } from 'mm-shared'
 import IEvent from 'event/IEvent'
 import NoEvents from 'event/NoEvents'
 import LoadingSpinner from 'loading/LoadingSpinner'
@@ -51,7 +51,7 @@ const pathToFilter = {
 interface ICatalogueBrowserProps extends RouteComponentProps {
   events: IEvent[]
   eventsLoading: boolean
-  getEvents(): IAction
+  getEvents(): Action
 }
 
 const CatalogueBrowser = ({

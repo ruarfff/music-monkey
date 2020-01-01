@@ -3,15 +3,15 @@ import Button from '@material-ui/core/Button/Button'
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik'
 import * as React from 'react'
 import { object, string } from 'yup'
-import IAction from '../IAction'
+import { Action } from 'mm-shared'
 import ErrorNotification from '../util/ErrorNotification'
 import './LoginEmail.scss'
 
 interface ILoginEmailProps {
   isAuthenticating: boolean
   authError: any
-  clearAuthError(): IAction
-  loginWithPassword(email: string, password: string): IAction
+  clearAuthError(): Action
+  loginWithPassword(email: string, password: string): Action
 }
 
 interface ILoginFormValues {

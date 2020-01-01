@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash'
 import { Redirect, RouteComponentProps } from 'react-router'
 import IEvent from '../../event/IEvent'
-import IAction from '../../IAction'
+import { Action } from 'mm-shared'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import localStorage from '../../storage/localStorage'
 import IUser from '../../user/IUser'
@@ -15,8 +15,8 @@ interface IInviteProps extends RouteComponentProps<any> {
   loading: boolean
   isAuthenticated: boolean
   fetchingRsvp: boolean
-  fetchInvite(inviteId: string): IAction
-  fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): IAction
+  fetchInvite(inviteId: string): Action
+  fetchOrCreateRsvp(inviteId: string, userId: string, eventId: string): Action
 }
 
 const Invite = ({

@@ -1,5 +1,5 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-import IAction from '../IAction';
+import { Action } from 'mm-shared';
 import {
   FETCH_MORE_PLAYLISTS_FAILURE,
   FETCH_MORE_PLAYLISTS_REQUEST,
@@ -13,7 +13,7 @@ import {
   fetchUsersPlaylists,
 } from './playlistClient'
 
-function* fetchPlaylistsFlow(action: IAction) {
+function* fetchPlaylistsFlow(action: Action) {
   try {
     const playlists = yield call(fetchUsersPlaylists, action.payload)
     yield put({ type: FETCH_PLAYLISTS_SUCCESS, payload: playlists })
@@ -24,7 +24,7 @@ function* fetchPlaylistsFlow(action: IAction) {
 
 const getOffset = (state: any) => state.playlist.offset
 
-function* fetchMorePlaylistsFlow(action: IAction) {
+function* fetchMorePlaylistsFlow(action: Action) {
   try {
     const offset = yield select(getOffset)
     const playlists = yield call(fetchMoreUsersPlaylists, action.payload, offset)
