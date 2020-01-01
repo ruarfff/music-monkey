@@ -1,4 +1,4 @@
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import IVote from './IVote'
 
 export const createVote = async (vote: IVote) => {

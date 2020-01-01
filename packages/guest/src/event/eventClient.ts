@@ -1,5 +1,5 @@
 import moment from 'moment'
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import IEvent from './IEvent'
 
 export const getEventById = async (eventId: string) => {

@@ -1,4 +1,4 @@
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import IUser from './IUser'
 
 export const getUserById = async (userId: string) => {

@@ -1,4 +1,4 @@
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import TrackSearchResult from './TrackSearchResult'
 
 export const searchTracks = async (searchTerm: string) => {

@@ -1,0 +1,19 @@
+{
+  "name": "mm-suggestions",
+  "version": "0.0.1",
+  "description": "Stuff for working with MusicMonkey suggestions.",
+  "author": "Ruairi O Brien <ruairitobrien@gmail.com>",
+  "homepage": "https://github.com/ruairitobrien/music-monkey#readme",
+  "license": "ISC",
+  "main": "index.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruairitobrien/music-monkey.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ruairitobrien/music-monkey/issues"
+  }
+}

@@ -1,4 +1,4 @@
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import IRsvp from './IRsvp'
 
 export const fetchRsvpByInviteAndUser = (inviteId: string, userId: string) => {

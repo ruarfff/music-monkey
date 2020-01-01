@@ -1,4 +1,4 @@
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import { INotification } from './notificationInitialState'
 
 export const getNotifications = async (userId: string) => {

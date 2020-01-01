@@ -1,4 +1,4 @@
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import IEvent from 'event/IEvent'
 
 export const sendEmails = async (

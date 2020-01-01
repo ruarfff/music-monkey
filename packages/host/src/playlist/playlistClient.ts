@@ -1,4 +1,4 @@
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import IUser from '../user/IUser'
 import IPlaylist from './IPlaylist'
 

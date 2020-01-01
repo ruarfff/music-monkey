@@ -1,5 +1,5 @@
 import moment from 'moment'
-import client from 'music-monkey-client'
+import client from 'mm-client'
 import IInvite from './IInvite'
 
 export const getInviteById = async (inviteId: string): Promise<IInvite> => {

@@ -1,4 +1,4 @@
-import client from 'music-monkey-client'
+import client from 'mm-client'
 
 export const getUserTopTracks = async () => {
   const response = await client.get('/recommendations', {

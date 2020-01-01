@@ -29,7 +29,7 @@ const composeEnhancer: typeof compose =
 
 export const store = createStore(
   createRootReducer(history),
-  {},
+  undefined,
   composeEnhancer(applyMiddleware(...middleware))
 )
 sagaMiddleware.run(rootSaga)
