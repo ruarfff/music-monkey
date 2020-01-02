@@ -1,6 +1,6 @@
 import { cloneDeep, findIndex } from 'lodash'
-import { Action } from 'mm-shared'
-import { UPDATE_RSVP_SUCCESS } from '../rsvp/rsvpActions'
+import { Action, Event } from 'mm-shared'
+import { UPDATE_RSVP_SUCCESS } from 'rsvp/rsvpActions'
 import {
   DESELECT_EVENT,
   EVENT_CLEAR,
@@ -17,7 +17,6 @@ import {
   EVENT_ID_SET
 } from './eventActions'
 import initialState from './eventInitialState'
-import IEvent from './IEvent'
 import IEventState from './IEventState'
 
 export default function event(
@@ -28,16 +27,18 @@ export default function event(
     case DESELECT_EVENT:
       return {
         ...state,
-        selectedEvent: {} as IEvent,
+        selectedEvent: {} as Event,
         eventId: null
       }
     case UPDATE_RSVP_SUCCESS:
-      const updatedGuests = cloneDeep(state.selectedEvent.guests).map(guest => {
-        if (payload.userId === guest.user.userId) {
-          guest.rsvp.status = payload.status
+      const updatedGuests = cloneDeep(state.selectedEvent!.guests!).map(
+        guest => {
+          if (payload.userId === guest.user.userId) {
+            guest.rsvp.status = payload.status
+          }
+          return guest
         }
-        return guest
-      })
+      )
 
       return {
         ...state,
@@ -73,7 +74,7 @@ export default function event(
     case EVENT_CLEAR:
       return {
         ...state,
-        selectedEvent: {} as IEvent,
+        selectedEvent: {} as Event,
         events: [],
         pastEvents: [],
         upcomingEvents: [],
@@ -104,7 +105,7 @@ export default function event(
     case FETCH_USERS_EVENTS_ERROR:
       return { ...state, eventsLoading: false } as IEventState
     case FETCH_USERS_EVENTS_SUCCESS: {
-      const events: IEvent[] = payload
+      const events: Event[] = payload
       return {
         ...state,
         events,

@@ -12,11 +12,11 @@ import {
   unSubscribeToVotesModified,
   subscribeToVotesModified
 } from './pusherGateway'
-import IEvent from '../event/IEvent'
+import { Event } from 'mm-shared'
 import { Action } from 'mm-shared'
 
 interface ISubscriptionWrapper {
-  event: IEvent
+  event: Event
   children: any
   getEventByIdNoLoading(eventId: string): Action
   fetchEventVotes(eventId: string): Action

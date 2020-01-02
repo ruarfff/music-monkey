@@ -12,20 +12,16 @@ import DoneAll from '@material-ui/icons/DoneAll'
 import Undo from '@material-ui/icons/Undo'
 import classNames from 'classnames'
 import { DropResult } from 'react-beautiful-dnd'
-import { Action } from 'mm-shared'
-import IEvent from 'event/IEvent'
+import { Action, Event, Playlist, PlaylistItem, Track } from 'mm-shared'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import IPlaylist from 'playlist/IPlaylist'
-import IPlaylistItem from 'playlist/IPlaylistItem'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
-import { Track } from 'mm-shared'
 import ITrackWithFeatures from 'track/ITrackWithFeatures'
 import TrackList from 'track/TrackList'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import './EventPlaylist.scss'
 
 interface IEventPlaylistProps {
-  event: IEvent
+  event: Event
   tracksWithFeatures: ITrackWithFeatures[]
   notification: string
   stagedSuggestions: IDecoratedSuggestion[]
@@ -34,18 +30,18 @@ interface IEventPlaylistProps {
   getTracksFeatures(trackIds: string[]): Action
   saveEventPlaylist(
     eventId: string,
-    playlist: IPlaylist,
+    playlist: Playlist,
     suggestions: Map<string, IDecoratedSuggestion>
   ): Action
   resetStagedSuggestions(): Action
   onPlaylistDragDrop(
-    playlist: IPlaylist,
+    playlist: Playlist,
     fromIndex: number,
     toIndex: number
   ): Action
   tryRemoveTrack(playlistId: string, uri: string, position: number): Action
   sortPlaylistByVotesDescending(
-    playlist: IPlaylist,
+    playlist: Playlist,
     votes: Map<string, ITrackVoteStatus>
   ): Action
 }
@@ -235,7 +231,7 @@ export default class EventPlaylist extends React.Component<
     } = this.props
     const trackIds = [] as string[]
     if (playlist!.tracks.items.length > 0) {
-      playlist!.tracks.items.forEach((track: IPlaylistItem) => {
+      playlist!.tracks.items.forEach((track: PlaylistItem) => {
         trackIds.push(track.track.id)
       })
       if (trackIds.length > 0) {

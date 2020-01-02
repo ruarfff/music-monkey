@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { withRouter, RouteComponentProps } from 'react-router'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import './Title.scss'
 
 const pathToTitle = {
@@ -21,7 +21,7 @@ const pathToTitle = {
 }
 
 interface ITitleProps extends RouteComponentProps {
-  event: IEvent
+  event: Event
 }
 
 const Title = ({ location, event }: ITitleProps) => {

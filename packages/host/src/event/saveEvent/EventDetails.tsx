@@ -4,7 +4,7 @@ import { Field, FieldProps } from 'formik'
 import EventDateTimePicker from './EventDateTimePicker'
 import EventLocationInput from './EventLocationInput'
 import EventTextInput from './EventTextInput'
-import EventSettings from './EventSettings'
+import EventSettings from './EventSettingsView'
 import './EventDetails.scss'
 
 const EventDetails = () => {

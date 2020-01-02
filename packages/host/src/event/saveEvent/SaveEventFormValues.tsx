@@ -1,7 +1,4 @@
-import { User } from 'mm-shared'
-import { Track } from 'mm-shared'
-import IEventSettings from 'event/IEventSettings'
-import ILocation from 'location/ILocation'
+import { Track, User, Location, EventSettings } from 'mm-shared'
 import { Moment } from 'moment'
 
 export default interface SaveEventFormValues {
@@ -12,8 +9,8 @@ export default interface SaveEventFormValues {
   tracks?: Track[]
   imageUrl: string
   genre: string
-  location: ILocation
-  settings: IEventSettings
+  location: Location
+  settings: EventSettings
   startDateTime: Moment
   endDateTime: Moment
 }

@@ -1,8 +1,8 @@
-import IEvent from '../event/IEvent'
+import { Event } from 'mm-shared'
 
 export default interface IInviteState {
   inviteId: string
-  event: IEvent
+  event: Event
   loading: boolean
   open: boolean
   error: any

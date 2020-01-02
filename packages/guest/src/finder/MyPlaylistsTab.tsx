@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import {
   Typography,
   List,
@@ -7,22 +8,17 @@ import {
   Avatar,
   ListItemText
 } from '@material-ui/core'
-import { Action } from 'mm-shared'
 import { isEmpty, sortBy, head } from 'lodash'
-import IPlaylist from '../playlist/IPlaylist'
-import { Track }  from 'mm-shared'
-import { User }  from 'mm-shared'
-import React, { useEffect, useState } from 'react'
-import TrackList from '../track/TrackList'
+import { Action, Playlist, PlaylistImage, Track, User } from 'mm-shared'
+import TrackList from 'track/TrackList'
 import backgroundImage from 'assets/music-monkey.jpg'
-import IPlaylistImage from '../playlist/IPlaylistImage'
 
 interface IMyPlaylistsTabProps {
   user: User
-  playlists: IPlaylist[]
+  playlists: Playlist[]
   playlistsEnabled: boolean
   onTrackSelected(track: Track): any
-  savePlaylistSuggestion(suggestions: IPlaylist): any
+  savePlaylistSuggestion(suggestions: Playlist): any
   fetchMorePlaylists(user: User): Action
 }
 
@@ -34,7 +30,7 @@ const MyPlaylistsTab = ({
   savePlaylistSuggestion,
   fetchMorePlaylists
 }: IMyPlaylistsTabProps) => {
-  const [selectedPlaylist, setSelectedPlaylist] = useState({} as IPlaylist)
+  const [selectedPlaylist, setSelectedPlaylist] = useState({} as Playlist)
 
   useEffect(() => {
     const trackScrolling = () => {
@@ -64,12 +60,12 @@ const MyPlaylistsTab = ({
     }
     return (
       <List>
-        {playlists.map((playlist: IPlaylist, i: number) => {
+        {playlists.map((playlist: Playlist, i: number) => {
           const playlistImage =
             playlist.images.length > 0
               ? (
                   head(sortBy(playlist.images, 'height')) ||
-                  ({} as IPlaylistImage)
+                  ({} as PlaylistImage)
                 ).url
               : backgroundImage
 
@@ -99,8 +95,8 @@ const MyPlaylistsTab = ({
 
   const renderListOfTracks = () => {
     return (
-      <React.Fragment>
-        <Button onClick={() => setSelectedPlaylist({} as IPlaylist)}>
+      <>
+        <Button onClick={() => setSelectedPlaylist({} as Playlist)}>
           BACK TO PLAYLISTS
         </Button>
         {playlistsEnabled && (
@@ -115,7 +111,7 @@ const MyPlaylistsTab = ({
             withSuggestingEnabled={true}
           />
         </List>
-      </React.Fragment>
+      </>
     )
   }
 

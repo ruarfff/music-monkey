@@ -1,4 +1,4 @@
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import { Action } from 'mm-shared'
 
 export const SHARE_EMAIL_REQUEST = 'SHARE_EMAIL_REQUEST'
@@ -16,7 +16,7 @@ export const clearMessage = (): Action => {
 export const shareByEmails = (
   emails: string[],
   emailText: string,
-  event: IEvent
+  event: Event
 ): Action => {
   return {
     type: SHARE_EMAIL_REQUEST,

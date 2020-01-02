@@ -1,20 +1,19 @@
+import React, { useEffect } from 'react'
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
-import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import IEvent from '../event/IEvent'
-import EventPicker from '../event/components/EventPickerContainer'
-import SelectedEvent from '../event/components/SelectedEvent'
-import { Action } from 'mm-shared'
-import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
+import { Action, Event } from 'mm-shared'
+import EventPicker from 'event/components/EventPickerContainer'
+import SelectedEvent from 'event/components/SelectedEvent'
+import useSwipeTabsIndex from 'util/useSwipeTabsIndex'
 import AcceptedTracks from './AcceptedTracksContainer'
 import MaybeTracks from './MaybeTracksContainer'
 import RejectedTracks from './RejectedTracksContainer'
 import './Requests.scss'
 
 interface IRequestsProps extends RouteComponentProps<any> {
-  selectedEvent: IEvent
+  selectedEvent: Event
   deselectEvent(): Action
   setEventId(eventId: string): Action
 }

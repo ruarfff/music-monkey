@@ -1,10 +1,9 @@
+import React from 'react'
 import { Button, Divider, Icon, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
-import * as React from 'react'
-import IEvent from '../event/IEvent'
-import { Action } from 'mm-shared'
-import Images from '../img/ImportImg'
-import ErrorNotification from '../util/ErrorNotification'
+import { Action, Event } from 'mm-shared'
+import Images from 'img/ImportImg'
+import ErrorNotification from 'util/ErrorNotification'
 
 import './Login.scss'
 
@@ -13,7 +12,7 @@ const authSuffix = process.env.REACT_APP_AUTH_SUFFIX
 
 interface ILoginProps {
   authError: any
-  inviteEvent: IEvent
+  inviteEvent: Event
   clearAuthError(): Action
   loginAsGuest(): Action
   loginWithPassword(email: string, password: string): Action

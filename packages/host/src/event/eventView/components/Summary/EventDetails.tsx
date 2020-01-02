@@ -5,14 +5,14 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import eventIcon from 'assets/date-icon.svg'
 import locationIcon from 'assets/location-marker-icon.svg'
 import MapItem from 'location/MapComponent'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import Image from 'components/Image'
 import backgroundImage from 'assets/music-monkey.jpg'
 
 import './EventDetails.scss'
 
 interface IEventDetailsProps extends RouteComponentProps<any> {
-  event: IEvent
+  event: Event
 }
 
 const EventDetails = ({ event, location }: IEventDetailsProps) => {

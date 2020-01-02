@@ -5,16 +5,16 @@ import { Field, FieldProps } from 'formik'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import uploadImage from 'upload/uploadImage'
 import { useSnackbarAlert } from 'notification/alert'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import EmailPreview from './EmailPreview'
 import LinkButton from 'components/LinkButton'
 
 import './ShareEvent.scss'
 
 interface IShareEventProps {
-  event: IEvent
+  event: Event
   inviteId: string
-  shareByEmails(emails: string[], emailText: string, event: IEvent): void
+  shareByEmails(emails: string[], emailText: string, event: Event): void
 }
 
 const ShareEvent = ({ inviteId, event }: IShareEventProps) => {

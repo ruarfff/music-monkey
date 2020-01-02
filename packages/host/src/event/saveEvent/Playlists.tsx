@@ -16,7 +16,7 @@ import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
 import { Action } from 'mm-shared'
 import { User } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
 import backgroundImage from 'assets/music-monkey.jpg'
@@ -30,7 +30,7 @@ import './Playlists.scss'
 
 interface PlaylistsProps {
   user: User
-  playlists: IPlaylist[]
+  playlists: Playlist[]
   playlistsLoading: boolean
   onAddTracks(tracks: Track[]): void
   fetchPlaylists(user: User): Action
@@ -50,7 +50,7 @@ const Playlists = ({
     }
   }, [fetchPlaylists, playlists, playlistsLoading, user])
 
-  const handlePlaylistClicked = (playlist: IPlaylist) => () => {
+  const handlePlaylistClicked = (playlist: Playlist) => () => {
     if (selectedPlaylist === playlist) {
       setSelectedPlaylist(undefined)
     } else {
@@ -58,7 +58,7 @@ const Playlists = ({
     }
   }
 
-  const handlePlaylistTracksSelected = (playlist: IPlaylist) => () => {
+  const handlePlaylistTracksSelected = (playlist: Playlist) => () => {
     onAddTracks(playlist.tracks.items.map(item => item.track))
   }
 
@@ -73,8 +73,8 @@ const Playlists = ({
   return (
     <List className="Playlists-root">
       {playlists
-        .filter((playlist: IPlaylist) => playlist.tracks.total > 0)
-        .map((playlist: IPlaylist) => (
+        .filter((playlist: Playlist) => playlist.tracks.total > 0)
+        .map((playlist: Playlist) => (
           <Collapse
             in={isEmpty(selectedPlaylist) || playlist === selectedPlaylist}
             key={playlist.id}

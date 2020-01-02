@@ -1,9 +1,9 @@
 import isEmpty from 'lodash/isEmpty'
 import moment from 'moment'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import { createPlaylist, addTracksToPlaylist } from 'playlist/playlistClient'
 import { createEvent, getEventById } from 'event/eventClient'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import CreateEventFormValues from './CreateEventFormValues'
 
 const createEventFlow = async ({
@@ -12,7 +12,7 @@ const createEventFlow = async ({
   eventDescription,
   tracks
 }: CreateEventFormValues) => {
-  const playlist: IPlaylist = await createPlaylist(eventName, eventDescription)
+  const playlist: Playlist = await createPlaylist(eventName, eventDescription)
 
   if (!isEmpty(tracks)) {
     addTracksToPlaylist(
@@ -20,7 +20,7 @@ const createEventFlow = async ({
       tracks!.map(track => track.uri)
     )
   }
-  let eventDetails: IEvent = {
+  let eventDetails: Event = {
     userId: user.userId,
     organizer: user.displayName,
     name: eventName,
@@ -40,9 +40,9 @@ const createEventFlow = async ({
       .utc()
       .add(3, 'hours')
       .startOf('hour')
-  } as IEvent
+  } as Event
 
-  const savedEvent: IEvent = await createEvent(eventDetails)
+  const savedEvent: Event = await createEvent(eventDetails)
   return await getEventById(savedEvent.eventId!)
 }
 

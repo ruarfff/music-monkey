@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Action } from 'mm-shared'
 import IUserState from './IUserState'
 

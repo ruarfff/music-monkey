@@ -1,4 +1,4 @@
-export default interface IRsvp {
+export interface Rsvp {
   rsvpId: string
   inviteId: string
   eventId: string

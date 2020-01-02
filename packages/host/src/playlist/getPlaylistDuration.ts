@@ -1,7 +1,7 @@
-import IPlaylist from './IPlaylist'
+import { Playlist } from 'mm-shared'
 import isEmpty from 'lodash/isEmpty'
 
-const getPlaylistDuration = (playlist: IPlaylist) => {
+const getPlaylistDuration = (playlist: Playlist) => {
   if (
     isEmpty(playlist) ||
     isEmpty(playlist.tracks) ||

@@ -1,3 +1,4 @@
+import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
@@ -10,11 +11,8 @@ import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import CloseIcon from '@material-ui/icons/Close'
 import { WithStyles } from '@material-ui/core'
-import * as React from 'react'
-import { Action } from 'mm-shared'
+import { Action, Event, EventGuest } from 'mm-shared'
 import SharePopup from 'components/ShareEvent/SharePopup'
-import IEvent from 'event/IEvent'
-import IEventGuest from 'event/IEventGuest'
 
 const decorated = withStyle(() => ({
   filter: {
@@ -47,7 +45,7 @@ const decorated = withStyle(() => ({
 }))
 
 interface IEventGuestsProps {
-  event: IEvent
+  event: Event
   message: string
   copyEventInvite(): Action
   clearMessage(): Action
@@ -103,9 +101,9 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
     const filteredGuests =
       this.state.filter !== 'all'
         ? event.guests.filter(
-          (guest: any) =>
-            guest.rsvp.status.toLocaleLowerCase() === this.state.filter
-        )
+            (guest: any) =>
+              guest.rsvp.status.toLocaleLowerCase() === this.state.filter
+          )
         : event.guests
 
     return (
@@ -172,7 +170,7 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
     )
   }
 
-  private renderEventGuest = (eventGuest: IEventGuest, classes: any) => {
+  private renderEventGuest = (eventGuest: EventGuest, classes: any) => {
     const { user, rsvp } = eventGuest
     const name = !user.displayName
       ? user.isGuest

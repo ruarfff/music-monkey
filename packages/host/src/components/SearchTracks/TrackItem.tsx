@@ -1,10 +1,9 @@
+import React from 'react'
 import Button from '@material-ui/core/Button'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import * as React from 'react'
-import { Action } from 'mm-shared'
-import { Track } from 'mm-shared'
+import { Action, Track } from 'mm-shared'
 import formatDuration from 'util/formatDuration'
 import './TrackItem.scss'
 

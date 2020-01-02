@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
-import IRootState from '../../rootState'
-import { setEventId } from '../eventActions'
-import { createVote, deleteVote } from '../../vote/voteActions'
-import Event from './Event'
+import IRootState from 'rootState'
+import { setEventId } from 'event/eventActions'
+import { createVote, deleteVote } from 'vote/voteActions'
+import EventView from './EventView'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
@@ -18,9 +18,9 @@ const mapDispatchToProps = {
   setEventId
 }
 
-const EventContainer = connect(
+const EventViewContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Event)
+)(EventView)
 
-export default EventContainer
+export default EventViewContainer

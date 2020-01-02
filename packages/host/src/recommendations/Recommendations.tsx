@@ -1,12 +1,12 @@
 import React from 'react'
 import TrackItem from 'components/SearchTracks/TrackItemContainer'
 import { Action } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import { Track } from 'mm-shared'
 
 interface IRecommendationsProps {
   recommendedTracks: Track[]
-  playlist?: IPlaylist
+  playlist?: Playlist
   layout?: string
   getRecommendations(): Action
 }

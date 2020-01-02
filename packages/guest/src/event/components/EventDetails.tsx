@@ -1,16 +1,13 @@
+import React from 'react'
 import { isEmpty } from 'lodash'
-import * as React from 'react'
-import { Action } from 'mm-shared'
-import { Track } from 'mm-shared'
-import TrackList from '../../track/TrackList'
-import { User } from 'mm-shared'
-import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
-import IVote from '../../vote/IVote'
-import IEvent from '../IEvent'
+import { Action, Event, Track, User } from 'mm-shared'
+import TrackList from 'track/TrackList'
+import ITrackVoteStatus from 'vote/ITrackVoteStatus'
+import IVote from 'vote/IVote'
 import './EventDetails.scss'
 
 interface IEventDetailsProps {
-  event: IEvent
+  event: Event
   user: User
   votes: Map<string, ITrackVoteStatus>
   createVote(vote: IVote): Action
@@ -48,15 +45,15 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
           <div className="EventDetails-playlist-info">
             <span className="EventDetails-playlist-title">Playlist Name</span>
             <br />
-            <span>{!isEmpty(event.playlist) && event.playlist.name}</span>
+            <span>{!isEmpty(event.playlist) && event.playlist!.name}</span>
             <br />
-            {!isEmpty(event.playlist) && event.playlist.description !== '' && (
+            {!isEmpty(event.playlist) && event.playlist!.description !== '' && (
               <>
                 <span className="EventDetails-playlist-title">
                   Playlist Description
                 </span>
                 <br />
-                <span>{event.playlist.description}</span>
+                <span>{event.playlist!.description}</span>
               </>
             )}
           </div>
@@ -72,7 +69,7 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
         <div>
           {!isEmpty(event.playlist) && (
             <TrackList
-              tracks={event.playlist.tracks.items.map(item => item.track)}
+              tracks={event.playlist!.tracks.items.map(item => item.track)}
               withVoting={true}
               votes={this.props.votes}
               onVote={this.handleTrackVote}

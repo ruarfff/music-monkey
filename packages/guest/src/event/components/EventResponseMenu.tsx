@@ -7,17 +7,13 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import { Action } from 'mm-shared'
-import IRsvp from '../../rsvp/IRsvp'
-import { User } from 'mm-shared'
-import IEvent from '../IEvent'
-import IEventGuest from '../IEventGuest'
+import { Action, Event, EventGuest, Rsvp, User } from 'mm-shared'
 import './EventResponseMenu.scss'
 
 interface IEventResponseMenu {
-  event: IEvent
+  event: Event
   user: User
-  updateRsvp(rsvp: IRsvp): Action
+  updateRsvp(rsvp: Rsvp): Action
 }
 
 const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {
@@ -27,7 +23,7 @@ const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {
   const anchorRef = useRef(null)
   const userStatus = event
     ? find(event.guests, guest => guest.rsvp.userId === user.userId)
-    : ({ rsvp: { status: 'Pending' } } as IEventGuest)
+    : ({ rsvp: { status: 'Pending' } } as EventGuest)
 
   function handleToggle() {
     setOpen(prevOpen => !prevOpen)

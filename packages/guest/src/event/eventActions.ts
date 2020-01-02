@@ -1,6 +1,4 @@
-import { Action } from 'mm-shared'
-import { Track }  from 'mm-shared'
-import IEvent from './IEvent'
+import { Action, Track, Event } from 'mm-shared'
 
 export const DESELECT_EVENT = 'DESELECT_EVENT'
 export const EVENT_SELECTED = 'EVENT_SELECTED'
@@ -24,7 +22,7 @@ export const setEventId = (eventId: string): Action => ({
   type: EVENT_ID_SET
 })
 
-export const selectEvent = (event: IEvent): Action => ({
+export const selectEvent = (event: Event): Action => ({
   payload: event,
   type: EVENT_SELECTED
 })

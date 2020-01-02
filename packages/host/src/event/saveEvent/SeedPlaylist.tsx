@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import isEmpty from 'lodash/isEmpty'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import {
   Grid,
   List,
@@ -31,10 +31,10 @@ import './SeedPlaylist.scss'
 
 interface PlaylistsProps {
   user: User
-  playlists: IPlaylist[]
+  playlists: Playlist[]
   playlistsLoading: boolean
   fetchPlaylists(user: User): Action
-  onPlaylistSelected(playlist: IPlaylist): void
+  onPlaylistSelected(playlist: Playlist): void
 }
 
 const SeedPlaylist = ({
@@ -44,9 +44,9 @@ const SeedPlaylist = ({
   fetchPlaylists,
   onPlaylistSelected
 }: PlaylistsProps) => {
-  const emptyPlaylist: IPlaylist = ({
+  const emptyPlaylist: Playlist = ({
     tracks: { items: [] }
-  } as unknown) as IPlaylist
+  } as unknown) as Playlist
   const [selectedPlaylist, setSelectedPlaylist] = useState()
   useEffect(() => {
     if (isEmpty(playlists) && !playlistsLoading) {
@@ -54,7 +54,7 @@ const SeedPlaylist = ({
     }
   }, [fetchPlaylists, playlists, playlistsLoading, user])
 
-  const handlePlaylistClicked = (playlist: IPlaylist) => () => {
+  const handlePlaylistClicked = (playlist: Playlist) => () => {
     if (selectedPlaylist === playlist) {
       setSelectedPlaylist(undefined)
     } else {
@@ -119,8 +119,8 @@ const SeedPlaylist = ({
             </ListItem>
           </Collapse>
           {playlists
-            .filter((playlist: IPlaylist) => playlist.tracks.total > 0)
-            .map((playlist: IPlaylist) => (
+            .filter((playlist: Playlist) => playlist.tracks.total > 0)
+            .map((playlist: Playlist) => (
               <Collapse
                 in={isEmpty(selectedPlaylist) || playlist === selectedPlaylist}
                 key={playlist.id}

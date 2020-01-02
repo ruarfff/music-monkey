@@ -63,7 +63,7 @@ describe('authReducer', () => {
   it('should handle CLEAR_AUTH_ERROR', () => {
     expect(
       auth(
-        {...initialState, authError: 'test'},
+        { ...initialState, authError: 'test' },
         {
           type: CLEAR_AUTH_ERROR
         }

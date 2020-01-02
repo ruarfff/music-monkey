@@ -1,4 +1,4 @@
-import { Action } from 'mm-shared'
+import { Action, Event, Playlist } from 'mm-shared'
 import {
   EVENT_FETCH_ERROR,
   EVENT_FETCH_INITIATED,
@@ -11,9 +11,7 @@ import {
 } from './eventActions'
 import initialState from './eventInitialState'
 import event from './eventReducer'
-import IEvent from './IEvent'
 import ISelectedSuggestion from './ISelectedSuggestion'
-import IPlaylist from '../playlist/IPlaylist'
 
 describe('eventReducer', () => {
   it('should return the initial state when no action matches', () => {
@@ -35,8 +33,8 @@ describe('eventReducer', () => {
     it('should handle EVENT_FETCHED', () => {
       const fetchedEvent = {
         eventId: 'event-id',
-        playlist: { id: 'playlist-id' } as IPlaylist
-      } as IEvent
+        playlist: { id: 'playlist-id' } as Playlist
+      } as Event
 
       expect(
         event(
@@ -58,12 +56,12 @@ describe('eventReducer', () => {
     it('should update existing event in events list when EVENT_FETCHED', () => {
       const oldEvent = {
         eventId: 'event-id',
-        playlist: { id: 'playlist-id' } as IPlaylist
-      } as IEvent
+        playlist: { id: 'playlist-id' } as Playlist
+      } as Event
       const newEvent = {
         eventId: 'event-id',
-        playlist: { id: 'new-playlist-id' } as IPlaylist
-      } as IEvent
+        playlist: { id: 'new-playlist-id' } as Playlist
+      } as Event
       expect(
         event(
           { ...initialState, eventLoading: true, events: [oldEvent] },
@@ -116,7 +114,7 @@ describe('eventReducer', () => {
   })
 
   it('should handle FETCH_USERS_EVENTS_SUCCESS', () => {
-    const events = [] as IEvent[]
+    const events = [] as Event[]
     expect(
       event(initialState, { type: FETCH_USERS_EVENTS_SUCCESS, payload: events })
     ).toEqual({ ...initialState, events })

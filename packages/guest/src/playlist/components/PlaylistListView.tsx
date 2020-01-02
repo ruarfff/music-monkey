@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import {
   Avatar,
   Divider,
@@ -9,19 +10,16 @@ import {
 } from '@material-ui/core'
 import uniqBy from 'lodash/uniqBy'
 import isEmpty from 'lodash/isEmpty'
-import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import IEvent from 'event/IEvent'
-import IPlaylist from 'playlist/IPlaylist'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import { Action } from 'mm-shared'
+import { Action, Event, Playlist } from 'mm-shared'
 import sortEvents from 'event/sortEvents'
 import backgroundImage from 'assets/music-monkey.jpg'
 import './PlaylistListView.scss'
 
 interface IPlaylistListViewProps {
-  selectedEvent: IEvent
-  events: IEvent[]
+  selectedEvent: Event
+  events: Event[]
   eventsLoading?: boolean
   deselectEvent(): Action
 }
@@ -45,11 +43,11 @@ const PlaylistListView = ({
 
   const { liveEvents, upcomingEvents, pastEvents } = sortEvents(events)
 
-  const playlists = uniqBy(
+  const playlists: Playlist[] = uniqBy(
     [...liveEvents, ...upcomingEvents, ...pastEvents]
-      .filter((event: IEvent) => event.playlistUrl && event.playlist)
+      .filter((event: Event) => event.playlistUrl && event.playlist)
       .map(event => {
-        return { ...event.playlist, eventId: event.eventId }
+        return { ...event.playlist!, eventId: event.eventId! }
       }),
     'id'
   )
@@ -64,40 +62,44 @@ const PlaylistListView = ({
 
   return (
     <List>
-      {playlists.map((playlist: IPlaylist, i: number) => (
-        <div className="PlaylistListView-item-wrapper" key={i}>
-          <ListItem
-            disabled={playlist.tracks.total < 1}
-            button={true}
-            component={Link}
-            to={'/playlists/' + playlist.eventId}
-            className={
-              playlist.tracks.total < 1 ? 'PlaylistListView-disabled-link' : ''
-            }
-          >
-            <div className="PlaylistListView-item">
-              <ListItemAvatar>
-                <Avatar
-                  alt={playlist.name}
-                  src={
-                    playlist.images.length > 0
-                      ? playlist.images[0].url
-                      : backgroundImage
-                  }
+      {playlists.map((playlist: Playlist, i: number) => {
+        return (
+          <div className="PlaylistListView-item-wrapper" key={i}>
+            <ListItem
+              disabled={playlist.tracks.total < 1}
+              button={true}
+              component={Link}
+              to={'/playlists/' + playlist.eventId!}
+              className={
+                playlist.tracks.total < 1
+                  ? 'PlaylistListView-disabled-link'
+                  : ''
+              }
+            >
+              <div className="PlaylistListView-item">
+                <ListItemAvatar>
+                  <Avatar
+                    alt={playlist.name}
+                    src={
+                      playlist.images.length > 0
+                        ? playlist.images[0].url
+                        : backgroundImage
+                    }
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={playlist.name}
+                  secondary={`${playlist.tracks.total} tracks`}
                 />
-              </ListItemAvatar>
-              <ListItemText
-                primary={playlist.name}
-                secondary={`${playlist.tracks.total} tracks`}
-              />
-            </div>
-          </ListItem>
+              </div>
+            </ListItem>
 
-          <li>
-            <Divider variant="inset" />
-          </li>
-        </div>
-      ))}
+            <li>
+              <Divider variant="inset" />
+            </li>
+          </div>
+        )
+      })}
     </List>
   )
 }

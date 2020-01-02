@@ -1,5 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Action } from 'mm-shared'
+import { sortBy } from 'lodash'
+import { Action, Event } from 'mm-shared'
 import {
   EVENT_FETCH_ERROR,
   EVENT_FETCH_INITIATED,
@@ -9,8 +10,6 @@ import {
   FETCH_USERS_EVENTS_SUCCESS
 } from './eventActions'
 import { getEventById, getUsersInvitedEvents } from './eventClient'
-import IEvent from './IEvent'
-import { sortBy } from 'lodash'
 
 function* fetchEventFlow(action: Action) {
   const eventId: string = action.payload
@@ -28,7 +27,7 @@ export function* watchFetchEvent() {
 
 function* fetchUsersEventsFlow() {
   try {
-    let events: IEvent[] = yield call(getUsersInvitedEvents)
+    let events: Event[] = yield call(getUsersInvitedEvents)
     events = sortBy(events || [], 'endDateTime').reverse()
     yield put({ type: FETCH_USERS_EVENTS_SUCCESS, payload: events })
   } catch (err) {

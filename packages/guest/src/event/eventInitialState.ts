@@ -1,9 +1,9 @@
-import IEvent from './IEvent'
+import { Event } from 'mm-shared'
 import IEventState from './IEventState'
 
 export default {
   fetchEventError: undefined,
-  selectedEvent: {} as IEvent,
+  selectedEvent: {} as Event,
   selectedSuggestion: undefined,
   events: [],
   eventsLoading: false,

@@ -8,14 +8,13 @@ import {
   ListItemText
 } from '@material-ui/core'
 import backgroundImage from 'assets/music-monkey.jpg'
-import IEvent from '../IEvent'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 
 import './EventPicker.scss'
 
 interface IEventPickerProps {
-  events: IEvent[]
-  selectEvent(event: IEvent): Action
+  events: Event[]
+  selectEvent(event: Event): Action
 }
 
 const EventPicker = ({ events, selectEvent }: IEventPickerProps) => {

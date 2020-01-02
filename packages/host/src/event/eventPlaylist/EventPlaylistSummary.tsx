@@ -3,32 +3,30 @@ import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabe
 import FormGroup from '@material-ui/core/FormGroup/FormGroup'
 import Grid from '@material-ui/core/Grid/Grid'
 import Switch from '@material-ui/core/Switch/Switch'
-import IEvent from 'event/IEvent'
-import { Action } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Action, Event, Playlist } from 'mm-shared'
 import formatDuration from 'util/formatDuration'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
-import './EventPlaylistSummary.scss'
 import getPlaylistDuration from 'playlist/getPlaylistDuration'
+import './EventPlaylistSummary.scss'
 
 interface IEventPlaylistSummaryProps {
-  event: IEvent
+  event: Event
   votes: Map<string, ITrackVoteStatus>
   sortPlaylistByVotesDescending(
-    playlist: IPlaylist,
+    playlist: Playlist,
     votes: Map<string, ITrackVoteStatus>
   ): Action
-  toggleDynamicVoting(event: IEvent): Action
-  toggleAutoAcceptSuggestions(event: IEvent): Action
-  toggleSuggestingPlaylists(event: IEvent): Action
+  toggleDynamicVoting(event: Event): Action
+  toggleAutoAcceptSuggestions(event: Event): Action
+  toggleSuggestingPlaylists(event: Event): Action
 }
 
 class EventPlaylistSummary extends React.PureComponent<
   IEventPlaylistSummaryProps
 > {
   public render() {
-    const playlist: IPlaylist = this.props.event.playlist || ({} as IPlaylist)
-    const event: IEvent = this.props.event || ({} as IEvent)
+    const playlist: Playlist = this.props.event.playlist || ({} as Playlist)
+    const event: Event = this.props.event || ({} as Event)
 
     const durationSeconds = getPlaylistDuration(playlist)
     const formattedDuration = formatDuration(durationSeconds)

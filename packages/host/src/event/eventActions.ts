@@ -1,6 +1,4 @@
-import { Action } from 'mm-shared'
-import IEvent from './IEvent'
-import IPlaylist from 'playlist/IPlaylist'
+import { Action, Event, Playlist } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 
@@ -42,7 +40,7 @@ export const PLAYLIST_SORTED_BY_VOTES_DESCENDING =
 
 export const EVENT_SELECTED = 'EVENT_SELECTED'
 
-export const selectEvent = (event: IEvent): Action => ({
+export const selectEvent = (event: Event): Action => ({
   payload: event,
   type: EVENT_SELECTED
 })
@@ -70,17 +68,17 @@ export const acknowledgeEventInviteCopied = (): Action => ({
   type: EVENT_INVITE_COPY_ACKNOWLEDGED
 })
 
-export const toggleDynamicVoting = (event: IEvent): Action => ({
+export const toggleDynamicVoting = (event: Event): Action => ({
   type: TOGGLE_DYNAMIC_VOTING,
   payload: event
 })
 
-export const toggleAutoAcceptSuggestions = (event: IEvent): Action => ({
+export const toggleAutoAcceptSuggestions = (event: Event): Action => ({
   type: TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   payload: event
 })
 
-export const toggleSuggestingPlaylists = (event: IEvent): Action => ({
+export const toggleSuggestingPlaylists = (event: Event): Action => ({
   type: TOGGLE_SUGGESTING_PLAYLISTS,
   payload: event
 })
@@ -91,7 +89,7 @@ export const getEvents = (): Action => ({
 
 export const saveEventPlaylist = (
   eventId: string,
-  playlist: IPlaylist,
+  playlist: Playlist,
   suggestions: Map<string, IDecoratedSuggestion>
 ): Action => ({
   type: SAVE_EVENT_PLAYLIST,
@@ -99,7 +97,7 @@ export const saveEventPlaylist = (
 })
 
 export const moveItemInEventPlaylist = (
-  playlist: IPlaylist,
+  playlist: Playlist,
   fromIndex: number,
   toIndex: number
 ): Action => ({
@@ -108,7 +106,7 @@ export const moveItemInEventPlaylist = (
 })
 
 export const sortPlaylistByVotesDescending = (
-  playlist: IPlaylist,
+  playlist: Playlist,
   votes: Map<string, ITrackVoteStatus>
 ): Action => ({
   type: SORT_PLAYLIST_BY_VOTES_DESCENDING,

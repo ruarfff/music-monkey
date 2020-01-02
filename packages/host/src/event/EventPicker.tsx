@@ -7,16 +7,15 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 import backgroundImage from 'assets/music-monkey.jpg'
-import IEvent from './IEvent'
 
 import './EventPicker.scss'
 
 interface IEventPickerProps {
-  events: IEvent[]
+  events: Event[]
   isOpen: boolean
-  selectEvent(event: IEvent): Action
+  selectEvent(event: Event): Action
   getEventSuggestions(eventId: string): Action
   onClose(): void
 }

@@ -17,11 +17,11 @@ import useMenuActive from '../util/useMenuActive'
 import { ProfileImage } from './ProfileImage'
 import './SideMenu.scss'
 import { User }  from 'mm-shared'
-import IEvent from '../event/IEvent'
+import { Event } from 'mm-shared'
 
 interface ISideMenuProps extends RouteComponentProps<any> {
   user: User
-  event: IEvent
+  event: Event
 }
 
 const checkLocation = (pathname: string, path: string) => {

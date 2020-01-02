@@ -7,9 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import Switch from '@material-ui/core/Switch'
 import Typography from '@material-ui/core/Typography'
 import cloneDeep from 'lodash/cloneDeep'
-import IEvent from 'event/IEvent'
-import { Action } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Action, Playlist, Event } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import formatDuration from 'util/formatDuration'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
@@ -22,18 +20,18 @@ import getPlaylistDuration from 'playlist/getPlaylistDuration'
 import './EventSummaryPlaylist.scss'
 
 interface IEventSummaryPlaylistProps {
-  event: IEvent
+  event: Event
   genre?: string
   eventImg?: string
   suggestion: IDecoratedSuggestion[]
   votes: Map<string, ITrackVoteStatus>
   sortPlaylistByVotesDescending(
-    playlist: IPlaylist,
+    playlist: Playlist,
     votes: Map<string, ITrackVoteStatus>
   ): Action
-  toggleDynamicVoting(event: IEvent): Action
-  toggleAutoAcceptSuggestions(event: IEvent): Action
-  toggleSuggestingPlaylists(event: IEvent): Action
+  toggleDynamicVoting(event: Event): Action
+  toggleAutoAcceptSuggestions(event: Event): Action
+  toggleSuggestingPlaylists(event: Event): Action
   editPlaylist(playlistId: string, name: string, description: string): Action
 }
 

@@ -8,10 +8,8 @@ import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import CloseIcon from '@material-ui/icons/Close'
-import { Action } from 'mm-shared'
+import { Action, Event, EventGuest } from 'mm-shared'
 import SharePopup from 'components/ShareEvent/SharePopup'
-import IEvent from 'event/IEvent'
-import IEventGuest from 'event/IEventGuest'
 
 const decorated = withStyle(() => ({
   noAvatar: {
@@ -37,14 +35,14 @@ const decorated = withStyle(() => ({
 
 interface IEventGuestsRightSideViewProps {
   message: string
-  event: IEvent
+  event: Event
   copyEventInvite(): Action
   clearMessage(): Action
 }
 
 class EventGuestsRightSideView extends React.PureComponent<
   IEventGuestsRightSideViewProps & WithStyles
-  > {
+> {
   public render() {
     const { event, copyEventInvite, classes } = this.props
 
@@ -127,7 +125,7 @@ class EventGuestsRightSideView extends React.PureComponent<
   }
 
   private renderEventGuest = (
-    eventGuest: IEventGuest,
+    eventGuest: EventGuest,
     classes: any,
     index: number
   ) => {
@@ -148,8 +146,8 @@ class EventGuestsRightSideView extends React.PureComponent<
         {user.image ? (
           <Avatar alt={user.displayName} src={user.image} />
         ) : (
-            <AccountCircle className={classes.noAvatar} />
-          )}
+          <AccountCircle className={classes.noAvatar} />
+        )}
         <Typography className={classes.guestName} align={'center'}>
           {name}
         </Typography>

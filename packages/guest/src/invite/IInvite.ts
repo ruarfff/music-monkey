@@ -1,7 +1,7 @@
-import IEvent from '../event/IEvent'
+import { Event } from 'mm-shared'
 
 export default interface IInvite {
   inviteId: string
   eventId: string
-  event: IEvent
+  event: Event
 }

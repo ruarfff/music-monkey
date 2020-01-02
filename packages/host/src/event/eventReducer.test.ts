@@ -1,7 +1,10 @@
-import { Action } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
-import IPlaylistItem from 'playlist/IPlaylistItem'
-import IPlaylistTracks from 'playlist/IPlaylistTracks'
+import {
+  Action,
+  Event,
+  Playlist,
+  PlaylistItem,
+  PlaylistTracks
+} from 'mm-shared'
 import {
   moveItemInEventPlaylist,
   SAVE_EVENT_PLAYLIST,
@@ -25,7 +28,6 @@ import {
 } from './eventActions'
 import initialState from './eventInitialState'
 import event from './eventReducer'
-import IEvent from './IEvent'
 
 describe('eventReducer', () => {
   it('should return the initial state when no action matches', () => {
@@ -50,13 +52,13 @@ describe('eventReducer', () => {
           { ...initialState, eventsLoading: true },
           {
             type: EVENTS_FETCHED,
-            payload: [{} as IEvent]
+            payload: [{} as Event]
           }
         )
       ).toEqual({
         ...initialState,
         eventsLoading: false,
-        events: [{} as IEvent]
+        events: [{} as Event]
       })
     })
 
@@ -119,13 +121,13 @@ describe('eventReducer', () => {
         { ...initialState, loading: true },
         {
           type: EVENT_FETCHED_BY_ID,
-          payload: {} as IEvent
+          payload: {} as Event
         }
       )
     ).toEqual({
       ...initialState,
       loading: false,
-      event: {} as IEvent
+      event: {} as Event
     })
   })
 
@@ -142,7 +144,7 @@ describe('eventReducer', () => {
   })
 
   it('should handle TOGGLE_DYNAMIC_VOTING', () => {
-    const updatedEvent = { settings: { dynamicVotingEnabled: false } } as IEvent
+    const updatedEvent = { settings: { dynamicVotingEnabled: false } } as Event
     expect(
       event(
         { ...initialState, event: updatedEvent },
@@ -158,7 +160,7 @@ describe('eventReducer', () => {
   })
 
   it('should handle TOGGLE_DYNAMIC_VOTING_ERROR', () => {
-    const updatedEvent = { settings: { dynamicVotingEnabled: true } } as IEvent
+    const updatedEvent = { settings: { dynamicVotingEnabled: true } } as Event
     expect(
       event(
         { ...initialState, event: updatedEvent },
@@ -179,7 +181,7 @@ describe('eventReducer', () => {
         dynamicVotingEnabled: false,
         autoAcceptSuggestionsEnabled: false
       }
-    } as IEvent
+    } as Event
     expect(
       event(
         { ...initialState, event: updatedEvent },
@@ -203,7 +205,7 @@ describe('eventReducer', () => {
         dynamicVotingEnabled: false,
         autoAcceptSuggestionsEnabled: true
       }
-    } as IEvent
+    } as Event
     expect(
       event(
         { ...initialState, event: updatedEvent },
@@ -226,7 +228,7 @@ describe('eventReducer', () => {
       settings: {
         suggestingPlaylistsEnabled: false
       }
-    } as IEvent
+    } as Event
     expect(
       event(
         { ...initialState, event: updatedEvent },
@@ -246,7 +248,7 @@ describe('eventReducer', () => {
       settings: {
         suggestingPlaylistsEnabled: true
       }
-    } as IEvent
+    } as Event
     expect(
       event(
         { ...initialState, event: updatedEvent },
@@ -316,17 +318,17 @@ describe('eventReducer', () => {
   })
 
   it('should handle MOVE_ITEM_IN_EVENT_PLAYLIST', () => {
-    const item1 = { track: { uri: 'item:1' } } as IPlaylistItem
-    const item2 = { track: { uri: 'item:2' } } as IPlaylistItem
-    const item3 = { track: { uri: 'item:3' } } as IPlaylistItem
+    const item1 = { track: { uri: 'item:1' } } as PlaylistItem
+    const item2 = { track: { uri: 'item:2' } } as PlaylistItem
+    const item3 = { track: { uri: 'item:3' } } as PlaylistItem
 
-    const tracks = { items: [item1, item2, item3] } as IPlaylistTracks
-    const originalPlaylist = { id: 'playlist-id', tracks } as IPlaylist
-    const reOrderedTracks = { items: [item2, item1, item3] } as IPlaylistTracks
+    const tracks = { items: [item1, item2, item3] } as PlaylistTracks
+    const originalPlaylist = { id: 'playlist-id', tracks } as Playlist
+    const reOrderedTracks = { items: [item2, item1, item3] } as PlaylistTracks
     const reOrderedPlaylist = {
       id: 'playlist-id',
       tracks: reOrderedTracks
-    } as IPlaylist
+    } as Playlist
     expect(
       event(
         {

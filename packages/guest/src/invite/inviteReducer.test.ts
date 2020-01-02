@@ -1,5 +1,4 @@
-import IEvent from '../event/IEvent'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 import IInvite from './IInvite'
 import { FETCHING_INVITE_ERROR, FETCHING_INVITE_SUCCESS } from './inviteActions'
 import initialState from './inviteInitialState'
@@ -20,7 +19,7 @@ describe('inviteReducer', () => {
   it('should handle FETCHING_INVITE_SUCCESS', () => {
     const fetchedInvite = {
       inviteId: 'invite-id',
-      event: {} as IEvent
+      event: {} as Event
     } as IInvite
     expect(
       invite(initialState, {

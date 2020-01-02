@@ -4,18 +4,17 @@ import Paper from '@material-ui/core/Paper'
 import { isEmpty } from 'lodash'
 import * as React from 'react'
 import { Action } from 'mm-shared'
-import IEvent from 'event/IEvent'
-import IPlaylist from 'playlist/IPlaylist'
-import IPlaylistItem from 'playlist/IPlaylistItem'
+import { Event } from 'mm-shared'
+import { Playlist, PlaylistItem } from 'mm-shared'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import './MostPopularTracks.scss'
 
 interface IMostPopularTracksProps {
   votes: Map<string, ITrackVoteStatus>
-  events: IEvent[]
-  playlist: IPlaylist
+  events: Event[]
+  playlist: Playlist
   sortPlaylistByVotesDescending(
-    playlist: IPlaylist,
+    playlist: Playlist,
     votes: Map<string, ITrackVoteStatus>
   ): Action
   fetchEventVotes(eventId: string): Action
@@ -24,7 +23,7 @@ interface IMostPopularTracksProps {
 class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
   public state = {
     anchorEl: null,
-    pickedEvent: {} as IEvent
+    pickedEvent: {} as Event
   }
 
   public componentWillReceiveProps(nextProps: IMostPopularTracksProps) {
@@ -52,7 +51,7 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
     this.setState({ anchorEl: event.currentTarget })
   }
 
-  public handleClose = (event?: IEvent) => () => {
+  public handleClose = (event?: Event) => () => {
     this.setState({ anchorEl: null })
     if (event && event.eventId) {
       this.setState({ pickedEvent: event })
@@ -86,7 +85,7 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
           onClose={this.handleClose()}
         >
           {eventsWithTracks &&
-            eventsWithTracks.map((event: IEvent, index: number) => {
+            eventsWithTracks.map((event: Event, index: number) => {
               if (event.eventId) {
                 return (
                   <MenuItem key={index} onClick={this.handleClose(event)}>
@@ -103,7 +102,7 @@ class MostVotedTracks extends React.Component<IMostPopularTracksProps> {
         </Menu>
         <div className="listWrapper">
           {playlist &&
-            playlist.tracks.items.slice(0, 5).map((item: IPlaylistItem, i) => {
+            playlist.tracks.items.slice(0, 5).map((item: PlaylistItem, i) => {
               return item ? (
                 <div key={i} className={'listItem'}>
                   <div className={'imgSection'}>

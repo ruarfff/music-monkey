@@ -1,11 +1,11 @@
-import IEvent from './IEvent'
+import { Event } from 'mm-shared'
 import ISelectedSuggestion from './ISelectedSuggestion'
 
 export default interface IEventState {
   fetchEventError?: Error
   eventId: string
-  selectedEvent: IEvent
-  events: IEvent[]
+  selectedEvent: Event
+  events: Event[]
   eventsLoading: boolean
   eventLoading: boolean
   selectedSuggestion?: ISelectedSuggestion

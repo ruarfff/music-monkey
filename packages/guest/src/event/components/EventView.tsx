@@ -1,23 +1,21 @@
+import React, { useEffect, useState } from 'react'
 import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import Icon from '@material-ui/core/Icon'
 import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
-import { Action } from 'mm-shared'
-import LoadingSpinner from '../../loading/LoadingSpinner'
-import { User } from 'mm-shared'
-import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
-import IVote from '../../vote/IVote'
-import IEvent from '../IEvent'
+import { Action, User, Event } from 'mm-shared'
+import LoadingSpinner from 'loading/LoadingSpinner'
+import ITrackVoteStatus from 'vote/ITrackVoteStatus'
+import IVote from 'vote/IVote'
 import EventDetails from './EventDetails'
 import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
-import React, { useEffect, useState } from 'react'
 import EventHeader from './EventHeaderContainer'
-import './Event.scss'
+import './EventView.scss'
 
-interface IEventProps {
+interface EventViewProps {
   user: User
-  selectedEvent: IEvent
+  selectedEvent: Event
   eventLoading: boolean
   votes: Map<string, ITrackVoteStatus>
   fetchingVotes: boolean
@@ -26,7 +24,7 @@ interface IEventProps {
   setEventId(eventId: string): Action
 }
 
-const Event = ({
+const EventView = ({
   user,
   selectedEvent,
   setEventId,
@@ -34,7 +32,7 @@ const Event = ({
   createVote,
   deleteVote,
   match
-}: IEventProps & RouteComponentProps<any>) => {
+}: EventViewProps & RouteComponentProps<any>) => {
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
   const handleTabChange = (e: any, value: any) => {
@@ -96,4 +94,4 @@ const Event = ({
   )
 }
 
-export default Event
+export default EventView

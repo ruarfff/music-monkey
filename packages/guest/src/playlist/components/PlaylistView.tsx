@@ -1,25 +1,21 @@
+import React, { useState, useEffect } from 'react'
 import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
-import React, { useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
-import IEvent from '../../event/IEvent'
-import { Action } from 'mm-shared'
-import { Track } from 'mm-shared'
-import { User } from 'mm-shared'
-import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
-import IVote from '../../vote/IVote'
-import './Playlist.scss'
+import { Action, Event, PlaylistItem, Track, User } from 'mm-shared'
+import ITrackVoteStatus from 'vote/ITrackVoteStatus'
+import IVote from 'vote/IVote'
 import ApprovedTracks from './ApprovedTracks'
 import PlaylistPlayer from './PlaylistPlayer'
-import IPlaylistItem from '../IPlaylistItem'
-import LoadingSpinner from '../../loading/LoadingSpinner'
+import LoadingSpinner from 'loading/LoadingSpinner'
+import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import MaybeTracks from './MaybeTracks'
-import IDecoratedSuggestion from '../../suggestion/IDecoratedSuggestion'
+import './PlaylistView.scss'
 
-interface IPlayListProps extends RouteComponentProps<any> {
+interface IPlayListViewProps extends RouteComponentProps<any> {
   user: User
-  event: IEvent
+  event: Event
   votes: Map<string, ITrackVoteStatus>
   suggestions: IDecoratedSuggestion[]
   createVote(vote: IVote): Action
@@ -27,7 +23,7 @@ interface IPlayListProps extends RouteComponentProps<any> {
   setEventId(eventId: string): Action
 }
 
-const Playlist = ({
+const PlaylistView = ({
   user,
   event,
   votes,
@@ -36,7 +32,7 @@ const Playlist = ({
   deleteVote,
   setEventId,
   match
-}: IPlayListProps) => {
+}: IPlayListViewProps) => {
   const [value, setValue] = useState(0)
   const [currentTrack, setCurrentTrack] = useState({} as Track)
   const eventId = match.params.eventId
@@ -44,7 +40,7 @@ const Playlist = ({
   const playlist = event.playlist
   const tracks =
     playlist && playlist.tracks && playlist.tracks.items
-      ? playlist.tracks.items.map((item: IPlaylistItem) => item.track)
+      ? playlist.tracks.items.map((item: PlaylistItem) => item.track)
       : []
   let voteStatus = {} as ITrackVoteStatus
   if (votes && votes.has(trackId)) {
@@ -125,7 +121,7 @@ const Playlist = ({
         {value === 0 ? (
           <Typography component="div" dir={'0'} style={{ padding: 10 }}>
             <ApprovedTracks
-              playlist={playlist}
+              playlist={playlist!}
               votes={votes}
               onTrackSelected={setCurrentTrack}
               onVote={handleTrackVote}
@@ -146,4 +142,4 @@ const Playlist = ({
   )
 }
 
-export default Playlist
+export default PlaylistView

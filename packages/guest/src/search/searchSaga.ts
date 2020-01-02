@@ -1,6 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Action } from 'mm-shared'
-import { Track }  from 'mm-shared'
+import { Action, Track } from 'mm-shared'
 import {
   SEARCH_FAILED,
   SEARCH_INITIATED,

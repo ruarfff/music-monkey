@@ -1,4 +1,4 @@
-import { LOGGED_OUT } from '../auth/authActions'
+import { LOGGED_OUT } from 'auth/authActions'
 import { Action } from 'mm-shared'
 import {
   FETCH_USER,

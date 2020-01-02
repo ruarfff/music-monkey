@@ -1,4 +1,4 @@
-export default interface IEventSettings {
+export interface EventSettings {
   dynamicVotingEnabled: boolean
   autoAcceptSuggestionsEnabled: boolean
   suggestingPlaylistsEnabled: boolean

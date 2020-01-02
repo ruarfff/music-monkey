@@ -1,9 +1,8 @@
 import List from '@material-ui/core/List/List'
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
-import { Action } from 'mm-shared'
-import { Track }  from 'mm-shared'
-import TrackList from '../track/TrackList'
+import { Action, Track } from 'mm-shared'
+import TrackList from 'track/TrackList'
 
 interface IRecommendationsProps {
   tracks: Track[]

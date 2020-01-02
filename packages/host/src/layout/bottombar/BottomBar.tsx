@@ -5,14 +5,14 @@ import ShowChartIcon from '@material-ui/icons/ShowChart'
 import EventIcon from '@material-ui/icons/Event'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import Monkey from 'assets/finder-logo.png'
 import './BottomBar.scss'
 
 const isHostMode = true
 
 interface IBottomBar extends RouteComponentProps<any> {
-  event: IEvent
+  event: Event
 }
 
 const checkLocation = (pathname: string, path: string) => {

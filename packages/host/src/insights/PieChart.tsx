@@ -8,9 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import flattenDeep from 'lodash/flattenDeep'
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts'
 import isEmpty from 'lodash/isEmpty'
-import IEvent from 'event/IEvent'
-import { Action } from 'mm-shared'
-import IRsvp from 'rsvp/IRsvp'
+import { Event } from 'mm-shared'
+import { Action, Rsvp } from 'mm-shared'
 
 const decorate = withStyles(() => ({
   title: {
@@ -20,7 +19,7 @@ const decorate = withStyles(() => ({
 }))
 
 interface IPieChartWidgetProps {
-  events: IEvent[]
+  events: Event[]
   pickedEvent: string
   filterByEventPick(id: any): Action
 }
@@ -37,7 +36,7 @@ class PieChartWidget extends React.Component<
     this.setState({ anchorEl: event.currentTarget })
   }
 
-  public handleClose = (event: IEvent) => () => {
+  public handleClose = (event: Event) => () => {
     this.setState({
       anchorEl: null,
       pickedEventName: event.name || event.eventId
@@ -65,9 +64,9 @@ class PieChartWidget extends React.Component<
             id="simple-menu"
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
-            onClose={this.handleClose({ eventId: 'all' } as IEvent)}
+            onClose={this.handleClose({ eventId: 'all' } as Event)}
           >
-            <MenuItem onClick={this.handleClose({ eventId: 'all' } as IEvent)}>
+            <MenuItem onClick={this.handleClose({ eventId: 'all' } as Event)}>
               All
             </MenuItem>
             {events.map(
@@ -101,23 +100,23 @@ class PieChartWidget extends React.Component<
         ? events.filter(event => event.eventId === eventId)
         : events
 
-    const allGuests = flattenDeep<IRsvp>(
+    const allGuests = flattenDeep<Rsvp>(
       selectedEvent
         .filter(event => !isEmpty(event.guests))
         .map(event => (event.guests || []).map(guest => guest.rsvp))
     )
 
     const pendingGuest = allGuests.filter(
-      (guest: IRsvp | undefined) => guest && guest.status === 'Pending'
+      (guest: Rsvp | undefined) => guest && guest.status === 'Pending'
     )
     const goingGuest = allGuests.filter(
-      (guest: IRsvp | undefined) => guest && guest.status === "I'm Going"
+      (guest: Rsvp | undefined) => guest && guest.status === "I'm Going"
     )
     const notGoingGuest = allGuests.filter(
-      (guest: IRsvp | undefined) => guest && guest.status === "I'm not going"
+      (guest: Rsvp | undefined) => guest && guest.status === "I'm not going"
     )
     const maybeGuest = allGuests.filter(
-      (guest: IRsvp | undefined) => guest && guest.status === 'Maybe'
+      (guest: Rsvp | undefined) => guest && guest.status === 'Maybe'
     )
 
     return [

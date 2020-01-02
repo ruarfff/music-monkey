@@ -1,14 +1,13 @@
 import Button from '@material-ui/core/Button'
-import * as React from 'react'
-import { Action } from 'mm-shared'
-import IEvent from 'event/IEvent'
+import React from 'react'
+import { Action, Event } from 'mm-shared'
 import ShareEventByEmail from './ShareEventByEmailContainer'
 import './SharePopup.scss'
 
 interface ISharePopupProps {
   message: string
   inviteId: string
-  event: IEvent
+  event: Event
   onCopyEventInvite(): void
   clearMessage(): Action
 }

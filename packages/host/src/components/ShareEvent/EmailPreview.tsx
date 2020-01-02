@@ -1,11 +1,11 @@
 import * as React from 'react'
 import logo from 'assets/marvin.png'
 import backgroundImage from 'assets/music-monkey.jpg'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import './EmailPreview.scss'
 
 interface IEmailPreviewProps {
-  event: IEvent
+  event: Event
   emailText: string
 }
 

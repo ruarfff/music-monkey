@@ -1,5 +1,5 @@
 import React from 'react'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import formatDuration from 'util/formatDuration'
 import CatalogueCard from './CatalogueCard'
 import getPlaylistImage from 'playlist/getPlaylistImage'
@@ -7,7 +7,7 @@ import getPlaylistDuration from 'playlist/getPlaylistDuration'
 
 interface PlaylistCardProps {
   eventId: string
-  playlist: IPlaylist
+  playlist: Playlist
 }
 
 const PlaylistCard = ({ playlist, eventId }: PlaylistCardProps) => {

@@ -1,15 +1,15 @@
+import React from 'react'
 import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import { isEmpty, uniqBy } from 'lodash'
-import React from 'react'
-import IEvent from '../../event/IEvent'
-import IDecoratedSuggestion from '../../suggestion/IDecoratedSuggestion'
-import TrackList from '../../track/TrackList'
+import { Event } from 'mm-shared'
+import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import TrackList from 'track/TrackList'
 import './MaybeTracks.scss'
 
 interface IMaybeTracksProps {
   suggestions: IDecoratedSuggestion[]
-  selectedEvent: IEvent
+  selectedEvent: Event
 }
 
 const MaybeTracks = ({ suggestions, selectedEvent }: IMaybeTracksProps) => {
@@ -25,7 +25,7 @@ const MaybeTracks = ({ suggestions, selectedEvent }: IMaybeTracksProps) => {
 
   const playlistTracks =
     !isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)
-      ? selectedEvent.playlist.tracks.items.map(track => track.track.uri)
+      ? selectedEvent.playlist!.tracks.items.map(track => track.track.uri)
       : []
 
   const maybeTracks = uniqBy(

@@ -8,10 +8,9 @@ import Tabs from '@material-ui/core/Tabs/Tabs'
 import Typography from '@material-ui/core/Typography/Typography'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps } from 'react-router'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 import InviteCopyAlert from 'components/InviteLink/InviteCopyAlert'
 import EventFetchError from 'event/EventFetchError'
-import IEvent from 'event/IEvent'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import EventGuests from './components/Guests/EventGuestsContainer'
 import EventPlaylistView from './components/Playlist/EventPlaylistViewContainer'
@@ -48,7 +47,7 @@ interface IEventViewState {
 
 interface IEventViewProps extends RouteComponentProps<any> {
   error: Error
-  event: IEvent
+  event: Event
   loading: boolean
   copiedToClipboard: boolean
   getEventById(eventId: string): Action

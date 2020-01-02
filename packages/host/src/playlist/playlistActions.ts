@@ -1,7 +1,7 @@
 import { Action } from 'mm-shared'
 import { Track } from 'mm-shared'
-import IUser from '../user/IUser'
-import IPlaylist from './IPlaylist'
+import { User } from 'mm-shared'
+import { Playlist } from 'mm-shared'
 
 export const FETCH_PLAYLISTS = 'FETCH_PLAYLISTS'
 export const FETCH_PLAYLISTS_SUCCESS = 'FETCH_PLAYLISTS_SUCCESS'
@@ -60,7 +60,7 @@ export const clearJustCreatedPlaylists = () => ({
   type: CLEAR_JUST_CREATED_PLAYLISTS
 })
 
-export const getMoreUsersPlaylists = (user: IUser, offset: number): Action => ({
+export const getMoreUsersPlaylists = (user: User, offset: number): Action => ({
   type: LOAD_MORE_PLAYLISTS_REQUEST,
   payload: {
     user,
@@ -69,7 +69,7 @@ export const getMoreUsersPlaylists = (user: IUser, offset: number): Action => ({
 })
 
 export const getMoreUsersPlaylistsSuccess = (
-  playlists: IPlaylist[]
+  playlists: Playlist[]
 ): Action => ({
   type: LOAD_MORE_PLAYLISTS_SUCCESS,
   payload: playlists
@@ -126,7 +126,7 @@ export const tryRemoveTrack = (
   }
 })
 
-export const trackRemoved = (playlist: IPlaylist): Action => ({
+export const trackRemoved = (playlist: Playlist): Action => ({
   type: REMOVE_TRACK_SUCCESS,
   payload: playlist
 })
@@ -135,12 +135,12 @@ export const removeTrackError = (): Action => ({
   type: REMOVE_TRACK_FAILURE
 })
 
-export const fetchPlaylists = (user: IUser): Action => ({
+export const fetchPlaylists = (user: User): Action => ({
   type: FETCH_PLAYLISTS,
   payload: user
 })
 
-export const fetchPlaylistsSuccess = (data: IPlaylist): Action => ({
+export const fetchPlaylistsSuccess = (data: Playlist): Action => ({
   payload: data,
   type: FETCH_PLAYLISTS_SUCCESS
 })
@@ -165,7 +165,7 @@ export const searchTrackFailure = (error: string): Action => ({
   payload: error
 })
 
-export const onPlaylistSelected = (playlist: IPlaylist): Action => ({
+export const onPlaylistSelected = (playlist: Playlist): Action => ({
   type: PLAYLIST_SELECTED,
   payload: playlist
 })

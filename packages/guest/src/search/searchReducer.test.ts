@@ -1,5 +1,4 @@
-import { Action } from 'mm-shared'
-import { Track }  from 'mm-shared'
+import { Action, Track } from 'mm-shared'
 import { SEARCH_SUCCESS } from './searchActions'
 import initialState from './searchInitialState'
 import search from './searchReducer'

@@ -1,10 +1,10 @@
+import React from 'react'
 import { Icon, Input } from '@material-ui/core'
 import Button from '@material-ui/core/Button/Button'
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik'
-import * as React from 'react'
 import { object, string } from 'yup'
 import { Action } from 'mm-shared'
-import ErrorNotification from '../util/ErrorNotification'
+import ErrorNotification from 'util/ErrorNotification'
 import './LoginEmail.scss'
 
 interface ILoginEmailProps {
@@ -66,16 +66,15 @@ class LoginEmail extends React.Component<ILoginEmailProps, any> {
           <a>Forgot your Password?</a>
           <a href="/signup">Not a user? Sign Up</a>
         </div>
-        {authError &&
-          authError.errorContext === 'login' && (
-            <ErrorNotification
-              message={
-                (authError.response && authError.response.data) ||
-                authError.message
-              }
-              onClose={this.handleErrorAcknowledged(setSubmitting)}
-            />
-          )}
+        {authError && authError.errorContext === 'login' && (
+          <ErrorNotification
+            message={
+              (authError.response && authError.response.data) ||
+              authError.message
+            }
+            onClose={this.handleErrorAcknowledged(setSubmitting)}
+          />
+        )}
       </Form>
     )
   }

@@ -4,12 +4,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import * as React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import IEvent from '../event/IEvent'
+import { Event } from 'mm-shared'
 import Monkey from '../assets/finder-logo.png'
 import './BottomBar.scss'
 
 interface IBottomBar extends RouteComponentProps<any> {
-  event: IEvent
+  event: Event
 }
 
 const checkLocation = (pathname: string, path: string) => {

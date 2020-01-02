@@ -1,5 +1,5 @@
-import IEvent from 'event/IEvent'
-import IPlaylist from 'playlist/IPlaylist'
+import { Event } from 'mm-shared'
+import { Playlist } from 'mm-shared'
 import SaveEventFormValues from './SaveEventFormValues'
 
 const mockSaveEvent = ({
@@ -31,8 +31,8 @@ const mockSaveEvent = ({
       name: eventName,
       description: eventDescription,
       tracks: { items: tracks.map(track => ({ track })) }
-    } as IPlaylist
-  } as IEvent
+    } as Playlist
+  } as Event
 }
 
 export default mockSaveEvent

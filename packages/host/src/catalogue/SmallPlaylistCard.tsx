@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import formatDuration from 'util/formatDuration'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
@@ -14,7 +14,7 @@ import getPlaylistDuration from 'playlist/getPlaylistDuration'
 import './SmallPlaylistCard.scss'
 
 interface ISmallPlaylistCardProps {
-  playlist: IPlaylist
+  playlist: Playlist
   classes?: { root: string }
 }
 

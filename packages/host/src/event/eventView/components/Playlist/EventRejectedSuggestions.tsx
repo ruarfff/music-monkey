@@ -9,19 +9,17 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { Action } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Action, Playlist, Track } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import formatDuration from 'util/formatDuration'
-import { Track } from 'mm-shared'
 import './EventRejectedSuggestions.scss'
 
 interface IEventRejectedSuggestionsProps extends RouteComponentProps<any> {
   suggestions: IDecoratedSuggestion[]
-  playlist: IPlaylist
+  playlist: Playlist
   saveEventPlaylist(
     eventId: string,
-    playlist: IPlaylist,
+    playlist: Playlist,
     suggestions: Map<string, IDecoratedSuggestion>
   ): Action
 }

@@ -1,8 +1,8 @@
-import IPlaylist from './IPlaylist'
+import { Playlist } from 'mm-shared'
 import IPlaylistState from './IPlaylistState'
 
 export default {
-  data: {} as IPlaylist[],
+  data: {} as Playlist[],
   eventPlaylists: [],
   error: undefined,
   isLoading: false,

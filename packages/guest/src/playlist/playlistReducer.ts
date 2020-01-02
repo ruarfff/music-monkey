@@ -1,6 +1,5 @@
 import { cloneDeep } from 'lodash'
-import IEvent from '../event/IEvent'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 import {
   EVENT_PLAYLISTS_LOADED,
   FETCH_MORE_PLAYLISTS_REQUEST,
@@ -35,12 +34,10 @@ export default function playlist(
     case FETCH_PLAYLISTS_ERROR:
       return { ...state, error: payload }
     case EVENT_PLAYLISTS_LOADED:
-      const filteredEvents = payload.filter(
-        (event: IEvent) => event.playlistUrl
-      )
+      const filteredEvents = payload.filter((event: Event) => event.playlistUrl)
       return {
         ...state,
-        eventPlaylists: filteredEvents.map((event: IEvent) => ({
+        eventPlaylists: filteredEvents.map((event: Event) => ({
           ...event.playlist,
           eventId: event.eventId
         }))

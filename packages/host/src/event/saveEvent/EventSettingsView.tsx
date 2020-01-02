@@ -5,7 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch, { SwitchClassKey, SwitchProps } from '@material-ui/core/Switch'
 import { List, ListItem, Divider } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
-import IEventSettings from 'event/IEventSettings'
+import { EventSettings } from 'mm-shared'
 import './EventSettings.scss'
 
 interface Styles extends Partial<Record<SwitchClassKey, string>> {
@@ -71,12 +71,12 @@ const IOSSwitch = withStyles((theme: Theme) =>
   )
 })
 
-const EventSettings = () => {
+const EventSettingsView = () => {
   return (
     <div className="EventSettings-root">
       <Field name="settings">
         {({ field, form: { setFieldValue } }: FieldProps) => {
-          const settings: IEventSettings = field.value
+          const settings: EventSettings = field.value
           return (
             <FormGroup>
               <List>
@@ -142,4 +142,4 @@ const EventSettings = () => {
   )
 }
 
-export default EventSettings
+export default EventSettingsView

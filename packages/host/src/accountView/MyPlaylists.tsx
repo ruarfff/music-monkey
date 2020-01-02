@@ -1,15 +1,15 @@
 import React from 'react'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import PlaylistCard from 'catalogue/PlaylistCard'
 
 interface IMyPlaylistsProps {
-  events: IEvent[]
+  events: Event[]
 }
 
 const MyPlaylists = ({ events }: IMyPlaylistsProps) => (
   <>
     {events.map(
-      (event: IEvent) =>
+      (event: Event) =>
         event.playlist &&
         event.eventId && (
           <PlaylistCard

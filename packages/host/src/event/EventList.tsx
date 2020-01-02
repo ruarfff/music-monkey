@@ -13,14 +13,14 @@ import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import Image from 'components/Image'
 import backgroundImage from 'assets/music-monkey.jpg'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import './EventList.scss'
 import TabPanel from './saveEvent/TabPanel'
 
 interface IEventListProps {
-  pastEvents: IEvent[]
-  liveEvents: IEvent[]
-  upcomingEvents: IEvent[]
+  pastEvents: Event[]
+  liveEvents: Event[]
+  upcomingEvents: Event[]
 }
 
 function a11yProps(index: any) {
@@ -30,7 +30,7 @@ function a11yProps(index: any) {
   }
 }
 
-const renderEvents = (events: IEvent[], status: string) => {
+const renderEvents = (events: Event[], status: string) => {
   if (isEmpty(events))
     return (
       <Typography align={'center'} variant={'h6'}>
@@ -39,7 +39,7 @@ const renderEvents = (events: IEvent[], status: string) => {
       </Typography>
     )
 
-  const getItemText = (event: IEvent, status: string) => {
+  const getItemText = (event: Event, status: string) => {
     if (status === 'live') return 'Happening Now'
     if (status === 'upcoming')
       return `Starts at ${event.startDateTime.format(' Do MMMM, YYYY')}`

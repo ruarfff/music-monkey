@@ -1,5 +1,5 @@
 import moment from 'moment'
-import IEventSettings from 'event/IEventSettings'
+import { EventSettings, User } from 'mm-shared'
 import IEventState from 'event/IEventState'
 
 export default {
@@ -31,7 +31,8 @@ export default {
     venue: '',
     invites: [],
     guests: [],
-    settings: {} as IEventSettings
+    settings: {} as EventSettings,
+    hostData: {} as User
   },
   eventsLoading: false,
   showSavedDialogue: false,

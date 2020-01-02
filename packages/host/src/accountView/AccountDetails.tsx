@@ -13,8 +13,7 @@ import instagramIcon from 'assets/instagram-icom.svg'
 import phoneIcon from 'assets/phone-icon.svg'
 import twitterIcon from 'assets/twitter.svg'
 import EventInput from 'components/EventInput/EventInput'
-import { Action } from 'mm-shared'
-import { User } from 'mm-shared'
+import { Action, User } from 'mm-shared'
 import EditAvatar from './EditAvatar'
 
 const decorate = withStyles(() => ({

@@ -1,11 +1,11 @@
 import React from 'react'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import eventIcon from 'assets/date-icon.svg'
 import locationIcon from 'assets/location-marker-icon.svg'
 import CatalogueCard from './CatalogueCard'
 
 interface EventCardProps {
-  event: IEvent
+  event: Event
 }
 
 const EventCard = ({ event }: EventCardProps) => {

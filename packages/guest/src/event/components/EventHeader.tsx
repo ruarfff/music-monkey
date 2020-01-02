@@ -4,14 +4,13 @@ import Icon from '@material-ui/core/Icon'
 import { Link } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import { Moment } from 'moment'
-import { ProfileImage } from '../../topbar/ProfileImage'
-import { Action } from 'mm-shared'
-import IEvent from '../IEvent'
+import { ProfileImage } from 'topbar/ProfileImage'
+import { Action, Event } from 'mm-shared'
 import EventResponseMenu from './EventResponseMenuContainer'
 import './EventHeader.scss'
 
 interface IEventHeaderProps {
-  event: IEvent
+  event: Event
   deselectEvent(): Action
 }
 

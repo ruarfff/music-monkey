@@ -1,11 +1,11 @@
 import React from 'react'
 import logo from 'assets/marvin.png'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import { isEmpty } from 'lodash'
 import './EmailPreview.scss'
 
 interface IEmailPreviewProps {
-  event: IEvent
+  event: Event
 }
 
 const EmailPreview = ({ event }: IEmailPreviewProps) => {

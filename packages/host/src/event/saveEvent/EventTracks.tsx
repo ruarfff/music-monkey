@@ -7,7 +7,7 @@ import arrayMove from 'util/arrayMove'
 import { Track } from 'mm-shared'
 import TrackList from 'track/TrackList'
 import formatDuration from 'util/formatDuration'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import {
   reOrderPlaylist,
   removeTrackFromPlaylist
@@ -16,7 +16,7 @@ import {
 import './EventTracks.scss'
 
 interface EventTracksProps {
-  playlist: IPlaylist
+  playlist: Playlist
   tracks: Track[]
   onTracksChanged(tracks: Track[]): void
 }

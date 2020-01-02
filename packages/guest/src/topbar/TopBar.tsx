@@ -1,12 +1,11 @@
+import React from 'react'
 import { AppBar, Toolbar } from '@material-ui/core'
-import * as React from 'react'
 import { ReactCookieProps } from 'react-cookie'
 import { RouteComponentProps } from 'react-router-dom'
-import { Action } from 'mm-shared'
-import { User }  from 'mm-shared'
+import { Action, User } from 'mm-shared'
 import SideMenu from './SideMenuContainer'
-import './TopBar.scss'
 import UserMenu from './UserMenu'
+import './TopBar.scss'
 
 interface ITopBarProps extends RouteComponentProps<any>, ReactCookieProps {
   user: User

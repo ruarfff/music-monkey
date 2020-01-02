@@ -1,8 +1,8 @@
-import IPlaylist from './IPlaylist'
+import { Playlist } from 'mm-shared'
 
 export default interface IPlaylistState {
-  data: IPlaylist[]
-  eventPlaylists: IPlaylist[]
+  data: Playlist[]
+  eventPlaylists: Playlist[]
   error?: Error
   isLoading: boolean
   offset: number

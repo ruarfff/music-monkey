@@ -2,14 +2,14 @@ import React from 'react'
 import Avatar from '@material-ui/core/Avatar/Avatar'
 import { AccountCircle } from '@material-ui/icons'
 import { flattenDeep, uniqBy } from 'lodash'
-import IEvent from 'event/IEvent'
-import IEventGuest from 'event/IEventGuest'
+import { Event } from 'mm-shared'
+import { EventGuest } from 'mm-shared'
 
 interface IMyGuestsProps {
-  events: IEvent[]
+  events: Event[]
 }
 
-const renderGuests = (guest: IEventGuest, key: number) => {
+const renderGuests = (guest: EventGuest, key: number) => {
   return (
     <div key={key} className="guest">
       {guest.user.image && (
@@ -22,17 +22,17 @@ const renderGuests = (guest: IEventGuest, key: number) => {
 }
 
 export default ({ events }: IMyGuestsProps) => {
-  const guests: IEventGuest[] = flattenDeep<IEventGuest>(
+  const guests: EventGuest[] = flattenDeep<EventGuest>(
     events.map(event => event.guests || [])
   )
 
   // TODO: We should guarantee uniqueness from api
-  const uniqueGuests: IEventGuest[] = uniqBy<IEventGuest>(guests, 'userId')
+  const uniqueGuests: EventGuest[] = uniqBy<EventGuest>(guests, 'userId')
 
   return (
     <div className="MyGuests-root">
       {uniqueGuests.length > 0 ? (
-        uniqueGuests.map((guest: IEventGuest, key: number) => {
+        uniqueGuests.map((guest: EventGuest, key: number) => {
           if (guest) {
             return renderGuests(guest, key)
           } else {

@@ -1,22 +1,21 @@
+import React from 'react'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
 import Snackbar from '@material-ui/core/Snackbar'
 import CloseIcon from '@material-ui/icons/Close'
-import * as React from 'react'
-import IEvent from 'event/IEvent'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 import EventInput from 'components/EventInput/EventInput'
 import InviteLink from 'components/InviteLink/InviteLink'
 import EmailPreview from './EmailPreview'
 import './SharePopup.scss'
 
 interface IShareEventByEmailProps {
-  event: IEvent
+  event: Event
   inviteId: string
   withPreview?: boolean
   message: string
-  shareByEmails(emails: string[], emailText: string, event: IEvent): void
+  shareByEmails(emails: string[], emailText: string, event: Event): void
   togglePopup?(): void
   onCopyEventInvite(): void
   clearMessage(): Action

@@ -1,12 +1,12 @@
 import Paper from '@material-ui/core/Paper'
 import * as _ from 'lodash'
 import * as React from 'react'
-import IEvent from '../event/IEvent'
+import { Event } from 'mm-shared'
 import { Track } from 'mm-shared'
 import './MostPopularTracks.scss'
 
 interface IMostPopularTracksProps {
-  events: IEvent[]
+  events: Event[]
 }
 
 class MostPopularTracks extends React.Component<IMostPopularTracksProps> {

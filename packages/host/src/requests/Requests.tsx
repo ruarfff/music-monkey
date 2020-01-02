@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import EventPicker from 'event/EventPickerContainer'
 import SelectedEvent from 'event/SelectedEvent'
 import checkEventIsLoaded from 'event/checkEventIsLoaded'
@@ -13,7 +13,7 @@ import RejectedTracks from './RejectedTracksContainer'
 import './Requests.scss'
 
 interface IRequestsProps extends RouteComponentProps<any> {
-  event: IEvent
+  event: Event
 }
 
 const Requests = ({ event }: IRequestsProps) => {

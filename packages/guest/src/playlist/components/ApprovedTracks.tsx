@@ -1,11 +1,11 @@
 import * as React from 'react'
 import TrackList from '../../track/TrackList'
-import IPlaylist from '../IPlaylist'
+import { Playlist } from 'mm-shared'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import { Track } from 'mm-shared'
 
 interface IApprovedTracksProps {
-  playlist: IPlaylist
+  playlist: Playlist
   votes: Map<string, ITrackVoteStatus>
   onTrackSelected: (track: Track) => void
   onVote: (track: Track) => void

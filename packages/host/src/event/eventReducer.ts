@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
-import { Action } from 'mm-shared'
+import { Action, EventSettings } from 'mm-shared'
 import {
   CLEAR_MESSAGE,
   SHARE_EMAIL_FAILURE,
@@ -29,7 +29,6 @@ import {
   EVENT_SELECTED
 } from './eventActions'
 import initialState from './eventInitialState'
-import IEventSettings from './IEventSettings'
 import IEventState from './IEventState'
 import {
   ADD_TRACK_SUCCESS,
@@ -206,7 +205,7 @@ function toggleSuggestPlaylists(state: IEventState) {
         settings: {
           ...event.settings,
           suggestingPlaylistsEnabled: !event.settings.suggestingPlaylistsEnabled
-        } as IEventSettings
+        } as EventSettings
       }
     }
   } else {
@@ -225,7 +224,7 @@ function toggleAutoAcceptSuggestions(state: IEventState) {
           ...event.settings,
           autoAcceptSuggestionsEnabled: !event.settings
             .autoAcceptSuggestionsEnabled
-        } as IEventSettings
+        } as EventSettings
       }
     }
   } else {
@@ -243,7 +242,7 @@ function toggleDynamicVoting(state: IEventState) {
         settings: {
           ...event.settings,
           dynamicVotingEnabled: !event.settings.dynamicVotingEnabled
-        } as IEventSettings
+        } as EventSettings
       }
     }
   } else {

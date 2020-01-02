@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
-import IRootState from '../../rootState'
-import { createVote, deleteVote } from '../../vote/voteActions'
-import Playlist from './Playlist'
-import { setEventId } from '../../event/eventActions'
+import IRootState from 'rootState'
+import { createVote, deleteVote } from 'vote/voteActions'
+import { setEventId } from 'event/eventActions'
+import PlaylistView from './PlaylistView'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
@@ -21,6 +21,6 @@ const mapDispatchToProps = {
 const PlaylistContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Playlist)
+)(PlaylistView)
 
 export default PlaylistContainer

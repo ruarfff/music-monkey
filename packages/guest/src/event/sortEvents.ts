@@ -1,8 +1,8 @@
 import moment from 'moment'
 import { sortBy } from 'lodash'
-import IEvent from './IEvent'
+import { Event } from 'mm-shared'
 
-const sortEvents = (events: IEvent[]) => {
+const sortEvents = (events: Event[]) => {
   const now = moment()
   return {
     pastEvents: sortBy(

@@ -1,9 +1,9 @@
 import React from 'react'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import EventCard from 'catalogue/EventCard'
 
 interface IMyEventsProps {
-  events: IEvent[]
+  events: Event[]
 }
 
 const MyEvents = ({ events }: IMyEventsProps) => (

@@ -1,10 +1,10 @@
 import client from 'mm-client'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 
 export const sendEmails = async (
   emails: string[],
   emailText: string,
-  event: IEvent
+  event: Event
 ) => {
   const response = await client.post(
     '/share/email',

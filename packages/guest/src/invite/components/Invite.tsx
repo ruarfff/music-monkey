@@ -1,16 +1,14 @@
+import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { Redirect, RouteComponentProps } from 'react-router'
-import IEvent from '../../event/IEvent'
-import { Action } from 'mm-shared'
-import LoadingSpinner from '../../loading/LoadingSpinner'
-import localStorage from '../../storage/localStorage'
-import { User } from 'mm-shared'
-import { inviteAnsweredKey, inviteIdKey } from '../inviteConstants'
-import React, { useEffect } from 'react'
+import { Action, Event, User } from 'mm-shared'
+import LoadingSpinner from 'loading/LoadingSpinner'
+import localStorage from 'storage/localStorage'
+import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 
 interface IInviteProps extends RouteComponentProps<any> {
   user: User
-  inviteEvent: IEvent
+  inviteEvent: Event
   authError: any
   loading: boolean
   isAuthenticated: boolean
@@ -41,7 +39,7 @@ const Invite = ({
     if (!isEmpty(inviteEvent) && !isEmpty(user)) {
       localStorage.set(inviteAnsweredKey, 'true')
       if (!fetchingRsvp) {
-        fetchOrCreateRsvp(inviteId, user.userId, inviteEvent.eventId)
+        fetchOrCreateRsvp(inviteId, user.userId, inviteEvent.eventId!)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

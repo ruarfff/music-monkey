@@ -1,7 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Action } from 'mm-shared'
+import { Action, EventSettings, Playlist, PlaylistItem } from 'mm-shared'
 import { deleteEvent, getEventById, updateEvent } from 'event/eventClient'
-import IEventSettings from 'event/IEventSettings'
 import {
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
@@ -26,8 +25,6 @@ import {
 } from './eventActions'
 import { CLEAR_STAGED_SUGGESTIONS } from 'suggestion/suggestionActions'
 import { getEvents } from './eventClient'
-import IPlaylist from 'playlist/IPlaylist'
-import IPlaylistItem from 'playlist/IPlaylistItem'
 import {
   reOrderPlaylist,
   replaceTracksInPlaylist
@@ -39,7 +36,7 @@ import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 
 interface ISavePlaylistArgs {
   eventId: string
-  playlist: IPlaylist
+  playlist: Playlist
   suggestions: Map<string, IDecoratedSuggestion>
 }
 
@@ -61,7 +58,7 @@ function* fetchEventByIdFlow(action: Action) {
   try {
     const event = yield call(getEventById, eventId)
     if (!event.settings) {
-      event.settings = {} as IEventSettings
+      event.settings = {} as EventSettings
     }
     yield put({ type: EVENT_FETCHED_BY_ID, payload: event })
   } catch (err) {
@@ -98,7 +95,7 @@ function* toggleDynamicVotingFlow(action: Action) {
       settings: {
         ...event.settings,
         dynamicVotingEnabled: !event.settings.dynamicVotingEnabled
-      } as IEventSettings
+      } as EventSettings
     })
   } catch (err) {
     yield put({ type: TOGGLE_DYNAMIC_VOTING_ERROR })
@@ -118,7 +115,7 @@ function* toggleAutoAcceptSuggestions(action: Action) {
         ...event.settings,
         autoAcceptSuggestionsEnabled: !event.settings
           .autoAcceptSuggestionsEnabled
-      } as IEventSettings
+      } as EventSettings
     })
   } catch (err) {
     yield put({ type: TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR })
@@ -137,7 +134,7 @@ function* toggleSuggestingPlaylists(action: Action) {
       settings: {
         ...event.settings,
         suggestingPlaylistsEnabled: !event.settings.suggestingPlaylistsEnabled
-      } as IEventSettings
+      } as EventSettings
     })
   } catch (err) {
     yield put({ type: TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR })
@@ -210,7 +207,7 @@ export function* watchMoveItemInEventPlaylist() {
 }
 
 function sortPlaylistByVotesDescending(
-  playlist: IPlaylist,
+  playlist: Playlist,
   votes: Map<string, ITrackVoteStatus>
 ) {
   const playlistItems = [...playlist.tracks.items]
@@ -240,12 +237,12 @@ function sortPlaylistByVotesDescending(
 
 function* sortPlaylistByVotesDescendingFlow({ payload }: Action) {
   const { playlist, votes } = payload
-  const sortedPlaylist: IPlaylist = sortPlaylistByVotesDescending(
+  const sortedPlaylist: Playlist = sortPlaylistByVotesDescending(
     playlist,
     votes
   )
   const trackIUris = sortedPlaylist.tracks.items.map(
-    (p: IPlaylistItem) => p.track.uri
+    (p: PlaylistItem) => p.track.uri
   )
   yield call(replaceTracksInPlaylist, sortedPlaylist.id, trackIUris)
   yield put({

@@ -1,6 +1,6 @@
 import client from 'mm-client'
-import IUser from '../user/IUser'
-import IPlaylist from './IPlaylist'
+import { User } from 'mm-shared'
+import { Playlist } from 'mm-shared'
 
 export const addTracksToPlaylist = async (
   playlistId: string,
@@ -18,7 +18,7 @@ export const addTracksToPlaylist = async (
 }
 
 export const reOrderPlaylist = async (
-  playlist: IPlaylist,
+  playlist: Playlist,
   fromIndex: number,
   toIndex: number
 ) => {
@@ -43,7 +43,7 @@ export const fetchPlaylist = async (playlistId: string) => {
   return res.data
 }
 
-export const fetchUsersPlaylists = async (user: IUser) => {
+export const fetchUsersPlaylists = async (user: User) => {
   const res = await client.get(
     '/users/' + user.userId + '/playlists?limit=50',
     {
@@ -53,7 +53,7 @@ export const fetchUsersPlaylists = async (user: IUser) => {
   return res.data
 }
 
-export const fetchMoreUsersPlaylists = async (user: IUser, offset: number) => {
+export const fetchMoreUsersPlaylists = async (user: User, offset: number) => {
   const res = await client.get(
     `/users/${user.userId}/playlists?limit=50&offset=${offset}`,
     {

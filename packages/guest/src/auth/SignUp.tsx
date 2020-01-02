@@ -1,11 +1,11 @@
+import React from 'react'
 import Button from '@material-ui/core/Button/Button'
 import Input from '@material-ui/core/Input/Input'
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik'
-import * as React from 'react'
 import { object, ref, string } from 'yup'
 import { Action } from 'mm-shared'
-import ErrorNotification from '../util/ErrorNotification'
-import LinkButton from '../util/LinkButton'
+import ErrorNotification from 'util/ErrorNotification'
+import LinkButton from 'util/LinkButton'
 import './SignUp.scss'
 
 interface ISignUpProps {

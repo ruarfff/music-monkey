@@ -6,11 +6,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import eventIcon from 'assets/event-date-icon.svg'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import './SmallEventCard.scss'
 
 interface ISmallEventCardProps {
-  event: IEvent
+  event: Event
 }
 
 const SmallEventCard = ({ event }: ISmallEventCardProps) => {

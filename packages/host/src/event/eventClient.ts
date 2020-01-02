@@ -1,13 +1,13 @@
 import moment from 'moment'
 import client from 'mm-client'
-import IEvent from './IEvent'
-import ILocation from 'location/ILocation'
+import { Event } from 'mm-shared'
+import { Location } from 'mm-shared'
 
 export const getEvents = async () => {
   const response = await client.get('/events', {
     withCredentials: true
   })
-  return response.data.map((event: IEvent) => ({
+  return response.data.map((event: Event) => ({
     ...event,
     endDateTime: moment(event.endDateTime),
     startDateTime: moment(event.startDateTime)
@@ -27,7 +27,7 @@ export const deleteEvent = (eventId: string) => {
   })
 }
 
-export const createEvent = async (event: IEvent) => {
+export const createEvent = async (event: Event) => {
   const response = await client.post(
     '/events',
     {
@@ -42,14 +42,14 @@ export const createEvent = async (event: IEvent) => {
   return parseEventResponse(response)
 }
 
-export const updateEvent = async (event: IEvent) => {
+export const updateEvent = async (event: Event) => {
   const response = await client.put('/events/' + event.eventId, event, {
     withCredentials: true
   })
   return parseEventResponse(response)
 }
 
-function getValidLocation(location: ILocation): ILocation {
+function getValidLocation(location: Location): Location {
   const address = location && location.address ? location.address : 'Nowhere'
   const latLng =
     location && location.latLng ? location.latLng : { lat: 0, lng: 0 }

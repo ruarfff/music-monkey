@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import mapMarker from 'assets/location-marker-icon.svg'
 import './MapComponent.scss'
 

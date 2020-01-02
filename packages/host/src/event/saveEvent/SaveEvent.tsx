@@ -5,7 +5,7 @@ import { AppBar, Tabs, Tab } from '@material-ui/core'
 import debounce from 'just-debounce-it'
 import { useSnackbarAlert } from 'notification/alert'
 import { User } from 'mm-shared'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import { Action } from 'mm-shared'
 import EventDetails from './EventDetails'
 import SaveEventFormValues from './SaveEventFormValues'
@@ -21,7 +21,7 @@ import './SaveEvent.scss'
 
 interface SaveEventProps extends RouteComponentProps {
   user: User
-  event: IEvent
+  event: Event
   loading: boolean
   getEventById(eventId: string): Action
   deleteEvent(eventId: string): Action

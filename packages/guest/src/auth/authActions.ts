@@ -16,10 +16,7 @@ export const loginAsGuest = (): Action => ({
   type: LOGGING_IN_AS_GUEST
 })
 
-export const loginWithPassword = (
-  email: string,
-  password: string
-): Action => ({
+export const loginWithPassword = (email: string, password: string): Action => ({
   payload: { email, password },
   type: LOGGING_IN_WITH_PASSWORD
 })

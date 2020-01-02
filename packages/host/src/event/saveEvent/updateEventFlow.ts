@@ -1,9 +1,9 @@
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import { updateEvent } from 'event/eventClient'
 import SaveEventFormValues from './SaveEventFormValues'
 
 const updateEventFlow = async (
-  event: IEvent,
+  event: Event,
   {
     user,
     tracks,

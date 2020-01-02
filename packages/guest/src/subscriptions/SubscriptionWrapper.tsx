@@ -16,11 +16,10 @@ import {
   subscribeToEventUpdated,
   subscribeToPlaylistModified
 } from './pusherGateway'
-import IEvent from '../event/IEvent'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 
 interface ISubscriptionWrapper {
-  event: IEvent
+  event: Event
   children: any
   getEvent(eventId: string): Action
   fetchEventVotes(eventId: string): Action
@@ -35,7 +34,7 @@ const SubscriptionWrapper = ({
   getSuggestions
 }: ISubscriptionWrapper) => {
   useEffect(() => {
-    const eventId = event ? event.eventId : ''
+    const eventId = event ? event.eventId! : ''
     const playlistId = event && event.playlist ? event.playlist.id : ''
 
     subscribeToSuggestionsModified(eventId, () => {

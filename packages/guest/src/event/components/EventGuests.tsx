@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Avatar,
   Divider,
@@ -6,18 +7,17 @@ import {
   List,
   Typography
 } from '@material-ui/core'
-import * as React from 'react'
-import IEvent from '../IEvent'
+import { Event } from 'mm-shared'
 import './EventGuests.scss'
 
 interface IEventGuestsProps {
-  event: IEvent
+  event: Event
 }
 
 const EventGuests = ({ event }: IEventGuestsProps) => {
   return (
     <List>
-      {event.guests.map(({ user, rsvp }: any, index: number) => {
+      {event.guests!.map(({ user, rsvp }: any, index: number) => {
         let initials: any = 'G'
 
         if (user && user.displayName) {

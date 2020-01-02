@@ -4,15 +4,15 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemText from '@material-ui/core/ListItemText'
-import IUser from '../user/IUser'
-import IPlaylist from './IPlaylist'
+import { User } from 'mm-shared'
+import { Playlist } from 'mm-shared'
 import getPlaylistImage from './getPlaylistImage'
 
 interface IPlaylistsSimpleListProps {
-  playlists: IPlaylist[]
-  user?: IUser
+  playlists: Playlist[]
+  user?: User
   disableEmptyPlaylists?: boolean
-  onPlaylistSelected(playlist: IPlaylist): void
+  onPlaylistSelected(playlist: Playlist): void
 }
 
 export default class PlaylistsSimpleList extends React.PureComponent<
@@ -26,7 +26,7 @@ export default class PlaylistsSimpleList extends React.PureComponent<
       disableEmptyPlaylists
     } = this.props
     const spotifyId = user ? user.spotifyId : ''
-    const handlePlaylistSelected = (playlist: IPlaylist) => () =>
+    const handlePlaylistSelected = (playlist: Playlist) => () =>
       onPlaylistSelected(playlist)
 
     let playlistView = <p>You do not have any playlists yet</p>
@@ -35,8 +35,8 @@ export default class PlaylistsSimpleList extends React.PureComponent<
       playlistView = (
         <List>
           {playlists
-            .filter((playlist: IPlaylist) => playlist.owner.id === spotifyId)
-            .map((playlist: IPlaylist, i: number) => (
+            .filter((playlist: Playlist) => playlist.owner.id === spotifyId)
+            .map((playlist: Playlist, i: number) => (
               <ListItem
                 disabled={disableEmptyPlaylists && playlist.tracks.total < 1}
                 key={i}

@@ -3,7 +3,7 @@ interface ILatLng {
   lng?: number
 }
 
-export default interface ILocation {
+export default interface Location {
   address: string
   latLng: ILatLng
 }

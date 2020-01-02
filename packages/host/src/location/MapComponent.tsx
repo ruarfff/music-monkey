@@ -1,11 +1,11 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
-import ILatLng from './ILatLng'
+import { LatLng } from 'mm-shared'
 import mapMarker from 'assets/location-marker-icon.svg'
 import './MapComponent.scss'
 
 interface IMapComponentProps {
-  coords: ILatLng
+  coords: LatLng
 }
 
 const Marker = (_: any) => <img alt="map marker" src={mapMarker} />

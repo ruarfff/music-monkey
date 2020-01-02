@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import uniqBy from 'lodash/uniqBy'
 import isEmpty from 'lodash/isEmpty'
 import EventSearchTracksContainer from 'components/SearchTracks/EventSearchTracksContainer'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import EventPlaylist from 'event/eventPlaylist/EventPlaylistContainer'
 import EventPlaylistSummary from 'event/eventPlaylist/EventPlaylistSummaryContainer'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
@@ -18,7 +18,7 @@ import EventSuggestions from './EventSuggestionsContainer'
 import './EventPlaylistView.scss'
 
 interface IEventPlaylistViewProps {
-  event: IEvent
+  event: Event
   acceptedSuggestions: IDecoratedSuggestion[]
   stagedSuggestions: IDecoratedSuggestion[]
   pendingSuggestions: IDecoratedSuggestion[]

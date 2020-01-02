@@ -5,13 +5,12 @@ import { isEmpty } from 'lodash'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import SuggestionList from 'suggestion/SuggestionList'
 import { User } from 'mm-shared'
-import IEvent from 'event/IEvent'
-import IPlaylistItem from 'playlist/IPlaylistItem'
+import { Event, PlaylistItem } from 'mm-shared'
 import './MaybeTracks.scss'
 
 interface IMaybeTracksProps {
   user: User
-  selectedEvent: IEvent
+  selectedEvent: Event
   suggestions: IDecoratedSuggestion[]
 }
 
@@ -23,7 +22,7 @@ const MaybeTracks = ({
   const playlistTracks =
     !isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)
       ? selectedEvent!.playlist!.tracks.items.map(
-          (track: IPlaylistItem) => track.track.uri
+          (track: PlaylistItem) => track.track.uri
         )
       : []
   const maybeSuggestions =

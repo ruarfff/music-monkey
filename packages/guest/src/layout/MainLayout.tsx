@@ -1,23 +1,22 @@
+import React, { useEffect, Suspense } from 'react'
 import { isEmpty, find } from 'lodash'
 import { Route, RouteComponentProps } from 'react-router'
-import BottomBar from '../bottombar/BottomBarContainer'
-import IEvent from '../event/IEvent'
-import { Action } from 'mm-shared'
-import { RouteWithSubRoutes } from '../routes'
-import TopBar from '../topbar/TopBarContainer'
-import './MainLayout.scss'
-import React, { useEffect, Suspense } from 'react'
+import BottomBar from 'bottombar/BottomBarContainer'
+import { Action, Event } from 'mm-shared'
+import { RouteWithSubRoutes } from 'routes'
+import TopBar from 'topbar/TopBarContainer'
 import LoadingSpinner from '../loading/LoadingSpinner'
+import './MainLayout.scss'
 
 interface IMainLayoutProps extends RouteComponentProps<any> {
   routes: Route[]
-  events: IEvent[]
+  events: Event[]
   eventId: string
-  selectedEvent: IEvent
+  selectedEvent: Event
   isAuthenticated: boolean
   eventLoading: boolean
   eventsLoading: boolean
-  inviteEvent: IEvent
+  inviteEvent: Event
   fetchingRsvp: boolean
   fetchUsersEvents(): Action
   getEvent(eventId: string): Action

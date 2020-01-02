@@ -3,8 +3,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Grid from '@material-ui/core/Grid'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
-import IEvent from 'event/IEvent'
-import { Action, User } from 'mm-shared'
+import { Action, User, Event } from 'mm-shared'
 import AccountDetails from './AccountDetails'
 import MyEvents from './MyEvents'
 import MyGuests from './MyGuests'
@@ -14,7 +13,7 @@ import './AccountView.scss'
 
 interface IAccountViewProps {
   user: User
-  events: IEvent[]
+  events: Event[]
   updateUserRequest(user: User): Action
   getEvents(): Action
 }

@@ -1,10 +1,10 @@
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import SaveEventFormValues from './SaveEventFormValues'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
 
 const eventWillBeModified = (
-  event: IEvent,
+  event: Event,
   formValue: SaveEventFormValues
 ): boolean => {
   if (isEmpty(event)) return false

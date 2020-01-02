@@ -8,8 +8,7 @@ import isEmpty from 'lodash/isEmpty'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
-import { Action } from 'mm-shared'
-import IEvent from 'event/IEvent'
+import { Action, Event } from 'mm-shared'
 import NoEvents from 'event/NoEvents'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import EventCard from 'catalogue/EventCard'
@@ -49,7 +48,7 @@ const pathToFilter = {
   }
 }
 interface ICatalogueBrowserProps extends RouteComponentProps {
-  events: IEvent[]
+  events: Event[]
   eventsLoading: boolean
   getEvents(): Action
 }
@@ -62,7 +61,7 @@ const CatalogueBrowser = ({
 }: ICatalogueBrowserProps) => {
   const now = moment()
   const currentFilter = pathToFilter[location.pathname]
-  const orderedEvents = sortBy(events, (event: IEvent) =>
+  const orderedEvents = sortBy(events, (event: Event) =>
     event.updatedAt ? event.updatedAt : event.createdAt
   ).reverse()
   const [visibleEvents, setVisibleEvents] = useState(orderedEvents)
@@ -146,7 +145,7 @@ const CatalogueBrowser = ({
           </Hidden>
           <Grid item={true} md={12}>
             <div className="CatalogueBrowser-list">
-              {map(visibleEvents, (event: IEvent) => {
+              {map(visibleEvents, (event: Event) => {
                 if (currentFilter.type === playlist) {
                   return (
                     <PlaylistCard

@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import EventSettings from './EventSettings'
+import EventSettingsView from './EventSettingsView'
 
 interface EventSettingsDialogProps {
   open: boolean
@@ -27,7 +27,7 @@ const EventSettingsDialog = ({
         <DialogContentText>
           Control how your guests suggest tracks.
         </DialogContentText>
-        <EventSettings />
+        <EventSettingsView />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">

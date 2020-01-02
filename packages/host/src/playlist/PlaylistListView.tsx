@@ -1,12 +1,12 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
 import { isEmpty, uniqBy } from 'lodash'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import PlaylistList from './PlaylistList'
 import sortEvents from 'event/sortEvents'
 
 interface PlaylistListViewProps {
-  events: IEvent[]
+  events: Event[]
 }
 
 const PlaylistListView = ({ events }: PlaylistListViewProps) => {
@@ -14,7 +14,7 @@ const PlaylistListView = ({ events }: PlaylistListViewProps) => {
 
   const playlists = uniqBy(
     [...liveEvents, ...upcomingEvents, ...pastEvents]
-      .filter((event: IEvent) => event.playlistUrl && event.playlist)
+      .filter((event: Event) => event.playlistUrl && event.playlist)
       .map(event => {
         return { ...event.playlist!, eventId: event.eventId! }
       }),

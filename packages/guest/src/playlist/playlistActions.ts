@@ -1,7 +1,4 @@
-import IEvent from '../event/IEvent'
-import { Action } from 'mm-shared'
-import { User } from 'mm-shared'
-import IPlaylist from './IPlaylist'
+import { Action, Event, User, Playlist } from 'mm-shared'
 
 export const FETCH_PLAYLISTS = 'FETCH_PLAYLISTS'
 export const FETCH_PLAYLISTS_SUCCESS = 'FETCH_PLAYLISTS_SUCCESS'
@@ -19,7 +16,7 @@ export const fetchMorePlaylists = (user: User) => ({
   payload: user
 })
 
-export const fetchMorePlaylistsSuccess = (data: IPlaylist[]) => ({
+export const fetchMorePlaylistsSuccess = (data: Playlist[]) => ({
   type: FETCH_MORE_PLAYLISTS_SUCCESS,
   payload: data
 })
@@ -34,7 +31,7 @@ export const fetchPlaylists = (user: User): Action => ({
   payload: user
 })
 
-export const fetchPlaylistsSuccess = (data: IPlaylist): Action => ({
+export const fetchPlaylistsSuccess = (data: Playlist): Action => ({
   payload: data,
   type: FETCH_PLAYLISTS_SUCCESS
 })
@@ -44,7 +41,7 @@ export const fetchPlaylistsError = (error: Error): Action => ({
   type: FETCH_PLAYLISTS_ERROR
 })
 
-export const loadEventPlaylists = (events: IEvent[]): Action => ({
+export const loadEventPlaylists = (events: Event[]): Action => ({
   type: EVENT_PLAYLISTS_LOADED,
   payload: events
 })

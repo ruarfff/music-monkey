@@ -2,13 +2,13 @@ import moment from 'moment'
 import isEmpty from 'lodash/isEmpty'
 import backgroundImage from 'assets/music-monkey.jpg'
 import { User } from 'mm-shared'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import getPlaylistTracks from 'playlist/getPlaylistTracks'
 import SaveEventFormValues from './SaveEventFormValues'
 
 const saveEventInitialFormValues = (
   user: User,
-  event: IEvent
+  event: Event
 ): SaveEventFormValues => {
   const defaultSettings = {
     dynamicVotingEnabled: false,

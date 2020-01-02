@@ -5,11 +5,11 @@ import { RouteWithSubRoutes } from 'routes/routes'
 import EventListView from 'event/EventListViewContainer'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import { Action } from 'mm-shared'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import isEmpty from 'lodash/isEmpty'
 
 interface ContentProps {
-  events: IEvent[]
+  events: Event[]
   eventsLoading: boolean
   getEvents(): Action
 }

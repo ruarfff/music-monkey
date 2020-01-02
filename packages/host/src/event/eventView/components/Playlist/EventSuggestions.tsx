@@ -12,20 +12,18 @@ import DoneAll from '@material-ui/icons/DoneAll'
 import uniqBy from 'lodash/uniqBy'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { Action } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Action, Playlist, Track } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import ISuggestion from 'suggestion/ISuggestion'
-import { Track } from 'mm-shared'
 import formatDuration from 'util/formatDuration'
 import './EventSuggestions.scss'
 
 interface IEventSuggestionsProps extends RouteComponentProps<any> {
   suggestions: IDecoratedSuggestion[]
-  playlist: IPlaylist
+  playlist: Playlist
   saveEventPlaylist(
     eventId: string,
-    playlist: IPlaylist,
+    playlist: Playlist,
     suggestions: Map<string, IDecoratedSuggestion>
   ): Action
   stageAllSuggestions(suggestions: IDecoratedSuggestion[]): Action

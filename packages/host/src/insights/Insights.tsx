@@ -4,22 +4,22 @@ import Typography from '@material-ui/core/Typography/Typography'
 import PieChartWidget from './PieChart'
 import MostPopularTracks from 'insights/MostPopularTracks'
 import MostVotedTracks from 'insights/MostVotedTracks'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import { Action, User } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import './Insights.scss'
 
 interface IInsightsProps {
   user: User
-  event: IEvent
-  events: IEvent[]
+  event: Event
+  events: Event[]
   pickedEvent: string
   votes: Map<string, ITrackVoteStatus>
   fetchPlaylists(user: User): Action
   filterByEventPick(id: any): Action
   sortPlaylistByVotesDescending(
-    playlist: IPlaylist,
+    playlist: Playlist,
     votes: Map<string, ITrackVoteStatus>
   ): Action
   fetchEventVotes(eventId: string): Action

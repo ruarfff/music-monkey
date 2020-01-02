@@ -1,5 +1,5 @@
 import client from 'mm-client'
-import IRsvp from './IRsvp'
+import { Rsvp } from 'mm-shared'
 
 export const fetchRsvpByInviteAndUser = (inviteId: string, userId: string) => {
   return client.get('/users/' + userId + '/rsvp?inviteId=' + inviteId, {
@@ -22,7 +22,7 @@ export const rsvpInvite = async (
   return response.data
 }
 
-export const updateRsvp = (rsvp: IRsvp) => {
+export const updateRsvp = (rsvp: Rsvp) => {
   return client.put(
     '/rsvp/' + rsvp.rsvpId,
     { ...rsvp },

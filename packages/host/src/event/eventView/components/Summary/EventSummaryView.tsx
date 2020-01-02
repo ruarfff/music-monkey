@@ -1,13 +1,13 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import IEvent from 'event/IEvent'
+import { Event } from 'mm-shared'
 import EventGuestsRightSideView from '../Guests/EventGuestsRightSideViewContainer'
 import EventDetails from './EventDetailsContainer'
 import EventSummaryPlaylist from './EventSummaryPlaylistContainer'
 import './EventSummaryView.scss'
 
 interface IEventSummaryViewProps {
-  event: IEvent
+  event: Event
 }
 
 const EventSummaryView = ({ event }: IEventSummaryViewProps) => {

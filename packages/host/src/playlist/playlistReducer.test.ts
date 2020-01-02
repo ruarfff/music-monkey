@@ -1,5 +1,5 @@
 import { Action } from 'mm-shared'
-import IPlaylist from './IPlaylist'
+import { Playlist } from 'mm-shared'
 import {
   ADD_TRACK_FAILURE,
   ADD_TRACK_SUCCESS,
@@ -9,7 +9,7 @@ import {
   PLAYLIST_DESELECTED,
   PLAYLIST_SELECTED,
   REMOVE_TRACK_FAILURE,
-  REMOVE_TRACK_SUCCESS,
+  REMOVE_TRACK_SUCCESS
 } from './playlistActions'
 import initialState from './playlistInitialState'
 import playlist from './playlistReducer'
@@ -26,29 +26,28 @@ it('should handle FETCH_PLAYLIST', () => {
 })
 
 it('should handle ADD_TRACK_FAILURE', () => {
-  expect(playlist(initialState, {type: ADD_TRACK_FAILURE})).toEqual({
+  expect(playlist(initialState, { type: ADD_TRACK_FAILURE })).toEqual({
     ...initialState,
-    notification: 'Error. Retry add track later',
+    notification: 'Error. Retry add track later'
   })
 })
 
 it('should handle ADD_TRACK_SUCCESS', () => {
-  expect(playlist(initialState, {type: ADD_TRACK_SUCCESS})).toEqual({
+  expect(playlist(initialState, { type: ADD_TRACK_SUCCESS })).toEqual({
     ...initialState,
-    notification: 'Track successfully added',
+    notification: 'Track successfully added'
   })
 })
 
-
 it('should handle REMOVE_TRACK_FAILURE', () => {
-  expect(playlist(initialState, {type: REMOVE_TRACK_FAILURE})).toEqual({
+  expect(playlist(initialState, { type: REMOVE_TRACK_FAILURE })).toEqual({
     ...initialState,
-    notification: 'Error. Retry remove track later',
+    notification: 'Error. Retry remove track later'
   })
 })
 
 it('should handle REMOVE_TRACK_SUCCESS', () => {
-  expect(playlist(initialState, {type: REMOVE_TRACK_SUCCESS})).toEqual({
+  expect(playlist(initialState, { type: REMOVE_TRACK_SUCCESS })).toEqual({
     ...initialState,
     notification: 'Track successfully removed'
   })
@@ -84,16 +83,16 @@ it('should handle FETCH_PLAYLIST_ERROR', () => {
 it('should handle PLAYLIST_SELECTED', () => {
   expect(
     playlist(initialState, {
-      payload: {} as IPlaylist,
+      payload: {} as Playlist,
       type: PLAYLIST_SELECTED
     })
-  ).toEqual({ ...initialState, selectedPlaylist: {} as IPlaylist })
+  ).toEqual({ ...initialState, selectedPlaylist: {} as Playlist })
 })
 
 it('should handle PLAYLIST_DESELECTED', () => {
   expect(
     playlist(
-      { ...initialState, selectedPlaylist: {} as IPlaylist },
+      { ...initialState, selectedPlaylist: {} as Playlist },
       {
         type: PLAYLIST_DESELECTED
       }

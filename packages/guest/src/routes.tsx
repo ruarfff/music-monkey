@@ -10,14 +10,16 @@ import LoadingPage from './loading/LoadingPage'
 const Account = lazy(() => import('account/AccountContainer'))
 const Login = lazy(() => import('auth/LoginContainer'))
 const SignUp = lazy(() => import('auth/SignUpContainer'))
-const Event = lazy(() => import('event/components/EventContainer'))
+const Event = lazy(() => import('event/components/EventViewContainer'))
 const EventListView = lazy(() =>
   import('event/components/EventListViewContainer')
 )
 const Finder = lazy(() => import('./finder/FinderContainer'))
 const Invite = lazy(() => import('./invite/components/InviteContainer'))
 const MainLayout = lazy(() => import('./layout/MainLayoutContainer'))
-const Playlist = lazy(() => import('./playlist/components/PlaylistContainer'))
+const Playlist = lazy(() =>
+  import('./playlist/components/PlaylistViewContainer')
+)
 const PlaylistListView = lazy(() =>
   import('./playlist/components/PlaylistListViewContainer')
 )

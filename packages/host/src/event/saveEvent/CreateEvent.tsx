@@ -8,7 +8,7 @@ import createEventFlow from './createEventFlow'
 import EventInitializeDialog from './EventInitializeDialog'
 import CreateEventFormValues from './CreateEventFormValues'
 import SeedPlaylist from './SeedPlaylistContainer'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import { Action } from 'mm-shared'
 
@@ -78,7 +78,7 @@ const CreateEvent = ({ user, history, getEvents }: CreateEventProps) => {
               {({ form: { setFieldValue } }: FieldProps) => {
                 return (
                   <SeedPlaylist
-                    onPlaylistSelected={(playlist: IPlaylist) => {
+                    onPlaylistSelected={(playlist: Playlist) => {
                       setFieldValue(
                         'tracks',
                         playlist.tracks.items.map(item => item.track)

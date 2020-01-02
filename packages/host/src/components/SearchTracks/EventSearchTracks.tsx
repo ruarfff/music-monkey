@@ -1,3 +1,4 @@
+import React from 'react'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
@@ -6,12 +7,9 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles'
 import CloseIcon from '@material-ui/icons/Close'
 import Search from '@material-ui/icons/Search'
 import { debounce, isEmpty } from 'lodash'
-import * as React from 'react'
-import { Action } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Action, Playlist, Track } from 'mm-shared'
 import ISearch from 'playlist/ISearch'
 import Recommendations from 'recommendations/RecommendationsContainer'
-import { Track } from 'mm-shared'
 import EventInput from 'components/EventInput/EventInput'
 import TrackItem from './TrackItem'
 import './EventSearchTracks.scss'
@@ -20,7 +18,7 @@ const WAIT_INTERVAL = 400
 
 interface IEventSearchTracksProps {
   searchResult: ISearch
-  playlist: IPlaylist
+  playlist: Playlist
   notification: string
   layout?: string
   searchTrack(text: string): Action
@@ -88,7 +86,9 @@ class EventSearchTracks extends React.PureComponent<
       layout
     } = this.props
 
-    const playlistTracks = playlist.tracks.items.map(track => track.track.uri)
+    const playlistTracks = playlist.tracks.items.map(
+      (track: any) => track.track.uri
+    )
 
     let filteredSearch
 

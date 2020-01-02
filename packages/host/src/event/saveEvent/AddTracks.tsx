@@ -9,7 +9,7 @@ import { useSnackbarAlert } from 'notification/alert'
 import { Action } from 'mm-shared'
 import TrackSearch from 'search/TrackSearch'
 import { Track } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Playlist } from 'mm-shared'
 import TrackList from './TrackList'
 import EventTracks from './EventTracks'
 import Playlists from './PlaylistsContainer'
@@ -17,7 +17,7 @@ import Playlists from './PlaylistsContainer'
 import './AddTracks.scss'
 
 interface AddTracksProps {
-  playlist: IPlaylist
+  playlist: Playlist
   recommendedTracks: Track[]
   getRecommendations(): Action
 }

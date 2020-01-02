@@ -1,8 +1,8 @@
-import IUser from './IUser'
+import { User } from 'mm-shared'
 import IUserState from './IUserState'
 
 export const emptyUser = {
-  data: {} as IUser,
+  data: {} as User,
   error: {} as Error,
   isLoading: false,
   isUpdating: false

@@ -1,8 +1,7 @@
+import React from 'react'
 import { Icon } from '@material-ui/core'
 import { debounce } from 'lodash'
-import * as React from 'react'
-import { Action } from 'mm-shared'
-import { Track }  from 'mm-shared'
+import { Action, Track } from 'mm-shared'
 
 import './Search.scss'
 

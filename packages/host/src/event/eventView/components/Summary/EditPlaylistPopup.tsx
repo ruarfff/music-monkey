@@ -1,12 +1,11 @@
+import React from 'react'
 import Button from '@material-ui/core/Button/Button'
-import * as React from 'react'
 import EventInput from 'components/EventInput/EventInput'
-import { Action } from 'mm-shared'
-import IPlaylist from 'playlist/IPlaylist'
+import { Action, Playlist } from 'mm-shared'
 import './EditPlaylistPopup.scss'
 
 interface IEditPlaylistPopupProps {
-  playlist: IPlaylist
+  playlist: Playlist
   togglePopup(): void
   editPlaylist(playlistId: string, name: string, description: string): Action
 }

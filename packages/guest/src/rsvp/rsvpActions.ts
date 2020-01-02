@@ -1,5 +1,4 @@
-import { Action } from 'mm-shared'
-import IRsvp from './IRsvp'
+import { Action, Rsvp } from 'mm-shared'
 
 export const FETCH_OR_CREATE_RSVP_INITIATED = 'FETCH_OR_CREATE_RSVP_INITIATED'
 export const FETCH_OR_CREATE_RSVP_SUCCESS = 'FETCH_OR_CREATE_RSVP_SUCCESS'
@@ -9,7 +8,7 @@ export const UPDATE_RSVP_REQUEST = 'UPDATE_RSVP_REQUEST'
 export const UPDATE_RSVP_SUCCESS = 'UPDATE_RSVP_SUCCESS'
 export const UPDATE_RSVP_FAILURE = 'UPDATE_RSVP_FAILURE'
 
-export const updateRsvp = (rsvp: IRsvp):Action => {
+export const updateRsvp = (rsvp: Rsvp): Action => {
   return {
     type: UPDATE_RSVP_REQUEST,
     payload: rsvp

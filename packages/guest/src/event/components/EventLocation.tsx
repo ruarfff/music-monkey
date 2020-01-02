@@ -1,11 +1,9 @@
-import GoogleMapView from '../../map/GoogleMapView'
-import IEvent from '../IEvent'
-
-const React = require('react')
-const { useState } = React
+import React, { useState } from 'react'
+import GoogleMapView from 'map/GoogleMapView'
+import { Event } from 'mm-shared'
 
 interface IEventLocationProps {
-  event: IEvent
+  event: Event
 }
 const EventLocation = ({ event }: IEventLocationProps) => {
   const [mapOpen, setMapOpen] = useState(false)
@@ -17,7 +15,7 @@ const EventLocation = ({ event }: IEventLocationProps) => {
       isOpen={mapOpen}
       onOpen={setMapOpen}
       address={event.location.address}
-      venue={event.venue}
+      venue={event.venue!}
     />
   )
 }

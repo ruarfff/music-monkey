@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { Redirect } from 'react-router'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 import LoadingSpinner from 'loading/LoadingSpinner'
 import localStorage from 'storage/localStorage'
-import IEvent from '../IEvent'
 import EventList from './EventList'
 import sortEvents from '../sortEvents'
 
 interface IEventListViewProps {
-  selectedEvent: IEvent
-  events: IEvent[]
+  selectedEvent: Event
+  events: Event[]
   eventsLoading: boolean
   deselectEvent(): Action
 }

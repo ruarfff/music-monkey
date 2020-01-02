@@ -1,30 +1,26 @@
+import React, { useEffect } from 'react'
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
+import swal from '@sweetalert/with-react'
 import { RouteComponentProps } from 'react-router'
-import React, { useEffect } from 'react'
 import SwipeableViews from 'react-swipeable-views'
-import IEvent from '../event/IEvent'
-import EventPicker from '../event/components/EventPickerContainer'
-import SelectedEvent from '../event/components/SelectedEvent'
-import { Action } from 'mm-shared'
-import IPlaylist from '../playlist/IPlaylist'
-import Search from '../search/SearchContainer'
-import IPlaylistSuggestion from '../suggestion/IPlaylistSuggestion'
-import ITrackSuggestion from '../suggestion/ITrackSuggestion'
-import { Track }  from 'mm-shared'
-import { User }  from 'mm-shared'
-import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
+import EventPicker from 'event/components/EventPickerContainer'
+import SelectedEvent from 'event/components/SelectedEvent'
+import Search from 'search/SearchContainer'
+import IPlaylistSuggestion from 'suggestion/IPlaylistSuggestion'
+import ITrackSuggestion from 'suggestion/ITrackSuggestion'
+import { Action, Event, Track, User, Playlist } from 'mm-shared'
+import useSwipeTabsIndex from 'util/useSwipeTabsIndex'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
 import SearchResults from './SearchResults'
-import swal from '@sweetalert/with-react'
 import './Finder.scss'
 
 interface IFinderProps extends RouteComponentProps<any> {
   user: User
-  userPlaylists: IPlaylist[]
-  events: IEvent[]
-  selectedEvent: IEvent
+  userPlaylists: Playlist[]
+  events: Event[]
+  selectedEvent: Event
   searching: boolean
   searchResults: Track[]
   deselectEvent(): Action
@@ -80,7 +76,7 @@ const Finder = ({
     showConfirmationDialog(user, selectedEvent, track, saveTrackSuggestion)
   }
 
-  const onPlaylistSelected = (playlist: IPlaylist) => () => {
+  const onPlaylistSelected = (playlist: Playlist) => () => {
     showConfirmationPlaylistDialog(
       user,
       selectedEvent,
@@ -91,7 +87,7 @@ const Finder = ({
 
   const playlistTracks =
     !isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)
-      ? selectedEvent.playlist.tracks.items.map(track => track.track.uri)
+      ? selectedEvent.playlist!.tracks.items.map(track => track.track.uri)
       : []
 
   let filteredSearch = [] as Track[]
@@ -169,8 +165,8 @@ const Finder = ({
 
 function showConfirmationPlaylistDialog(
   user: User,
-  event: IEvent,
-  playlist: IPlaylist,
+  event: Event,
+  playlist: Playlist,
   savePlaylistSuggestion: any
 ) {
   return showDialog(playlist.name, event.name, 'Playlist').then(
@@ -194,7 +190,7 @@ function showConfirmationPlaylistDialog(
 
 function showConfirmationDialog(
   user: User,
-  event: IEvent,
+  event: Event,
   track: Track,
   saveTrackSuggestion: any
 ) {
