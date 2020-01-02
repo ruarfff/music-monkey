@@ -29,7 +29,7 @@ it('should handle FETCH_USER_SUCCESS', () => {
     ...emptyUser,
     data: { id: 'test-id' },
     isLoading: false,
-    error: new Error
+    error: new Error()
   })
 })
 
