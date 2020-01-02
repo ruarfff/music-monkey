@@ -12,7 +12,7 @@ import {
   watchFetchMorePlaylistsFlow,
   watchFetchPlaylists
 } from './playlist/playlistSaga'
-import { watchFetchRecommendation } from './recommendation/recommendationsSaga'
+import { watchFetchRecommendation } from './recommendations/recommendationsSaga'
 import { watchFetchOrCreateRsvp, watchFetchUpdateRsvp } from './rsvp/rsvpSaga'
 import { watchSearch } from './search/searchSaga'
 import {

@@ -1,7 +1,8 @@
-@import './_colours.scss';
+@import 'mm-shared/src/theme/main';
 
 :export {
-  primaryMain: $main;
+  primaryMain: $primary;
   secondaryLight: $secondary-light;
   secondaryMain: $secondary-main;
+  mmWhite: $mm-white;
 }

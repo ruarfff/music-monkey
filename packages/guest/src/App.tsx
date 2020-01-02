@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import { Store } from 'redux'
 import SubscriptionWrapper from './subscriptions/SubscriptionWrapperContainer'
 import { Routes } from './routes'
-import theme from './theme/theme'
+import theme from 'theme/theme'
 
 interface IAppProps {
   store: Store

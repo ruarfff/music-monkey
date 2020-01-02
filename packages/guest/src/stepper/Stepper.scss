@@ -1,4 +1,4 @@
-@import '../theme/colours';
+@import 'mm-shared/src/theme/main';
 
 .stepper-menu {
   background-color: $main !important;
@@ -25,7 +25,7 @@
 }
 
 .stepper-menu.blue {
-  background-color: $secondary-light!important;
+  background-color: $secondary-light !important;
 }
 
 .stepper-menu.yellow {

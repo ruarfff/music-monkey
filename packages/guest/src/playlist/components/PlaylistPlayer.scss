@@ -1,4 +1,4 @@
-@import '../../theme/colours.scss';
+@import 'mm-shared/src/theme/main';
 
 .PlaylistPlayer-container {
   top: 0;
@@ -130,7 +130,7 @@
   }
 }
 
-  .Playlist-back-arrow {
-    color: #fff;
-    font-size: 3em;
-  }
+.Playlist-back-arrow {
+  color: #fff;
+  font-size: 3em;
+}

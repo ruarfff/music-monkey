@@ -1,7 +1,7 @@
-import { Typography } from '@material-ui/core'
-import Recommendations from '../recommendation/RecommendationsContainer'
-import { Track }  from 'mm-shared'
 import React from 'react'
+import { Typography } from '@material-ui/core'
+import Recommendations from '../recommendations/RecommendationsContainer'
+import { Track } from 'mm-shared'
 
 interface IRecommendationsTabProps {
   onTrackSelected(track: Track): any

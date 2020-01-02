@@ -1,15 +1,13 @@
-@import '../../theme/colours';
+@import 'mm-shared/src/theme/main';
 
 .EventDetails-root {
   padding: 15px;
-
 
   .EventDetails-playlist-description {
     display: flex;
     justify-content: space-between;
 
     .EventDetails-playlist-info {
-
       .EventDetails-playlist-title {
         font-size: 14px;
         color: $main;
@@ -28,5 +26,4 @@
       }
     }
   }
-
 }
