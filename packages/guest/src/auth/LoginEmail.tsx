@@ -63,7 +63,7 @@ class LoginEmail extends React.Component<ILoginEmailProps, any> {
           )}
         </div>
         <div className="login-link-container">
-          <a>Forgot your Password?</a>
+          <p>Forgot your Password?</p>
           <a href="/signup">Not a user? Sign Up</a>
         </div>
         {authError && authError.errorContext === 'login' && (
