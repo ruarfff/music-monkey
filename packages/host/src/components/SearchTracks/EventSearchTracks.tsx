@@ -11,7 +11,7 @@ import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import ISearch from 'playlist/ISearch'
 import Recommendations from 'recommendations/RecommendationsContainer'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import EventInput from 'components/EventInput/EventInput'
 import TrackItem from './TrackItem'
 import './EventSearchTracks.scss'
@@ -24,7 +24,7 @@ interface IEventSearchTracksProps {
   notification: string
   layout?: string
   searchTrack(text: string): Action
-  addTrack(playlistId: string, track: ITrack): Action
+  addTrack(playlistId: string, track: Track): Action
 }
 
 const decorate = withStyles(() => ({

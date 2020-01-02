@@ -8,7 +8,7 @@ import { addTracksToPlaylist } from 'playlist/playlistClient'
 import { useSnackbarAlert } from 'notification/alert'
 import { Action } from 'mm-shared'
 import TrackSearch from 'search/TrackSearch'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import TrackList from './TrackList'
 import EventTracks from './EventTracks'
@@ -18,7 +18,7 @@ import './AddTracks.scss'
 
 interface AddTracksProps {
   playlist: IPlaylist
-  recommendedTracks: ITrack[]
+  recommendedTracks: Track[]
   getRecommendations(): Action
 }
 
@@ -28,7 +28,7 @@ const AddTracks = ({
   getRecommendations
 }: AddTracksProps) => {
   const [tabIndex, setTabIndex] = useState(0)
-  const [searchedTracks, setSearchedTracks] = useState([] as ITrack[])
+  const [searchedTracks, setSearchedTracks] = useState([] as Track[])
   const [isLoading, setIsLoading] = useState(false)
   const { showSuccess, showError } = useSnackbarAlert()
 
@@ -47,7 +47,7 @@ const AddTracks = ({
     <Grid container className="AddTracks-root" spacing={2}>
       <Field name="tracks">
         {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
-          const handleAddTrack = async (track: ITrack) => {
+          const handleAddTrack = async (track: Track) => {
             try {
               await addTracksToPlaylist(playlist.id, [track.uri])
               setFieldValue('tracks', [...value, track])
@@ -58,7 +58,7 @@ const AddTracks = ({
             }
           }
 
-          const handleAddTracks = (tracks: ITrack[]) => {
+          const handleAddTracks = (tracks: Track[]) => {
             try {
               addTracksToPlaylist(
                 playlist.id,
@@ -72,14 +72,14 @@ const AddTracks = ({
             }
           }
 
-          const handleTracksChanges = (tracks: ITrack[]) => {
+          const handleTracksChanges = (tracks: Track[]) => {
             setFieldValue('tracks', tracks)
           }
           return (
             <Grid container>
               <Grid item xs={12}>
                 <TrackSearch
-                  onSearchResult={(results: ITrack[]) => {
+                  onSearchResult={(results: Track[]) => {
                     if (!isEqual(searchedTracks, results))
                       setSearchedTracks(results)
                     setIsLoading(false)

@@ -13,7 +13,7 @@ import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import formatDuration from 'util/formatDuration'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import './EventRejectedSuggestions.scss'
 
 interface IEventRejectedSuggestionsProps extends RouteComponentProps<any> {
@@ -26,7 +26,7 @@ interface IEventRejectedSuggestionsProps extends RouteComponentProps<any> {
   ): Action
 }
 
-const trackHasImage = (track: ITrack) => {
+const trackHasImage = (track: Track) => {
   return track.album && track.album.images && track.album.images.length
 }
 

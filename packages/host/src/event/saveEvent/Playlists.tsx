@@ -23,7 +23,7 @@ import backgroundImage from 'assets/music-monkey.jpg'
 import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
 import getNumberOfPlaylistTracks from 'playlist/getNumberOfPlaylistTracks'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import TrackItem from './TrackItem'
 
 import './Playlists.scss'
@@ -32,7 +32,7 @@ interface PlaylistsProps {
   user: IUser
   playlists: IPlaylist[]
   playlistsLoading: boolean
-  onAddTracks(tracks: ITrack[]): void
+  onAddTracks(tracks: Track[]): void
   fetchPlaylists(user: IUser): Action
 }
 
@@ -62,7 +62,7 @@ const Playlists = ({
     onAddTracks(playlist.tracks.items.map(item => item.track))
   }
 
-  const handleTrackSelected = (track: ITrack) => () => {
+  const handleTrackSelected = (track: Track) => () => {
     onAddTracks([track])
   }
 

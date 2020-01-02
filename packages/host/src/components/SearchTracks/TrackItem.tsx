@@ -4,16 +4,16 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import * as React from 'react'
 import { Action } from 'mm-shared'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import formatDuration from 'util/formatDuration'
 import './TrackItem.scss'
 
 interface ITrackItemProps {
-  track: ITrack
+  track: Track
   playlistId: string
   layout?: string
   disableAddButton?: boolean
-  addTrack(playlistId: string, track: ITrack): Action
+  addTrack(playlistId: string, track: Track): Action
   handleClearSearch?(): void
 }
 
@@ -27,7 +27,7 @@ const TrackItem = ({
 }: ITrackItemProps) => {
   let trackImage = <span />
 
-  const handleAddTrack = (track: ITrack) => () => {
+  const handleAddTrack = (track: Track) => () => {
     addTrack(playlistId, track)
     if (handleClearSearch) {
       handleClearSearch()

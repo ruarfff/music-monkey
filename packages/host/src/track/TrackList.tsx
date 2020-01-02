@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import ITrackVoteStatus from '../vote/ITrackVoteStatus'
-import ITrack from './ITrack'
+import { Track } from 'mm-shared'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import TrackListItem from './TrackListItem'
 
@@ -9,16 +9,16 @@ import TrackListItem from './TrackListItem'
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
 
 interface ITrackListProps {
-  tracks: ITrack[]
+  tracks: Track[]
   tracksWithFeatures?: ITrackWithFeatures[]
   disableRemoveTrack?: boolean
   withVoting?: boolean
   votes?: Map<string, ITrackVoteStatus>
   avatar?: string
-  onVote?(track: ITrack): void
-  onTrackSelected?(track: ITrack): void
+  onVote?(track: Track): void
+  onTrackSelected?(track: Track): void
   onDragEnd?(result: any): void
-  onTrackRemoved?(track: ITrack): void
+  onTrackRemoved?(track: Track): void
 }
 
 const getItemStyle = (isDragging: any, draggableStyle: any) => {
@@ -39,10 +39,10 @@ const TrackList = ({
   withVoting = false,
   votes = new Map(),
   avatar = undefined,
-  onVote = (t: ITrack) => ({} as any),
-  onTrackSelected = (t: ITrack) => ({} as any),
+  onVote = (t: Track) => ({} as any),
+  onTrackSelected = (t: Track) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
-  onTrackRemoved = (track: ITrack) => ({} as any),
+  onTrackRemoved = (track: Track) => ({} as any),
   disableRemoveTrack = false
 }: ITrackListProps) => (
   <React.Fragment>

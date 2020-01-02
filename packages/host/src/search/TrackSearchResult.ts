@@ -1,8 +1,8 @@
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 
 export default interface TrackSearchResult {
   href: string
-  items: ITrack[]
+  items: Track[]
   limit: number
   next: string
   offset: number

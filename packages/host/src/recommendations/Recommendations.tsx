@@ -2,10 +2,10 @@ import React from 'react'
 import TrackItem from 'components/SearchTracks/TrackItemContainer'
 import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 
 interface IRecommendationsProps {
-  recommendedTracks: ITrack[]
+  recommendedTracks: Track[]
   playlist?: IPlaylist
   layout?: string
   getRecommendations(): Action
@@ -32,7 +32,7 @@ class Recommendations extends React.PureComponent<IRecommendationsProps> {
     return (
       <div>
         <span>Recommended tracks</span>
-        {filteredRecommendedTracks.map((track: ITrack, index: number) => (
+        {filteredRecommendedTracks.map((track: Track, index: number) => (
           <TrackItem
             layout={layout}
             key={index}

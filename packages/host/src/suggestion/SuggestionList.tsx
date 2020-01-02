@@ -1,7 +1,7 @@
 import React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import SuggestionListItem from './SuggestionListItem'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
 
@@ -10,10 +10,10 @@ interface SuggestionListProps {
   withVoting?: boolean
   votes?: Map<string, ITrackVoteStatus>
   disableRemoveTrack?: boolean
-  onVote?(track: ITrack): void
-  onTrackSelected?(track: ITrack): void
+  onVote?(track: Track): void
+  onTrackSelected?(track: Track): void
   onDragEnd?(result: any): void
-  onTrackRemoved?(track: ITrack): void
+  onTrackRemoved?(track: Track): void
 }
 
 const getItemStyle = (isDragging: any, draggableStyle: any) => {
@@ -33,10 +33,10 @@ const SuggestionList = ({
   withVoting = false,
   votes = new Map(),
   disableRemoveTrack = false,
-  onVote = (t: ITrack) => ({} as any),
-  onTrackSelected = (t: ITrack) => ({} as any),
+  onVote = (t: Track) => ({} as any),
+  onTrackSelected = (t: Track) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
-  onTrackRemoved = (track: ITrack) => ({} as any)
+  onTrackRemoved = (track: Track) => ({} as any)
 }: SuggestionListProps) => (
   <DragDropContext onDragEnd={onDragEnd}>
     <Droppable droppableId="suggestion-list-droppable">

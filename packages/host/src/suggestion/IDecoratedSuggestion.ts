@@ -1,9 +1,9 @@
 import ISuggestion from '../suggestion/ISuggestion'
-import ITrack from '../track/ITrack'
+import { Track } from 'mm-shared'
 import IUser from '../user/IUser'
 
 export default interface IDecoratedSuggestion {
   user: IUser
   suggestion: ISuggestion
-  track: ITrack
+  track: Track
 }

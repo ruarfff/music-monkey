@@ -4,7 +4,7 @@ import { Typography, Paper, List, ListSubheader } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import remove from 'lodash/remove'
 import arrayMove from 'util/arrayMove'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import TrackList from 'track/TrackList'
 import formatDuration from 'util/formatDuration'
 import IPlaylist from 'playlist/IPlaylist'
@@ -17,8 +17,8 @@ import './EventTracks.scss'
 
 interface EventTracksProps {
   playlist: IPlaylist
-  tracks: ITrack[]
-  onTracksChanged(tracks: ITrack[]): void
+  tracks: Track[]
+  onTracksChanged(tracks: Track[]): void
 }
 const EventTracks = ({
   tracks = [],
@@ -31,7 +31,7 @@ const EventTracks = ({
 
   const numTracks = tracks.length
 
-  const handleTrackRemoved = (trackToRemove: ITrack) => {
+  const handleTrackRemoved = (trackToRemove: Track) => {
     const position = tracks.indexOf(trackToRemove)
     removeTrackFromPlaylist(playlist.id, trackToRemove.uri, position)
     onTracksChanged(remove(tracks, track => track.id !== trackToRemove.id))

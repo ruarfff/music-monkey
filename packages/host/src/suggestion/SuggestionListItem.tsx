@@ -14,7 +14,7 @@ import Remove from '@material-ui/icons/Remove'
 import { Divider, Avatar } from '@material-ui/core'
 import getTrackImage from 'track/getTrackImage'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import IUser from 'user/IUser'
 import './SuggestionListItem.scss'
 
@@ -24,9 +24,9 @@ interface SuggestionListItemProps {
   numberOfVotes: number
   disableRemoveTrack?: boolean
   avatar?: string
-  onVote(track: ITrack): void
-  onTrackSelected?(track: ITrack): void
-  onTrackRemoved?(track: ITrack): void
+  onVote(track: Track): void
+  onTrackSelected?(track: Track): void
+  onTrackRemoved?(track: Track): void
 }
 
 const SuggestionListItem = ({
@@ -42,7 +42,7 @@ const SuggestionListItem = ({
     return <span />
   }
 
-  const track: ITrack = suggestion.track
+  const track: Track = suggestion.track
   const user: IUser = suggestion.user
   let initials: any = 'G'
 
@@ -61,7 +61,7 @@ const SuggestionListItem = ({
     onVote(track)
   }
 
-  const handleRemoveTrack = (track: ITrack) => () => {
+  const handleRemoveTrack = (track: Track) => () => {
     if (isFunction(onTrackRemoved)) {
       onTrackRemoved(track)
     }

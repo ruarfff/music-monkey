@@ -1,9 +1,9 @@
 import IUser from 'user/IUser'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 
 export default interface CreateEventFormValues {
   user: IUser
   eventName: string
   eventDescription: string
-  tracks?: ITrack[]
+  tracks?: Track[]
 }

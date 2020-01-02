@@ -1,6 +1,9 @@
 import { Action } from 'mm-shared'
 import IRecommendationsState from './IRecommendationState'
-import { FETCH_RECOMMENDATIONS_SUCCESS,RECOMMENDATIONS_CLEAR } from './recommendationActions'
+import {
+  FETCH_RECOMMENDATIONS_SUCCESS,
+  RECOMMENDATIONS_CLEAR
+} from './recommendationActions'
 import initialState from './recommendationsInitialState'
 
 export default function recommendation(

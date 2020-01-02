@@ -10,7 +10,7 @@ import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import isFunction from 'lodash/isFunction'
 import Image from 'components/Image'
 import backgroundImage from 'assets/music-monkey.jpg'
-import ITrack from './ITrack'
+import { Track } from 'mm-shared'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import Remove from '@material-ui/icons/Remove'
 import { Divider, Avatar } from '@material-ui/core'
@@ -27,15 +27,15 @@ import './TrackListItem.scss'
       /> */
 
 interface ITrackListItemProps {
-  track: ITrack
+  track: Track
   tracksWithFeature: ITrackWithFeatures
   withVoting: boolean
   numberOfVotes: number
   disableRemoveTrack?: boolean
   avatar?: string
-  onVote(track: ITrack): void
-  onTrackSelected?(track: ITrack): void
-  onTrackRemoved?(track: ITrack): void
+  onVote(track: Track): void
+  onTrackSelected?(track: Track): void
+  onTrackRemoved?(track: Track): void
 }
 
 const TrackListItem = ({
@@ -62,7 +62,7 @@ const TrackListItem = ({
     onVote(track)
   }
 
-  const handleRemoveTrack = (track: ITrack) => () => {
+  const handleRemoveTrack = (track: Track) => () => {
     if (isFunction(onTrackRemoved)) {
       onTrackRemoved(track)
     }

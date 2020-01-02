@@ -1,6 +1,6 @@
-import IAlbum from '../playlist/IAlbum'
+import { Album } from './Album'
 
-export default interface ITrack {
+export interface Track {
   disc_number: number
   duration_ms: number
   explicit: boolean
@@ -10,7 +10,7 @@ export default interface ITrack {
   track_number: number
   type: string
   uri: string
-  album: IAlbum
+  album: Album
   href: string
   id: string
 }

@@ -2,7 +2,7 @@ import Paper from '@material-ui/core/Paper'
 import * as _ from 'lodash'
 import * as React from 'react'
 import IEvent from '../event/IEvent'
-import ITrack from '../track/ITrack'
+import { Track } from 'mm-shared'
 import './MostPopularTracks.scss'
 
 interface IMostPopularTracksProps {
@@ -15,7 +15,7 @@ class MostPopularTracks extends React.Component<IMostPopularTracksProps> {
 
     const popularTracks = _.sortBy(
       _.uniqBy(
-        _.flattenDeep<ITrack>(
+        _.flattenDeep<Track>(
           events.map(event =>
             event.playlist
               ? event.playlist.tracks.items.map(track => track.track)
@@ -35,7 +35,7 @@ class MostPopularTracks extends React.Component<IMostPopularTracksProps> {
             popularTracks
               .reverse()
               .slice(0, 5)
-              .map((track: ITrack | undefined, i) => {
+              .map((track: Track | undefined, i) => {
                 return track ? (
                   <div key={i} className="listItem">
                     <div className="imgSection">

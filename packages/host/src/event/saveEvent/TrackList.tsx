@@ -1,12 +1,12 @@
 import React from 'react'
 import { List } from '@material-ui/core'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import TrackItem from './TrackItem'
 
 interface TrackListProps {
-  tracks: ITrack[]
-  filterList: ITrack[]
-  onTrackSelected(track: ITrack): void
+  tracks: Track[]
+  filterList: Track[]
+  onTrackSelected(track: Track): void
 }
 
 const TrackList = ({ tracks, filterList, onTrackSelected }: TrackListProps) => {

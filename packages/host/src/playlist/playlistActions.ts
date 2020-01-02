@@ -1,5 +1,5 @@
 import { Action } from 'mm-shared'
-import ITrack from '../track/ITrack'
+import { Track } from 'mm-shared'
 import IUser from '../user/IUser'
 import IPlaylist from './IPlaylist'
 
@@ -60,10 +60,7 @@ export const clearJustCreatedPlaylists = () => ({
   type: CLEAR_JUST_CREATED_PLAYLISTS
 })
 
-export const getMoreUsersPlaylists = (
-  user: IUser,
-  offset: number
-): Action => ({
+export const getMoreUsersPlaylists = (user: IUser, offset: number): Action => ({
   type: LOAD_MORE_PLAYLISTS_REQUEST,
   payload: {
     user,
@@ -99,7 +96,7 @@ export const getTracksFeaturesFailure = (error: string): Action => {
   }
 }
 
-export const addTrack = (playlistId: string, track: ITrack): Action => ({
+export const addTrack = (playlistId: string, track: Track): Action => ({
   type: ADD_TRACK_REQUEST,
   payload: {
     playlistId,
@@ -107,7 +104,7 @@ export const addTrack = (playlistId: string, track: ITrack): Action => ({
   }
 })
 
-export const addTrackSuccess = (track: ITrack): Action => ({
+export const addTrackSuccess = (track: Track): Action => ({
   type: ADD_TRACK_SUCCESS,
   payload: track
 })

@@ -16,7 +16,7 @@ import { Action } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import ISuggestion from 'suggestion/ISuggestion'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import formatDuration from 'util/formatDuration'
 import './EventSuggestions.scss'
 
@@ -34,7 +34,7 @@ interface IEventSuggestionsProps extends RouteComponentProps<any> {
 }
 
 interface IEventSuggestionsState {
-  tracksBeingRemoved: ITrack
+  tracksBeingRemoved: Track
 }
 
 class EventSuggestions extends React.Component<
@@ -177,7 +177,7 @@ class EventSuggestions extends React.Component<
     const { track, suggestion } = decoratedSuggestion
     this.setState({ tracksBeingRemoved: track })
     setTimeout(() => {
-      this.setState({ tracksBeingRemoved: {} as ITrack })
+      this.setState({ tracksBeingRemoved: {} as Track })
       this.props.rejectSuggestion(suggestion)
     }, 700)
   }

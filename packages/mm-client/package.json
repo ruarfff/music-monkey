@@ -3,17 +3,5 @@
   "version": "0.0.1",
   "description": "Client for interacting with MusicMokey api.'",
   "author": "Ruairi O Brien <ruairitobrien@gmail.com>",
-  "homepage": "https://github.com/ruairitobrien/music-monkey#readme",
-  "license": "ISC",
-  "main": "index.ts",
-  "directories": {
-    "lib": "lib"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ruairitobrien/music-monkey.git"
-  },
-  "bugs": {
-    "url": "https://github.com/ruairitobrien/music-monkey/issues"
-  }
+  "main": "index.ts"
 }

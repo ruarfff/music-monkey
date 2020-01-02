@@ -18,7 +18,7 @@ import LoadingSpinner from 'loading/LoadingSpinner'
 import IPlaylist from 'playlist/IPlaylist'
 import IPlaylistItem from 'playlist/IPlaylistItem'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
-import ITrack from 'track/ITrack'
+import { Track } from 'mm-shared'
 import ITrackWithFeatures from 'track/ITrackWithFeatures'
 import TrackList from 'track/TrackList'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
@@ -85,7 +85,7 @@ export default class EventPlaylist extends React.Component<
       notification,
       tracksWithFeatures
     } = this.props
-    let stagedTracks: ITrack[] = []
+    let stagedTracks: Track[] = []
 
     if (!event.playlist) {
       return <span />
@@ -255,7 +255,7 @@ export default class EventPlaylist extends React.Component<
     }
   }
 
-  private handleRemoveTrack = (track: ITrack) => {
+  private handleRemoveTrack = (track: Track) => {
     const playlist = this.props.event.playlist!
     this.props.tryRemoveTrack(playlist.id, track.uri, track.track_number)
 

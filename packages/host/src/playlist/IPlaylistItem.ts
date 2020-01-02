@@ -1,6 +1,6 @@
-import ITrack from "../track/ITrack";
+import { Track } from 'mm-shared'
 
-export default interface IPlaylistItem {   
-    added_at: string,
-    track: ITrack
+export default interface IPlaylistItem {
+  added_at: string
+  track: Track
 }

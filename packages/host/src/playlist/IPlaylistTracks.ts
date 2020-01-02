@@ -1,4 +1,4 @@
-import IPlaylistItem from './IPlaylistItem';
+import IPlaylistItem from './IPlaylistItem'
 
 export default interface IPlaylistTracks {
   href: string
