@@ -11,8 +11,8 @@ import IPlaylist from '../playlist/IPlaylist'
 import Search from '../search/SearchContainer'
 import IPlaylistSuggestion from '../suggestion/IPlaylistSuggestion'
 import ITrackSuggestion from '../suggestion/ITrackSuggestion'
-import ITrack from '../track/ITrack'
-import IUser from '../user/IUser'
+import { Track }  from 'mm-shared'
+import { User }  from 'mm-shared'
 import useSwipeTabsIndex from '../util/useSwipeTabsIndex'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
@@ -21,17 +21,17 @@ import swal from '@sweetalert/with-react'
 import './Finder.scss'
 
 interface IFinderProps extends RouteComponentProps<any> {
-  user: IUser
+  user: User
   userPlaylists: IPlaylist[]
   events: IEvent[]
   selectedEvent: IEvent
   searching: boolean
-  searchResults: ITrack[]
+  searchResults: Track[]
   deselectEvent(): Action
   saveTrackSuggestion(suggestions: ITrackSuggestion): Action
-  fetchPlaylists(user: IUser): Action
+  fetchPlaylists(user: User): Action
   savePlaylistSuggestion(suggestions: IPlaylistSuggestion): Action
-  fetchMorePlaylists(user: IUser): Action
+  fetchMorePlaylists(user: User): Action
   setEventId(eventId: string): Action
 }
 
@@ -76,7 +76,7 @@ const Finder = ({
     )
   }
 
-  const onTrackSelected = (track: ITrack) => {
+  const onTrackSelected = (track: Track) => {
     showConfirmationDialog(user, selectedEvent, track, saveTrackSuggestion)
   }
 
@@ -94,7 +94,7 @@ const Finder = ({
       ? selectedEvent.playlist.tracks.items.map(track => track.track.uri)
       : []
 
-  let filteredSearch = [] as ITrack[]
+  let filteredSearch = [] as Track[]
 
   if (!isEmpty(searchResults)) {
     filteredSearch = searchResults.filter(
@@ -168,7 +168,7 @@ const Finder = ({
 }
 
 function showConfirmationPlaylistDialog(
-  user: IUser,
+  user: User,
   event: IEvent,
   playlist: IPlaylist,
   savePlaylistSuggestion: any
@@ -193,9 +193,9 @@ function showConfirmationPlaylistDialog(
 }
 
 function showConfirmationDialog(
-  user: IUser,
+  user: User,
   event: IEvent,
-  track: ITrack,
+  track: Track,
   saveTrackSuggestion: any
 ) {
   return showDialog(track.name, event.name, 'Track').then((result: any) => {

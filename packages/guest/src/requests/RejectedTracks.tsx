@@ -5,10 +5,10 @@ import React from 'react'
 import IDecoratedSuggestion from '../suggestion/IDecoratedSuggestion'
 import TrackList from '../track/TrackList'
 import './RejectedTracks.scss'
-import IUser from '../user/IUser'
+import { User }  from 'mm-shared'
 
 interface IRejectedTracksProps {
-  user: IUser
+  user: User
   suggestions: IDecoratedSuggestion[]
 }
 

@@ -1,10 +1,10 @@
 import { Avatar } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import * as React from 'react'
-import IUser from '../user/IUser'
+import { User }  from 'mm-shared'
 
 interface IProfileImageProps {
-  user: IUser
+  user: User
 }
 
 export const ProfileImage = ({ user }: IProfileImageProps) => {

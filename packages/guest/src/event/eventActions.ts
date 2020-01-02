@@ -1,5 +1,5 @@
 import { Action } from 'mm-shared'
-import ITrack from '../track/ITrack'
+import { Track }  from 'mm-shared'
 import IEvent from './IEvent'
 
 export const DESELECT_EVENT = 'DESELECT_EVENT'
@@ -38,7 +38,7 @@ export const getEvent = (eventId: string): Action => ({
   type: EVENT_FETCH_INITIATED
 })
 
-export const selectSuggestion = (track: ITrack): Action => ({
+export const selectSuggestion = (track: Track): Action => ({
   payload: track,
   type: EVENT_SUGGESTION_SELECTED
 })

@@ -2,13 +2,13 @@ import React from 'react'
 import isEmpty from 'lodash/isEmpty'
 import { Sizes } from 'react-sizes'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import LoginError from './LoginError'
 import MobileLayout from './MobileLayout'
 import DesktopLayout from './DesktopLayout'
 
 interface ILayoutProps {
-  user: IUser
+  user: User
   userLoading: boolean
   userError: Error
   isDesktop: boolean

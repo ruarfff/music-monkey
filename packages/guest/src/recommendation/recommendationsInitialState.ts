@@ -1,6 +1,6 @@
-import ITrack from '../track/ITrack'
+import { Track }  from 'mm-shared'
 import IRecommendationsState from './IRecommendationsState'
 
 export default {
-  tracks: [] as ITrack[]
+  tracks: [] as Track[]
 } as IRecommendationsState

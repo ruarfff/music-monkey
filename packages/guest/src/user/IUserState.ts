@@ -1,7 +1,7 @@
-import IUser from './IUser'
+import { User } from 'mm-shared'
 
 export default interface IUserState {
-  data: IUser
+  data: User
   error?: Error
   isLoading: boolean
 }

@@ -5,19 +5,18 @@ import PieChartWidget from './PieChart'
 import MostPopularTracks from 'insights/MostPopularTracks'
 import MostVotedTracks from 'insights/MostVotedTracks'
 import IEvent from 'event/IEvent'
-import { Action } from 'mm-shared'
+import { Action, User } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
-import IUser from 'user/IUser'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import './Insights.scss'
 
 interface IInsightsProps {
-  user: IUser
+  user: User
   event: IEvent
   events: IEvent[]
   pickedEvent: string
   votes: Map<string, ITrackVoteStatus>
-  fetchPlaylists(user: IUser): Action
+  fetchPlaylists(user: User): Action
   filterByEventPick(id: any): Action
   sortPlaylistByVotesDescending(
     playlist: IPlaylist,

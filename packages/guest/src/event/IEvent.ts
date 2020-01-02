@@ -1,7 +1,7 @@
 import { Moment } from 'moment'
 import ILocation from '../location/ILocation'
 import IPlaylist from '../playlist/IPlaylist'
-import IUser from '../user/IUser'
+import { User } from 'mm-shared'
 import IEventGuest from './IEventGuest'
 import IEventSettings from './IEventSettings'
 
@@ -19,7 +19,7 @@ export default interface IEvent {
   startDateTime: any
   venue: string
   userId: string
-  hostData: IUser
+  hostData: User
   genre: string
   invites: string[]
   guests: IEventGuest[]

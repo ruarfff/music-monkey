@@ -9,14 +9,14 @@ import Popper from '@material-ui/core/Popper'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import { Action } from 'mm-shared'
 import IRsvp from '../../rsvp/IRsvp'
-import IUser from '../../user/IUser'
+import { User } from 'mm-shared'
 import IEvent from '../IEvent'
 import IEventGuest from '../IEventGuest'
 import './EventResponseMenu.scss'
 
 interface IEventResponseMenu {
   event: IEvent
-  user: IUser
+  user: User
   updateRsvp(rsvp: IRsvp): Action
 }
 

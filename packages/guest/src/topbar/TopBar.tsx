@@ -3,13 +3,13 @@ import * as React from 'react'
 import { ReactCookieProps } from 'react-cookie'
 import { RouteComponentProps } from 'react-router-dom'
 import { Action } from 'mm-shared'
-import IUser from '../user/IUser'
+import { User }  from 'mm-shared'
 import SideMenu from './SideMenuContainer'
 import './TopBar.scss'
 import UserMenu from './UserMenu'
 
 interface ITopBarProps extends RouteComponentProps<any>, ReactCookieProps {
-  user: IUser
+  user: User
   logout(): Action
 }
 

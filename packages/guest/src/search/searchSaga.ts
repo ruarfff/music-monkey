@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'mm-shared'
-import ITrack from '../track/ITrack'
+import { Track }  from 'mm-shared'
 import {
   SEARCH_FAILED,
   SEARCH_INITIATED,
@@ -14,7 +14,7 @@ function searchTracks(searchTerm: string) {
 
 function* searchTracksFlow(action: Action) {
   try {
-    const tracks: ITrack[] = yield call(searchTracks, action.payload)
+    const tracks: Track[] = yield call(searchTracks, action.payload)
     yield put({ type: SEARCH_SUCCESS, payload: tracks })
   } catch (err) {
     yield put({ type: SEARCH_FAILED, payload: err })

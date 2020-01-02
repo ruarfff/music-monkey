@@ -1,13 +1,13 @@
 import moment from 'moment'
 import isEmpty from 'lodash/isEmpty'
 import backgroundImage from 'assets/music-monkey.jpg'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import IEvent from 'event/IEvent'
 import getPlaylistTracks from 'playlist/getPlaylistTracks'
 import SaveEventFormValues from './SaveEventFormValues'
 
 const saveEventInitialFormValues = (
-  user: IUser,
+  user: User,
   event: IEvent
 ): SaveEventFormValues => {
   const defaultSettings = {

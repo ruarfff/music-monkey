@@ -1,10 +1,10 @@
 import { Typography } from '@material-ui/core'
 import Recommendations from '../recommendation/RecommendationsContainer'
-import ITrack from '../track/ITrack'
+import { Track }  from 'mm-shared'
 import React from 'react'
 
 interface IRecommendationsTabProps {
-  onTrackSelected(track: ITrack): any
+  onTrackSelected(track: Track): any
 }
 
 const RecommendationsTab = ({ onTrackSelected }: IRecommendationsTabProps) => {

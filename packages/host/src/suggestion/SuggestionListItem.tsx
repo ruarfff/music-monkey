@@ -15,7 +15,7 @@ import { Divider, Avatar } from '@material-ui/core'
 import getTrackImage from 'track/getTrackImage'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
 import { Track } from 'mm-shared'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import './SuggestionListItem.scss'
 
 interface SuggestionListItemProps {
@@ -43,7 +43,7 @@ const SuggestionListItem = ({
   }
 
   const track: Track = suggestion.track
-  const user: IUser = suggestion.user
+  const user: User = suggestion.user
   let initials: any = 'G'
 
   if (user && user.displayName) {

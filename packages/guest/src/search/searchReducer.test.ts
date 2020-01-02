@@ -1,5 +1,5 @@
 import { Action } from 'mm-shared'
-import ITrack from '../track/ITrack'
+import { Track }  from 'mm-shared'
 import { SEARCH_SUCCESS } from './searchActions'
 import initialState from './searchInitialState'
 import search from './searchReducer'
@@ -10,9 +10,9 @@ it('should return the initial state when no action matches', () => {
 
 it('should handle SEARCH_SUCCESS', () => {
   expect(
-    search(initialState, { type: SEARCH_SUCCESS, payload: [{} as ITrack] })
+    search(initialState, { type: SEARCH_SUCCESS, payload: [{} as Track] })
   ).toEqual({
     ...initialState,
-    tracks: [{} as ITrack]
+    tracks: [{} as Track]
   })
 })

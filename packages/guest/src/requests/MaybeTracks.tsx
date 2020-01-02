@@ -4,12 +4,12 @@ import { isEmpty, uniqBy } from 'lodash'
 import React from 'react'
 import IDecoratedSuggestion from '../suggestion/IDecoratedSuggestion'
 import TrackList from '../track/TrackList'
-import IUser from '../user/IUser'
+import { User }  from 'mm-shared'
 import './MaybeTracks.scss'
 import IEvent from '../event/IEvent'
 
 interface IMaybeTracksProps {
-  user: IUser
+  user: User
   selectedEvent: IEvent
   suggestions: IDecoratedSuggestion[]
 }

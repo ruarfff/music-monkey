@@ -5,11 +5,11 @@ import Avatar from '@material-ui/core/Avatar/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import './UserMenu.scss'
 
 interface IUserMenuProps {
-  user: IUser
+  user: User
   logout(): void
 }
 

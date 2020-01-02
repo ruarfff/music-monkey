@@ -11,15 +11,15 @@ import React, { useEffect, useState } from 'react'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import './PlaylistPlayer.scss'
 import { findIndex, isEmpty, pull } from 'lodash'
-import ITrack from '../../track/ITrack'
+import { Track } from 'mm-shared'
 import { Link } from 'react-router-dom'
 
 interface IPlaylistPlayerProps {
-  tracks: ITrack[]
-  selectedTrack: ITrack
+  tracks: Track[]
+  selectedTrack: Track
   selectedTrackVotes: ITrackVoteStatus
-  onFavouriteClicked(track: ITrack): void
-  onTrackChanged(track: ITrack): void
+  onFavouriteClicked(track: Track): void
+  onTrackChanged(track: Track): void
 }
 
 export default ({
@@ -40,7 +40,7 @@ export default ({
   }
 
   const randomTrack = () => {
-    const filteredTracks: ITrack[] = pull(tracks, selectedTrack)
+    const filteredTracks: Track[] = pull(tracks, selectedTrack)
     onTrackChanged(
       filteredTracks[Math.floor(Math.random() * filteredTracks.length)]
     )

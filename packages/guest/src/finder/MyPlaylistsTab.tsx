@@ -10,20 +10,20 @@ import {
 import { Action } from 'mm-shared'
 import { isEmpty, sortBy, head } from 'lodash'
 import IPlaylist from '../playlist/IPlaylist'
-import ITrack from '../track/ITrack'
-import IUser from '../user/IUser'
+import { Track }  from 'mm-shared'
+import { User }  from 'mm-shared'
 import React, { useEffect, useState } from 'react'
 import TrackList from '../track/TrackList'
 import backgroundImage from 'assets/music-monkey.jpg'
 import IPlaylistImage from '../playlist/IPlaylistImage'
 
 interface IMyPlaylistsTabProps {
-  user: IUser
+  user: User
   playlists: IPlaylist[]
   playlistsEnabled: boolean
-  onTrackSelected(track: ITrack): any
+  onTrackSelected(track: Track): any
   savePlaylistSuggestion(suggestions: IPlaylist): any
-  fetchMorePlaylists(user: IUser): Action
+  fetchMorePlaylists(user: User): Action
 }
 
 const MyPlaylistsTab = ({

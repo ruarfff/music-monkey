@@ -1,4 +1,5 @@
 import { Album } from './Album'
+import { Artist } from './Artist'
 
 export interface Track {
   disc_number: number
@@ -13,4 +14,5 @@ export interface Track {
   album: Album
   href: string
   id: string
+  artists: Artist[]
 }

@@ -2,14 +2,14 @@ import { Icon } from '@material-ui/core'
 import { debounce } from 'lodash'
 import * as React from 'react'
 import { Action } from 'mm-shared'
-import ITrack from '../track/ITrack'
+import { Track }  from 'mm-shared'
 
 import './Search.scss'
 
 const WAIT_INTERVAL = 200
 
 interface ISearchProps {
-  tracks: ITrack[]
+  tracks: Track[]
   clearSearch(): Action
   searchTracks(searchTerm: string): Action
 }

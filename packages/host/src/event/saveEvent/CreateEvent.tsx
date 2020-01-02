@@ -3,7 +3,7 @@ import { Formik, FormikProps, FormikHelpers, Field, FieldProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import * as Yup from 'yup'
 import { useSnackbarAlert } from 'notification/alert'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import createEventFlow from './createEventFlow'
 import EventInitializeDialog from './EventInitializeDialog'
 import CreateEventFormValues from './CreateEventFormValues'
@@ -15,7 +15,7 @@ import { Action } from 'mm-shared'
 import './CreateEvent.scss'
 
 interface CreateEventProps extends RouteComponentProps {
-  user: IUser
+  user: User
   getEvents(): Action
 }
 

@@ -1,7 +1,7 @@
 import client from 'mm-client'
-import IUser from './IUser'
+import { User } from 'mm-shared'
 
-export const getUserById = async (userId: IUser) => {
+export const getUserById = async (userId: User) => {
   const res = await client.get('/users/' + userId, {
     withCredentials: true
   })
@@ -9,7 +9,7 @@ export const getUserById = async (userId: IUser) => {
   return res
 }
 
-export const updateUserById = async (user: IUser) => {
+export const updateUserById = async (user: User) => {
   const res = await client.put('/users/' + user.userId, user, {
     withCredentials: true
   })

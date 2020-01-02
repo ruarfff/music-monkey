@@ -1,5 +1,5 @@
 import { Action } from 'mm-shared'
-import IUser from './IUser'
+import { User } from 'mm-shared'
 
 export const FETCH_USER = 'FETCH_USER'
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
@@ -13,7 +13,7 @@ export const fetchUser = (): Action => ({
   type: FETCH_USER
 })
 
-export const fetchUserSuccess = (data: IUser): Action => ({
+export const fetchUserSuccess = (data: User): Action => ({
   payload: data,
   type: FETCH_USER_SUCCESS
 })
@@ -23,7 +23,7 @@ export const fetchUserError = (error: Error): Action => ({
   type: FETCH_USER_ERROR
 })
 
-export const updateUserRequest = (data: IUser): Action => ({
+export const updateUserRequest = (data: User): Action => ({
   type: UPDATE_USER_REQUEST,
-  payload: data,
+  payload: data
 })

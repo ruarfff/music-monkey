@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ITrack from '../track/ITrack'
+import { Track }  from 'mm-shared'
 import ITrackVoteStatus from '../vote/ITrackVoteStatus'
 import TrackListItem from './TrackListItem'
 
@@ -7,12 +7,12 @@ import TrackListItem from './TrackListItem'
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
 
 interface ITrackListProps {
-  tracks: ITrack[]
+  tracks: Track[]
   withVoting?: boolean
   votes?: Map<string, ITrackVoteStatus>
   withSuggestingEnabled?: boolean
-  onVote?: (track: ITrack) => void
-  onTrackSelected?: (track: ITrack) => void
+  onVote?: (track: Track) => void
+  onTrackSelected?: (track: Track) => void
 }
 
 const TrackList = ({
@@ -20,8 +20,8 @@ const TrackList = ({
   withVoting = false,
   withSuggestingEnabled = false,
   votes = new Map(),
-  onVote = (t: ITrack) => undefined,
-  onTrackSelected = (t: ITrack) => undefined
+  onVote = (t: Track) => undefined,
+  onTrackSelected = (t: Track) => undefined
 }: ITrackListProps) => (
   <React.Fragment>
     {tracks.map((track, i) => {

@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
 import { Action } from 'mm-shared'
 import LoadingSpinner from '../../loading/LoadingSpinner'
-import IUser from '../../user/IUser'
+import { User } from 'mm-shared'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import IVote from '../../vote/IVote'
 import IEvent from '../IEvent'
@@ -16,7 +16,7 @@ import EventHeader from './EventHeaderContainer'
 import './Event.scss'
 
 interface IEventProps {
-  user: IUser
+  user: User
   selectedEvent: IEvent
   eventLoading: boolean
   votes: Map<string, ITrackVoteStatus>

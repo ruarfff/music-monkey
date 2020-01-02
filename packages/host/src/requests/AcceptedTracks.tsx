@@ -4,11 +4,11 @@ import ListItem from '@material-ui/core/ListItem'
 import { isEmpty } from 'lodash'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import SuggestionList from 'suggestion/SuggestionList'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import './AcceptedTracks.scss'
 
 interface AcceptedTracksProps {
-  user: IUser
+  user: User
   suggestions: IDecoratedSuggestion[]
 }
 

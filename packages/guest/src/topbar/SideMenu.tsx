@@ -16,11 +16,11 @@ import { Link, RouteComponentProps } from 'react-router-dom'
 import useMenuActive from '../util/useMenuActive'
 import { ProfileImage } from './ProfileImage'
 import './SideMenu.scss'
-import IUser from '../user/IUser'
+import { User }  from 'mm-shared'
 import IEvent from '../event/IEvent'
 
 interface ISideMenuProps extends RouteComponentProps<any> {
-  user: IUser
+  user: User
   event: IEvent
 }
 

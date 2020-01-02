@@ -3,13 +3,13 @@ import { AppBar, Toolbar } from '@material-ui/core'
 import { ReactCookieProps } from 'react-cookie'
 import { RouteComponentProps } from 'react-router-dom'
 import { Action } from 'mm-shared'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import UserMenu from './UserMenu'
 import Title from 'layout/TitleContainer'
 import './TopBar.scss'
 
 interface ITopBarProps extends RouteComponentProps<any>, ReactCookieProps {
-  user: IUser
+  user: User
   logout(): Action
 }
 

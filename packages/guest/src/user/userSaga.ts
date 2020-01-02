@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'mm-shared'
-import IUser from './IUser'
+import { User } from 'mm-shared'
 import {
   UPDATE_USER_FAILURE,
   UPDATE_USER_REQUEST,
@@ -9,7 +9,7 @@ import {
 import { updateUserById } from './userClient'
 
 function* updateUserFlow(action: Action) {
-  const user: IUser = action.payload
+  const user: User = action.payload
 
   try {
     const editedUser = yield call(updateUserById, user)

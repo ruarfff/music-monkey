@@ -5,8 +5,8 @@ import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import IEvent from '../../event/IEvent'
 import { Action } from 'mm-shared'
-import ITrack from '../../track/ITrack'
-import IUser from '../../user/IUser'
+import { Track } from 'mm-shared'
+import { User } from 'mm-shared'
 import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
 import IVote from '../../vote/IVote'
 import './Playlist.scss'
@@ -18,7 +18,7 @@ import MaybeTracks from './MaybeTracks'
 import IDecoratedSuggestion from '../../suggestion/IDecoratedSuggestion'
 
 interface IPlayListProps extends RouteComponentProps<any> {
-  user: IUser
+  user: User
   event: IEvent
   votes: Map<string, ITrackVoteStatus>
   suggestions: IDecoratedSuggestion[]
@@ -38,7 +38,7 @@ const Playlist = ({
   match
 }: IPlayListProps) => {
   const [value, setValue] = useState(0)
-  const [currentTrack, setCurrentTrack] = useState({} as ITrack)
+  const [currentTrack, setCurrentTrack] = useState({} as Track)
   const eventId = match.params.eventId
   const trackId = currentTrack ? currentTrack.uri : ''
   const playlist = event.playlist
@@ -57,7 +57,7 @@ const Playlist = ({
   // Clear track on event change
   useEffect(() => {
     return () => {
-      setCurrentTrack({} as ITrack)
+      setCurrentTrack({} as Track)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [event])
@@ -73,7 +73,7 @@ const Playlist = ({
     setValue(value)
   }
 
-  const handleTrackVote = (track: ITrack) => {
+  const handleTrackVote = (track: Track) => {
     const trackId = track.uri
     const eventId = !!event ? event.eventId : ''
 

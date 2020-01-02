@@ -15,7 +15,7 @@ import {
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
 import { Action } from 'mm-shared'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import IPlaylist from 'playlist/IPlaylist'
 import Image from 'components/Image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
@@ -29,11 +29,11 @@ import TrackItem from './TrackItem'
 import './Playlists.scss'
 
 interface PlaylistsProps {
-  user: IUser
+  user: User
   playlists: IPlaylist[]
   playlistsLoading: boolean
   onAddTracks(tracks: Track[]): void
-  fetchPlaylists(user: IUser): Action
+  fetchPlaylists(user: User): Action
 }
 
 const Playlists = ({

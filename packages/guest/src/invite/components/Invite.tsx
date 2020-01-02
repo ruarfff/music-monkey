@@ -4,12 +4,12 @@ import IEvent from '../../event/IEvent'
 import { Action } from 'mm-shared'
 import LoadingSpinner from '../../loading/LoadingSpinner'
 import localStorage from '../../storage/localStorage'
-import IUser from '../../user/IUser'
+import { User } from 'mm-shared'
 import { inviteAnsweredKey, inviteIdKey } from '../inviteConstants'
 import React, { useEffect } from 'react'
 
 interface IInviteProps extends RouteComponentProps<any> {
-  user: IUser
+  user: User
   inviteEvent: IEvent
   authError: any
   loading: boolean

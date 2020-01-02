@@ -12,14 +12,14 @@ import instagramIcon from '../assets/instagram-icom.svg'
 import phoneIcon from '../assets/phone-icon.svg'
 import twitterIcon from '../assets/twitter.svg'
 import { Action } from 'mm-shared'
-import IUser from '../user/IUser'
+import { User }  from 'mm-shared'
 import EventInput from './CustomInput'
 import EditAvatar from './EditAvatar'
 import './Account.scss'
 
 interface IAccountDetailsProps {
-  user: IUser
-  updateUserRequest(user: IUser): Action
+  user: User
+  updateUserRequest(user: User): Action
 }
 
 class AccountDetails extends React.Component<IAccountDetailsProps> {

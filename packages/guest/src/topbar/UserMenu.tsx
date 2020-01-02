@@ -1,12 +1,12 @@
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import * as React from 'react'
-import IUser from '../user/IUser'
+import { User }  from 'mm-shared'
 import useMenuActive from '../util/useMenuActive'
 import { ProfileImage } from './ProfileImage'
 import './UserMenu.scss'
 
 interface IUserMenuProps {
-  user: IUser
+  user: User
   onLogout(): any
 }
 

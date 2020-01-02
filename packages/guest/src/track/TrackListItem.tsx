@@ -6,7 +6,7 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import ITrack from '../track/ITrack'
+import { Track }  from 'mm-shared'
 import './TrackListItem.scss'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
@@ -17,8 +17,8 @@ interface ITrackListItemProps {
   withVoting: boolean
   currentUserVoted: boolean
   numberOfVotes: number
-  onVote: (track: ITrack) => void
-  onTrackSelected: (track: ITrack) => void
+  onVote: (track: Track) => void
+  onTrackSelected: (track: Track) => void
   withSuggestingEnabled: boolean
   eventName?: string
 }

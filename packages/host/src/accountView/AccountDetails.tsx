@@ -14,7 +14,7 @@ import phoneIcon from 'assets/phone-icon.svg'
 import twitterIcon from 'assets/twitter.svg'
 import EventInput from 'components/EventInput/EventInput'
 import { Action } from 'mm-shared'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import EditAvatar from './EditAvatar'
 
 const decorate = withStyles(() => ({
@@ -55,8 +55,8 @@ const decorate = withStyles(() => ({
 }))
 
 interface IAccountDetailsProps {
-  user: IUser
-  updateUserRequest(user: IUser): Action
+  user: User
+  updateUserRequest(user: User): Action
 }
 
 class AccountDetails extends React.Component<

@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
 import debounce from 'just-debounce-it'
 import { useSnackbarAlert } from 'notification/alert'
-import IUser from 'user/IUser'
+import { User } from 'mm-shared'
 import IEvent from 'event/IEvent'
 import { Action } from 'mm-shared'
 import EventDetails from './EventDetails'
@@ -20,7 +20,7 @@ import ShareEvent from './ShareEventContainer'
 import './SaveEvent.scss'
 
 interface SaveEventProps extends RouteComponentProps {
-  user: IUser
+  user: User
   event: IEvent
   loading: boolean
   getEventById(eventId: string): Action

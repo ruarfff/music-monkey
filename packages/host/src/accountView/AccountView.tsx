@@ -4,8 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 import IEvent from 'event/IEvent'
-import { Action } from 'mm-shared'
-import IUser from 'user/IUser'
+import { Action, User } from 'mm-shared'
 import AccountDetails from './AccountDetails'
 import MyEvents from './MyEvents'
 import MyGuests from './MyGuests'
@@ -14,9 +13,9 @@ import isEmpty from 'lodash/isEmpty'
 import './AccountView.scss'
 
 interface IAccountViewProps {
-  user: IUser
+  user: User
   events: IEvent[]
-  updateUserRequest(user: IUser): Action
+  updateUserRequest(user: User): Action
   getEvents(): Action
 }
 
