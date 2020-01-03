@@ -5,7 +5,7 @@ import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from 'rootState'
 
-const AccountView = lazy(() => import('accountView/AccountViewContainer'))
+const AccountView = lazy(() => import('account/AccountViewContainer'))
 const CreateEvent = lazy(() => import('event/saveEvent/CreateEventContainer'))
 const CatalogueBrowser = lazy(() =>
   import('catalogue/CatalogueBrowserContainer')

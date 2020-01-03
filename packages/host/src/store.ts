@@ -2,7 +2,6 @@ import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { applyMiddleware, compose, createStore } from 'redux'
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant'
-//import { createLogger } from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 import createRootReducer from './rootReducer'
 import rootSaga from './rootSaga'
@@ -12,9 +11,6 @@ export const history = createBrowserHistory()
 const sagaMiddleware = createSagaMiddleware()
 
 const isDevBuild = process.env.NODE_ENV !== 'production'
-// const logger = createLogger({
-//   duration: true
-// })
 
 const rootMiddleWares = [sagaMiddleware, routerMiddleware(history)]
 

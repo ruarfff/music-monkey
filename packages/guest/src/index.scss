@@ -1,5 +1,12 @@
+@import 'mm-shared/src/theme/main';
+
 body {
-  font-family: Roboto !important;
+  background: $mm-white !important;
+  font-family: $main-font-family;
+}
+
+a {
+  text-decoration: none !important;
 }
 
 .text-decoration-none {

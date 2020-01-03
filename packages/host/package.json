@@ -10,9 +10,11 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "peerDependencies": {
-    "mm-shared": "*"
+    "mm-shared": "*",
+    "mm-client": "*"
   },
   "devDependencies": {
-    "mm-shared": "*"
+    "mm-shared": "*",
+    "mm-client": "*"
   }
 }
