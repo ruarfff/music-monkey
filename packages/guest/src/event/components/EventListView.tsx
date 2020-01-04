@@ -37,17 +37,21 @@ const EventListView = ({
     if (storedInvite === 'undefined') {
       storedInvite = null
     }
+    console.log('storedInvite ' + storedInvite)
     setInviteId(storedInvite)
     setInviteAnswered(localStorage.get(inviteAnsweredKey, null))
   }, [])
   useEffect(() => {
     const shouldRedirect = !!(inviteId && inviteAnswered === 'false')
+    console.log('shouldRedirect ' + shouldRedirect)
+    console.log('redirect ' + redirect)
     if (shouldRedirect !== redirect) {
       setRedirect(shouldRedirect)
     }
   }, [inviteAnswered, inviteId, redirect])
 
   if (redirect && inviteId) {
+    console.log(redirect + ' ' + inviteId)
     return <Redirect to={'/invite/' + inviteId} />
   }
 

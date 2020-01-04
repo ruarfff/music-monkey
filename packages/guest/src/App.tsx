@@ -6,7 +6,7 @@ import { History } from 'history'
 import { CookiesProvider } from 'react-cookie'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router'
 import { SnackbarProvider } from 'notistack'
 import SubscriptionWrapper from 'subscriptions/SubscriptionWrapperContainer'
 import theme from 'theme/theme'
@@ -40,23 +40,28 @@ const App = ({ store, history }: IAppProps) => (
               <AuthLoader>
                 <SubscriptionWrapper>
                   <RouteContextProvider>
-                    <Route path="/" component={userIsAuthenticated(Layout)} />
-                    <Route
-                      path="/login"
-                      component={userIsNotAuthenticated(Login)}
-                    />
-                    <Route
-                      path="/invite/:inviteId"
-                      component={userIsNotAuthenticated(Invite)}
-                    />
-                    <Route
-                      path="/about"
-                      component={userIsNotAuthenticated(Stepper)}
-                    />
-                    <Route
-                      path="/signup"
-                      component={userIsNotAuthenticated(SignUp)}
-                    />
+                    <Switch>
+                      <Route
+                        path="/invite/:inviteId"
+                        component={Invite}
+                        exact={true}
+                      />
+                      <Route
+                        path="/login"
+                        component={userIsNotAuthenticated(Login)}
+                        exact={true}
+                      />
+                      <Route
+                        path="/about"
+                        component={userIsNotAuthenticated(Stepper)}
+                      />
+                      <Route
+                        path="/signup"
+                        component={userIsNotAuthenticated(SignUp)}
+                        exact={true}
+                      />
+                      <Route path="/" component={userIsAuthenticated(Layout)} />
+                    </Switch>
                   </RouteContextProvider>
                 </SubscriptionWrapper>
               </AuthLoader>
