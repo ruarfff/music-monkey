@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   ClickAwayListener,
   IconButton,
@@ -11,13 +12,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import MenuIcon from '@material-ui/icons/Menu'
-import * as React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import useMenuActive from '../util/useMenuActive'
 import { ProfileImage } from './ProfileImage'
+import { User, Event, useMenuActive } from 'mm-shared'
 import './SideMenu.scss'
-import { User }  from 'mm-shared'
-import { Event } from 'mm-shared'
 
 interface ISideMenuProps extends RouteComponentProps<any> {
   user: User

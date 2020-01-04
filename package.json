@@ -112,7 +112,7 @@
     "@types/uuid": "^3.4.4",
     "@types/yup": "^0.26.2",
     "babel-plugin-import": "^1.12.2",
-    "customize-cra": "^0.8.0",
+    "customize-cra": "^0.9.1",
     "lerna": "3.20.1",
     "node-sass": "^4.11.0",
     "react-app-rewired": "^2.1.5",
@@ -133,7 +133,12 @@
       "last 1 safari version"
     ]
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/babel-loader"
+    ]
+  }
 }

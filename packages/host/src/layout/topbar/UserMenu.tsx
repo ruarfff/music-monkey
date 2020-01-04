@@ -1,7 +1,6 @@
 import React from 'react'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
-import { User } from 'mm-shared'
-import useMenuActive from 'util/useMenuActive'
+import { User, useMenuActive } from 'mm-shared'
 import { ProfileImage } from './ProfileImage'
 import './UserMenu.scss'
 

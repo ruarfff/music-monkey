@@ -3,5 +3,8 @@
   "version": "0.0.1",
   "description": "Stuff common to guest and host.",
   "author": "Ruairi O Brien <ruairitobrien@gmail.com>",
-  "main": "index.ts"
+  "main": "src/",
+  "peerDependencies": {
+    "typescript": "3.6.4"
+  }
 }

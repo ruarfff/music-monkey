@@ -1,5 +1,4 @@
-const React = require('react')
-const { useState } = React
+import { useState } from 'react'
 
 export default function useMenuActive() {
   const [menuLink, setMenuLink] = useState(undefined)
