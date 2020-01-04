@@ -12,10 +12,11 @@ import './TopBar.scss'
 interface ITopBarProps extends RouteComponentProps<any>, ReactCookieProps {
   user: User
   event: Event
+  isHost: boolean
   logout(): void
 }
 
-const TopAppBar = ({ user, event, cookies, logout }: ITopBarProps) => {
+const TopAppBar = ({ user, event, cookies, isHost, logout }: ITopBarProps) => {
   const handleLogout = () => {
     if (cookies) {
       cookies.remove('jwt')
@@ -26,9 +27,9 @@ const TopAppBar = ({ user, event, cookies, logout }: ITopBarProps) => {
   return (
     <AppBar position="fixed" className="top-appBar">
       <Toolbar variant="dense">
-        <SideMenu user={user} event={event} />
+        <SideMenu user={user} event={event} isHost={isHost} />
         <Title event={event} />
-        <UserMenu user={user} onLogout={handleLogout} />
+        <UserMenu user={user} onLogout={handleLogout} isHost={isHost} />
       </Toolbar>
     </AppBar>
   )

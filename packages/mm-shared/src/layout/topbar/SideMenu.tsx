@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core'
 import EventIcon from '@material-ui/icons/Event'
 import SearchIcon from '@material-ui/icons/Search'
+import AddBoxIcon from '@material-ui/icons/AddBox'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
@@ -21,19 +22,21 @@ import './SideMenu.scss'
 interface ISideMenuProps extends RouteComponentProps<any> {
   user: User
   event: Event
+  isHost: boolean
 }
 
 const checkLocation = (pathname: string, path: string) => {
   return pathname === path ? 'active' : ''
 }
 
-const SideMenu = ({ user, location, event }: ISideMenuProps) => {
+const SideMenu = ({ user, location, event, isHost }: ISideMenuProps) => {
   const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
   const eventsLink = eventId ? `/events/${eventId}` : '/'
   const playlistsLink = eventId ? `/playlists/${eventId}` : '/playlists'
   const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
   const finderLink = eventId ? `/finder/${eventId}` : '/finder'
+  const createLink = '/create-event'
   const accountLink = '/account'
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
   return (
@@ -79,14 +82,25 @@ const SideMenu = ({ user, location, event }: ISideMenuProps) => {
             <span>Playlists</span>
           </MenuItem>
         </Link>
-        <Link to={finderLink}>
-          <MenuItem
-            className={`SideMenu-item ${checkLocation(pathname, finderLink)}`}
-          >
-            <SearchIcon />
-            <span>Finder</span>
-          </MenuItem>
-        </Link>
+        {isHost ? (
+          <Link to={createLink}>
+            <MenuItem
+              className={`SideMenu-item ${checkLocation(pathname, createLink)}`}
+            >
+              <AddBoxIcon />
+              <span>Create Event</span>
+            </MenuItem>
+          </Link>
+        ) : (
+          <Link to={finderLink}>
+            <MenuItem
+              className={`SideMenu-item ${checkLocation(pathname, finderLink)}`}
+            >
+              <SearchIcon />
+              <span>Finder</span>
+            </MenuItem>
+          </Link>
+        )}
         <Link to={requestsLink}>
           <MenuItem
             className={`SideMenu-item ${checkLocation(pathname, requestsLink)}`}

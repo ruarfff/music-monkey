@@ -18,7 +18,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
 }) => {
   return (
     <div className="MainLayout-root">
-      <TopBar event={event} user={user} logout={logout} />
+      <TopBar event={event} user={user} logout={logout} isHost={isHost} />
 
       <main className="MainLayout-body">
         <div className="MainLayout-toolbar" />

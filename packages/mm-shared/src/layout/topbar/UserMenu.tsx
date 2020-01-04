@@ -7,10 +7,11 @@ import { Link } from 'react-router-dom'
 
 interface IUserMenuProps {
   user: User
+  isHost: boolean
   onLogout(): any
 }
 
-const UserMenu = ({ user, onLogout }: IUserMenuProps) => {
+const UserMenu = ({ user, onLogout, isHost }: IUserMenuProps) => {
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
   const isOpen = Boolean(menuLink)
   return (
@@ -36,9 +37,16 @@ const UserMenu = ({ user, onLogout }: IUserMenuProps) => {
         open={isOpen}
         onClose={handleMenuClose}
       >
-        <a href="https://guests.musicmonkey.io/">
-          <MenuItem>Guest Mode</MenuItem>
-        </a>
+        {isHost ? (
+          <a href="https://guests.musicmonkey.io/">
+            <MenuItem>Guest Mode</MenuItem>
+          </a>
+        ) : (
+          <a href="https://musicmonkey.io/">
+            <MenuItem>Host Mode</MenuItem>
+          </a>
+        )}
+
         <Link to="/account">
           <MenuItem>My Account</MenuItem>
         </Link>
