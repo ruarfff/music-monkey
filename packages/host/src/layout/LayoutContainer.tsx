@@ -6,7 +6,8 @@ import Layout from './Layout'
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   userLoading: state.user.isLoading,
-  userError: state.user.error
+  userError: state.user.error,
+  event: state.event.event
 })
 
 const mapDispatchToProps = {}

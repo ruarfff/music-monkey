@@ -7,9 +7,11 @@ import { CookiesProvider } from 'react-cookie'
 import AuthLoader from './auth/AuthLoaderContainer'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
+import { SnackbarProvider } from 'notistack'
 import SubscriptionWrapper from './subscriptions/SubscriptionWrapperContainer'
-import { Routes } from './routes'
+import { Routes } from './routes/routes'
 import theme from 'theme/theme'
+import RouteContextProvider from 'routes/RouteContext'
 
 interface IAppProps {
   store: Store
@@ -20,17 +22,25 @@ const App = ({ store, history }: IAppProps) => (
   <StylesProvider injectFirst>
     <CssBaseline />
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <CookiesProvider>
-            <AuthLoader>
-              <SubscriptionWrapper>
-                <Routes history={history} />
-              </SubscriptionWrapper>
-            </AuthLoader>
-          </CookiesProvider>
-        </ConnectedRouter>
-      </Provider>
+      <SnackbarProvider
+        maxSnack={3}
+        preventDuplicate={true}
+        autoHideDuration={1500}
+      >
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <CookiesProvider>
+              <AuthLoader>
+                <SubscriptionWrapper>
+                  <RouteContextProvider>
+                    <Routes history={history} />
+                  </RouteContextProvider>
+                </SubscriptionWrapper>
+              </AuthLoader>
+            </CookiesProvider>
+          </ConnectedRouter>
+        </Provider>
+      </SnackbarProvider>
     </ThemeProvider>
   </StylesProvider>
 )

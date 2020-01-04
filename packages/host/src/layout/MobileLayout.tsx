@@ -1,10 +1,14 @@
 import React from 'react'
+import { BottomBar, Event } from 'mm-shared'
 import Content from './ContentContainer'
 import TopBar from './topbar/TopBarContainer'
-import BottomBar from './bottombar/BottomBarContainer'
 import './MobileLayout.scss'
 
-const MobileLayout = () => {
+interface MobileLayoutProps {
+  event: Event
+}
+
+const MobileLayout = ({ event }: MobileLayoutProps) => {
   return (
     <div className="MobileLayout-root">
       <TopBar />
@@ -14,7 +18,7 @@ const MobileLayout = () => {
         <Content />
       </main>
 
-      <BottomBar />
+      <BottomBar event={event} />
     </div>
   )
 }

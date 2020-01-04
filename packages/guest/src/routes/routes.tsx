@@ -4,8 +4,8 @@ import { History } from 'history'
 import { Route, Switch } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
-import IRootState from './rootState'
-import LoadingPage from './loading/LoadingPage'
+import IRootState from '../rootState'
+import LoadingPage from '../loading/LoadingPage'
 
 const Account = lazy(() => import('account/AccountContainer'))
 const Login = lazy(() => import('auth/LoginContainer'))
@@ -14,17 +14,18 @@ const Event = lazy(() => import('event/components/EventViewContainer'))
 const EventListView = lazy(() =>
   import('event/components/EventListViewContainer')
 )
-const Finder = lazy(() => import('./finder/FinderContainer'))
-const Invite = lazy(() => import('./invite/components/InviteContainer'))
-const MainLayout = lazy(() => import('./layout/MainLayoutContainer'))
+const Finder = lazy(() => import('../finder/FinderContainer'))
+const Invite = lazy(() => import('../invite/components/InviteContainer'))
+const Insights = lazy(() => import('insights/InsightsContainer'))
+const MainLayout = lazy(() => import('../layout/MainLayoutContainer'))
 const Playlist = lazy(() =>
-  import('./playlist/components/PlaylistViewContainer')
+  import('../playlist/components/PlaylistViewContainer')
 )
 const PlaylistListView = lazy(() =>
-  import('./playlist/components/PlaylistListViewContainer')
+  import('../playlist/components/PlaylistListViewContainer')
 )
-const Requests = lazy(() => import('./requests/RequestsContainer'))
-const Stepper = lazy(() => import('./stepper/StepperContainer'))
+const Requests = lazy(() => import('../requests/RequestsContainer'))
+const Stepper = lazy(() => import('../stepper/StepperContainer'))
 
 const locationHelper = locationHelperBuilder({})
 
@@ -44,7 +45,7 @@ const userIsAuthenticated = connectedRouterRedirect({
   wrapperDisplayName: 'UserIsAuthenticated'
 }) as any
 
-const routes = [
+export const routes = [
   {
     component: Invite,
     path: '/invite/:inviteId',
@@ -113,6 +114,11 @@ const routes = [
         component: userIsAuthenticated(Finder),
         path: '/finder/:eventId',
         exact: true
+      },
+      {
+        component: Insights,
+        exact: true,
+        path: '/insights'
       }
     ]
   }

@@ -5,7 +5,8 @@ import ShowChartIcon from '@material-ui/icons/ShowChart'
 import EventIcon from '@material-ui/icons/Event'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
-import { Event } from 'mm-shared'
+import { withRouter } from 'react-router'
+import { Event } from 'event'
 import Monkey from 'assets/finder-logo.png'
 import './BottomBar.scss'
 
@@ -22,9 +23,9 @@ const checkLocation = (pathname: string, path: string) => {
 const BottomBar = ({ location, event }: IBottomBar) => {
   const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
-  const eventsLink = '/' //eventId ? `/events/${eventId}` : '/'
-  const playlistsLink = '/playlists'
-  const requestsLink = '/requests' //eventId ? `/requests/${eventId}` : '/requests'
+  const eventsLink = eventId ? `/events/${eventId}` : '/'
+  const playlistsLink = eventId ? `/playlists/${eventId}` : '/playlists'
+  const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
   const finderLink = eventId ? `/finder/${eventId}` : '/finder'
   const accountLink = '/account'
   const createLink = '/create-event'
@@ -102,4 +103,4 @@ const BottomBar = ({ location, event }: IBottomBar) => {
   )
 }
 
-export default BottomBar
+export default withRouter(BottomBar)

@@ -56,6 +56,11 @@ export const routes = [
     path: '/playlists'
   },
   {
+    component: EventView,
+    exact: true,
+    path: '/playlists/:eventId'
+  },
+  {
     component: CatalogueBrowser,
     path: '/catalogue'
   },
@@ -68,6 +73,11 @@ export const routes = [
     component: Requests,
     exact: true,
     path: '/requests'
+  },
+  {
+    component: Requests,
+    exact: true,
+    path: '/requests/:eventId'
   },
   {
     component: Insights,
