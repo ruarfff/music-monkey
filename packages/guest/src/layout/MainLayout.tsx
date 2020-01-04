@@ -1,8 +1,7 @@
 import React, { useEffect, Suspense } from 'react'
 import { isEmpty, find } from 'lodash'
 import { Route, RouteComponentProps } from 'react-router'
-import BottomBar from 'layout/bottombar/BottomBarContainer'
-import { Action, Event } from 'mm-shared'
+import { Action, Event, BottomBar } from 'mm-shared'
 import { RouteWithSubRoutes } from 'routes/routes'
 import TopBar from 'layout/topbar/TopBarContainer'
 import LoadingSpinner from '../loading/LoadingSpinner'
@@ -71,7 +70,7 @@ const MainLayout = ({
           ))}
         </Suspense>
       </main>
-      <BottomBar />
+      <BottomBar event={selectedEvent} isHost={false} />
     </div>
   )
 }

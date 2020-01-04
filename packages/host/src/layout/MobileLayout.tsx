@@ -18,7 +18,7 @@ const MobileLayout = ({ event }: MobileLayoutProps) => {
         <Content />
       </main>
 
-      <BottomBar event={event} />
+      <BottomBar event={event} isHost={true} />
     </div>
   )
 }
