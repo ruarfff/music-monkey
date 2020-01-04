@@ -1,10 +1,10 @@
 import React, { useEffect, Suspense } from 'react'
 import { isEmpty, find } from 'lodash'
 import { Route, RouteComponentProps } from 'react-router'
-import BottomBar from 'bottombar/BottomBarContainer'
+import BottomBar from 'layout/bottombar/BottomBarContainer'
 import { Action, Event } from 'mm-shared'
 import { RouteWithSubRoutes } from 'routes'
-import TopBar from 'topbar/TopBarContainer'
+import TopBar from 'layout/topbar/TopBarContainer'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import './MainLayout.scss'
 

@@ -1,8 +1,9 @@
-import { useState } from 'react'
+const React = require('react')
+const { useState } = React
 
 export default function useMenuActive() {
   const [menuLink, setMenuLink] = useState(undefined)
-  const handleMenuOpen = (e: any) => {
+  const handleMenuOpen = (e: MouseEvent): void => {
     setMenuLink(e.currentTarget)
   }
 

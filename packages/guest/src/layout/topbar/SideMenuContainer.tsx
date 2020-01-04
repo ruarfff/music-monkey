@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import IRootState from '../rootState'
+import IRootState from '../../rootState'
 import SideMenu from './SideMenu'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -10,9 +10,6 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {}
 
-const SideMenuContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SideMenu)
+const SideMenuContainer = connect(mapStateToProps, mapDispatchToProps)(SideMenu)
 
 export default withRouter(SideMenuContainer)
