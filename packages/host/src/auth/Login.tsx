@@ -1,7 +1,6 @@
 import React from 'react'
 import logo from 'assets/logo-home.png'
-import { Action } from 'mm-shared'
-import LoadingSpinner from 'loading/LoadingSpinner'
+import { Action, LoadingSpinner } from 'mm-shared'
 import ErrorNotification from 'util/ErrorNotification'
 import IAuthState from './IAuthState'
 import spotifyLoginButtonImage from 'assets/spotify-login.svg'
@@ -17,7 +16,6 @@ interface ILoginProps {
 }
 
 class Login extends React.Component<ILoginProps, {}> {
-
   public render() {
     const { isAuthenticating, authError } = this.props.auth
     if (isAuthenticating) {

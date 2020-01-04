@@ -1,8 +1,13 @@
 import React from 'react'
 import isEmpty from 'lodash/isEmpty'
 import { Sizes } from 'react-sizes'
-import LoadingSpinner from 'loading/LoadingSpinner'
-import { User, Event, DesktopLayout, MainLayout } from 'mm-shared'
+import {
+  User,
+  Event,
+  DesktopLayout,
+  MainLayout,
+  LoadingSpinner
+} from 'mm-shared'
 import LoginError from './LoginError'
 import Content from './ContentContainer'
 

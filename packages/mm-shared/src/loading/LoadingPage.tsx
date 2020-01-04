@@ -1,11 +1,11 @@
 import * as React from 'react'
-import Images from '../img/ImportImg'
+import logo from '../assets/MM_Logo-logo-purple.png'
 import './LoadingPage.scss'
 
 const LoadingPage = () => (
   <div className="loadingPage">
     <div className="loadingPage-container">
-      <img alt="loading logo" className="ing-logo" src={Images.Logo} />
+      <img alt="loading logo" className="ing-logo" src={logo} />
     </div>
   </div>
 )

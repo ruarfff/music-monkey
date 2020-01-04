@@ -3,10 +3,8 @@ import { Route, Switch } from 'react-router'
 import { RouteContext } from 'routes/RouteContext'
 import { RouteWithSubRoutes } from 'routes/routes'
 import EventListView from 'event/EventListViewContainer'
-import LoadingSpinner from 'loading/LoadingSpinner'
-import { Action } from 'mm-shared'
-import { Event } from 'mm-shared'
 import isEmpty from 'lodash/isEmpty'
+import { Action, Event, LoadingSpinner } from 'mm-shared'
 
 interface ContentProps {
   events: Event[]

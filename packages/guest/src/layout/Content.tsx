@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, Suspense } from 'react'
 import { RouteContext } from 'routes/RouteContext'
 import { RouteWithSubRoutes } from 'routes/routes'
-import LoadingSpinner from 'loading/LoadingSpinner'
-import { Action, Event } from 'mm-shared'
+import { Action, Event, LoadingSpinner } from 'mm-shared'
 import isEmpty from 'lodash/isEmpty'
 import { Switch } from 'react-router'
 

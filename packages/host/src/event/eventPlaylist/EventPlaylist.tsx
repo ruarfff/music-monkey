@@ -12,8 +12,14 @@ import DoneAll from '@material-ui/icons/DoneAll'
 import Undo from '@material-ui/icons/Undo'
 import classNames from 'classnames'
 import { DropResult } from 'react-beautiful-dnd'
-import { Action, Event, Playlist, PlaylistItem, Track } from 'mm-shared'
-import LoadingSpinner from 'loading/LoadingSpinner'
+import {
+  Action,
+  Event,
+  Playlist,
+  PlaylistItem,
+  Track,
+  LoadingSpinner
+} from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import ITrackWithFeatures from 'track/ITrackWithFeatures'
 import TrackList from 'track/TrackList'

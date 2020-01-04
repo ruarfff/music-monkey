@@ -1,6 +1,5 @@
 import React from 'react'
-import { Action } from 'mm-shared'
-import LoadingPage from 'loading/LoadingPage'
+import { Action, LoadingPage } from 'mm-shared'
 import './Login.scss'
 
 interface IAuthLoader {

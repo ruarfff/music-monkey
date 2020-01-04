@@ -3,12 +3,18 @@ import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
-import { Action, Event, PlaylistItem, Track, User } from 'mm-shared'
+import {
+  Action,
+  Event,
+  PlaylistItem,
+  Track,
+  User,
+  LoadingSpinner
+} from 'mm-shared'
 import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import IVote from 'vote/IVote'
 import ApprovedTracks from './ApprovedTracks'
 import PlaylistPlayer from './PlaylistPlayer'
-import LoadingSpinner from 'loading/LoadingSpinner'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import MaybeTracks from './MaybeTracks'
 import './PlaylistView.scss'

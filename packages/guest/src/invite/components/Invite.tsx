@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { Redirect, RouteComponentProps } from 'react-router'
-import { Action, Event, User } from 'mm-shared'
-import LoadingSpinner from 'loading/LoadingSpinner'
+import { Action, Event, User, LoadingSpinner } from 'mm-shared'
 import localStorage from 'storage/localStorage'
 import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 
