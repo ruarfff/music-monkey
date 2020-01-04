@@ -17,9 +17,6 @@ interface ILoginProps {
 }
 
 class Login extends React.Component<ILoginProps, {}> {
-  public componentDidMount() {
-    this.props.login()
-  }
 
   public render() {
     const { isAuthenticating, authError } = this.props.auth

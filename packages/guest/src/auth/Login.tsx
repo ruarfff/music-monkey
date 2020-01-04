@@ -20,9 +20,6 @@ interface ILoginProps {
 }
 
 class Login extends React.PureComponent<ILoginProps> {
-public componentDidMount() {
-    this.props.login()
-  }
   public render() {
     const { authError, inviteEvent } = this.props
     let spotifyLoginUrl

@@ -14,6 +14,7 @@ import Layout from 'layout/LayoutContainer'
 import { userIsAuthenticated, userIsNotAuthenticated } from 'routes/routes'
 import RouteContextProvider from 'routes/RouteContext'
 
+import AuthLoader from 'auth/AuthLoaderContainer'
 import Login from 'auth/LoginContainer'
 //import SignUp from 'auth/SignUpContainer'
 //import Invite from 'invite/components/InviteContainer'
@@ -36,18 +37,19 @@ const App = ({ store, history }: IAppProps) => (
         <Provider store={store}>
           <ConnectedRouter history={history}>
             <CookiesProvider>
-              <SubscriptionWrapper>
-                <RouteContextProvider>
-                  <Route path="/" component={userIsAuthenticated(Layout)} />
-                  <Route
-                    path="/login"
-                    component={userIsNotAuthenticated(Login)}
-                  />
-                  {/* <Route
+              <AuthLoader>
+                <SubscriptionWrapper>
+                  <RouteContextProvider>
+                    <Route path="/" component={userIsAuthenticated(Layout)} />
+                    <Route
+                      path="/login"
+                      component={userIsNotAuthenticated(Login)}
+                    />
+                    {/* <Route
                         path="/invite/:inviteId"
                         component={userIsNotAuthenticated(Invite)}
                       /> */}
-                  {/* <Route
+                    {/* <Route
                     path="/about"
                     component={userIsNotAuthenticated(Stepper)}
                   />
@@ -55,8 +57,9 @@ const App = ({ store, history }: IAppProps) => (
                     path="/signup"
                     component={userIsNotAuthenticated(SignUp)}
                   /> */}
-                </RouteContextProvider>
-              </SubscriptionWrapper>
+                  </RouteContextProvider>
+                </SubscriptionWrapper>
+              </AuthLoader>
             </CookiesProvider>
           </ConnectedRouter>
         </Provider>

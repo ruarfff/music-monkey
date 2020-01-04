@@ -16,6 +16,7 @@ import Layout from 'layout/LayoutContainer'
 import Login from 'auth/LoginContainer'
 import { userIsAuthenticated, userIsNotAuthenticated } from 'routes/routes'
 import RouteContextProvider from 'routes/RouteContext'
+import AuthLoader from 'auth/AuthLoaderContainer'
 
 interface IAppProps {
   store: Store
@@ -35,6 +36,7 @@ const App = ({ store, history }: IAppProps) => (
           <Provider store={store}>
             <ConnectedRouter history={history}>
               <CookiesProvider>
+<AuthLoader>
                 <SubscriptionWrapper>
                   <RouteContextProvider>
                     <Route path="/" component={userIsAuthenticated(Layout)} />
@@ -44,6 +46,7 @@ const App = ({ store, history }: IAppProps) => (
                     />
                   </RouteContextProvider>
                 </SubscriptionWrapper>
+</AuthLoader>
               </CookiesProvider>
             </ConnectedRouter>
           </Provider>
