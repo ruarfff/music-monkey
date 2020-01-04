@@ -1,0 +1,44 @@
+.CustomInput-input {
+  font-size: 24px;
+  border-radius: 4px;
+  border: 1px solid #979797;
+  padding-left: 16px;
+  min-height: 40px;
+  &:hover:not($disabled):before {
+    border-bottom: 1px solid #979797!important;
+  }
+  &:before {
+    content: none;
+  }
+  &:after {
+    content: none;
+  }
+}
+
+.CustomInput-label {
+  padding-left: 16px;
+  &:hover:not($disabled):before {
+    border-bottom: none !important;
+  }
+  padding-top: 4px;
+}
+
+.CustomInput-text-area {
+  border-radius: 4px;
+  border: 1px solid #979797;
+  padding-left: 16px;
+  min-height: 240px;
+  &:hover:not($disabled):before {
+    border-bottom: 1px solid #979797 !important;
+  }
+  &:before {
+    content: none;
+  }
+  &:after {
+    content: none;
+  }
+}
+
+.CustomInput-form-control {
+  margin: 0;
+}

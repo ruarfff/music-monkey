@@ -3,6 +3,7 @@ import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import { User, useMenuActive } from 'mm-shared'
 import { ProfileImage } from './ProfileImage'
 import './UserMenu.scss'
+import { Link } from 'react-router-dom'
 
 interface IUserMenuProps {
   user: User
@@ -38,6 +39,9 @@ const UserMenu = ({ user, onLogout }: IUserMenuProps) => {
         <a href="https://guests.musicmonkey.io/">
           <MenuItem>Guest Mode</MenuItem>
         </a>
+        <Link to="/account">
+          <MenuItem>My Account</MenuItem>
+        </Link>
         <MenuItem onClick={onLogout}>Logout</MenuItem>
       </Menu>
     </div>

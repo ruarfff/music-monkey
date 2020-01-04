@@ -1,11 +1,10 @@
-import React from 'react'
 import Button from '@material-ui/core/Button'
+import * as React from 'react'
 import AvatarEditor from 'react-avatar-editor'
 import './EditAvatar.scss'
 
 interface IEditAvatarProps {
   url: string
-
   toggleEditAvatarModal(): void
 }
 
@@ -19,8 +18,8 @@ class EditAvatar extends React.Component<IEditAvatarProps> {
 
   public render() {
     return (
-      <div className="EditAvatar-root">
-        <div className="avatarEditContainer">
+      <div className="EditAvatar-wrapper">
+        <div className="EditAvatar-container">
           <AvatarEditor
             ref={this.setEditorRef}
             width={110}
@@ -31,7 +30,7 @@ class EditAvatar extends React.Component<IEditAvatarProps> {
             rotate={0}
             image={this.state.newUrl}
           />
-          <div className="avatarControls">
+          <div className="EditAvatar-controls">
             <input type="file" onChange={this.setFile} />
 
             <div>
