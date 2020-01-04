@@ -1,13 +1,13 @@
 import React, { useEffect, Suspense } from 'react'
 import { isEmpty, find } from 'lodash'
 import { Route, RouteComponentProps } from 'react-router'
-import { Action, Event, BottomBar } from 'mm-shared'
+import { Action, Event, BottomBar, TopBar, User } from 'mm-shared'
 import { RouteWithSubRoutes } from 'routes/routes'
-import TopBar from 'layout/topbar/TopBarContainer'
 import LoadingSpinner from '../loading/LoadingSpinner'
 import './MainLayout.scss'
 
 interface IMainLayoutProps extends RouteComponentProps<any> {
+  user: User
   routes: Route[]
   events: Event[]
   eventId: string
@@ -17,6 +17,7 @@ interface IMainLayoutProps extends RouteComponentProps<any> {
   eventsLoading: boolean
   inviteEvent: Event
   fetchingRsvp: boolean
+  logout(): void
   fetchUsersEvents(): Action
   getEvent(eventId: string): Action
   getSuggestions(eventId: string): Action
@@ -24,11 +25,13 @@ interface IMainLayoutProps extends RouteComponentProps<any> {
 }
 
 const MainLayout = ({
+  user,
   routes,
   events,
   eventId,
   selectedEvent,
   isAuthenticated,
+  logout,
   fetchUsersEvents,
   getEvent,
   eventLoading,
@@ -62,7 +65,7 @@ const MainLayout = ({
 
   return (
     <div className="MainLayout-root">
-      <TopBar />
+      <TopBar logout={logout} event={selectedEvent} user={user} />
       <main className="MainLayout-body">
         <Suspense fallback={<LoadingSpinner />}>
           {routes.map((route, i) => (

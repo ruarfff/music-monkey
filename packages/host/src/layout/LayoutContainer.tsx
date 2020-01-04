@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import withSizes, { Sizes } from 'react-sizes'
 import IRootState from 'rootState'
+import { logout } from 'auth/authActions'
 import Layout from './Layout'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -10,7 +11,7 @@ const mapStateToProps = (state: IRootState) => ({
   event: state.event.event
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = { logout }
 
 const mapSizesToProps = ({ width, height }: Sizes) => ({
   isDesktop: width > 1024,

@@ -1,7 +1,7 @@
+import React from 'react'
 import { Avatar } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import * as React from 'react'
-import { User }  from 'mm-shared'
+import { User } from '../../'
 
 interface IProfileImageProps {
   user: User

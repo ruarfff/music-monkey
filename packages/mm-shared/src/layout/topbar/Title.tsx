@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { Event } from 'mm-shared'
+import { Event } from '../../'
 import './Title.scss'
 
 const pathToTitle = {

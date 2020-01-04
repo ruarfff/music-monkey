@@ -13,6 +13,7 @@ interface ILayoutProps {
   userError: Error
   isDesktop: boolean
   event: Event
+  logout(): void
 }
 
 const Layout = ({
@@ -20,12 +21,17 @@ const Layout = ({
   userLoading,
   userError,
   isDesktop,
-  event
+  event,
+  logout
 }: ILayoutProps & Sizes) => {
   return (
     <div>
       {!isEmpty(user) &&
-        (isDesktop ? <DesktopLayout /> : <MobileLayout event={event} />)}
+        (isDesktop ? (
+          <DesktopLayout />
+        ) : (
+          <MobileLayout event={event} user={user} logout={logout} />
+        ))}
       {userLoading && <LoadingSpinner />}
       {userError.message && <LoginError />}
     </div>

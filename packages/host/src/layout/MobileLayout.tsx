@@ -1,17 +1,18 @@
 import React from 'react'
-import { BottomBar, Event } from 'mm-shared'
+import { TopBar, BottomBar, Event, User } from 'mm-shared'
 import Content from './ContentContainer'
-import TopBar from './topbar/TopBarContainer'
 import './MobileLayout.scss'
 
 interface MobileLayoutProps {
   event: Event
+  user: User
+  logout(): void
 }
 
-const MobileLayout = ({ event }: MobileLayoutProps) => {
+const MobileLayout = ({ event, user, logout }: MobileLayoutProps) => {
   return (
     <div className="MobileLayout-root">
-      <TopBar />
+      <TopBar event={event} user={user} logout={logout} />
 
       <main className="MobileLayout-content">
         <div className="MobileLayout-toolbar" />

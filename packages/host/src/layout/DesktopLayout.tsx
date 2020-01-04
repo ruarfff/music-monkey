@@ -7,7 +7,6 @@ import logo from 'assets/logo-home.png'
 import UserMenu from './UserMenuContainer'
 import NavMenu from './NavMenu'
 import Content from './ContentContainer'
-import Title from './TitleContainer'
 import CreateEventMenuButton from './CreateEventMenuButton'
 import './DesktopLayout.scss'
 
@@ -34,8 +33,6 @@ const DesktopLayout = () => {
               <MenuIcon />
             </IconButton>
           )}
-
-          <Title />
           <CreateEventMenuButton />
           <UserMenu />
         </Toolbar>

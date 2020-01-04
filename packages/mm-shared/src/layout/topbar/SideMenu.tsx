@@ -12,9 +12,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import MenuIcon from '@material-ui/icons/Menu'
+import { withRouter } from 'react-router'
 import { Link, RouteComponentProps } from 'react-router-dom'
+import { User, Event, useMenuActive } from '../../'
 import { ProfileImage } from './ProfileImage'
-import { User, Event, useMenuActive } from 'mm-shared'
 import './SideMenu.scss'
 
 interface ISideMenuProps extends RouteComponentProps<any> {
@@ -107,4 +108,4 @@ const SideMenu = ({ user, location, event }: ISideMenuProps) => {
   )
 }
 
-export default SideMenu
+export default withRouter(SideMenu)
