@@ -2,10 +2,9 @@ import React from 'react'
 import isEmpty from 'lodash/isEmpty'
 import { Sizes } from 'react-sizes'
 import LoadingSpinner from 'loading/LoadingSpinner'
-import { User, Event } from 'mm-shared'
+import { User, Event, DesktopLayout, MainLayout } from 'mm-shared'
 import LoginError from './LoginError'
-import MobileLayout from './MobileLayout'
-import DesktopLayout from './DesktopLayout'
+import Content from './ContentContainer'
 
 interface ILayoutProps {
   user: User
@@ -28,9 +27,18 @@ const Layout = ({
     <div>
       {!isEmpty(user) &&
         (isDesktop ? (
-          <DesktopLayout />
+          <DesktopLayout
+            event={event}
+            user={user}
+            logout={logout}
+            isHost={true}
+          >
+            <Content />
+          </DesktopLayout>
         ) : (
-          <MobileLayout event={event} user={user} logout={logout} />
+          <MainLayout event={event} user={user} logout={logout} isHost={true}>
+            <Content />
+          </MainLayout>
         ))}
       {userLoading && <LoadingSpinner />}
       {userError.message && <LoginError />}

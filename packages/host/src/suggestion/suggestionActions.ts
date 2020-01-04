@@ -16,6 +16,8 @@ export const REJECT_SUGGESTION = 'REJECT_SUGGESTION'
 export const REJECT_SUGGESTION_SUCCESS = 'REJECT_SUGGESTION_SUCCESS'
 export const REJECT_SUGGESTION_FAILED = 'REJECT_SUGGESTION_FAILED'
 
+export const CLEAR_SUGGESTION = 'CLEAR_SUGGESTION'
+
 export const getEventSuggestions = (eventId: string): Action => ({
   type: FETCH_SUGGESTIONS_INITIATED,
   payload: eventId

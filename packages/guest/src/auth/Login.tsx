@@ -14,11 +14,15 @@ interface ILoginProps {
   authError: any
   inviteEvent: Event
   clearAuthError(): Action
+  login(): Action
   loginAsGuest(): Action
   loginWithPassword(email: string, password: string): Action
 }
 
 class Login extends React.PureComponent<ILoginProps> {
+public componentDidMount() {
+    this.props.login()
+  }
   public render() {
     const { authError, inviteEvent } = this.props
     let spotifyLoginUrl

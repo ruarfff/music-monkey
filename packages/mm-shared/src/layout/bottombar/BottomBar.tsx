@@ -6,7 +6,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import { withRouter } from 'react-router'
 import { Event } from '../../event'
-import Monkey from 'assets/finder-logo.png'
+import Monkey from '../../assets/finder-logo.png'
 import './BottomBar.scss'
 
 interface IBottomBar extends RouteComponentProps<any> {

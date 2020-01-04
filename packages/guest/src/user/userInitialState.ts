@@ -3,6 +3,7 @@ import IUserState from './IUserState'
 
 export const emptyUser = {
   data: {} as User,
-  error: undefined,
-  isLoading: false
+  error: {} as Error,
+  isLoading: false,
+  isUpdating: false
 } as IUserState

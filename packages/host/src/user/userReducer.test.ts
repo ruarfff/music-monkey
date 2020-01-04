@@ -1,5 +1,9 @@
 import { Action } from 'mm-shared'
-import { FETCH_USER, FETCH_USER_ERROR, FETCH_USER_SUCCESS } from './userActions'
+import {
+  FETCH_USER,
+  FETCH_USER_ERROR,
+  FETCH_USER_SUCCESS
+} from './userActions'
 import { emptyUser } from './userInitialState'
 import user from './userReducer'
 

@@ -1,3 +1,4 @@
+import { LOGGED_OUT } from 'auth/authActions'
 import { Action } from 'mm-shared'
 import {
   FETCH_USER,
@@ -27,7 +28,9 @@ export default function user(state = emptyUser, { type, payload }: Action) {
     case UPDATE_USER_SUCCESS:
       return { ...state, data: payload.data}
     case UPDATE_USER_FAILURE:
-      return { ...state, error: payload}
+      return { ...state, error: payload }
+    case LOGGED_OUT:
+      return { ...state, data: undefined, isLoading: false }
     default:
       return state
   }

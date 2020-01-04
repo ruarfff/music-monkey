@@ -32,7 +32,8 @@ it('should handle FETCH_USER_SUCCESS', () => {
   ).toEqual({
     ...emptyUser,
     data: { id: 'test-id' },
-    isLoading: false
+    isLoading: false,
+    error: new Error()
   })
 })
 

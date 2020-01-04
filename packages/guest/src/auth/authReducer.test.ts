@@ -1,5 +1,6 @@
 import { Action } from 'mm-shared'
 import {
+  CLEAR_AUTH_ERROR,
   LOGGED_OUT,
   LOGGING_IN,
   LOGIN_FAILURE,
@@ -93,6 +94,20 @@ describe('authReducer', () => {
     ).toEqual({
       ...initialState,
       isAuthenticated: false
+    })
+  })
+
+  it('should handle CLEAR_AUTH_ERROR', () => {
+    expect(
+      auth(
+        { ...initialState, authError: 'test' },
+        {
+          type: CLEAR_AUTH_ERROR
+        }
+      )
+    ).toEqual({
+      ...initialState,
+      authError: undefined
     })
   })
 })

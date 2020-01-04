@@ -5,7 +5,7 @@ import Avatar from '@material-ui/core/Avatar/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import { User } from 'mm-shared'
+import { User } from '../../'
 import './UserMenu.scss'
 
 interface IUserMenuProps {

@@ -9,6 +9,9 @@ const mapDispatchToProps = {
   fetchUser
 }
 
-const UserContainer = connect(mapStateToProps, mapDispatchToProps)(User)
+const UserContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(User)
 
 export default UserContainer

@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import { Link, LinkProps } from 'react-router-dom'
-import logo from 'assets/marvin.png'
+import logo from '../../assets/marvin.png'
 import { withRouter, RouteComponentProps } from 'react-router'
 import './CreateEventMenuButton.scss'
 

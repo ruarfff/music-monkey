@@ -1,16 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import { Toolbar, AppBar, IconButton, Divider, Drawer } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import logo from 'assets/logo-home.png'
-import UserMenu from './UserMenuContainer'
+import logo from '../../assets/logo-home.svg'
+import UserMenu from './UserMenu'
 import NavMenu from './NavMenu'
-import Content from './ContentContainer'
 import CreateEventMenuButton from './CreateEventMenuButton'
+import { User, Event } from '../..'
 import './DesktopLayout.scss'
 
-const DesktopLayout = () => {
+interface DesktopLayoutProps {
+  event: Event
+  user: User
+  isHost: boolean
+  logout(): void
+}
+
+const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({
+  children,
+  user,
+  isHost,
+  logout
+}) => {
   const [navOpen, setNavOpen] = useState(true)
   const handleNavToggle = () => {
     setNavOpen(!navOpen)
@@ -34,7 +46,7 @@ const DesktopLayout = () => {
             </IconButton>
           )}
           <CreateEventMenuButton />
-          <UserMenu />
+          <UserMenu user={user} logout={logout} />
         </Toolbar>
       </AppBar>
 
@@ -67,7 +79,7 @@ const DesktopLayout = () => {
         }`}
       >
         <div className="DesktopLayout-toolbar" />
-        <Content />
+        {children}
       </main>
     </div>
   )

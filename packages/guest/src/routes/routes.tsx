@@ -1,126 +1,91 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy } from 'react'
 import { push } from 'connected-react-router'
-import { History } from 'history'
-import { Route, Switch } from 'react-router'
+import { Route } from 'react-router'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
-import IRootState from '../rootState'
-import LoadingPage from '../loading/LoadingPage'
+import IRootState from 'rootState'
 
 const Account = lazy(() => import('account/AccountContainer'))
-const Login = lazy(() => import('auth/LoginContainer'))
-const SignUp = lazy(() => import('auth/SignUpContainer'))
 const Event = lazy(() => import('event/components/EventViewContainer'))
 const EventListView = lazy(() =>
   import('event/components/EventListViewContainer')
 )
-const Finder = lazy(() => import('../finder/FinderContainer'))
-const Invite = lazy(() => import('../invite/components/InviteContainer'))
+const Finder = lazy(() => import('finder/FinderContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
-const MainLayout = lazy(() => import('../layout/MainLayoutContainer'))
-const Playlist = lazy(() =>
-  import('../playlist/components/PlaylistViewContainer')
-)
+const Playlist = lazy(() => import('playlist/components/PlaylistViewContainer'))
 const PlaylistListView = lazy(() =>
-  import('../playlist/components/PlaylistListViewContainer')
+  import('playlist/components/PlaylistListViewContainer')
 )
-const Requests = lazy(() => import('../requests/RequestsContainer'))
-const Stepper = lazy(() => import('../stepper/StepperContainer'))
+const Requests = lazy(() => import('requests/RequestsContainer'))
 
 const locationHelper = locationHelperBuilder({})
 
-const userIsNotAuthenticated = connectedRouterRedirect({
+export const userIsNotAuthenticated = connectedRouterRedirect({
   allowRedirectBack: false,
   authenticatedSelector: (state: IRootState) => !state.auth.isAuthenticated,
-  redirectPath: (state: IRootState, ownProps: any) =>
+  redirectPath: (state, ownProps) =>
     locationHelper.getRedirectQueryParam(ownProps) || '/',
   wrapperDisplayName: 'UserIsNotAuthenticated'
-}) as any
+})
 
-const userIsAuthenticated = connectedRouterRedirect({
+export const userIsAuthenticated = connectedRouterRedirect({
   authenticatedSelector: (state: IRootState) =>
     state.auth.isAuthenticated || state.auth.isAuthenticating,
   redirectAction: push,
   redirectPath: '/login',
   wrapperDisplayName: 'UserIsAuthenticated'
-}) as any
+})
 
 export const routes = [
   {
-    component: Invite,
-    path: '/invite/:inviteId',
-    exact: true
-  },
-  {
-    component: userIsNotAuthenticated(Stepper),
-    path: '/about',
-    exact: true
-  },
-  {
-    component: userIsNotAuthenticated(SignUp),
-    path: '/signup',
-    exact: true
-  },
-  {
-    component: userIsNotAuthenticated(Login),
-    path: '/login',
-    exact: true
-  },
-  {
-    component: MainLayout,
+    component: EventListView,
     path: '/',
-    routes: [
-      {
-        component: userIsAuthenticated(EventListView),
-        path: '/',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Event),
-        path: '/events/:eventId',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Account),
-        path: '/account',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Requests),
-        path: '/requests',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Requests),
-        path: '/requests/:eventId',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(PlaylistListView),
-        path: '/playlists',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Playlist),
-        path: '/playlists/:eventId',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Finder),
-        path: '/finder',
-        exact: true
-      },
-      {
-        component: userIsAuthenticated(Finder),
-        path: '/finder/:eventId',
-        exact: true
-      },
-      {
-        component: Insights,
-        exact: true,
-        path: '/insights'
-      }
-    ]
+    exact: true
+  },
+  {
+    component: Event,
+    path: '/events/:eventId',
+    exact: true
+  },
+  {
+    component: Account,
+    path: '/account',
+    exact: true
+  },
+  {
+    component: Requests,
+    path: '/requests',
+    exact: true
+  },
+  {
+    component: Requests,
+    path: '/requests/:eventId',
+    exact: true
+  },
+  {
+    component: PlaylistListView,
+    path: '/playlists',
+    exact: true
+  },
+  {
+    component: Playlist,
+    path: '/playlists/:eventId',
+    exact: true
+  },
+  {
+    component: Finder,
+    path: '/finder',
+    exact: true
+  },
+  {
+    component: Finder,
+    path: '/finder/:eventId',
+    exact: true
+  },
+  {
+    component: Insights,
+    exact: true,
+    path: '/insights'
   }
 ]
 
@@ -135,21 +100,3 @@ export const RouteWithSubRoutes = (route: any) => (
     render={renderSubRoutes(route)}
   />
 )
-
-interface IRouterProps {
-  history: History
-}
-
-export const Routes: React.SFC<IRouterProps> = ({ history }) => {
-  const fof = () => <div>404</div>
-  return (
-    <Suspense fallback={<LoadingPage />}>
-      <Switch>
-        {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-        <Route render={fof} />
-      </Switch>
-    </Suspense>
-  )
-}

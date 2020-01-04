@@ -1,12 +1,18 @@
 import client from 'mm-client'
 import { User } from 'mm-shared'
 
-export const getUserById = async (userId: User) => {
-  const res = await client.get('/users/' + userId, {
+export const getUserById = async (userId: string) => {
+  const response = await client.get('/users/' + userId, {
     withCredentials: true
   })
+  return response
+}
 
-  return res
+export const getCurrentUser = async () => {
+  const response = await client.post('/users/me', {
+    withCredentials: true
+  })
+  return response
 }
 
 export const updateUserById = async (user: User) => {

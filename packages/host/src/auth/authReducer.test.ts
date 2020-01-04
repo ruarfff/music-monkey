@@ -4,7 +4,10 @@ import {
   LOGGED_OUT,
   LOGGING_IN,
   LOGIN_FAILURE,
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
+  SIGN_UP_FAILURE,
+  SIGN_UP_SUCCESS,
+  SIGNING_UP
 } from './authActions'
 import initialState from './authInitialState'
 import auth from './authReducer'
@@ -21,6 +24,13 @@ describe('authReducer', () => {
     })
   })
 
+  it('should handle SIGNING_UP', () => {
+    expect(auth(initialState, { type: SIGNING_UP })).toEqual({
+      ...initialState,
+      isAuthenticating: true
+    })
+  })
+
   it('should handle LOGIN_SUCCESS', () => {
     expect(
       auth(initialState, {
@@ -29,7 +39,21 @@ describe('authReducer', () => {
     ).toEqual({
       ...initialState,
       isAuthenticating: false,
-      isAuthenticated: true
+      isAuthenticated: true,
+      firstAuthenticated: false
+    })
+  })
+
+  it('should handle SIGN_UP_SUCCESS', () => {
+    expect(
+      auth(initialState, {
+        type: SIGN_UP_SUCCESS
+      })
+    ).toEqual({
+      ...initialState,
+      isAuthenticating: false,
+      isAuthenticated: true,
+      firstAuthenticated: false
     })
   })
 
@@ -37,6 +61,19 @@ describe('authReducer', () => {
     expect(
       auth(initialState, {
         type: LOGIN_FAILURE,
+        payload: new Error('oops')
+      })
+    ).toEqual({
+      ...initialState,
+      authError: new Error('oops'),
+      isAuthenticating: false
+    })
+  })
+
+  it('should handle SIGN_UP_FAILURE', () => {
+    expect(
+      auth(initialState, {
+        type: SIGN_UP_FAILURE,
         payload: new Error('oops')
       })
     ).toEqual({
