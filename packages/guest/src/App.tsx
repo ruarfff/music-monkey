@@ -16,9 +16,9 @@ import RouteContextProvider from 'routes/RouteContext'
 
 import AuthLoader from 'auth/AuthLoaderContainer'
 import Login from 'auth/LoginContainer'
-//import SignUp from 'auth/SignUpContainer'
-//import Invite from 'invite/components/InviteContainer'
-//import Stepper from 'stepper/StepperContainer'
+import SignUp from 'auth/SignUpContainer'
+import Invite from 'invite/components/InviteContainer'
+import Stepper from 'stepper/StepperContainer'
 
 interface IAppProps {
   store: Store
@@ -45,18 +45,18 @@ const App = ({ store, history }: IAppProps) => (
                       path="/login"
                       component={userIsNotAuthenticated(Login)}
                     />
-                    {/* <Route
-                        path="/invite/:inviteId"
-                        component={userIsNotAuthenticated(Invite)}
-                      /> */}
-                    {/* <Route
-                    path="/about"
-                    component={userIsNotAuthenticated(Stepper)}
-                  />
-                  <Route
-                    path="/signup"
-                    component={userIsNotAuthenticated(SignUp)}
-                  /> */}
+                    <Route
+                      path="/invite/:inviteId"
+                      component={userIsNotAuthenticated(Invite)}
+                    />
+                    <Route
+                      path="/about"
+                      component={userIsNotAuthenticated(Stepper)}
+                    />
+                    <Route
+                      path="/signup"
+                      component={userIsNotAuthenticated(SignUp)}
+                    />
                   </RouteContextProvider>
                 </SubscriptionWrapper>
               </AuthLoader>

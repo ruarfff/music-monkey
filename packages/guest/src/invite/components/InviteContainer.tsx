@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import IRootState from '../../rootState'
-import { fetchInvite } from '../inviteActions'
-import { fetchOrCreateRsvp } from '../../rsvp/rsvpActions'
+import IRootState from 'rootState'
+import { fetchInvite } from 'invite/inviteActions'
+import { fetchOrCreateRsvp } from 'rsvp/rsvpActions'
 import Invite from './Invite'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -15,9 +15,6 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = { fetchInvite, fetchOrCreateRsvp }
 
-const InviteContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Invite)
+const InviteContainer = connect(mapStateToProps, mapDispatchToProps)(Invite)
 
 export default InviteContainer

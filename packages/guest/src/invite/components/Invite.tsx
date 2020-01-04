@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
-import { Redirect, RouteComponentProps } from 'react-router'
+import { Redirect, RouteComponentProps, withRouter } from 'react-router'
 import { Action, Event, User, LoadingSpinner } from 'mm-shared'
 import localStorage from 'storage/localStorage'
 import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
@@ -53,4 +53,4 @@ const Invite = ({
   return <LoadingSpinner />
 }
 
-export default Invite
+export default withRouter(Invite)
