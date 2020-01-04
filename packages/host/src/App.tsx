@@ -1,6 +1,6 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { StylesProvider, ThemeProvider } from '@material-ui/styles'
+import { StylesProvider, ThemeProvider } from '@material-ui/core/styles'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { ConnectedRouter } from 'connected-react-router'
 import { History } from 'history'
@@ -36,17 +36,17 @@ const App = ({ store, history }: IAppProps) => (
           <Provider store={store}>
             <ConnectedRouter history={history}>
               <CookiesProvider>
-<AuthLoader>
-                <SubscriptionWrapper>
-                  <RouteContextProvider>
-                    <Route path="/" component={userIsAuthenticated(Layout)} />
-                    <Route
-                      path="/login"
-                      component={userIsNotAuthenticated(Login)}
-                    />
-                  </RouteContextProvider>
-                </SubscriptionWrapper>
-</AuthLoader>
+                <AuthLoader>
+                  <SubscriptionWrapper>
+                    <RouteContextProvider>
+                      <Route path="/" component={userIsAuthenticated(Layout)} />
+                      <Route
+                        path="/login"
+                        component={userIsNotAuthenticated(Login)}
+                      />
+                    </RouteContextProvider>
+                  </SubscriptionWrapper>
+                </AuthLoader>
               </CookiesProvider>
             </ConnectedRouter>
           </Provider>

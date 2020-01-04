@@ -1,6 +1,6 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { StylesProvider, ThemeProvider } from '@material-ui/styles'
+import { StylesProvider, ThemeProvider } from '@material-ui/core/styles'
 import { ConnectedRouter } from 'connected-react-router'
 import { History } from 'history'
 import { CookiesProvider } from 'react-cookie'
