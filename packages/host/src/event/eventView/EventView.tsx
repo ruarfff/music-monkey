@@ -11,9 +11,9 @@ import { RouteComponentProps } from 'react-router'
 import { Action, Event, LoadingSpinner } from 'mm-shared'
 import InviteCopyAlert from 'components/InviteLink/InviteCopyAlert'
 import EventFetchError from 'event/EventFetchError'
-import EventGuests from './components/Guests/EventGuestsContainer'
-import EventPlaylistView from './components/Playlist/EventPlaylistViewContainer'
-import EventSummaryView from './components/Summary/EventSummaryViewContainer'
+import EventGuests from './EventGuestsContainer'
+import EventPlaylistView from './EventPlaylistViewContainer'
+import EventSummaryView from './EventSummaryViewContainer'
 import './EventView.scss'
 
 const decorated = withStyle(() => ({

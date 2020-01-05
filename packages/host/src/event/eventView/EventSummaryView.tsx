@@ -1,7 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import { Event } from 'mm-shared'
-import EventGuestsRightSideView from '../Guests/EventGuestsRightSideViewContainer'
+import EventGuestsRightSideView from './EventGuestsRightSideViewContainer'
 import EventDetails from './EventDetailsContainer'
 import EventSummaryPlaylist from './EventSummaryPlaylistContainer'
 import './EventSummaryView.scss'
