@@ -5,7 +5,6 @@ import swal from '@sweetalert/with-react'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import EventPicker from 'event/eventSelect/EventPickerContainer'
-import checkEventIsLoaded from 'event/checkEventIsLoaded'
 import SelectedEvent from 'event/eventSelect/SelectedEvent'
 import Search from 'search/SearchContainer'
 import IPlaylistSuggestion from 'requests/IPlaylistSuggestion'
@@ -16,7 +15,8 @@ import {
   Track,
   User,
   Playlist,
-  useSwipeTabsIndex
+  useSwipeTabsIndex,
+  checkEventIsLoaded
 } from 'mm-shared'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
