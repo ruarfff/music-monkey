@@ -6,9 +6,9 @@ import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from 'rootState'
 
 const Account = lazy(() => import('account/AccountContainer'))
-const Event = lazy(() => import('event/components/EventViewContainer'))
+const Event = lazy(() => import('event/eventView/EventViewContainer'))
 const EventListView = lazy(() =>
-  import('event/components/EventListViewContainer')
+  import('event/eventList/EventListViewContainer')
 )
 const Finder = lazy(() => import('finder/FinderContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))

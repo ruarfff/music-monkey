@@ -11,8 +11,7 @@ import {
 import uniqBy from 'lodash/uniqBy'
 import isEmpty from 'lodash/isEmpty'
 import { Link } from 'react-router-dom'
-import { Action, Event, Playlist, LoadingSpinner } from 'mm-shared'
-import sortEvents from 'event/sortEvents'
+import { Action, Event, Playlist, LoadingSpinner, sortEvents } from 'mm-shared'
 import backgroundImage from 'assets/music-monkey.jpg'
 import './PlaylistListView.scss'
 

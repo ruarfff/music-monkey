@@ -1,9 +1,8 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
 import { isEmpty, uniqBy } from 'lodash'
-import { Event } from 'mm-shared'
+import { Event, sortEvents } from 'mm-shared'
 import PlaylistList from './PlaylistList'
-import sortEvents from 'event/sortEvents'
 
 interface PlaylistListViewProps {
   events: Event[]

@@ -1,10 +1,9 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
-import { isEmpty } from 'lodash'
-import { Event } from 'mm-shared'
-import EventList from './EventList'
-import sortEvents from './sortEvents'
 import { Link } from 'react-router-dom'
+import { isEmpty } from 'lodash'
+import { Event, sortEvents } from 'mm-shared'
+import EventList from './EventList'
 
 interface IEventListViewProps {
   events: Event[]

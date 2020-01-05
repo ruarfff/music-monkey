@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { Redirect } from 'react-router'
-import { Action, Event, LoadingSpinner, localStorage } from 'mm-shared'
+import {
+  Action,
+  Event,
+  LoadingSpinner,
+  localStorage,
+  sortEvents
+} from 'mm-shared'
 import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 import EventList from './EventList'
-import sortEvents from '../sortEvents'
 
 interface IEventListViewProps {
   selectedEvent: Event

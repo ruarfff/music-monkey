@@ -5,10 +5,5 @@
     "baseUrl": "./src"
   },
   "exclude": ["./src/setupTests.ts"],
-  "include": [
-    "./src",
-    "config-overrides.js",
-    "../mm-shared/src/user/userClient.ts",
-    "../mm-shared/src/util"
-  ]
+  "include": ["./src", "config-overrides.js"]
 }

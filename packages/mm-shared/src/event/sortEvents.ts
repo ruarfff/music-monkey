@@ -2,7 +2,7 @@ import moment from 'moment'
 import { sortBy } from 'lodash'
 import { Event } from 'mm-shared'
 
-const sortEvents = (events: Event[]) => {
+export const sortEvents = (events: Event[]) => {
   const now = moment()
   return {
     pastEvents: sortBy(
@@ -22,5 +22,3 @@ const sortEvents = (events: Event[]) => {
     ).reverse()
   }
 }
-
-export default sortEvents
