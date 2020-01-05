@@ -2,7 +2,7 @@ import React from 'react'
 import { Divider, List, ListItem, ListItemText } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
-import Image from 'components/Image'
+import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import { Playlist } from 'mm-shared'
 import getPlaylistImage from './getPlaylistImage'
@@ -28,10 +28,9 @@ const PlaylistList = ({ playlists }: IPlaylistListProps) => {
             to={'/events/' + playlist.eventId}
             className="PlaylistList-item"
           >
-            <Image
-              src={getPlaylistImage(playlist)}
+            <Img
+              src={[getPlaylistImage(playlist), backgroundImage]}
               alt="Playlist icon"
-              fallbackSrc={backgroundImage}
               className="PlaylistList-playlist-image"
             />
 

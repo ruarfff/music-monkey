@@ -16,7 +16,7 @@ import {
 } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import EditPlaylistPopup from './EditPlaylistPopup'
-import Image from 'components/Image'
+import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import getPlaylistImage from 'playlist/getPlaylistImage'
 import getPlaylistDuration from 'playlist/getPlaylistDuration'
@@ -141,11 +141,10 @@ const EventSummaryPlaylist = ({
             <Grid item={true} xs={6}>
               {image && (
                 <ButtonBase>
-                  <Image
+                  <Img
                     className="playlist-image"
-                    src={image}
+                    src={[image, backgroundImage]}
                     alt="Playlist"
-                    fallbackSrc={backgroundImage}
                   />
                 </ButtonBase>
               )}

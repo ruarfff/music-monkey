@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
-import Image from 'components/Image'
+import Img from 'react-image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
 import backgroundImage from 'assets/music-monkey.jpg'
 import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
@@ -81,10 +81,9 @@ const Playlists = ({
               onClick={handlePlaylistClicked(playlist)}
             >
               <ListItemAvatar>
-                <Image
+                <Img
                   alt={playlist.name}
-                  src={getPlaylistImage(playlist)}
-                  fallbackSrc={backgroundImage}
+                  src={[getPlaylistImage(playlist), backgroundImage]}
                   className="Playlists-image"
                 />
               </ListItemAvatar>

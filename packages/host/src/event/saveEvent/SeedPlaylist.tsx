@@ -18,7 +18,7 @@ import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
 import { Action, User, LoadingSpinner } from 'mm-shared'
 import marvin from 'assets/marvin.png'
-import Image from 'components/Image'
+import Img from 'react-image'
 import getPlaylistImage from 'playlist/getPlaylistImage'
 import backgroundImage from 'assets/music-monkey.jpg'
 import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
@@ -93,10 +93,9 @@ const SeedPlaylist = ({
               }}
             >
               <ListItemAvatar>
-                <Image
+                <Img
                   alt="New Playlist"
                   src={marvin}
-                  fallbackSrc={marvin}
                   className="SeedPlaylist-image-marvin"
                 />
               </ListItemAvatar>
@@ -129,10 +128,9 @@ const SeedPlaylist = ({
                   onClick={handlePlaylistClicked(playlist)}
                 >
                   <ListItemAvatar>
-                    <Image
+                    <Img
                       alt={playlist.name}
-                      src={getPlaylistImage(playlist)}
-                      fallbackSrc={backgroundImage}
+                      src={[getPlaylistImage(playlist), backgroundImage]}
                       className="SeedPlaylist-image"
                     />
                   </ListItemAvatar>
@@ -193,10 +191,9 @@ const SeedPlaylist = ({
                             className="SeedPlaylist-track"
                           >
                             <ListItemAvatar>
-                              <Image
-                                src={getTrackImage(track)}
+                              <Img
+                                src={[getTrackImage(track), backgroundImage]}
                                 alt={track.name}
-                                fallbackSrc={backgroundImage}
                                 className="SeedPlaylist-track-image"
                               />
                             </ListItemAvatar>

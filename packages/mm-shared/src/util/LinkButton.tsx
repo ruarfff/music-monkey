@@ -1,9 +1,15 @@
-import Button, { ButtonProps } from '@material-ui/core/Button/Button'
-import * as React from 'react'
-import { Link, LinkProps } from 'react-router-dom'
+import React from 'react'
+import {
+  Link as RouterLink,
+  LinkProps as RouterLinkProps
+} from 'react-router-dom'
+import Button from '@material-ui/core/Button'
+import './LinkButton.scss'
 
-const LinkButton: React.SFC<ButtonProps & LinkProps> = (props: any) => (
-  <Button component={Link} {...props} />
+const Link = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(
+  (props, ref) => <RouterLink innerRef={ref} {...props} />
 )
 
-export default LinkButton
+export default function LinkButton(props: any) {
+  return <Button className="LinkButton-root" component={Link} {...props} />
+}

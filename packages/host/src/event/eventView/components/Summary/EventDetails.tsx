@@ -6,7 +6,7 @@ import eventIcon from 'assets/date-icon.svg'
 import locationIcon from 'assets/location-marker-icon.svg'
 import MapItem from 'location/MapComponent'
 import { Event } from 'mm-shared'
-import Image from 'components/Image'
+import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 
 import './EventDetails.scss'
@@ -27,11 +27,10 @@ const EventDetails = ({ event, location }: IEventDetailsProps) => {
           </Typography>
         </Grid>
         <Grid item={true} xs={12}>
-          <Image
+          <Img
             className="event-img"
-            src={event.imageUrl}
+            src={[event.imageUrl, backgroundImage]}
             alt={event.name}
-            fallbackSrc={backgroundImage}
           />
         </Grid>
 

@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
-import Image from 'components/Image'
+import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import { Event } from 'mm-shared'
 import './EventList.scss'
@@ -57,10 +57,9 @@ const renderEvents = (events: Event[], status: string) => {
             to={'/events/' + event.eventId}
             className="EventList-item"
           >
-            <Image
-              src={event.imageUrl || backgroundImage}
+            <Img
+              src={[event.imageUrl, backgroundImage]}
               alt="Event icon"
-              fallbackSrc={backgroundImage}
               className="EventList-event-image"
             />
 

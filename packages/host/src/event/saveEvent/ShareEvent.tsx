@@ -5,9 +5,8 @@ import { Field, FieldProps } from 'formik'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import uploadImage from 'upload/uploadImage'
 import { useSnackbarAlert } from 'notification/alert'
-import { Event } from 'mm-shared'
+import { Event, LinkButton } from 'mm-shared'
 import EmailPreview from './EmailPreview'
-import LinkButton from 'components/LinkButton'
 
 import './ShareEvent.scss'
 

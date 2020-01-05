@@ -8,7 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import isFunction from 'lodash/isFunction'
-import Image from 'components/Image'
+import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import { Track } from 'mm-shared'
 import ITrackWithFeatures from './ITrackWithFeatures'
@@ -69,10 +69,9 @@ const TrackListItem = ({
   }
 
   const trackImage = (
-    <Image
-      src={getTrackImage(track)}
+    <Img
+      src={[getTrackImage(track), backgroundImage]}
       alt={track.name}
-      fallbackSrc={backgroundImage}
       className="TrackListItem-track-image"
     />
   )
