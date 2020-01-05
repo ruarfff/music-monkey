@@ -4,9 +4,8 @@ import { Toolbar, AppBar, IconButton, Divider, Drawer } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import logo from '../../assets/logo-home.svg'
-import UserMenu from './UserMenu'
+import UserMenu from '../topbar/UserMenu'
 import NavMenu from './NavMenu'
-import CreateEventMenuButton from './CreateEventMenuButton'
 import { User, Event } from '../..'
 import './DesktopLayout.scss'
 
@@ -45,8 +44,7 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({
               <MenuIcon />
             </IconButton>
           )}
-          <CreateEventMenuButton />
-          <UserMenu user={user} logout={logout} />
+          <UserMenu user={user} onLogout={logout} isHost={isHost} />
         </Toolbar>
       </AppBar>
 
@@ -71,7 +69,7 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({
           </Link>
         </div>
         <Divider />
-        <NavMenu />
+        <NavMenu isHost={isHost} />
       </Drawer>
       <main
         className={`DesktopLayout-content ${

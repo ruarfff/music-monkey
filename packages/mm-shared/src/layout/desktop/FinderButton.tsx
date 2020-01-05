@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button'
 import { Link, LinkProps } from 'react-router-dom'
 import logo from '../../assets/marvin.png'
 import { withRouter, RouteComponentProps } from 'react-router'
-import './CreateEventMenuButton.scss'
+import './FinderButton.scss'
 
 const Title = ({ location }: RouteComponentProps) => {
   const ButtonLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
@@ -13,14 +13,14 @@ const Title = ({ location }: RouteComponentProps) => {
   return (
     <Button
       component={ButtonLink}
-      to="/create-event"
+      to="/finder"
       variant="contained"
       size="small"
       color="secondary"
-      className="CreateEventMenuButton"
+      className="FinderButton"
     >
       <img src={logo} alt="event icon" />
-      Create new event
+      Find Music
     </Button>
   )
 }
