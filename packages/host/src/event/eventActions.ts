@@ -1,6 +1,8 @@
 import { Action, Event, Playlist, TrackVoteStatus } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 
+export const DESELECT_EVENT = 'DESELECT_EVENT'
+export const EVENT_SELECTED = 'EVENT_SELECTED'
 export const EVENTS_FETCH_INITIATED = 'EVENTS_FETCH_INITIATED'
 export const EVENTS_FETCHED = 'EVENTS_FETCHED'
 export const EVENTS_FETCH_ERROR = 'EVENTS_FETCH_ERROR'
@@ -37,11 +39,13 @@ export const SORT_PLAYLIST_BY_VOTES_DESCENDING =
 export const PLAYLIST_SORTED_BY_VOTES_DESCENDING =
   'PLAYLIST_SORTED_BY_VOTES_DESCENDING'
 
-export const EVENT_SELECTED = 'EVENT_SELECTED'
-
 export const selectEvent = (event: Event): Action => ({
   payload: event,
   type: EVENT_SELECTED
+})
+
+export const deselectEvent = (): Action => ({
+  type: DESELECT_EVENT
 })
 
 export const getEventById = (eventId: string): Action => ({
