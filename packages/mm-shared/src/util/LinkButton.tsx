@@ -10,6 +10,6 @@ const Link = React.forwardRef<HTMLAnchorElement, RouterLinkProps>(
   (props, ref) => <RouterLink innerRef={ref} {...props} />
 )
 
-export default function LinkButton(props: any) {
+export const LinkButton = (props: any) => {
   return <Button className="LinkButton-root" component={Link} {...props} />
 }

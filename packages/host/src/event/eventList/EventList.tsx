@@ -13,9 +13,8 @@ import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
-import { Event } from 'mm-shared'
+import { Event, TabPanel } from 'mm-shared'
 import './EventList.scss'
-import TabPanel from '../saveEvent/TabPanel'
 
 interface IEventListProps {
   pastEvents: Event[]

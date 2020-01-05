@@ -5,10 +5,5 @@
     "baseUrl": "./src"
   },
   "exclude": ["./src/setupTests.ts"],
-  "include": [
-    "./src",
-    "config-overrides.js",
-    "../mm-shared/src/storage",
-    "../mm-shared/src/vote"
-  ]
+  "include": ["./src", "config-overrides.js"]
 }

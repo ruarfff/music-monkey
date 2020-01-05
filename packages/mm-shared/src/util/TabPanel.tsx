@@ -6,7 +6,7 @@ interface TabPanelProps {
   value: number
 }
 
-const TabPanel = (props: TabPanelProps) => {
+export const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props
 
   return (
@@ -22,5 +22,3 @@ const TabPanel = (props: TabPanelProps) => {
     </Typography>
   )
 }
-
-export default TabPanel
