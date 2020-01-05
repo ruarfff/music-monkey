@@ -7,9 +7,7 @@ import IRootState from 'rootState'
 
 const AccountView = lazy(() => import('account/AccountContainer'))
 const CreateEvent = lazy(() => import('event/saveEvent/CreateEventContainer'))
-const CatalogueBrowser = lazy(() =>
-  import('catalogue/CatalogueBrowserContainer')
-)
+
 const EventView = lazy(() => import('event/eventView/EventViewContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
 const Requests = lazy(() => import('requests/RequestsContainer'))
@@ -59,10 +57,6 @@ export const routes = [
     component: EventView,
     exact: true,
     path: '/playlists/:eventId'
-  },
-  {
-    component: CatalogueBrowser,
-    path: '/catalogue'
   },
   {
     component: AccountView,
