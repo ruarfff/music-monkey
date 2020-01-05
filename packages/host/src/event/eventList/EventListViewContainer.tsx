@@ -4,7 +4,7 @@ import EventListView from './EventListView'
 import { deselectEvent } from 'event/eventActions'
 
 const mapStateToProps = ({ event }: IRootState) => ({
-  selectedEvent: event.event,
+  event: event.event,
   events: event.events,
   eventsLoading: event.eventsLoading
 })

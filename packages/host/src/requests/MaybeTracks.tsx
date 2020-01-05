@@ -10,18 +10,14 @@ import './MaybeTracks.scss'
 
 interface IMaybeTracksProps {
   user: User
-  selectedEvent: Event
+  event: Event
   suggestions: IDecoratedSuggestion[]
 }
 
-const MaybeTracks = ({
-  user,
-  suggestions,
-  selectedEvent
-}: IMaybeTracksProps) => {
+const MaybeTracks = ({ user, suggestions, event }: IMaybeTracksProps) => {
   const playlistTracks =
-    !isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)
-      ? selectedEvent!.playlist!.tracks.items.map(
+    !isEmpty(event) && !isEmpty(event.playlist)
+      ? event!.playlist!.tracks.items.map(
           (track: PlaylistItem) => track.track.uri
         )
       : []
