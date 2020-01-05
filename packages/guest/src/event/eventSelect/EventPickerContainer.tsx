@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import { deselectEvent, selectEvent } from '../eventActions'
-import IRootState from '../../rootState'
+import IRootState from 'rootState'
+import { selectEvent } from '../eventActions'
+import { getEventSuggestions } from 'requests/suggestionActions'
 import EventPicker from './EventPicker'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -8,10 +9,7 @@ const mapStateToProps = (state: IRootState) => ({
   event: state.event.event
 })
 
-const mapDispatchToProps = {
-  deselectEvent,
-  selectEvent
-}
+const mapDispatchToProps = { selectEvent, getEventSuggestions }
 
 const EventPickerContainer = connect(
   mapStateToProps,

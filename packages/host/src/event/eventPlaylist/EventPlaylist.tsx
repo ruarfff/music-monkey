@@ -21,7 +21,7 @@ import {
   LoadingSpinner,
   TrackVoteStatus
 } from 'mm-shared'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import ITrackWithFeatures from 'track/ITrackWithFeatures'
 import TrackList from 'track/TrackList'
 import './EventPlaylist.scss'

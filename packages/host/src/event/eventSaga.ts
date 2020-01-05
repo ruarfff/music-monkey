@@ -29,15 +29,15 @@ import {
   SAVE_EVENT_PLAYLIST_SUCCESS,
   SORT_PLAYLIST_BY_VOTES_DESCENDING
 } from './eventActions'
-import { CLEAR_STAGED_SUGGESTIONS } from 'suggestion/suggestionActions'
+import { CLEAR_STAGED_SUGGESTIONS } from 'requests/suggestionActions'
 import { getEvents } from './eventClient'
 import {
   reOrderPlaylist,
   replaceTracksInPlaylist
 } from 'playlist/playlistClient'
 import { addTracksToPlaylist } from 'playlist/playlistClient'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
-import { acceptSuggestions } from 'suggestion/suggestionClient'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
+import { acceptSuggestions } from 'requests/suggestionClient'
 
 interface ISavePlaylistArgs {
   eventId: string

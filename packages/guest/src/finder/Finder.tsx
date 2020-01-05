@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import swal from '@sweetalert/with-react'
 import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
 import EventPicker from 'event/eventSelect/EventPickerContainer'
+import checkEventIsLoaded from 'event/checkEventIsLoaded'
 import SelectedEvent from 'event/eventSelect/SelectedEvent'
 import Search from 'search/SearchContainer'
-import IPlaylistSuggestion from 'suggestion/IPlaylistSuggestion'
-import ITrackSuggestion from 'suggestion/ITrackSuggestion'
+import IPlaylistSuggestion from 'requests/IPlaylistSuggestion'
+import ITrackSuggestion from 'requests/ITrackSuggestion'
 import {
   Action,
   Event,
@@ -53,6 +54,8 @@ const Finder = ({
   match
 }: IFinderProps) => {
   const eventId = match.params.eventId
+  const eventLoaded = checkEventIsLoaded(event)
+  const [eventPickerOpen, setEventPickerOpen] = useState(!eventLoaded)
   useEffect(() => {
     const selectedEventId = event ? event.eventId : ''
     if (eventId && selectedEventId !== eventId) {
@@ -116,9 +119,19 @@ const Finder = ({
       )}
       {!searching && isEmpty(filteredSearch) && (
         <div>
-          {isEmpty(event) && <EventPicker />}
-          {!isEmpty(event) && (
-            <SelectedEvent event={event} deselectEvent={deselectEvent} />
+          <EventPicker
+            isOpen={eventPickerOpen}
+            onClose={() => {
+              setEventPickerOpen(false)
+            }}
+          />
+          {eventLoaded && (
+            <SelectedEvent
+              event={event}
+              onClick={() => {
+                setEventPickerOpen(true)
+              }}
+            />
           )}
           <Divider variant="inset" className="Finder-divider" />
           <AppBar position="static" color="default">

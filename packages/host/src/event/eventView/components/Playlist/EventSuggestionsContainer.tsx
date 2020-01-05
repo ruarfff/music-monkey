@@ -5,7 +5,7 @@ import {
   rejectSuggestion,
   stageAllSuggestions,
   stageSuggestion
-} from 'suggestion/suggestionActions'
+} from 'requests/suggestionActions'
 import EventSuggestions from './EventSuggestions'
 
 const mapStateToProps = (state: IRootState) => ({

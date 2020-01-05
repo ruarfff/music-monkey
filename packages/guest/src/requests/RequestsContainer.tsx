@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { deselectEvent, setEventId } from '../event/eventActions'
+import { setEventId } from '../event/eventActions'
 import { withRouter } from 'react-router'
 import IRootState from '../rootState'
 import Requests from './Requests'
@@ -9,7 +9,6 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = {
-  deselectEvent,
   setEventId
 }
 

@@ -13,8 +13,8 @@ import uniqBy from 'lodash/uniqBy'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Action, Playlist, Track, formatDuration } from 'mm-shared'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
-import ISuggestion from 'suggestion/ISuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
+import ISuggestion from 'requests/ISuggestion'
 import './EventSuggestions.scss'
 
 interface IEventSuggestionsProps extends RouteComponentProps<any> {

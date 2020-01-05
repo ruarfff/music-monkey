@@ -1,5 +1,5 @@
 import { Action, Event, Playlist, TrackVoteStatus } from 'mm-shared'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 
 export const DESELECT_EVENT = 'DESELECT_EVENT'
 export const EVENT_SELECTED = 'EVENT_SELECTED'

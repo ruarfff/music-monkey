@@ -23,7 +23,7 @@ interface ISubscriptionWrapper {
   children: any
   getEvent(eventId: string): Action
   fetchEventVotes(eventId: string): Action
-  getSuggestions(eventId: string): Action
+  getEventSuggestions(eventId: string): Action
 }
 
 const SubscriptionWrapper = ({
@@ -31,14 +31,14 @@ const SubscriptionWrapper = ({
   children,
   getEvent,
   fetchEventVotes,
-  getSuggestions
+  getEventSuggestions
 }: ISubscriptionWrapper) => {
   useEffect(() => {
     const eventId = event ? event.eventId! : ''
     const playlistId = event && event.playlist ? event.playlist.id : ''
 
     subscribeToSuggestionsModified(eventId, () => {
-      getSuggestions(eventId)
+      getEventSuggestions(eventId)
     })
 
     subscribeToRSVPModified(eventId, () => {

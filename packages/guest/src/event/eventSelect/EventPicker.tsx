@@ -7,19 +7,28 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import backgroundImage from 'assets/music-monkey.jpg'
 import { Action, Event } from 'mm-shared'
+import backgroundImage from 'assets/music-monkey.jpg'
 
 import './EventPicker.scss'
 
 interface IEventPickerProps {
   events: Event[]
+  isOpen: boolean
   selectEvent(event: Event): Action
+  getEventSuggestions(eventId: string): Action
+  onClose(): void
 }
 
-const EventPicker = ({ events, selectEvent }: IEventPickerProps) => {
+const EventPicker = ({
+  events,
+  isOpen,
+  selectEvent,
+  getEventSuggestions,
+  onClose
+}: IEventPickerProps) => {
   return (
-    <Dialog open={true}>
+    <Dialog open={isOpen} onClose={onClose}>
       <div className="EventPicker-modal">
         <DialogTitle className="EventPicker-modal-title">
           Select Event for Requests
@@ -32,6 +41,8 @@ const EventPicker = ({ events, selectEvent }: IEventPickerProps) => {
                   button={true}
                   onClick={() => {
                     selectEvent(event)
+                    getEventSuggestions(event.eventId!)
+                    onClose()
                   }}
                 >
                   <img

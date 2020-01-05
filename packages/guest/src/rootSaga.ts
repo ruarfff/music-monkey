@@ -19,7 +19,7 @@ import {
   watchFetchSuggestions,
   watchSavePlaylistSuggestion,
   watchSaveTrackSuggestion
-} from './suggestion/suggestionSaga'
+} from './requests/suggestionSaga'
 import {
   watchCreateVote,
   watchDeleteVote,

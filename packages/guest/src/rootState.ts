@@ -5,7 +5,7 @@ import IPlaylistState from './playlist/IPlaylistState'
 import IRecommendationsState from './recommendations/IRecommendationsState'
 import IRsvpState from './rsvp/IRsvpState'
 import ISearchState from './search/ISearchState'
-import ISuggestionState from './suggestion/ISuggestionState'
+import ISuggestionState from './requests/ISuggestionState'
 import IUserState from './user/IUserState'
 import { VoteState } from 'mm-shared'
 

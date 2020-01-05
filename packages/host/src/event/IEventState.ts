@@ -1,6 +1,6 @@
 import { Event } from 'mm-shared'
 import IEventErrors from './IEventErrors'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 
 export default interface IEventState {
   errors: IEventErrors

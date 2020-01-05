@@ -1,4 +1,4 @@
-import ISuggestion from '../suggestion/ISuggestion'
+import ISuggestion from './ISuggestion'
 import { Track } from 'mm-shared'
 import { User } from 'mm-shared'
 

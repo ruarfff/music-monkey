@@ -26,7 +26,7 @@ import { watchFetchShareEmail } from 'event/shareEvent/shareSaga'
 import {
   watchFetchSuggestions,
   watchRejectSuggestion
-} from 'suggestion/suggestionSaga'
+} from 'requests/suggestionSaga'
 import { watchUpdateUserFlow } from 'user/userSaga'
 import { watchFetchEventVotes } from 'mm-shared'
 

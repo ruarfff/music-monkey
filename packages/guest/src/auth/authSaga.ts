@@ -4,7 +4,7 @@ import { EVENT_CLEAR } from 'event/eventActions'
 import { PLAYLIST_CLEAR } from 'playlist/playlistActions'
 import { RECOMMENDATIONS_CLEAR } from 'recommendations/recommendationsActions'
 import { CLEAR_SEARCH } from 'search/searchActions'
-import { CLEAR_SUGGESTION } from 'suggestion/suggestionActions'
+import { CLEAR_SUGGESTION } from 'requests/suggestionActions'
 import { FETCH_USER_SUCCESS } from 'user/userActions'
 import {
   LOGGED_OUT,

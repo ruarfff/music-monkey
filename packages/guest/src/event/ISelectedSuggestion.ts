@@ -1,6 +1,6 @@
-import ISuggestion from "../suggestion/ISuggestion";
+import ISuggestion from '../requests/ISuggestion'
 
 export default interface ISelectedSuggestion {
-    suggestion: ISuggestion
-    name: string
+  suggestion: ISuggestion
+  name: string
 }

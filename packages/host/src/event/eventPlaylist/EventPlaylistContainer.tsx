@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getTracksFeatures, tryRemoveTrack } from 'playlist/playlistActions'
 import IRootState from 'rootState'
-import { resetStagedSuggestions } from 'suggestion/suggestionActions'
+import { resetStagedSuggestions } from 'requests/suggestionActions'
 import EventPlaylist from './EventPlaylist'
 import {
   moveItemInEventPlaylist,

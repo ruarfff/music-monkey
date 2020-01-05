@@ -3,7 +3,7 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import { isEmpty, uniqBy } from 'lodash'
 import { Event } from 'mm-shared'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import TrackList from 'track/TrackList'
 import './MaybeTracks.scss'
 

@@ -1,16 +1,16 @@
 import React from 'react'
 import { ListItemText } from '@material-ui/core'
-import { Action, Event } from 'mm-shared'
+import { Event } from 'mm-shared'
 import './SelectedEvent.scss'
 
 interface ISelectedEventProps {
   event: Event
-  deselectEvent(): Action
+  onClick(): void
 }
 
-const SelectedEvent = ({ event, deselectEvent }: ISelectedEventProps) => {
+const SelectedEvent = ({ event, onClick }: ISelectedEventProps) => {
   return (
-    <div onClick={deselectEvent} className="SelectedEvent-block">
+    <div className="SelectedEvent-block" onClick={onClick}>
       <div className="SelectedEvent-image">
         <img alt="event" src={event.imageUrl} />
       </div>

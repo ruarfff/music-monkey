@@ -13,7 +13,7 @@ interface ContentProps {
   eventLoading: boolean
   getEvents(): Action
   getEvent(eventId: string): Action
-  getSuggestions(eventId: string): Action
+  getEventSuggestions(eventId: string): Action
   fetchEventVotes(eventId: string): Action
 }
 
@@ -25,7 +25,7 @@ const Content = ({
   eventLoading,
   getEvents,
   getEvent,
-  getSuggestions,
+  getEventSuggestions,
   fetchEventVotes
 }: ContentProps) => {
   const routes = useContext(RouteContext)
@@ -41,7 +41,7 @@ const Content = ({
     if (eventId && !eventLoading) {
       if (isEmpty(event) || event.eventId !== eventId) {
         getEvent(eventId)
-        getSuggestions(eventId)
+        getEventSuggestions(eventId)
         fetchEventVotes(eventId)
       }
     }

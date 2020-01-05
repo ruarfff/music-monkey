@@ -6,7 +6,7 @@ import IRootState from '../rootState'
 import {
   savePlaylistSuggestion,
   saveTrackSuggestion
-} from '../suggestion/suggestionActions'
+} from '../requests/suggestionActions'
 import Finder from './Finder'
 
 const mapStateToProps = (state: IRootState) => ({

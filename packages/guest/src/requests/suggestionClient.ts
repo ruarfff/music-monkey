@@ -1,7 +1,7 @@
 import client from 'mm-client'
 import ISuggestion from './ISuggestion'
 
-export const getSuggestions = async (eventId: string) => {
+export const getEventSuggestions = async (eventId: string) => {
   const response = await client.get('/suggestions?eventId=' + eventId, {
     withCredentials: true
   })

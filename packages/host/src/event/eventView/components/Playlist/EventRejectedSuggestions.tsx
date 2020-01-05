@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { Action, Playlist, Track, formatDuration } from 'mm-shared'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import './EventRejectedSuggestions.scss'
 
 interface IEventRejectedSuggestionsProps extends RouteComponentProps<any> {

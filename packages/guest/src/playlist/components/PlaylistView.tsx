@@ -14,7 +14,7 @@ import {
 import { TrackVoteStatus, Vote } from 'mm-shared'
 import ApprovedTracks from './ApprovedTracks'
 import PlaylistPlayer from './PlaylistPlayer'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import MaybeTracks from './MaybeTracks'
 import './PlaylistView.scss'
 

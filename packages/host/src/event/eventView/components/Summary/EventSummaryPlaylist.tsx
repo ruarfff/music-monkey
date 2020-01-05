@@ -14,7 +14,7 @@ import {
   formatDuration,
   TrackVoteStatus
 } from 'mm-shared'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import EditPlaylistPopup from './EditPlaylistPopup'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'

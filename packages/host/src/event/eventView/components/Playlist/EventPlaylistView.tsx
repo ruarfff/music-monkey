@@ -11,7 +11,7 @@ import EventSearchTracksContainer from 'components/SearchTracks/EventSearchTrack
 import { Event } from 'mm-shared'
 import EventPlaylist from 'event/eventPlaylist/EventPlaylistContainer'
 import EventPlaylistSummary from 'event/eventPlaylist/EventPlaylistSummaryContainer'
-import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import EventRejectedSuggestions from './EventRejectedSuggestionsContainer'
 import EventSuggestions from './EventSuggestionsContainer'
 

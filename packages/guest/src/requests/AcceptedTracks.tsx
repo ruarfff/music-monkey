@@ -2,10 +2,10 @@ import List from '@material-ui/core/List/List'
 import ListItem from '@material-ui/core/ListItem/ListItem'
 import { isEmpty, uniqBy } from 'lodash'
 import React from 'react'
-import IDecoratedSuggestion from '../suggestion/IDecoratedSuggestion'
+import IDecoratedSuggestion from './IDecoratedSuggestion'
 import TrackList from '../track/TrackList'
 import './AcceptedTracks.scss'
-import { User }  from 'mm-shared'
+import { User } from 'mm-shared'
 
 interface IAcceptedTracksProps {
   user: User
@@ -20,7 +20,10 @@ const AcceptedTracks = ({ user, suggestions }: IAcceptedTracksProps) => {
           .filter(s => s.suggestion && s.suggestion.accepted)
       : []
 
-  const acceptedTracks = uniqBy(acceptedSuggestions.map(s => s.track), 'id')
+  const acceptedTracks = uniqBy(
+    acceptedSuggestions.map(s => s.track),
+    'id'
+  )
 
   return (
     <List>

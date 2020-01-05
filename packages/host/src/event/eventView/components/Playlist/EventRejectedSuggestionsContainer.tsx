@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { saveEventPlaylist } from 'event/eventActions'
 import IRootState from 'rootState'
-import { stageSuggestion } from 'suggestion/suggestionActions'
+import { stageSuggestion } from 'requests/suggestionActions'
 import EventRejectedSuggestions from './EventRejectedSuggestions'
 
 const mapStateToProps = (state: IRootState) => ({

@@ -16,7 +16,7 @@ import {
 import {
   bulkSaveSuggestions,
   deleteSuggestion,
-  getSuggestions,
+  getEventSuggestions,
   saveSuggestion
 } from './suggestionClient'
 import SuggestionTransformer from './SuggestionTransformer'
@@ -25,7 +25,7 @@ const suggestionTransformer = new SuggestionTransformer()
 
 function* fetchSuggestionsFlow(action: Action) {
   try {
-    const suggestions = yield call(getSuggestions, action.payload)
+    const suggestions = yield call(getEventSuggestions, action.payload)
     yield put({
       type: FETCH_SUGGESTIONS_SUCCESS,
       payload: suggestions
