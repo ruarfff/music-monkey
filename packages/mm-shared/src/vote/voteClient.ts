@@ -1,7 +1,7 @@
 import client from 'mm-client'
-import IVote from './IVote'
+import { Vote } from './Vote'
 
-export const createVote = async (vote: IVote) => {
+export const createVote = async (vote: Vote) => {
   const response = await client.post('/votes', vote, {
     withCredentials: true
   })

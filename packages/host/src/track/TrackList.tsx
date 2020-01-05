@@ -1,7 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import ITrackVoteStatus from '../vote/ITrackVoteStatus'
-import { Track } from 'mm-shared'
+import { Track, TrackVoteStatus } from 'mm-shared'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import TrackListItem from './TrackListItem'
 
@@ -13,7 +12,7 @@ interface ITrackListProps {
   tracksWithFeatures?: ITrackWithFeatures[]
   disableRemoveTrack?: boolean
   withVoting?: boolean
-  votes?: Map<string, ITrackVoteStatus>
+  votes?: Map<string, TrackVoteStatus>
   avatar?: string
   onVote?(track: Track): void
   onTrackSelected?(track: Track): void
@@ -54,8 +53,8 @@ const TrackList = ({
               const trackId = track.uri
               let numberOfVotes = 0
               if (votes && votes.has(trackId)) {
-                const voteStatus: ITrackVoteStatus =
-                  votes.get(trackId) || ({} as ITrackVoteStatus)
+                const voteStatus: TrackVoteStatus =
+                  votes.get(trackId) || ({} as TrackVoteStatus)
                 numberOfVotes = voteStatus.numberOfVotes
               }
 

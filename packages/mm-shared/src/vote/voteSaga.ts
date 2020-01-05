@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Action } from 'mm-shared'
+import { Action } from '../'
 import {
   FETCH_EVENT_VOTES_FAILURE,
   FETCH_EVENT_VOTES_INITIATED,

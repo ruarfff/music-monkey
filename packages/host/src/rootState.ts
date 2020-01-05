@@ -5,7 +5,7 @@ import IPlaylistState from './playlist/IPlaylistState'
 import IRecommendationsState from './recommendations/IRecommendationState'
 import ISuggestionState from './suggestion/ISuggestionState'
 import IUserState from './user/IUserState'
-import IVoteState from './vote/IVoteState'
+import { VoteState } from 'mm-shared'
 
 export default interface IRootState {
   auth: IAuthState
@@ -13,7 +13,7 @@ export default interface IRootState {
   playlist: IPlaylistState
   event: IEventState
   suggestion: ISuggestionState
-  vote: IVoteState
+  vote: VoteState
   insights: IInsightsInitialState
   recommendation: IRecommendationsState
 }

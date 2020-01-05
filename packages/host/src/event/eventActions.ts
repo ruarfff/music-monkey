@@ -1,6 +1,5 @@
-import { Action, Event, Playlist } from 'mm-shared'
+import { Action, Event, Playlist, TrackVoteStatus } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 
 export const EVENTS_FETCH_INITIATED = 'EVENTS_FETCH_INITIATED'
 export const EVENTS_FETCHED = 'EVENTS_FETCHED'
@@ -107,7 +106,7 @@ export const moveItemInEventPlaylist = (
 
 export const sortPlaylistByVotesDescending = (
   playlist: Playlist,
-  votes: Map<string, ITrackVoteStatus>
+  votes: Map<string, TrackVoteStatus>
 ): Action => ({
   type: SORT_PLAYLIST_BY_VOTES_DESCENDING,
   payload: { playlist, votes }

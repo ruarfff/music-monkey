@@ -1,21 +1,24 @@
+import React from 'react'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Paper from '@material-ui/core/Paper'
 import { isEmpty } from 'lodash'
-import * as React from 'react'
-import { Action } from 'mm-shared'
-import { Event } from 'mm-shared'
-import { Playlist, PlaylistItem } from 'mm-shared'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
+import {
+  Action,
+  Event,
+  Playlist,
+  PlaylistItem,
+  TrackVoteStatus
+} from 'mm-shared'
 import './MostPopularTracks.scss'
 
 interface IMostPopularTracksProps {
-  votes: Map<string, ITrackVoteStatus>
+  votes: Map<string, TrackVoteStatus>
   events: Event[]
   playlist: Playlist
   sortPlaylistByVotesDescending(
     playlist: Playlist,
-    votes: Map<string, ITrackVoteStatus>
+    votes: Map<string, TrackVoteStatus>
   ): Action
   fetchEventVotes(eventId: string): Action
 }

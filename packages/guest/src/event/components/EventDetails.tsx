@@ -1,16 +1,14 @@
 import React from 'react'
 import { isEmpty } from 'lodash'
-import { Action, Event, Track, User } from 'mm-shared'
+import { Action, Event, Track, User, TrackVoteStatus, Vote } from 'mm-shared'
 import TrackList from 'track/TrackList'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
-import IVote from 'vote/IVote'
 import './EventDetails.scss'
 
 interface IEventDetailsProps {
   event: Event
   user: User
-  votes: Map<string, ITrackVoteStatus>
-  createVote(vote: IVote): Action
+  votes: Map<string, TrackVoteStatus>
+  createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
 }
 
@@ -32,7 +30,7 @@ class EventDetails extends React.PureComponent<IEventDetailsProps> {
       eventId,
       trackId,
       userId: user.userId
-    } as IVote
+    } as Vote
     this.props.createVote(vote)
   }
 

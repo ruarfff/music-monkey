@@ -1,10 +1,13 @@
-import { Action } from 'mm-shared'
-import IVoteState from './IVoteState'
-import { FETCH_EVENT_VOTES_INITIATED, FETCH_EVENT_VOTES_SUCCESS } from './voteActions'
+import { Action } from '../'
+import { VoteState } from './VoteState'
+import {
+  FETCH_EVENT_VOTES_INITIATED,
+  FETCH_EVENT_VOTES_SUCCESS
+} from './voteActions'
 import initialState from './voteInitialState'
 
 export default function vote(
-  state: IVoteState = initialState,
+  state: VoteState = initialState,
   { type, payload }: Action
 ) {
   switch (type) {
@@ -15,10 +18,10 @@ export default function vote(
       }
     case FETCH_EVENT_VOTES_SUCCESS:
       return {
-      	...state,
+        ...state,
         votes: new Map(Object.entries(payload)),
         fetchingVotes: false
-      } as IVoteState
+      } as VoteState
     default:
       return state
   }

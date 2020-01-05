@@ -1,5 +1,5 @@
-import { Action } from 'mm-shared'
-import IVote from './IVote'
+import { Action } from '../'
+import { Vote } from './Vote'
 
 export const FETCH_EVENT_VOTES_INITIATED = 'FETCH_EVENT_VOTES_INITIATED'
 export const FETCH_EVENT_VOTES_SUCCESS = 'FETCH_EVENT_VOTES_SUCCESS'
@@ -17,7 +17,7 @@ export const fetchEventVotes = (eventId: string) =>
     payload: eventId
   } as Action)
 
-export const createVote = (vote: IVote) =>
+export const createVote = (vote: Vote) =>
   ({
     type: VOTE_CREATE_INITIATED,
     payload: vote

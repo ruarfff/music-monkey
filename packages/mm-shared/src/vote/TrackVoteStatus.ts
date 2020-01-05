@@ -1,4 +1,4 @@
-export default interface ITrackVoteStatus {
+export interface TrackVoteStatus {
   numberOfVotes: number
   votedByCurrentUser: boolean
 }

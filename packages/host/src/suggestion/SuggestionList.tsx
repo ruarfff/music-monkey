@@ -1,14 +1,13 @@
 import React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
-import { Track } from 'mm-shared'
+import { Track, TrackVoteStatus } from 'mm-shared'
 import SuggestionListItem from './SuggestionListItem'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
 
 interface SuggestionListProps {
   suggestions: IDecoratedSuggestion[]
   withVoting?: boolean
-  votes?: Map<string, ITrackVoteStatus>
+  votes?: Map<string, TrackVoteStatus>
   disableRemoveTrack?: boolean
   onVote?(track: Track): void
   onTrackSelected?(track: Track): void
@@ -46,8 +45,8 @@ const SuggestionList = ({
             const trackId = suggestion.track.uri
             let numberOfVotes = 0
             if (votes && votes.has(trackId)) {
-              const voteStatus: ITrackVoteStatus =
-                votes.get(trackId) || ({} as ITrackVoteStatus)
+              const voteStatus: TrackVoteStatus =
+                votes.get(trackId) || ({} as TrackVoteStatus)
               numberOfVotes = voteStatus.numberOfVotes
             }
 

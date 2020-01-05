@@ -24,7 +24,7 @@ import {
   watchCreateVote,
   watchDeleteVote,
   watchFetchEventVotes
-} from './vote/voteSaga'
+} from 'mm-shared'
 import { watchUpdateUserFlow } from './user/userSaga'
 
 export default function* rootSaga() {

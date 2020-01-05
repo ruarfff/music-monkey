@@ -1,5 +1,11 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Action, EventSettings, Playlist, PlaylistItem } from 'mm-shared'
+import {
+  Action,
+  EventSettings,
+  Playlist,
+  PlaylistItem,
+  TrackVoteStatus
+} from 'mm-shared'
 import { deleteEvent, getEventById, updateEvent } from 'event/eventClient'
 import {
   EVENTS_FETCH_ERROR,
@@ -32,7 +38,6 @@ import {
 import { addTracksToPlaylist } from 'playlist/playlistClient'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import { acceptSuggestions } from 'suggestion/suggestionClient'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 
 interface ISavePlaylistArgs {
   eventId: string
@@ -208,7 +213,7 @@ export function* watchMoveItemInEventPlaylist() {
 
 function sortPlaylistByVotesDescending(
   playlist: Playlist,
-  votes: Map<string, ITrackVoteStatus>
+  votes: Map<string, TrackVoteStatus>
 ) {
   const playlistItems = [...playlist.tracks.items]
   playlistItems.sort((a: any, b: any) => {

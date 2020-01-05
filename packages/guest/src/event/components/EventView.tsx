@@ -3,9 +3,14 @@ import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import Icon from '@material-ui/core/Icon'
 import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
-import { Action, User, Event, LoadingSpinner } from 'mm-shared'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
-import IVote from 'vote/IVote'
+import {
+  Action,
+  User,
+  Event,
+  LoadingSpinner,
+  TrackVoteStatus,
+  Vote
+} from 'mm-shared'
 import EventDetails from './EventDetails'
 import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
@@ -16,9 +21,9 @@ interface EventViewProps {
   user: User
   selectedEvent: Event
   eventLoading: boolean
-  votes: Map<string, ITrackVoteStatus>
+  votes: Map<string, TrackVoteStatus>
   fetchingVotes: boolean
-  createVote(vote: IVote): Action
+  createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
   setEventId(eventId: string): Action
 }

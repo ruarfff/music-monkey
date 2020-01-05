@@ -9,7 +9,7 @@ import recommendation from './recommendations/recommendationReducer'
 import search from './search/searchReducer'
 import suggestion from './suggestion/suggestionReducer'
 import user from './user/userReducer'
-import vote from './vote/voteReducer'
+import { voteReducer as vote } from 'mm-shared'
 import rsvp from './rsvp/rsvpReducer'
 
 export default (history: History) =>

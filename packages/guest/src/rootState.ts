@@ -7,7 +7,7 @@ import IRsvpState from './rsvp/IRsvpState'
 import ISearchState from './search/ISearchState'
 import ISuggestionState from './suggestion/ISuggestionState'
 import IUserState from './user/IUserState'
-import IVoteState from './vote/IVoteState'
+import { VoteState } from 'mm-shared'
 
 export default interface IRootState {
   auth: IAuthState
@@ -19,5 +19,5 @@ export default interface IRootState {
   suggestion: ISuggestionState
   user: IUserState
   rsvp: IRsvpState
-  vote: IVoteState
+  vote: VoteState
 }

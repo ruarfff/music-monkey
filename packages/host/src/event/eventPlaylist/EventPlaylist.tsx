@@ -18,12 +18,12 @@ import {
   Playlist,
   PlaylistItem,
   Track,
-  LoadingSpinner
+  LoadingSpinner,
+  TrackVoteStatus
 } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import ITrackWithFeatures from 'track/ITrackWithFeatures'
 import TrackList from 'track/TrackList'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import './EventPlaylist.scss'
 
 interface IEventPlaylistProps {
@@ -32,7 +32,7 @@ interface IEventPlaylistProps {
   notification: string
   stagedSuggestions: IDecoratedSuggestion[]
   saving: boolean
-  votes: Map<string, ITrackVoteStatus>
+  votes: Map<string, TrackVoteStatus>
   getTracksFeatures(trackIds: string[]): Action
   saveEventPlaylist(
     eventId: string,
@@ -48,7 +48,7 @@ interface IEventPlaylistProps {
   tryRemoveTrack(playlistId: string, uri: string, position: number): Action
   sortPlaylistByVotesDescending(
     playlist: Playlist,
-    votes: Map<string, ITrackVoteStatus>
+    votes: Map<string, TrackVoteStatus>
   ): Action
 }
 

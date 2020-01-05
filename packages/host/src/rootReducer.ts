@@ -8,7 +8,7 @@ import playlist from './playlist/playlistReducer'
 import recommendation from './recommendations/recommendationReducer'
 import suggestion from './suggestion/suggestionReducer'
 import user from './user/userReducer'
-import vote from './vote/voteReducer'
+import { voteReducer as vote } from 'mm-shared'
 
 export default (history: History) =>
   combineReducers({

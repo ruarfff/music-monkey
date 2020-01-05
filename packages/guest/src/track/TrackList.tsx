@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { Track }  from 'mm-shared'
-import ITrackVoteStatus from '../vote/ITrackVoteStatus'
+import React from 'react'
+import { Track, TrackVoteStatus } from 'mm-shared'
 import TrackListItem from './TrackListItem'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
@@ -9,7 +8,7 @@ import TrackListItem from './TrackListItem'
 interface ITrackListProps {
   tracks: Track[]
   withVoting?: boolean
-  votes?: Map<string, ITrackVoteStatus>
+  votes?: Map<string, TrackVoteStatus>
   withSuggestingEnabled?: boolean
   onVote?: (track: Track) => void
   onTrackSelected?: (track: Track) => void
@@ -29,8 +28,8 @@ const TrackList = ({
       let numberOfVotes = 0
       let userVoted = false
       if (votes && votes.has(trackId)) {
-        const voteStatus: ITrackVoteStatus =
-          votes.get(trackId) || ({} as ITrackVoteStatus)
+        const voteStatus: TrackVoteStatus =
+          votes.get(trackId) || ({} as TrackVoteStatus)
         numberOfVotes = voteStatus.numberOfVotes
         userVoted = voteStatus.votedByCurrentUser
       }

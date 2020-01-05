@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import IRootState from 'rootState'
 import { fetchUsersEvents, getEvent } from 'event/eventActions'
 import { getSuggestions } from 'suggestion/suggestionActions'
-import { fetchEventVotes } from 'vote/voteActions'
+import { fetchEventVotes } from 'mm-shared'
 import Content from './Content'
 
 const mapStateToProps = ({ event }: IRootState) => ({

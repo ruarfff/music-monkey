@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
 import { setEventId } from 'event/eventActions'
-import { createVote, deleteVote } from 'vote/voteActions'
+import { createVote, deleteVote } from 'mm-shared'
 import EventView from './EventView'
 
 const mapStateToProps = (state: IRootState) => ({

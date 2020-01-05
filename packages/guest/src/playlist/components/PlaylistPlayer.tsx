@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Icon,
@@ -7,17 +8,15 @@ import {
   LinearProgress
 } from '@material-ui/core'
 import ChevronLeft from '@material-ui/icons/ChevronLeft'
-import React, { useEffect, useState } from 'react'
-import ITrackVoteStatus from '../../vote/ITrackVoteStatus'
-import './PlaylistPlayer.scss'
 import { findIndex, isEmpty, pull } from 'lodash'
-import { Track } from 'mm-shared'
+import { Track, TrackVoteStatus } from 'mm-shared'
 import { Link } from 'react-router-dom'
+import './PlaylistPlayer.scss'
 
 interface IPlaylistPlayerProps {
   tracks: Track[]
   selectedTrack: Track
-  selectedTrackVotes: ITrackVoteStatus
+  selectedTrackVotes: TrackVoteStatus
   onFavouriteClicked(track: Track): void
   onTrackChanged(track: Track): void
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
-import { createVote, deleteVote } from 'vote/voteActions'
+import { createVote, deleteVote } from 'mm-shared'
 import { setEventId } from 'event/eventActions'
 import PlaylistView from './PlaylistView'
 

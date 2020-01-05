@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import IRootState from '../rootState'
 import SubscriptionWrapper from './SubscriptionWrapper'
 import { getEvent } from '../event/eventActions'
-import { fetchEventVotes } from '../vote/voteActions'
+import { fetchEventVotes } from 'mm-shared'
 import { getSuggestions } from '../suggestion/suggestionActions'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -15,7 +15,4 @@ const mapDispatchToProps = {
   getSuggestions
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SubscriptionWrapper)
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionWrapper)

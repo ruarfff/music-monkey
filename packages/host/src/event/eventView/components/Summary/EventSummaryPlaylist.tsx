@@ -7,9 +7,14 @@ import Grid from '@material-ui/core/Grid'
 import Switch from '@material-ui/core/Switch'
 import Typography from '@material-ui/core/Typography'
 import cloneDeep from 'lodash/cloneDeep'
-import { Action, Playlist, Event, formatDuration } from 'mm-shared'
+import {
+  Action,
+  Playlist,
+  Event,
+  formatDuration,
+  TrackVoteStatus
+} from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
 import EditPlaylistPopup from './EditPlaylistPopup'
 import Image from 'components/Image'
 import backgroundImage from 'assets/music-monkey.jpg'
@@ -23,10 +28,10 @@ interface IEventSummaryPlaylistProps {
   genre?: string
   eventImg?: string
   suggestion: IDecoratedSuggestion[]
-  votes: Map<string, ITrackVoteStatus>
+  votes: Map<string, TrackVoteStatus>
   sortPlaylistByVotesDescending(
     playlist: Playlist,
-    votes: Map<string, ITrackVoteStatus>
+    votes: Map<string, TrackVoteStatus>
   ): Action
   toggleDynamicVoting(event: Event): Action
   toggleAutoAcceptSuggestions(event: Event): Action

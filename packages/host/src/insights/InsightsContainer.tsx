@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { sortPlaylistByVotesDescending } from 'event/eventActions'
 import { fetchPlaylists } from 'playlist/playlistActions'
 import IRootState from 'rootState'
-import { fetchEventVotes } from 'vote/voteActions'
+import { fetchEventVotes } from 'mm-shared'
 import { filterByEventPick } from './insightsActions'
 import Insights from './Insights'
 

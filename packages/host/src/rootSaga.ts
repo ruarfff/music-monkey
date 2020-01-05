@@ -28,7 +28,7 @@ import {
   watchRejectSuggestion
 } from 'suggestion/suggestionSaga'
 import { watchUpdateUserFlow } from 'user/userSaga'
-import { watchFetchEventVotes } from 'vote/voteSaga'
+import { watchFetchEventVotes } from 'mm-shared'
 
 export default function* rootSaga() {
   yield all([

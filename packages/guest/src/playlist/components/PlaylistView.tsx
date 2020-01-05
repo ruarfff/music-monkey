@@ -11,8 +11,7 @@ import {
   User,
   LoadingSpinner
 } from 'mm-shared'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
-import IVote from 'vote/IVote'
+import { TrackVoteStatus, Vote } from 'mm-shared'
 import ApprovedTracks from './ApprovedTracks'
 import PlaylistPlayer from './PlaylistPlayer'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
@@ -22,9 +21,9 @@ import './PlaylistView.scss'
 interface IPlayListViewProps extends RouteComponentProps<any> {
   user: User
   event: Event
-  votes: Map<string, ITrackVoteStatus>
+  votes: Map<string, TrackVoteStatus>
   suggestions: IDecoratedSuggestion[]
-  createVote(vote: IVote): Action
+  createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
   setEventId(eventId: string): Action
 }
@@ -48,9 +47,9 @@ const PlaylistView = ({
     playlist && playlist.tracks && playlist.tracks.items
       ? playlist.tracks.items.map((item: PlaylistItem) => item.track)
       : []
-  let voteStatus = {} as ITrackVoteStatus
+  let voteStatus = {} as TrackVoteStatus
   if (votes && votes.has(trackId)) {
-    voteStatus = votes.get(trackId) || ({} as ITrackVoteStatus)
+    voteStatus = votes.get(trackId) || ({} as TrackVoteStatus)
   }
   if (tracks.length > 0 && isEmpty(currentTrack)) {
     setCurrentTrack(tracks[0])
@@ -90,7 +89,7 @@ const PlaylistView = ({
       eventId,
       trackId,
       userId: user.userId
-    } as IVote
+    } as Vote
     createVote(vote)
   }
 

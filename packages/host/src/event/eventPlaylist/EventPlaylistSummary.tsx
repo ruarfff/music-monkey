@@ -3,17 +3,22 @@ import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabe
 import FormGroup from '@material-ui/core/FormGroup/FormGroup'
 import Grid from '@material-ui/core/Grid/Grid'
 import Switch from '@material-ui/core/Switch/Switch'
-import { Action, Event, Playlist, formatDuration } from 'mm-shared'
-import ITrackVoteStatus from 'vote/ITrackVoteStatus'
+import {
+  Action,
+  Event,
+  Playlist,
+  formatDuration,
+  TrackVoteStatus
+} from 'mm-shared'
 import getPlaylistDuration from 'playlist/getPlaylistDuration'
 import './EventPlaylistSummary.scss'
 
 interface IEventPlaylistSummaryProps {
   event: Event
-  votes: Map<string, ITrackVoteStatus>
+  votes: Map<string, TrackVoteStatus>
   sortPlaylistByVotesDescending(
     playlist: Playlist,
-    votes: Map<string, ITrackVoteStatus>
+    votes: Map<string, TrackVoteStatus>
   ): Action
   toggleDynamicVoting(event: Event): Action
   toggleAutoAcceptSuggestions(event: Event): Action
