@@ -12,9 +12,9 @@ const EventListView = lazy(() =>
 )
 const Finder = lazy(() => import('finder/FinderContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
-const Playlist = lazy(() => import('playlist/components/PlaylistViewContainer'))
+const Playlist = lazy(() => import('playlist/PlaylistViewContainer'))
 const PlaylistListView = lazy(() =>
-  import('playlist/components/PlaylistListViewContainer')
+  import('playlist/PlaylistListViewContainer')
 )
 const Requests = lazy(() => import('requests/RequestsContainer'))
 
