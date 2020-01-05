@@ -22,7 +22,16 @@ export const fetchUserError = (error: Error): Action => ({
   type: FETCH_USER_ERROR
 })
 
-export const updateUserRequest = (data: User): Action => ({
+export const updateUserRequest = (user: User): Action => ({
   type: UPDATE_USER_REQUEST,
-  payload: data
+  payload: user
+})
+
+export const updateUserSuccess = (user: User): Action => ({
+  type: UPDATE_USER_SUCCESS,
+  payload: user
+})
+
+export const updateUserFailure = (): Action => ({
+  type: UPDATE_USER_FAILURE
 })

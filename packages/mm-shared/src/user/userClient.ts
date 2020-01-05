@@ -1,5 +1,5 @@
 import client from 'mm-client'
-import { User } from 'mm-shared'
+import { User } from './User'
 
 export const getUserById = async (userId: string) => {
   const response = await client.get('/users/' + userId, {
