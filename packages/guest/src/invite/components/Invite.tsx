@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { Redirect, RouteComponentProps, withRouter } from 'react-router'
-import { Action, Event, User, LoadingSpinner } from 'mm-shared'
-import localStorage from 'storage/localStorage'
+import { Action, Event, User, LoadingSpinner, localStorage } from 'mm-shared'
 import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 
 interface IInviteProps extends RouteComponentProps<any> {
