@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty'
 import { Switch } from 'react-router'
 
 interface ContentProps {
-  selectedEvent: Event
+  event: Event
   events: Event[]
   eventsLoading: boolean
   eventId: string
@@ -18,7 +18,7 @@ interface ContentProps {
 }
 
 const Content = ({
-  selectedEvent,
+  event,
   events,
   eventsLoading,
   eventId,
@@ -39,7 +39,7 @@ const Content = ({
 
   useEffect(() => {
     if (eventId && !eventLoading) {
-      if (isEmpty(selectedEvent) || selectedEvent.eventId !== eventId) {
+      if (isEmpty(event) || event.eventId !== eventId) {
         getEvent(eventId)
         getSuggestions(eventId)
         fetchEventVotes(eventId)

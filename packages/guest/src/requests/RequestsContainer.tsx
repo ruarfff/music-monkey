@@ -5,7 +5,7 @@ import IRootState from '../rootState'
 import Requests from './Requests'
 
 const mapStateToProps = (state: IRootState) => ({
-  selectedEvent: state.event.selectedEvent
+  event: state.event.event
 })
 
 const mapDispatchToProps = {
@@ -14,10 +14,7 @@ const mapDispatchToProps = {
 }
 
 const RequestsContainer = withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Requests)
+  connect(mapStateToProps, mapDispatchToProps)(Requests)
 )
 
 export default RequestsContainer

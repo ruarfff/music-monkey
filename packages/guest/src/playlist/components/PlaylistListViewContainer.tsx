@@ -4,7 +4,7 @@ import PlaylistListView from './PlaylistListView'
 import { deselectEvent } from '../../event/eventActions'
 
 const mapStateToProps = (state: IRootState) => ({
-  selectedEvent: state.event.selectedEvent,
+  event: state.event.event,
   eventsLoading: state.event.eventsLoading,
   events: state.event.events
 })

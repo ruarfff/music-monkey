@@ -9,14 +9,14 @@ import './MaybeTracks.scss'
 
 interface IMaybeTracksProps {
   suggestions: IDecoratedSuggestion[]
-  selectedEvent: Event
+  event: Event
 }
 
-const MaybeTracks = ({ suggestions, selectedEvent }: IMaybeTracksProps) => {
+const MaybeTracks = ({ suggestions, event }: IMaybeTracksProps) => {
   const maybeSuggestions =
-    !isEmpty(suggestions) && !isEmpty(selectedEvent)
+    !isEmpty(suggestions) && !isEmpty(event)
       ? suggestions
-          .filter(s => s.suggestion.eventId === selectedEvent.eventId)
+          .filter(s => s.suggestion.eventId === event.eventId)
           .filter(
             s =>
               s.suggestion && !s.suggestion.rejected && !s.suggestion.accepted
@@ -24,8 +24,8 @@ const MaybeTracks = ({ suggestions, selectedEvent }: IMaybeTracksProps) => {
       : []
 
   const playlistTracks =
-    !isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)
-      ? selectedEvent.playlist!.tracks.items.map(track => track.track.uri)
+    !isEmpty(event) && !isEmpty(event.playlist)
+      ? event.playlist!.tracks.items.map(track => track.track.uri)
       : []
 
   const maybeTracks = uniqBy(

@@ -12,20 +12,20 @@ import RejectedTracks from './RejectedTracksContainer'
 import './Requests.scss'
 
 interface IRequestsProps extends RouteComponentProps<any> {
-  selectedEvent: Event
+  event: Event
   deselectEvent(): Action
   setEventId(eventId: string): Action
 }
 
 const Requests = ({
-  selectedEvent,
+  event,
   deselectEvent,
   setEventId,
   match
 }: IRequestsProps) => {
   const eventId = match.params.eventId
   useEffect(() => {
-    const selectedEventId = selectedEvent ? selectedEvent.eventId : ''
+    const selectedEventId = event ? event.eventId : ''
     if (eventId && selectedEventId !== eventId) {
       setEventId(eventId)
     }
@@ -36,9 +36,9 @@ const Requests = ({
 
   return (
     <div>
-      {isEmpty(selectedEvent) && <EventPicker />}
-      {!isEmpty(selectedEvent) && (
-        <SelectedEvent event={selectedEvent} deselectEvent={deselectEvent} />
+      {isEmpty(event) && <EventPicker />}
+      {!isEmpty(event) && (
+        <SelectedEvent event={event} deselectEvent={deselectEvent} />
       )}
       <Divider variant="inset" className="Requests-divider" />
       <AppBar position="static" color="default">

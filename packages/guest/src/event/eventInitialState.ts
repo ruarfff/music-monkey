@@ -3,7 +3,7 @@ import IEventState from './IEventState'
 
 export default {
   fetchEventError: undefined,
-  selectedEvent: {} as Event,
+  event: {} as Event,
   selectedSuggestion: undefined,
   events: [],
   eventsLoading: false,

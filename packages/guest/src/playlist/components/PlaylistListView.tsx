@@ -16,24 +16,24 @@ import backgroundImage from 'assets/music-monkey.jpg'
 import './PlaylistListView.scss'
 
 interface IPlaylistListViewProps {
-  selectedEvent: Event
+  event: Event
   events: Event[]
   eventsLoading?: boolean
   deselectEvent(): Action
 }
 
 const PlaylistListView = ({
-  selectedEvent,
+  event,
   events,
   eventsLoading,
   deselectEvent
 }: IPlaylistListViewProps) => {
   useEffect(() => {
-    if (!isEmpty(selectedEvent)) {
+    if (!isEmpty(event)) {
       deselectEvent()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedEvent])
+  }, [event])
 
   if (eventsLoading) {
     return <LoadingSpinner />

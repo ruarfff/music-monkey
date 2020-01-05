@@ -8,7 +8,7 @@ import Content from './Content'
 const mapStateToProps = ({ event }: IRootState) => ({
   events: event.events,
   eventsLoading: event.eventsLoading,
-  selectedEvent: event.selectedEvent,
+  event: event.event,
   eventId: event.eventId,
   eventLoading: event.eventLoading
 })

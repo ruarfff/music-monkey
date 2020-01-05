@@ -19,7 +19,7 @@ import './EventView.scss'
 
 interface EventViewProps {
   user: User
-  selectedEvent: Event
+  event: Event
   eventLoading: boolean
   votes: Map<string, TrackVoteStatus>
   fetchingVotes: boolean
@@ -30,7 +30,7 @@ interface EventViewProps {
 
 const EventView = ({
   user,
-  selectedEvent,
+  event,
   setEventId,
   votes,
   createVote,
@@ -45,11 +45,11 @@ const EventView = ({
 
   // handleVotes
   useEffect(() => {
-    if (eventId !== selectedEvent.eventId) setEventId(eventId)
+    if (eventId !== event.eventId) setEventId(eventId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId])
 
-  if (isEmpty(selectedEvent)) {
+  if (isEmpty(event)) {
     return <LoadingSpinner />
   }
 
@@ -79,18 +79,18 @@ const EventView = ({
               createVote={createVote}
               deleteVote={deleteVote}
               votes={votes}
-              event={selectedEvent}
+              event={event}
             />
           </Typography>
         )}
         {tabIndex === 1 && (
           <Typography component="div" dir={'1'}>
-            <EventLocation event={selectedEvent} />
+            <EventLocation event={event} />
           </Typography>
         )}
         {tabIndex === 2 && (
           <Typography component="div" dir={'2'}>
-            <EventGuests event={selectedEvent} />
+            <EventGuests event={event} />
           </Typography>
         )}
       </div>

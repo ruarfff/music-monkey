@@ -13,14 +13,14 @@ import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 import EventList from './EventList'
 
 interface IEventListViewProps {
-  selectedEvent: Event
+  event: Event
   events: Event[]
   eventsLoading: boolean
   deselectEvent(): Action
 }
 
 const EventListView = ({
-  selectedEvent,
+  event,
   events,
   eventsLoading,
   deselectEvent
@@ -30,11 +30,11 @@ const EventListView = ({
   const [inviteAnswered, setInviteAnswered] = useState(null)
 
   useEffect(() => {
-    if (!isEmpty(selectedEvent)) {
+    if (!isEmpty(event)) {
       deselectEvent()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedEvent])
+  }, [event])
 
   useEffect(() => {
     let storedInvite = localStorage.get(inviteIdKey, null)

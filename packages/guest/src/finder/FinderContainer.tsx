@@ -13,7 +13,7 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   events: state.event.events,
   userPlaylists: state.playlist.data,
-  selectedEvent: state.event.selectedEvent,
+  event: state.event.event,
   searchResults: state.search.tracks,
   searching: state.search.searching
 })
@@ -28,10 +28,7 @@ const mapDispatchToProps = {
 }
 
 const FinderContainer = withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Finder)
+  connect(mapStateToProps, mapDispatchToProps)(Finder)
 )
 
 export default FinderContainer

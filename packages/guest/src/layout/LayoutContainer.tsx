@@ -8,7 +8,7 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   userLoading: state.user.isLoading,
   userError: state.user.error,
-  event: state.event.selectedEvent
+  event: state.event.event
 })
 
 const mapDispatchToProps = { logout }

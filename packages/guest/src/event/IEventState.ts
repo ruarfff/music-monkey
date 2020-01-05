@@ -4,7 +4,7 @@ import ISelectedSuggestion from './ISelectedSuggestion'
 export default interface IEventState {
   fetchEventError?: Error
   eventId: string
-  selectedEvent: Event
+  event: Event
   events: Event[]
   eventsLoading: boolean
   eventLoading: boolean

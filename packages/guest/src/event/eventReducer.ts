@@ -27,23 +27,21 @@ export default function event(
     case DESELECT_EVENT:
       return {
         ...state,
-        selectedEvent: {} as Event,
+        event: {} as Event,
         eventId: null
       }
     case UPDATE_RSVP_SUCCESS:
-      const updatedGuests = cloneDeep(state.selectedEvent!.guests!).map(
-        guest => {
-          if (payload.userId === guest.user.userId) {
-            guest.rsvp.status = payload.status
-          }
-          return guest
+      const updatedGuests = cloneDeep(state.event!.guests!).map(guest => {
+        if (payload.userId === guest.user.userId) {
+          guest.rsvp.status = payload.status
         }
-      )
+        return guest
+      })
 
       return {
         ...state,
-        selectedEvent: {
-          ...state.selectedEvent,
+        event: {
+          ...state.event,
           guests: updatedGuests
         }
       }
@@ -65,7 +63,7 @@ export default function event(
       }
       return {
         ...state,
-        selectedEvent: payload,
+        event: payload,
         eventId: payload.eventId,
         eventLoading: false,
         events: existingEvents
@@ -74,7 +72,7 @@ export default function event(
     case EVENT_CLEAR:
       return {
         ...state,
-        selectedEvent: {} as Event,
+        event: {} as Event,
         events: [],
         pastEvents: [],
         upcomingEvents: [],
@@ -115,7 +113,7 @@ export default function event(
     case EVENT_SELECTED:
       return {
         ...state,
-        selectedEvent: payload,
+        event: payload,
         eventId: payload.eventId
       }
     case EVENT_ID_SET:

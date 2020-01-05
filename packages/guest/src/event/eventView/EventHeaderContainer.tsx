@@ -4,7 +4,7 @@ import { deselectEvent } from '../eventActions'
 import EventHeader from './EventHeader'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.selectedEvent
+  event: state.event.event
 })
 
 const mapDispatchToProps = {

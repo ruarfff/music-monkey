@@ -5,7 +5,7 @@ import EventPicker from './EventPicker'
 
 const mapStateToProps = (state: IRootState) => ({
   events: state.event.events,
-  selectedEvent: state.event.selectedEvent
+  event: state.event.event
 })
 
 const mapDispatchToProps = {

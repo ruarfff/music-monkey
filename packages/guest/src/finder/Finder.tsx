@@ -26,7 +26,7 @@ interface IFinderProps extends RouteComponentProps<any> {
   user: User
   userPlaylists: Playlist[]
   events: Event[]
-  selectedEvent: Event
+  event: Event
   searching: boolean
   searchResults: Track[]
   deselectEvent(): Action
@@ -41,7 +41,7 @@ const Finder = ({
   user,
   userPlaylists,
   events,
-  selectedEvent,
+  event,
   searching,
   searchResults,
   deselectEvent,
@@ -54,7 +54,7 @@ const Finder = ({
 }: IFinderProps) => {
   const eventId = match.params.eventId
   useEffect(() => {
-    const selectedEventId = selectedEvent ? selectedEvent.eventId : ''
+    const selectedEventId = event ? event.eventId : ''
     if (eventId && selectedEventId !== eventId) {
       setEventId(eventId)
     }
@@ -79,21 +79,21 @@ const Finder = ({
   }
 
   const onTrackSelected = (track: Track) => {
-    showConfirmationDialog(user, selectedEvent, track, saveTrackSuggestion)
+    showConfirmationDialog(user, event, track, saveTrackSuggestion)
   }
 
   const onPlaylistSelected = (playlist: Playlist) => () => {
     showConfirmationPlaylistDialog(
       user,
-      selectedEvent,
+      event,
       playlist,
       savePlaylistSuggestion
     )
   }
 
   const playlistTracks =
-    !isEmpty(selectedEvent) && !isEmpty(selectedEvent.playlist)
-      ? selectedEvent.playlist!.tracks.items.map(track => track.track.uri)
+    !isEmpty(event) && !isEmpty(event.playlist)
+      ? event.playlist!.tracks.items.map(track => track.track.uri)
       : []
 
   let filteredSearch = [] as Track[]
@@ -116,12 +116,9 @@ const Finder = ({
       )}
       {!searching && isEmpty(filteredSearch) && (
         <div>
-          {isEmpty(selectedEvent) && <EventPicker />}
-          {!isEmpty(selectedEvent) && (
-            <SelectedEvent
-              event={selectedEvent}
-              deselectEvent={deselectEvent}
-            />
+          {isEmpty(event) && <EventPicker />}
+          {!isEmpty(event) && (
+            <SelectedEvent event={event} deselectEvent={deselectEvent} />
           )}
           <Divider variant="inset" className="Finder-divider" />
           <AppBar position="static" color="default">
@@ -151,9 +148,7 @@ const Finder = ({
             {tabIndex === 1 ? (
               <MyPlaylistsTab
                 user={user}
-                playlistsEnabled={
-                  selectedEvent.settings.suggestingPlaylistsEnabled
-                }
+                playlistsEnabled={event.settings.suggestingPlaylistsEnabled}
                 fetchMorePlaylists={fetchMorePlaylists}
                 savePlaylistSuggestion={onPlaylistSelected}
                 onTrackSelected={onTrackSelected}

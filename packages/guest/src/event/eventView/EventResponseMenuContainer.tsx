@@ -5,7 +5,7 @@ import EventResponseMenu from './EventResponseMenu'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  event: state.event.selectedEvent
+  event: state.event.event
 })
 
 const mapDispatchToProps = {

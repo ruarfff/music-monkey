@@ -8,7 +8,7 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   votes: state.vote.votes,
   fetchingVotes: state.vote.fetchingVotes,
-  selectedEvent: state.event.selectedEvent,
+  event: state.event.event,
   eventLoading: state.event.eventLoading
 })
 

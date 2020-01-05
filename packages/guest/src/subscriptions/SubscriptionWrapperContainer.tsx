@@ -6,7 +6,7 @@ import { fetchEventVotes } from 'mm-shared'
 import { getSuggestions } from '../suggestion/suggestionActions'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.selectedEvent
+  event: state.event.event
 })
 
 const mapDispatchToProps = {

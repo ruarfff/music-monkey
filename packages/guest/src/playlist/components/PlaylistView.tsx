@@ -137,7 +137,7 @@ const PlaylistView = ({
         )}
         {value === 1 ? (
           <Typography component="div" dir={'1'}>
-            <MaybeTracks suggestions={suggestions} selectedEvent={event} />
+            <MaybeTracks suggestions={suggestions} event={event} />
           </Typography>
         ) : (
           <div />

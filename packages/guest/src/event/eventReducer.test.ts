@@ -47,7 +47,7 @@ describe('eventReducer', () => {
       ).toEqual({
         ...initialState,
         eventLoading: false,
-        selectedEvent: fetchedEvent,
+        event: fetchedEvent,
         eventId: 'event-id',
         events: [fetchedEvent]
       })
@@ -73,7 +73,7 @@ describe('eventReducer', () => {
       ).toEqual({
         ...initialState,
         eventLoading: false,
-        selectedEvent: newEvent,
+        event: newEvent,
         events: [newEvent],
         eventId: 'event-id'
       })
@@ -128,7 +128,7 @@ describe('eventReducer', () => {
       })
     ).toEqual({
       ...initialState,
-      selectedEvent: { eventId: 'event-id' },
+      event: { eventId: 'event-id' },
       eventId: 'event-id'
     })
   })
