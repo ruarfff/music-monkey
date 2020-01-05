@@ -32,9 +32,7 @@ async function createRsvp({ inviteId, userId, eventId }: IRsvpArgs) {
 function* fetchOrCreateRsvpFlow({ payload }: Action) {
   try {
     let rsvp = yield call(fetchRsvp, payload)
-    console.log(JSON.stringify(rsvp, null, 4))
     if (!rsvp) {
-      console.log('Create RSVP')
       rsvp = createRsvp(payload)
     }
     yield put({ type: FETCH_OR_CREATE_RSVP_SUCCESS, payload: rsvp })

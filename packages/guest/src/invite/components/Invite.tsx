@@ -26,7 +26,6 @@ const Invite = ({
   fetchingRsvp,
   fetchOrCreateRsvp
 }: IInviteProps) => {
-  console.log('Heloooooooo!!!!!!!!!!')
   const inviteId = match.params.inviteId
   useEffect(() => {
     localStorage.set(inviteIdKey, inviteId)
@@ -36,13 +35,9 @@ const Invite = ({
       fetchInvite(inviteId)
     }
 
-    console.log('inviteEvent ' + JSON.stringify(inviteEvent))
-    console.log('user ' + JSON.stringify(user))
-
     if (!isEmpty(inviteEvent) && !isEmpty(user)) {
       localStorage.set(inviteAnsweredKey, 'true')
       if (!fetchingRsvp) {
-        console.log('fetchOrCreateRsvp')
         fetchOrCreateRsvp(inviteId, user.userId, inviteEvent.eventId!)
       }
     }

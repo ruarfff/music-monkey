@@ -31,7 +31,6 @@ const Content = ({
   const routes = useContext(RouteContext)
   useEffect(() => {
     if (isEmpty(events) && !eventsLoading) {
-      console.log('Waaaaaatttttt')
       getEvents()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
