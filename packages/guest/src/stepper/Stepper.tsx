@@ -1,11 +1,11 @@
+import React from 'react'
+import { Redirect } from 'react-router'
 import { Button, MobileStepper } from '@material-ui/core'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import * as React from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import Images from '../img/ImportImg'
-import LinkButton from '../util/LinkButton'
+import { LinkButton } from 'mm-shared'
 
-import { Redirect } from 'react-router'
 import './Stepper.scss'
 
 class Stepper extends React.Component<any, any> {

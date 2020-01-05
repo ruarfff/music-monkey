@@ -1,5 +1,5 @@
 import { Playlist } from 'mm-shared'
-import formatDuration from 'util/formatDuration'
+import { formatDuration } from 'mm-shared'
 import getPlaylistDuration from './getPlaylistDuration'
 
 const getFormattedPlaylistDuration = (playlist: Playlist) => {

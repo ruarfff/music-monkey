@@ -9,8 +9,14 @@ import SelectedEvent from 'event/components/SelectedEvent'
 import Search from 'search/SearchContainer'
 import IPlaylistSuggestion from 'suggestion/IPlaylistSuggestion'
 import ITrackSuggestion from 'suggestion/ITrackSuggestion'
-import { Action, Event, Track, User, Playlist } from 'mm-shared'
-import useSwipeTabsIndex from 'util/useSwipeTabsIndex'
+import {
+  Action,
+  Event,
+  Track,
+  User,
+  Playlist,
+  useSwipeTabsIndex
+} from 'mm-shared'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
 import SearchResults from './SearchResults'

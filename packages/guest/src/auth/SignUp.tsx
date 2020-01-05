@@ -3,9 +3,7 @@ import Button from '@material-ui/core/Button/Button'
 import Input from '@material-ui/core/Input/Input'
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik'
 import { object, ref, string } from 'yup'
-import { Action } from 'mm-shared'
-import ErrorNotification from 'util/ErrorNotification'
-import LinkButton from 'util/LinkButton'
+import { Action, ErrorNotification, LinkButton } from 'mm-shared'
 import './SignUp.scss'
 
 interface ISignUpProps {

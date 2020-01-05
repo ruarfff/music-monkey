@@ -1,9 +1,8 @@
 import React from 'react'
 import logo from 'assets/logo-home.png'
-import { Action, LoadingSpinner } from 'mm-shared'
-import ErrorNotification from 'util/ErrorNotification'
-import IAuthState from './IAuthState'
+import { Action, LoadingSpinner, ErrorNotification } from 'mm-shared'
 import spotifyLoginButtonImage from 'assets/spotify-login.svg'
+import IAuthState from './IAuthState'
 import './Login.scss'
 
 const serviceUrl = process.env.REACT_APP_MM_API_URL

@@ -3,8 +3,7 @@ import Button from '@material-ui/core/Button'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import { Action, Track } from 'mm-shared'
-import formatDuration from 'util/formatDuration'
+import { Action, Track, formatDuration } from 'mm-shared'
 import './TrackItem.scss'
 
 interface ITrackItemProps {

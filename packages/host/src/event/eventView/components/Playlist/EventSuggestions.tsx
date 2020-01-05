@@ -12,10 +12,9 @@ import DoneAll from '@material-ui/icons/DoneAll'
 import uniqBy from 'lodash/uniqBy'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { Action, Playlist, Track } from 'mm-shared'
+import { Action, Playlist, Track, formatDuration } from 'mm-shared'
 import IDecoratedSuggestion from 'suggestion/IDecoratedSuggestion'
 import ISuggestion from 'suggestion/ISuggestion'
-import formatDuration from 'util/formatDuration'
 import './EventSuggestions.scss'
 
 interface IEventSuggestionsProps extends RouteComponentProps<any> {

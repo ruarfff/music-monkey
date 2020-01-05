@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
-import { Action, EventSettings } from 'mm-shared'
+import { Action, EventSettings, arrayMove } from 'mm-shared'
 import {
   CLEAR_MESSAGE,
   SHARE_EMAIL_FAILURE,
@@ -35,7 +35,6 @@ import {
   REMOVE_TRACK_SUCCESS
 } from 'playlist/playlistActions'
 import { cloneDeep } from 'lodash'
-import arrayMove from 'util/arrayMove'
 
 export default function event(
   state: IEventState = initialState,

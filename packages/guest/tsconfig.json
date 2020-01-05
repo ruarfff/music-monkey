@@ -8,6 +8,7 @@
   "include": [
     "./src",
     "config-overrides.js",
-    "../mm-shared/src/user/userClient.ts"
+    "../mm-shared/src/user/userClient.ts",
+    "../mm-shared/src/util"
   ]
 }

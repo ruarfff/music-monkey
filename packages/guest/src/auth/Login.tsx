@@ -1,9 +1,8 @@
 import React from 'react'
 import { Button, Divider, Icon, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
-import { Action, Event } from 'mm-shared'
+import { Action, Event, ErrorNotification } from 'mm-shared'
 import Images from 'img/ImportImg'
-import ErrorNotification from 'util/ErrorNotification'
 
 import './Login.scss'
 

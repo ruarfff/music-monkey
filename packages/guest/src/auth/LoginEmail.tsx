@@ -3,8 +3,7 @@ import { Icon, Input } from '@material-ui/core'
 import Button from '@material-ui/core/Button/Button'
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik'
 import { object, string } from 'yup'
-import { Action } from 'mm-shared'
-import ErrorNotification from 'util/ErrorNotification'
+import { Action, ErrorNotification } from 'mm-shared'
 import './LoginEmail.scss'
 
 interface ILoginEmailProps {
