@@ -15,7 +15,7 @@ import Image from 'components/Image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import { Event } from 'mm-shared'
 import './EventList.scss'
-import TabPanel from './saveEvent/TabPanel'
+import TabPanel from '../saveEvent/TabPanel'
 
 interface IEventListProps {
   pastEvents: Event[]

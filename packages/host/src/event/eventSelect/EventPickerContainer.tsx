@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
-import { selectEvent } from './eventActions'
+import { selectEvent } from '../eventActions'
 import { getEventSuggestions } from 'suggestion/suggestionActions'
 import EventPicker from './EventPicker'
 

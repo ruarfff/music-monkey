@@ -2,7 +2,7 @@ import React, { useContext, Suspense, useEffect } from 'react'
 import { Route, Switch } from 'react-router'
 import { RouteContext } from 'routes/RouteContext'
 import { RouteWithSubRoutes } from 'routes/routes'
-import EventListView from 'event/EventListViewContainer'
+import EventListView from 'event/eventList/EventListViewContainer'
 import isEmpty from 'lodash/isEmpty'
 import { Action, Event, LoadingSpinner } from 'mm-shared'
 
