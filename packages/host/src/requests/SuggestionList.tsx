@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { Track, TrackVoteStatus } from 'mm-shared'
 import SuggestionListItem from './SuggestionListItem'
@@ -27,7 +27,7 @@ const getItemStyle = (isDragging: any, draggableStyle: any) => {
   }
 }
 
-const SuggestionList = ({
+const SuggestionList: FunctionComponent<SuggestionListProps> = ({
   suggestions = [],
   withVoting = false,
   votes = new Map(),
@@ -36,7 +36,7 @@ const SuggestionList = ({
   onTrackSelected = (t: Track) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
   onTrackRemoved = (track: Track) => ({} as any)
-}: SuggestionListProps) => (
+}) => (
   <DragDropContext onDragEnd={onDragEnd}>
     <Droppable droppableId="suggestion-list-droppable">
       {provided => (

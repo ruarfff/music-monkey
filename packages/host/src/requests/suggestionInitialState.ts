@@ -2,6 +2,7 @@ import IDecoratedSuggestion from './IDecoratedSuggestion'
 import ISuggestionState from './ISuggestionState'
 
 export default {
+  suggestions: [] as IDecoratedSuggestion[],
   acceptedSuggestions: [] as IDecoratedSuggestion[],
   pendingSuggestions: [] as IDecoratedSuggestion[],
   rejectedSuggestions: [] as IDecoratedSuggestion[],

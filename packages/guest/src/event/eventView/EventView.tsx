@@ -16,13 +16,13 @@ import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
 import EventHeader from './EventHeaderContainer'
 import './EventView.scss'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 
 interface EventViewProps {
   user: User
   event: Event
-  eventLoading: boolean
   votes: Map<string, TrackVoteStatus>
-  fetchingVotes: boolean
+  suggestions: IDecoratedSuggestion[]
   createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
   setEventId(eventId: string): Action
@@ -31,10 +31,11 @@ interface EventViewProps {
 const EventView = ({
   user,
   event,
-  setEventId,
   votes,
+  suggestions,
   createVote,
   deleteVote,
+  setEventId,
   match
 }: EventViewProps & RouteComponentProps<any>) => {
   const eventId = match.params.eventId
@@ -80,6 +81,7 @@ const EventView = ({
               deleteVote={deleteVote}
               votes={votes}
               event={event}
+              suggestions={suggestions}
             />
           </Typography>
         )}

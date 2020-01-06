@@ -1,8 +1,8 @@
 import isEmpty from 'lodash/isEmpty'
 import head from 'lodash/head'
 import sortBy from 'lodash/sortBy'
-import backgroundImage from 'assets/music-monkey.jpg'
-import { Track, Image } from 'mm-shared'
+import backgroundImage from '../assets/music-monkey.jpg'
+import { Track, Image } from '../'
 
 const getTrackImage = (track: Track) => {
   return track.album && !isEmpty(track.album.images)

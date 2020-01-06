@@ -37,7 +37,9 @@ const MaybeTracks = ({ suggestions, event }: IMaybeTracksProps) => {
 
   return (
     <List>
-      {!isEmpty(maybeTracks) && <TrackList tracks={maybeTracks} />}
+      {!isEmpty(maybeTracks) && (
+        <TrackList tracks={maybeTracks} suggestions={maybeSuggestions} />
+      )}
       {isEmpty(maybeTracks) && (
         <ListItem>
           <span className="noTracks">No pending suggestions</span>

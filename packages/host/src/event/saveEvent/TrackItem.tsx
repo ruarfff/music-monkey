@@ -4,10 +4,8 @@ import ListItem from '@material-ui/core/ListItem'
 import { ListItemText, ListItemIcon, Divider } from '@material-ui/core'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import AddIcon from '@material-ui/icons/Add'
-import { Track } from 'mm-shared'
+import { Track, getTrackImage } from 'mm-shared'
 import Img from 'react-image'
-import backgroundImage from 'assets/music-monkey.jpg'
-import getTrackImage from 'track/getTrackImage'
 
 import './TrackItem.scss'
 
@@ -23,7 +21,7 @@ const TrackItem = ({ track, onSelected }: ITrackItemProps) => {
 
   const trackImage = (
     <Img
-      src={[getTrackImage(track), backgroundImage]}
+      src={getTrackImage(track)}
       alt={track.name}
       className="TrackItem-track-image"
     />

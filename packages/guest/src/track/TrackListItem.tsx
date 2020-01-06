@@ -1,41 +1,60 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
+import Img from 'react-image'
 import {
-  Avatar,
   Divider,
   Icon,
   ListItem,
-  ListItemText
+  ListItemText,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  Avatar
 } from '@material-ui/core'
-import { Track }  from 'mm-shared'
+import Badge from '@material-ui/core/Badge'
+import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
+import IconButton from '@material-ui/core/IconButton'
+import { Track, getTrackImage } from 'mm-shared'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import './TrackListItem.scss'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
 
-interface ITrackListItemProps {
+interface TrackListItemProps {
   track: any
+  suggestion?: IDecoratedSuggestion
   withVoting: boolean
   currentUserVoted: boolean
   numberOfVotes: number
-  onVote: (track: Track) => void
-  onTrackSelected: (track: Track) => void
   withSuggestingEnabled: boolean
   eventName?: string
+  onVote: (track: Track) => void
+  onTrackSelected: (track: Track) => void
 }
 
-const TrackListItem = ({
+const TrackListItem: FunctionComponent<TrackListItemProps> = ({
   track,
+  suggestion,
   withVoting,
   currentUserVoted,
   numberOfVotes,
-  onVote,
-  onTrackSelected,
   withSuggestingEnabled,
-  eventName
-}: ITrackListItemProps) => {
+  eventName,
+  onVote,
+  onTrackSelected
+}) => {
   if (!track) {
     return <span />
   }
+
+  console.log(suggestion)
+  const user = !!suggestion ? suggestion.user : null
+  let initials: any = 'G'
+
+  if (!!user && user.displayName) {
+    initials = user.displayName.match(/\b\w/g) || []
+    initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+  }
+
   const handleTrackSelected = () => {
     onTrackSelected(track)
   }
@@ -44,62 +63,71 @@ const TrackListItem = ({
     onVote(track)
   }
 
-  let trackImage = <span />
-  if (track.album && track.album.images && track.album.images.length > 0) {
-    trackImage = (
-      <Avatar>
-        <img
-          src={track.album.images[track.album.images.length - 1].url}
-          alt={track.name}
-        />
-      </Avatar>
+  const trackImage = (
+    <Img
+      src={getTrackImage(track)}
+      alt={track.name}
+      className="TrackListItem-track-image"
+    />
+  )
+
+  let avatar = <span />
+
+  if (!!user) {
+    avatar = user.image ? (
+      <Avatar alt="user avatar" src={user.image} className="avatar" />
+    ) : (
+      <Avatar className="EventGuests-avatar">{initials}</Avatar>
     )
   }
+
   let votingButton = <span />
   if (withVoting) {
     votingButton = (
-      <div className="playList-favorite">
-        <div
-          className="playList-button-favorite"
-          onClick={handleTrackVote}
-          style={{ color: currentUserVoted ? 'secondary' : 'primary' }}
+      <IconButton aria-label="Vote" onClick={handleTrackVote}>
+        <Badge
+          badgeContent={numberOfVotes}
+          color={currentUserVoted ? 'secondary' : 'primary'}
+          className="TrackListItem-voting"
         >
-          <span className="playList-favorite-count"> {numberOfVotes} </span>
-          <Icon
-            className={`playList-favorite-icon ${
-              currentUserVoted ? 'secondary' : 'primary'
-            }`}
-          >
-            favorite
-          </Icon>
-        </div>
-      </div>
+          <FavouriteIcon />
+        </Badge>
+      </IconButton>
     )
   }
 
   return (
-    <div className="event-list-item">
-      <ListItem dense={true} button={true}>
-        {trackImage}
-        <div className="event-list-name" onClick={handleTrackSelected}>
-          <ListItemText
-            primary={track.artists[0].name}
-            secondary={track.name}
-          />
-          <span className="event-list-span-name"> {eventName} </span>
-        </div>
-        {votingButton}
-        {withSuggestingEnabled ? (
-          <Icon onClick={handleTrackSelected} className="playList-button-add">
-            {' '}
-            playlist_add{' '}
-          </Icon>
-        ) : (
-          ''
-        )}
+    <>
+      <ListItem
+        className="TrackListItem-root"
+        alignItems="flex-start"
+        dense
+        button
+        onClick={handleTrackSelected}
+      >
+        <ListItemIcon>{trackImage}</ListItemIcon>
+        <ListItemText
+          className="TrackListItem-content"
+          primary={track.name}
+          primaryTypographyProps={{ noWrap: true }}
+          secondary={track.artists[0].name}
+          secondaryTypographyProps={{
+            variant: 'body2',
+            noWrap: true
+          }}
+        />
+
+        <span> {eventName} </span>
+        <ListItemSecondaryAction className="TrackListItem-actions">
+          {avatar}
+          {votingButton}
+          {withSuggestingEnabled && (
+            <Icon onClick={handleTrackSelected}> playlist_add </Icon>
+          )}
+        </ListItemSecondaryAction>
       </ListItem>
-      <Divider variant="inset" />
-    </div>
+      <Divider variant="inset" component="li" />
+    </>
   )
 }
 

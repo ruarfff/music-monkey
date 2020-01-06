@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import Badge from '@material-ui/core/Badge'
 import Fab from '@material-ui/core/Fab'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
@@ -12,10 +12,8 @@ import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import Remove from '@material-ui/icons/Remove'
 import { Divider, Avatar } from '@material-ui/core'
-import getTrackImage from 'track/getTrackImage'
 import IDecoratedSuggestion from './IDecoratedSuggestion'
-import { Track } from 'mm-shared'
-import { User } from 'mm-shared'
+import { Track, User, getTrackImage } from 'mm-shared'
 import './SuggestionListItem.scss'
 
 interface SuggestionListItemProps {
@@ -29,7 +27,7 @@ interface SuggestionListItemProps {
   onTrackRemoved?(track: Track): void
 }
 
-const SuggestionListItem = ({
+const SuggestionListItem: FunctionComponent<SuggestionListItemProps> = ({
   suggestion,
   withVoting,
   numberOfVotes,
@@ -37,7 +35,7 @@ const SuggestionListItem = ({
   onVote,
   onTrackSelected,
   onTrackRemoved
-}: SuggestionListItemProps) => {
+}) => {
   if (!suggestion) {
     return <span />
   }

@@ -6,10 +6,9 @@ import EventView from './EventView'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  votes: state.vote.votes,
-  fetchingVotes: state.vote.fetchingVotes,
   event: state.event.event,
-  eventLoading: state.event.eventLoading
+  votes: state.vote.votes,
+  suggestions: state.suggestion.suggestions
 })
 
 const mapDispatchToProps = {

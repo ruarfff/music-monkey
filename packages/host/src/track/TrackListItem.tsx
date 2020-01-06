@@ -10,11 +10,10 @@ import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import isFunction from 'lodash/isFunction'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
-import { Track } from 'mm-shared'
+import { Track, getTrackImage } from 'mm-shared'
 import ITrackWithFeatures from './ITrackWithFeatures'
 import Remove from '@material-ui/icons/Remove'
 import { Divider, Avatar } from '@material-ui/core'
-import getTrackImage from 'track/getTrackImage'
 import './TrackListItem.scss'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW

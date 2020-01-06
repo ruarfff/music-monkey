@@ -1,66 +1,31 @@
 @import 'mm-shared/src/theme/main';
 
-.playList-button-favorite {
-  justify-content: center;
-  align-items: center;
-  display: flex;
+.TrackListItem-root {
+  .TrackListItem-content {
+    padding-left: 1em;
+    padding-right: 2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .TrackListItem-voting .badge {
+    right: -15px;
+  }
 
-  .playList-favorite-count {
-    color: white;
-    z-index: 2;
-    font-size: 10px;
-    position: absolute;
+  .TrackListItem-track-image {
+    border-radius: 4px;
+    max-width: 4.5em;
+    max-height: 4.5em;
   }
 }
-
-.event-list-name {
-  padding-left: 17px;
-  width: 100%;
-}
-
-.event-list-span-name {
-  color: $secondary-light;
-}
-
-.playList-favorite {
+.TrackListItem-actions {
   display: flex;
-  align-items: center;
-}
+  .MuiFab-primary {
+    background-color: $danger-red;
+    opacity: 0.9;
+  }
 
-.cover-avatar {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-.playList-button-menu {
-  width: 20px;
-}
-
-.playList-button-add {
-  color: #737373;
-}
-
-.playList-favorite-icon {
-  color: grey;
-  font-size: 27px;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-}
-
-.playList-favorite-icon.secondary {
-  color: $secondary-light !important;
-}
-
-.playList-name-group {
-  padding-left: 15px;
-  padding-top: 5px;
-  color: $main;
-  font-size: 13px;
-}
-
-.img-cover,
-.img-cover-avatar {
-  width: 100%;
+  .EventGuests-avatar {
+    margin: 10;
+  }
 }

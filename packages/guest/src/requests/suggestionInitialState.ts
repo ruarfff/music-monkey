@@ -3,6 +3,10 @@ import ISuggestionState from './ISuggestionState'
 
 export default {
   suggestions: [] as IDecoratedSuggestion[],
+  acceptedSuggestions: [] as IDecoratedSuggestion[],
+  pendingSuggestions: [] as IDecoratedSuggestion[],
+  rejectedSuggestions: [] as IDecoratedSuggestion[],
+  stagedSuggestions: [] as IDecoratedSuggestion[],
   deletingSuggestion: false,
   fetchingSuggestions: false,
   savingSuggestion: false,

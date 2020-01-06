@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { Track, TrackVoteStatus } from 'mm-shared'
 import TrackListItem from './TrackListItem'
+import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
+import { List } from '@material-ui/core'
 
-// TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
-// Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
-
-interface ITrackListProps {
+interface TrackListProps {
   tracks: Track[]
+  suggestions?: IDecoratedSuggestion[]
   withVoting?: boolean
   votes?: Map<string, TrackVoteStatus>
   withSuggestingEnabled?: boolean
@@ -14,15 +14,16 @@ interface ITrackListProps {
   onTrackSelected?: (track: Track) => void
 }
 
-const TrackList = ({
+const TrackList: FunctionComponent<TrackListProps> = ({
   tracks = [],
+  suggestions = [],
   withVoting = false,
   withSuggestingEnabled = false,
   votes = new Map(),
   onVote = (t: Track) => undefined,
   onTrackSelected = (t: Track) => undefined
-}: ITrackListProps) => (
-  <React.Fragment>
+}) => (
+  <List>
     {tracks.map((track, i) => {
       const trackId = track.uri
       let numberOfVotes = 0
@@ -38,6 +39,7 @@ const TrackList = ({
         <TrackListItem
           key={i}
           track={track}
+          suggestion={suggestions.find(s => s.track.uri === trackId)}
           withVoting={withVoting}
           currentUserVoted={userVoted}
           numberOfVotes={numberOfVotes}
@@ -47,7 +49,7 @@ const TrackList = ({
         />
       )
     })}
-  </React.Fragment>
+  </List>
 )
 
 export default TrackList

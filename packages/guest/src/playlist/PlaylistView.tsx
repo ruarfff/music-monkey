@@ -127,6 +127,7 @@ const PlaylistView = ({
           <Typography component="div" dir={'0'} style={{ padding: 10 }}>
             <ApprovedTracks
               playlist={playlist!}
+              suggestions={suggestions}
               votes={votes}
               onTrackSelected={setCurrentTrack}
               onVote={handleTrackVote}
