@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Track, TrackVoteStatus } from 'mm-shared'
+import { Event, Track, TrackVoteStatus } from 'mm-shared'
 import TrackListItem from './TrackListItem'
 import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import { List } from '@material-ui/core'
@@ -10,6 +10,7 @@ interface TrackListProps {
   withVoting?: boolean
   votes?: Map<string, TrackVoteStatus>
   withSuggestingEnabled?: boolean
+  event?: Event
   onVote?: (track: Track) => void
   onTrackSelected?: (track: Track) => void
 }
@@ -20,6 +21,7 @@ const TrackList: FunctionComponent<TrackListProps> = ({
   withVoting = false,
   withSuggestingEnabled = false,
   votes = new Map(),
+  event,
   onVote = (t: Track) => undefined,
   onTrackSelected = (t: Track) => undefined
 }) => (
@@ -43,6 +45,7 @@ const TrackList: FunctionComponent<TrackListProps> = ({
           withVoting={withVoting}
           currentUserVoted={userVoted}
           numberOfVotes={numberOfVotes}
+          event={event}
           onTrackSelected={onTrackSelected}
           onVote={onVote}
           withSuggestingEnabled={withSuggestingEnabled}

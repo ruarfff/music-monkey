@@ -12,7 +12,7 @@ import {
 import Badge from '@material-ui/core/Badge'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import IconButton from '@material-ui/core/IconButton'
-import { Track, getTrackImage } from 'mm-shared'
+import { Event, Track, getTrackImage } from 'mm-shared'
 import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import './TrackListItem.scss'
 
@@ -26,7 +26,7 @@ interface TrackListItemProps {
   currentUserVoted: boolean
   numberOfVotes: number
   withSuggestingEnabled: boolean
-  eventName?: string
+  event?: Event
   onVote: (track: Track) => void
   onTrackSelected: (track: Track) => void
 }
@@ -37,8 +37,8 @@ const TrackListItem: FunctionComponent<TrackListItemProps> = ({
   withVoting,
   currentUserVoted,
   numberOfVotes,
+  event,
   withSuggestingEnabled,
-  eventName,
   onVote,
   onTrackSelected
 }) => {
@@ -46,8 +46,7 @@ const TrackListItem: FunctionComponent<TrackListItemProps> = ({
     return <span />
   }
 
-  console.log(suggestion)
-  const user = !!suggestion ? suggestion.user : null
+  const user = !!suggestion ? suggestion.user : !!event ? event.hostData : null
   let initials: any = 'G'
 
   if (!!user && user.displayName) {
@@ -117,7 +116,6 @@ const TrackListItem: FunctionComponent<TrackListItemProps> = ({
           }}
         />
 
-        <span> {eventName} </span>
         <ListItemSecondaryAction className="TrackListItem-actions">
           {avatar}
           {votingButton}

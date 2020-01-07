@@ -46,6 +46,7 @@ const EventDetails: FunctionComponent<IEventDetailsProps> = ({
     <div className="EventDetails-root">
       {!isEmpty(event.playlist) && (
         <TrackList
+          event={event}
           tracks={event.playlist!.tracks.items.map(item => item.track)}
           suggestions={suggestions}
           withVoting={true}
