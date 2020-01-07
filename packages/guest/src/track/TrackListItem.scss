@@ -3,7 +3,7 @@
 .TrackListItem-root {
   .TrackListItem-content {
     padding-left: 1em;
-    padding-right: 2em;
+    padding-right: 3em;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -23,9 +23,5 @@
   .MuiFab-primary {
     background-color: $danger-red;
     opacity: 0.9;
-  }
-
-  .EventGuests-avatar {
-    margin: 10;
   }
 }
