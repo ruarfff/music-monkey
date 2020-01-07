@@ -5,6 +5,8 @@ import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from 'rootState'
 
+import { Music } from 'mm-shared'
+
 const AccountView = lazy(() => import('account/AccountContainer'))
 const CreateEvent = lazy(() => import('event/saveEvent/CreateEventContainer'))
 
@@ -77,7 +79,8 @@ export const routes = [
     component: Insights,
     exact: true,
     path: '/insights'
-  }
+  },
+  { component: Music, exact: true, path: '/music' }
 ]
 
 const renderSubRoutes = (route: any) => (props: any) => (

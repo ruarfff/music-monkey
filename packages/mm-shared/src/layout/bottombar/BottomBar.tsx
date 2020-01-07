@@ -22,11 +22,11 @@ const BottomBar = ({ location, event, isHost }: IBottomBar) => {
   const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
   const eventsLink = eventId ? `/events/${eventId}` : '/'
-  const playlistsLink = eventId ? `/playlists/${eventId}` : '/playlists'
   const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
   const finderLink = eventId ? `/finder/${eventId}` : '/finder'
   const createLink = '/create-event'
   const insightsLink = '/insights'
+  const musicLink = '/music'
 
   return (
     <div className="BottomBar-navigation">
@@ -37,17 +37,16 @@ const BottomBar = ({ location, event, isHost }: IBottomBar) => {
         >
           <Link to={eventsLink}>
             <EventIcon />
-            <span>Events</span>
+            <span>Parties</span>
           </Link>
         </div>
-
         <div
           className={`BottomBar-navigation-item
-          ${checkLocation(pathname, playlistsLink)}`}
+          ${checkLocation(pathname, requestsLink)}`}
         >
-          <Link to={playlistsLink}>
-            <LibraryMusicIcon />
-            <span>Playlists</span>
+          <Link to={requestsLink}>
+            <FavoriteIcon />
+            <span>Requests</span>
           </Link>
         </div>
       </div>
@@ -66,14 +65,13 @@ const BottomBar = ({ location, event, isHost }: IBottomBar) => {
       <div className="BottomBar-navigation-right">
         <div
           className={`BottomBar-navigation-item
-          ${checkLocation(pathname, requestsLink)}`}
+          ${checkLocation(pathname, musicLink)}`}
         >
-          <Link to={requestsLink}>
-            <FavoriteIcon />
-            <span>Requests</span>
+          <Link to={musicLink}>
+            <LibraryMusicIcon />
+            <span>Music</span>
           </Link>
         </div>
-
         <div
           className={`BottomBar-navigation-item
           ${checkLocation(pathname, insightsLink)}`}

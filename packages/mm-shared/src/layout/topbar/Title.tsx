@@ -33,7 +33,7 @@ const Title = ({ location, event }: ITitleProps) => {
     title = pathToTitle[path] || 'MusicMonkey'
   }
   return (
-    <Typography variant="h3" color="inherit" className="Title">
+    <Typography variant="h3" color="inherit" className="Title" noWrap={true}>
       {title}
     </Typography>
   )
