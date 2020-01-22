@@ -1,8 +1,5 @@
-import React from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import AppBar from '@material-ui/core/AppBar/AppBar'
-import { WithStyles } from '@material-ui/core'
-import Grid from '@material-ui/core/Grid/Grid'
-import withStyle from '@material-ui/core/styles/withStyles'
 import Tab from '@material-ui/core/Tab/Tab'
 import Tabs from '@material-ui/core/Tabs/Tabs'
 import Typography from '@material-ui/core/Typography/Typography'
@@ -14,37 +11,10 @@ import EventFetchError from 'event/EventFetchError'
 import EventGuests from './EventGuestsContainer'
 import EventPlaylistView from './EventPlaylistViewContainer'
 import EventSummaryView from './EventSummaryViewContainer'
+import EventHeader from './EventHeaderContainer'
 import './EventView.scss'
 
-const decorated = withStyle(() => ({
-  tabContainer: {
-    background: 'transparent',
-    boxShadow: 'none',
-    borderBottom: '1px solid #d6d6d6',
-    marginBottom: '10px'
-  },
-  tab: {
-    color: '#979797'
-  },
-  tabs: {
-    color: '#AF00FF!important',
-    borderBottom: '1px solid #979797'
-  },
-  TabIndicator: {
-    backgroundColor: '#AF00FF!important',
-    height: '1px'
-  },
-  content: {
-    paddingTop: 0,
-    height: '100%'
-  }
-}))
-
-interface IEventViewState {
-  tabIndex: number
-}
-
-interface IEventViewProps extends RouteComponentProps<any> {
+interface EventViewProps extends RouteComponentProps<any> {
   error: Error
   event: Event
   loading: boolean
@@ -57,121 +27,92 @@ interface IEventViewProps extends RouteComponentProps<any> {
   getEventByIdNoLoading(eventId: string): Action
 }
 
-function TabContainer({ children, dir }: any) {
+const EventView: FC<EventViewProps> = ({
+  event,
+  match,
+  getEventById,
+  fetchEventVotes,
+  getEventSuggestions,
+  loading,
+  error,
+  copiedToClipboard,
+  acknowledgeEventInviteCopied
+}) => {
+  const eventId = match.params.eventId
+  const [tabIndex, setTabIndex] = useState(0)
+  const handleTabChange = (e: any, value: any) => {
+    setTabIndex(value)
+  }
+
+  useEffect(() => {
+    if (!event || event.eventId !== eventId) {
+      getEventById(eventId)
+      fetchEventVotes(eventId)
+      getEventSuggestions(eventId)
+    }
+  }, [event, eventId, fetchEventVotes, getEventById, getEventSuggestions])
+
+  const shouldShowEvent: boolean = !loading && !isEmpty(event)
+
+  const handleGetEvent = () => {
+    getEventById(eventId)
+  }
+
+  if (!shouldShowEvent) {
+    return <LoadingSpinner />
+  }
+
   return (
-    <Typography style={{ height: '100%' }} component="div" dir={dir}>
-      {children}
-    </Typography>
+    <div className="EventView-root">
+      {loading && !isEmpty(error) && (
+        <EventFetchError onTryAgain={handleGetEvent} />
+      )}
+      <EventHeader
+        updateRsvp={(x: any): Action => {
+          return {} as Action
+        }}
+      />
+      <div>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={tabIndex}
+            onChange={handleTabChange}
+            indicatorColor="primary"
+            textColor="secondary"
+            variant="fullWidth"
+            classes={{ indicator: 'indicator-color' }}
+            className="EventView-tabs"
+          >
+            <Tab className="EventView-tab" label="Event Summary" />
+            <Tab className="EventView-tab" label="Playlist" />
+            <Tab className="EventView-tab" label="Guest List" />
+          </Tabs>
+        </AppBar>
+        {tabIndex === 0 && (
+          <Typography component="div">
+            <EventSummaryView />
+          </Typography>
+        )}
+        {tabIndex === 1 && (
+          <Typography component="div" dir={'1'}>
+            <EventPlaylistView />
+          </Typography>
+        )}
+        {tabIndex === 2 && (
+          <Typography component="div" dir={'2'}>
+            <EventGuests />
+          </Typography>
+        )}
+      </div>
+
+      {copiedToClipboard && (
+        <InviteCopyAlert
+          message="Copied to Clipboard"
+          onClose={acknowledgeEventInviteCopied}
+        />
+      )}
+    </div>
   )
 }
 
-class EventView extends React.Component<
-  IEventViewProps & WithStyles,
-  IEventViewState
-> {
-  public state = {
-    tabIndex: 0
-  }
-
-  public componentDidMount() {
-    const eventId = this.props.match.params.eventId
-
-    this.props.getEventById(eventId)
-    this.props.fetchEventVotes(eventId)
-    this.props.getEventSuggestions(eventId)
-  }
-
-  public componentWillReceiveProps(newProps: IEventViewProps) {
-    const eventId = newProps.match.params.eventId
-    if (isEmpty(newProps.event) && !newProps.loading) {
-      this.props.getEventById(eventId)
-      this.props.fetchEventVotes(eventId)
-      this.props.getEventSuggestions(eventId)
-    }
-  }
-
-  public render() {
-    const {
-      loading,
-      error,
-      event,
-      copiedToClipboard,
-      acknowledgeEventInviteCopied
-    } = this.props
-
-    const shouldShowEvent: boolean = !loading && !isEmpty(event)
-
-    return (
-      <div className="EventView-root">
-        {loading && <LoadingSpinner />}
-        {loading && !isEmpty(error) && (
-          <EventFetchError onTryAgain={this.handleGetEvent} />
-        )}
-        {shouldShowEvent && this.renderEventView()}
-        {copiedToClipboard && (
-          <InviteCopyAlert
-            message="Copied to Clipboard"
-            onClose={acknowledgeEventInviteCopied}
-          />
-        )}
-      </div>
-    )
-  }
-
-  private renderEventView = () => {
-    const { tabIndex } = this.state
-    const { classes } = this.props
-
-    return (
-      <Grid className={classes.content} container={true} spacing={2}>
-        <Grid className={classes.content} item={true} xs={12}>
-          <AppBar
-            position="static"
-            color="primary"
-            className={classes.tabContainer}
-          >
-            <Tabs
-              value={tabIndex}
-              onChange={this.handleTabChange}
-              indicatorColor={'primary'}
-              textColor={'primary'}
-              TabIndicatorProps={{ className: classes.TabIndicator }}
-              centered={true}
-              className={classes.tabs}
-              variant="fullWidth"
-            >
-              <Tab className={classes.tab} label="Event Summary" />
-              <Tab className={classes.tab} label="Playlist" />
-              <Tab className={classes.tab} label="Guest List" />
-            </Tabs>
-          </AppBar>
-          {tabIndex === 0 && (
-            <TabContainer className={classes.content} dir={'x'}>
-              <EventSummaryView />
-            </TabContainer>
-          )}
-          {tabIndex === 1 && (
-            <TabContainer className={classes.content} dir={'x'}>
-              <EventPlaylistView />
-            </TabContainer>
-          )}
-          {tabIndex === 2 && (
-            <TabContainer className={classes.content} dir={'x'}>
-              <EventGuests />
-            </TabContainer>
-          )}
-        </Grid>
-      </Grid>
-    )
-  }
-
-  private handleGetEvent() {
-    this.props.getEventById(this.props.match.params.eventId)
-  }
-
-  private handleTabChange = (event: any, index: number) => {
-    this.setState({ tabIndex: index })
-  }
-}
-
-export default decorated(EventView)
+export default EventView

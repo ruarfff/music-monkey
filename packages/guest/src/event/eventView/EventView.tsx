@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import Icon from '@material-ui/core/Icon'
 import { isEmpty } from 'lodash'
@@ -15,10 +15,10 @@ import EventDetails from './EventDetails'
 import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
 import EventHeader from './EventHeaderContainer'
-import './EventView.scss'
 import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
+import './EventView.scss'
 
-interface EventViewProps {
+interface EventViewProps extends RouteComponentProps<any> {
   user: User
   event: Event
   votes: Map<string, TrackVoteStatus>
@@ -28,7 +28,7 @@ interface EventViewProps {
   setEventId(eventId: string): Action
 }
 
-const EventView = ({
+const EventView: FC<EventViewProps> = ({
   user,
   event,
   votes,
@@ -37,7 +37,7 @@ const EventView = ({
   deleteVote,
   setEventId,
   match
-}: EventViewProps & RouteComponentProps<any>) => {
+}) => {
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
   const handleTabChange = (e: any, value: any) => {
@@ -55,7 +55,7 @@ const EventView = ({
   }
 
   return (
-    <div className="Event-root">
+    <div className="EventView-root">
       <EventHeader />
       <div>
         <AppBar position="static" color="default">
@@ -66,11 +66,11 @@ const EventView = ({
             textColor="secondary"
             variant="fullWidth"
             classes={{ indicator: 'indicator-color' }}
-            className="Event-tabs"
+            className="EventView-tabs"
           >
-            <Tab icon={<Icon>library_music</Icon>} className="Event-tab" />
-            <Tab icon={<Icon>location_on</Icon>} className="Event-tab" />
-            <Tab icon={<Icon>account_circle</Icon>} className="Event-tab" />
+            <Tab icon={<Icon>library_music</Icon>} className="EventView-tab" />
+            <Tab icon={<Icon>location_on</Icon>} className="EventView-tab" />
+            <Tab icon={<Icon>account_circle</Icon>} className="EventView-tab" />
           </Tabs>
         </AppBar>
         {tabIndex === 0 && (

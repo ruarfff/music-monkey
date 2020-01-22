@@ -4,17 +4,26 @@ import Icon from '@material-ui/core/Icon'
 import { Link } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import { Moment } from 'moment'
-import { Action, Event } from 'mm-shared'
+import { Action, Event, User, Rsvp } from './../../'
 import { ProfileImage } from './ProfileImage'
-import EventResponseMenu from './EventResponseMenuContainer'
+import EventResponseMenu from './EventResponseMenu'
 import './EventHeader.scss'
 
 interface IEventHeaderProps {
+  isHost?: boolean
+  user: User
   event: Event
   deselectEvent(): Action
+  updateRsvp(rsvp: Rsvp): Action
 }
 
-const EventHeader = ({ event, deselectEvent }: IEventHeaderProps) => {
+const EventHeader = ({
+  isHost = false,
+  user,
+  event,
+  deselectEvent,
+  updateRsvp
+}: IEventHeaderProps) => {
   const getEndDateFormat = (startDate: Moment, endDate: Moment) => {
     const message = `${
       startDate.format('DD') === endDate.format('DD') ? 'h:mm a' : 'h:mm a, Do '
@@ -74,7 +83,13 @@ const EventHeader = ({ event, deselectEvent }: IEventHeaderProps) => {
               <span>{event.organizer}</span>
             </div>
           </div>
-          <EventResponseMenu />
+          {!isHost && (
+            <EventResponseMenu
+              event={event}
+              user={user}
+              updateRsvp={updateRsvp}
+            />
+          )}
           <div className="EventHeader-times-container">
             <div>
               <div className="EventHeader-times-heading">Times</div>

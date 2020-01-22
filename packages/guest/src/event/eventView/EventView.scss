@@ -1,11 +1,11 @@
 @import 'mm-shared/src/theme/main';
 
-.Event-root {
+.EventView-root {
   width: 100%;
   height: 100%;
 
-  .Event-tabs {
-    .Event-tab[aria-selected='true'] {
+  .EventView-tabs {
+    .EventView-tab[aria-selected='true'] {
       color: $main;
     }
 

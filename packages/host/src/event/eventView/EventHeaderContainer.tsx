@@ -1,17 +1,16 @@
 import { connect } from 'react-redux'
-import IRootState from 'rootState'
-import { updateRsvp } from 'rsvp/rsvpActions'
+import IRootState from '../../rootState'
 import { deselectEvent } from '../eventActions'
 import { EventHeader } from 'mm-shared'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  event: state.event.event
+  event: state.event.event,
+  isHost: true
 })
 
 const mapDispatchToProps = {
-  deselectEvent,
-  updateRsvp
+  deselectEvent
 }
 
 const EventHeaderContainer = connect(

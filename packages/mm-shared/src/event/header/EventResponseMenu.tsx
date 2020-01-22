@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { find } from 'lodash'
+import find from 'lodash/find'
 import { Button, MenuItem } from '@material-ui/core'
 import MenuList from '@material-ui/core/MenuList'
 import Grow from '@material-ui/core/Grow'
@@ -7,7 +7,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import { Action, Event, EventGuest, Rsvp, User } from 'mm-shared'
+import { Action, Event, EventGuest, Rsvp, User } from '../../'
 import './EventResponseMenu.scss'
 
 interface IEventResponseMenu {

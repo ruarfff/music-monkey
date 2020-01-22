@@ -5,5 +5,10 @@
     "baseUrl": "./src"
   },
   "exclude": ["./src/setupTests.ts"],
-  "include": ["./src", "config-overrides.js"]
+  "include": [
+    "./src",
+    "config-overrides.js",
+    "../mm-shared/src/event/header/EventResponseMenu.tsx",
+    "../mm-shared/src/event/header/ProfileImage.tsx"
+  ]
 }
