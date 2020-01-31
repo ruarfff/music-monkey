@@ -3,9 +3,9 @@ import { isEmpty } from 'lodash'
 import { Action, Event, Track, User, TrackVoteStatus, Vote } from 'mm-shared'
 import TrackList from 'track/TrackList'
 import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
-import './EventDetails.scss'
+import './EventTracks.scss'
 
-interface IEventDetailsProps {
+interface IEventTracksProps {
   event: Event
   user: User
   votes: Map<string, TrackVoteStatus>
@@ -14,7 +14,7 @@ interface IEventDetailsProps {
   deleteVote(voteId: string): Action
 }
 
-const EventDetails: FunctionComponent<IEventDetailsProps> = ({
+const EventTracks: FunctionComponent<IEventTracksProps> = ({
   event,
   user,
   votes,
@@ -43,7 +43,7 @@ const EventDetails: FunctionComponent<IEventDetailsProps> = ({
   }
 
   return (
-    <div className="EventDetails-root">
+    <div className="EventTracks-root">
       {!isEmpty(event.playlist) && (
         <TrackList
           event={event}
@@ -58,4 +58,4 @@ const EventDetails: FunctionComponent<IEventDetailsProps> = ({
   )
 }
 
-export default EventDetails
+export default EventTracks

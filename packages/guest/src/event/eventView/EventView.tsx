@@ -11,7 +11,7 @@ import {
   TrackVoteStatus,
   Vote
 } from 'mm-shared'
-import EventDetails from './EventDetails'
+import EventTracks from './EventTracks'
 import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
 import EventHeader from './EventHeaderContainer'
@@ -75,7 +75,7 @@ const EventView: FC<EventViewProps> = ({
         </AppBar>
         {tabIndex === 0 && (
           <Typography component="div">
-            <EventDetails
+            <EventTracks
               user={user}
               createVote={createVote}
               deleteVote={deleteVote}
