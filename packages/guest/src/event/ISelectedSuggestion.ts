@@ -1,6 +1,6 @@
-import ISuggestion from '../requests/ISuggestion'
+import { Suggestion } from 'mm-shared'
 
 export default interface ISelectedSuggestion {
-  suggestion: ISuggestion
+  suggestion: Suggestion
   name: string
 }

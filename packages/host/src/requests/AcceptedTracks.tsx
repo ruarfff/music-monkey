@@ -1,37 +1,33 @@
-import React from 'react'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import { isEmpty } from 'lodash'
-import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
-import SuggestionList from 'requests/SuggestionList'
-import { User } from 'mm-shared'
+import React, { FC } from 'react'
+import { isEmpty, uniqBy } from 'lodash'
+import { DecoratedSuggestion, TrackList } from 'mm-shared'
+import { Typography } from '@material-ui/core'
 import './AcceptedTracks.scss'
 
 interface AcceptedTracksProps {
-  user: User
-  suggestions: IDecoratedSuggestion[]
+  suggestions: DecoratedSuggestion[]
 }
 
-const AcceptedTracks = ({ user, suggestions }: AcceptedTracksProps) => {
-  const acceptedSuggestions =
-    !isEmpty(suggestions) && !isEmpty(user)
-      ? suggestions.filter(s => s.suggestion && s.suggestion.accepted)
-      : []
+const AcceptedTracks: FC<AcceptedTracksProps> = ({ suggestions }) => {
+  const acceptedSuggestions = !isEmpty(suggestions)
+    ? suggestions.filter(s => s.suggestion && s.suggestion.accepted)
+    : []
+  const acceptedTracks = uniqBy(
+    acceptedSuggestions.map(s => s.track),
+    'id'
+  )
 
   return (
-    <List>
-      {!isEmpty(acceptedSuggestions) && (
-        <SuggestionList
-          suggestions={acceptedSuggestions}
-          disableRemoveTrack={true}
-        />
+    <>
+      {!isEmpty(acceptedTracks) && (
+        <TrackList tracks={acceptedTracks} suggestions={acceptedSuggestions} />
       )}
-      {isEmpty(acceptedSuggestions) && (
-        <ListItem>
-          <span className="noTracks">No accepted suggestions yet</span>
-        </ListItem>
+      {isEmpty(acceptedTracks) && (
+        <Typography className="noTracks" variant="h6" gutterBottom>
+          No accepted suggestions yet
+        </Typography>
       )}
-    </List>
+    </>
   )
 }
 

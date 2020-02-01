@@ -1,12 +1,12 @@
-import IDecoratedSuggestion from './IDecoratedSuggestion'
+import { DecoratedSuggestion } from 'mm-shared'
 import ISuggestionState from './ISuggestionState'
 
 export default {
-  suggestions: [] as IDecoratedSuggestion[],
-  acceptedSuggestions: [] as IDecoratedSuggestion[],
-  pendingSuggestions: [] as IDecoratedSuggestion[],
-  rejectedSuggestions: [] as IDecoratedSuggestion[],
-  stagedSuggestions: [] as IDecoratedSuggestion[],
+  suggestions: [] as DecoratedSuggestion[],
+  acceptedSuggestions: [] as DecoratedSuggestion[],
+  pendingSuggestions: [] as DecoratedSuggestion[],
+  rejectedSuggestions: [] as DecoratedSuggestion[],
+  stagedSuggestions: [] as DecoratedSuggestion[],
   deletingSuggestion: false,
   fetchingSuggestions: false,
   savingSuggestion: false,

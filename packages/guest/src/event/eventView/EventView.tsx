@@ -9,20 +9,20 @@ import {
   Event,
   LoadingSpinner,
   TrackVoteStatus,
-  Vote
+  Vote,
+  DecoratedSuggestion
 } from 'mm-shared'
 import EventTracks from './EventTracks'
 import EventGuests from './EventGuests'
 import EventLocation from './EventLocation'
 import EventHeader from './EventHeaderContainer'
-import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import './EventView.scss'
 
 interface EventViewProps extends RouteComponentProps<any> {
   user: User
   event: Event
   votes: Map<string, TrackVoteStatus>
-  suggestions: IDecoratedSuggestion[]
+  suggestions: DecoratedSuggestion[]
   createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
   setEventId(eventId: string): Action

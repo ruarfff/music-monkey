@@ -1,18 +1,15 @@
-import React from 'react'
-import List from '@material-ui/core/List/List'
-import ListItem from '@material-ui/core/ListItem/ListItem'
+import React, { FC } from 'react'
 import { isEmpty, uniqBy } from 'lodash'
-import { Event } from 'mm-shared'
-import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
-import TrackList from 'track/TrackList'
+import { Event, DecoratedSuggestion, TrackList } from 'mm-shared'
+import { Typography } from '@material-ui/core'
 import './MaybeTracks.scss'
 
-interface IMaybeTracksProps {
-  suggestions: IDecoratedSuggestion[]
+interface MaybeTracksProps {
+  suggestions: DecoratedSuggestion[]
   event: Event
 }
 
-const MaybeTracks = ({ suggestions, event }: IMaybeTracksProps) => {
+const MaybeTracks: FC<MaybeTracksProps> = ({ suggestions, event }) => {
   const maybeSuggestions =
     !isEmpty(suggestions) && !isEmpty(event)
       ? suggestions
@@ -36,16 +33,16 @@ const MaybeTracks = ({ suggestions, event }: IMaybeTracksProps) => {
   )
 
   return (
-    <List>
+    <>
       {!isEmpty(maybeTracks) && (
         <TrackList tracks={maybeTracks} suggestions={maybeSuggestions} />
       )}
       {isEmpty(maybeTracks) && (
-        <ListItem>
-          <span className="noTracks">No pending suggestions</span>
-        </ListItem>
+        <Typography className="noTracks" variant="h6" gutterBottom>
+          No pending suggestions
+        </Typography>
       )}
-    </List>
+    </>
   )
 }
 

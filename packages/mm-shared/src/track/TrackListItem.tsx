@@ -1,37 +1,48 @@
-import React, { FunctionComponent } from 'react'
-import Img from 'react-image'
+import React, { FC } from 'react'
+import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
+import Remove from '@material-ui/icons/Remove'
 import {
-  Divider,
+  Badge,
   Icon,
   ListItem,
-  ListItemText,
   ListItemIcon,
+  ListItemText,
+  Fab,
+  Divider,
+  Avatar,
   ListItemSecondaryAction,
-  Avatar
+  IconButton
 } from '@material-ui/core'
-import Badge from '@material-ui/core/Badge'
-import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
-import IconButton from '@material-ui/core/IconButton'
-import { Event, Track, getTrackImage } from 'mm-shared'
-import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
+import isFunction from 'lodash/isFunction'
+import Img from 'react-image'
+import backgroundImage from 'assets/music-monkey.jpg'
+import { Event, Track, getTrackImage, DecoratedSuggestion } from '../'
 import './TrackListItem.scss'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
 
+/* <ListItemText
+        primary={
+          tracksWithFeature && 'tempo ' + Math.round(tracksWithFeature.tempo)
+        }
+      /> */
+
 interface TrackListItemProps {
-  track: any
-  suggestion?: IDecoratedSuggestion
+  track: Track
+  suggestion?: DecoratedSuggestion
   withVoting: boolean
   currentUserVoted: boolean
   numberOfVotes: number
   withSuggestingEnabled: boolean
+  disableRemoveTrack?: boolean
   event?: Event
-  onVote: (track: Track) => void
-  onTrackSelected: (track: Track) => void
+  onVote(track: Track): void
+  onTrackSelected?(track: Track): void
+  onTrackRemoved?(track: Track): void
 }
 
-const TrackListItem: FunctionComponent<TrackListItemProps> = ({
+export const TrackListItem: FC<TrackListItemProps> = ({
   track,
   suggestion,
   withVoting,
@@ -39,8 +50,10 @@ const TrackListItem: FunctionComponent<TrackListItemProps> = ({
   numberOfVotes,
   event,
   withSuggestingEnabled,
+  disableRemoveTrack,
   onVote,
-  onTrackSelected
+  onTrackSelected,
+  onTrackRemoved
 }) => {
   if (!track) {
     return <span />
@@ -55,16 +68,24 @@ const TrackListItem: FunctionComponent<TrackListItemProps> = ({
   }
 
   const handleTrackSelected = () => {
-    onTrackSelected(track)
+    if (isFunction(onTrackSelected)) {
+      onTrackSelected(track)
+    }
   }
 
   const handleTrackVote = () => {
     onVote(track)
   }
 
+  const handleRemoveTrack = (track: Track) => () => {
+    if (isFunction(onTrackRemoved)) {
+      onTrackRemoved(track)
+    }
+  }
+
   const trackImage = (
     <Img
-      src={getTrackImage(track)}
+      src={[getTrackImage(track), backgroundImage]}
       alt={track.name}
       className="TrackListItem-track-image"
     />
@@ -100,7 +121,6 @@ const TrackListItem: FunctionComponent<TrackListItemProps> = ({
       <ListItem
         className="TrackListItem-root"
         alignItems="flex-start"
-        dense
         button
         onClick={handleTrackSelected}
       >
@@ -118,6 +138,16 @@ const TrackListItem: FunctionComponent<TrackListItemProps> = ({
 
         <ListItemSecondaryAction className="TrackListItem-actions">
           {avatar}
+          {!disableRemoveTrack && (
+            <Fab
+              aria-label="remove"
+              size="small"
+              color="primary"
+              onClick={handleRemoveTrack(track)}
+            >
+              <Remove />
+            </Fab>
+          )}
           {votingButton}
           {withSuggestingEnabled && (
             <Icon onClick={handleTrackSelected}> playlist_add </Icon>
@@ -128,5 +158,3 @@ const TrackListItem: FunctionComponent<TrackListItemProps> = ({
     </>
   )
 }
-
-export default TrackListItem

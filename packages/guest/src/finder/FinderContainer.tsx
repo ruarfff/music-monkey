@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { deselectEvent, setEventId } from '../event/eventActions'
-import { fetchMorePlaylists, fetchPlaylists } from '../playlist/playlistActions'
-import IRootState from '../rootState'
+import { deselectEvent, setEventId } from 'event/eventActions'
+import { fetchMorePlaylists, fetchPlaylists } from 'playlist/playlistActions'
+import IRootState from 'rootState'
 import {
   savePlaylistSuggestion,
   saveTrackSuggestion
-} from '../requests/suggestionActions'
+} from 'requests/suggestionActions'
 import Finder from './Finder'
 
 const mapStateToProps = (state: IRootState) => ({

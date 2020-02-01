@@ -1,23 +1,28 @@
 import React, { FC, useEffect, useState } from 'react'
-import AppBar from '@material-ui/core/AppBar/AppBar'
-import Tab from '@material-ui/core/Tab/Tab'
-import Tabs from '@material-ui/core/Tabs/Tabs'
-import Typography from '@material-ui/core/Typography/Typography'
+import { AppBar, Icon, Tab, Tabs, Typography } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps } from 'react-router'
-import { Action, Event, LoadingSpinner } from 'mm-shared'
+import {
+  Action,
+  Event,
+  LoadingSpinner,
+  TrackVoteStatus,
+  DecoratedSuggestion
+} from 'mm-shared'
 import InviteCopyAlert from 'components/InviteLink/InviteCopyAlert'
 import EventFetchError from 'event/EventFetchError'
 import EventGuests from './EventGuestsContainer'
 import EventPlaylistView from './EventPlaylistViewContainer'
-import EventSummaryView from './EventSummaryViewContainer'
+import EventTracks from './EventTracks'
 import EventHeader from './EventHeaderContainer'
 import './EventView.scss'
 
 interface EventViewProps extends RouteComponentProps<any> {
-  error: Error
   event: Event
+  votes: Map<string, TrackVoteStatus>
+  suggestions: DecoratedSuggestion[]
   loading: boolean
+  error: Error
   copiedToClipboard: boolean
   getEventById(eventId: string): Action
   copyEventInvite(): Action
@@ -30,6 +35,8 @@ interface EventViewProps extends RouteComponentProps<any> {
 const EventView: FC<EventViewProps> = ({
   event,
   match,
+  votes,
+  suggestions,
   getEventById,
   fetchEventVotes,
   getEventSuggestions,
@@ -83,14 +90,18 @@ const EventView: FC<EventViewProps> = ({
             classes={{ indicator: 'indicator-color' }}
             className="EventView-tabs"
           >
-            <Tab className="EventView-tab" label="Event Summary" />
-            <Tab className="EventView-tab" label="Playlist" />
-            <Tab className="EventView-tab" label="Guest List" />
+            <Tab icon={<Icon>library_music</Icon>} className="EventView-tab" />
+            <Tab icon={<Icon>location_on</Icon>} className="EventView-tab" />
+            <Tab icon={<Icon>account_circle</Icon>} className="EventView-tab" />
           </Tabs>
         </AppBar>
         {tabIndex === 0 && (
           <Typography component="div">
-            <EventSummaryView />
+            <EventTracks
+              votes={votes}
+              event={event}
+              suggestions={suggestions}
+            />
           </Typography>
         )}
         {tabIndex === 1 && (

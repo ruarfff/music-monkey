@@ -1,4 +1,4 @@
-export default interface ISuggestion {
+export interface Suggestion {
   suggestionId?: string
   eventId: string
   userId: string

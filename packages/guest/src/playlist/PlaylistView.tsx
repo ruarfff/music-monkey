@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { RouteComponentProps } from 'react-router'
@@ -11,24 +11,23 @@ import {
   User,
   LoadingSpinner
 } from 'mm-shared'
-import { TrackVoteStatus, Vote } from 'mm-shared'
+import { TrackVoteStatus, Vote, DecoratedSuggestion } from 'mm-shared'
 import ApprovedTracks from './ApprovedTracks'
 import PlaylistPlayer from './PlaylistPlayer'
-import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
 import MaybeTracks from './MaybeTracks'
 import './PlaylistView.scss'
 
-interface IPlayListViewProps extends RouteComponentProps<any> {
+interface PlayListViewProps extends RouteComponentProps<any> {
   user: User
   event: Event
   votes: Map<string, TrackVoteStatus>
-  suggestions: IDecoratedSuggestion[]
+  suggestions: DecoratedSuggestion[]
   createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
   setEventId(eventId: string): Action
 }
 
-const PlaylistView = ({
+const PlaylistView: FC<PlayListViewProps> = ({
   user,
   event,
   votes,
@@ -37,7 +36,7 @@ const PlaylistView = ({
   deleteVote,
   setEventId,
   match
-}: IPlayListViewProps) => {
+}) => {
   const [value, setValue] = useState(0)
   const [currentTrack, setCurrentTrack] = useState({} as Track)
   const eventId = match.params.eventId

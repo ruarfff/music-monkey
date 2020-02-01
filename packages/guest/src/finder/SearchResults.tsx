@@ -1,21 +1,17 @@
-import { List } from '@material-ui/core'
-import * as React from 'react'
-import { Track }  from 'mm-shared'
-import TrackList from '../track/TrackList'
+import React, { FC } from 'react'
+import { Track, TrackList } from 'mm-shared'
 
-interface ISearchResultsProps {
+interface SearchResultsProps {
   tracks: Track[]
   onTrackSelected(track: Track): any
 }
-const SearchResults = ({ tracks, onTrackSelected }: ISearchResultsProps) => {
+const SearchResults: FC<SearchResultsProps> = ({ tracks, onTrackSelected }) => {
   return (
-    <List>
-      <TrackList
-        tracks={tracks}
-        withSuggestingEnabled={true}
-        onTrackSelected={onTrackSelected}
-      />
-    </List>
+    <TrackList
+      tracks={tracks}
+      withSuggestingEnabled={true}
+      onTrackSelected={onTrackSelected}
+    />
   )
 }
 

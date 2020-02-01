@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import {
   Typography,
   List,
@@ -9,11 +9,17 @@ import {
   ListItemText
 } from '@material-ui/core'
 import { isEmpty, sortBy, head } from 'lodash'
-import { Action, Playlist, PlaylistImage, Track, User } from 'mm-shared'
-import TrackList from 'track/TrackList'
+import {
+  Action,
+  Playlist,
+  PlaylistImage,
+  Track,
+  TrackList,
+  User
+} from 'mm-shared'
 import backgroundImage from 'assets/music-monkey.jpg'
 
-interface IMyPlaylistsTabProps {
+interface MyPlaylistsTabProps {
   user: User
   playlists: Playlist[]
   playlistsEnabled: boolean
@@ -22,14 +28,14 @@ interface IMyPlaylistsTabProps {
   fetchMorePlaylists(user: User): Action
 }
 
-const MyPlaylistsTab = ({
+const MyPlaylistsTab: FC<MyPlaylistsTabProps> = ({
   user,
   playlists,
   playlistsEnabled,
   onTrackSelected,
   savePlaylistSuggestion,
   fetchMorePlaylists
-}: IMyPlaylistsTabProps) => {
+}) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState({} as Playlist)
 
   useEffect(() => {
@@ -104,13 +110,11 @@ const MyPlaylistsTab = ({
             ADD ALL TRACKS
           </Button>
         )}
-        <List>
-          <TrackList
-            tracks={selectedPlaylist.tracks.items.map(t => t.track)}
-            onTrackSelected={onTrackSelected}
-            withSuggestingEnabled={true}
-          />
-        </List>
+        <TrackList
+          tracks={selectedPlaylist.tracks.items.map(t => t.track)}
+          onTrackSelected={onTrackSelected}
+          withSuggestingEnabled={true}
+        />
       </>
     )
   }

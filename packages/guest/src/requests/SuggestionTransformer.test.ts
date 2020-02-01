@@ -1,7 +1,8 @@
+import { Suggestion } from 'mm-shared'
 import IPlaylistSuggestion from './IPlaylistSuggestion'
-import ISuggestion from './ISuggestion'
 import ITrackSuggestion from './ITrackSuggestion'
 import SuggestionTransformer from './SuggestionTransformer'
+
 describe('SuggestionTransformer', () => {
   let suggestionTransformer: SuggestionTransformer
 
@@ -15,7 +16,7 @@ describe('SuggestionTransformer', () => {
       userId: 'iUser',
       trackUri: 'track:uri'
     } as ITrackSuggestion
-    const suggestion: ISuggestion = suggestionTransformer.trackSuggestionToSuggestion(
+    const suggestion: Suggestion = suggestionTransformer.trackSuggestionToSuggestion(
       trackSuggestion
     )
 
@@ -50,7 +51,7 @@ describe('SuggestionTransformer', () => {
         accepted: false,
         rejected: false,
         trackUri: 'track:uri:1'
-      } as ISuggestion,
+      } as Suggestion,
       {
         eventId: playlistSuggestion.eventId,
         userId: playlistSuggestion.userId,
@@ -59,7 +60,7 @@ describe('SuggestionTransformer', () => {
         accepted: false,
         rejected: false,
         trackUri: 'track:uri:2'
-      } as ISuggestion
+      } as Suggestion
     ])
   })
 })

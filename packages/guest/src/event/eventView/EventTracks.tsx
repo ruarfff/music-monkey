@@ -1,15 +1,22 @@
 import React, { FunctionComponent } from 'react'
 import { isEmpty } from 'lodash'
-import { Action, Event, Track, User, TrackVoteStatus, Vote } from 'mm-shared'
-import TrackList from 'track/TrackList'
-import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
+import {
+  Action,
+  DecoratedSuggestion,
+  Event,
+  Track,
+  User,
+  TrackVoteStatus,
+  TrackList,
+  Vote
+} from 'mm-shared'
 import './EventTracks.scss'
 
 interface IEventTracksProps {
   event: Event
   user: User
   votes: Map<string, TrackVoteStatus>
-  suggestions: IDecoratedSuggestion[]
+  suggestions: DecoratedSuggestion[]
   createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
 }

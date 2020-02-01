@@ -1,20 +1,18 @@
-import List from '@material-ui/core/List/List'
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { isEmpty } from 'lodash'
-import { Action, Track } from 'mm-shared'
-import TrackList from 'track/TrackList'
+import { Action, Track, TrackList } from 'mm-shared'
 
-interface IRecommendationsProps {
+interface RecommendationsProps {
   tracks: Track[]
   getRecommendations(): Action
   onRecommendationSelected?(track: Track): void
 }
 
-const Recommendations = ({
+const Recommendations: FC<RecommendationsProps> = ({
   tracks,
   getRecommendations,
   onRecommendationSelected
-}: IRecommendationsProps) => {
+}) => {
   useEffect(() => {
     if (isEmpty(tracks)) {
       getRecommendations()
@@ -22,13 +20,11 @@ const Recommendations = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tracks])
   return (
-    <List>
-      <TrackList
-        tracks={tracks}
-        onTrackSelected={onRecommendationSelected}
-        withSuggestingEnabled={true}
-      />
-    </List>
+    <TrackList
+      tracks={tracks}
+      onTrackSelected={onRecommendationSelected}
+      withSuggestingEnabled={true}
+    />
   )
 }
 

@@ -1,6 +1,6 @@
 import { Action } from 'mm-shared'
+import { Suggestion } from 'mm-shared'
 import IPlaylistSuggestion from './IPlaylistSuggestion'
-import ISuggestion from './ISuggestion'
 import ITrackSuggestion from './ITrackSuggestion'
 
 export const SAVE_TRACK_SUGGESTION_INITIATED = 'SAVE_TRACK_SUGGESTION_INITIATED'
@@ -42,7 +42,7 @@ export const clearSuggestion = (): Action => ({
   type: CLEAR_SUGGESTION
 })
 
-export const deleteSuggestion = (suggestion: ISuggestion): Action => ({
+export const deleteSuggestion = (suggestion: Suggestion): Action => ({
   type: DELETE_SUGGESTION_INITIATED,
   payload: suggestion
 })

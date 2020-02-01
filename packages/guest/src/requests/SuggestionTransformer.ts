@@ -1,11 +1,9 @@
+import { Suggestion } from 'mm-shared'
 import IPlaylistSuggestion from './IPlaylistSuggestion'
-import ISuggestion from './ISuggestion'
 import ITrackSuggestion from './ITrackSuggestion'
 
 export default class SuggestionTransformer {
-  public trackSuggestionToSuggestion(
-    suggestion: ITrackSuggestion
-  ): ISuggestion {
+  public trackSuggestionToSuggestion(suggestion: ITrackSuggestion): Suggestion {
     return {
       eventId: suggestion.eventId,
       userId: suggestion.userId,
@@ -13,12 +11,12 @@ export default class SuggestionTransformer {
       trackUri: suggestion.trackUri,
       accepted: false,
       rejected: false
-    } as ISuggestion
+    } as Suggestion
   }
 
   public playlistSuggestionToSuggestions(
     suggestion: IPlaylistSuggestion
-  ): ISuggestion[] {
+  ): Suggestion[] {
     return suggestion.trackUris.map(trackUri => ({
       eventId: suggestion.eventId,
       userId: suggestion.userId,

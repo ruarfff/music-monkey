@@ -1,32 +1,36 @@
-import React from 'react'
-import TrackList from 'track/TrackList'
-import { Track, TrackVoteStatus, Playlist } from 'mm-shared'
-import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
+import React, { FC } from 'react'
+import {
+  Track,
+  TrackVoteStatus,
+  TrackList,
+  Playlist,
+  DecoratedSuggestion
+} from 'mm-shared'
 
-interface IApprovedTracksProps {
+interface ApprovedTracksProps {
   playlist: Playlist
   votes: Map<string, TrackVoteStatus>
-  suggestions: IDecoratedSuggestion[]
+  suggestions: DecoratedSuggestion[]
   onTrackSelected: (track: Track) => void
   onVote: (track: Track) => void
 }
 
-export default ({
+const ApprovedTracks: FC<ApprovedTracksProps> = ({
   playlist,
   votes,
   suggestions,
   onTrackSelected,
   onVote
-}: IApprovedTracksProps) => {
-  return (
-    <TrackList
-      tracks={playlist.tracks && playlist.tracks.items.map((s: any) => s.track)}
-      suggestions={suggestions}
-      withSuggestingEnabled={false}
-      onTrackSelected={onTrackSelected}
-      withVoting={true}
-      votes={votes}
-      onVote={onVote}
-    />
-  )
-}
+}) => (
+  <TrackList
+    tracks={playlist.tracks && playlist.tracks.items.map((s: any) => s.track)}
+    suggestions={suggestions}
+    withSuggestingEnabled={false}
+    onTrackSelected={onTrackSelected}
+    withVoting={true}
+    votes={votes}
+    onVote={onVote}
+  />
+)
+
+export default ApprovedTracks
