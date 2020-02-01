@@ -56,7 +56,7 @@ const EventTracks: FunctionComponent<IEventTracksProps> = ({
           event={event}
           tracks={event.playlist!.tracks.items.map(item => item.track)}
           suggestions={suggestions}
-          withVoting={true}
+          options={{ canVote: true }}
           votes={votes}
           onVote={handleTrackVote}
         />

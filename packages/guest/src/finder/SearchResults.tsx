@@ -9,8 +9,8 @@ const SearchResults: FC<SearchResultsProps> = ({ tracks, onTrackSelected }) => {
   return (
     <TrackList
       tracks={tracks}
-      withSuggestingEnabled={true}
       onTrackSelected={onTrackSelected}
+      options={{ canRequest: true }}
     />
   )
 }

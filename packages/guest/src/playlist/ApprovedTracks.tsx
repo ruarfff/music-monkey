@@ -25,11 +25,10 @@ const ApprovedTracks: FC<ApprovedTracksProps> = ({
   <TrackList
     tracks={playlist.tracks && playlist.tracks.items.map((s: any) => s.track)}
     suggestions={suggestions}
-    withSuggestingEnabled={false}
-    onTrackSelected={onTrackSelected}
-    withVoting={true}
     votes={votes}
+    onTrackSelected={onTrackSelected}
     onVote={onVote}
+    options={{ canRequest: true, canVote: true }}
   />
 )
 

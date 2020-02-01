@@ -113,7 +113,7 @@ const MyPlaylistsTab: FC<MyPlaylistsTabProps> = ({
         <TrackList
           tracks={selectedPlaylist.tracks.items.map(t => t.track)}
           onTrackSelected={onTrackSelected}
-          withSuggestingEnabled={true}
+          options={{ canRequest: true }}
         />
       </>
     )

@@ -1,6 +1,5 @@
 import client from 'mm-client'
-import { User } from 'mm-shared'
-import { Playlist } from 'mm-shared'
+import { User, Playlist } from 'mm-shared'
 
 export const addTracksToPlaylist = async (
   playlistId: string,

@@ -3,8 +3,13 @@ import { DropResult } from 'react-beautiful-dnd'
 import { Typography, Paper, List, ListSubheader } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import remove from 'lodash/remove'
-import { Track, arrayMove, formatDuration, Playlist } from 'mm-shared'
-import TrackList from 'track/TrackList'
+import {
+  Track,
+  arrayMove,
+  formatDuration,
+  Playlist,
+  TrackList
+} from 'mm-shared'
 import {
   reOrderPlaylist,
   removeTrackFromPlaylist

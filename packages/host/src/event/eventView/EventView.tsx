@@ -12,7 +12,6 @@ import {
 import InviteCopyAlert from 'components/InviteLink/InviteCopyAlert'
 import EventFetchError from 'event/EventFetchError'
 import EventGuests from './EventGuestsContainer'
-import EventPlaylistView from './EventPlaylistViewContainer'
 import EventTracks from './EventTracks'
 import EventHeader from './EventHeaderContainer'
 import './EventView.scss'
@@ -106,7 +105,7 @@ const EventView: FC<EventViewProps> = ({
         )}
         {tabIndex === 1 && (
           <Typography component="div" dir={'1'}>
-            <EventPlaylistView />
+            <p>Hello</p>
           </Typography>
         )}
         {tabIndex === 2 && (

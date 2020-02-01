@@ -17,6 +17,7 @@ import isFunction from 'lodash/isFunction'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import { Event, Track, getTrackImage, DecoratedSuggestion } from '../'
+import { TrackConfig } from './TrackConfig'
 import './TrackListItem.scss'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
@@ -31,12 +32,10 @@ import './TrackListItem.scss'
 interface TrackListItemProps {
   track: Track
   suggestion?: DecoratedSuggestion
-  withVoting: boolean
-  currentUserVoted: boolean
   numberOfVotes: number
-  withSuggestingEnabled: boolean
-  disableRemoveTrack?: boolean
   event?: Event
+  currentUserVoted: boolean
+  options: TrackConfig
   onVote(track: Track): void
   onTrackSelected?(track: Track): void
   onTrackRemoved?(track: Track): void
@@ -45,12 +44,10 @@ interface TrackListItemProps {
 export const TrackListItem: FC<TrackListItemProps> = ({
   track,
   suggestion,
-  withVoting,
   currentUserVoted,
   numberOfVotes,
   event,
-  withSuggestingEnabled,
-  disableRemoveTrack,
+  options,
   onVote,
   onTrackSelected,
   onTrackRemoved
@@ -102,7 +99,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   let votingButton = <span />
-  if (withVoting) {
+  if (options.canVote) {
     votingButton = (
       <IconButton aria-label="Vote" onClick={handleTrackVote}>
         <Badge
@@ -138,7 +135,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
         <ListItemSecondaryAction className="TrackListItem-actions">
           {avatar}
-          {!disableRemoveTrack && (
+          {options.canRemove && (
             <Fab
               aria-label="remove"
               size="small"
@@ -149,7 +146,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
             </Fab>
           )}
           {votingButton}
-          {withSuggestingEnabled && (
+          {options.canRequest && (
             <Icon onClick={handleTrackSelected}> playlist_add </Icon>
           )}
         </ListItemSecondaryAction>

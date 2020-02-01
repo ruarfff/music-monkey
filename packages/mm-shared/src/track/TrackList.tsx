@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
 import { List } from '@material-ui/core'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import { Event, Track, TrackVoteStatus, DecoratedSuggestion } from '../'
 import { TrackListItem } from './TrackListItem'
+import { TrackConfig } from './TrackConfig'
+import { Event, Track, TrackVoteStatus, DecoratedSuggestion } from '../'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
@@ -10,11 +11,9 @@ import { TrackListItem } from './TrackListItem'
 interface TrackListProps {
   tracks: Track[]
   suggestions?: DecoratedSuggestion[]
-  disableRemoveTrack?: boolean
-  withSuggestingEnabled?: boolean
-  withVoting?: boolean
   votes?: Map<string, TrackVoteStatus>
   event?: Event
+  options?: TrackConfig
   onVote?(track: Track): void
   onTrackSelected?(track: Track): void
   onDragEnd?(result: any): void
@@ -36,11 +35,9 @@ const getItemStyle = (isDragging: any, draggableStyle: any) => {
 export const TrackList: FC<TrackListProps> = ({
   tracks = [],
   suggestions = [],
-  withVoting = false,
   votes = new Map(),
-  disableRemoveTrack = true,
-  withSuggestingEnabled = false,
   event,
+  options = { canRemove: false, canRequest: false, canVote: false },
   onVote = (t: Track) => ({} as any),
   onTrackSelected = (t: Track) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
@@ -79,12 +76,10 @@ export const TrackList: FC<TrackListProps> = ({
                         suggestion={suggestions.find(
                           s => s.track.uri === trackId
                         )}
-                        withVoting={withVoting}
-                        currentUserVoted={userVoted}
-                        disableRemoveTrack={disableRemoveTrack}
                         numberOfVotes={numberOfVotes}
-                        withSuggestingEnabled={withSuggestingEnabled}
                         event={event}
+                        currentUserVoted={userVoted}
+                        options={options}
                         onTrackSelected={onTrackSelected}
                         onVote={onVote}
                         onTrackRemoved={onTrackRemoved}

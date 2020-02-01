@@ -1,4 +1,3 @@
-import ITrackWithFeatures from '../track/ITrackWithFeatures'
 import { Playlist } from 'mm-shared'
 import ISearch from './ISearch'
 
@@ -10,6 +9,5 @@ export default interface IPlaylistState {
   isCreating: boolean
   searchResult: ISearch
   notification: string
-  tracksWithFeatures: ITrackWithFeatures[]
   createdPlaylists: Playlist[]
 }
