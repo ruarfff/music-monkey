@@ -29,7 +29,7 @@ export const savePlaylistSuggestion = (
   payload: suggestion
 })
 
-export const getEventSuggestions = (eventId: string): Action => ({
+export const getRequestsByEventId = (eventId: string): Action => ({
   type: FETCH_SUGGESTIONS_INITIATED,
   payload: eventId
 })

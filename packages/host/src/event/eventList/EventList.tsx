@@ -49,7 +49,7 @@ const renderEvents = (events: Event[], status: string) => {
   return (
     <>
       {events.map((event, index) => (
-        <div className="EventList-root" key={index + status}>
+        <React.Fragment key={index + status}>
           <ListItem
             button={true}
             component={Link}
@@ -68,10 +68,8 @@ const renderEvents = (events: Event[], status: string) => {
               className="EventList-text"
             />
           </ListItem>
-          <li>
-            <Divider variant="inset" className="EventList-item-divider" />
-          </li>
-        </div>
+          <Divider variant="inset" component="li" />
+        </React.Fragment>
       ))}
     </>
   )
@@ -88,7 +86,7 @@ const EventList = ({
   }
 
   return (
-    <List>
+    <List className="EventList-root">
       <AppBar position="static" color="default">
         <Tabs
           value={tabIndex}

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Typography } from '@material-ui/core'
-import Recommendations from '../recommendations/RecommendationsContainer'
+import Recommendations from 'recommendations/RecommendationsContainer'
 import { Track } from 'mm-shared'
 
 interface RecommendationsTabProps {

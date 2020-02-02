@@ -1,0 +1,13 @@
+@import 'mm-shared/src/theme/main';
+
+.EventListView-root {
+  .EventListView-action {
+    position: absolute;
+    bottom: 7em;
+    right: 1.5em;
+    .MuiFab-primary {
+      background-color: $secondary-light;
+      opacity: 0.9;
+    }
+  }
+}

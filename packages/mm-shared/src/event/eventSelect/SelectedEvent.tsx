@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListItemText } from '@material-ui/core'
-import { Event } from 'mm-shared'
+import { Event } from '../../'
 import './SelectedEvent.scss'
 
 interface ISelectedEventProps {

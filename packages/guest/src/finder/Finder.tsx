@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import swal from '@sweetalert/with-react'
-import { RouteComponentProps } from 'react-router'
 import SwipeableViews from 'react-swipeable-views'
-import EventPicker from 'event/eventSelect/EventPickerContainer'
-import SelectedEvent from 'event/eventSelect/SelectedEvent'
 import Search from 'search/SearchContainer'
 import IPlaylistSuggestion from 'requests/IPlaylistSuggestion'
 import ITrackSuggestion from 'requests/ITrackSuggestion'
@@ -15,27 +12,25 @@ import {
   Track,
   User,
   Playlist,
-  useSwipeTabsIndex,
-  checkEventIsLoaded
+  useSwipeTabsIndex
 } from 'mm-shared'
 import MyPlaylistsTab from './MyPlaylistsTab'
 import RecommendationsTab from './RecommendationsTab'
 import SearchResults from './SearchResults'
+import EventSelect from 'event/select/EventSelectContainer'
 import './Finder.scss'
 
-interface IFinderProps extends RouteComponentProps<any> {
+interface IFinderProps {
   user: User
-  userPlaylists: Playlist[]
-  events: Event[]
   event: Event
-  searching: boolean
+  events: Event[]
+  userPlaylists: Playlist[]
   searchResults: Track[]
-  deselectEvent(): Action
+  searching: boolean
   saveTrackSuggestion(suggestions: ITrackSuggestion): Action
   fetchPlaylists(user: User): Action
   savePlaylistSuggestion(suggestions: IPlaylistSuggestion): Action
   fetchMorePlaylists(user: User): Action
-  setEventId(eventId: string): Action
 }
 
 const Finder = ({
@@ -45,25 +40,11 @@ const Finder = ({
   event,
   searching,
   searchResults,
-  deselectEvent,
   saveTrackSuggestion,
   fetchPlaylists,
   savePlaylistSuggestion,
-  fetchMorePlaylists,
-  setEventId,
-  match
+  fetchMorePlaylists
 }: IFinderProps) => {
-  const eventId = match.params.eventId
-  const eventLoaded = checkEventIsLoaded(event)
-  const [eventPickerOpen, setEventPickerOpen] = useState(!eventLoaded)
-  useEffect(() => {
-    const selectedEventId = event ? event.eventId : ''
-    if (eventId && selectedEventId !== eventId) {
-      setEventId(eventId)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventId])
-
   useEffect(() => {
     if (!isEmpty(user) && isEmpty(userPlaylists)) {
       fetchPlaylists(user)
@@ -116,20 +97,7 @@ const Finder = ({
       )}
       {!searching && isEmpty(filteredSearch) && (
         <div>
-          <EventPicker
-            isOpen={eventPickerOpen}
-            onClose={() => {
-              setEventPickerOpen(false)
-            }}
-          />
-          {eventLoaded && (
-            <SelectedEvent
-              event={event}
-              onClick={() => {
-                setEventPickerOpen(true)
-              }}
-            />
-          )}
+          <EventSelect />
           <Divider variant="inset" className="Finder-divider" />
           <AppBar position="static" color="default">
             <Tabs

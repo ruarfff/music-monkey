@@ -7,7 +7,7 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import { Action, Event } from 'mm-shared'
+import { Action, Event } from '../../'
 import backgroundImage from 'assets/music-monkey.jpg'
 
 import './EventPicker.scss'
@@ -16,7 +16,7 @@ interface IEventPickerProps {
   events: Event[]
   isOpen: boolean
   selectEvent(event: Event): Action
-  getEventSuggestions(eventId: string): Action
+  getRequestsByEventId(eventId: string): Action
   onClose(): void
 }
 
@@ -24,7 +24,7 @@ const EventPicker = ({
   events,
   isOpen,
   selectEvent,
-  getEventSuggestions,
+  getRequestsByEventId,
   onClose
 }: IEventPickerProps) => {
   return (
@@ -41,7 +41,7 @@ const EventPicker = ({
                   button={true}
                   onClick={() => {
                     selectEvent(event)
-                    getEventSuggestions(event.eventId!)
+                    getRequestsByEventId(event.eventId!)
                     onClose()
                   }}
                 >

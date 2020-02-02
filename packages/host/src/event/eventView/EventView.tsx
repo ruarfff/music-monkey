@@ -10,7 +10,7 @@ import {
   DecoratedSuggestion
 } from 'mm-shared'
 import EventFetchError from 'event/EventFetchError'
-import EventGuests from './EventGuestsContainer'
+import EventGuests from './EventGuests'
 import EventTracks from './EventTracks'
 import EventHeader from './EventHeaderContainer'
 import './EventView.scss'
@@ -104,7 +104,7 @@ const EventView: FC<EventViewProps> = ({
         )}
         {tabIndex === 2 && (
           <Typography component="div" dir={'2'}>
-            <EventGuests />
+            <EventGuests event={event} />
           </Typography>
         )}
       </div>

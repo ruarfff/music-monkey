@@ -9,6 +9,7 @@
     "./src",
     "config-overrides.js",
     "../mm-shared/src/event/header/EventResponseMenu.tsx",
-    "../mm-shared/src/event/header/ProfileImage.tsx"
+    "../mm-shared/src/event/header/ProfileImage.tsx",
+    "../mm-shared/src/event/eventSelect/EventSelect.tsx"
   ]
 }
