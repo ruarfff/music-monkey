@@ -1,9 +1,8 @@
 import isEmpty from 'lodash/isEmpty'
 import moment from 'moment'
-import { Event } from 'mm-shared'
+import { Event, Playlist } from 'mm-shared'
 import { createPlaylist, addTracksToPlaylist } from 'playlist/playlistClient'
 import { createEvent, getEventById } from 'event/eventClient'
-import { Playlist } from 'mm-shared'
 import CreateEventFormValues from './CreateEventFormValues'
 
 const createEventFlow = async ({

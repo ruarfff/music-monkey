@@ -11,7 +11,7 @@ const Event = lazy(() => import('event/eventView/EventViewContainer'))
 const EventListView = lazy(() =>
   import('event/eventList/EventListViewContainer')
 )
-const Marvin = lazy(() => import('finder/Marvin'))
+const Marvin = lazy(() => import('finder/MarvinContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
 const Playlist = lazy(() => import('playlist/PlaylistViewContainer'))
 const PlaylistListView = lazy(() =>

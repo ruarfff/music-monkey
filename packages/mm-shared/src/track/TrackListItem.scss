@@ -20,8 +20,13 @@
 }
 .TrackListItem-actions {
   display: flex;
-  .MuiFab-primary {
+  .MuiFab-secondary {
     background-color: $danger-red;
+    opacity: 0.9;
+  }
+
+  .MuiFab-primary {
+    background-color: $nice-green;
     opacity: 0.9;
   }
 }

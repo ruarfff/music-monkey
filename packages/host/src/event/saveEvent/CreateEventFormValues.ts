@@ -1,5 +1,4 @@
-import { User } from 'mm-shared'
-import { Track } from 'mm-shared'
+import { User, Track } from 'mm-shared'
 
 export default interface CreateEventFormValues {
   user: User

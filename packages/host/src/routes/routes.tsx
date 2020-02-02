@@ -9,7 +9,7 @@ import { Music } from 'mm-shared'
 
 const AccountView = lazy(() => import('account/AccountContainer'))
 const CreateEvent = lazy(() => import('event/saveEvent/CreateEventContainer'))
-
+const Marvin = lazy(() => import('finder/MarvinContainer'))
 const EventView = lazy(() => import('event/eventView/EventViewContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
 const Requests = lazy(() => import('request/RequestsContainer'))
@@ -74,6 +74,16 @@ export const routes = [
     component: Requests,
     exact: true,
     path: '/requests/:eventId'
+  },
+  {
+    component: Marvin,
+    path: '/finder',
+    exact: true
+  },
+  {
+    component: Marvin,
+    path: '/finder/:eventId',
+    exact: true
   },
   {
     component: Insights,

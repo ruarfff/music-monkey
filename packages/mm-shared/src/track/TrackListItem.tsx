@@ -113,14 +113,37 @@ export const TrackListItem: FC<TrackListItemProps> = ({
     )
   }
 
-  return (
-    <>
-      <ListItem
-        className="TrackListItem-root"
-        alignItems="flex-start"
-        button
+  let addButton = <span />
+  if (options.canRemove) {
+    addButton = (
+      <Fab
+        aria-label="remove"
+        size="small"
+        color="secondary"
+        onClick={handleRemoveTrack(track)}
+      >
+        <Remove />
+      </Fab>
+    )
+  }
+
+  let deleteButton = <span />
+  if (options.canRequest) {
+    deleteButton = (
+      <Fab
+        color="primary"
+        aria-label="add"
+        size="small"
         onClick={handleTrackSelected}
       >
+        <AddIcon />
+      </Fab>
+    )
+  }
+
+  return (
+    <>
+      <ListItem className="TrackListItem-root" alignItems="flex-start" button>
         <ListItemIcon>{trackImage}</ListItemIcon>
         <ListItemText
           className="TrackListItem-content"
@@ -135,27 +158,9 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
         <ListItemSecondaryAction className="TrackListItem-actions">
           {avatar}
-          {options.canRemove && (
-            <Fab
-              aria-label="remove"
-              size="small"
-              color="primary"
-              onClick={handleRemoveTrack(track)}
-            >
-              <Remove />
-            </Fab>
-          )}
           {votingButton}
-          {options.canRequest && (
-            <Fab
-              color="primary"
-              aria-label="add"
-              size="small"
-              onClick={handleTrackSelected}
-            >
-              <AddIcon />
-            </Fab>
-          )}
+          {addButton}
+          {deleteButton}
         </ListItemSecondaryAction>
       </ListItem>
       <Divider variant="inset" component="li" />

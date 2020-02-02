@@ -15,16 +15,14 @@ export const DELETE_SUGGESTION_FAILED = 'DELETE_SUGGESTION_FAILED'
 export const CLEAR_SAVED_SUGGESTION = 'CLEAR_SAVED_SUGGESTION'
 export const CLEAR_SUGGESTION = 'CLEAR_SUGGESTION'
 
-export const saveTrackSuggestion = (suggestion: TrackRequest): Action => ({
+export const saveTrackRequest = (request: TrackRequest): Action => ({
   type: SAVE_TRACK_SUGGESTION_INITIATED,
-  payload: suggestion
+  payload: request
 })
 
-export const savePlaylistSuggestion = (
-  suggestion: PlaylistRequest
-): Action => ({
+export const savePlaylistRequest = (request: PlaylistRequest): Action => ({
   type: SAVE_PLAYLIST_SUGGESTION_INITIATED,
-  payload: suggestion
+  payload: request
 })
 
 export const getRequestsByEventId = (eventId: string): Action => ({

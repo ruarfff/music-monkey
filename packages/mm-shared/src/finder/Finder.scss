@@ -1,90 +1,56 @@
 @import '../theme/main';
 
-.list-item-requests {
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: space-between !important;
-
-  .list-item-requests-event {
-    font-size: 14px;
-    color: $secondary-light;
-  }
-
-  .list-item-requests-title {
-    width: 100%;
-    padding-left: 20px;
-  }
-
-  .list-group-button-count.black {
-    span {
-      color: #000 !important;
-    }
-  }
-}
-
-.finder-playlist-header {
-  .finder-playlist-img {
-    height: 130px;
-
-    img {
-      width: 100%;
-      height: 134px;
-    }
-  }
-
-  .finder-playlist-container {
-    position: absolute;
-    height: 60px;
-    margin-top: -56px;
-    background-color: $main;
-    z-index: 19;
-    width: 100%;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 30px;
-
-    .finder-playlist-container-title {
-      font-weight: 500;
-      width: 60%;
-    }
-
-    .finder-playlist-container-button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: -40px;
-      margin-right: 20px;
-
-      .finder-playlist-header-container-button {
-        background-color: $secondary-main;
-        width: 42px !important;
-        height: 42px !important;
-      }
-
-      .finder-playlist-header-container-button-label {
-        padding-top: 4px;
-        font-weight: 500;
-      }
-    }
-  }
-}
-
-.swal2-icon.swal2-question {
-  color: $main;
-  border-color: $main;
-}
-
-.swal2-popup .swal2-styled:focus {
-  box-shadow: none;
-}
-
-.Finder-divider {
-  margin: 0 !important;
-}
-
-.Finder-stopper-block {
+.Finder-root {
+  height: 100%;
   width: 100%;
-  height: 170px;
+  margin: 0 auto;
+
+  h6 {
+    color: $dark-grey;
+  }
+
+  .Finder-search-loading {
+    margin-bottom: 5em;
+  }
+}
+.Finder-tab {
+  padding: 0.5em 1.5em;
+}
+
+.Finder-playlist-count {
+  .MuiBadge-badge {
+    right: -5%;
+    @include media('>sm') {
+      right: -20%;
+    }
+  }
+}
+
+.Finder-action {
+  text-align: center;
+
+  .Finder-action-button {
+    widows: 80%;
+  }
+}
+
+.Finder-dialog-title {
+  background-color: $primary;
+  color: $mm-white;
+  text-align: center;
+}
+
+.Finder-dialog {
+  width: 100%;
+}
+
+.Finder-no-tracks {
+  backdrop-filter: blur(5px);
+  margin: 0 auto;
+  margin-top: 2em;
+  height: 6em;
+  padding-top: 1.5em;
+  font-size: 2em;
+  box-shadow: 0 7px 13px -6px $primary, 0 2px 11px 0px $base-shadow,
+    0 4px 5px -2px $primary-dark;
 }

@@ -9,25 +9,23 @@ import {
   ListItemText
 } from '@material-ui/core'
 import { isEmpty, sortBy, head } from 'lodash'
-import { Action, Playlist, PlaylistImage, Track, TrackList, User } from '../'
+import { Playlist, PlaylistImage, Track, TrackList, User } from '..'
 import backgroundImage from 'assets/music-monkey.jpg'
 
-interface MyPlaylistsTabProps {
+interface PlaylistsProps {
   user: User
   playlists: Playlist[]
   playlistsEnabled: boolean
-  onSelected(track: Track): any
-  savePlaylistSuggestion(suggestions: Playlist): any
-  fetchMorePlaylists(user: User): Action
+  onTrackSelected(track: Track): any
+  onPlaylistSelected(suggestions: Playlist): any
 }
 
-const MyPlaylistsTab: FC<MyPlaylistsTabProps> = ({
+const Playlists: FC<PlaylistsProps> = ({
   user,
   playlists,
   playlistsEnabled,
-  onSelected,
-  savePlaylistSuggestion,
-  fetchMorePlaylists
+  onTrackSelected,
+  onPlaylistSelected
 }) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState({} as Playlist)
 
@@ -99,13 +97,13 @@ const MyPlaylistsTab: FC<MyPlaylistsTabProps> = ({
           BACK TO PLAYLISTS
         </Button>
         {playlistsEnabled && (
-          <Button onClick={savePlaylistSuggestion(selectedPlaylist)}>
+          <Button onClick={onPlaylistSelected(selectedPlaylist)}>
             ADD ALL TRACKS
           </Button>
         )}
         <TrackList
           tracks={selectedPlaylist.tracks.items.map(t => t.track)}
-          onSelected={onSelected}
+          onSelected={onTrackSelected}
           options={{ canRequest: true }}
         />
       </>
@@ -122,4 +120,4 @@ const MyPlaylistsTab: FC<MyPlaylistsTabProps> = ({
   )
 }
 
-export default MyPlaylistsTab
+export default Playlists

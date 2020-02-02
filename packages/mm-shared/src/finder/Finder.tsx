@@ -1,22 +1,20 @@
 import React, { FC, useEffect, useState } from 'react'
-import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
-import { isEmpty, isEqual } from 'lodash'
-import SwipeableViews from 'react-swipeable-views'
+import { Grid, Tab, Tabs, Typography, Badge, Paper } from '@material-ui/core'
+import isEmpty from 'lodash/isEmpty'
+import isEqual from 'lodash/isEqual'
 import {
   Action,
   Event,
   Track,
-  TrackRequest,
   User,
-  Playlist,
-  PlaylistRequest,
+  LoadingSpinner,
   TrackSearch,
   useSwipeTabsIndex,
-  useSnackbarAlert
+  TrackList,
+  Playlist
 } from '../'
-import MyPlaylistsTab from './MyPlaylistsTab'
-import RecommendationsTab from './RecommendationsTab'
-import SearchResults from './SearchResults'
+import Playlists from './Playlists'
+
 import './Finder.scss'
 
 interface FinderProps {
@@ -26,10 +24,10 @@ interface FinderProps {
   userPlaylists: Playlist[]
   recommendations: Track[]
   getRecommendations(): Action
-  saveTrackRequest(request: TrackRequest): Action
   fetchPlaylists(user: User): Action
-  savePlaylistRequest(request: PlaylistRequest): Action
-  fetchMorePlaylists(user: User): Action
+  onTrackSelected?(track: Track): any
+  onPlaylistSelected?(playlist: Playlist): any
+  onPlaylistTracksChanged?(tracks: Track[]): any
 }
 
 const Finder: FC<FinderProps> = ({
@@ -39,19 +37,22 @@ const Finder: FC<FinderProps> = ({
   userPlaylists,
   recommendations = [],
   getRecommendations,
-  saveTrackRequest,
   fetchPlaylists,
-  savePlaylistRequest,
-  fetchMorePlaylists
+  onTrackSelected = () => {},
+  onPlaylistSelected = () => {},
+  onPlaylistTracksChanged = () => {}
 }) => {
   useEffect(() => {
     if (!isEmpty(user) && isEmpty(userPlaylists)) {
       fetchPlaylists(user)
     }
+
+    if (isEmpty(recommendations)) {
+      getRecommendations()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
-  const { showSuccess } = useSnackbarAlert()
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
   const [searchResults, setSearchResults] = useState()
   const [searching, setSearching] = useState()
@@ -64,102 +65,113 @@ const Finder: FC<FinderProps> = ({
     )
   }
 
-  const onSelected = (track: Track) => {
-    saveTrackRequest({
-      eventId: event.eventId,
-      userId: user.userId,
-      type: 'track',
-      trackUri: track.uri
-    } as TrackRequest)
-    showSuccess('Track requested')
-  }
-
-  const onPlaylistSelected = (playlist: Playlist) => () => {
-    savePlaylistRequest({
-      eventId: event.eventId,
-      userId: user.userId,
-      playlistUri: playlist.uri,
-      trackUris: playlist.tracks.items.map(t => t.track.uri)
-    } as PlaylistRequest)
-    showSuccess('Playlist requested')
-  }
-
   const playlistTracks =
     !isEmpty(event) && !isEmpty(event.playlist)
-      ? event.playlist!.tracks.items.map(track => track.track.uri)
+      ? event.playlist!.tracks.items.map(track => track.track)
       : []
 
   return (
-    <div>
-      <TrackSearch
-        onSearchResult={(results: Track[]) => {
-          if (!isEqual(searchResults, results))
-            setSearchResults(
-              results.filter(
-                searchedTrack =>
-                  playlistTracks.indexOf(searchedTrack.uri) === -1
-              )
-            )
-          setSearching(false)
-        }}
-        onSearchStart={() => {
-          setSearching(true)
-        }}
-      />
-      <Divider variant="inset" className="Finder-divider" />
-      {(searching || !isEmpty(searchResults)) && (
-        <SearchResults tracks={searchResults} onSelected={onSelected} />
-      )}
-      {!searching && isEmpty(searchResults) && (
-        <div>
-          <Divider variant="inset" className="Finder-divider" />
-          <AppBar position="static" color="default">
-            <Tabs
-              value={tabIndex}
-              onChange={handleTabChange}
-              indicatorColor="secondary"
-              textColor="secondary"
-              variant="fullWidth"
-              classes={{ indicator: 'indicator-color' }}
-            >
-              <Tab label="SUGGESTED" />
-              <Tab label="MY PLAYLISTS" />
-            </Tabs>
-          </AppBar>
-          <SwipeableViews
-            axis="x"
-            index={tabIndex}
-            onChangeIndex={handleTabChange}
-          >
-            {tabIndex === 0 ? (
-              <RecommendationsTab
-                recommendations={recommendations.filter(
+    <Grid container className="Finder-root" spacing={2}>
+      <Grid item xs={12}>
+        <TrackSearch
+          onSearchResult={(results: Track[]) => {
+            if (!isEqual(searchResults, results))
+              setSearchResults(
+                results.filter(
                   searchedTrack =>
-                    playlistTracks.indexOf(searchedTrack.uri) === -1
-                )}
-                getRecommendations={getRecommendations}
-                onSelected={onSelected}
+                    playlistTracks
+                      .map(t => t.uri)
+                      .indexOf(searchedTrack.uri) === -1
+                )
+              )
+            setSearching(false)
+          }}
+          onSearchStart={() => {
+            setSearching(true)
+          }}
+          onFocus={() => {
+            handleTabChange(1)
+          }}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+        >
+          <Tab
+            className="Finder-tab"
+            label={
+              !isEmpty(playlistTracks) ? (
+                <Badge
+                  className="Finder-playlist-count"
+                  overlap="circle"
+                  color={'secondary'}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  badgeContent={playlistTracks.length}
+                >
+                  Current Playlist
+                </Badge>
+              ) : (
+                'Current Playlist'
+              )
+            }
+          />
+          <Tab
+            className="Finder-tab"
+            label={isEmpty(searchResults) ? 'Suggested' : 'Search Results'}
+          />
+          <Tab label="My Playlists" className="Finder-tab" />
+        </Tabs>
+      </Grid>
+      <Grid item xs={12}>
+        {searching ? (
+          <div className="AddTracks-search-loading">
+            <LoadingSpinner />
+          </div>
+        ) : (
+          <>
+            {tabIndex === 0 &&
+              (isEmpty(playlistTracks) ? (
+                <Paper className="Finder-no-tracks">
+                  <Typography variant="h5" align="center" gutterBottom>
+                    No tracks yet
+                  </Typography>
+                  <Typography variant="body2" align="center" gutterBottom>
+                    Search for tracks or pick from your recommendations
+                  </Typography>
+                </Paper>
+              ) : (
+                <TrackList tracks={playlistTracks} />
+              ))}
+            {tabIndex === 1 && (
+              <TrackList
+                tracks={
+                  !isEmpty(searchResults) ? searchResults : recommendations
+                }
+                filterList={playlistTracks}
+                onSelected={onTrackSelected}
               />
-            ) : (
-              <div />
             )}
-
-            {tabIndex === 1 ? (
-              <MyPlaylistsTab
+            {tabIndex === 2 && (
+              <Playlists
                 user={user}
-                playlistsEnabled={event.settings.suggestingPlaylistsEnabled}
-                fetchMorePlaylists={fetchMorePlaylists}
-                savePlaylistSuggestion={onPlaylistSelected}
-                onSelected={onSelected}
                 playlists={userPlaylists}
+                playlistsEnabled={event.settings.suggestingPlaylistsEnabled}
+                onTrackSelected={onTrackSelected}
+                onPlaylistSelected={onPlaylistSelected}
               />
-            ) : (
-              <div />
             )}
-          </SwipeableViews>
-        </div>
-      )}
-    </div>
+          </>
+        )}
+      </Grid>
+    </Grid>
   )
 }
 

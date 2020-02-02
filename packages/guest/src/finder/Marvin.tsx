@@ -1,12 +1,58 @@
-import React from 'react'
+import React, { FC } from 'react'
 import EventSelect from 'event/select/EventSelectContainer'
 import Finder from './FinderContainer'
+import {
+  useSnackbarAlert,
+  TrackRequest,
+  PlaylistRequest,
+  Playlist,
+  User,
+  Event,
+  Track
+} from 'mm-shared'
 
-const Marvin = () => (
-  <div>
-    <EventSelect />
-    <Finder />
-  </div>
-)
+interface MarvinProps {
+  user: User
+  event: Event
+  saveTrackRequest(request: TrackRequest): any
+  savePlaylistRequest(request: PlaylistRequest): any
+}
 
+const Marvin: FC<MarvinProps> = ({
+  event,
+  user,
+  saveTrackRequest,
+  savePlaylistRequest
+}) => {
+  const { showSuccess } = useSnackbarAlert()
+  const onTrackSelected = (track: Track) => {
+    saveTrackRequest({
+      eventId: event.eventId,
+      userId: user.userId,
+      type: 'track',
+      trackUri: track.uri
+    } as TrackRequest)
+    showSuccess('Track requested')
+  }
+
+  const onPlaylistSelected = (playlist: Playlist) => () => {
+    savePlaylistRequest({
+      eventId: event.eventId,
+      userId: user.userId,
+      playlistUri: playlist.uri,
+      trackUris: playlist.tracks.items.map(t => t.track.uri)
+    } as PlaylistRequest)
+    showSuccess('Playlist requested')
+  }
+
+  return (
+    <div>
+      <EventSelect />
+      <Finder
+        onPlaylistSelected={onPlaylistSelected}
+        onTrackSelected={onTrackSelected}
+      />
+    </div>
+  )
+}
 export default Marvin

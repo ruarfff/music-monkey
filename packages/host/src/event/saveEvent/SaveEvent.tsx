@@ -18,20 +18,10 @@ import './SaveEvent.scss'
 interface SaveEventProps extends RouteComponentProps {
   user: User
   event: Event
-  loading: boolean
   getEventById(eventId: string): Action
-  deleteEvent(eventId: string): Action
 }
 
-const SaveEvent = ({
-  user,
-  event,
-  loading,
-  deleteEvent,
-  getEventById,
-  match,
-  history
-}: SaveEventProps) => {
+const SaveEvent = ({ user, event, getEventById, match }: SaveEventProps) => {
   const { showSuccess, showError } = useSnackbarAlert()
   const eventIdFromPath = match.params['eventId']
   useEffect(() => {
