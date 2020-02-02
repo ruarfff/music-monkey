@@ -7,16 +7,11 @@ import {
 } from 'mm-shared'
 import {
   moveItemInEventPlaylist,
-  SAVE_EVENT_PLAYLIST,
-  SAVE_EVENT_PLAYLIST_ERROR,
-  SAVE_EVENT_PLAYLIST_SUCCESS,
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
   EVENT_FETCH_BY_ID_INITIATED,
   EVENT_FETCHED_BY_ID,
-  EVENT_INVITE_COPIED,
-  EVENT_INVITE_COPY_ACKNOWLEDGED,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
   TOGGLE_DYNAMIC_VOTING,
@@ -86,22 +81,6 @@ describe('eventReducer', () => {
         payload: newEvent
       })
     ).toEqual({ ...initialState, event: newEvent })
-  })
-
-  it('should handle EVENT_INVITE_COPIED', () => {
-    expect(event(initialState, { type: EVENT_INVITE_COPIED })).toEqual({
-      ...initialState,
-      copiedToClipboard: true
-    })
-  })
-
-  it('should handle EVENT_INVITE_COPY_ACKNOWLEDGED', () => {
-    expect(
-      event(initialState, { type: EVENT_INVITE_COPY_ACKNOWLEDGED })
-    ).toEqual({
-      ...initialState,
-      copiedToClipboard: false
-    })
   })
 
   it('should handle EVENT_FETCH_BY_ID_INITIATED', () => {
@@ -268,53 +247,6 @@ describe('eventReducer', () => {
 
   it('should return the initial state when no action matches', () => {
     expect(event(undefined, {} as Action)).toEqual(initialState)
-  })
-
-  it('should handle SAVE_EVENT_PLAYLIST', () => {
-    expect(
-      event(initialState, {
-        type: SAVE_EVENT_PLAYLIST
-      })
-    ).toEqual({
-      ...initialState,
-      savingEventPlaylist: true
-    })
-  })
-
-  it('should handle SAVE_EVENT_PLAYLIST_SUCCESS', () => {
-    expect(
-      event(
-        {
-          ...initialState,
-          savingEventPlaylist: true
-        },
-        {
-          type: SAVE_EVENT_PLAYLIST_SUCCESS
-        }
-      )
-    ).toEqual({
-      ...initialState,
-      savingEventPlaylist: false
-    })
-  })
-
-  it('should handle SAVE_EVENT_PLAYLIST_ERROR', () => {
-    expect(
-      event(
-        {
-          ...initialState,
-          savingEventPlaylist: true
-        },
-        {
-          type: SAVE_EVENT_PLAYLIST_ERROR,
-          payload: new Error('oh-the-humanity')
-        }
-      )
-    ).toEqual({
-      ...initialState,
-      savingEventPlaylist: false,
-      saveEventPlaylistError: new Error('oh-the-humanity')
-    })
   })
 
   it('should handle MOVE_ITEM_IN_EVENT_PLAYLIST', () => {

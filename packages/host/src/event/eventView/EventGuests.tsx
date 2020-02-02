@@ -2,17 +2,13 @@ import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import Snackbar from '@material-ui/core/Snackbar/Snackbar'
 import withStyle from '@material-ui/core/styles/withStyles'
 import Typography from '@material-ui/core/Typography/Typography'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import CloseIcon from '@material-ui/icons/Close'
 import { WithStyles } from '@material-ui/core'
-import { Action, Event, EventGuest } from 'mm-shared'
-import SharePopup from 'components/ShareEvent/SharePopup'
+import { Event, EventGuest } from 'mm-shared'
 
 const decorated = withStyle(() => ({
   filter: {
@@ -46,9 +42,6 @@ const decorated = withStyle(() => ({
 
 interface IEventGuestsProps {
   event: Event
-  message: string
-  copyEventInvite(): Action
-  clearMessage(): Action
 }
 
 class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
@@ -75,22 +68,11 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
 
   public render() {
     const { anchorEl } = this.state
-    const { event, classes, copyEventInvite } = this.props
-
-    const inviteId = event && event.invites ? event.invites[0] : ''
+    const { event, classes } = this.props
 
     if (!event || !event.guests || event.guests.length < 1) {
       return (
         <Grid container={true} justify={'center'} direction={'column'}>
-          <Grid container={true} justify={'center'}>
-            <SharePopup
-              event={event}
-              clearMessage={this.props.clearMessage}
-              message={this.props.message}
-              inviteId={inviteId}
-              onCopyEventInvite={copyEventInvite}
-            />
-          </Grid>
           <Typography align="center" variant="subtitle1">
             No guests have opened their invite yet.
           </Typography>
@@ -108,24 +90,6 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
 
     return (
       <div className="EventSuggestions-root">
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          open={!!this.props.message}
-          ContentProps={{
-            'aria-describedby': 'message-id'
-          }}
-          message={<span id="message-id">{this.props.message}</span>}
-          action={
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              onClick={this.handleCloseMessage}
-            >
-              <CloseIcon />
-            </IconButton>
-          }
-        />
         <Grid
           container={true}
           className={classes.filter}
@@ -153,13 +117,6 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
             </MenuItem>
             <MenuItem onClick={this.handleClickMenuItem}>Maybe</MenuItem>
           </Menu>
-          <SharePopup
-            event={event}
-            clearMessage={this.props.clearMessage}
-            message={this.props.message}
-            inviteId={inviteId}
-            onCopyEventInvite={copyEventInvite}
-          />
         </Grid>
         <Grid container={true} className={classes.guestsContainer} spacing={3}>
           {filteredGuests.map((eventGuest: any) =>
@@ -197,10 +154,6 @@ class EventGuests extends React.PureComponent<IEventGuestsProps & WithStyles> {
         </Typography>
       </Grid>
     )
-  }
-
-  private handleCloseMessage = () => {
-    this.props.clearMessage()
   }
 }
 

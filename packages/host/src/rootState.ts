@@ -3,7 +3,7 @@ import IEventState from './event/IEventState'
 import { IInsightsInitialState } from './insights/insightsInitialState'
 import IPlaylistState from './playlist/IPlaylistState'
 import IRecommendationsState from './recommendations/IRecommendationState'
-import ISuggestionState from './requests/ISuggestionState'
+import ISuggestionState from './requests/RequestState'
 import IUserState from './user/IUserState'
 import { VoteState } from 'mm-shared'
 

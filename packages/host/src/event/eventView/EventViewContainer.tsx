@@ -1,28 +1,20 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import IRootState from 'rootState'
-import { getEventSuggestions } from 'requests/suggestionActions'
+import { getRequestsByEventId } from 'requests/requestActions'
 import { fetchEventVotes } from 'mm-shared'
 import EventView from './EventView'
-import {
-  acknowledgeEventInviteCopied,
-  copyEventInvite,
-  getEventById,
-  getEventByIdNoLoading
-} from 'event/eventActions'
+import { getEventById, getEventByIdNoLoading } from 'event/eventActions'
 
 const mapStateToProps = ({ event }: IRootState) => ({
   error: event.fetchError,
   event: event.event,
-  loading: event.loading,
-  copiedToClipboard: event.copiedToClipboard
+  loading: event.loading
 })
 
 const mapDispatchToProps = {
   getEventById,
-  copyEventInvite,
-  acknowledgeEventInviteCopied,
-  getEventSuggestions,
+  getEventSuggestions: getRequestsByEventId,
   fetchEventVotes,
   getEventByIdNoLoading
 }

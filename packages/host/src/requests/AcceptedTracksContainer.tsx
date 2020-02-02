@@ -4,7 +4,7 @@ import AcceptedTracks from './AcceptedTracks'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  suggestions: state.suggestion.suggestions
+  suggestions: state.suggestion.requests
 })
 
 const mapDispatchToProps = {}

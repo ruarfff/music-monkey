@@ -9,7 +9,6 @@ import {
   TrackVoteStatus,
   DecoratedSuggestion
 } from 'mm-shared'
-import InviteCopyAlert from 'components/InviteLink/InviteCopyAlert'
 import EventFetchError from 'event/EventFetchError'
 import EventGuests from './EventGuestsContainer'
 import EventTracks from './EventTracks'
@@ -22,10 +21,7 @@ interface EventViewProps extends RouteComponentProps<any> {
   suggestions: DecoratedSuggestion[]
   loading: boolean
   error: Error
-  copiedToClipboard: boolean
   getEventById(eventId: string): Action
-  copyEventInvite(): Action
-  acknowledgeEventInviteCopied(): Action
   getEventSuggestions(eventId: string): Action
   fetchEventVotes(eventId: string): Action
   getEventByIdNoLoading(eventId: string): Action
@@ -40,9 +36,7 @@ const EventView: FC<EventViewProps> = ({
   fetchEventVotes,
   getEventSuggestions,
   loading,
-  error,
-  copiedToClipboard,
-  acknowledgeEventInviteCopied
+  error
 }) => {
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
@@ -114,13 +108,6 @@ const EventView: FC<EventViewProps> = ({
           </Typography>
         )}
       </div>
-
-      {copiedToClipboard && (
-        <InviteCopyAlert
-          message="Copied to Clipboard"
-          onClose={acknowledgeEventInviteCopied}
-        />
-      )}
     </div>
   )
 }

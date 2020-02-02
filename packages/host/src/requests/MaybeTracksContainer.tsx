@@ -4,7 +4,7 @@ import MaybeTracks from './MaybeTracks'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  suggestions: state.suggestion.suggestions,
+  suggestions: state.suggestion.requests,
   event: state.event.event
 })
 

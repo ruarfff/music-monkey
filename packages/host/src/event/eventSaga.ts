@@ -24,26 +24,13 @@ import {
   TOGGLE_SUGGESTING_PLAYLISTS,
   MOVE_ITEM_IN_EVENT_PLAYLIST,
   PLAYLIST_SORTED_BY_VOTES_DESCENDING,
-  SAVE_EVENT_PLAYLIST,
-  SAVE_EVENT_PLAYLIST_ERROR,
-  SAVE_EVENT_PLAYLIST_SUCCESS,
   SORT_PLAYLIST_BY_VOTES_DESCENDING
 } from './eventActions'
-import { CLEAR_STAGED_SUGGESTIONS } from 'requests/suggestionActions'
 import { getEvents } from './eventClient'
 import {
   reOrderPlaylist,
   replaceTracksInPlaylist
 } from 'playlist/playlistClient'
-import { addTracksToPlaylist } from 'playlist/playlistClient'
-import IDecoratedSuggestion from 'requests/IDecoratedSuggestion'
-import { acceptSuggestions } from 'requests/suggestionClient'
-
-interface ISavePlaylistArgs {
-  eventId: string
-  playlist: Playlist
-  suggestions: Map<string, IDecoratedSuggestion>
-}
 
 function* fetchEventsFlow() {
   try {
@@ -148,54 +135,6 @@ function* toggleSuggestingPlaylists(action: Action) {
 
 export function* watchToggleSuggestingPlaylists() {
   yield takeEvery(TOGGLE_SUGGESTING_PLAYLISTS, toggleSuggestingPlaylists)
-}
-
-async function saveEventPlaylist({
-  eventId,
-  playlist,
-  suggestions
-}: ISavePlaylistArgs) {
-  if (!playlist) {
-    return Promise.reject(new Error('No Event Playlist'))
-  }
-  const playlistTrackUris: string[] = playlist.tracks.items.map(
-    pl => pl.track.uri
-  )
-  const suggestedTrackUris: string[] = Array.from(suggestions.keys())
-
-  const trackUrisNotInPlaylist = suggestedTrackUris.filter(
-    trackUri => !playlistTrackUris.includes(trackUri)
-  )
-
-  if (trackUrisNotInPlaylist.length < 1) {
-    await acceptSuggestions(
-      eventId,
-      Array.from(suggestions.values()).map(s => s.suggestion)
-    )
-    return eventId
-  }
-
-  await addTracksToPlaylist(playlist.id, trackUrisNotInPlaylist)
-  await acceptSuggestions(
-    eventId,
-    Array.from(suggestions.values()).map(s => s.suggestion)
-  )
-  return eventId
-}
-
-function* saveEventPlaylistFlow(action: Action) {
-  try {
-    const eventId = yield call(saveEventPlaylist, action.payload)
-    yield put({ type: SAVE_EVENT_PLAYLIST_SUCCESS })
-    yield put({ type: CLEAR_STAGED_SUGGESTIONS })
-    yield put({ type: EVENT_FETCH_BY_ID_INITIATED, payload: eventId })
-  } catch (err) {
-    yield put({ type: SAVE_EVENT_PLAYLIST_ERROR, payload: err })
-  }
-}
-
-export function* watchSaveEventPlaylist() {
-  yield takeEvery(SAVE_EVENT_PLAYLIST, saveEventPlaylistFlow)
 }
 
 function moveItemInEventPlaylistFlow(action: Action) {

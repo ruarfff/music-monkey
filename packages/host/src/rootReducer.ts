@@ -6,7 +6,7 @@ import event from './event/eventReducer'
 import insights from './insights/insightsReducer'
 import playlist from './playlist/playlistReducer'
 import recommendation from './recommendations/recommendationReducer'
-import suggestion from './requests/suggestionReducer'
+import suggestion from './requests/requestReducer'
 import user from './user/userReducer'
 import { voteReducer as vote } from 'mm-shared'
 

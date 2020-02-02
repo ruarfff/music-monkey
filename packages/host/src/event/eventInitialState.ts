@@ -11,7 +11,6 @@ export default {
     playlistCreation: undefined
   },
   events: [],
-  createEventStep: 0,
   event: {
     description: '',
     imageUrl: '',
@@ -35,14 +34,8 @@ export default {
     hostData: {} as User
   },
   eventsLoading: false,
-  showSavedDialogue: false,
-  playlistReselected: false,
-  shareEventMessage: '',
-  playlistInput: '',
   loading: false,
   fetchError: {} as Error,
-  copiedToClipboard: false,
   pendingSuggestions: [],
-  rejectedSuggestions: [],
-  savingEventPlaylist: false
+  rejectedSuggestions: []
 } as IEventState

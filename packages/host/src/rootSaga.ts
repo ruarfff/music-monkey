@@ -2,7 +2,6 @@ import { all } from 'redux-saga/effects'
 import { watchLogin, watchLogout } from 'auth/authSaga'
 import {
   watchMoveItemInEventPlaylist,
-  watchSaveEventPlaylist,
   watchSortPlaylistByVotesDescending,
   watchFetchEvents,
   watchDeleteEvent,
@@ -26,7 +25,7 @@ import { watchFetchShareEmail } from 'event/shareEvent/shareSaga'
 import {
   watchFetchSuggestions,
   watchRejectSuggestion
-} from 'requests/suggestionSaga'
+} from 'requests/requestSaga'
 import { watchUpdateUserFlow } from 'user/userSaga'
 import { watchFetchEventVotes } from 'mm-shared'
 
@@ -40,7 +39,6 @@ export default function* rootSaga() {
     watchDeleteEvent(),
     watchFetchSuggestions(),
     watchRejectSuggestion(),
-    watchSaveEventPlaylist(),
     watchFetchEventVotes(),
     watchMoveItemInEventPlaylist(),
     watchSortPlaylistByVotesDescending(),
