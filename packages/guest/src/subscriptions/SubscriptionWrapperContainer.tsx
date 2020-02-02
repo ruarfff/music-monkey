@@ -3,7 +3,7 @@ import IRootState from '../rootState'
 import SubscriptionWrapper from './SubscriptionWrapper'
 import { getEvent } from '../event/eventActions'
 import { fetchEventVotes } from 'mm-shared'
-import { getRequestsByEventId } from '../requests/suggestionActions'
+import { getRequestsByEventId } from '../request/requestActions'
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.event.event

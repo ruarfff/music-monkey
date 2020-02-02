@@ -12,7 +12,7 @@ const CreateEvent = lazy(() => import('event/saveEvent/CreateEventContainer'))
 
 const EventView = lazy(() => import('event/eventView/EventViewContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
-const Requests = lazy(() => import('requests/RequestsContainer'))
+const Requests = lazy(() => import('request/RequestsContainer'))
 const PlaylistListView = lazy(() =>
   import('playlist/PlaylistListViewContainer')
 )

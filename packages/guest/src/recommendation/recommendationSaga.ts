@@ -1,11 +1,10 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Track }  from 'mm-shared'
+import { Track, getUserTopTracks } from 'mm-shared'
 import {
   FETCH_RECOMMENDATIONS_FAILED,
   FETCH_RECOMMENDATIONS_INITIATED,
   FETCH_RECOMMENDATIONS_SUCCESS
-} from './recommendationsActions'
-import { getUserTopTracks } from './recommendationsClient'
+} from './recommendationActions'
 
 function* fetchRecommendationsFlow() {
   try {

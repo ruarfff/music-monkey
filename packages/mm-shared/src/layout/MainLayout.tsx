@@ -25,7 +25,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
         {children}
       </main>
 
-      <BottomBar event={event} isHost={isHost} />
+      <BottomBar event={event} />
     </div>
   )
 }

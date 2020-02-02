@@ -2,9 +2,9 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'mm-shared'
 import { EVENT_CLEAR } from 'event/eventActions'
 import { PLAYLIST_CLEAR } from 'playlist/playlistActions'
-import { RECOMMENDATIONS_CLEAR } from 'recommendations/recommendationsActions'
+import { RECOMMENDATIONS_CLEAR } from 'recommendation/recommendationActions'
 import { CLEAR_SEARCH } from 'search/searchActions'
-import { CLEAR_SUGGESTION } from 'requests/suggestionActions'
+import { CLEAR_SUGGESTION } from 'request/requestActions'
 import { FETCH_USER_SUCCESS } from 'user/userActions'
 import {
   LOGGED_OUT,

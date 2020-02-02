@@ -20,12 +20,12 @@ import {
   watchFetchSearchTracks,
   watchFetchTrackFeatures
 } from 'playlist/playlistSaga'
-import { watchFetchRecommendation } from 'recommendations/recommendationSaga'
+import { watchFetchRecommendation } from 'recommendation/recommendationSaga'
 import { watchFetchShareEmail } from 'event/shareEvent/shareSaga'
 import {
   watchFetchSuggestions,
   watchRejectSuggestion
-} from 'requests/requestSaga'
+} from 'request/requestSaga'
 import { watchUpdateUserFlow } from 'user/userSaga'
 import { watchFetchEventVotes } from 'mm-shared'
 

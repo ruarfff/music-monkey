@@ -9,14 +9,7 @@ import {
   ListItemText
 } from '@material-ui/core'
 import { isEmpty, sortBy, head } from 'lodash'
-import {
-  Action,
-  Playlist,
-  PlaylistImage,
-  Track,
-  TrackList,
-  User
-} from 'mm-shared'
+import { Action, Playlist, PlaylistImage, Track, TrackList, User } from '../'
 import backgroundImage from 'assets/music-monkey.jpg'
 
 interface MyPlaylistsTabProps {

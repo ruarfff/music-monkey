@@ -1,4 +1,4 @@
-export default interface ITrackSuggestion {
+export interface TrackRequest {
   eventId: string
   userId: string
   type: string

@@ -12,14 +12,14 @@ import {
   watchFetchMorePlaylistsFlow,
   watchFetchPlaylists
 } from './playlist/playlistSaga'
-import { watchFetchRecommendation } from './recommendations/recommendationsSaga'
+import { watchFetchRecommendation } from './recommendation/recommendationSaga'
 import { watchFetchOrCreateRsvp, watchFetchUpdateRsvp } from './rsvp/rsvpSaga'
 import { watchSearch } from './search/searchSaga'
 import {
   watchFetchSuggestions,
   watchSavePlaylistSuggestion,
   watchSaveTrackSuggestion
-} from './requests/suggestionSaga'
+} from './request/requestSaga'
 import {
   watchCreateVote,
   watchDeleteVote,

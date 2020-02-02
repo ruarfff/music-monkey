@@ -11,20 +11,18 @@ import './BottomBar.scss'
 
 interface IBottomBar extends RouteComponentProps<any> {
   event: Event
-  isHost: boolean
 }
 
 const checkLocation = (pathname: string, path: string) => {
   return pathname === path ? 'highlighted' : ''
 }
 
-const BottomBar = ({ location, event, isHost }: IBottomBar) => {
+const BottomBar = ({ location, event }: IBottomBar) => {
   const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
   const eventsLink = eventId ? `/events/${eventId}` : '/'
   const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
   const finderLink = eventId ? `/finder/${eventId}` : '/finder'
-  const createLink = '/create-event'
   const insightsLink = '/insights'
   const musicLink = '/music'
 
@@ -53,10 +51,7 @@ const BottomBar = ({ location, event, isHost }: IBottomBar) => {
 
       <div className="BottomBar-finder">
         <div className="BottomBar-finder-button">
-          <Link
-            to={isHost ? createLink : finderLink}
-            className="BottomBar-finder-button-link"
-          >
+          <Link to={finderLink} className="BottomBar-finder-button-link">
             <img alt="finder" src={Monkey} />
           </Link>
         </div>

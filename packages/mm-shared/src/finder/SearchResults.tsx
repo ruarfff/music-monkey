@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Track, TrackList } from 'mm-shared'
+import { Track, TrackList } from '../'
 
 interface SearchResultsProps {
   tracks: Track[]

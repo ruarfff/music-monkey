@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
-import { getRecommendations } from 'recommendations/recommendationActions'
+import { getRecommendations } from 'recommendation/recommendationActions'
 import AddTracks from './AddTracks'
 
 const mapStateToProps = (state: IRootState) => ({

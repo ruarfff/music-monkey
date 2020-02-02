@@ -1,5 +1,5 @@
 import { DecoratedSuggestion } from 'mm-shared'
-import ISuggestionState from './ISuggestionState'
+import ISuggestionState from './RequestState'
 
 export default {
   suggestions: [] as DecoratedSuggestion[],

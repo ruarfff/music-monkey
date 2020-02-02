@@ -1,5 +1,5 @@
 import { Action } from 'mm-shared'
-import ISuggestionState from './ISuggestionState'
+import ISuggestionState from './RequestState'
 import {
   CLEAR_SAVED_SUGGESTION,
   CLEAR_SUGGESTION,
@@ -13,8 +13,8 @@ import {
   SAVE_SUGGESTION_FAILED,
   SAVE_SUGGESTION_SUCCESS,
   SAVE_TRACK_SUGGESTION_INITIATED
-} from './suggestionActions'
-import initialState from './suggestionInitialState'
+} from './requestActions'
+import initialState from './requestInitialState'
 
 export default function suggestion(
   state: ISuggestionState = initialState,

@@ -1,5 +1,5 @@
 import { Track } from 'mm-shared'
 
-export default interface IRecommendationsState {
+export default interface RecommendationState {
   tracks: Track[]
 }

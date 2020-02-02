@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
 import { fetchUsersEvents, getEvent } from 'event/eventActions'
-import { getRequestsByEventId } from 'requests/suggestionActions'
+import { getRequestsByEventId } from 'request/requestActions'
 import { fetchEventVotes } from 'mm-shared'
 import Content from './Content'
 

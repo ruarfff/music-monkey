@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { selectEvent, setEventId } from 'event/eventActions'
 import IRootState from 'rootState'
-import { getRequestsByEventId } from 'requests/suggestionActions'
+import { getRequestsByEventId } from 'request/requestActions'
 import { EventSelect } from 'mm-shared'
 
 const mapStateToProps = (state: IRootState) => ({

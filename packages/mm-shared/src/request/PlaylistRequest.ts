@@ -1,4 +1,4 @@
-export default interface IPlaylistSuggestion {
+export interface PlaylistRequest {
   eventId: string
   userId: string
   playlistUri: string

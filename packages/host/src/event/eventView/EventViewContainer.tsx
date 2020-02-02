@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import IRootState from 'rootState'
-import { getRequestsByEventId } from 'requests/requestActions'
+import { getRequestsByEventId } from 'request/requestActions'
 import { fetchEventVotes } from 'mm-shared'
 import EventView from './EventView'
 import { getEventById, getEventByIdNoLoading } from 'event/eventActions'

@@ -11,13 +11,13 @@ const Event = lazy(() => import('event/eventView/EventViewContainer'))
 const EventListView = lazy(() =>
   import('event/eventList/EventListViewContainer')
 )
-const Finder = lazy(() => import('finder/FinderContainer'))
+const Marvin = lazy(() => import('finder/Marvin'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
 const Playlist = lazy(() => import('playlist/PlaylistViewContainer'))
 const PlaylistListView = lazy(() =>
   import('playlist/PlaylistListViewContainer')
 )
-const Requests = lazy(() => import('requests/RequestsContainer'))
+const Requests = lazy(() => import('request/RequestsContainer'))
 
 const locationHelper = locationHelperBuilder({})
 
@@ -74,12 +74,12 @@ export const routes = [
     exact: true
   },
   {
-    component: Finder,
+    component: Marvin,
     path: '/finder',
     exact: true
   },
   {
-    component: Finder,
+    component: Marvin,
     path: '/finder/:eventId',
     exact: true
   },

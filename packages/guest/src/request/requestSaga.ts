@@ -12,13 +12,13 @@ import {
   SAVE_SUGGESTION_FAILED,
   SAVE_SUGGESTION_SUCCESS,
   SAVE_TRACK_SUGGESTION_INITIATED
-} from './suggestionActions'
+} from './requestActions'
 import {
   bulkSaveSuggestions,
   deleteSuggestion,
   getEventSuggestions,
   saveSuggestion
-} from './suggestionClient'
+} from './requestClient'
 import SuggestionTransformer from './SuggestionTransformer'
 
 const suggestionTransformer = new SuggestionTransformer()

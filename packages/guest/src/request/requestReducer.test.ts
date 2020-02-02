@@ -1,7 +1,4 @@
-import { Action } from 'mm-shared'
-import ITrackSuggestion from './IPlaylistSuggestion'
-import IPlaylistSuggestion from './IPlaylistSuggestion'
-import ISuggestion from './ISuggestion'
+import { Action, Suggestion, TrackRequest, PlaylistRequest } from 'mm-shared'
 import {
   CLEAR_SAVED_SUGGESTION,
   DELETE_SUGGESTION_FAILED,
@@ -14,9 +11,9 @@ import {
   SAVE_SUGGESTION_FAILED,
   SAVE_SUGGESTION_SUCCESS,
   SAVE_TRACK_SUGGESTION_INITIATED
-} from './suggestionActions'
-import initialState from './suggestionInitialState'
-import suggestion from './suggestionReducer'
+} from './requestActions'
+import initialState from './requestInitialState'
+import suggestion from './requestReducer'
 
 describe('suggestionReducer', () => {
   it('should return the initial state when no action matches', () => {
@@ -27,7 +24,7 @@ describe('suggestionReducer', () => {
     expect(
       suggestion(initialState, {
         type: SAVE_TRACK_SUGGESTION_INITIATED,
-        payload: {} as ITrackSuggestion
+        payload: {} as TrackRequest
       })
     ).toEqual({
       ...initialState,
@@ -39,7 +36,7 @@ describe('suggestionReducer', () => {
     expect(
       suggestion(initialState, {
         type: SAVE_PLAYLIST_SUGGESTION_INITIATED,
-        payload: {} as IPlaylistSuggestion
+        payload: {} as PlaylistRequest
       })
     ).toEqual({
       ...initialState,
@@ -53,13 +50,13 @@ describe('suggestionReducer', () => {
         { ...initialState, savingSuggestion: true },
         {
           type: SAVE_SUGGESTION_SUCCESS,
-          payload: {} as ISuggestion
+          payload: {} as Suggestion
         }
       )
     ).toEqual({
       ...initialState,
       savingSuggestion: false,
-      savedSuggestion: {} as ISuggestion
+      savedSuggestion: {} as Suggestion
     })
   })
 
@@ -107,19 +104,19 @@ describe('suggestionReducer', () => {
     expect(
       suggestion(
         { ...initialState, fetchingSuggestions: true },
-        { type: FETCH_SUGGESTIONS_SUCCESS, payload: [] as ISuggestion[] }
+        { type: FETCH_SUGGESTIONS_SUCCESS, payload: [] as Suggestion[] }
       )
     ).toEqual({
       ...initialState,
       fetchingSuggestions: false,
-      suggestions: [] as ISuggestion[]
+      suggestions: [] as Suggestion[]
     })
   })
 
   it('should handle CLEAR_SAVED_SUGGESTION', () => {
     expect(
       suggestion(
-        { ...initialState, savedSuggestion: {} as ISuggestion },
+        { ...initialState, savedSuggestion: {} as Suggestion },
         { type: CLEAR_SAVED_SUGGESTION }
       )
     ).toEqual({ ...initialState, savedSuggestion: undefined })
@@ -129,7 +126,7 @@ describe('suggestionReducer', () => {
     expect(
       suggestion(initialState, {
         type: DELETE_SUGGESTION_INITIATED,
-        payload: {} as ISuggestion
+        payload: {} as Suggestion
       })
     ).toEqual({ ...initialState, deletingSuggestion: true })
   })
@@ -138,12 +135,12 @@ describe('suggestionReducer', () => {
     expect(
       suggestion(
         { ...initialState, deletingSuggestion: true },
-        { type: DELETE_SUGGESTION_SUCCESS, payload: {} as ISuggestion }
+        { type: DELETE_SUGGESTION_SUCCESS, payload: {} as Suggestion }
       )
     ).toEqual({
       ...initialState,
       deletingSuggestion: false,
-      deletedSuggestion: {} as ISuggestion
+      deletedSuggestion: {} as Suggestion
     })
   })
 

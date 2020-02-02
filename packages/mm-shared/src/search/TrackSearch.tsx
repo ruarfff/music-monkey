@@ -10,7 +10,7 @@ import { TrackSearchResult } from './TrackSearchResult'
 import './TrackSearch.scss'
 
 interface TrackSearchProps {
-  onFocus(): void
+  onFocus?(): void
   onSearchStart(): void
   onSearchResult(tracks: Track[]): void
 }
@@ -18,7 +18,7 @@ interface TrackSearchProps {
 export const TrackSearch = ({
   onSearchStart,
   onSearchResult,
-  onFocus
+  onFocus = () => {}
 }: TrackSearchProps) => {
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 400)
