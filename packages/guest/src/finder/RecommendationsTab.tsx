@@ -4,15 +4,13 @@ import Recommendations from '../recommendations/RecommendationsContainer'
 import { Track } from 'mm-shared'
 
 interface RecommendationsTabProps {
-  onTrackSelected(track: Track): any
+  onSelected(track: Track): any
 }
 
-const RecommendationsTab: FC<RecommendationsTabProps> = ({
-  onTrackSelected
-}) => {
+const RecommendationsTab: FC<RecommendationsTabProps> = ({ onSelected }) => {
   return (
     <Typography component="div" dir={'0'}>
-      <Recommendations onRecommendationSelected={onTrackSelected} />
+      <Recommendations onRecommendationSelected={onSelected} />
       <div className="Finder-stopper-block" />
     </Typography>
   )

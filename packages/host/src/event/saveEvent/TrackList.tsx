@@ -6,21 +6,17 @@ import TrackItem from './TrackItem'
 interface TrackListProps {
   tracks: Track[]
   filterList: Track[]
-  onTrackSelected(track: Track): void
+  onSelected(track: Track): void
 }
 
-const TrackList = ({ tracks, filterList, onTrackSelected }: TrackListProps) => {
+const TrackList = ({ tracks, filterList, onSelected }: TrackListProps) => {
   const existingTracks = filterList.map(track => track.uri)
   return (
     <List>
       {tracks
         .filter(track => existingTracks.indexOf(track.uri) === -1)
         .map(track => (
-          <TrackItem
-            onSelected={onTrackSelected}
-            track={track}
-            key={track.uri}
-          />
+          <TrackItem onSelected={onSelected} track={track} key={track.uri} />
         ))}
     </List>
   )

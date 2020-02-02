@@ -57,7 +57,7 @@ const EventTracks = ({
       }
     >
       <TrackList
-        onTrackRemoved={handleTrackRemoved}
+        onRemoved={handleTrackRemoved}
         onDragEnd={(result: DropResult) => {
           if (!result.destination) {
             return

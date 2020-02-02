@@ -81,7 +81,7 @@ const Finder = ({
     )
   }
 
-  const onTrackSelected = (track: Track) => {
+  const onSelected = (track: Track) => {
     showConfirmationDialog(user, event, track, saveTrackSuggestion)
   }
 
@@ -112,10 +112,7 @@ const Finder = ({
       <Search />
       <Divider variant="inset" className="Finder-divider" />
       {(searching || !isEmpty(filteredSearch)) && (
-        <SearchResults
-          tracks={filteredSearch}
-          onTrackSelected={onTrackSelected}
-        />
+        <SearchResults tracks={filteredSearch} onSelected={onSelected} />
       )}
       {!searching && isEmpty(filteredSearch) && (
         <div>
@@ -153,7 +150,7 @@ const Finder = ({
             onChangeIndex={handleTabChange}
           >
             {tabIndex === 0 ? (
-              <RecommendationsTab onTrackSelected={onTrackSelected} />
+              <RecommendationsTab onSelected={onSelected} />
             ) : (
               <div />
             )}
@@ -164,7 +161,7 @@ const Finder = ({
                 playlistsEnabled={event.settings.suggestingPlaylistsEnabled}
                 fetchMorePlaylists={fetchMorePlaylists}
                 savePlaylistSuggestion={onPlaylistSelected}
-                onTrackSelected={onTrackSelected}
+                onSelected={onSelected}
                 playlists={userPlaylists}
               />
             ) : (

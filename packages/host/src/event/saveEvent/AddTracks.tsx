@@ -4,9 +4,14 @@ import { FieldProps, Field } from 'formik'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
 import { addTracksToPlaylist } from 'playlist/playlistClient'
-import { useSnackbarAlert } from 'notification/alert'
-import { Action, LoadingSpinner, Track, Playlist } from 'mm-shared'
-import TrackSearch from 'search/TrackSearch'
+import {
+  useSnackbarAlert,
+  Action,
+  LoadingSpinner,
+  Track,
+  Playlist,
+  TrackSearch
+} from 'mm-shared'
 import TrackList from './TrackList'
 import EventTracks from './EventTracks'
 import Playlists from './PlaylistsContainer'
@@ -150,7 +155,7 @@ const AddTracks = ({
                             : recommendedTracks
                         }
                         filterList={value}
-                        onTrackSelected={handleAddTrack}
+                        onSelected={handleAddTrack}
                       />
                     )}
                     {tabIndex === 2 && (

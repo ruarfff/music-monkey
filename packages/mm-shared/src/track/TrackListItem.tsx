@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
+import AddIcon from '@material-ui/icons/Add'
 import Remove from '@material-ui/icons/Remove'
 import {
   Badge,
-  Icon,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -37,8 +37,8 @@ interface TrackListItemProps {
   currentUserVoted: boolean
   options: TrackConfig
   onVote(track: Track): void
-  onTrackSelected?(track: Track): void
-  onTrackRemoved?(track: Track): void
+  onSelected?(track: Track): void
+  onRemoved?(track: Track): void
 }
 
 export const TrackListItem: FC<TrackListItemProps> = ({
@@ -49,8 +49,8 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   event,
   options,
   onVote,
-  onTrackSelected,
-  onTrackRemoved
+  onSelected,
+  onRemoved
 }) => {
   if (!track) {
     return <span />
@@ -65,8 +65,8 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const handleTrackSelected = () => {
-    if (isFunction(onTrackSelected)) {
-      onTrackSelected(track)
+    if (isFunction(onSelected)) {
+      onSelected(track)
     }
   }
 
@@ -75,8 +75,8 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const handleRemoveTrack = (track: Track) => () => {
-    if (isFunction(onTrackRemoved)) {
-      onTrackRemoved(track)
+    if (isFunction(onRemoved)) {
+      onRemoved(track)
     }
   }
 
@@ -147,7 +147,14 @@ export const TrackListItem: FC<TrackListItemProps> = ({
           )}
           {votingButton}
           {options.canRequest && (
-            <Icon onClick={handleTrackSelected}> playlist_add </Icon>
+            <Fab
+              color="primary"
+              aria-label="add"
+              size="small"
+              onClick={handleTrackSelected}
+            >
+              <AddIcon />
+            </Fab>
           )}
         </ListItemSecondaryAction>
       </ListItem>

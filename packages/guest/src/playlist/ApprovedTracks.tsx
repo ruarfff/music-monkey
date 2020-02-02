@@ -11,7 +11,7 @@ interface ApprovedTracksProps {
   playlist: Playlist
   votes: Map<string, TrackVoteStatus>
   suggestions: DecoratedSuggestion[]
-  onTrackSelected: (track: Track) => void
+  onSelected: (track: Track) => void
   onVote: (track: Track) => void
 }
 
@@ -19,14 +19,14 @@ const ApprovedTracks: FC<ApprovedTracksProps> = ({
   playlist,
   votes,
   suggestions,
-  onTrackSelected,
+  onSelected,
   onVote
 }) => (
   <TrackList
     tracks={playlist.tracks && playlist.tracks.items.map((s: any) => s.track)}
     suggestions={suggestions}
     votes={votes}
-    onTrackSelected={onTrackSelected}
+    onSelected={onSelected}
     onVote={onVote}
     options={{ canRequest: true, canVote: true }}
   />

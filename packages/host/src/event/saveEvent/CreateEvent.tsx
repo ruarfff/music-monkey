@@ -2,12 +2,17 @@ import React, { useState } from 'react'
 import { Formik, FormikProps, FormikHelpers, Field, FieldProps } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import * as Yup from 'yup'
-import { useSnackbarAlert } from 'notification/alert'
 import createEventFlow from './createEventFlow'
 import EventInitializeDialog from './EventInitializeDialog'
 import CreateEventFormValues from './CreateEventFormValues'
 import SeedPlaylist from './SeedPlaylistContainer'
-import { User, Playlist, LoadingSpinner, Action } from 'mm-shared'
+import {
+  User,
+  Playlist,
+  LoadingSpinner,
+  Action,
+  useSnackbarAlert
+} from 'mm-shared'
 
 import './CreateEvent.scss'
 

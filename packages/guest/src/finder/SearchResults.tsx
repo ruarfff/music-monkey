@@ -3,13 +3,13 @@ import { Track, TrackList } from 'mm-shared'
 
 interface SearchResultsProps {
   tracks: Track[]
-  onTrackSelected(track: Track): any
+  onSelected(track: Track): any
 }
-const SearchResults: FC<SearchResultsProps> = ({ tracks, onTrackSelected }) => {
+const SearchResults: FC<SearchResultsProps> = ({ tracks, onSelected }) => {
   return (
     <TrackList
       tracks={tracks}
-      onTrackSelected={onTrackSelected}
+      onSelected={onSelected}
       options={{ canRequest: true }}
     />
   )

@@ -1,6 +1,6 @@
-import { Track } from 'mm-shared'
+import { Track } from '../'
 
-export default interface TrackSearchResult {
+export interface TrackSearchResult {
   href: string
   items: Track[]
   limit: number

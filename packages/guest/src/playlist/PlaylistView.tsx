@@ -128,7 +128,7 @@ const PlaylistView: FC<PlayListViewProps> = ({
               playlist={playlist!}
               suggestions={suggestions}
               votes={votes}
-              onTrackSelected={setCurrentTrack}
+              onSelected={setCurrentTrack}
               onVote={handleTrackVote}
             />
           </Typography>

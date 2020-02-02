@@ -3,9 +3,9 @@ import { Paper, InputBase, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import ClearIcon from '@material-ui/icons/Clear'
 import isEmpty from 'lodash/isEmpty'
-import { Track, useDebounce } from 'mm-shared'
-import { searchTracks } from 'search/searchClient'
-import TrackSearchResult from './TrackSearchResult'
+import { Track, useDebounce } from '../'
+import { searchTracks } from './searchClient'
+import { TrackSearchResult } from './TrackSearchResult'
 
 import './TrackSearch.scss'
 
@@ -15,7 +15,7 @@ interface TrackSearchProps {
   onSearchResult(tracks: Track[]): void
 }
 
-const TrackSearch = ({
+export const TrackSearch = ({
   onSearchStart,
   onSearchResult,
   onFocus
@@ -69,5 +69,3 @@ const TrackSearch = ({
     </Paper>
   )
 }
-
-export default TrackSearch

@@ -15,9 +15,9 @@ interface TrackListProps {
   event?: Event
   options?: TrackConfig
   onVote?(track: Track): void
-  onTrackSelected?(track: Track): void
+  onSelected?(track: Track): void
   onDragEnd?(result: any): void
-  onTrackRemoved?(track: Track): void
+  onRemoved?(track: Track): void
 }
 
 const getItemStyle = (isDragging: any, draggableStyle: any) => {
@@ -39,9 +39,9 @@ export const TrackList: FC<TrackListProps> = ({
   event,
   options = { canRemove: false, canRequest: false, canVote: false },
   onVote = (t: Track) => ({} as any),
-  onTrackSelected = (t: Track) => ({} as any),
+  onSelected = (t: Track) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
-  onTrackRemoved = (track: Track) => ({} as any)
+  onRemoved = (track: Track) => ({} as any)
 }) => (
   <List>
     <DragDropContext onDragEnd={onDragEnd}>
@@ -80,9 +80,9 @@ export const TrackList: FC<TrackListProps> = ({
                         event={event}
                         currentUserVoted={userVoted}
                         options={options}
-                        onTrackSelected={onTrackSelected}
+                        onSelected={onSelected}
                         onVote={onVote}
-                        onTrackRemoved={onTrackRemoved}
+                        onRemoved={onRemoved}
                       />
                     </div>
                   )}

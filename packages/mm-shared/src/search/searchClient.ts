@@ -1,5 +1,5 @@
 import client from 'mm-client'
-import TrackSearchResult from './TrackSearchResult'
+import { TrackSearchResult } from './TrackSearchResult'
 
 export const searchTracks = async (searchTerm: string) => {
   const response = await client.get(

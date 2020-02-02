@@ -22,7 +22,7 @@ const Recommendations: FC<RecommendationsProps> = ({
   return (
     <TrackList
       tracks={tracks}
-      onTrackSelected={onRecommendationSelected}
+      onSelected={onRecommendationSelected}
       options={{ canRequest: true }}
     />
   )

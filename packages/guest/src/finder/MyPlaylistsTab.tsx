@@ -23,7 +23,7 @@ interface MyPlaylistsTabProps {
   user: User
   playlists: Playlist[]
   playlistsEnabled: boolean
-  onTrackSelected(track: Track): any
+  onSelected(track: Track): any
   savePlaylistSuggestion(suggestions: Playlist): any
   fetchMorePlaylists(user: User): Action
 }
@@ -32,7 +32,7 @@ const MyPlaylistsTab: FC<MyPlaylistsTabProps> = ({
   user,
   playlists,
   playlistsEnabled,
-  onTrackSelected,
+  onSelected,
   savePlaylistSuggestion,
   fetchMorePlaylists
 }) => {
@@ -112,7 +112,7 @@ const MyPlaylistsTab: FC<MyPlaylistsTabProps> = ({
         )}
         <TrackList
           tracks={selectedPlaylist.tracks.items.map(t => t.track)}
-          onTrackSelected={onTrackSelected}
+          onSelected={onSelected}
           options={{ canRequest: true }}
         />
       </>
