@@ -16,7 +16,13 @@ import {
 import isFunction from 'lodash/isFunction'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
-import { Event, Track, getTrackImage, DecoratedSuggestion } from '../'
+import {
+  Event,
+  Track,
+  getTrackImage,
+  DecoratedSuggestion,
+  formatDuration
+} from '../'
 import { TrackConfig } from './TrackConfig'
 import './TrackListItem.scss'
 
@@ -149,7 +155,13 @@ export const TrackListItem: FC<TrackListItemProps> = ({
           className="TrackListItem-content"
           primary={track.name}
           primaryTypographyProps={{ noWrap: true }}
-          secondary={track.artists[0].name}
+          secondary={
+            <span>
+              {track.artists[0].name}
+              <br />
+              {formatDuration(track.duration_ms)}
+            </span>
+          }
           secondaryTypographyProps={{
             variant: 'body2',
             noWrap: true

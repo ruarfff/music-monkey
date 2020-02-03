@@ -89,8 +89,8 @@ const AddTracks: FC<AddTracksProps> = ({
 
         return (
           <Finder
-            eventTracks={value}
             isHost={true}
+            eventTracks={value}
             allowSuggestPlaylist={true}
             onTrackSelected={handleAddTrack}
             onPlaylistSelected={handlePlaylistSelected}

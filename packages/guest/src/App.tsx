@@ -32,7 +32,7 @@ const App = ({ store, history }: IAppProps) => (
       <SnackbarProvider
         maxSnack={3}
         preventDuplicate={true}
-        autoHideDuration={1500}
+        autoHideDuration={1000}
       >
         <Provider store={store}>
           <ConnectedRouter history={history}>
