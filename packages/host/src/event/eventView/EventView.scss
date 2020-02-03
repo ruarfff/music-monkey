@@ -3,14 +3,9 @@
 .EventView-root {
   width: 100%;
   height: 100%;
+  margin: 0 auto;
 
   .EventView-tabs {
-    .EventView-tab[aria-selected='true'] {
-      color: $main;
-    }
-
-    .indicator-color {
-      background-color: $secondary-light;
-    }
+    padding: 0.5em 1.5em;
   }
 }

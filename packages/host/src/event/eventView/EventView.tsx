@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { AppBar, Icon, Tab, Tabs, Typography } from '@material-ui/core'
+import { Grid, Tab, Tabs, Typography } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps } from 'react-router'
 import {
@@ -63,31 +63,30 @@ const EventView: FC<EventViewProps> = ({
   }
 
   return (
-    <div className="EventView-root">
-      {loading && !isEmpty(error) && (
-        <EventFetchError onTryAgain={handleGetEvent} />
-      )}
-      <EventHeader
-        updateRsvp={(x: any): Action => {
-          return {} as Action
-        }}
-      />
-      <div>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={tabIndex}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="secondary"
-            variant="fullWidth"
-            classes={{ indicator: 'indicator-color' }}
-            className="EventView-tabs"
-          >
-            <Tab icon={<Icon>library_music</Icon>} className="EventView-tab" />
-            <Tab icon={<Icon>location_on</Icon>} className="EventView-tab" />
-            <Tab icon={<Icon>account_circle</Icon>} className="EventView-tab" />
-          </Tabs>
-        </AppBar>
+    <Grid className="EventView-root" container spacing={2}>
+      <Grid item xs={12}>
+        {loading && !isEmpty(error) && (
+          <EventFetchError onTryAgain={handleGetEvent} />
+        )}
+        <EventHeader
+          updateRsvp={(x: any): Action => {
+            return {} as Action
+          }}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+        >
+          <Tab className="EventView-tab" label="Current Playlist" />
+          <Tab className="EventView-tab" label="Guests" />
+        </Tabs>
+      </Grid>
+      <Grid item xs={12}>
         {tabIndex === 0 && (
           <Typography component="div">
             <EventTracks
@@ -98,17 +97,12 @@ const EventView: FC<EventViewProps> = ({
           </Typography>
         )}
         {tabIndex === 1 && (
-          <Typography component="div" dir={'1'}>
-            <p>Hello</p>
-          </Typography>
-        )}
-        {tabIndex === 2 && (
           <Typography component="div" dir={'2'}>
             <EventGuests event={event} />
           </Typography>
         )}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   )
 }
 
