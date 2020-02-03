@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, Typography, Badge, Paper } from '@material-ui/core'
+import { DropResult } from 'react-beautiful-dnd'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
 import {
@@ -16,7 +17,6 @@ import {
 import Playlists from './Playlists'
 
 import './Finder.scss'
-import { DropResult } from 'react-beautiful-dnd'
 
 interface FinderProps {
   isHost?: boolean

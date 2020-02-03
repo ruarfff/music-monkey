@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react'
-import { Grid, Tab, Tabs, Typography } from '@material-ui/core'
+import React, { FC, useEffect } from 'react'
+import { Grid } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps } from 'react-router'
 import {
@@ -10,7 +10,6 @@ import {
   DecoratedSuggestion
 } from 'mm-shared'
 import EventFetchError from 'event/EventFetchError'
-import EventGuests from './EventGuests'
 import EventTracks from './EventTracks'
 import EventHeader from './EventHeaderContainer'
 import './EventView.scss'
@@ -39,10 +38,10 @@ const EventView: FC<EventViewProps> = ({
   error
 }) => {
   const eventId = match.params.eventId
-  const [tabIndex, setTabIndex] = useState(0)
-  const handleTabChange = (e: any, value: any) => {
-    setTabIndex(value)
-  }
+  //   const [tabIndex, setTabIndex] = useState(0)
+  //   const handleTabChange = (e: any, value: any) => {
+  //     setTabIndex(value)
+  //   }
 
   useEffect(() => {
     if (!event || event.eventId !== eventId) {
@@ -63,7 +62,7 @@ const EventView: FC<EventViewProps> = ({
   }
 
   return (
-    <Grid className="EventView-root" container spacing={2}>
+    <Grid className="EventView-root" container>
       <Grid item xs={12}>
         {loading && !isEmpty(error) && (
           <EventFetchError onTryAgain={handleGetEvent} />
@@ -75,7 +74,8 @@ const EventView: FC<EventViewProps> = ({
         />
       </Grid>
       <Grid item xs={12}>
-        <Tabs
+        <EventTracks votes={votes} event={event} suggestions={suggestions} />
+        {/* <Tabs
           value={tabIndex}
           onChange={handleTabChange}
           indicatorColor="primary"
@@ -100,7 +100,7 @@ const EventView: FC<EventViewProps> = ({
           <Typography component="div" dir={'2'}>
             <EventGuests event={event} />
           </Typography>
-        )}
+        )} */}
       </Grid>
     </Grid>
   )
