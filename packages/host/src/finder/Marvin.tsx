@@ -28,7 +28,6 @@ const Marvin: FC<MarvinProps> = ({ event, user }) => {
   const [tracks, setTracks] = useState([] as Track[])
 
   useEffect(() => {
-    console.log('rrrrrrrrrr')
     setTracks(getPlaylistTracks(playlist!))
   }, [event, playlist])
 
