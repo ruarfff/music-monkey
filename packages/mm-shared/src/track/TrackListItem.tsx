@@ -150,6 +150,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   return (
     <>
       <ListItem className="TrackListItem-root" alignItems="flex-start" button>
+        <audio src={track.preview_url} crossOrigin="anonymous"></audio>
         <ListItemIcon>{trackImage}</ListItemIcon>
         <ListItemText
           className="TrackListItem-content"

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { selectEvent } from 'event/eventActions'
+import { selectEvent, getEventById } from 'event/eventActions'
 import IRootState from 'rootState'
 import { getRequestsByEventId } from 'request/requestActions'
-import { EventSelect, Action } from 'mm-shared'
+import { EventSelect } from 'mm-shared'
 
 const mapStateToProps = (state: IRootState) => ({
   events: state.event.events,
@@ -12,9 +12,7 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   selectEvent,
-  setEventId: (): Action => {
-    return { type: '' } as Action
-  },
+  setEventId: getEventById,
   getRequestsByEventId
 }
 

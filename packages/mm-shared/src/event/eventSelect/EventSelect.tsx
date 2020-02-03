@@ -26,11 +26,13 @@ const EventSelect: FC<EventSelectProps> = ({
 }) => {
   const eventId = match.params.eventId
   const eventLoaded = checkEventIsLoaded(event)
-  const [eventPickerOpen, setEventPickerOpen] = useState(!eventLoaded)
+  const [eventPickerOpen, setEventPickerOpen] = useState(false)
   useEffect(() => {
     const selectedEventId = event ? event.eventId : ''
     if (eventId && selectedEventId !== eventId) {
       setEventId(eventId)
+    } else if (!eventLoaded) {
+      setEventPickerOpen(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId])

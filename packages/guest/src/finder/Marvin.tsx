@@ -10,7 +10,8 @@ import {
   User,
   Event,
   Track,
-  getPlaylistTracks
+  getPlaylistTracks,
+  LoadingSpinner
 } from 'mm-shared'
 
 interface MarvinProps {
@@ -52,13 +53,15 @@ const Marvin: FC<MarvinProps> = ({
   return (
     <div>
       <EventSelect />
-      {!isEmpty(event) && (
+      {!isEmpty(event) ? (
         <Finder
           eventTracks={tracks}
           allowSuggestPlaylist={event.settings.suggestingPlaylistsEnabled}
           onPlaylistSelected={onPlaylistSelected}
           onTrackSelected={onTrackSelected}
         />
+      ) : (
+        <LoadingSpinner />
       )}
     </div>
   )
