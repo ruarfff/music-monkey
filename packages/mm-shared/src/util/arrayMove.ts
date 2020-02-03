@@ -17,9 +17,5 @@ export default function arrayMove(
       array.push(undefined)
     }
   }
-  console.log(array)
-  console.log(newIndex)
-  console.log(oldIndex)
   array.splice(newIndex, 0, array.splice(oldIndex, 1)[0])
-  console.log(array)
 }

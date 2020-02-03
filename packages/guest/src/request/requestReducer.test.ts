@@ -15,7 +15,7 @@ import {
 import initialState from './requestInitialState'
 import suggestion from './requestReducer'
 
-describe('suggestionReducer', () => {
+describe('requestReducer', () => {
   it('should return the initial state when no action matches', () => {
     expect(suggestion(undefined, {} as Action)).toEqual(initialState)
   })

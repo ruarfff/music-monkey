@@ -12,6 +12,7 @@ import {
   Action,
   Track,
   Playlist,
+  arrayMove,
   getPlaylistTracks
 } from 'mm-shared'
 import Finder from 'finder/FinderContainer'
@@ -68,12 +69,6 @@ const AddTracks: FC<AddTracksProps> = ({
 
         const handlePlaylistSelected = (playlist: Playlist) => {
           handleAddTracks(playlist.tracks.items.map(item => item.track))
-        }
-
-        function arrayMove(arr: any[], fromIndex: number, toIndex: number) {
-          var element = arr[fromIndex]
-          arr.splice(fromIndex, 1)
-          arr.splice(toIndex, 0, element)
         }
 
         const handleTrackMoved = (from: number, to: number) => {
