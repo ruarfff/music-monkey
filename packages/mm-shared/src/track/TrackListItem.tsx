@@ -2,6 +2,8 @@ import React, { FC } from 'react'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import AddIcon from '@material-ui/icons/Add'
 import Remove from '@material-ui/icons/Remove'
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
+import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
 import {
   Badge,
   ListItem,
@@ -42,7 +44,9 @@ interface TrackListItemProps {
   event?: Event
   currentUserVoted: boolean
   options: TrackConfig
-  onVote(track: Track): void
+  isPlaying?: boolean
+  onPlay?(track: Track): void
+  onVote?(track: Track): void
   onSelected?(track: Track): void
   onRemoved?(track: Track): void
 }
@@ -54,9 +58,11 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   numberOfVotes,
   event,
   options,
-  onVote,
-  onSelected,
-  onRemoved
+  isPlaying = false,
+  onPlay = () => {},
+  onVote = () => {},
+  onSelected = () => {},
+  onRemoved = () => {}
 }) => {
   if (!track) {
     return <span />
@@ -87,11 +93,14 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const trackImage = (
-    <Img
-      src={[getTrackImage(track), backgroundImage]}
-      alt={track.name}
-      className="TrackListItem-track-image"
-    />
+    <div className="TrackListItem-track-image">
+      {isPlaying ? (
+        <PauseCircleOutlineIcon className="content-overlay" />
+      ) : (
+        <PlayCircleOutlineIcon className="content-overlay" />
+      )}
+      <Img src={[getTrackImage(track), backgroundImage]} alt={track.name} />
+    </div>
   )
 
   let avatar = <span />
@@ -150,8 +159,13 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   return (
     <>
       <ListItem className="TrackListItem-root" alignItems="flex-start" button>
-        <audio src={track.preview_url} crossOrigin="anonymous"></audio>
-        <ListItemIcon>{trackImage}</ListItemIcon>
+        <ListItemIcon
+          onClick={() => {
+            onPlay(track)
+          }}
+        >
+          {trackImage}
+        </ListItemIcon>
         <ListItemText
           className="TrackListItem-content"
           primary={track.name}

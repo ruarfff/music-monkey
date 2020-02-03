@@ -13,9 +13,20 @@
   }
 
   .TrackListItem-track-image {
+    position: relative;
     border-radius: 4px;
-    max-width: 4.5em;
-    max-height: 4.5em;
+    width: 4.5em;
+    height: 4.5em;
+
+    .content-overlay {
+      background: rgba(0, 0, 0, 0.3);
+      color: rgba(248, 240, 240, 0.5);
+      position: absolute;
+      height: 99%;
+      width: 100%;
+      left: 0;
+      top: 0;
+    }
   }
 }
 .TrackListItem-actions {

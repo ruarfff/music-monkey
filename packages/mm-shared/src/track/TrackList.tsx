@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { List, ListSubheader } from '@material-ui/core'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import isEmpty from 'lodash/isEmpty'
@@ -11,10 +11,6 @@ import {
   DecoratedSuggestion,
   formatDuration
 } from '../'
-
-// TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
-// Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
-
 interface TrackListProps {
   tracks: Track[]
   suggestions?: DecoratedSuggestion[]
@@ -58,11 +54,51 @@ export const TrackList: FC<TrackListProps> = ({
   onDragEnd = (result: any) => ({} as any),
   onRemoved = (track: Track) => ({} as any)
 }) => {
+  const [nowPlaying, setNowPlaying] = useState()
+  const [trackPlaying, setTrackPlaying] = useState(false)
+  const [trackTime, setTrackTime] = useState(0)
   const duration = isEmpty(tracks)
     ? 0
     : tracks.map(track => track.duration_ms).reduce((acc, dur) => acc + dur)
   const numTracks = tracks.length
   const existingTracks = filterList.map(track => track.uri)
+  useEffect(() => {
+    const audio = document.getElementById('TrackList-audio') as HTMLMediaElement
+    const timeUpdater = () => {
+      const timer = (audio.currentTime * 100) / audio.duration
+      setTrackTime(+timer.toFixed(0))
+    }
+    audio.addEventListener('timeupdate', timeUpdater)
+
+    return () => {
+      audio.removeEventListener('timeupdate', timeUpdater)
+    }
+  }, [])
+
+  const onPlay = (track: Track) => {
+    const audio = document.getElementById('TrackList-audio') as HTMLMediaElement
+    const audioSource = document.getElementById(
+      'TrackList-audio-source'
+    ) as HTMLMediaElement
+    if (audioSource.src !== track.preview_url) {
+      setNowPlaying(track)
+      audioSource.src = track.preview_url
+      audio.load()
+      audio.play()
+      setTrackPlaying(true)
+    } else {
+      if (trackTime === 100) {
+        setTrackPlaying(false)
+        setTrackTime(0)
+      }
+      if (!trackPlaying) {
+        audio.play()
+      } else {
+        audio.pause()
+      }
+      setTrackPlaying(!trackPlaying)
+    }
+  }
 
   return (
     <List
@@ -112,6 +148,12 @@ export const TrackList: FC<TrackListProps> = ({
                         >
                           <TrackListItem
                             track={track}
+                            onPlay={onPlay}
+                            isPlaying={
+                              trackPlaying &&
+                              nowPlaying &&
+                              nowPlaying.uri === track.uri
+                            }
                             suggestion={suggestions.find(
                               s => s.track.uri === trackId
                             )}
@@ -134,6 +176,16 @@ export const TrackList: FC<TrackListProps> = ({
           )}
         </Droppable>
       </DragDropContext>
+      <div style={{ display: 'none' }}>
+        <audio
+          id="TrackList-audio"
+          controls={true}
+          preload="none"
+          crossOrigin="anonymous"
+        >
+          <source id="TrackList-audio-source" src="" />
+        </audio>
+      </div>
     </List>
   )
 }
