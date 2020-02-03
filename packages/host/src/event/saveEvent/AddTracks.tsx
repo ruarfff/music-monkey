@@ -1,8 +1,19 @@
 import React, { FC, useEffect } from 'react'
 import { FieldProps, Field } from 'formik'
 import isEmpty from 'lodash/isEmpty'
-import { addTracksToPlaylist } from 'playlist/playlistClient'
-import { useSnackbarAlert, Action, Track, Playlist } from 'mm-shared'
+import remove from 'lodash/remove'
+import {
+  addTracksToPlaylist,
+  reOrderPlaylist,
+  removeTrackFromPlaylist
+} from 'playlist/playlistClient'
+import {
+  useSnackbarAlert,
+  Action,
+  Track,
+  Playlist,
+  getPlaylistTracks
+} from 'mm-shared'
 import Finder from 'finder/FinderContainer'
 
 import './AddTracks.scss'
@@ -55,19 +66,41 @@ const AddTracks: FC<AddTracksProps> = ({
           }
         }
 
-        const handleTracksChanges = (tracks: Track[]) => {
-          setFieldValue('tracks', tracks)
-        }
-
         const handlePlaylistSelected = (playlist: Playlist) => {
           handleAddTracks(playlist.tracks.items.map(item => item.track))
         }
 
+        function arrayMove(arr: any[], fromIndex: number, toIndex: number) {
+          var element = arr[fromIndex]
+          arr.splice(fromIndex, 1)
+          arr.splice(toIndex, 0, element)
+        }
+
+        const handleTrackMoved = (from: number, to: number) => {
+          let reorderedTracks = [...getPlaylistTracks(playlist)]
+          arrayMove(reorderedTracks, from, to)
+          reOrderPlaylist(playlist, from, to)
+          setFieldValue('tracks', reorderedTracks)
+        }
+
+        const handleTrackRemoved = (trackToRemove: Track) => {
+          const position = value.indexOf(trackToRemove)
+          removeTrackFromPlaylist(playlist.id, trackToRemove.uri, position)
+          setFieldValue(
+            'tracks',
+            remove(value, (track: Track) => track.id !== trackToRemove.id)
+          )
+        }
+
         return (
           <Finder
+            eventTracks={value}
+            isHost={true}
+            allowSuggestPlaylist={true}
             onTrackSelected={handleAddTrack}
             onPlaylistSelected={handlePlaylistSelected}
-            onPlaylistTracksChanged={handleTracksChanges}
+            onTrackRemoved={handleTrackRemoved}
+            onTrackMoved={handleTrackMoved}
           />
         )
       }}

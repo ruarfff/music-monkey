@@ -1,0 +1,80 @@
+@import '../theme/main';
+
+.Playlists-root {
+  height: 100%;
+  width: 100%;
+
+  h6 {
+    color: $dark-grey;
+  }
+
+  .Playlists-image {
+    height: 4em;
+    width: 4em;
+  }
+
+  .Playlists-item-text {
+    padding-left: 2em;
+  }
+
+  .Playlists-loading-area {
+    height: 255px;
+  }
+  .Playlists-clear {
+    margin: 0px;
+    top: 77px;
+    right: 20px;
+    bottom: auto;
+    left: auto;
+    position: fixed;
+  }
+
+  .Playlists-image-marvin {
+    padding-top: 0.5em;
+    padding-bottom: 0.75em;
+    height: 4em;
+    width: 4em;
+  }
+
+  .Playlists-select-playlist {
+    background-color: rgba(255, 176, 0, 0.75);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    transition: all 0.4s;
+    box-shadow: 0 14px 26px -12px $primary, 0 4px 23px 0px $base-shadow,
+      0 8px 10px -5px $primary-dark;
+
+    .Playlists-select-playlist-icon {
+      color: white;
+    }
+
+    .MuiListItemText-primary {
+      color: white;
+      font-weight: 700;
+    }
+  }
+
+  .Playlists-track {
+    margin-right: 0.5em;
+    margin-left: 2em;
+    height: 4.5em;
+    padding: 1em;
+    padding-bottom: 2em;
+    margin-bottom: 1em;
+
+    .Playlists-track-image {
+      border-radius: 4px;
+      max-width: 3.5em;
+      max-height: 3.5em;
+    }
+
+    .Playlists-track-content {
+      padding-left: 1.5em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}

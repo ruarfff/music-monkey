@@ -16,13 +16,18 @@ import {
 } from '@material-ui/core'
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
-import { Action, User, LoadingSpinner, getTrackImage } from 'mm-shared'
+import {
+  Action,
+  User,
+  LoadingSpinner,
+  getTrackImage,
+  getPlaylistImage,
+  getFormattedPlaylistDuration,
+  getNumberOfPlaylistTracks
+} from 'mm-shared'
 import marvin from 'assets/marvin.png'
 import Img from 'react-image'
-import getPlaylistImage from 'playlist/getPlaylistImage'
 import backgroundImage from 'assets/music-monkey.jpg'
-import getFormattedPlaylistDuration from 'playlist/getFormattedPlaylistDuration'
-import getNumberOfPlaylistTracks from 'playlist/getNumberOfPlaylistTracks'
 
 import './SeedPlaylist.scss'
 

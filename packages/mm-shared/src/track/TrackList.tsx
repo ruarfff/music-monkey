@@ -1,9 +1,16 @@
 import React, { FC } from 'react'
-import { List } from '@material-ui/core'
+import { List, ListSubheader } from '@material-ui/core'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import isEmpty from 'lodash/isEmpty'
 import { TrackListItem } from './TrackListItem'
 import { TrackConfig } from './TrackConfig'
-import { Event, Track, TrackVoteStatus, DecoratedSuggestion } from '../'
+import {
+  Event,
+  Track,
+  TrackVoteStatus,
+  DecoratedSuggestion,
+  formatDuration
+} from '../'
 
 // TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
 // Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
@@ -39,16 +46,36 @@ export const TrackList: FC<TrackListProps> = ({
   filterList = [],
   votes = new Map(),
   event,
-  options = { canRemove: false, canRequest: false, canVote: false },
+  options = {
+    canRemove: false,
+    canRequest: false,
+    canVote: false,
+    showSummary: false,
+    allowDragDrop: false
+  },
   onVote = (t: Track) => ({} as any),
   onSelected = (t: Track) => ({} as any),
   onDragEnd = (result: any) => ({} as any),
   onRemoved = (track: Track) => ({} as any)
 }) => {
+  const duration = isEmpty(tracks)
+    ? 0
+    : tracks.map(track => track.duration_ms).reduce((acc, dur) => acc + dur)
+  const numTracks = tracks.length
   const existingTracks = filterList.map(track => track.uri)
 
   return (
-    <List>
+    <List
+      subheader={
+        options.showSummary ? (
+          <ListSubheader component="div">
+            {numTracks} tracks : {formatDuration(duration)}
+          </ListSubheader>
+        ) : (
+          <span />
+        )
+      }
+    >
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="track-list-droppable">
           {provided => (
@@ -71,6 +98,7 @@ export const TrackList: FC<TrackListProps> = ({
                       key={i}
                       draggableId={trackId + '-' + i}
                       index={i}
+                      isDragDisabled={!options.allowDragDrop}
                     >
                       {(draggableProvided, draggableSnapshot) => (
                         <div

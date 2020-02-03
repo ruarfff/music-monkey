@@ -8,6 +8,11 @@
   "include": [
     "./src",
     "config-overrides.js",
-    "../mm-shared/src/track/getTrackImage.ts"
+    "../mm-shared/src/track/getTrackImage.ts",
+    "../mm-shared/src/playlist/getFormattedPlaylistDuration.ts",
+    "../mm-shared/src/playlist/getNumberOfPlaylistTracks.ts",
+    "../mm-shared/src/playlist/getPlaylistDuration.ts",
+    "../mm-shared/src/playlist/getPlaylistImage.ts",
+    "../mm-shared/src/playlist/getPlaylistTracks.ts"
   ]
 }

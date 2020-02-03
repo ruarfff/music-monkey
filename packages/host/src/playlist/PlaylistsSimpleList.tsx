@@ -4,9 +4,7 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemText from '@material-ui/core/ListItemText'
-import { User } from 'mm-shared'
-import { Playlist } from 'mm-shared'
-import getPlaylistImage from './getPlaylistImage'
+import { User, Playlist, getPlaylistImage } from 'mm-shared'
 
 interface IPlaylistsSimpleListProps {
   playlists: Playlist[]

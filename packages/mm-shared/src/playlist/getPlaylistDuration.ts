@@ -1,7 +1,7 @@
-import { Playlist } from 'mm-shared'
 import isEmpty from 'lodash/isEmpty'
+import { Playlist } from '..'
 
-const getPlaylistDuration = (playlist: Playlist) => {
+export const getPlaylistDuration = (playlist: Playlist) => {
   if (
     isEmpty(playlist) ||
     isEmpty(playlist.tracks) ||
@@ -13,5 +13,3 @@ const getPlaylistDuration = (playlist: Playlist) => {
     .map(item => item.track.duration_ms)
     .reduce((acc, dur) => acc + dur)
 }
-
-export default getPlaylistDuration

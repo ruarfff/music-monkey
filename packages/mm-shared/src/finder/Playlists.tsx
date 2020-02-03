@@ -1,16 +1,30 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import {
   Typography,
   List,
-  Button,
   ListItem,
   ListItemAvatar,
-  Avatar,
-  ListItemText
+  ListItemText,
+  Divider,
+  ListItemSecondaryAction,
+  IconButton,
+  Collapse,
+  ListItemIcon
 } from '@material-ui/core'
-import { isEmpty, sortBy, head } from 'lodash'
-import { Playlist, PlaylistImage, Track, TrackList, User } from '..'
+import { ChevronRight, KeyboardArrowDown, QueueMusic } from '@material-ui/icons'
+import isEmpty from 'lodash/isEmpty'
+import Img from 'react-image'
+import {
+  Playlist,
+  Track,
+  TrackList,
+  User,
+  getFormattedPlaylistDuration,
+  getNumberOfPlaylistTracks,
+  getPlaylistImage
+} from '..'
 import backgroundImage from 'assets/music-monkey.jpg'
+import './Playlists.scss'
 
 interface PlaylistsProps {
   user: User
@@ -28,95 +42,91 @@ const Playlists: FC<PlaylistsProps> = ({
   onPlaylistSelected
 }) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState({} as Playlist)
-
-  useEffect(() => {
-    const trackScrolling = () => {
-      if (
-        document.body.offsetHeight ===
-        window.pageYOffset + window.innerHeight
-      ) {
-        console.log('Bug: Not fetching more playlists')
-        //handleFetchMorePlaylists()
-      }
+  const handlePlaylistClicked = (playlist: Playlist) => () => {
+    if (selectedPlaylist === playlist) {
+      setSelectedPlaylist({} as Playlist)
+    } else {
+      setSelectedPlaylist(playlist)
     }
-
-    document.addEventListener('scroll', trackScrolling)
-
-    return function cleanup() {
-      document.removeEventListener('scroll', trackScrolling)
-    }
-  })
-
-  const renderPlaylistSimpleList = () => {
-    if (isEmpty(playlists)) {
-      return (
-        <Typography align={'center'} variant={'h6'}>
-          It looks like you don't have any playlists yet :(
-        </Typography>
-      )
-    }
-    return (
-      <List>
-        {playlists.map((playlist: Playlist, i: number) => {
-          const playlistImage =
-            playlist.images.length > 0
-              ? (
-                  head(sortBy(playlist.images, 'height')) ||
-                  ({} as PlaylistImage)
-                ).url
-              : backgroundImage
-
-          const playlistDisabled = playlist.tracks.total < 1
-          return (
-            <ListItem
-              disabled={playlistDisabled}
-              button={true}
-              key={i}
-              onClick={() => {
-                if (!playlistDisabled) setSelectedPlaylist(playlist)
-              }}
-            >
-              <ListItemAvatar>
-                <Avatar alt={playlist.name} src={playlistImage} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={playlist.name}
-                secondary={`${playlist.tracks.total} tracks`}
-              />
-            </ListItem>
-          )
-        })}
-      </List>
-    )
-  }
-
-  const renderListOfTracks = () => {
-    return (
-      <>
-        <Button onClick={() => setSelectedPlaylist({} as Playlist)}>
-          BACK TO PLAYLISTS
-        </Button>
-        {playlistsEnabled && (
-          <Button onClick={onPlaylistSelected(selectedPlaylist)}>
-            ADD ALL TRACKS
-          </Button>
-        )}
-        <TrackList
-          tracks={selectedPlaylist.tracks.items.map(t => t.track)}
-          onSelected={onTrackSelected}
-          options={{ canRequest: true }}
-        />
-      </>
-    )
   }
 
   return (
-    <Typography component="div" dir="1">
-      {isEmpty(selectedPlaylist)
-        ? renderPlaylistSimpleList()
-        : renderListOfTracks()}
-      <div className="Finder-stopper-block" />
-    </Typography>
+    <List className="Playlists-root">
+      {playlists
+        .filter((playlist: Playlist) => playlist.tracks.total > 0)
+        .map((playlist: Playlist, index: number) => (
+          <Collapse
+            in={isEmpty(selectedPlaylist) || playlist === selectedPlaylist}
+            key={playlist.id + '-' + index}
+          >
+            <ListItem
+              alignItems="flex-start"
+              button
+              onClick={handlePlaylistClicked(playlist)}
+            >
+              <ListItemAvatar>
+                <Img
+                  alt={playlist.name}
+                  src={[getPlaylistImage(playlist), backgroundImage]}
+                  className="Playlists-image"
+                />
+              </ListItemAvatar>
+              <ListItemText
+                className="Playlists-item-text"
+                primary={playlist.name}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="textPrimary"
+                    >
+                      {`${getNumberOfPlaylistTracks(playlist)} Tracks`}
+                    </Typography>
+                    {` —  ${getFormattedPlaylistDuration(playlist)}`}
+                  </React.Fragment>
+                }
+              />
+              <ListItemSecondaryAction
+                onClick={handlePlaylistClicked(playlist)}
+              >
+                <IconButton edge="end" aria-label="delete" color="primary">
+                  {isEmpty(selectedPlaylist) && <ChevronRight />}
+                  {selectedPlaylist === playlist && <KeyboardArrowDown />}
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+            <Collapse
+              in={selectedPlaylist === playlist}
+              timeout="auto"
+              unmountOnExit
+            >
+              {playlistsEnabled && (
+                <List component="div" disablePadding>
+                  <ListItem
+                    button
+                    className="Playlists-select-playlist"
+                    onClick={() => {
+                      onPlaylistSelected(playlist)
+                    }}
+                  >
+                    <ListItemIcon>
+                      <QueueMusic className="Playlists-select-playlist-icon" />
+                    </ListItemIcon>
+                    <ListItemText primary="Add all tracks" />
+                  </ListItem>
+                </List>
+              )}
+              <TrackList
+                tracks={playlist.tracks.items.map(t => t.track)}
+                onSelected={onTrackSelected}
+                options={{ canRequest: true }}
+              />
+            </Collapse>
+            <Divider variant="inset" component="li" />
+          </Collapse>
+        ))}
+    </List>
   )
 }
 

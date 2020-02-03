@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import isEmpty from 'lodash/isEmpty'
 import EventSelect from 'event/select/EventSelectContainer'
 import Finder from './FinderContainer'
 import {
@@ -8,7 +9,8 @@ import {
   Playlist,
   User,
   Event,
-  Track
+  Track,
+  getPlaylistTracks
 } from 'mm-shared'
 
 interface MarvinProps {
@@ -45,13 +47,19 @@ const Marvin: FC<MarvinProps> = ({
     showSuccess('Playlist requested')
   }
 
+  const tracks = getPlaylistTracks(event.playlist!)
+
   return (
     <div>
       <EventSelect />
-      <Finder
-        onPlaylistSelected={onPlaylistSelected}
-        onTrackSelected={onTrackSelected}
-      />
+      {!isEmpty(event) && (
+        <Finder
+          eventTracks={tracks}
+          allowSuggestPlaylist={event.settings.suggestingPlaylistsEnabled}
+          onPlaylistSelected={onPlaylistSelected}
+          onTrackSelected={onTrackSelected}
+        />
+      )}
     </div>
   )
 }

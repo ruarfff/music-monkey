@@ -1,16 +1,14 @@
 import isEmpty from 'lodash/isEmpty'
 import { Playlist } from 'mm-shared'
+import { Track } from 'mm-shared'
 
-const getNumberOfPlaylistTracks = (playlist: Playlist) => {
+export const getPlaylistTracks = (playlist: Playlist): Track[] => {
   if (
     isEmpty(playlist) ||
     isEmpty(playlist.tracks) ||
     isEmpty(playlist.tracks.items)
   ) {
-    return 0
+    return []
   }
-
-  return playlist.tracks.items.length
+  return playlist.tracks.items.map(item => item.track)
 }
-
-export default getNumberOfPlaylistTracks

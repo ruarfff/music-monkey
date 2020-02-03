@@ -16,31 +16,38 @@ import {
 import Playlists from './Playlists'
 
 import './Finder.scss'
+import { DropResult } from 'react-beautiful-dnd'
 
 interface FinderProps {
+  isHost?: boolean
   user: User
-  event: Event
+  eventTracks: Track[]
   events: Event[]
   userPlaylists: Playlist[]
   recommendations: Track[]
+  allowSuggestPlaylist?: boolean
   getRecommendations(): Action
   fetchPlaylists(user: User): Action
   onTrackSelected?(track: Track): any
   onPlaylistSelected?(playlist: Playlist): any
-  onPlaylistTracksChanged?(tracks: Track[]): any
+  onTrackRemoved?(track: Track): any
+  onTrackMoved?(from: number, to: number): any
 }
 
 const Finder: FC<FinderProps> = ({
+  isHost = false,
   user,
-  event,
+  eventTracks,
   events,
   userPlaylists,
   recommendations = [],
   getRecommendations,
   fetchPlaylists,
+  allowSuggestPlaylist = false,
   onTrackSelected = () => {},
   onPlaylistSelected = () => {},
-  onPlaylistTracksChanged = () => {}
+  onTrackRemoved = () => {},
+  onTrackMoved = () => {}
 }) => {
   useEffect(() => {
     if (!isEmpty(user) && isEmpty(userPlaylists)) {
@@ -65,11 +72,6 @@ const Finder: FC<FinderProps> = ({
     )
   }
 
-  const playlistTracks =
-    !isEmpty(event) && !isEmpty(event.playlist)
-      ? event.playlist!.tracks.items.map(track => track.track)
-      : []
-
   return (
     <Grid container className="Finder-root" spacing={2}>
       <Grid item xs={12}>
@@ -79,9 +81,8 @@ const Finder: FC<FinderProps> = ({
               setSearchResults(
                 results.filter(
                   searchedTrack =>
-                    playlistTracks
-                      .map(t => t.uri)
-                      .indexOf(searchedTrack.uri) === -1
+                    eventTracks.map(t => t.uri).indexOf(searchedTrack.uri) ===
+                    -1
                 )
               )
             setSearching(false)
@@ -105,7 +106,7 @@ const Finder: FC<FinderProps> = ({
           <Tab
             className="Finder-tab"
             label={
-              !isEmpty(playlistTracks) ? (
+              !isEmpty(eventTracks) ? (
                 <Badge
                   className="Finder-playlist-count"
                   overlap="circle"
@@ -114,7 +115,7 @@ const Finder: FC<FinderProps> = ({
                     vertical: 'top',
                     horizontal: 'right'
                   }}
-                  badgeContent={playlistTracks.length}
+                  badgeContent={eventTracks.length}
                 >
                   Current Playlist
                 </Badge>
@@ -138,7 +139,7 @@ const Finder: FC<FinderProps> = ({
         ) : (
           <>
             {tabIndex === 0 &&
-              (isEmpty(playlistTracks) ? (
+              (isEmpty(eventTracks) ? (
                 <Paper className="Finder-no-tracks">
                   <Typography variant="h5" align="center" gutterBottom>
                     No tracks yet
@@ -148,14 +149,31 @@ const Finder: FC<FinderProps> = ({
                   </Typography>
                 </Paper>
               ) : (
-                <TrackList tracks={playlistTracks} />
+                <TrackList
+                  tracks={eventTracks}
+                  options={{
+                    showSummary: true,
+                    allowDragDrop: isHost,
+                    canRemove: isHost
+                  }}
+                  onDragEnd={(result: DropResult) => {
+                    if (!result.destination) {
+                      return
+                    }
+                    onTrackMoved(result.source.index, result.destination.index)
+                  }}
+                  onRemoved={(track: Track) => {
+                    onTrackRemoved(track)
+                  }}
+                />
               ))}
             {tabIndex === 1 && (
               <TrackList
+                options={{ canRequest: true }}
                 tracks={
                   !isEmpty(searchResults) ? searchResults : recommendations
                 }
-                filterList={playlistTracks}
+                filterList={eventTracks}
                 onSelected={onTrackSelected}
               />
             )}
@@ -163,7 +181,7 @@ const Finder: FC<FinderProps> = ({
               <Playlists
                 user={user}
                 playlists={userPlaylists}
-                playlistsEnabled={event.settings.suggestingPlaylistsEnabled}
+                playlistsEnabled={allowSuggestPlaylist || isHost}
                 onTrackSelected={onTrackSelected}
                 onPlaylistSelected={onPlaylistSelected}
               />

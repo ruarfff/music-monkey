@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
-import { Playlist } from 'mm-shared'
-import getPlaylistImage from './getPlaylistImage'
-import getPlaylistTracks from './getPlaylistTracks'
+import { Playlist, getPlaylistImage, getPlaylistTracks } from 'mm-shared'
 import './PlaylistList.scss'
 
 interface PlaylistWithEventId extends Playlist {
