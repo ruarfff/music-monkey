@@ -1,6 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography/Typography'
+import { Typography } from '@material-ui/core'
+import EventSelect from 'event/select/EventSelectContainer'
 import PieChartWidget from './PieChart'
 import MostPopularTracks from 'insights/MostPopularTracks'
 import MostVotedTracks from 'insights/MostVotedTracks'
@@ -42,32 +43,35 @@ class Insights extends React.Component<IInsightsProps> {
     } = this.props
 
     return (
-      <div className="insightsContainer">
-        <Typography>Tracks Statistic</Typography>
-        <Grid container={true} spacing={3}>
-          <Grid item={true} md={6}>
-            <MostPopularTracks events={events} />
+      <div>
+        <EventSelect />
+        <div className="insightsContainer">
+          <Typography>Tracks Statistic</Typography>
+          <Grid container={true} spacing={3}>
+            <Grid item={true} md={6}>
+              <MostPopularTracks events={events} />
+            </Grid>
+            <Grid item={true} md={6}>
+              <MostVotedTracks
+                events={events}
+                votes={votes}
+                sortPlaylistByVotesDescending={sortPlaylistByVotesDescending}
+                fetchEventVotes={fetchEventVotes}
+                playlist={event.playlist!}
+              />
+            </Grid>
           </Grid>
-          <Grid item={true} md={6}>
-            <MostVotedTracks
-              events={events}
-              votes={votes}
-              sortPlaylistByVotesDescending={sortPlaylistByVotesDescending}
-              fetchEventVotes={fetchEventVotes}
-              playlist={event.playlist!}
-            />
+          <Typography>Guests Statistic</Typography>
+          <Grid container={true} spacing={3}>
+            <Grid item={true} md={6}>
+              <PieChartWidget
+                filterByEventPick={filterByEventPick}
+                pickedEvent={pickedEvent}
+                events={events}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Typography>Guests Statistic</Typography>
-        <Grid container={true} spacing={3}>
-          <Grid item={true} md={6}>
-            <PieChartWidget
-              filterByEventPick={filterByEventPick}
-              pickedEvent={pickedEvent}
-              events={events}
-            />
-          </Grid>
-        </Grid>
+        </div>
       </div>
     )
   }

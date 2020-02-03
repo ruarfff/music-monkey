@@ -1,5 +1,10 @@
 import React from 'react'
+import { Typography } from '@material-ui/core'
 
 export const Music = () => {
-  return <h1>Coming soon!</h1>
+  return (
+    <Typography align={'center'} variant={'h6'}>
+      Coming Soon!
+    </Typography>
+  )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListItemText } from '@material-ui/core'
+import { List, ListItemText, ListItem, ListItemIcon } from '@material-ui/core'
 import { Event } from '../../'
 import './SelectedEvent.scss'
 
@@ -10,14 +10,24 @@ interface ISelectedEventProps {
 
 const SelectedEvent = ({ event, onClick }: ISelectedEventProps) => {
   return (
-    <div className="SelectedEvent-block" onClick={onClick}>
-      <div className="SelectedEvent-image">
-        <img alt="event" src={event.imageUrl} />
-      </div>
-      <div className="SelectedEvent-content">
-        <ListItemText primary={event.name} secondary={event.organizer} />
-      </div>
-    </div>
+    <List>
+      <ListItem
+        className="SelectedEvent-block"
+        onClick={onClick}
+        button={true}
+        alignItems="center"
+      >
+        <ListItemIcon className="SelectedEvent-image">
+          <img alt="event" src={event.imageUrl} />
+        </ListItemIcon>
+
+        <ListItemText
+          className="SelectedEvent-content"
+          primary={event.name}
+          secondary={event.organizer}
+        />
+      </ListItem>
+    </List>
   )
 }
 
