@@ -43,9 +43,11 @@ class Insights extends React.Component<IInsightsProps> {
     } = this.props
 
     return (
-      <div>
-        <EventSelect />
-        <div className="insightsContainer">
+      <Grid container spacing={2} className="Insights-root">
+        <Grid item xs={12}>
+          <EventSelect />
+        </Grid>
+        <Grid item xs={12} className="insightsContainer">
           <Typography>Tracks Statistic</Typography>
           <Grid container={true} spacing={3}>
             <Grid item={true} md={6}>
@@ -71,8 +73,8 @@ class Insights extends React.Component<IInsightsProps> {
               />
             </Grid>
           </Grid>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     )
   }
 }
