@@ -1,56 +1,21 @@
 @import '../../theme/main';
 
-.EventHeader-times-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 25%;
-}
-
-.EventHeader-times-heading {
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.EventHeader-times-text {
-  font-size: 12px;
-}
-
-.EventHeader-top-menu {
-  top: 0;
-  color: #fff;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  position: fixed;
-  padding: 70px 10px 10px;
-  height: 45px;
-}
-
-.EventHeader-back-arrow {
-  color: #fff;
-  font-size: 3em;
-}
-
 .EventHeader-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: white;
 
-  .Event-background {
+  .EventHeader-background {
     height: 205px;
     width: 100%;
     position: absolute;
     z-index: 0;
   }
 
-  .Event-img {
+  .EventHeader-content {
     height: 205px;
     width: 100%;
-    background: rgba(175, 0, 255, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,68 +25,24 @@
     z-index: 2;
   }
 
-  .Event-img-secondRow {
+  .EventHeader-top-menu {
+    top: 0;
+    color: #fff;
     display: flex;
     width: 100%;
-    justify-content: space-between;
-    padding: 0 10px;
     align-items: center;
-    margin-top: 10px;
-
-    .Event-img-organizer-wrapper {
-      display: flex;
-      flex-direction: column;
-      width: 25%;
-      font-size: 14px;
-
-      div {
-        display: flex;
-        flex-direction: column;
-      }
-    }
+    justify-content: space-between;
+    position: fixed;
+    padding: 70px 10px 10px;
+    height: 45px;
   }
 
-  .Event-img-info-block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .Event-img-calendar {
-      .Event-img-calendar-month {
-        background-color: $secondary-light;
-        font-size: 13px;
-        padding: 5px 15px;
-      }
-
-      .Event-img-calendar-number {
-        background-color: #fff;
-        color: black;
-        height: 35px;
-        display: flex;
-        justify-content: center;
-        font-size: 23px;
-        align-items: center;
-      }
-    }
-
-    .Event-img-info {
-      font-weight: 500;
-      font-size: 18px;
-      padding-left: 20px;
-      max-width: 210px;
-
-      .Event-img-info-location {
-        align-items: center;
-        display: flex;
-        font-size: 12px;
-        padding-top: 5px;
-      }
-
-      .material-icons {
-        font-size: 12px;
-        color: $secondary-light;
-        padding-right: 5px;
-      }
-    }
+  .EventHeader-back-arrow {
+    color: #fff;
+    font-size: 3em;
+  }
+  .EventHeader-edit {
+    color: #fff;
+    align-self: flex-end;
   }
 }

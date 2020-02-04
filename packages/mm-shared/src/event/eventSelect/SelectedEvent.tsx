@@ -1,7 +1,9 @@
 import React from 'react'
 import { List, ListItemText, ListItem, ListItemIcon } from '@material-ui/core'
 import { Event } from '../../'
+import backgroundImage from 'assets/music-monkey.jpg'
 import './SelectedEvent.scss'
+import Img from 'react-image'
 
 interface ISelectedEventProps {
   event: Event
@@ -18,7 +20,7 @@ const SelectedEvent = ({ event, onClick }: ISelectedEventProps) => {
         alignItems="center"
       >
         <ListItemIcon className="SelectedEvent-image">
-          <img alt="event" src={event.imageUrl} />
+          <Img src={[event.imageUrl, backgroundImage]} alt="Event icon" />
         </ListItemIcon>
 
         <ListItemText

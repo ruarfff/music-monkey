@@ -1,12 +1,15 @@
 import React from 'react'
 import ChevronLeft from '@material-ui/icons/ChevronLeft'
-import Icon from '@material-ui/core/Icon'
+import EditIcon from '@material-ui/icons/Edit'
 import { Link } from 'react-router-dom'
-import { isEmpty } from 'lodash'
+import { isEmpty, take } from 'lodash'
 import { Moment } from 'moment'
 import { Action, Event, User, Rsvp } from './../../'
-import { ProfileImage } from './ProfileImage'
+import Img from 'react-image'
+import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
+import AvatarGroup from '@material-ui/lab/AvatarGroup'
+import { Typography, Avatar, Tooltip } from '@material-ui/core'
 import './EventHeader.scss'
 
 interface IEventHeaderProps {
@@ -42,11 +45,15 @@ const EventHeader = ({
   }
 
   const times = dateFormat(event)
-
+  console.log(times)
   return (
     <div className="EventHeader-container">
-      <img className="Event-background" src={event.imageUrl} alt="" />
-      <div className="Event-img">
+      <Img
+        src={[event.imageUrl, backgroundImage]}
+        alt="Event banner"
+        className="EventHeader-background"
+      />
+      <div className="EventHeader-content">
         <div className="EventHeader-top-menu">
           <Link
             to="/"
@@ -56,47 +63,41 @@ const EventHeader = ({
           >
             <ChevronLeft className="EventHeader-back-arrow" />
           </Link>
-        </div>
-        <div className="Event-img-info-block">
-          <div className="Event-img-calendar">
-            <div className="Event-img-calendar-month">
-              {event.startDateTime.format('MMM')}
-            </div>
-            <div className="Event-img-calendar-number">
-              {event.startDateTime.format('D')}
-            </div>
-          </div>
-          <div className="Event-img-info">
-            <div className="Event-img-info-title">{event.name}</div>
-            <div className="Event-img-info-location">{event.description}</div>
-            <div className="Event-img-info-location">
-              <Icon>location_on</Icon>
-              {event.location.address}
-            </div>
-          </div>
-        </div>
-        <div className="Event-img-secondRow">
-          <div className="Event-img-organizer-wrapper">
-            <span>Organizer</span>
-            <div>
-              <ProfileImage user={event.hostData} />
-              <span>{event.organizer}</span>
-            </div>
-          </div>
-          {!isHost && (
-            <EventResponseMenu
-              event={event}
-              user={user}
-              updateRsvp={updateRsvp}
-            />
+          {isHost && (
+            <Link to={`/events/${event.eventId}/edit`}>
+              <EditIcon className="EventHeader-edit" />
+            </Link>
           )}
-          <div className="EventHeader-times-container">
-            <div>
-              <div className="EventHeader-times-heading">Times</div>
-              <div className="EventHeader-times-text">{times}</div>
-            </div>
-          </div>
         </div>
+
+        <div>
+          <Typography>Guests</Typography>
+          {!isEmpty(event.guests) ? (
+            <AvatarGroup>
+              {take(event.guests, 3).map(guest => (
+                <Avatar
+                  key={guest.user.userId}
+                  alt={guest.user.displayName}
+                  src={guest.user.image}
+                />
+              ))}
+              {event.guests!.length > 3 && (
+                <Tooltip title="Guests">
+                  <Avatar>+{event.guests!.length}</Avatar>
+                </Tooltip>
+              )}
+            </AvatarGroup>
+          ) : (
+            <Typography>No Guests Yet</Typography>
+          )}
+        </div>
+        {!isHost && (
+          <EventResponseMenu
+            event={event}
+            user={user}
+            updateRsvp={updateRsvp}
+          />
+        )}
       </div>
     </div>
   )
