@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Divider, Tab, Tabs, Typography } from '@material-ui/core'
+import { Tab, Tabs, Typography, Grid } from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views'
 import { useSwipeTabsIndex } from 'mm-shared'
 import EventSelect from 'event/select/EventSelectContainer'
@@ -12,47 +12,53 @@ const Requests = () => {
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
   return (
-    <div>
-      <EventSelect />
-      <Divider variant="inset" className="Requests-divider" />
-      <AppBar position="static" color="default">
+    <Grid container>
+      <Grid item xs={12}>
+        <EventSelect />
+      </Grid>
+      <Grid item xs={12}>
         <Tabs
           value={tabIndex}
           onChange={handleTabChange}
-          indicatorColor="secondary"
-          textColor="secondary"
+          indicatorColor="primary"
+          textColor="primary"
           variant="fullWidth"
-          classes={{ indicator: 'indicator-color' }}
         >
           <Tab label="APPROVED" />
           <Tab label="MAYBE" />
           <Tab label="DECLINED" />
         </Tabs>
-      </AppBar>
-      <SwipeableViews axis="x" index={tabIndex} onChangeIndex={handleTabChange}>
-        {tabIndex === 0 ? (
-          <Typography component="div" dir="0">
-            <AcceptedTracks />
-          </Typography>
-        ) : (
-          <div />
-        )}
-        {tabIndex === 1 ? (
-          <Typography component="div" dir="1">
-            <MaybeTracks />
-          </Typography>
-        ) : (
-          <div />
-        )}
-        {tabIndex === 2 ? (
-          <Typography component="div" dir="2">
-            <RejectedTracks />
-          </Typography>
-        ) : (
-          <div />
-        )}
-      </SwipeableViews>
-    </div>
+      </Grid>
+      <Grid item xs={12}>
+        <SwipeableViews
+          axis="x"
+          index={tabIndex}
+          onChangeIndex={handleTabChange}
+        >
+          {tabIndex === 0 ? (
+            <Typography component="div" dir="0">
+              <AcceptedTracks />
+            </Typography>
+          ) : (
+            <div />
+          )}
+          {tabIndex === 1 ? (
+            <Typography component="div" dir="1">
+              <MaybeTracks />
+            </Typography>
+          ) : (
+            <div />
+          )}
+          {tabIndex === 2 ? (
+            <Typography component="div" dir="2">
+              <RejectedTracks />
+            </Typography>
+          ) : (
+            <div />
+          )}
+        </SwipeableViews>
+      </Grid>
+    </Grid>
   )
 }
 
