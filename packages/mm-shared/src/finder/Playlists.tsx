@@ -59,6 +59,22 @@ const Playlists: FC<PlaylistsProps> = ({
             in={isEmpty(selectedPlaylist) || playlist === selectedPlaylist}
             key={playlist.id + '-' + index}
           >
+            {playlistsEnabled && selectedPlaylist === playlist && (
+              <List component="div" disablePadding>
+                <ListItem
+                  button
+                  className="Playlists-select-playlist"
+                  onClick={() => {
+                    onPlaylistSelected(playlist)
+                  }}
+                >
+                  <ListItemIcon>
+                    <QueueMusic className="Playlists-select-playlist-icon" />
+                  </ListItemIcon>
+                  <ListItemText primary="Add all tracks" />
+                </ListItem>
+              </List>
+            )}
             <ListItem
               alignItems="flex-start"
               button
@@ -101,22 +117,6 @@ const Playlists: FC<PlaylistsProps> = ({
               timeout="auto"
               unmountOnExit
             >
-              {playlistsEnabled && (
-                <List component="div" disablePadding>
-                  <ListItem
-                    button
-                    className="Playlists-select-playlist"
-                    onClick={() => {
-                      onPlaylistSelected(playlist)
-                    }}
-                  >
-                    <ListItemIcon>
-                      <QueueMusic className="Playlists-select-playlist-icon" />
-                    </ListItemIcon>
-                    <ListItemText primary="Add all tracks" />
-                  </ListItem>
-                </List>
-              )}
               <TrackList
                 tracks={playlist.tracks.items.map(t => t.track)}
                 onSelected={onTrackSelected}
