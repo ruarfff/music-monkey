@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Action } from 'mm-shared'
+import { Action, getRequestsByEventId, rejectRequest } from 'mm-shared'
 import {
   FETCH_REQUESTS_FAILED,
   FETCH_REQUESTS_INITIATED,
@@ -8,7 +8,6 @@ import {
   REJECT_REQUEST_FAILED,
   REJECT_REQUEST_SUCCESS
 } from './requestActions'
-import { getRequestsByEventId, rejectRequest } from './requestClient'
 
 function* fetchSuggestionsFlow(action: Action) {
   try {

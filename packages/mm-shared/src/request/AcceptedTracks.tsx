@@ -5,17 +5,26 @@ import { Typography } from '@material-ui/core'
 import './AcceptedTracks.scss'
 
 interface AcceptedTracksProps {
+  isHost?: boolean
   user: User
   suggestions: DecoratedSuggestion[]
 }
 
-const AcceptedTracks: FC<AcceptedTracksProps> = ({ user, suggestions }) => {
-  const acceptedSuggestions =
-    !isEmpty(suggestions) && !isEmpty(user)
-      ? suggestions
-          .filter(s => s.suggestion.userId === user.userId)
-          .filter(s => s.suggestion && s.suggestion.accepted)
+const AcceptedTracks: FC<AcceptedTracksProps> = ({
+  user,
+  suggestions,
+  isHost = false
+}) => {
+  let acceptedSuggestions =
+    !isEmpty(suggestions) && (isHost || !isEmpty(user))
+      ? suggestions.filter(s => s.suggestion && s.suggestion.accepted)
       : []
+
+  if (!isHost) {
+    acceptedSuggestions = acceptedSuggestions.filter(
+      s => s.suggestion.userId === user.userId
+    )
+  }
 
   const acceptedTracks = uniqBy(
     acceptedSuggestions.map(s => s.track),

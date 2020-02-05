@@ -5,20 +5,25 @@ import { Typography } from '@material-ui/core'
 import './MaybeTracks.scss'
 
 interface MaybeTracksProps {
+  isHost?: boolean
   user: User
   event: Event
   suggestions: DecoratedSuggestion[]
 }
 
-const MaybeTracks: FC<MaybeTracksProps> = ({ user, suggestions, event }) => {
+const MaybeTracks: FC<MaybeTracksProps> = ({
+  user,
+  suggestions,
+  event,
+  isHost = false
+}) => {
   const playlistTracks =
     !isEmpty(event) && !isEmpty(event.playlist)
       ? event.playlist!.tracks.items.map(track => track.track.uri)
       : []
-  const maybeSuggestions =
-    !isEmpty(suggestions) && !isEmpty(user)
+  let maybeSuggestions =
+    !isEmpty(suggestions) && (isHost || !isEmpty(user))
       ? suggestions
-          .filter(s => s.suggestion.userId === user.userId)
           .filter(
             s =>
               s.suggestion && !s.suggestion.rejected && !s.suggestion.accepted
@@ -27,10 +32,14 @@ const MaybeTracks: FC<MaybeTracksProps> = ({ user, suggestions, event }) => {
             suggestion => playlistTracks.indexOf(suggestion.track.uri) === -1
           )
       : []
+
+  if (!isHost) {
+    maybeSuggestions = maybeSuggestions.filter(
+      s => s.suggestion.userId === user.userId
+    )
+  }
   const maybeTracks = uniqBy(
-    maybeSuggestions
-      .map(s => s.track)
-      .filter(track => playlistTracks.indexOf(track.uri) === -1),
+    maybeSuggestions.map(s => s.track),
     'id'
   )
 

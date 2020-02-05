@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import IRootState from '../rootState'
-import RejectedTracks from './RejectedTracks'
+import IRootState from 'rootState'
+import AcceptedTracks from './AcceptedTracks'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
@@ -9,9 +9,9 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {}
 
-const RejectedTracksContainer = connect(
+const AcceptedTracksContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RejectedTracks)
+)(AcceptedTracks)
 
-export default RejectedTracksContainer
+export default AcceptedTracksContainer

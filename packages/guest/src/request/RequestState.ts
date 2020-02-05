@@ -1,7 +1,7 @@
 import { DecoratedSuggestion, Suggestion } from 'mm-shared'
 
 export default interface ISuggestionState {
-  suggestions: DecoratedSuggestion[]
+  requests: DecoratedSuggestion[]
   acceptedSuggestions: DecoratedSuggestion[]
   pendingSuggestions: DecoratedSuggestion[]
   rejectedSuggestions: DecoratedSuggestion[]

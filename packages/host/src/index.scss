@@ -5,6 +5,11 @@ body {
   font-family: $main-font-family;
 }
 
+.MuiTab-root {
+  border: 1px solid black;
+  border-color: #e7e7e7;
+}
+
 .MuiTab-textColorPrimary.Mui-selected {
   color: $mm-white;
   background-color: $primary;

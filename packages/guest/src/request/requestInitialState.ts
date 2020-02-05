@@ -2,7 +2,7 @@ import { DecoratedSuggestion } from 'mm-shared'
 import ISuggestionState from './RequestState'
 
 export default {
-  suggestions: [] as DecoratedSuggestion[],
+  requests: [] as DecoratedSuggestion[],
   acceptedSuggestions: [] as DecoratedSuggestion[],
   pendingSuggestions: [] as DecoratedSuggestion[],
   rejectedSuggestions: [] as DecoratedSuggestion[],

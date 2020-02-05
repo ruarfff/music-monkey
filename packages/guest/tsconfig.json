@@ -10,6 +10,17 @@
     "config-overrides.js",
     "../mm-shared/src/event/header/EventResponseMenu.tsx",
     "../mm-shared/src/event/header/ProfileImage.tsx",
-    "../mm-shared/src/event/eventSelect/EventSelect.tsx"
+    "../mm-shared/src/event/eventSelect/EventSelect.tsx",
+    "../mm-shared/src/request/requestClient.ts",
+    "../mm-shared/src/request/SuggestionTransformer.test.ts",
+    "../mm-shared/src/request/SuggestionTransformer.ts",
+    "../mm-shared/src/request/Requests.tsx",
+    "../mm-shared/src/request/RejectedTracks.tsx",
+    "../mm-shared/src/request/RejectedTracksContainer.tsx",
+    "../mm-shared/src/request/MaybeTracksContainer.tsx",
+    "../mm-shared/src/request/AcceptedTracksContainer.tsx",
+    "../mm-shared/src/request/MaybeTracks.tsx",
+    "../mm-shared/src/request/AcceptedTracks.tsx",
+    "../mm-shared/src/request/RequestsContainer.tsx"
   ]
 }

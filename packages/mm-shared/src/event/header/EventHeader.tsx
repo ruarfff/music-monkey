@@ -77,7 +77,7 @@ const EventHeader = ({
               {take(event.guests, 3).map(guest => (
                 <Avatar
                   key={guest.user.userId}
-                  alt={guest.user.displayName}
+                  alt={guest.user.displayName || 'G'}
                   src={guest.user.image}
                 />
               ))}

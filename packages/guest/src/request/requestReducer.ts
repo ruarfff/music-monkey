@@ -43,7 +43,7 @@ export default function suggestion(
       return {
         ...state,
         fetchingSuggestions: false,
-        suggestions: payload
+        requests: payload
       } as ISuggestionState
     case FETCH_SUGGESTIONS_FAILED:
       return {
@@ -59,7 +59,7 @@ export default function suggestion(
     case CLEAR_SUGGESTION:
       return {
         ...state,
-        suggestions: []
+        requests: []
       }
     case DELETE_SUGGESTION_INITIATED:
       return {

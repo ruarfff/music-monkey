@@ -184,8 +184,8 @@ export const TrackListItem: FC<TrackListItemProps> = ({
         />
 
         <ListItemSecondaryAction className="TrackListItem-actions">
-          {avatar}
           {votingButton}
+          {avatar}
           {addButton}
           {deleteButton}
         </ListItemSecondaryAction>

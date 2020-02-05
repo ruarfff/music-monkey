@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
-import { setEventId } from '../event/eventActions'
-import { withRouter } from 'react-router'
-import IRootState from '../rootState'
-import Requests from './Requests'
+import { setEventId } from 'event/eventActions'
+import IRootState from 'rootState'
+import RequestsView from './RequestView'
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.event.event
@@ -12,8 +11,9 @@ const mapDispatchToProps = {
   setEventId
 }
 
-const RequestsContainer = withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Requests)
-)
+const RequestsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RequestsView)
 
 export default RequestsContainer

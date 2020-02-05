@@ -1,5 +1,4 @@
-import { Action } from 'mm-shared'
-import { Suggestion, TrackRequest, PlaylistRequest } from 'mm-shared'
+import { Action, Suggestion, TrackRequest, PlaylistRequest } from 'mm-shared'
 
 export const SAVE_TRACK_SUGGESTION_INITIATED = 'SAVE_TRACK_SUGGESTION_INITIATED'
 export const SAVE_PLAYLIST_SUGGESTION_INITIATED =

@@ -1,5 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Grid, Tab, Tabs, Typography, Badge, Paper } from '@material-ui/core'
+import {
+  AppBar,
+  Grid,
+  Tab,
+  Tabs,
+  Typography,
+  Badge,
+  Paper
+} from '@material-ui/core'
 import { DropResult } from 'react-beautiful-dnd'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
@@ -96,40 +104,42 @@ const Finder: FC<FinderProps> = ({
         />
       </Grid>
       <Grid item xs={12}>
-        <Tabs
-          value={tabIndex}
-          onChange={handleTabChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-        >
-          <Tab
-            className="Finder-tab"
-            label={
-              !isEmpty(eventTracks) ? (
-                <Badge
-                  className="Finder-playlist-count"
-                  overlap="circle"
-                  color={'secondary'}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                  badgeContent={eventTracks.length}
-                >
-                  Current Playlist
-                </Badge>
-              ) : (
-                'Current Playlist'
-              )
-            }
-          />
-          <Tab
-            className="Finder-tab"
-            label={isEmpty(searchResults) ? 'Suggested' : 'Search Results'}
-          />
-          <Tab label="My Playlists" className="Finder-tab" />
-        </Tabs>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={tabIndex}
+            onChange={handleTabChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth"
+          >
+            <Tab
+              className="Finder-tab"
+              label={
+                !isEmpty(eventTracks) ? (
+                  <Badge
+                    className="Finder-playlist-count"
+                    overlap="circle"
+                    color={'secondary'}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                    badgeContent={eventTracks.length}
+                  >
+                    Current Playlist
+                  </Badge>
+                ) : (
+                  'Current Playlist'
+                )
+              }
+            />
+            <Tab
+              className="Finder-tab"
+              label={isEmpty(searchResults) ? 'Suggested' : 'Search Results'}
+            />
+            <Tab label="My Playlists" className="Finder-tab" />
+          </Tabs>
+        </AppBar>
       </Grid>
       <Grid item xs={12}>
         {searching ? (

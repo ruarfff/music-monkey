@@ -1,6 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Action } from 'mm-shared'
-import { CLEAR_SEARCH, removeTrack } from '../search/searchActions'
+import { CLEAR_SEARCH, removeTrack } from 'search/searchActions'
 import {
   DELETE_SUGGESTION_FAILED,
   DELETE_SUGGESTION_INITIATED,
@@ -14,18 +13,19 @@ import {
   SAVE_TRACK_SUGGESTION_INITIATED
 } from './requestActions'
 import {
+  Action,
   bulkSaveSuggestions,
   deleteSuggestion,
-  getEventSuggestions,
-  saveSuggestion
-} from './requestClient'
-import SuggestionTransformer from './SuggestionTransformer'
+  getRequestsByEventId,
+  saveSuggestion,
+  SuggestionTransformer
+} from 'mm-shared'
 
 const suggestionTransformer = new SuggestionTransformer()
 
 function* fetchSuggestionsFlow(action: Action) {
   try {
-    const suggestions = yield call(getEventSuggestions, action.payload)
+    const suggestions = yield call(getRequestsByEventId, action.payload)
     yield put({
       type: FETCH_SUGGESTIONS_SUCCESS,
       payload: suggestions

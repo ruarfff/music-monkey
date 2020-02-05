@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import IRootState from 'rootState'
-import Requests from './Requests'
+import Requests from './RequestView'
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.event.event
