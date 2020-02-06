@@ -10,10 +10,12 @@ import {
   subscribeToRSVPModified,
   unSubscribeToRSVPModified,
   unSubscribeToVotesModified,
-  subscribeToVotesModified
+  subscribeToVotesModified,
+  unSubscribeToPlaylistModified,
+  unSubscribeToEventUpdated,
+  subscribeToPlaylistModified
 } from './pusherGateway'
-import { Event } from 'mm-shared'
-import { Action } from 'mm-shared'
+import { Action, Event } from 'mm-shared'
 
 interface ISubscriptionWrapper {
   event: Event
@@ -23,7 +25,7 @@ interface ISubscriptionWrapper {
   getEventSuggestions(eventId: string): Action
 }
 
-export default ({
+const SubscriptionWrapper = ({
   event,
   children,
   getEventByIdNoLoading,
@@ -32,6 +34,8 @@ export default ({
 }: ISubscriptionWrapper) => {
   useEffect(() => {
     const eventId = event && event.eventId ? event.eventId : ''
+    const playlistId = event && event.playlist ? event.playlist.id : ''
+
     const autoAcceptSuggestionsEnabled =
       event && event.settings && event.settings.autoAcceptSuggestionsEnabled
     const dynamicVotingEnabled =
@@ -56,13 +60,21 @@ export default ({
       }
     })
 
+    subscribeToPlaylistModified(playlistId, () => {
+      getEventByIdNoLoading(eventId)
+    })
+
     return () => {
       unSubscribeToSuggestionsModified(eventId)
       unSubscribeToRSVPModified(eventId)
       unSubscribeToVotesModified(eventId)
+      unSubscribeToPlaylistModified(playlistId)
+      unSubscribeToEventUpdated(eventId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [event])
 
   return children
 }
+
+export default SubscriptionWrapper

@@ -4,8 +4,10 @@ const pusher = new Pusher('d7c284d8f17d26f74047', {
   encrypted: true
 })
 // TODO: Whole thing a terrible hack. Must make this subscription stuff smarter.
-let subscribedToSuggestions = ''
-let subscribedToVotes = ''
+let subscribedToSuggestions: string = ''
+let subscribedToVotes: string = ''
+let subscribedToPlaylists: string = ''
+let subscribedToEvent: string = ''
 let subscribedToRSVPUpdate = ''
 
 export const subscribeToSuggestionsModified = (
@@ -66,6 +68,47 @@ export const unSubscribeToVotesModified = (eventId: string) => {
   try {
     pusher.unsubscribe('mm-votes-' + eventId)
     subscribedToVotes = ''
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const subscribeToPlaylistModified = (
+  playlistId: string,
+  callback: any
+) => {
+  if (subscribedToPlaylists !== playlistId) {
+    const channel = pusher.subscribe('mm-playlists-' + playlistId)
+
+    channel.bind('playlist-updated', callback)
+
+    subscribedToPlaylists = playlistId
+  }
+}
+
+export const unSubscribeToPlaylistModified = (playlistId: string) => {
+  try {
+    pusher.unsubscribe('mm-playlists-' + playlistId)
+    subscribedToPlaylists = ''
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const subscribeToEventUpdated = (eventId: string, callback: any) => {
+  if (subscribedToEvent !== eventId) {
+    const channel = pusher.subscribe('mm-events-' + eventId)
+
+    channel.bind('event-updated', callback)
+
+    subscribedToEvent = eventId
+  }
+}
+
+export const unSubscribeToEventUpdated = (eventId: string) => {
+  try {
+    pusher.unsubscribe('mm-events-' + eventId)
+    subscribedToEvent = ''
   } catch (err) {
     console.error(err)
   }

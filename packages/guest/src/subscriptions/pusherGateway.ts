@@ -8,7 +8,7 @@ let subscribedToSuggestions: string = ''
 let subscribedToVotes: string = ''
 let subscribedToPlaylists: string = ''
 let subscribedToEvent: string = ''
-let subscribedToGuestUpdate = false
+let subscribedToRSVPUpdate = ''
 
 export const subscribeToSuggestionsModified = (
   eventId: string,
@@ -18,9 +18,9 @@ export const subscribeToSuggestionsModified = (
     const channel = pusher.subscribe('mm-suggestions-' + eventId)
 
     channel.bind('suggestion-saved', data => callback(data))
-    channel.bind('suggestions-accepted', data => callback(data))
+    channel.bind('suggestions-accepted', data => callback('accepted'))
     channel.bind('suggestions-rejected', data => callback(data))
-    channel.bind('suggestions-auto-accepted', data => callback(data))
+    channel.bind('suggestions-auto-accepted', data => callback('accepted'))
 
     subscribedToSuggestions = eventId
   }
@@ -36,18 +36,20 @@ export const unSubscribeToSuggestionsModified = (eventId: string) => {
 }
 
 export const subscribeToRSVPModified = (eventId: string, callback: any) => {
-  if (!subscribedToGuestUpdate) {
+  if (subscribedToRSVPUpdate !== eventId) {
     const channel = pusher.subscribe('mm-rsvps-' + eventId)
     channel.bind('rsvp-saved', callback)
     channel.bind('rsvp-updated', callback)
-    subscribedToGuestUpdate = true
+    subscribedToRSVPUpdate = eventId
   }
 }
 
 export const unSubscribeToRSVPModified = (eventId: string) => {
-  if (!subscribedToGuestUpdate) {
+  try {
     pusher.unsubscribe('mm-rsvps-' + eventId)
-    subscribedToGuestUpdate = false
+    subscribedToRSVPUpdate = ''
+  } catch (err) {
+    console.error(err)
   }
 }
 
