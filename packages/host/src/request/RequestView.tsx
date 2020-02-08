@@ -1,7 +1,8 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
+import { acceptRequest, rejectRequest } from 'mm-shared'
 import EventSelect from 'event/select/EventSelectContainer'
-import { Requests } from 'mm-shared'
+import Requests from './RequestsContainer'
 
 const RequestView = () => {
   return (
@@ -10,7 +11,7 @@ const RequestView = () => {
         <EventSelect />
       </Grid>
       <Grid item xs={12}>
-        <Requests isHost={true} />
+        <Requests onAccept={acceptRequest} onReject={rejectRequest} />
       </Grid>
     </Grid>
   )

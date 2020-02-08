@@ -17,7 +17,7 @@ const Playlist = lazy(() => import('playlist/PlaylistViewContainer'))
 const PlaylistListView = lazy(() =>
   import('playlist/PlaylistListViewContainer')
 )
-const Requests = lazy(() => import('request/RequestsContainer'))
+const RequestView = lazy(() => import('request/RequestViewContainer'))
 
 const locationHelper = locationHelperBuilder({})
 
@@ -54,12 +54,12 @@ export const routes = [
     exact: true
   },
   {
-    component: Requests,
+    component: RequestView,
     path: '/requests',
     exact: true
   },
   {
-    component: Requests,
+    component: RequestView,
     path: '/requests/:eventId',
     exact: true
   },

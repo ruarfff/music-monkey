@@ -11,6 +11,7 @@ import {
   DecoratedSuggestion,
   formatDuration
 } from '../'
+import { Suggestion } from 'request'
 interface TrackListProps {
   tracks: Track[]
   suggestions?: DecoratedSuggestion[]
@@ -20,8 +21,10 @@ interface TrackListProps {
   filterList?: Track[]
   onVote?(track: Track): void
   onSelected?(track: Track): void
+  onAccept?(suggestion: Suggestion): void
   onDragEnd?(result: any): void
   onRemoved?(track: Track): void
+  onReject?(suggestion: Suggestion): void
 }
 
 const getItemStyle = (isDragging: any, draggableStyle: any) => {
@@ -49,10 +52,12 @@ export const TrackList: FC<TrackListProps> = ({
     showSummary: false,
     allowDragDrop: false
   },
-  onVote = (t: Track) => ({} as any),
-  onSelected = (t: Track) => ({} as any),
-  onDragEnd = (result: any) => ({} as any),
-  onRemoved = (track: Track) => ({} as any)
+  onVote = (t: Track) => {},
+  onSelected = (t: Track) => {},
+  onAccept = (s: Suggestion) => {},
+  onDragEnd = (result: any) => {},
+  onRemoved = (track: Track) => {},
+  onReject = (s: Suggestion) => {}
 }) => {
   const [nowPlaying, setNowPlaying] = useState()
   const [trackPlaying, setTrackPlaying] = useState(false)
@@ -97,6 +102,20 @@ export const TrackList: FC<TrackListProps> = ({
         audio.pause()
       }
       setTrackPlaying(!trackPlaying)
+    }
+  }
+
+  const handleOnSelect = (track: Track, suggestion: Suggestion) => {
+    onSelected(track)
+    if (suggestion) {
+      onAccept(suggestion)
+    }
+  }
+
+  const handleRemove = (track: Track, suggestion: Suggestion) => {
+    onRemoved(track)
+    if (suggestion) {
+      onReject(suggestion)
     }
   }
 
@@ -161,9 +180,9 @@ export const TrackList: FC<TrackListProps> = ({
                             event={event}
                             currentUserVoted={userVoted}
                             options={options}
-                            onSelected={onSelected}
+                            onSelected={handleOnSelect}
                             onVote={onVote}
-                            onRemoved={onRemoved}
+                            onRemoved={handleRemove}
                           />
                         </div>
                       )}

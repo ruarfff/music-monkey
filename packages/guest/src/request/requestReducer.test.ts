@@ -1,9 +1,5 @@
 import { Action, Suggestion, TrackRequest, PlaylistRequest } from 'mm-shared'
 import {
-  CLEAR_SAVED_SUGGESTION,
-  DELETE_SUGGESTION_FAILED,
-  DELETE_SUGGESTION_INITIATED,
-  DELETE_SUGGESTION_SUCCESS,
   FETCH_SUGGESTIONS_FAILED,
   FETCH_SUGGESTIONS_SUCCESS,
   FETCH_SUGGESTIONS_INITIATED,
@@ -28,7 +24,7 @@ describe('requestReducer', () => {
       })
     ).toEqual({
       ...initialState,
-      savingSuggestion: true
+      savingRequests: true
     })
   })
 
@@ -40,14 +36,14 @@ describe('requestReducer', () => {
       })
     ).toEqual({
       ...initialState,
-      savingSuggestion: true
+      savingRequests: true
     })
   })
 
   it('should handle SAVE_SUGGESTION_SUCCESS', () => {
     expect(
       suggestion(
-        { ...initialState, savingSuggestion: true },
+        { ...initialState, savingRequests: true },
         {
           type: SAVE_SUGGESTION_SUCCESS,
           payload: {} as Suggestion
@@ -55,15 +51,15 @@ describe('requestReducer', () => {
       )
     ).toEqual({
       ...initialState,
-      savingSuggestion: false,
-      savedSuggestion: {} as Suggestion
+      savingRequests: false,
+      savedRequest: {} as Suggestion
     })
   })
 
   it('should handle SAVE_SUGGESTION_FAILED', () => {
     expect(
       suggestion(
-        { ...initialState, savingSuggestion: true },
+        { ...initialState, savingRequests: true },
         {
           type: SAVE_SUGGESTION_FAILED,
           payload: new Error('hurtrealbad')
@@ -71,8 +67,8 @@ describe('requestReducer', () => {
       )
     ).toEqual({
       ...initialState,
-      savingSuggestion: false,
-      savingSuggestionError: new Error('hurtrealbad')
+      savingRequests: false,
+      savingRequestsError: new Error('hurtrealbad')
     })
   })
 
@@ -83,73 +79,33 @@ describe('requestReducer', () => {
       })
     ).toEqual({
       ...initialState,
-      fetchingSuggestions: true
+      fetchingRequests: true
     })
   })
 
   it('should handle FETCH_SUGGESTIONS_FAILED', () => {
     expect(
       suggestion(
-        { ...initialState, fetchingSuggestions: true },
+        { ...initialState, fetchingRequests: true },
         { type: FETCH_SUGGESTIONS_FAILED, payload: new Error('terrible') }
       )
     ).toEqual({
       ...initialState,
-      fetchingSuggestions: false,
-      fetchingSuggestionsError: new Error('terrible')
+      fetchingRequests: false,
+      fetchingRequestsError: new Error('terrible')
     })
   })
 
   it('should handle FETCH_SUGGESTION_SUCCESS', () => {
     expect(
       suggestion(
-        { ...initialState, fetchingSuggestions: true },
+        { ...initialState },
         { type: FETCH_SUGGESTIONS_SUCCESS, payload: [] as Suggestion[] }
       )
     ).toEqual({
       ...initialState,
-      fetchingSuggestions: false,
-      suggestions: [] as Suggestion[]
+      fetchingRequests: false,
+      requests: [] as Suggestion[]
     })
-  })
-
-  it('should handle CLEAR_SAVED_SUGGESTION', () => {
-    expect(
-      suggestion(
-        { ...initialState, savedSuggestion: {} as Suggestion },
-        { type: CLEAR_SAVED_SUGGESTION }
-      )
-    ).toEqual({ ...initialState, savedSuggestion: undefined })
-  })
-
-  it('should handle DELETE_SUGGESTION_INITIATED', () => {
-    expect(
-      suggestion(initialState, {
-        type: DELETE_SUGGESTION_INITIATED,
-        payload: {} as Suggestion
-      })
-    ).toEqual({ ...initialState, deletingSuggestion: true })
-  })
-
-  it('should handle DELETE_SUGGESTION_SUCCESS', () => {
-    expect(
-      suggestion(
-        { ...initialState, deletingSuggestion: true },
-        { type: DELETE_SUGGESTION_SUCCESS, payload: {} as Suggestion }
-      )
-    ).toEqual({
-      ...initialState,
-      deletingSuggestion: false,
-      deletedSuggestion: {} as Suggestion
-    })
-  })
-
-  it('should handle DELETE_SUGGESTION_FAILED', () => {
-    expect(
-      suggestion(
-        { ...initialState, deletingSuggestion: true },
-        { type: DELETE_SUGGESTION_FAILED, payload: new Error('balls') }
-      )
-    ).toEqual({ ...initialState, deletingSuggestionError: new Error('balls') })
   })
 })

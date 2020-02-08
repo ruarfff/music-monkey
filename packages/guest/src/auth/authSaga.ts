@@ -3,8 +3,6 @@ import { Action } from 'mm-shared'
 import { EVENT_CLEAR } from 'event/eventActions'
 import { PLAYLIST_CLEAR } from 'playlist/playlistActions'
 import { RECOMMENDATIONS_CLEAR } from 'recommendation/recommendationActions'
-import { CLEAR_SEARCH } from 'search/searchActions'
-import { CLEAR_SUGGESTION } from 'request/requestActions'
 import { FETCH_USER_SUCCESS } from 'user/userActions'
 import {
   LOGGED_OUT,
@@ -49,8 +47,6 @@ export function* logoutFlow() {
     yield put({ type: EVENT_CLEAR })
     yield put({ type: PLAYLIST_CLEAR })
     yield put({ type: RECOMMENDATIONS_CLEAR })
-    yield put({ type: CLEAR_SEARCH })
-    yield put({ type: CLEAR_SUGGESTION })
   } catch (err) {
     console.error(err)
   }

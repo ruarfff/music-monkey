@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import EventSelect from 'event/select/EventSelectContainer'
-import { Requests } from 'mm-shared'
+import Requests from './RequestsContainer'
 
 const RequestView = () => {
   return (

@@ -3,8 +3,7 @@ import SuggestionState from './RequestState'
 import {
   FETCH_REQUESTS_FAILED,
   FETCH_REQUESTS_INITIATED,
-  FETCH_REQUESTS_SUCCESS,
-  REJECT_REQUEST
+  FETCH_REQUESTS_SUCCESS
 } from './requestActions'
 import initialState from './requestInitialState'
 
@@ -47,31 +46,6 @@ export default function suggestion(
         fetchingSuggestionsError: payload
       } as SuggestionState
 
-    case REJECT_REQUEST: {
-      const suggestionToReject = state.pendingRequests.find(
-        s => s.suggestion.suggestionId === payload.suggestionId
-      )
-      const rejectedSuggestions = !!suggestionToReject
-        ? [
-            ...state.rejectedRequests,
-            {
-              ...suggestionToReject,
-              suggestion: { ...suggestionToReject.suggestion, rejected: true }
-            }
-          ]
-        : state.rejectedRequests
-      const pendingSuggestions = !!suggestionToReject
-        ? state.pendingRequests.filter(
-            s => s.suggestion.suggestionId !== payload.suggestionId
-          )
-        : state.pendingRequests
-
-      return {
-        ...state,
-        rejectedSuggestions,
-        pendingSuggestions
-      }
-    }
     default:
       return state
   }

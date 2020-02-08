@@ -31,6 +31,7 @@ const EventSelect: FC<EventSelectProps> = ({
     const selectedEventId = event ? event.eventId : ''
     if (eventId && selectedEventId !== eventId) {
       setEventId(eventId)
+      getRequestsByEventId(eventId)
     } else if (!eventLoaded) {
       setEventPickerOpen(true)
     }

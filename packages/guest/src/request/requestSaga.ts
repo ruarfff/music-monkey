@@ -1,9 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { CLEAR_SEARCH, removeTrack } from 'search/searchActions'
 import {
-  DELETE_SUGGESTION_FAILED,
-  DELETE_SUGGESTION_INITIATED,
-  DELETE_SUGGESTION_SUCCESS,
   FETCH_SUGGESTIONS_FAILED,
   FETCH_SUGGESTIONS_INITIATED,
   FETCH_SUGGESTIONS_SUCCESS,
@@ -15,7 +12,6 @@ import {
 import {
   Action,
   bulkSaveSuggestions,
-  deleteSuggestion,
   getRequestsByEventId,
   saveSuggestion,
   SuggestionTransformer
@@ -74,18 +70,4 @@ export function* watchSavePlaylistSuggestion() {
     SAVE_PLAYLIST_SUGGESTION_INITIATED,
     savePlaylistSuggestionFlow
   )
-}
-
-function* deleteSuggestionFlow(action: Action) {
-  try {
-    yield call(deleteSuggestion, action.payload)
-    yield put({ type: DELETE_SUGGESTION_SUCCESS })
-  } catch (err) {
-    yield put({ type: DELETE_SUGGESTION_FAILED, payload: err })
-  }
-}
-
-// TODO: Not implemented yet!!!
-export function* watchDeleteSuggestion() {
-  yield takeEvery(DELETE_SUGGESTION_INITIATED, deleteSuggestionFlow)
 }

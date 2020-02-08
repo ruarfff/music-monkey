@@ -11,7 +11,7 @@ const CreateEvent = lazy(() => import('event/saveEvent/CreateEventContainer'))
 const Marvin = lazy(() => import('finder/MarvinContainer'))
 const EventView = lazy(() => import('event/eventView/EventViewContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
-const Requests = lazy(() => import('request/RequestsContainer'))
+const RequestView = lazy(() => import('request/RequestViewContainer'))
 const PlaylistListView = lazy(() =>
   import('playlist/PlaylistListViewContainer')
 )
@@ -65,12 +65,12 @@ export const routes = [
     path: '/account'
   },
   {
-    component: Requests,
+    component: RequestView,
     exact: true,
     path: '/requests'
   },
   {
-    component: Requests,
+    component: RequestView,
     exact: true,
     path: '/requests/:eventId'
   },

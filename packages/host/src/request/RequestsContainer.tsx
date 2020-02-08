@@ -1,16 +1,18 @@
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 import IRootState from 'rootState'
-import Requests from './RequestView'
+import { Requests } from 'mm-shared'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.event
+  isHost: true,
+  user: state.user.data,
+  event: state.event.event,
+  acceptedRequests: state.suggestion.acceptedRequests,
+  pendingRequests: state.suggestion.pendingRequests,
+  rejectedRequests: state.suggestion.rejectedRequests
 })
 
 const mapDispatchToProps = {}
 
-const RequestsContainer = withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Requests)
-)
+const RequestsContainer = connect(mapStateToProps, mapDispatchToProps)(Requests)
 
 export default RequestsContainer

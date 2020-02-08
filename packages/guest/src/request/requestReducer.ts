@@ -1,11 +1,6 @@
-import { Action } from 'mm-shared'
+import { Action, DecoratedSuggestion } from 'mm-shared'
 import ISuggestionState from './RequestState'
 import {
-  CLEAR_SAVED_SUGGESTION,
-  CLEAR_SUGGESTION,
-  DELETE_SUGGESTION_FAILED,
-  DELETE_SUGGESTION_INITIATED,
-  DELETE_SUGGESTION_SUCCESS,
   FETCH_SUGGESTIONS_FAILED,
   FETCH_SUGGESTIONS_INITIATED,
   FETCH_SUGGESTIONS_SUCCESS,
@@ -22,62 +17,55 @@ export default function suggestion(
 ) {
   switch (type) {
     case SAVE_TRACK_SUGGESTION_INITIATED:
-      return { ...state, savingSuggestion: true } as ISuggestionState
+      return { ...state, savingRequests: true } as ISuggestionState
     case SAVE_PLAYLIST_SUGGESTION_INITIATED:
-      return { ...state, savingSuggestion: true } as ISuggestionState
+      return { ...state, savingRequests: true } as ISuggestionState
     case SAVE_SUGGESTION_SUCCESS:
       return {
         ...state,
-        savingSuggestion: false,
-        savedSuggestion: payload
+        savingRequests: false,
+        savedRequest: payload
       } as ISuggestionState
     case SAVE_SUGGESTION_FAILED:
       return {
         ...state,
-        savingSuggestion: false,
-        savingSuggestionError: payload
+        savingRequests: false,
+        savingRequestsError: payload
       } as ISuggestionState
     case FETCH_SUGGESTIONS_INITIATED:
-      return { ...state, fetchingSuggestions: true } as ISuggestionState
-    case FETCH_SUGGESTIONS_SUCCESS:
+      return { ...state, fetchingRequests: true } as ISuggestionState
+    case FETCH_SUGGESTIONS_SUCCESS: {
+      const suggestions = [...payload]
+
+      const pendingSuggestions = suggestions.filter(
+        (s: DecoratedSuggestion) =>
+          !s.suggestion.accepted && !s.suggestion.rejected
+      )
+
+      const rejectedSuggestions = suggestions.filter(
+        (s: DecoratedSuggestion) => s.suggestion.rejected
+      )
+
+      const acceptedSuggestions = suggestions.filter(
+        (s: DecoratedSuggestion) => s.suggestion.accepted
+      )
+
       return {
         ...state,
-        fetchingSuggestions: false,
-        requests: payload
+        requests: suggestions,
+        fetchingRequests: false,
+        pendingRequests: pendingSuggestions,
+        rejectedRequests: rejectedSuggestions,
+        acceptedRequests: acceptedSuggestions
       } as ISuggestionState
+    }
     case FETCH_SUGGESTIONS_FAILED:
       return {
         ...state,
-        fetchingSuggestions: false,
-        fetchingSuggestionsError: payload
+        fetchingRequests: false,
+        fetchingRequestsError: payload
       } as ISuggestionState
-    case CLEAR_SAVED_SUGGESTION:
-      return {
-        ...state,
-        savedSuggestion: undefined
-      }
-    case CLEAR_SUGGESTION:
-      return {
-        ...state,
-        requests: []
-      }
-    case DELETE_SUGGESTION_INITIATED:
-      return {
-        ...state,
-        deletingSuggestion: true
-      }
-    case DELETE_SUGGESTION_FAILED:
-      return {
-        ...state,
-        deletingSuggestion: false,
-        deletingSuggestionError: payload
-      }
-    case DELETE_SUGGESTION_SUCCESS:
-      return {
-        ...state,
-        deletingSuggestion: false,
-        deletedSuggestion: payload
-      }
+
     default:
       return state
   }

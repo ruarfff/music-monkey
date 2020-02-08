@@ -1,17 +1,36 @@
 import React, { FC } from 'react'
 import { Tab, Tabs, Typography, Grid, AppBar } from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views'
-import { useSwipeTabsIndex } from '../'
-import AcceptedTracks from './AcceptedTracksContainer'
-import MaybeTracks from './MaybeTracksContainer'
-import RejectedTracks from './RejectedTracksContainer'
+import { useSwipeTabsIndex, Suggestion } from '../'
+import { User } from 'user'
+import { Event } from 'event'
+import AcceptedTracks from './AcceptedTracks'
+import MaybeTracks from './MaybeTracks'
+import RejectedTracks from './RejectedTracks'
+import { DecoratedSuggestion } from './DecoratedSuggestion'
 import './Requests.scss'
 
 interface RequestsProps {
   isHost?: boolean
+  user: User
+  event: Event
+  acceptedRequests: DecoratedSuggestion[]
+  rejectedRequests: DecoratedSuggestion[]
+  pendingRequests: DecoratedSuggestion[]
+  onAccept?(request: Suggestion): void
+  onReject?(request: Suggestion): void
 }
 
-const Requests: FC<RequestsProps> = ({ isHost = false }) => {
+const Requests: FC<RequestsProps> = ({
+  isHost = false,
+  user,
+  acceptedRequests,
+  rejectedRequests,
+  pendingRequests,
+  event,
+  onAccept = () => {},
+  onReject = () => {}
+}) => {
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
   return (
@@ -39,21 +58,38 @@ const Requests: FC<RequestsProps> = ({ isHost = false }) => {
         >
           {tabIndex === 0 ? (
             <Typography component="div" dir="0">
-              <AcceptedTracks isHost={isHost} />
+              <MaybeTracks
+                isHost={isHost}
+                user={user}
+                requests={pendingRequests}
+                event={event}
+                onAccept={onAccept}
+                onReject={onReject}
+              />
             </Typography>
           ) : (
             <div />
           )}
           {tabIndex === 1 ? (
             <Typography component="div" dir="1">
-              <MaybeTracks isHost={isHost} />
+              <AcceptedTracks
+                isHost={isHost}
+                user={user}
+                requests={acceptedRequests}
+                onReject={onReject}
+              />
             </Typography>
           ) : (
             <div />
           )}
           {tabIndex === 2 ? (
             <Typography component="div" dir="2">
-              <RejectedTracks isHost={isHost} />
+              <RejectedTracks
+                isHost={isHost}
+                user={user}
+                requests={rejectedRequests}
+                onAccept={onAccept}
+              />
             </Typography>
           ) : (
             <div />

@@ -8,10 +8,20 @@ export const getRequestsByEventId = async (eventId: string) => {
   return response.data
 }
 
-export const acceptRequests = (eventId: string, requests: Suggestion[]) => {
-  return client.post('/suggestions/' + eventId + '/accept', requests, {
+export const acceptManyRequests = (eventId: string, requests: Suggestion[]) => {
+  return client.post('/suggestions/event/' + eventId + '/accept', requests, {
     withCredentials: true
   })
+}
+
+export const acceptRequest = (request: Suggestion) => {
+  return client.post(
+    '/suggestions/' + request.suggestionId + '/accept',
+    {},
+    {
+      withCredentials: true
+    }
+  )
 }
 
 export const rejectRequest = (request: Suggestion) => {

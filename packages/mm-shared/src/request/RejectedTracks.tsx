@@ -1,23 +1,25 @@
 import React, { FC } from 'react'
 import { isEmpty, uniqBy } from 'lodash'
 import { Typography } from '@material-ui/core'
-import { User, DecoratedSuggestion, TrackList } from 'mm-shared'
+import { User, DecoratedSuggestion, TrackList, Suggestion } from '../'
 import './RejectedTracks.scss'
 
 interface RejectedTracksProps {
-  isHost?: boolean
+  isHost: boolean
   user: User
-  suggestions: DecoratedSuggestion[]
+  requests: DecoratedSuggestion[]
+  onAccept(suggestion: Suggestion): void
 }
 
 const RejectedTracks: FC<RejectedTracksProps> = ({
   user,
-  suggestions,
-  isHost = false
+  requests,
+  isHost,
+  onAccept
 }) => {
   let rejectedSuggestions =
-    !isEmpty(suggestions) && (isHost || !isEmpty(user))
-      ? suggestions.filter(s => s.suggestion && s.suggestion.rejected)
+    !isEmpty(requests) && (isHost || !isEmpty(user))
+      ? requests.filter(s => s.suggestion && s.suggestion.rejected)
       : []
 
   if (!isHost) {
@@ -33,7 +35,12 @@ const RejectedTracks: FC<RejectedTracksProps> = ({
   return (
     <>
       {!isEmpty(rejectedTracks) && (
-        <TrackList tracks={rejectedTracks} suggestions={rejectedSuggestions} />
+        <TrackList
+          tracks={rejectedTracks}
+          suggestions={rejectedSuggestions}
+          options={{ canRequest: isHost }}
+          onAccept={onAccept}
+        />
       )}
       {isEmpty(rejectedTracks) && (
         <Typography className="noTracks" variant="h6" gutterBottom>

@@ -23,19 +23,11 @@ import {
   Track,
   getTrackImage,
   DecoratedSuggestion,
-  formatDuration
+  formatDuration,
+  Suggestion
 } from '../'
 import { TrackConfig } from './TrackConfig'
 import './TrackListItem.scss'
-
-// TODO:  use this: https://codepen.io/dmarcus/pen/vKdWxW
-// Also this for styles: https://codepen.io/ArnaudBalland/pen/vGZKLr
-
-/* <ListItemText
-        primary={
-          tracksWithFeature && 'tempo ' + Math.round(tracksWithFeature.tempo)
-        }
-      /> */
 
 interface TrackListItemProps {
   track: Track
@@ -47,8 +39,8 @@ interface TrackListItemProps {
   isPlaying?: boolean
   onPlay?(track: Track): void
   onVote?(track: Track): void
-  onSelected?(track: Track): void
-  onRemoved?(track: Track): void
+  onSelected?(track: Track, suggestion: Suggestion): void
+  onRemoved?(track: Track, suggestion: Suggestion): void
 }
 
 export const TrackListItem: FC<TrackListItemProps> = ({
@@ -78,7 +70,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
   const handleTrackSelected = () => {
     if (isFunction(onSelected)) {
-      onSelected(track)
+      onSelected(track, suggestion?.suggestion)
     }
   }
 
@@ -88,7 +80,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
   const handleRemoveTrack = (track: Track) => () => {
     if (isFunction(onRemoved)) {
-      onRemoved(track)
+      onRemoved(track, suggestion?.suggestion)
     }
   }
 

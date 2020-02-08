@@ -1,19 +1,18 @@
 import { connect } from 'react-redux'
-import { setEventId } from 'event/eventActions'
 import IRootState from 'rootState'
-import RequestsView from './RequestView'
+import { Requests } from 'mm-shared'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.event
+  isHost: false,
+  user: state.user.data,
+  event: state.event.event,
+  acceptedRequests: state.suggestion.acceptedRequests,
+  pendingRequests: state.suggestion.pendingRequests,
+  rejectedRequests: state.suggestion.rejectedRequests
 })
 
-const mapDispatchToProps = {
-  setEventId
-}
+const mapDispatchToProps = {}
 
-const RequestsContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RequestsView)
+const RequestsContainer = connect(mapStateToProps, mapDispatchToProps)(Requests)
 
 export default RequestsContainer

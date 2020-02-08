@@ -1,29 +1,33 @@
 import React, { FC } from 'react'
-import { isEmpty, uniqBy } from 'lodash'
-import { Event, User, DecoratedSuggestion, TrackList } from 'mm-shared'
 import { Typography } from '@material-ui/core'
+import { isEmpty, uniqBy } from 'lodash'
+import { Event, User, DecoratedSuggestion, TrackList, Suggestion } from '../'
 import './MaybeTracks.scss'
 
 interface MaybeTracksProps {
-  isHost?: boolean
+  isHost: boolean
   user: User
   event: Event
-  suggestions: DecoratedSuggestion[]
+  requests: DecoratedSuggestion[]
+  onAccept(suggestion: Suggestion): void
+  onReject(suggestion: Suggestion): void
 }
 
 const MaybeTracks: FC<MaybeTracksProps> = ({
   user,
-  suggestions,
+  requests,
   event,
-  isHost = false
+  isHost,
+  onAccept,
+  onReject
 }) => {
   const playlistTracks =
     !isEmpty(event) && !isEmpty(event.playlist)
       ? event.playlist!.tracks.items.map(track => track.track.uri)
       : []
   let maybeSuggestions =
-    !isEmpty(suggestions) && (isHost || !isEmpty(user))
-      ? suggestions
+    !isEmpty(requests) && (isHost || !isEmpty(user))
+      ? requests
           .filter(
             s =>
               s.suggestion && !s.suggestion.rejected && !s.suggestion.accepted
@@ -46,7 +50,13 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
   return (
     <>
       {!isEmpty(maybeTracks) && (
-        <TrackList tracks={maybeTracks} suggestions={maybeSuggestions} />
+        <TrackList
+          tracks={maybeTracks}
+          suggestions={maybeSuggestions}
+          options={{ canRequest: isHost, canRemove: isHost }}
+          onAccept={onAccept}
+          onReject={onReject}
+        />
       )}
       {isEmpty(maybeTracks) && (
         <Typography className="noTracks" variant="h6" gutterBottom>
