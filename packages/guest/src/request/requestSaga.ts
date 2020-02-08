@@ -1,5 +1,4 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { CLEAR_SEARCH, removeTrack } from 'search/searchActions'
 import {
   FETCH_SUGGESTIONS_FAILED,
   FETCH_SUGGESTIONS_INITIATED,
@@ -42,8 +41,6 @@ function* saveTrackSuggestionFlow(action: Action) {
       suggestionTransformer.trackSuggestionToSuggestion(action.payload)
     )
     yield put({ type: SAVE_SUGGESTION_SUCCESS, payload: savedSuggestion })
-    yield put({ type: CLEAR_SEARCH })
-    yield put(removeTrack(savedSuggestion.data.trackUri))
   } catch (err) {
     yield put({ type: SAVE_SUGGESTION_FAILED, payload: err })
   }

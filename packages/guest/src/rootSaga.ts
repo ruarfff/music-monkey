@@ -14,7 +14,6 @@ import {
 } from './playlist/playlistSaga'
 import { watchFetchRecommendation } from './recommendation/recommendationSaga'
 import { watchFetchOrCreateRsvp, watchFetchUpdateRsvp } from './rsvp/rsvpSaga'
-import { watchSearch } from './search/searchSaga'
 import {
   watchFetchSuggestions,
   watchSavePlaylistSuggestion,
@@ -34,7 +33,6 @@ export default function* rootSaga() {
     watchFetchSuggestions(),
     watchSaveTrackSuggestion(),
     watchFetchRecommendation(),
-    watchSearch(),
     watchFetchEvent(),
     watchSavePlaylistSuggestion(),
     watchLogout(),

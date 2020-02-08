@@ -6,7 +6,6 @@ import event from './event/eventReducer'
 import invite from './invite/inviteReducer'
 import playlist from './playlist/playlistReducer'
 import recommendation from './recommendation/recommendationReducer'
-import search from './search/searchReducer'
 import suggestion from './request/requestReducer'
 import user from './user/userReducer'
 import { voteReducer as vote } from 'mm-shared'
@@ -21,7 +20,6 @@ export default (history: History) =>
     playlist,
     recommendation,
     rsvp,
-    search,
     suggestion,
     user,
     vote
