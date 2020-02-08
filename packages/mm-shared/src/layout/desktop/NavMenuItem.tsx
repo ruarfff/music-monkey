@@ -85,9 +85,11 @@ class NavMenuItem extends React.Component<ILeftMenuItemProps> {
           onClick={this.handleToggleDropdown}
           selected={pathName === location.pathname && true}
         >
-          <ListItemIcon className="NavMenuItem-icon">
-            <img alt="list item" src={icon} />
-          </ListItemIcon>
+          {icon && (
+            <ListItemIcon className="NavMenuItem-icon">
+              <img alt="list item" src={icon} />
+            </ListItemIcon>
+          )}
           <ListItemText
             inset={true}
             disableTypography={true}
