@@ -13,10 +13,7 @@ const EventListView = lazy(() =>
 )
 const Marvin = lazy(() => import('finder/MarvinContainer'))
 const Insights = lazy(() => import('insights/InsightsContainer'))
-const Playlist = lazy(() => import('playlist/PlaylistViewContainer'))
-const PlaylistListView = lazy(() =>
-  import('playlist/PlaylistListViewContainer')
-)
+
 const RequestView = lazy(() => import('request/RequestViewContainer'))
 
 const locationHelper = locationHelperBuilder({})
@@ -61,16 +58,6 @@ export const routes = [
   {
     component: RequestView,
     path: '/requests/:eventId',
-    exact: true
-  },
-  {
-    component: PlaylistListView,
-    path: '/playlists',
-    exact: true
-  },
-  {
-    component: Playlist,
-    path: '/playlists/:eventId',
     exact: true
   },
   {
