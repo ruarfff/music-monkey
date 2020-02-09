@@ -1,7 +1,8 @@
 import React from 'react'
-import { AppBar, Toolbar } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
+import { AppBar, Toolbar, Fab } from '@material-ui/core'
 import { ReactCookieProps } from 'react-cookie'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { User, Event } from '../../'
 import SideMenu from './SideMenu'
@@ -29,6 +30,20 @@ const TopAppBar = ({ user, event, cookies, isHost, logout }: ITopBarProps) => {
       <Toolbar variant="dense">
         <SideMenu user={user} event={event} isHost={isHost} />
         <Title event={event} />
+        {isHost && (
+          <div className="new-party">
+            <Link to="/create-event">
+              <Fab
+                aria-label="New Party"
+                variant="extended"
+                color="secondary"
+                size="small"
+              >
+                <AddIcon />
+              </Fab>
+            </Link>
+          </div>
+        )}
         <UserMenu user={user} onLogout={handleLogout} isHost={isHost} />
       </Toolbar>
     </AppBar>

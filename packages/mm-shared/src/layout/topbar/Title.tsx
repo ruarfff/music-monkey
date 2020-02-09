@@ -5,17 +5,12 @@ import { Event } from '../../'
 import './Title.scss'
 
 const pathToTitle = {
-  '/': 'Events',
-  '/playlists': 'Playlists',
+  '/': 'Parties',
+  '/music': 'Music',
   '/create-event': 'Create Event',
   '/create-event/playlist': 'Seed Playlist',
   '/create-event/tracks': 'Add Tracks',
   '/create-event/details': 'Event Settings',
-  '/catalogue/upcoming-events': 'Upcoming Event',
-  '/catalogue/past-events': 'Past Events',
-  '/catalogue/all-playlists': 'Playlists',
-  '/catalogue/upcoming-playlists': 'Upcoming Playlists',
-  '/catalogue/past-playlists': 'Past Playlists',
   '/account': 'Account Settings',
   '/insights': 'Insights'
 }
