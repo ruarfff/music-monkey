@@ -33,7 +33,7 @@ const CreateEvent = ({ user, history, getEvents }: CreateEventProps) => {
       const event = await createEventFlow(values)
       getEvents()
       setSubmitting(false)
-      history.push('/events/' + event.eventId + '/edit')
+      history.push('/events/' + event.eventId + '/save')
     } catch (err) {
       showError('Could not create event')
       console.error(err)

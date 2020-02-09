@@ -16,6 +16,9 @@ const PlaylistListView = lazy(() =>
   import('playlist/PlaylistListViewContainer')
 )
 const SaveEvent = lazy(() => import('event/saveEvent/SaveEventContainer'))
+const EditEventView = lazy(() =>
+  import('event/saveEvent/EditEventViewContainer')
+)
 
 const locationHelper = locationHelperBuilder({})
 
@@ -47,8 +50,9 @@ export const routes = [
   },
   {
     component: SaveEvent,
-    path: '/events/:eventId/edit'
+    path: '/events/:eventId/save'
   },
+  { component: EditEventView, path: '/events/:eventId/edit' },
   {
     component: PlaylistListView,
     exact: true,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
@@ -21,7 +21,12 @@ interface SaveEventProps extends RouteComponentProps {
   getEventById(eventId: string): Action
 }
 
-const SaveEvent = ({ user, event, getEventById, match }: SaveEventProps) => {
+const SaveEvent: FC<SaveEventProps> = ({
+  user,
+  event,
+  getEventById,
+  match
+}) => {
   const { showSuccess, showError } = useSnackbarAlert()
   const eventIdFromPath = match.params['eventId']
   useEffect(() => {

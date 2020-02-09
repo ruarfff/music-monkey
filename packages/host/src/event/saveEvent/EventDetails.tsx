@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { Field, FieldProps } from 'formik'
 import EventDateTimePicker from './EventDateTimePicker'
@@ -7,9 +7,23 @@ import EventTextInput from './EventTextInput'
 import EventSettings from './EventSettingsView'
 import './EventDetails.scss'
 
-const EventDetails = () => {
+interface EventDetailsProps {
+  showDetails?: boolean
+}
+
+const EventDetails: FC<EventDetailsProps> = ({ showDetails = false }) => {
   return (
     <Grid container className="EventDetails-root">
+      {showDetails && (
+        <Grid item={true} xs={12}>
+          <EventTextInput name="eventName" label="Name" autoFocus />
+          <EventTextInput
+            name="eventDescription"
+            multiline={true}
+            label="Description"
+          />
+        </Grid>
+      )}
       <Grid item={true} xs={12} sm={6}>
         <Typography
           className="EventDetails-settings-title"
