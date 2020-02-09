@@ -101,7 +101,7 @@ const Finder: FC<FinderProps> = ({
             setSearching(true)
           }}
           onFocus={() => {
-            handleTabChange(1)
+            handleTabChange(hideCurrentPlaylist ? 0 : 1)
           }}
         />
       </Grid>

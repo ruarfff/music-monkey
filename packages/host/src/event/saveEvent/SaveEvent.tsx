@@ -83,7 +83,7 @@ const SaveEvent: FC<SaveEventProps> = ({
       [debounceMs, formik.submitForm]
     )
 
-    React.useEffect(() => {
+    useEffect(() => {
       debouncedSubmit()
     }, [debouncedSubmit, formik.values])
 

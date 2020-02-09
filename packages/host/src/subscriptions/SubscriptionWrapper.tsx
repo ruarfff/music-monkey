@@ -44,9 +44,8 @@ const SubscriptionWrapper = ({
     subscribeToSuggestionsModified(eventId, () => {
       if (autoAcceptSuggestionsEnabled) {
         getEventByIdNoLoading(eventId)
-      } else {
-        getEventSuggestions(eventId)
       }
+      getEventSuggestions(eventId)
     })
 
     subscribeToRSVPModified(eventId, () => {

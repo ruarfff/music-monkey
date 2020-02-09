@@ -83,6 +83,7 @@ const Marvin: FC<MarvinProps> = ({ event, user }) => {
       removeTrackFromPlaylist(playlist.id, trackToRemove.uri, position)
       showSuccess('Track removed')
     } catch (err) {
+      console.error(err)
       setTracks(oldTracks)
       showError('Error removing track')
     }
@@ -95,6 +96,7 @@ const Marvin: FC<MarvinProps> = ({ event, user }) => {
         <Finder
           isHost={true}
           eventTracks={tracks}
+          hideCurrentPlaylist={true}
           onTrackSelected={handleAddTrack}
           onPlaylistSelected={handlePlaylistSelected}
           onTrackRemoved={handleTrackRemoved}
