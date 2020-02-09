@@ -34,6 +34,7 @@ interface FinderProps {
   userPlaylists: Playlist[]
   recommendations: Track[]
   allowSuggestPlaylist?: boolean
+  hideCurrentPlaylist?: boolean
   getRecommendations(): Action
   fetchPlaylists(user: User): Action
   onTrackSelected?(track: Track): any
@@ -52,6 +53,7 @@ const Finder: FC<FinderProps> = ({
   getRecommendations,
   fetchPlaylists,
   allowSuggestPlaylist = false,
+  hideCurrentPlaylist = false,
   onTrackSelected = () => {},
   onPlaylistSelected = () => {},
   onTrackRemoved = () => {},
@@ -112,27 +114,29 @@ const Finder: FC<FinderProps> = ({
             textColor="primary"
             variant="fullWidth"
           >
-            <Tab
-              className="Finder-tab"
-              label={
-                !isEmpty(eventTracks) ? (
-                  <Badge
-                    className="Finder-playlist-count"
-                    overlap="circle"
-                    color={'secondary'}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right'
-                    }}
-                    badgeContent={eventTracks.length}
-                  >
-                    Current Playlist
-                  </Badge>
-                ) : (
-                  'Current Playlist'
-                )
-              }
-            />
+            {!hideCurrentPlaylist && (
+              <Tab
+                className="Finder-tab"
+                label={
+                  !isEmpty(eventTracks) ? (
+                    <Badge
+                      className="Finder-playlist-count"
+                      overlap="circle"
+                      color={'secondary'}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      badgeContent={eventTracks.length}
+                    >
+                      Current Playlist
+                    </Badge>
+                  ) : (
+                    'Current Playlist'
+                  )
+                }
+              />
+            )}
             <Tab
               className="Finder-tab"
               label={isEmpty(searchResults) ? 'Suggested' : 'Search Results'}
@@ -149,6 +153,7 @@ const Finder: FC<FinderProps> = ({
         ) : (
           <>
             {tabIndex === 0 &&
+              !hideCurrentPlaylist &&
               (isEmpty(eventTracks) ? (
                 <Paper className="Finder-no-tracks">
                   <Typography variant="h5" align="center" gutterBottom>
@@ -177,7 +182,8 @@ const Finder: FC<FinderProps> = ({
                   }}
                 />
               ))}
-            {tabIndex === 1 && (
+            {((hideCurrentPlaylist && tabIndex === 0) ||
+              (!hideCurrentPlaylist && tabIndex === 1)) && (
               <TrackList
                 options={{ canRequest: true }}
                 tracks={
@@ -187,7 +193,8 @@ const Finder: FC<FinderProps> = ({
                 onSelected={onTrackSelected}
               />
             )}
-            {tabIndex === 2 && (
+            {((hideCurrentPlaylist && tabIndex === 1) ||
+              (!hideCurrentPlaylist && tabIndex === 2)) && (
               <Playlists
                 user={user}
                 playlists={userPlaylists}
