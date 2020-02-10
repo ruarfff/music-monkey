@@ -8,6 +8,7 @@ import playlist from './playlist/playlistReducer'
 import recommendation from './recommendation/recommendationReducer'
 import suggestion from './request/requestReducer'
 import user from './user/userReducer'
+import music from './music/musicReducer'
 import { voteReducer as vote } from 'mm-shared'
 
 export default (history: History) =>
@@ -20,5 +21,6 @@ export default (history: History) =>
     user,
     vote,
     insights,
-    recommendation
+    recommendation,
+    music
   })

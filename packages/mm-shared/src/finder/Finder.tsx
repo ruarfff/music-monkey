@@ -20,9 +20,9 @@ import {
   TrackSearch,
   useSwipeTabsIndex,
   TrackList,
-  Playlist
+  Playlist,
+  Playlists
 } from '../'
-import Playlists from './Playlists'
 
 import './Finder.scss'
 

@@ -11,11 +11,11 @@ import {
   VOTE_DELETE_INITIATED,
   VOTE_DELETE_SUCCESS
 } from './voteActions'
-import { createVote, deleteVote, fetchEventVotes } from './voteClient'
+import { saveVote, removeVote, getEventVotes } from './voteClient'
 
 function* createVoteFlow({ payload }: Action) {
   try {
-    const savedVote = yield call(createVote, payload)
+    const savedVote = yield call(saveVote, payload)
     yield put({ type: VOTE_CREATE_SUCCESS, payload: savedVote })
   } catch (err) {
     yield put({ type: VOTE_CREATE_FAILURE, payload: err })
@@ -28,7 +28,7 @@ export function* watchCreateVote() {
 
 function* deleteVoteFlow({ payload }: Action) {
   try {
-    yield call(deleteVote, payload)
+    yield call(removeVote, payload)
     yield put({ type: VOTE_DELETE_SUCCESS })
   } catch (err) {
     yield put({ type: VOTE_DELETE_FAILURE, payload: err })
@@ -41,7 +41,7 @@ export function* watchDeleteVote() {
 
 function* fetchEventVotesFlow({ payload }: Action) {
   try {
-    const votes = yield call(fetchEventVotes, payload)
+    const votes = yield call(getEventVotes, payload)
     yield put({ type: FETCH_EVENT_VOTES_SUCCESS, payload: votes })
   } catch (err) {
     yield put({ type: FETCH_EVENT_VOTES_FAILURE, payload: err })

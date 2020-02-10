@@ -2,7 +2,7 @@ import { Playlist } from 'mm-shared'
 import IPlaylistState from './IPlaylistState'
 
 export default {
-  data: {} as Playlist[],
+  data: [] as Playlist[],
   eventPlaylists: [],
   error: undefined,
   isLoading: false,

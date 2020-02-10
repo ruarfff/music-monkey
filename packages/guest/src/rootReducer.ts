@@ -8,6 +8,7 @@ import playlist from './playlist/playlistReducer'
 import recommendation from './recommendation/recommendationReducer'
 import suggestion from './request/requestReducer'
 import user from './user/userReducer'
+import music from './music/musicReducer'
 import { voteReducer as vote } from 'mm-shared'
 import rsvp from './rsvp/rsvpReducer'
 
@@ -22,5 +23,6 @@ export default (history: History) =>
     rsvp,
     suggestion,
     user,
-    vote
+    vote,
+    music
   })

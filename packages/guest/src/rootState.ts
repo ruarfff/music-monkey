@@ -6,6 +6,7 @@ import RecommendationState from './recommendation/RecommendationState'
 import IRsvpState from './rsvp/IRsvpState'
 import ISuggestionState from './request/RequestState'
 import IUserState from './user/IUserState'
+import MusicState from 'music/MusicState'
 import { VoteState } from 'mm-shared'
 
 export default interface IRootState {
@@ -17,5 +18,6 @@ export default interface IRootState {
   suggestion: ISuggestionState
   user: IUserState
   rsvp: IRsvpState
-  vote: VoteState
+  vote: VoteState,
+    music: MusicState
 }

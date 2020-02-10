@@ -36,7 +36,7 @@ interface PlaylistsProps {
 
 const Playlists: FC<PlaylistsProps> = ({
   user,
-  playlists,
+  playlists = [],
   playlistsEnabled,
   onTrackSelected,
   onPlaylistSelected
