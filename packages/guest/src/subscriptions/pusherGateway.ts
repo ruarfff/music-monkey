@@ -17,10 +17,12 @@ export const subscribeToSuggestionsModified = (
   if (subscribedToSuggestions !== eventId) {
     const channel = pusher.subscribe('mm-suggestions-' + eventId)
 
-    channel.bind('suggestion-saved', data => callback(data))
-    channel.bind('suggestions-accepted', data => callback('accepted'))
-    channel.bind('suggestions-rejected', data => callback(data))
-    channel.bind('suggestions-auto-accepted', data => callback('accepted'))
+    channel.bind('suggestion-saved', (data: any) => callback(data))
+    channel.bind('suggestions-accepted', (data: any) => callback('accepted'))
+    channel.bind('suggestions-rejected', (data: any) => callback(data))
+    channel.bind('suggestions-auto-accepted', (data: any) =>
+      callback('accepted')
+    )
 
     subscribedToSuggestions = eventId
   }

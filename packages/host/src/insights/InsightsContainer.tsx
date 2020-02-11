@@ -3,19 +3,16 @@ import { sortPlaylistByVotesDescending } from 'event/eventActions'
 import { fetchPlaylists } from 'playlist/playlistActions'
 import IRootState from 'rootState'
 import { fetchEventVotes } from 'mm-shared'
-import { filterByEventPick } from './insightsActions'
 import Insights from './Insights'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.event.event,
   events: state.event.events,
-  pickedEvent: state.insights.eventId,
   votes: state.vote.votes
 })
 
 const mapDispatchToProps = {
-  filterByEventPick,
   sortPlaylistByVotesDescending,
   fetchPlaylists,
   fetchEventVotes

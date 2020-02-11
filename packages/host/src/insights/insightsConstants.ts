@@ -1,1 +1,0 @@
-export const FILTER_BY_EVENT = 'FILTER_BY_EVENT'
