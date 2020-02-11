@@ -1,5 +1,5 @@
 import { Track } from 'mm-shared'
 
 export default interface MusicState {
-  likedTracks: Track[]
+  likedTracks: { track: Track }[]
 }
