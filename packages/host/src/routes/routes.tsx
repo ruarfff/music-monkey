@@ -5,7 +5,7 @@ import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from 'rootState'
 
-const MusicView = lazy(() => import('music/MusicView'))
+const MusicView = lazy(() => import('music/MusicViewContainer'))
 const AccountView = lazy(() => import('account/AccountContainer'))
 const CreateEvent = lazy(() => import('event/saveEvent/CreateEventContainer'))
 const Marvin = lazy(() => import('finder/MarvinContainer'))

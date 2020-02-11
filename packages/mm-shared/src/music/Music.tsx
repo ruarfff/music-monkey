@@ -83,7 +83,11 @@ export const Music: FC<MusicProps> = ({
           />
         )}
         {tabIndex === 1 && (
-          <TrackList tracks={likedTracks.map(lt => lt.track)} />
+          <TrackList
+            tracks={isEmpty(likedTracks) ? [] : likedTracks.map(lt => lt.track)}
+            options={{ canRequest: true }}
+            onSelected={onTrackSelected}
+          />
         )}
       </Grid>
     </Grid>

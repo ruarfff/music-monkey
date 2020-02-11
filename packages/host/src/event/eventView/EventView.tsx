@@ -38,10 +38,6 @@ const EventView: FC<EventViewProps> = ({
   error
 }) => {
   const eventId = match.params.eventId
-  //   const [tabIndex, setTabIndex] = useState(0)
-  //   const handleTabChange = (e: any, value: any) => {
-  //     setTabIndex(value)
-  //   }
 
   useEffect(() => {
     if (!event || event.eventId !== eventId) {
@@ -75,32 +71,6 @@ const EventView: FC<EventViewProps> = ({
       </Grid>
       <Grid item xs={12}>
         <EventTracks votes={votes} event={event} suggestions={suggestions} />
-        {/* <Tabs
-          value={tabIndex}
-          onChange={handleTabChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-        >
-          <Tab className="EventView-tab" label="Current Playlist" />
-          <Tab className="EventView-tab" label="Guests" />
-        </Tabs>
-      </Grid>
-      <Grid item xs={12}>
-        {tabIndex === 0 && (
-          <Typography component="div">
-            <EventTracks
-              votes={votes}
-              event={event}
-              suggestions={suggestions}
-            />
-          </Typography>
-        )}
-        {tabIndex === 1 && (
-          <Typography component="div" dir={'2'}>
-            <EventGuests event={event} />
-          </Typography>
-        )} */}
       </Grid>
     </Grid>
   )

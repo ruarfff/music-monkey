@@ -6,10 +6,12 @@ import { fetchEventVotes } from 'mm-shared'
 import EventView from './EventView'
 import { getEventById, getEventByIdNoLoading } from 'event/eventActions'
 
-const mapStateToProps = ({ event }: IRootState) => ({
+const mapStateToProps = ({ event, vote, suggestion }: IRootState) => ({
   error: event.fetchError,
   event: event.event,
-  loading: event.loading
+  loading: event.loading,
+  votes: vote.votes,
+  suggestions: suggestion.requests
 })
 
 const mapDispatchToProps = {
