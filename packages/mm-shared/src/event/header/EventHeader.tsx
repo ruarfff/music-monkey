@@ -1,5 +1,6 @@
 import React from 'react'
 import ChevronLeft from '@material-ui/icons/ChevronLeft'
+import { Typography, Avatar, Tooltip, Grid } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import { Link } from 'react-router-dom'
 import { isEmpty, take } from 'lodash'
@@ -9,7 +10,6 @@ import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
-import { Typography, Avatar, Tooltip } from '@material-ui/core'
 import './EventHeader.scss'
 
 interface IEventHeaderProps {
@@ -53,25 +53,35 @@ const EventHeader = ({
         alt="Event banner"
         className="EventHeader-background"
       />
-      <div className="EventHeader-content">
-        <div className="EventHeader-top-menu">
-          <Link
-            to="/"
-            onClick={() => {
-              deselectEvent()
-            }}
-          >
-            <ChevronLeft className="EventHeader-back-arrow" />
-          </Link>
-          {isHost && (
-            <Link to={`/events/${event.eventId}/edit`}>
-              <EditIcon className="EventHeader-edit" />
-            </Link>
-          )}
-        </div>
 
-        <div>
+      <div className="EventHeader-top-menu">
+        <Link
+          to="/"
+          onClick={() => {
+            deselectEvent()
+          }}
+        >
+          <ChevronLeft className="EventHeader-back-arrow" />
+        </Link>
+        {isHost && (
+          <Link to={`/events/${event.eventId}/edit`}>
+            <EditIcon className="EventHeader-edit" />
+          </Link>
+        )}
+      </div>
+
+      <Grid
+        className="EventHeader-guests"
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
+        <Grid item xs={12}>
           <Typography>Guests</Typography>
+        </Grid>
+        <Grid item xs={12}>
           {!isEmpty(event.guests) ? (
             <AvatarGroup>
               {take(event.guests, 3).map(guest => (
@@ -90,15 +100,18 @@ const EventHeader = ({
           ) : (
             <Typography>No Guests Yet</Typography>
           )}
-        </div>
-        {!isHost && (
+        </Grid>
+      </Grid>
+
+      {!isHost && (
+        <div className="EventHeader-response-menu">
           <EventResponseMenu
             event={event}
             user={user}
             updateRsvp={updateRsvp}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
