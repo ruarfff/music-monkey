@@ -1,20 +1,26 @@
 import React, { FC, useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
+  User,
   Action,
   Event,
   LoadingSpinner,
   TrackVoteStatus,
-  DecoratedSuggestion
+  DecoratedSuggestion,
+  EventDetailsView,
+  EventGuestView,
+  EventSettingsView,
+  EventHeader
 } from 'mm-shared'
 import EventFetchError from 'event/EventFetchError'
 import EventTracks from './EventTracks'
-import EventHeader from './EventHeaderContainer'
 import './EventView.scss'
 
 interface EventViewProps extends RouteComponentProps<any> {
+  isHost: boolean
+  user: User
   event: Event
   votes: Map<string, TrackVoteStatus>
   suggestions: DecoratedSuggestion[]
@@ -24,18 +30,22 @@ interface EventViewProps extends RouteComponentProps<any> {
   getEventSuggestions(eventId: string): Action
   fetchEventVotes(eventId: string): Action
   getEventByIdNoLoading(eventId: string): Action
+  deselectEvent(): Action
 }
 
 const EventView: FC<EventViewProps> = ({
+  isHost,
+  user,
   event,
   match,
   votes,
   suggestions,
+  error,
   getEventById,
   fetchEventVotes,
   getEventSuggestions,
   loading,
-  error
+  deselectEvent
 }) => {
   const eventId = match.params.eventId
 
@@ -57,23 +67,57 @@ const EventView: FC<EventViewProps> = ({
     return <LoadingSpinner />
   }
 
+  if (loading && !isEmpty(error)) {
+    return (
+      <Grid className="EventView-root" container>
+        <EventFetchError onTryAgain={handleGetEvent} />
+      </Grid>
+    )
+  }
   return (
     <Grid className="EventView-root" container>
-      <Grid item xs={12}>
-        {loading && !isEmpty(error) && (
-          <EventFetchError onTryAgain={handleGetEvent} />
-        )}
-        <EventHeader
-          updateRsvp={(x: any): Action => {
-            return {} as Action
-          }}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <EventTracks votes={votes} event={event} suggestions={suggestions} />
-      </Grid>
+      <Switch>
+        <Route path={`/events/${event.eventId}/details`}>
+          <EventDetailsView
+            user={user}
+            event={event}
+            deselectEvent={deselectEvent}
+          />
+        </Route>
+        <Route path={`/events/${event.eventId}/guests`}>
+          <EventGuestView
+            user={user}
+            event={event}
+            deselectEvent={deselectEvent}
+          />
+        </Route>
+        <Route path={`/events/${event.eventId}/settings`}>
+          <EventSettingsView
+            user={user}
+            event={event}
+            deselectEvent={deselectEvent}
+          />
+        </Route>
+        <Route path={`/events/${event.eventId}`}>
+          <Grid item xs={12}>
+            <EventHeader
+              user={user}
+              event={event}
+              isHost={isHost}
+              deselectEvent={deselectEvent}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <EventTracks
+              votes={votes}
+              event={event}
+              suggestions={suggestions}
+            />
+          </Grid>
+        </Route>
+      </Switch>
     </Grid>
   )
 }
 
-export default EventView
+export default withRouter(EventView)

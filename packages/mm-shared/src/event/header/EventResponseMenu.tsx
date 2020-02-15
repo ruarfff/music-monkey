@@ -1,11 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import find from 'lodash/find'
-import { Button, MenuItem } from '@material-ui/core'
-import MenuList from '@material-ui/core/MenuList'
-import Grow from '@material-ui/core/Grow'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import Paper from '@material-ui/core/Paper'
-import Popper from '@material-ui/core/Popper'
+import { Button, MenuItem, MenuProps, Menu } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import { Action, Event, EventGuest, Rsvp, User } from '../../'
 import './EventResponseMenu.scss'
@@ -16,36 +12,58 @@ interface IEventResponseMenu {
   updateRsvp(rsvp: Rsvp): Action
 }
 
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5'
+  }
+})((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center'
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center'
+    }}
+    {...props}
+  />
+))
+
+const StyledMenuItem = withStyles(theme => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.secondary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white
+      }
+    }
+  }
+}))(MenuItem)
+
 const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {
   const options = ["I'm Going", 'Maybe', "I'm not going"]
   const [selected, selectOption] = useState('You Going?')
-  const [open, setOpen] = useState(false)
-  const anchorRef = useRef(null)
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   const userStatus = event
     ? find(event.guests, guest => guest.rsvp.userId === user.userId)
     : ({ rsvp: { status: 'Pending' } } as EventGuest)
-
-  function handleToggle() {
-    setOpen(prevOpen => !prevOpen)
-  }
-
-  const handleClose = (event: any) => {
-    if (
-      anchorRef &&
-      (anchorRef.current || ({} as any)).contains(event.target)
-    ) {
-      return
-    }
-
-    setOpen(false)
-  }
 
   const handleMenuItemClick = (option: string) => {
     if (userStatus) {
       updateRsvp({ ...userStatus.rsvp, status: option })
     }
-
-    setOpen(false)
     selectOption(option)
   }
 
@@ -59,45 +77,36 @@ const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {
 
   return (
     <div>
-      <span ref={anchorRef}>
-        <Button
-          variant="contained"
-          aria-haspopup="true"
-          color="secondary"
-          onClick={handleToggle}
-          className="EventResponseMenu-button"
-        >
-          {selected}
-          <ArrowDropDownIcon />
-        </Button>
-      </span>
-      <Popper open={open} anchorEl={anchorRef.current} transition disablePortal>
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom'
-            }}
+      <Button
+        aria-controls="customized-menu"
+        variant="contained"
+        aria-haspopup="true"
+        color="secondary"
+        onClick={handleClick}
+        className="EventResponseMenu-button"
+      >
+        {selected}
+        <ArrowDropDownIcon />
+      </Button>
+
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        {options.map(option => (
+          <StyledMenuItem
+            className="EventResponseMenu-menu-item"
+            key={option}
+            selected={selected === option}
+            onClick={() => handleMenuItemClick(option)}
           >
-            <Paper id="event-response-menu-list-grow">
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList>
-                  {options.map(option => (
-                    <MenuItem
-                      key={option}
-                      selected={selected === option}
-                      onClick={() => handleMenuItemClick(option)}
-                    >
-                      {option}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
+            {option}
+          </StyledMenuItem>
+        ))}
+      </StyledMenu>
     </div>
   )
 }

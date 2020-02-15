@@ -45,7 +45,6 @@ export const routes = [
   },
   {
     component: EventView,
-    exact: true,
     path: '/events/:eventId'
   },
   {
