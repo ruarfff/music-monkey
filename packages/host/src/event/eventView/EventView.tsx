@@ -1,5 +1,6 @@
-import React, { FC, useEffect } from 'react'
-import { Grid } from '@material-ui/core'
+import React, { FC, useEffect, useState } from 'react'
+import { Grid, AppBar, Tab, Tabs, Typography } from '@material-ui/core'
+import SwipeableViews from 'react-swipeable-views'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
@@ -48,6 +49,10 @@ const EventView: FC<EventViewProps> = ({
   deselectEvent
 }) => {
   const eventId = match.params.eventId
+  const [tabIndex, setTabIndex] = useState(0)
+  const handleTabChange = (e: any, value: any) => {
+    setTabIndex(value)
+  }
 
   useEffect(() => {
     if (!event || event.eventId !== eventId) {
@@ -108,11 +113,34 @@ const EventView: FC<EventViewProps> = ({
             />
           </Grid>
           <Grid item xs={12}>
-            <EventTracks
-              votes={votes}
-              event={event}
-              suggestions={suggestions}
-            />
+            <AppBar position="static" color="default">
+              <Tabs
+                value={tabIndex}
+                onChange={handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                variant="fullWidth"
+              >
+                <Tab label="PLAYLIST" />
+                <Tab label="REQUESTS" />
+              </Tabs>
+            </AppBar>
+            <SwipeableViews
+              axis="x"
+              index={tabIndex}
+              onChangeIndex={handleTabChange}
+            >
+              <Typography component="div" dir="0">
+                <EventTracks
+                  votes={votes}
+                  event={event}
+                  suggestions={suggestions}
+                />
+              </Typography>
+              <Typography component="div" dir="0">
+                <h1>Requests</h1>
+              </Typography>
+            </SwipeableViews>
           </Grid>
         </Route>
       </Switch>

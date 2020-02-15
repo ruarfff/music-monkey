@@ -122,7 +122,7 @@ export const TrackList: FC<TrackListProps> = ({
   return (
     <List
       subheader={
-        options.showSummary ? (
+        options.showSummary && !isEmpty(tracks) ? (
           <ListSubheader component="div">
             {numTracks} tracks : {formatDuration(duration)}
           </ListSubheader>

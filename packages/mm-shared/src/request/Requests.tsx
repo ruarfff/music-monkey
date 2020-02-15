@@ -56,7 +56,7 @@ const Requests: FC<RequestsProps> = ({
           index={tabIndex}
           onChangeIndex={handleTabChange}
         >
-          {tabIndex === 0 ? (
+          {tabIndex === 0 && (
             <Typography component="div" dir="0">
               <MaybeTracks
                 isHost={isHost}
@@ -67,10 +67,8 @@ const Requests: FC<RequestsProps> = ({
                 onReject={onReject}
               />
             </Typography>
-          ) : (
-            <div />
           )}
-          {tabIndex === 1 ? (
+          {tabIndex === 1 && (
             <Typography component="div" dir="1">
               <AcceptedTracks
                 isHost={isHost}
@@ -79,10 +77,8 @@ const Requests: FC<RequestsProps> = ({
                 onReject={onReject}
               />
             </Typography>
-          ) : (
-            <div />
           )}
-          {tabIndex === 2 ? (
+          {tabIndex === 2 && (
             <Typography component="div" dir="2">
               <RejectedTracks
                 isHost={isHost}
@@ -91,8 +87,6 @@ const Requests: FC<RequestsProps> = ({
                 onAccept={onAccept}
               />
             </Typography>
-          ) : (
-            <div />
           )}
         </SwipeableViews>
       </Grid>

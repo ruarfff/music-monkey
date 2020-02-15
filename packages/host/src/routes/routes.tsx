@@ -58,24 +58,19 @@ export const routes = [
     path: '/playlists'
   },
   {
-    component: EventView,
-    exact: true,
-    path: '/playlists/:eventId'
-  },
-  {
     component: AccountView,
-    exact: true,
-    path: '/account'
+    path: '/account',
+    exact: true
   },
   {
     component: RequestView,
-    exact: true,
-    path: '/requests'
+    path: '/requests',
+    exact: true
   },
   {
     component: RequestView,
-    exact: true,
-    path: '/requests/:eventId'
+    path: '/requests/:eventId',
+    exact: true
   },
   {
     component: Marvin,

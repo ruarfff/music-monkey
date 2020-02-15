@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from 'react'
-import { AppBar, Tab, Tabs, Typography } from '@material-ui/core'
-import Icon from '@material-ui/core/Icon'
+import { Grid, AppBar, Tab, Tabs, Typography } from '@material-ui/core'
+import SwipeableViews from 'react-swipeable-views'
 import { isEmpty } from 'lodash'
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
   Action,
   User,
@@ -10,15 +10,17 @@ import {
   LoadingSpinner,
   TrackVoteStatus,
   Vote,
-  DecoratedSuggestion
+  DecoratedSuggestion,
+  EventDetailsView,
+  EventGuestView,
+  EventSettingsView,
+  EventHeader
 } from 'mm-shared'
 import EventTracks from './EventTracks'
-import EventGuests from './EventGuests'
-import EventLocation from './EventLocation'
-import EventHeader from './EventHeaderContainer'
 import './EventView.scss'
 
 interface EventViewProps extends RouteComponentProps<any> {
+  isHost: boolean
   user: User
   event: Event
   votes: Map<string, TrackVoteStatus>
@@ -26,9 +28,11 @@ interface EventViewProps extends RouteComponentProps<any> {
   createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
   setEventId(eventId: string): Action
+  deselectEvent(): Action
 }
 
 const EventView: FC<EventViewProps> = ({
+  isHost,
   user,
   event,
   votes,
@@ -36,7 +40,8 @@ const EventView: FC<EventViewProps> = ({
   createVote,
   deleteVote,
   setEventId,
-  match
+  match,
+  deselectEvent
 }) => {
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
@@ -55,49 +60,75 @@ const EventView: FC<EventViewProps> = ({
   }
 
   return (
-    <div className="EventView-root">
-      <EventHeader />
-      <div>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={tabIndex}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="secondary"
-            variant="fullWidth"
-            classes={{ indicator: 'indicator-color' }}
-            className="EventView-tabs"
-          >
-            <Tab icon={<Icon>library_music</Icon>} className="EventView-tab" />
-            <Tab icon={<Icon>location_on</Icon>} className="EventView-tab" />
-            <Tab icon={<Icon>account_circle</Icon>} className="EventView-tab" />
-          </Tabs>
-        </AppBar>
-        {tabIndex === 0 && (
-          <Typography component="div">
-            <EventTracks
+    <Grid className="EventView-root" container>
+      <Switch>
+        <Route path={`/events/${event.eventId}/details`}>
+          <EventDetailsView
+            user={user}
+            event={event}
+            deselectEvent={deselectEvent}
+          />
+        </Route>
+        <Route path={`/events/${event.eventId}/guests`}>
+          <EventGuestView
+            user={user}
+            event={event}
+            deselectEvent={deselectEvent}
+          />
+        </Route>
+        <Route path={`/events/${event.eventId}/settings`}>
+          <EventSettingsView
+            user={user}
+            event={event}
+            deselectEvent={deselectEvent}
+          />
+        </Route>
+        <Route path={`/events/${event.eventId}`}>
+          <Grid item xs={12}>
+            <EventHeader
               user={user}
-              createVote={createVote}
-              deleteVote={deleteVote}
-              votes={votes}
               event={event}
-              suggestions={suggestions}
+              isHost={isHost}
+              deselectEvent={deselectEvent}
             />
-          </Typography>
-        )}
-        {tabIndex === 1 && (
-          <Typography component="div" dir={'1'}>
-            <EventLocation event={event} />
-          </Typography>
-        )}
-        {tabIndex === 2 && (
-          <Typography component="div" dir={'2'}>
-            <EventGuests event={event} />
-          </Typography>
-        )}
-      </div>
-    </div>
+          </Grid>
+          <Grid item xs={12}>
+            <AppBar position="static" color="default">
+              <Tabs
+                value={tabIndex}
+                onChange={handleTabChange}
+                indicatorColor="primary"
+                textColor="primary"
+                variant="fullWidth"
+              >
+                <Tab label="PLAYLIST" />
+                <Tab label="REQUESTS" />
+              </Tabs>
+            </AppBar>
+            <SwipeableViews
+              axis="x"
+              index={tabIndex}
+              onChangeIndex={handleTabChange}
+            >
+              <Typography component="div" dir="0">
+                <EventTracks
+                  user={user}
+                  createVote={createVote}
+                  deleteVote={deleteVote}
+                  votes={votes}
+                  event={event}
+                  suggestions={suggestions}
+                />
+              </Typography>
+              <Typography component="div" dir="0">
+                <h1>Requests</h1>
+              </Typography>
+            </SwipeableViews>
+          </Grid>
+        </Route>
+      </Switch>
+    </Grid>
   )
 }
 
-export default EventView
+export default withRouter(EventView)

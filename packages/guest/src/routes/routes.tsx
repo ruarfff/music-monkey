@@ -6,8 +6,8 @@ import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import IRootState from 'rootState'
 
 const MusicView = lazy(() => import('music/MusicViewContainer'))
-const Account = lazy(() => import('account/AccountContainer'))
-const Event = lazy(() => import('event/eventView/EventViewContainer'))
+const AccountView = lazy(() => import('account/AccountContainer'))
+const EventView = lazy(() => import('event/eventView/EventViewContainer'))
 const EventListView = lazy(() =>
   import('event/eventList/EventListViewContainer')
 )
@@ -41,12 +41,11 @@ export const routes = [
     exact: true
   },
   {
-    component: Event,
-    path: '/events/:eventId',
-    exact: true
+    component: EventView,
+    path: '/events/:eventId'
   },
   {
-    component: Account,
+    component: AccountView,
     path: '/account',
     exact: true
   },
