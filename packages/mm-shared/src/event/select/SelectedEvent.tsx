@@ -1,6 +1,6 @@
 import React from 'react'
 import { List, ListItemText, ListItem, ListItemIcon } from '@material-ui/core'
-import { Event } from '../../'
+import { Event } from '../..'
 import backgroundImage from 'assets/music-monkey.jpg'
 import './SelectedEvent.scss'
 import Img from 'react-image'

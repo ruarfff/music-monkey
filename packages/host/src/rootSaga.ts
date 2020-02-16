@@ -21,7 +21,6 @@ import {
   watchFetchTrackFeatures
 } from 'playlist/playlistSaga'
 import { watchFetchRecommendation } from 'recommendation/recommendationSaga'
-import { watchFetchShareEmail } from 'event/shareEvent/shareSaga'
 import { watchFetchSuggestions } from 'request/requestSaga'
 import { watchUpdateUserFlow } from 'user/userSaga'
 import { watchFetchEventVotes } from 'mm-shared'
@@ -44,7 +43,6 @@ export default function* rootSaga() {
     watchToggleSuggestingPlaylists(),
     watchUpdateUserFlow(),
     watchFetchRemoveTrackFromPlaylist(),
-    watchFetchShareEmail(),
     watchFetchSearchTracks(),
     watchFetchAddTrackToPlaylist(),
     watchFetchTrackFeatures(),

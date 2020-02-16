@@ -7,7 +7,7 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import { Action, Event } from '../../'
+import { Action, Event } from '../..'
 import backgroundImage from 'assets/music-monkey.jpg'
 
 import './EventPicker.scss'

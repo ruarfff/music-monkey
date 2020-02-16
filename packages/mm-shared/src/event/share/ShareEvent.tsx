@@ -12,6 +12,7 @@ import './ShareEvent.scss'
 interface IShareEventProps {
   event: Event
   inviteId: string
+  shareByEmails(emails: string[], emailText: string, event: Event): void
 }
 
 const ShareEvent = ({ inviteId, event }: IShareEventProps) => {
