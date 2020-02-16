@@ -4,7 +4,6 @@ import { getRequestsByEventId } from 'request/requestActions'
 import { fetchEventVotes } from 'mm-shared'
 import EventView from './EventView'
 import { getEventById, getEventByIdNoLoading } from 'event/eventActions'
-import { deselectEvent } from '../eventActions'
 
 const mapStateToProps = ({ user, event, vote, suggestion }: IRootState) => ({
   isHost: true,
@@ -20,8 +19,7 @@ const mapDispatchToProps = {
   getEventById,
   getEventSuggestions: getRequestsByEventId,
   fetchEventVotes,
-  getEventByIdNoLoading,
-  deselectEvent
+  getEventByIdNoLoading
 }
 
 const EventViewContainer = connect(

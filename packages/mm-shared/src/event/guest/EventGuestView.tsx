@@ -1,33 +1,28 @@
 import React from 'react'
 import { ChevronLeft } from '@material-ui/icons'
-import { Link } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { User } from 'user'
-import { Action } from 'state'
-import { Rsvp } from 'rsvp'
 import { Event } from 'event'
 import EventGuests from './EventGuests'
 
-interface EventGuestViewProps {
+interface EventGuestViewProps extends RouteComponentProps<any> {
   isHost?: boolean
   user: User
   event: Event
-  deselectEvent(): Action
 }
 
-const EventGuestView = ({ event, deselectEvent }: EventGuestViewProps) => (
+const EventGuestView = ({ event, history }: EventGuestViewProps) => (
   <div>
     <div className="EventHeader-top-menu">
-      <Link
-        to="/"
+      <ChevronLeft
+        className="EventHeader-back-arrow"
         onClick={() => {
-          deselectEvent()
+          history.goBack()
         }}
-      >
-        <ChevronLeft className="EventHeader-back-arrow" />
-      </Link>
+      />
     </div>
     <EventGuests event={event} />
   </div>
 )
 
-export default EventGuestView
+export default withRouter(EventGuestView)

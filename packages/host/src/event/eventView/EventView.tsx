@@ -34,7 +34,6 @@ interface EventViewProps extends RouteComponentProps<any> {
   getEventSuggestions(eventId: string): Action
   fetchEventVotes(eventId: string): Action
   getEventByIdNoLoading(eventId: string): Action
-  deselectEvent(): Action
 }
 
 const EventView: FC<EventViewProps> = ({
@@ -48,8 +47,7 @@ const EventView: FC<EventViewProps> = ({
   getEventById,
   fetchEventVotes,
   getEventSuggestions,
-  loading,
-  deselectEvent
+  loading
 }) => {
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
@@ -86,25 +84,13 @@ const EventView: FC<EventViewProps> = ({
     <Grid className="EventView-root" container>
       <Switch>
         <Route path={`/events/${event.eventId}/details`}>
-          <EventDetailsView
-            user={user}
-            event={event}
-            deselectEvent={deselectEvent}
-          />
+          <EventDetailsView user={user} event={event} />
         </Route>
         <Route path={`/events/${event.eventId}/guests`}>
-          <EventGuestView
-            user={user}
-            event={event}
-            deselectEvent={deselectEvent}
-          />
+          <EventGuestView user={user} event={event} />
         </Route>
         <Route path={`/events/${event.eventId}/settings`}>
-          <EventSettingsView
-            user={user}
-            event={event}
-            deselectEvent={deselectEvent}
-          />
+          <EventSettingsView user={user} event={event} />
         </Route>
         <Route path={`/events/${event.eventId}/edit`}>
           <EditEventView />
@@ -114,12 +100,7 @@ const EventView: FC<EventViewProps> = ({
         </Route>
         <Route path={`/events/${event.eventId}`}>
           <Grid item xs={12}>
-            <EventHeader
-              user={user}
-              event={event}
-              isHost={isHost}
-              deselectEvent={deselectEvent}
-            />
+            <EventHeader user={user} event={event} isHost={isHost} />
           </Grid>
           <Grid item xs={12}>
             <AppBar position="static" color="default">

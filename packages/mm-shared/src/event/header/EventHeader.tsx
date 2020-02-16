@@ -4,18 +4,18 @@ import { Typography, Avatar, Tooltip, Grid } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import { Link } from 'react-router-dom'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { isEmpty, take } from 'lodash'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
-import { Action, Event, User, Rsvp } from './../../'
+import { Event, User, Rsvp } from './../../'
 import './EventHeader.scss'
 
-interface IEventHeaderProps {
+interface IEventHeaderProps extends RouteComponentProps<any> {
   isHost?: boolean
   user: User
   event: Event
-  deselectEvent(): Action
   updateRsvp?(rsvp: Rsvp): any
 }
 
@@ -23,7 +23,7 @@ const EventHeader = ({
   isHost = false,
   user,
   event,
-  deselectEvent,
+  history,
   updateRsvp = () => {}
 }: IEventHeaderProps) => {
   return (
@@ -35,14 +35,12 @@ const EventHeader = ({
       />
 
       <div className="EventHeader-top-menu">
-        <Link
-          to="/"
+        <ChevronLeft
+          className="EventHeader-back-arrow"
           onClick={() => {
-            deselectEvent()
+            history.goBack()
           }}
-        >
-          <ChevronLeft className="EventHeader-back-arrow" />
-        </Link>
+        />
         {isHost && (
           <Link to={`/events/${event.eventId}/edit`}>
             <EditIcon className="EventHeader-edit" />
@@ -149,4 +147,4 @@ const EventHeader = ({
   )
 }
 
-export default EventHeader
+export default withRouter(EventHeader)
