@@ -5,7 +5,7 @@ import { Redirect } from 'react-router'
 import {
   Action,
   Event,
-  LoadingSpinner,
+  MarvinLoader,
   localStorage,
   sortEvents
 } from 'mm-shared'
@@ -56,7 +56,7 @@ const EventListView = ({
   }
 
   if (eventsLoading) {
-    return <LoadingSpinner />
+    return <MarvinLoader />
   }
 
   if (isEmpty(events)) {

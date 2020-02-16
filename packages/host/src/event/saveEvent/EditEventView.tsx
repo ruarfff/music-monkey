@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
 import { RouteComponentProps, withRouter } from 'react-router'
 import debounce from 'just-debounce-it'
@@ -25,10 +25,6 @@ const EditEventView: FC<EditEventViewProps> = ({
 }) => {
   const { showSuccess, showError } = useSnackbarAlert()
   const eventIdFromPath = match.params['eventId']
-  useEffect(() => {
-    getEventById(eventIdFromPath)
-    // eslint-disable-next-line
-  }, [eventIdFromPath])
 
   const handleSubmit = (
     values: SaveEventFormValues,

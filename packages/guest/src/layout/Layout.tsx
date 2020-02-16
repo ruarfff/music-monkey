@@ -1,13 +1,7 @@
 import React from 'react'
 import isEmpty from 'lodash/isEmpty'
 import { Sizes } from 'react-sizes'
-import {
-  User,
-  Event,
-  DesktopLayout,
-  MainLayout,
-  LoadingSpinner
-} from 'mm-shared'
+import { User, Event, DesktopLayout, MainLayout, MarvinLoader } from 'mm-shared'
 import LoginError from './LoginError'
 import Content from './ContentContainer'
 
@@ -45,7 +39,7 @@ const Layout = ({
             <Content />
           </MainLayout>
         ))}
-      {userLoading && <LoadingSpinner />}
+      {userLoading && <MarvinLoader />}
       {userError.message && <LoginError />}
     </div>
   )

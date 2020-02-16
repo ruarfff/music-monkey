@@ -1,9 +1,18 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
 import { RouteComponentProps } from 'react-router-dom'
+import { withRouter } from 'react-router'
+import isEmpty from 'lodash/isEmpty'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
 import debounce from 'just-debounce-it'
-import { Event, Action, TabPanel, User, useSnackbarAlert } from 'mm-shared'
+import {
+  Event,
+  Action,
+  TabPanel,
+  User,
+  useSnackbarAlert,
+  MarvinLoader
+} from 'mm-shared'
 import EventDetails from './EventDetails'
 import SaveEventFormValues from './SaveEventFormValues'
 import FormValidationSchema from './FormValidationSchema'
@@ -29,11 +38,6 @@ const SaveEvent: FC<SaveEventProps> = ({
 }) => {
   const { showSuccess, showError } = useSnackbarAlert()
   const eventIdFromPath = match.params['eventId']
-  useEffect(() => {
-    getEventById(eventIdFromPath)
-    // eslint-disable-next-line
-  }, [eventIdFromPath])
-
   const [tabIndex, setTabIndex] = useState(0)
   const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue)
@@ -90,6 +94,10 @@ const SaveEvent: FC<SaveEventProps> = ({
     return <></>
   }
 
+  if (isEmpty(event)) {
+    return <MarvinLoader />
+  }
+
   return (
     <Formik
       enableReinitialize
@@ -141,4 +149,4 @@ const SaveEvent: FC<SaveEventProps> = ({
   )
 }
 
-export default SaveEvent
+export default withRouter(SaveEvent)

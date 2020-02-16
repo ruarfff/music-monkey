@@ -7,7 +7,7 @@ import {
   Action,
   User,
   Event,
-  LoadingSpinner,
+  MarvinLoader,
   TrackVoteStatus,
   Vote,
   DecoratedSuggestion,
@@ -56,7 +56,7 @@ const EventView: FC<EventViewProps> = ({
   }, [eventId])
 
   if (isEmpty(event)) {
-    return <LoadingSpinner />
+    return <MarvinLoader />
   }
 
   return (

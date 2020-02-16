@@ -16,7 +16,7 @@ import {
   Event,
   Track,
   User,
-  LoadingSpinner,
+  MarvinLoader,
   TrackSearch,
   useSwipeTabsIndex,
   TrackList,
@@ -148,7 +148,7 @@ const Finder: FC<FinderProps> = ({
       <Grid item xs={12}>
         {searching ? (
           <div className="AddTracks-search-loading">
-            <LoadingSpinner />
+            <MarvinLoader />
           </div>
         ) : (
           <>

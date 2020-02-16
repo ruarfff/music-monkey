@@ -9,7 +9,7 @@ import SeedPlaylist from './SeedPlaylistContainer'
 import {
   User,
   Playlist,
-  LoadingSpinner,
+  MarvinLoader,
   Action,
   useSnackbarAlert
 } from 'mm-shared'
@@ -62,7 +62,7 @@ const CreateEvent = ({ user, history, getEvents }: CreateEventProps) => {
           <div className="CreateEvent-root">
             {isSubmitting && (
               <div className="CreateEvent-loading">
-                <LoadingSpinner />
+                <MarvinLoader />
               </div>
             )}
             <EventInitializeDialog

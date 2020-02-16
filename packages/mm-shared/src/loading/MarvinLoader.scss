@@ -1,0 +1,80 @@
+@import '../theme/main';
+
+.MarvinLoader-root {
+  align-items: center;
+  background: $main;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  margin: 0;
+
+  .m-loader {
+    margin-top: 50%;
+    margin-bottom: 50%;
+    height: 200px;
+    position: relative;
+    width: 200px;
+  }
+  .m-loader img {
+    border-radius: 9999px;
+    height: 80%;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+  }
+  @keyframes cycle-colors {
+    0% {
+      border-color: hsl(0, 100%, 50%);
+    }
+    25% {
+      border-color: hsl(90, 100%, 50%);
+    }
+    50% {
+      border-color: hsl(180, 100%, 50%);
+    }
+    75% {
+      border-color: hsl(270, 100%, 50%);
+    }
+    100% {
+      border-color: hsl(360, 100%, 50%);
+    }
+  }
+
+  @keyframes pulse {
+    to {
+      opacity: 0;
+      transform: scale(1);
+    }
+  }
+
+  .m-loader::before,
+  .m-loader::after {
+    animation: pulse 2s linear infinite;
+    border: #fff solid 8px;
+    border-radius: 9999px;
+    box-sizing: border-box;
+    content: ' ';
+    height: 140%;
+    left: -20%;
+    opacity: 0.6;
+    position: absolute;
+    top: -20%;
+    transform: scale(0.714);
+    width: 140%;
+    z-index: 1;
+  }
+
+  .m-loader::after {
+    animation-delay: 1s;
+  }
+
+  .m-loader:hover::before,
+  .m-loader:hover::after {
+    animation: pulse 1s linear infinite, cycle-colors 6s linear infinite;
+  }
+
+  .m-loader:hover::after {
+    animation-delay: 0.5s;
+  }
+}

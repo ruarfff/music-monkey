@@ -4,7 +4,7 @@ import { RouteContext } from 'routes/RouteContext'
 import { RouteWithSubRoutes } from 'routes/routes'
 import EventListView from 'event/eventList/EventListViewContainer'
 import isEmpty from 'lodash/isEmpty'
-import { Action, Event, LoadingSpinner } from 'mm-shared'
+import { Action, Event, MarvinLoader } from 'mm-shared'
 
 interface ContentProps {
   events: Event[]
@@ -20,11 +20,11 @@ const Content = ({ events, eventsLoading, getEvents }: ContentProps) => {
     }
   })
   if (eventsLoading) {
-    return <LoadingSpinner />
+    return <MarvinLoader />
   }
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<MarvinLoader />}>
       <Switch>
         <Route exact={true} path="/" component={EventListView} />
         {routes.map((route: any, i: number) => (

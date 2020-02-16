@@ -3,6 +3,7 @@
 body {
   background: $mm-white !important;
   font-family: $main-font-family;
+  height: 100%;
 }
 
 .MuiTab-root {
@@ -17,19 +18,4 @@ body {
 
 a {
   text-decoration: none !important;
-}
-
-.swal2-popup .swal2-styled.swal2-confirm {
-  &:focus {
-    box-shadow: none;
-  }
-  background: $secondary-main !important;
-}
-
-.swal2-icon.swal2-success .swal2-success-ring {
-  border: 0.25em solid $primary !important;
-}
-
-.swal2-icon.swal2-success [class^='swal2-success-line'] {
-  background-color: $primary !important;
 }

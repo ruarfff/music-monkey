@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from 'assets/logo-home.png'
-import { Action, LoadingSpinner, ErrorNotification } from 'mm-shared'
+import { Action, MarvinLoader, ErrorNotification } from 'mm-shared'
 import spotifyLoginButtonImage from 'assets/spotify-login.svg'
 import IAuthState from './IAuthState'
 import './Login.scss'
@@ -18,7 +18,7 @@ class Login extends React.Component<ILoginProps, {}> {
   public render() {
     const { isAuthenticating, authError } = this.props.auth
     if (isAuthenticating) {
-      return <LoadingSpinner />
+      return <MarvinLoader />
     }
 
     const spotifyLoginUrl = serviceUrl + '/auth/spotify-host' + authSuffix

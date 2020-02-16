@@ -19,7 +19,7 @@ import { ChevronRight, KeyboardArrowDown } from '@material-ui/icons'
 import {
   Action,
   User,
-  LoadingSpinner,
+  MarvinLoader,
   getTrackImage,
   getPlaylistImage,
   getFormattedPlaylistDuration,
@@ -68,7 +68,7 @@ const SeedPlaylist = ({
     return (
       <div className="SeedPlaylist-root">
         <div className="SeedPlaylist-loading-area">
-          <LoadingSpinner />
+          <MarvinLoader />
         </div>
       </div>
     )

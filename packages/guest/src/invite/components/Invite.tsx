@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { Redirect, RouteComponentProps, withRouter } from 'react-router'
-import { Action, Event, User, LoadingSpinner, localStorage } from 'mm-shared'
+import { Action, Event, User, MarvinLoader, localStorage } from 'mm-shared'
 import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 
 interface IInviteProps extends RouteComponentProps<any> {
@@ -50,7 +50,7 @@ const Invite = ({
     return <Redirect to={`/events/${inviteEvent.eventId}`} />
   }
 
-  return <LoadingSpinner />
+  return <MarvinLoader />
 }
 
 export default withRouter(Invite)

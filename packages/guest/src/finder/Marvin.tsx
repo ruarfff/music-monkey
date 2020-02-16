@@ -11,7 +11,7 @@ import {
   Event,
   Track,
   getPlaylistTracks,
-  LoadingSpinner
+  MarvinLoader
 } from 'mm-shared'
 
 interface MarvinProps {
@@ -61,7 +61,7 @@ const Marvin: FC<MarvinProps> = ({
           onTrackSelected={onTrackSelected}
         />
       ) : (
-        <LoadingSpinner />
+        <MarvinLoader />
       )}
     </div>
   )

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, Suspense } from 'react'
 import { RouteContext } from 'routes/RouteContext'
 import { RouteWithSubRoutes } from 'routes/routes'
-import { Action, Event, LoadingSpinner } from 'mm-shared'
+import { Action, Event, MarvinLoader } from 'mm-shared'
 import isEmpty from 'lodash/isEmpty'
 import { Switch } from 'react-router'
 
@@ -47,11 +47,11 @@ const Content = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventId])
   if (eventsLoading) {
-    return <LoadingSpinner />
+    return <MarvinLoader />
   }
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<MarvinLoader />}>
       <Switch>
         {routes.map((route: any, i: number) => (
           <RouteWithSubRoutes key={i} {...route} />

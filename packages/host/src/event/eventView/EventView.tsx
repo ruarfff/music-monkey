@@ -7,7 +7,7 @@ import {
   User,
   Action,
   Event,
-  LoadingSpinner,
+  MarvinLoader,
   TrackVoteStatus,
   DecoratedSuggestion,
   EventDetailsView,
@@ -17,6 +17,9 @@ import {
 } from 'mm-shared'
 import EventFetchError from 'event/EventFetchError'
 import EventTracks from './EventTracks'
+import SaveEvent from 'event/saveEvent/SaveEventContainer'
+import EditEventView from 'event/saveEvent/EditEventViewContainer'
+
 import './EventView.scss'
 
 interface EventViewProps extends RouteComponentProps<any> {
@@ -69,7 +72,7 @@ const EventView: FC<EventViewProps> = ({
   }
 
   if (!shouldShowEvent) {
-    return <LoadingSpinner />
+    return <MarvinLoader />
   }
 
   if (loading && !isEmpty(error)) {
@@ -102,6 +105,12 @@ const EventView: FC<EventViewProps> = ({
             event={event}
             deselectEvent={deselectEvent}
           />
+        </Route>
+        <Route path={`/events/${event.eventId}/edit`}>
+          <EditEventView />
+        </Route>
+        <Route path={`/events/${event.eventId}/save`}>
+          <SaveEvent />
         </Route>
         <Route path={`/events/${event.eventId}`}>
           <Grid item xs={12}>
