@@ -3,7 +3,7 @@ import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
 import { RouteComponentProps, withRouter } from 'react-router'
 import debounce from 'just-debounce-it'
 import SaveEventFormValues from './SaveEventFormValues'
-import { Action, User, Event, useSnackbarAlert } from 'mm-shared'
+import { Action, User, Event, useSnackbarAlert, EventTopMenu } from 'mm-shared'
 import EventDetails from './EventDetails'
 import eventWillBeModified from './eventWillBeModified'
 import updateEventFlow from './updateEventFlow'
@@ -71,6 +71,7 @@ const EditEventView: FC<EditEventViewProps> = ({
 
   return (
     <div className="EditEventView-root">
+      <EventTopMenu event={event} />
       <Formik
         enableReinitialize
         initialValues={saveEventInitialFormValues(user, event)}

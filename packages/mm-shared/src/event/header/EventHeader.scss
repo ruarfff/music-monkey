@@ -17,31 +17,6 @@
     margin: auto;
   }
 
-  .EventHeader-top-menu {
-    top: 0;
-    color: #fff;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    position: fixed;
-    padding: 70px 15px 15px;
-    height: 45px;
-    background: rgb(0, 0, 0); /* fallback color */
-    background: rgba(0, 0, 0, 0.7);
-    .EventHeader-back-arrow {
-      color: #fff;
-      font-size: 3em;
-    }
-    .EventHeader-edit {
-      color: #fff;
-      align-self: flex-end;
-    }
-    @media (min-width: 1025px) {
-      padding-top: 80px;
-    }
-  }
-
   .EventHeader-actions {
     position: absolute;
     top: 50px;

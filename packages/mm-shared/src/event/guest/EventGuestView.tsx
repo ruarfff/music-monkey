@@ -1,9 +1,9 @@
 import React from 'react'
-import { ChevronLeft } from '@material-ui/icons'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { User } from 'user'
-import { Event } from 'event'
+import { Event, EventTopMenu } from '../../event'
 import EventGuests from './EventGuests'
+import './EventGuestView.scss'
 
 interface EventGuestViewProps extends RouteComponentProps<any> {
   isHost?: boolean
@@ -11,17 +11,12 @@ interface EventGuestViewProps extends RouteComponentProps<any> {
   event: Event
 }
 
-const EventGuestView = ({ event, history }: EventGuestViewProps) => (
-  <div>
-    <div className="EventHeader-top-menu">
-      <ChevronLeft
-        className="EventHeader-back-arrow"
-        onClick={() => {
-          history.goBack()
-        }}
-      />
+const EventGuestView = ({ isHost, event }: EventGuestViewProps) => (
+  <div className="EventGuestView-root">
+    <EventTopMenu isHost={isHost} event={event} />
+    <div className="EventGuestView-content">
+      <EventGuests event={event} />
     </div>
-    <EventGuests event={event} />
   </div>
 )
 

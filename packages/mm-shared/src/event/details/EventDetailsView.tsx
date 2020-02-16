@@ -1,8 +1,8 @@
 import React from 'react'
-import { ChevronLeft } from '@material-ui/icons'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { User } from 'user'
-import { Event } from 'event'
+import { Event, EventTopMenu } from '../../event'
+import './EventDetailsView.scss'
 
 interface EventDetailsViewProps extends RouteComponentProps<any> {
   isHost?: boolean
@@ -29,17 +29,12 @@ interface EventDetailsViewProps extends RouteComponentProps<any> {
 
 //   const times = dateFormat(event)
 
-const EventDetailsView = ({ history }: EventDetailsViewProps) => (
-  <div>
-    <div className="EventHeader-top-menu">
-      <ChevronLeft
-        className="EventHeader-back-arrow"
-        onClick={() => {
-          history.goBack()
-        }}
-      />
+const EventDetailsView = ({ isHost, event }: EventDetailsViewProps) => (
+  <div className="EventDetailsView-root">
+    <EventTopMenu isHost={isHost} event={event} />
+    <div className="EventDetailsView-content">
+      <h1>DETAILS</h1>
     </div>
-    <h1>DETAILS</h1>
   </div>
 )
 

@@ -1,7 +1,5 @@
 import React from 'react'
-import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import { Typography, Avatar, Tooltip, Grid } from '@material-ui/core'
-import EditIcon from '@material-ui/icons/Edit'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps, withRouter } from 'react-router'
@@ -9,8 +7,9 @@ import { isEmpty, take } from 'lodash'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
-import { Event, User, Rsvp } from './../../'
+import { User, Rsvp } from './../../'
 import './EventHeader.scss'
+import { Event, EventTopMenu } from '../../event'
 
 interface IEventHeaderProps extends RouteComponentProps<any> {
   isHost?: boolean
@@ -23,7 +22,6 @@ const EventHeader = ({
   isHost = false,
   user,
   event,
-  history,
   updateRsvp = () => {}
 }: IEventHeaderProps) => {
   return (
@@ -34,19 +32,7 @@ const EventHeader = ({
         className="EventHeader-background"
       />
 
-      <div className="EventHeader-top-menu">
-        <ChevronLeft
-          className="EventHeader-back-arrow"
-          onClick={() => {
-            history.goBack()
-          }}
-        />
-        {isHost && (
-          <Link to={`/events/${event.eventId}/edit`}>
-            <EditIcon className="EventHeader-edit" />
-          </Link>
-        )}
-      </div>
+      <EventTopMenu isHost={isHost} event={event} backTo="/" />
 
       <Grid container className="EventHeader-actions">
         <Grid item xs={4} className="EventHeader-details">
