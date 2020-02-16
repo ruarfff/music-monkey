@@ -5,6 +5,7 @@ import { User } from 'user'
 import { Action } from 'state'
 import { Rsvp } from 'rsvp'
 import { Event } from 'event'
+import EventGuests from './EventGuests'
 
 interface EventGuestViewProps {
   isHost?: boolean
@@ -13,7 +14,7 @@ interface EventGuestViewProps {
   deselectEvent(): Action
 }
 
-const EventGuestView = ({ deselectEvent }: EventGuestViewProps) => (
+const EventGuestView = ({ event, deselectEvent }: EventGuestViewProps) => (
   <div>
     <div className="EventHeader-top-menu">
       <Link
@@ -25,7 +26,7 @@ const EventGuestView = ({ deselectEvent }: EventGuestViewProps) => (
         <ChevronLeft className="EventHeader-back-arrow" />
       </Link>
     </div>
-    <h1>Guests</h1>
+    <EventGuests event={event} />
   </div>
 )
 

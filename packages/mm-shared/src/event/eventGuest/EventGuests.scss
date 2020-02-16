@@ -1,3 +1,5 @@
+@import '../../theme/main';
+
 .EventGuests-inline {
   display: inline;
 }
@@ -5,20 +7,15 @@
 .EventGuests-avatar {
   margin: 10;
 }
+
 .EventGuests-orange-avatar {
   margin: 10;
   color: #fff;
-  background-color: orange;
+  background-color: $secondary-main;
 }
 
 .EventGuests-purple-avatar {
   margin: 10;
   color: #fff;
-  background-color: purple;
-}
-
-.EventGuests-purple-avatar {
-  margin: 10;
-  color: #fff;
-  background-color: green;
+  background-color: $primary-dark;
 }
