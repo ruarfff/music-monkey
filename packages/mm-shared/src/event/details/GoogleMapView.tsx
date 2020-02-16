@@ -1,5 +1,5 @@
+import React from 'react'
 import { ListItemText } from '@material-ui/core'
-import * as React from 'react'
 import { GoogleMap, InfoWindow, Marker, withGoogleMap } from 'react-google-maps'
 import './GoogleMapView.scss'
 

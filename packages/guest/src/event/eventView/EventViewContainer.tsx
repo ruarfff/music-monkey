@@ -8,7 +8,8 @@ const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
   event: state.event.event,
   votes: state.vote.votes,
-  suggestions: state.suggestion.requests
+  suggestions: state.suggestion.requests,
+  pendingRequests: state.suggestion.pendingRequests
 })
 
 const mapDispatchToProps = {

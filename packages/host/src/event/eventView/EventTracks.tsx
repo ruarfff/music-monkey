@@ -16,6 +16,7 @@ import {
   removeTrackFromPlaylist
 } from 'playlist/playlistClient'
 import './EventTracks.scss'
+import { Typography } from '@material-ui/core'
 
 interface EventTracksProps {
   event: Event
@@ -59,7 +60,13 @@ const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
   }
   return (
     <div className="EventTracks-root">
-      {!isEmpty(event.playlist) && (
+      {isEmpty(tracks) && (
+        <Typography className="EventTracks-no-tracks" variant="h6" gutterBottom>
+          No tracks yet
+        </Typography>
+      )}
+
+      {!isEmpty(tracks) && (
         <TrackList
           event={event}
           tracks={tracks}

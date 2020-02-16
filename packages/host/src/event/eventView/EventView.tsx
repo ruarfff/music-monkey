@@ -13,7 +13,9 @@ import {
   EventDetailsView,
   EventGuestView,
   EventSettingsView,
-  EventHeader
+  EventHeader,
+  MaybeTracks,
+  Suggestion
 } from 'mm-shared'
 import EventFetchError from 'event/EventFetchError'
 import EventTracks from './EventTracks'
@@ -30,6 +32,7 @@ interface EventViewProps extends RouteComponentProps<any> {
   suggestions: DecoratedSuggestion[]
   loading: boolean
   error: Error
+  pendingRequests: DecoratedSuggestion[]
   getEventById(eventId: string): Action
   getEventSuggestions(eventId: string): Action
   fetchEventVotes(eventId: string): Action
@@ -44,6 +47,7 @@ const EventView: FC<EventViewProps> = ({
   votes,
   suggestions,
   error,
+  pendingRequests,
   getEventById,
   fetchEventVotes,
   getEventSuggestions,
@@ -128,7 +132,14 @@ const EventView: FC<EventViewProps> = ({
                 />
               </Typography>
               <Typography component="div" dir="0">
-                <h1>Requests</h1>
+                <MaybeTracks
+                  isHost={isHost}
+                  user={user}
+                  event={event}
+                  requests={pendingRequests}
+                  onAccept={(s: Suggestion) => {}}
+                  onReject={(s: Suggestion) => {}}
+                />
               </Typography>
             </SwipeableViews>
           </Grid>

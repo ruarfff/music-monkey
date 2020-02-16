@@ -2,7 +2,6 @@
 
 .MarvinLoader-root {
   align-items: center;
-  background: $main;
   display: flex;
   height: 100%;
   width: 100%;
@@ -51,7 +50,7 @@
   .m-loader::before,
   .m-loader::after {
     animation: pulse 2s linear infinite;
-    border: #fff solid 8px;
+    border: $main solid 8px;
     border-radius: 9999px;
     box-sizing: border-box;
     content: ' ';

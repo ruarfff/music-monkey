@@ -12,7 +12,8 @@ const mapStateToProps = ({ user, event, vote, suggestion }: IRootState) => ({
   event: event.event,
   loading: event.loading,
   votes: vote.votes,
-  suggestions: suggestion.requests
+  suggestions: suggestion.requests,
+  pendingRequests: suggestion.pendingRequests
 })
 
 const mapDispatchToProps = {

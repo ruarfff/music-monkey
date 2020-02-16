@@ -11,9 +11,11 @@ import {
   TrackVoteStatus,
   Vote,
   DecoratedSuggestion,
+  Suggestion,
   EventDetailsView,
   EventGuestView,
   EventSettingsView,
+  MaybeTracks,
   EventHeader
 } from 'mm-shared'
 import EventTracks from './EventTracks'
@@ -25,6 +27,7 @@ interface EventViewProps extends RouteComponentProps<any> {
   event: Event
   votes: Map<string, TrackVoteStatus>
   suggestions: DecoratedSuggestion[]
+  pendingRequests: DecoratedSuggestion[]
   createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
   setEventId(eventId: string): Action
@@ -36,6 +39,7 @@ const EventView: FC<EventViewProps> = ({
   event,
   votes,
   suggestions,
+  pendingRequests,
   createVote,
   deleteVote,
   setEventId,
@@ -102,7 +106,14 @@ const EventView: FC<EventViewProps> = ({
                 />
               </Typography>
               <Typography component="div" dir="0">
-                <h1>Requests</h1>
+                <MaybeTracks
+                  isHost={isHost}
+                  user={user}
+                  event={event}
+                  requests={pendingRequests}
+                  onAccept={(s: Suggestion) => {}}
+                  onReject={(s: Suggestion) => {}}
+                />
               </Typography>
             </SwipeableViews>
           </Grid>
