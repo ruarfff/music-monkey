@@ -44,7 +44,7 @@ const EventHeader = ({
               className="EventHeader-heading"
             >{`${event.startDateTime.format('Do MMM, h:mm a')}`}</Typography>
 
-            <Typography>{event.location.address}</Typography>
+            <Typography variant="h5">{event.location.address}</Typography>
           </Link>
         </Grid>
 

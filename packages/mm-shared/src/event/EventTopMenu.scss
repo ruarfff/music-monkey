@@ -1,3 +1,5 @@
+$text-backdrop: rgba(44, 153, 153, 0.7);
+
 .EventTopMenu-root {
   top: 0;
   color: #fff;
@@ -8,8 +10,8 @@
   position: fixed;
   padding: 70px 15px 15px;
   height: 45px;
-  background: rgb(0, 0, 0); /* fallback color */
-  background: rgba(0, 0, 0, 0.7);
+
+  background: $text-backdrop;
   .EventTopMenu-back-arrow {
     color: #fff;
     font-size: 3em;
