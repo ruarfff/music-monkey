@@ -1,7 +1,7 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { User } from 'user'
-import { Event, EventTopMenu } from '../../event'
+import { Event, EventTopMenu, ShareEvent } from '../../event'
 import EventGuests from './EventGuests'
 import './EventGuestView.scss'
 
@@ -15,6 +15,7 @@ const EventGuestView = ({ isHost, event }: EventGuestViewProps) => (
   <div className="EventGuestView-root">
     <EventTopMenu isHost={isHost} event={event} />
     <div className="EventGuestView-content">
+      <ShareEvent event={event} />
       <EventGuests event={event} />
     </div>
   </div>

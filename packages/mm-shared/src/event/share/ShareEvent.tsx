@@ -1,23 +1,17 @@
-import React, { useState } from 'react'
-import { Input, Button, LinearProgress, ButtonGroup } from '@material-ui/core'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import { Field, FieldProps } from 'formik'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import uploadImage from 'upload/uploadImage'
-import { Event, LinkButton, useSnackbarAlert } from 'mm-shared'
-import EmailPreview from './EmailPreview'
+import { Event, useSnackbarAlert } from '../../'
 
 import './ShareEvent.scss'
 
 interface IShareEventProps {
   event: Event
-  inviteId: string
-  shareByEmails(emails: string[], emailText: string, event: Event): void
 }
 
-const ShareEvent = ({ inviteId, event }: IShareEventProps) => {
-  const [loading, setLoading] = useState(false)
-  const { showError, showSuccess } = useSnackbarAlert()
+const ShareEvent = ({ event }: IShareEventProps) => {
+  const inviteId = event && event.invites ? event.invites[0] : ''
+  const { showSuccess } = useSnackbarAlert()
   if (!event) {
     return null
   }
@@ -27,69 +21,6 @@ const ShareEvent = ({ inviteId, event }: IShareEventProps) => {
 
   return (
     <Grid item container xs={12} spacing={1}>
-      <Grid item={true} xs={12}>
-        <ButtonGroup
-          fullWidth
-          aria-label="event edit actions"
-          className="SaveEvent-actions"
-        >
-          <LinkButton to={`/events/${event.eventId}`}>Go to event</LinkButton>
-        </ButtonGroup>
-      </Grid>
-      <Grid item={true} xs={12}>
-        <Field name="imageUrl">
-          {({ form: { setFieldValue } }: FieldProps) => {
-            const onFileDialog = async (e: any) => {
-              const files: any[] = Array.from(e.target.files)
-
-              if (files.length > 1) {
-                const msg = 'Only 1 images can be uploaded at a time'
-                showError(msg)
-                return
-              }
-
-              const types = ['image/png', 'image/jpeg', 'image/gif']
-              const file = files[0]
-
-              if (types.every(type => file.type !== type)) {
-                showError(`'${file.type}' is not a supported format`)
-                return
-              }
-
-              setLoading(true)
-              try {
-                const uploadResponse = await uploadImage(file.name, file)
-                setFieldValue('imageUrl', uploadResponse.imgUrl)
-              } catch (err) {
-                console.error(err)
-                showError(`'Failed to upload image`)
-              }
-              setLoading(false)
-            }
-
-            return loading ? (
-              <LinearProgress variant="query" color="secondary" />
-            ) : (
-              <Button
-                variant="contained"
-                component="label"
-                color="secondary"
-                fullWidth
-              >
-                Upload new image
-                <Input
-                  type="file"
-                  onChange={onFileDialog}
-                  style={{ display: 'none' }}
-                />
-              </Button>
-            )
-          }}
-        </Field>
-      </Grid>
-      <Grid item={true} xs={12}>
-        <EmailPreview event={event} />
-      </Grid>
       <Grid item={true} xs={12}>
         <a
           className="resp-sharing-button__link"

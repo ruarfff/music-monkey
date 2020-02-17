@@ -1,0 +1,67 @@
+@import '../../theme/main';
+
+.EmailPreview-root {
+  height: 410px;
+  margin: 0 auto;
+  width: 100%;
+
+  .EmailPreview-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 365px;
+    padding: 20px;
+
+    .EmailPreview-logo {
+      img {
+        width: 100px;
+      }
+    }
+
+    .EmailPreview-link {
+      color: $mm-white;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+
+    .EmailPreview-event-name {
+      font-size: 26px;
+      color: $mm-white;
+    }
+
+    .EmailPreview-date-wrapper {
+      border-radius: 4px;
+      max-width: 196px;
+      width: 100%;
+      overflow: hidden;
+
+      .EmailPreview-date-top {
+        background: $secondary-light;
+        color: $mm-white;
+        font-size: 14px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .EmailPreview-date-bot {
+        background: $mm-white;
+        color: $black;
+        font-size: 14px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .EmailPreview-text {
+      color: $mm-white;
+      font-size: 14px;
+      max-width: 300px;
+      word-wrap: break-word;
+    }
+  }
+}

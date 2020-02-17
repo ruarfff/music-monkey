@@ -3,19 +3,18 @@ import { Input, Button, LinearProgress, ButtonGroup } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import { Field, FieldProps } from 'formik'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import uploadImage from 'upload/uploadImage'
-import { Event, LinkButton, useSnackbarAlert } from 'mm-shared'
+import { Event, LinkButton, useSnackbarAlert, uploadImage } from 'mm-shared'
 import EmailPreview from './EmailPreview'
 
 import './ShareEvent.scss'
 
-interface IShareEventProps {
+interface ShareEventProps {
   event: Event
-  inviteId: string
 }
 
-const ShareEvent = ({ inviteId, event }: IShareEventProps) => {
+const ShareEvent = ({ event }: ShareEventProps) => {
   const [loading, setLoading] = useState(false)
+  const inviteId = event && event.invites ? event.invites[0] : ''
   const { showError, showSuccess } = useSnackbarAlert()
   if (!event) {
     return null

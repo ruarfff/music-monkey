@@ -20,7 +20,7 @@ import saveEventInitialFormValues from './saveEventInitialFormValues'
 import AddTracks from './AddTracksContainer'
 import eventWillBeModified from './eventWillBeModified'
 import updateEventFlow from './updateEventFlow'
-import ShareEvent from './ShareEventContainer'
+import ShareEvent from './ShareEvent'
 
 import './SaveEvent.scss'
 
@@ -136,10 +136,7 @@ const SaveEvent: FC<SaveEventProps> = ({
             )}
             {tabIndex === 2 && (
               <TabPanel value={tabIndex} index={2}>
-                <ShareEvent
-                  event={event}
-                  inviteId={event && event.invites ? event.invites[0] : ''}
-                />
+                <ShareEvent event={event} />
               </TabPanel>
             )}
           </Form>
