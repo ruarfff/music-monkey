@@ -91,7 +91,7 @@ const EventView: FC<EventViewProps> = ({
           <EventDetailsView user={user} event={event} />
         </Route>
         <Route path={`/events/${event.eventId}/guests`}>
-          <EventGuestView user={user} event={event} />
+          <EventGuestView user={user} event={event} isHost={true} />
         </Route>
         <Route path={`/events/${event.eventId}/settings`}>
           <EventSettingsView user={user} event={event} />

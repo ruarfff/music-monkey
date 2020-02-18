@@ -2,6 +2,7 @@ import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { User } from 'user'
 import { Event, EventTopMenu } from '../../event'
+import EventSettings from './EventSettings'
 import './EventSettingsView.scss'
 
 interface EventSettingsViewProps extends RouteComponentProps<any> {
@@ -14,7 +15,7 @@ const EventSettingsView = ({ isHost, event }: EventSettingsViewProps) => (
   <div className="EventSettingsView-root">
     <EventTopMenu isHost={isHost} event={event} />
     <div className="EventSettingsView-content">
-      <h1>Settings</h1>
+      <EventSettings event={event} onChange={() => {}} />
     </div>
   </div>
 )

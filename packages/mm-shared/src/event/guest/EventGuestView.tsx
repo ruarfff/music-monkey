@@ -6,7 +6,7 @@ import EventGuests from './EventGuests'
 import './EventGuestView.scss'
 
 interface EventGuestViewProps extends RouteComponentProps<any> {
-  isHost?: boolean
+  isHost: boolean
   user: User
   event: Event
 }
@@ -15,7 +15,7 @@ const EventGuestView = ({ isHost, event }: EventGuestViewProps) => (
   <div className="EventGuestView-root">
     <EventTopMenu isHost={isHost} event={event} />
     <div className="EventGuestView-content">
-      <ShareEvent event={event} />
+      {isHost && <ShareEvent event={event} />}
       <EventGuests event={event} />
     </div>
   </div>
