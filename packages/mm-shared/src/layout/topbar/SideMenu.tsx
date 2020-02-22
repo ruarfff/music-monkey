@@ -68,7 +68,7 @@ const SideMenu = ({ user, location, event, isHost }: ISideMenuProps) => {
               className={`SideMenu-item ${checkLocation(pathname, createLink)}`}
             >
               <AddBoxIcon />
-              <span>Create Event</span>
+              <span>Create Party</span>
             </MenuItem>
           </Link>
         ) : (

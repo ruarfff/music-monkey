@@ -7,7 +7,7 @@ import './Title.scss'
 const pathToTitle = {
   '/': 'Parties',
   '/music': 'Music',
-  '/create-event': 'Create Event',
+  '/create-event': 'Create Party',
   '/create-event/playlist': 'Seed Playlist',
   '/create-event/tracks': 'Add Tracks',
   '/create-event/details': 'Event Settings',

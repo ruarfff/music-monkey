@@ -23,8 +23,8 @@ const NoEvents: FC<NoEventsProps> = ({ status = '' }) => {
     >
       <Grid item xs={12}>
         <Typography align={'center'} variant={'h6'}>
-          It looks like you don't have any {status && status + ' '}events yet :({' '}
-          <Link to="/create-event">Create one?</Link>
+          It looks like you don't have any {status && status + ' '}parties yet
+          :( <Link to="/create-event">Create one?</Link>
         </Typography>
       </Grid>
       <Grid item xs={12}>

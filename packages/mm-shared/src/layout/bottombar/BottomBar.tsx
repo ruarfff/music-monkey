@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
+import HomeIcon from '@material-ui/icons/Home'
 import ShowChartIcon from '@material-ui/icons/ShowChart'
-import EventIcon from '@material-ui/icons/Event'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import { withRouter } from 'react-router'
@@ -34,7 +34,7 @@ const BottomBar = ({ location, event }: IBottomBar) => {
           ${checkLocation(pathname, eventsLink)}`}
         >
           <Link to={eventsLink}>
-            <EventIcon />
+            <HomeIcon />
             <span>Parties</span>
           </Link>
         </div>
