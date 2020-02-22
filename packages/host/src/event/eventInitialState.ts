@@ -34,7 +34,6 @@ export default {
     hostData: {} as User
   },
   eventsLoading: false,
-  loading: false,
   fetchError: {} as Error,
   pendingSuggestions: [],
   rejectedSuggestions: []

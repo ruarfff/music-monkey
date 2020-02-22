@@ -30,13 +30,11 @@ interface EventViewProps extends RouteComponentProps<any> {
   event: Event
   votes: Map<string, TrackVoteStatus>
   suggestions: DecoratedSuggestion[]
-  loading: boolean
   error: Error
   pendingRequests: DecoratedSuggestion[]
   getEventById(eventId: string): Action
   getEventSuggestions(eventId: string): Action
   fetchEventVotes(eventId: string): Action
-  getEventByIdNoLoading(eventId: string): Action
 }
 
 const EventView: FC<EventViewProps> = ({
@@ -50,8 +48,7 @@ const EventView: FC<EventViewProps> = ({
   pendingRequests,
   getEventById,
   fetchEventVotes,
-  getEventSuggestions,
-  loading
+  getEventSuggestions
 }) => {
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
@@ -67,7 +64,7 @@ const EventView: FC<EventViewProps> = ({
     }
   }, [event, eventId, fetchEventVotes, getEventById, getEventSuggestions])
 
-  const shouldShowEvent: boolean = !loading && !isEmpty(event)
+  const shouldShowEvent: boolean = !isEmpty(event)
 
   const handleGetEvent = () => {
     getEventById(eventId)
@@ -77,7 +74,7 @@ const EventView: FC<EventViewProps> = ({
     return <MarvinLoader />
   }
 
-  if (loading && !isEmpty(error)) {
+  if (!isEmpty(error)) {
     return (
       <Grid className="EventView-root" container>
         <EventFetchError onTryAgain={handleGetEvent} />

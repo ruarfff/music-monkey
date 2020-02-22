@@ -7,8 +7,6 @@ export const EVENTS_FETCHED = 'EVENTS_FETCHED'
 export const EVENTS_FETCH_ERROR = 'EVENTS_FETCH_ERROR'
 
 export const EVENT_FETCH_BY_ID_INITIATED = 'EVENT_FETCH_BY_ID_INITIATED'
-export const EVENT_FETCH_BY_ID_NO_LOADING_INITIATED =
-  'EVENT_FETCH_BY_ID_NO_LOADING_INITIATED'
 export const EVENT_FETCHED_BY_ID = 'EVENT_FETCHED_BY_ID'
 export const EVENT_FETCH_BY_ID_ERROR = 'EVENT_FETCH_BY_ID_ERROR'
 
@@ -43,11 +41,6 @@ export const deselectEvent = (): Action => ({
 export const getEventById = (eventId: string): Action => ({
   payload: eventId,
   type: EVENT_FETCH_BY_ID_INITIATED
-})
-
-export const getEventByIdNoLoading = (eventId: string): Action => ({
-  payload: eventId,
-  type: EVENT_FETCH_BY_ID_NO_LOADING_INITIATED
 })
 
 export const deleteEvent = (eventId: string): Action => ({

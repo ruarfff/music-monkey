@@ -12,6 +12,7 @@ import {
   unSubscribeToVotesModified,
   subscribeToVotesModified,
   unSubscribeToPlaylistModified,
+  subscribeToEventUpdated,
   unSubscribeToEventUpdated,
   subscribeToPlaylistModified
 } from './pusherGateway'
@@ -20,7 +21,7 @@ import { Action, Event } from 'mm-shared'
 interface ISubscriptionWrapper {
   event: Event
   children: any
-  getEventByIdNoLoading(eventId: string): Action
+  getEventById(eventId: string): Action
   fetchEventVotes(eventId: string): Action
   getEventSuggestions(eventId: string): Action
 }
@@ -28,7 +29,7 @@ interface ISubscriptionWrapper {
 const SubscriptionWrapper = ({
   event,
   children,
-  getEventByIdNoLoading,
+  getEventById,
   fetchEventVotes,
   getEventSuggestions
 }: ISubscriptionWrapper) => {
@@ -43,24 +44,28 @@ const SubscriptionWrapper = ({
 
     subscribeToSuggestionsModified(eventId, () => {
       if (autoAcceptSuggestionsEnabled) {
-        getEventByIdNoLoading(eventId)
+        getEventById(eventId)
       }
       getEventSuggestions(eventId)
     })
 
     subscribeToRSVPModified(eventId, () => {
-      getEventByIdNoLoading(eventId)
+      getEventById(eventId)
     })
 
     subscribeToVotesModified(eventId, () => {
       fetchEventVotes(eventId)
       if (dynamicVotingEnabled) {
-        getEventByIdNoLoading(eventId)
+        getEventById(eventId)
       }
     })
 
     subscribeToPlaylistModified(playlistId, () => {
-      getEventByIdNoLoading(eventId)
+      getEventById(eventId)
+    })
+
+    subscribeToEventUpdated(eventId, () => {
+      getEventById(eventId)
     })
 
     return () => {

@@ -15,7 +15,6 @@ import {
   EVENT_DELETE_SUCCESSFUL,
   EVENT_FETCH_BY_ID_ERROR,
   EVENT_FETCH_BY_ID_INITIATED,
-  EVENT_FETCH_BY_ID_NO_LOADING_INITIATED,
   EVENT_FETCHED_BY_ID,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
@@ -60,10 +59,6 @@ function* fetchEventByIdFlow(action: Action) {
 
 export function* watchFetchEventById() {
   yield takeEvery(EVENT_FETCH_BY_ID_INITIATED, fetchEventByIdFlow)
-}
-
-export function* watchFetchEventByIdNoLoading() {
-  yield takeEvery(EVENT_FETCH_BY_ID_NO_LOADING_INITIATED, fetchEventByIdFlow)
 }
 
 function* deleteEventFlow(action: Action) {

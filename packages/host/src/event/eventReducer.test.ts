@@ -10,7 +10,6 @@ import {
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
-  EVENT_FETCH_BY_ID_INITIATED,
   EVENT_FETCHED_BY_ID,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
   TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
@@ -83,21 +82,10 @@ describe('eventReducer', () => {
     ).toEqual({ ...initialState, event: newEvent })
   })
 
-  it('should handle EVENT_FETCH_BY_ID_INITIATED', () => {
-    expect(
-      event(initialState, {
-        type: EVENT_FETCH_BY_ID_INITIATED
-      })
-    ).toEqual({
-      ...initialState,
-      loading: true
-    })
-  })
-
   it('should handle EVENT_FETCHED_BY_ID', () => {
     expect(
       event(
-        { ...initialState, loading: true },
+        { ...initialState },
         {
           type: EVENT_FETCHED_BY_ID,
           payload: {} as Event
@@ -105,7 +93,6 @@ describe('eventReducer', () => {
       )
     ).toEqual({
       ...initialState,
-      loading: false,
       event: {} as Event
     })
   })

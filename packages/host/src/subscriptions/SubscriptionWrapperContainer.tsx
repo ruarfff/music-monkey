@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
-import { getEventByIdNoLoading } from 'event/eventActions'
+import { getEventById } from 'event/eventActions'
 import { fetchEventVotes } from 'mm-shared'
 import { getRequestsByEventId } from 'request/requestActions'
 import SubscriptionWrapper from './SubscriptionWrapper'
@@ -10,7 +10,7 @@ const mapStateToProps = (state: IRootState) => ({
 })
 
 const mapDispatchToProps = {
-  getEventByIdNoLoading,
+  getEventById,
   fetchEventVotes,
   getEventSuggestions: getRequestsByEventId
 }

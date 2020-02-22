@@ -24,7 +24,6 @@ const EditEventView: FC<EditEventViewProps> = ({
   match
 }) => {
   const { showSuccess, showError } = useSnackbarAlert()
-  const eventIdFromPath = match.params['eventId']
 
   const handleSubmit = (
     values: SaveEventFormValues,
@@ -34,7 +33,6 @@ const EditEventView: FC<EditEventViewProps> = ({
       if (eventWillBeModified(event, values)) {
         updateEventFlow(event, values)
           .then(event => {
-            getEventById(eventIdFromPath)
             showSuccess('Event Saved')
           })
           .catch(err => {

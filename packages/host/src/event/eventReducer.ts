@@ -66,20 +66,17 @@ export default function event(
     case EVENT_FETCH_BY_ID_INITIATED:
       return {
         ...state,
-        fetchError: {},
-        loading: true
+        fetchError: {}
       }
     case EVENT_FETCHED_BY_ID:
       return {
         ...state,
-        event: payload,
-        loading: false
+        event: payload
       }
     case EVENT_FETCH_BY_ID_ERROR:
       return {
         ...state,
-        fetchError: payload,
-        loading: false
+        fetchError: payload
       }
     case TOGGLE_DYNAMIC_VOTING:
       return toggleDynamicVoting(state)

@@ -5,10 +5,5 @@
     "baseUrl": "./src"
   },
   "exclude": ["./src/setupTests.ts"],
-  "include": [
-    "./src",
-    "config-overrides.js",
-    "../mm-shared/src/event/details/GoogleMapView.tsx",
-    "../mm-shared/src/event/details/EventLocation.tsx"
-  ]
+  "include": ["./src", "config-overrides.js"]
 }

@@ -7,7 +7,6 @@ export default interface IEventState {
   event: Event
   eventsLoading: boolean
   saveEventPlaylistError?: Error
-  loading: boolean
   fetchError: Error
   pendingSuggestions: DecoratedSuggestion[]
   rejectedSuggestions: DecoratedSuggestion[]
