@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router'
+import isEmpty from 'lodash/isEmpty'
 import {
   Action,
   Event,
@@ -32,7 +33,7 @@ const EventSelect: FC<EventSelectProps> = ({
     if (eventId && selectedEventId !== eventId) {
       setEventId(eventId)
       getRequestsByEventId(eventId)
-    } else if (!eventLoaded) {
+    } else if (!eventLoaded && !isEmpty(events)) {
       setEventPickerOpen(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

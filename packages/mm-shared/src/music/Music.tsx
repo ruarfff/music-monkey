@@ -49,7 +49,6 @@ export const Music: FC<MusicProps> = ({
       }
     }
 
-    console.log(likedTracks)
     if (isEmpty(likedTracks)) {
       getLikedTracks()
     }

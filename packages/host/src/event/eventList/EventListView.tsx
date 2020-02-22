@@ -1,10 +1,9 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
-import { Link } from 'react-router-dom'
 import { isEmpty } from 'lodash'
 import { Event, sortEvents } from 'mm-shared'
 import EventList from './EventList'
 import './EventListView.scss'
+import NoEvents from './NoEvents'
 
 interface IEventListViewProps {
   events: Event[]
@@ -12,14 +11,7 @@ interface IEventListViewProps {
 
 const EventListView = ({ events }: IEventListViewProps) => {
   if (isEmpty(events)) {
-    return (
-      <div>
-        <Typography align={'center'} variant={'h6'}>
-          It looks like you don't have any events yet :({' '}
-          <Link to="/create-event">Create one?</Link>
-        </Typography>
-      </div>
-    )
+    return <NoEvents />
   }
 
   const { pastEvents, upcomingEvents, liveEvents } = sortEvents(events)

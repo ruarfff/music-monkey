@@ -1,13 +1,10 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
-import { RouteComponentProps } from 'react-router-dom'
-import { withRouter } from 'react-router'
 import isEmpty from 'lodash/isEmpty'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
 import debounce from 'just-debounce-it'
 import {
   Event,
-  Action,
   TabPanel,
   User,
   useSnackbarAlert,
@@ -24,20 +21,13 @@ import ShareEvent from './ShareEvent'
 
 import './SaveEvent.scss'
 
-interface SaveEventProps extends RouteComponentProps {
+interface SaveEventProps {
   user: User
   event: Event
-  getEventById(eventId: string): Action
 }
 
-const SaveEvent: FC<SaveEventProps> = ({
-  user,
-  event,
-  getEventById,
-  match
-}) => {
+const SaveEvent: FC<SaveEventProps> = ({ user, event }) => {
   const { showSuccess, showError } = useSnackbarAlert()
-  const eventIdFromPath = match.params['eventId']
   const [tabIndex, setTabIndex] = useState(0)
   const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setTabIndex(newValue)
@@ -51,7 +41,6 @@ const SaveEvent: FC<SaveEventProps> = ({
       if (eventWillBeModified(event, values)) {
         updateEventFlow(event, values)
           .then(event => {
-            getEventById(eventIdFromPath)
             showSuccess('Event Saved')
           })
           .catch(err => {
@@ -146,4 +135,4 @@ const SaveEvent: FC<SaveEventProps> = ({
   )
 }
 
-export default withRouter(SaveEvent)
+export default SaveEvent

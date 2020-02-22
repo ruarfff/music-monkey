@@ -6,14 +6,14 @@ import {
   ListItemText,
   AppBar,
   Tabs,
-  Tab,
-  Typography
+  Tab
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import { Event, TabPanel } from 'mm-shared'
+import NoEvents from './NoEvents'
 import './EventList.scss'
 
 interface IEventListProps {
@@ -30,13 +30,7 @@ function a11yProps(index: any) {
 }
 
 const renderEvents = (events: Event[], status: string) => {
-  if (isEmpty(events))
-    return (
-      <Typography align={'center'} variant={'h6'}>
-        It looks like you don't have any {status} events :({' '}
-        <Link to="/create-event">Create one?</Link>
-      </Typography>
-    )
+  if (isEmpty(events)) return <NoEvents status={status} />
 
   const getItemText = (event: Event, status: string) => {
     if (status === 'live') return 'Happening Now'

@@ -15,10 +15,12 @@ interface ContentProps {
 const Content = ({ events, eventsLoading, getEvents }: ContentProps) => {
   const routes = useContext(RouteContext)
   useEffect(() => {
-    if (isEmpty(events) && !eventsLoading) {
+    if (isEmpty(events)) {
+      console.log('Getting events')
       getEvents()
     }
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   if (eventsLoading) {
     return <MarvinLoader />
   }
