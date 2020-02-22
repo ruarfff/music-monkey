@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
 import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
-import { RouteComponentProps, withRouter } from 'react-router'
 import debounce from 'just-debounce-it'
 import SaveEventFormValues from './SaveEventFormValues'
-import { Action, User, Event, useSnackbarAlert, EventTopMenu } from 'mm-shared'
+import { User, Event, useSnackbarAlert, EventTopMenu } from 'mm-shared'
 import EventDetails from './EventDetails'
 import eventWillBeModified from './eventWillBeModified'
 import updateEventFlow from './updateEventFlow'
@@ -11,18 +10,13 @@ import FormValidationSchema from './FormValidationSchema'
 import saveEventInitialFormValues from './saveEventInitialFormValues'
 
 import './EditEventView.scss'
-interface EditEventViewProps extends RouteComponentProps {
+
+interface EditEventViewProps {
   user: User
   event: Event
-  getEventById(eventId: string): Action
 }
 
-const EditEventView: FC<EditEventViewProps> = ({
-  user,
-  event,
-  getEventById,
-  match
-}) => {
+const EditEventView: FC<EditEventViewProps> = ({ user, event }) => {
   const { showSuccess, showError } = useSnackbarAlert()
 
   const handleSubmit = (
@@ -76,17 +70,15 @@ const EditEventView: FC<EditEventViewProps> = ({
         validationSchema={FormValidationSchema}
         onSubmit={handleSubmit}
       >
-        {() => {
-          return (
-            <Form className="EditEventView-form">
-              <AutoSave debounceMs={1500} />
-              <EventDetails showDetails={true} />
-            </Form>
-          )
-        }}
+        {() => (
+          <Form className="EditEventView-form">
+            <AutoSave debounceMs={1500} />
+            <EventDetails showDetails={true} />
+          </Form>
+        )}
       </Formik>
     </div>
   )
 }
 
-export default withRouter(EditEventView)
+export default EditEventView
