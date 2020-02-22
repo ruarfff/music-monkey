@@ -60,7 +60,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
       )}
       {isEmpty(maybeTracks) && (
         <Typography className="noTracks" variant="h6" gutterBottom>
-          No suggestions yet
+          No requests yet
         </Typography>
       )}
     </>

@@ -44,7 +44,7 @@ const RejectedTracks: FC<RejectedTracksProps> = ({
       )}
       {isEmpty(rejectedTracks) && (
         <Typography className="noTracks" variant="h6" gutterBottom>
-          No rejected request yet
+          No rejected requests yet
         </Typography>
       )}
     </>

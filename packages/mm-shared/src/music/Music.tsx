@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react'
-import { AppBar, Grid, Tab, Tabs } from '@material-ui/core'
+import { AppBar, Typography, Tab, Tabs } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
+import SwipeableViews from 'react-swipeable-views'
 import {
   Action,
   Track,
@@ -56,23 +57,22 @@ export const Music: FC<MusicProps> = ({
   }, [user])
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={tabIndex}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-          >
-            <Tab label="Playlists" />
-            <Tab label="Liked Songs" />
-          </Tabs>
-        </AppBar>
-      </Grid>
-      <Grid item xs={12}>
-        {tabIndex === 0 && (
+    <div>
+      <AppBar position="static" color="default">
+        <Tabs
+          value={tabIndex}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+          variant="fullWidth"
+        >
+          <Tab label="PLAYLISTS" />
+          <Tab label="LIKED SONGS" />
+        </Tabs>
+      </AppBar>
+
+      <SwipeableViews axis="x" index={tabIndex} onChangeIndex={handleTabChange}>
+        <Typography component="div" dir="0">
           <Playlists
             user={user}
             playlists={userPlaylists}
@@ -80,15 +80,15 @@ export const Music: FC<MusicProps> = ({
             onTrackSelected={onTrackSelected}
             onPlaylistSelected={onPlaylistSelected}
           />
-        )}
-        {tabIndex === 1 && (
+        </Typography>
+        <Typography component="div" dir="0">
           <TrackList
             tracks={isEmpty(likedTracks) ? [] : likedTracks.map(lt => lt.track)}
             options={{ canRequest: true }}
             onSelected={onTrackSelected}
           />
-        )}
-      </Grid>
-    </Grid>
+        </Typography>
+      </SwipeableViews>
+    </div>
   )
 }
