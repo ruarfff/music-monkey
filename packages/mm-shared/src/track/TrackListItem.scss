@@ -8,9 +8,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  .TrackListItem-voting .badge {
-    right: -15px;
-  }
 
   .TrackListItem-track-image {
     position: relative;
@@ -35,8 +32,27 @@
     opacity: 0.9;
   }
 
+  .MuiFab-root {
+  }
+
   .MuiFab-primary {
     background-color: $nice-green;
     opacity: 0.9;
+  }
+
+  .MuiFab-colorInherit {
+    background-color: $secondary-light;
+  }
+
+  .MuiSvgIcon-colorPrimary {
+    color: $secondary-light;
+  }
+  .current-user .MuiBadge-badge {
+    color: white;
+  }
+  .MuiBadge-badge {
+    right: +18px;
+    top: +18px;
+    font-weight: 800;
   }
 }

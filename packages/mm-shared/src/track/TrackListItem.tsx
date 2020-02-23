@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIconFill from '@material-ui/icons/Favorite'
 import AddIcon from '@material-ui/icons/Add'
 import Remove from '@material-ui/icons/Remove'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
@@ -12,8 +13,7 @@ import {
   Fab,
   Divider,
   Avatar,
-  ListItemSecondaryAction,
-  IconButton
+  ListItemSecondaryAction
 } from '@material-ui/core'
 import isFunction from 'lodash/isFunction'
 import Img from 'react-image'
@@ -107,16 +107,14 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
   let votingButton = <span />
   if (options.canVote) {
-    votingButton = (
-      <IconButton aria-label="Vote" onClick={handleTrackVote}>
-        <Badge
-          badgeContent={numberOfVotes}
-          color={currentUserVoted ? 'secondary' : 'primary'}
-          className="TrackListItem-voting"
-        >
-          <FavouriteIcon />
-        </Badge>
-      </IconButton>
+    votingButton = currentUserVoted ? (
+      <Badge badgeContent={numberOfVotes} className="current-user">
+        <FavoriteIconFill color="primary" fontSize="large" />
+      </Badge>
+    ) : (
+      <Badge badgeContent={numberOfVotes}>
+        <FavouriteIcon fontSize="large" />
+      </Badge>
     )
   }
 
