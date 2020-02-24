@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import IRootState from 'rootState'
 import { setEventId } from 'event/eventActions'
 import { createVote, deleteVote } from 'mm-shared'
+import { updateRsvp } from 'rsvp/rsvpActions'
 import EventView from './EventView'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -15,7 +16,8 @@ const mapStateToProps = (state: IRootState) => ({
 const mapDispatchToProps = {
   createVote,
   deleteVote,
-  setEventId
+  setEventId,
+  updateRsvp
 }
 
 const EventViewContainer = connect(

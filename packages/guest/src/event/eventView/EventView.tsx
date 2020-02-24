@@ -12,6 +12,7 @@ import {
   Vote,
   DecoratedSuggestion,
   Suggestion,
+  Rsvp,
   EventDetailsView,
   EventGuestView,
   EventSettingsView,
@@ -31,6 +32,7 @@ interface EventViewProps extends RouteComponentProps<any> {
   createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
   setEventId(eventId: string): Action
+  updateRsvp(rsvp: Rsvp): Action
 }
 
 const EventView: FC<EventViewProps> = ({
@@ -43,6 +45,7 @@ const EventView: FC<EventViewProps> = ({
   createVote,
   deleteVote,
   setEventId,
+  updateRsvp,
   match
 }) => {
   const eventId = match.params.eventId
@@ -75,7 +78,12 @@ const EventView: FC<EventViewProps> = ({
         </Route>
         <Route path={`/events/${event.eventId}`}>
           <Grid item xs={12}>
-            <EventHeader user={user} event={event} isHost={isHost} />
+            <EventHeader
+              user={user}
+              event={event}
+              isHost={isHost}
+              updateRsvp={updateRsvp}
+            />
           </Grid>
           <Grid item xs={12}>
             <AppBar position="static" color="default">
