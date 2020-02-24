@@ -1,22 +1,40 @@
 import React, { useState } from 'react'
-import GoogleMapView from './GoogleMapView'
+import { LocationAutoComplete, MapComponent } from '../../'
 import { Event } from '../Event'
 
 interface IEventLocationProps {
+  isHost: boolean
   event: Event
+  updateEvent(event: Event): any
 }
-const EventLocation = ({ event }: IEventLocationProps) => {
-  const [mapOpen, setMapOpen] = useState(false)
+const EventLocation = ({ isHost, event, updateEvent }: IEventLocationProps) => {
+  const [location, setLocation] = useState(event.location)
   return (
-    <GoogleMapView
-      containerElement={<div style={{ height: `400px`, width: `400px` }} />}
-      mapElement={<div style={{ height: `100%` }} />}
-      position={event.location.latLng}
-      isOpen={mapOpen}
-      onOpen={setMapOpen}
-      address={event.location.address}
-      venue={event.venue!}
-    />
+    <div>
+      {isHost && (
+        <LocationAutoComplete
+          value={location ? location.address || '' : ''}
+          onSelect={(selectedLocation: any) => {
+            setLocation(selectedLocation)
+            updateEvent({ ...event, location })
+          }}
+          onChange={(address: string) => {
+            setLocation({
+              address,
+              latLng: { lat: 0, lng: 0 }
+            })
+          }}
+          onBlur={() => {
+            if (event.location && event.location.address !== location.address) {
+              updateEvent({ ...event, location })
+            }
+          }}
+          placeholder="Search for place"
+        />
+      )}
+
+      <MapComponent coords={location.latLng} />
+    </div>
   )
 }
 

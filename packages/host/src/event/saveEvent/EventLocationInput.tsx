@@ -1,30 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Field, FieldProps } from 'formik'
-import LocationAutoComplete from 'location/LocationAutoComplete'
-import MapComponent from 'location/MapComponent'
+import { LocationAutoComplete, MapComponent } from 'mm-shared'
 
 const EventLocationInput = () => {
+  const [location, setLocation] = useState()
   return (
     <Field name="location">
-      {({ field: { value }, form: { setFieldValue } }: FieldProps) => (
-        <>
-          <LocationAutoComplete
-            value={value ? value.address || '' : ''}
-            onSelect={(location: any) => {
-              setFieldValue('location', location)
-            }}
-            onChange={(address: string) => {
-              setFieldValue('location', {
-                address,
-                latLng: { lat: 0, lng: 0 }
-              })
-            }}
-            placeholder="Search for place"
-          />
+      {({ field: { value }, form: { setFieldValue } }: FieldProps) => {
+        if (!location) {
+          setLocation(value)
+        }
+        return (
+          <>
+            <LocationAutoComplete
+              value={location ? location.address || '' : ''}
+              onSelect={(selectedLocation: any) => {
+                setFieldValue('location', selectedLocation)
+                setLocation(selectedLocation)
+              }}
+              onChange={(address: string) => {
+                setLocation({
+                  address,
+                  latLng: { lat: 0, lng: 0 }
+                })
+              }}
+              onBlur={() => {
+                if (value && value.address !== location.address) {
+                  setFieldValue('location', location)
+                }
+              }}
+              placeholder="Search for place"
+            />
 
-          <MapComponent coords={value.latLng} />
-        </>
-      )}
+            <MapComponent coords={value.latLng} />
+          </>
+        )
+      }}
     </Field>
   )
 }

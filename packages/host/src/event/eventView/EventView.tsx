@@ -86,7 +86,12 @@ const EventView: FC<EventViewProps> = ({
     <Grid className="EventView-root" container>
       <Switch>
         <Route path={`/events/${event.eventId}/details`}>
-          <EventDetailsView user={user} event={event} />
+          <EventDetailsView
+            user={user}
+            event={event}
+            isHost={true}
+            updateEvent={updateEvent}
+          />
         </Route>
         <Route path={`/events/${event.eventId}/guests`}>
           <EventGuestView user={user} event={event} isHost={true} />

@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField/TextField'
 interface LocationAutoCompleteProps {
   placeholder: string
   value: string
+  onBlur(address: string): void
   onChange(address: string): void
   onSelect(location: any): void
 }
@@ -68,6 +69,7 @@ function renderSuggestionsContainer(options: any) {
 }
 
 const LocationAutoComplete = ({
+  onBlur,
   onChange,
   onSelect,
   placeholder,
@@ -91,7 +93,8 @@ const LocationAutoComplete = ({
             {renderInput({
               ...getInputProps({
                 placeholder
-              })
+              }),
+              onBlur
             })}
 
             {renderSuggestionsContainer({

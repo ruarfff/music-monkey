@@ -6,12 +6,10 @@ import Requests from './RequestsContainer'
 
 const RequestView = () => {
   const handleRejectRequest = (request: Suggestion) => {
-    console.log(request)
     rejectRequest(request)
   }
 
   const handleAcceptRequest = (request: Suggestion) => {
-    console.log(request)
     acceptRequest(request)
   }
 

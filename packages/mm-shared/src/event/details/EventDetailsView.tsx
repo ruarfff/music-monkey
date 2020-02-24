@@ -6,35 +6,21 @@ import EventLocation from './EventLocation'
 import './EventDetailsView.scss'
 
 interface EventDetailsViewProps extends RouteComponentProps<any> {
-  isHost?: boolean
+  isHost: boolean
   user: User
   event: Event
+  updateEvent?(event: Event): any
 }
 
-//   const getEndDateFormat = (startDate: Moment, endDate: Moment) => {
-//     const message = `${
-//       startDate.format('DD') === endDate.format('DD') ? 'h:mm a' : 'h:mm a, Do '
-//     }
-//      ${startDate.format('MMMM') === endDate.format('MMMM') ? '' : 'MMMM'}`
-//     return message
-//   }
-//   const dateFormat = (event: any) => {
-//     if (isEmpty(event)) {
-//       return null
-//     }
-//     const { startDateTime, endDateTime } = event
-//     return `${startDateTime.format('Do MMM, h:mm a')} to ${endDateTime.format(
-//       getEndDateFormat(startDateTime, endDateTime)
-//     )}`
-//   }
-
-//   const times = dateFormat(event)
-
-const EventDetailsView = ({ isHost, event }: EventDetailsViewProps) => (
+const EventDetailsView = ({
+  isHost,
+  event,
+  updateEvent = () => {}
+}: EventDetailsViewProps) => (
   <div className="EventDetailsView-root">
     <EventTopMenu isHost={isHost} event={event} />
     <div className="EventDetailsView-content">
-      <EventLocation event={event} />
+      <EventLocation isHost={isHost} event={event} updateEvent={updateEvent} />
     </div>
   </div>
 )

@@ -1,21 +1,20 @@
 import React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
 import { User } from 'user'
 import { Event, EventTopMenu } from '../../event'
 import EventSettings from './EventSettings'
 import './EventSettingsView.scss'
 
-interface EventSettingsViewProps extends RouteComponentProps<any> {
+interface EventSettingsViewProps {
   isHost: boolean
   user: User
   event: Event
-  updateEvent(event: Event): any
+  updateEvent?(event: Event): any
 }
 
 const EventSettingsView = ({
   isHost,
   event,
-  updateEvent
+  updateEvent = () => {}
 }: EventSettingsViewProps) => (
   <div className="EventSettingsView-root">
     <EventTopMenu isHost={isHost} event={event} />
@@ -31,4 +30,4 @@ const EventSettingsView = ({
   </div>
 )
 
-export default withRouter(EventSettingsView)
+export default EventSettingsView
