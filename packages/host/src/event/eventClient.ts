@@ -43,9 +43,13 @@ export const createEvent = async (event: Event) => {
 }
 
 export const updateEvent = async (event: Event) => {
-  const response = await client.put('/events/' + event.eventId, event, {
-    withCredentials: true
-  })
+  const response = await client.put(
+    '/events/' + event.eventId,
+    { ...event, playlist: undefined },
+    {
+      withCredentials: true
+    }
+  )
   return parseEventResponse(response)
 }
 

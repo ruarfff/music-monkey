@@ -8,8 +8,8 @@ import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
 import { User, Rsvp } from './../../'
-import './EventHeader.scss'
 import { Event, EventTopMenu } from '../../event'
+import './EventHeader.scss'
 
 interface IEventHeaderProps extends RouteComponentProps<any> {
   isHost?: boolean

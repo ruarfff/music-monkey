@@ -17,6 +17,7 @@ import {
   MaybeTracks,
   Suggestion
 } from 'mm-shared'
+import { updateEvent } from 'event/eventClient'
 import EventFetchError from 'event/EventFetchError'
 import EventTracks from './EventTracks'
 import SaveEvent from 'event/saveEvent/SaveEventContainer'
@@ -91,7 +92,12 @@ const EventView: FC<EventViewProps> = ({
           <EventGuestView user={user} event={event} isHost={true} />
         </Route>
         <Route path={`/events/${event.eventId}/settings`}>
-          <EventSettingsView user={user} event={event} />
+          <EventSettingsView
+            user={user}
+            event={event}
+            isHost={true}
+            updateEvent={updateEvent}
+          />
         </Route>
         <Route path={`/events/${event.eventId}/edit`}>
           <EditEventView />

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import FormGroup from '@material-ui/core/FormGroup'
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -71,12 +71,13 @@ const IOSSwitch = withStyles((theme: Theme) =>
 })
 
 interface EventSettingsProps {
+  isHost: boolean
   event: Event
   onChange(settings: any): void
 }
 
-const EventSettings: FC<EventSettingsProps> = ({ event, onChange }) => {
-  const settings = event.settings
+const EventSettings: FC<EventSettingsProps> = ({ event, isHost, onChange }) => {
+  const [settings, setSettings] = useState({ ...event.settings })
   return (
     <div className="EventSettings-root">
       <FormGroup>
@@ -85,31 +86,16 @@ const EventSettings: FC<EventSettingsProps> = ({ event, onChange }) => {
             <FormControlLabel
               control={
                 <IOSSwitch
-                  value="Suggesting Playlists Enabled"
-                  checked={settings.suggestingPlaylistsEnabled}
-                  onChange={() => {
-                    onChange({
-                      ...settings,
-                      suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
-                    })
-                  }}
-                />
-              }
-              label="Allow Playlist Suggestions"
-            />
-          </ListItem>
-          <Divider />
-          <ListItem>
-            <FormControlLabel
-              control={
-                <IOSSwitch
                   value="Auto Accept Suggestions Enabled"
                   checked={settings.autoAcceptSuggestionsEnabled}
+                  disabled={!isHost}
                   onChange={() => {
-                    onChange({
+                    const newSettings = {
                       ...settings,
                       autoAcceptSuggestionsEnabled: !settings.autoAcceptSuggestionsEnabled
-                    })
+                    }
+                    setSettings(newSettings)
+                    onChange(newSettings)
                   }}
                 />
               }
@@ -123,17 +109,42 @@ const EventSettings: FC<EventSettingsProps> = ({ event, onChange }) => {
                 <IOSSwitch
                   value="dynamic Voting Enabled"
                   checked={settings.dynamicVotingEnabled}
+                  disabled={!isHost}
                   onChange={() => {
-                    onChange({
+                    const newSettings = {
                       ...settings,
                       dynamicVotingEnabled: !settings.dynamicVotingEnabled
-                    })
+                    }
+                    setSettings(newSettings)
+                    onChange(newSettings)
                   }}
                 />
               }
               label="Dynamic Voting"
             />
           </ListItem>
+          <Divider />
+          <ListItem>
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  value="Suggesting Playlists Enabled"
+                  checked={settings.suggestingPlaylistsEnabled}
+                  disabled={!isHost}
+                  onChange={() => {
+                    const newSettings = {
+                      ...settings,
+                      suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
+                    }
+                    setSettings(newSettings)
+                    onChange(newSettings)
+                  }}
+                />
+              }
+              label="Allow Playlist Suggestions"
+            />
+          </ListItem>
+          <Divider />
         </List>
       </FormGroup>
     </div>

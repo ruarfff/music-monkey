@@ -84,24 +84,6 @@ const EventSettingsView = () => {
                   <FormControlLabel
                     control={
                       <IOSSwitch
-                        value="Suggesting Playlists Enabled"
-                        checked={settings.suggestingPlaylistsEnabled}
-                        onChange={() => {
-                          setFieldValue('settings', {
-                            ...settings,
-                            suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
-                          })
-                        }}
-                      />
-                    }
-                    label="Allow Playlist Suggestions"
-                  />
-                </ListItem>
-                <Divider />
-                <ListItem>
-                  <FormControlLabel
-                    control={
-                      <IOSSwitch
                         value="Auto Accept Suggestions Enabled"
                         checked={settings.autoAcceptSuggestionsEnabled}
                         onChange={() => {
@@ -133,6 +115,25 @@ const EventSettingsView = () => {
                     label="Dynamic Voting"
                   />
                 </ListItem>
+                <Divider />
+                <ListItem>
+                  <FormControlLabel
+                    control={
+                      <IOSSwitch
+                        value="Suggesting Playlists Enabled"
+                        checked={settings.suggestingPlaylistsEnabled}
+                        onChange={() => {
+                          setFieldValue('settings', {
+                            ...settings,
+                            suggestingPlaylistsEnabled: !settings.suggestingPlaylistsEnabled
+                          })
+                        }}
+                      />
+                    }
+                    label="Allow Playlist Suggestions"
+                  />
+                </ListItem>
+                <Divider />
               </List>
             </FormGroup>
           )
