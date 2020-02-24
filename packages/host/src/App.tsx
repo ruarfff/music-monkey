@@ -17,6 +17,7 @@ import Login from 'auth/LoginContainer'
 import { userIsAuthenticated, userIsNotAuthenticated } from 'routes/routes'
 import RouteContextProvider from 'routes/RouteContext'
 import AuthLoader from 'auth/AuthLoaderContainer'
+import './App.scss'
 
 interface IAppProps {
   store: Store
@@ -29,9 +30,17 @@ const App = ({ store, history }: IAppProps) => (
     <ThemeProvider theme={theme}>
       <MuiPickersUtilsProvider utils={Utils}>
         <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center'
+          }}
           maxSnack={3}
           preventDuplicate={true}
           autoHideDuration={1000}
+          classes={{
+            variantSuccess: 'alert-success-custom'
+          }}
+          dense={true}
         >
           <Provider store={store}>
             <ConnectedRouter history={history}>

@@ -4,7 +4,7 @@ export const useSnackbarAlert = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   const showSuccess = (message: string) => {
-    enqueueSnackbar(message, { variant: 'default' })
+    enqueueSnackbar(message, { variant: 'success' })
   }
 
   const showError = (message: string) => {

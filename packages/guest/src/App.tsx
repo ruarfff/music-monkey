@@ -19,6 +19,7 @@ import Login from 'auth/LoginContainer'
 import SignUp from 'auth/SignUpContainer'
 import Invite from 'invite/components/InviteContainer'
 import Stepper from 'stepper/StepperContainer'
+import './App.scss'
 
 interface IAppProps {
   store: Store
@@ -30,9 +31,17 @@ const App = ({ store, history }: IAppProps) => (
     <CssBaseline />
     <ThemeProvider theme={theme}>
       <SnackbarProvider
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center'
+        }}
         maxSnack={3}
         preventDuplicate={true}
         autoHideDuration={1000}
+        classes={{
+          variantSuccess: 'alert-success-custom'
+        }}
+        dense={true}
       >
         <Provider store={store}>
           <ConnectedRouter history={history}>
