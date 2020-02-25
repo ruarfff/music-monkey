@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Divider,
   List,
@@ -11,9 +11,11 @@ import {
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
+import SwipeableViews from 'react-swipeable-views'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
-import { Event, TabPanel } from 'mm-shared'
+import { Event, useSwipeTabsIndex } from 'mm-shared'
+import NoEvents from './NoEvents'
 import './EventList.scss'
 
 interface IEventListProps {
@@ -30,13 +32,7 @@ function a11yProps(index: any) {
 }
 
 const renderEvents = (events: Event[], status: string) => {
-  if (isEmpty(events))
-    return (
-      <Typography align={'center'} variant={'h6'}>
-        It looks like you don't have any {status} events :({' '}
-        <Link to="/create-event">Create one?</Link>
-      </Typography>
-    )
+  if (isEmpty(events)) return <NoEvents status={status} />
 
   const getItemText = (event: Event, status: string) => {
     if (status === 'live') return 'Happening Now'
@@ -47,9 +43,9 @@ const renderEvents = (events: Event[], status: string) => {
   }
 
   return (
-    <>
+    <List>
       {events.map((event, index) => (
-        <div className="EventList-root" key={index + status}>
+        <React.Fragment key={index + status}>
           <ListItem
             button={true}
             component={Link}
@@ -68,12 +64,10 @@ const renderEvents = (events: Event[], status: string) => {
               className="EventList-text"
             />
           </ListItem>
-          <li>
-            <Divider variant="inset" className="EventList-item-divider" />
-          </li>
-        </div>
+          <Divider variant="inset" component="li" />
+        </React.Fragment>
       ))}
-    </>
+    </List>
   )
 }
 
@@ -82,13 +76,10 @@ const EventList = ({
   upcomingEvents,
   liveEvents
 }: IEventListProps) => {
-  const [tabIndex, setTabIndex] = useState(0)
-  const handleTabChange = (_: React.ChangeEvent<{}>, newValue: number) => {
-    setTabIndex(newValue)
-  }
+  const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
   return (
-    <List>
+    <div className="EventList-root">
       <AppBar position="static" color="default">
         <Tabs
           value={tabIndex}
@@ -103,22 +94,20 @@ const EventList = ({
           <Tab label="Past" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      {tabIndex === 0 && (
-        <TabPanel value={tabIndex} index={0}>
+      <SwipeableViews axis="x" index={tabIndex} onChangeIndex={handleTabChange}>
+        <Typography component="div" dir="0">
           {renderEvents(upcomingEvents, 'upcoming')}
-        </TabPanel>
-      )}
-      {tabIndex === 1 && (
-        <TabPanel value={tabIndex} index={1}>
+        </Typography>
+
+        <Typography component="div" dir="0">
           {renderEvents(liveEvents, 'live')}
-        </TabPanel>
-      )}
-      {tabIndex === 2 && (
-        <TabPanel value={tabIndex} index={2}>
+        </Typography>
+
+        <Typography component="div" dir="0">
           {renderEvents(pastEvents, 'past')}
-        </TabPanel>
-      )}
-    </List>
+        </Typography>
+      </SwipeableViews>
+    </div>
   )
 }
 

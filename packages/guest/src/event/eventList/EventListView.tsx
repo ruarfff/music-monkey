@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Typography } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 import { Redirect } from 'react-router'
 import {
@@ -11,6 +10,8 @@ import {
 } from 'mm-shared'
 import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
 import EventList from './EventList'
+import './EventListView.scss'
+import NoEvents from './NoEvents'
 
 interface IEventListViewProps {
   event: Event
@@ -60,23 +61,19 @@ const EventListView = ({
   }
 
   if (isEmpty(events)) {
-    return (
-      <div>
-        <Typography align={'center'} variant={'h6'}>
-          It looks like you don't have any events yet :(
-        </Typography>
-      </div>
-    )
+    return <NoEvents />
   }
 
   const { pastEvents, upcomingEvents, liveEvents } = sortEvents(events)
 
   return (
-    <EventList
-      pastEvents={pastEvents}
-      upcomingEvents={upcomingEvents}
-      liveEvents={liveEvents}
-    />
+    <div className="EventListView-root">
+      <EventList
+        pastEvents={pastEvents}
+        upcomingEvents={upcomingEvents}
+        liveEvents={liveEvents}
+      />
+    </div>
   )
 }
 
