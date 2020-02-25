@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Grid, AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
   Action,

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIconFill from '@material-ui/icons/Favorite'
 import AddIcon from '@material-ui/icons/Add'
@@ -43,6 +43,43 @@ interface TrackListItemProps {
   onRemoved?(track: Track, suggestion: Suggestion): void
 }
 
+interface VoteButtonProps {
+  voteDetails: any
+  onVote(track: Track): void
+}
+const VoteButton: FC<VoteButtonProps> = ({ voteDetails, onVote }) => {
+  const [vote, setVote] = useState(voteDetails)
+  const handleTrackVote = () => {
+    console.log(vote)
+    setVote({
+      track: vote.track,
+      currentUserVoted: !vote.currentUserVoted,
+      numberOfVotes: vote.currentUserVoted
+        ? vote.numberOfVotes - 1
+        : vote.numberOfVotes + 1
+    })
+    const doVote = async () => {
+      onVote(vote.track)
+    }
+
+    doVote()
+  }
+
+  return vote.currentUserVoted ? (
+    <div onClick={handleTrackVote}>
+      <Badge badgeContent={vote.numberOfVotes} className="current-user">
+        <FavoriteIconFill color="primary" fontSize="large" />
+      </Badge>
+    </div>
+  ) : (
+    <div onClick={handleTrackVote}>
+      <Badge badgeContent={vote.numberOfVotes}>
+        <FavouriteIcon fontSize="large" />
+      </Badge>
+    </div>
+  )
+}
+
 export const TrackListItem: FC<TrackListItemProps> = ({
   track,
   suggestion,
@@ -74,10 +111,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
     }
   }
 
-  const handleTrackVote = () => {
-    onVote(track)
-  }
-
   const handleRemoveTrack = (track: Track) => () => {
     if (isFunction(onRemoved)) {
       onRemoved(track, suggestion?.suggestion)
@@ -102,19 +135,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
       <Avatar alt="user avatar" src={user.image} className="avatar" />
     ) : (
       <Avatar className="EventGuests-avatar">{initials}</Avatar>
-    )
-  }
-
-  let votingButton = <span />
-  if (options.canVote) {
-    votingButton = currentUserVoted ? (
-      <Badge badgeContent={numberOfVotes} className="current-user">
-        <FavoriteIconFill color="primary" fontSize="large" />
-      </Badge>
-    ) : (
-      <Badge badgeContent={numberOfVotes}>
-        <FavouriteIcon fontSize="large" />
-      </Badge>
     )
   }
 
@@ -145,6 +165,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
       </Fab>
     )
   }
+  console.log('Track: ' + track)
 
   return (
     <>
@@ -174,7 +195,12 @@ export const TrackListItem: FC<TrackListItemProps> = ({
         />
 
         <ListItemSecondaryAction className="TrackListItem-actions">
-          {votingButton}
+          {options.canVote && (
+            <VoteButton
+              onVote={onVote}
+              voteDetails={{ currentUserVoted, numberOfVotes, track }}
+            />
+          )}
           {avatar}
           {addButton}
           {deleteButton}

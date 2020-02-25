@@ -3,8 +3,8 @@ import { Grid, AppBar, Tab, Tabs, Typography } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
-  User,
   Action,
+  User,
   Event,
   MarvinLoader,
   TrackVoteStatus,
