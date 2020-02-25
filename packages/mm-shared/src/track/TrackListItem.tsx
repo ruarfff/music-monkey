@@ -165,7 +165,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
       </Fab>
     )
   }
-  console.log('Track: ' + track)
 
   return (
     <>
