@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 import AddIcon from '@material-ui/icons/Add'
 import { Typography, Grid, Fab } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import Img from 'react-image'
 import partyPeople from 'assets/party-people.svg'
 
 import './NoEvents.scss'
@@ -42,11 +41,7 @@ const NoEvents: FC<NoEventsProps> = ({ status = '' }) => {
         </div>
       </Grid>
       <Grid item xs={12}>
-        <Img
-          src={[partyPeople]}
-          alt="Party People"
-          className="NoEvents-image"
-        ></Img>
+        <img src={partyPeople} alt="Party People" className="NoEvents-image" />
       </Grid>
     </Grid>
   )
