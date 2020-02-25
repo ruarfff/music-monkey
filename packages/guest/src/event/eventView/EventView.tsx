@@ -119,6 +119,7 @@ const EventView: FC<EventViewProps> = ({
                   user={user}
                   event={event}
                   requests={pendingRequests}
+                  showAll={true}
                   onAccept={(s: Suggestion) => {}}
                   onReject={(s: Suggestion) => {}}
                 />

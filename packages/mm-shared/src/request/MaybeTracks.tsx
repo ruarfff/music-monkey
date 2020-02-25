@@ -9,6 +9,7 @@ interface MaybeTracksProps {
   user: User
   event: Event
   requests: DecoratedSuggestion[]
+  showAll?: boolean
   onAccept(suggestion: Suggestion): void
   onReject(suggestion: Suggestion): void
 }
@@ -18,6 +19,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
   requests,
   event,
   isHost,
+  showAll,
   onAccept,
   onReject
 }) => {
@@ -37,7 +39,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
           )
       : []
 
-  if (!isHost) {
+  if (!isHost && !showAll) {
     maybeSuggestions = maybeSuggestions.filter(
       s => s.suggestion.userId === user.userId
     )
