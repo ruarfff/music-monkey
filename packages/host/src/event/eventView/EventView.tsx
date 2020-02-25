@@ -14,7 +14,10 @@ import {
   EventSettingsView,
   EventHeader,
   MaybeTracks,
-  Suggestion
+  Suggestion,
+  acceptRequest,
+  rejectRequest,
+  useSnackbarAlert
 } from 'mm-shared'
 import { updateEvent } from 'event/eventClient'
 import EventFetchError from 'event/EventFetchError'
@@ -52,6 +55,8 @@ const EventView: FC<EventViewProps> = ({
 }) => {
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
+  const { showSuccess } = useSnackbarAlert()
+
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
   }
@@ -68,6 +73,16 @@ const EventView: FC<EventViewProps> = ({
 
   const handleGetEvent = () => {
     getEventById(eventId)
+  }
+
+  const handleRejectRequest = (request: Suggestion) => {
+    showSuccess('Request rejected')
+    rejectRequest(request)
+  }
+
+  const handleAcceptRequest = (request: Suggestion) => {
+    showSuccess('Request accepted')
+    acceptRequest(request)
   }
 
   if (!shouldShowEvent) {
@@ -140,8 +155,8 @@ const EventView: FC<EventViewProps> = ({
                 user={user}
                 event={event}
                 requests={pendingRequests}
-                onAccept={(s: Suggestion) => {}}
-                onReject={(s: Suggestion) => {}}
+                onAccept={handleAcceptRequest}
+                onReject={handleRejectRequest}
               />
             </Typography>
           </Grid>
