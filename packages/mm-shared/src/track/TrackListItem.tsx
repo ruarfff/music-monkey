@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIconFill from '@material-ui/icons/Favorite'
 import AddIcon from '@material-ui/icons/Add'
@@ -30,6 +30,7 @@ import { TrackConfig } from './TrackConfig'
 import './TrackListItem.scss'
 
 interface TrackListItemProps {
+  isHost: boolean
   track: Track
   suggestion?: DecoratedSuggestion
   numberOfVotes: number
@@ -43,26 +44,45 @@ interface TrackListItemProps {
   onRemoved?(track: Track, suggestion: Suggestion): void
 }
 
+interface VoteDetails {
+  isHost: boolean
+  currentUserVoted: boolean
+  numberOfVotes: number
+  track: Track
+}
+
 interface VoteButtonProps {
-  voteDetails: any
+  voteDetails: VoteDetails
   onVote(track: Track): void
 }
 const VoteButton: FC<VoteButtonProps> = ({ voteDetails, onVote }) => {
-  const [vote, setVote] = useState(voteDetails)
-  const handleTrackVote = () => {
-    console.log(vote)
-    setVote({
-      track: vote.track,
-      currentUserVoted: !vote.currentUserVoted,
-      numberOfVotes: vote.currentUserVoted
-        ? vote.numberOfVotes - 1
-        : vote.numberOfVotes + 1
-    })
-    const doVote = async () => {
-      onVote(vote.track)
-    }
+  const [vote, setVote] = useState<VoteDetails>({
+    currentUserVoted: false,
+    numberOfVotes: 0,
+    isHost: false,
+    track: {} as Track
+  })
 
-    doVote()
+  useEffect(() => {
+    setVote(voteDetails)
+  }, [voteDetails])
+
+  const handleTrackVote = () => {
+    if (!vote.isHost) {
+      setVote({
+        isHost: vote.isHost,
+        track: vote.track,
+        currentUserVoted: !vote.currentUserVoted,
+        numberOfVotes: vote.currentUserVoted
+          ? vote.numberOfVotes - 1
+          : vote.numberOfVotes + 1
+      })
+      const doVote = async () => {
+        onVote(vote.track)
+      }
+
+      doVote()
+    }
   }
 
   return vote.currentUserVoted ? (
@@ -81,6 +101,7 @@ const VoteButton: FC<VoteButtonProps> = ({ voteDetails, onVote }) => {
 }
 
 export const TrackListItem: FC<TrackListItemProps> = ({
+  isHost,
   track,
   suggestion,
   currentUserVoted,
@@ -197,7 +218,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
           {options.canVote && (
             <VoteButton
               onVote={onVote}
-              voteDetails={{ currentUserVoted, numberOfVotes, track }}
+              voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
             />
           )}
           {avatar}

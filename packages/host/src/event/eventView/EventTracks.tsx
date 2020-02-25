@@ -68,6 +68,7 @@ const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
 
       {!isEmpty(tracks) && (
         <TrackList
+          isHost={true}
           event={event}
           tracks={tracks}
           suggestions={suggestions}

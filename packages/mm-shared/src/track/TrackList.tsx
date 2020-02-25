@@ -13,6 +13,7 @@ import {
 } from '../'
 import { Suggestion } from 'request'
 interface TrackListProps {
+  isHost: boolean
   tracks: Track[]
   suggestions?: DecoratedSuggestion[]
   votes?: Map<string, TrackVoteStatus>
@@ -40,6 +41,7 @@ const getItemStyle = (isDragging: any, draggableStyle: any) => {
 }
 
 export const TrackList: FC<TrackListProps> = ({
+  isHost,
   tracks = [],
   suggestions = [],
   filterList = [],
@@ -166,6 +168,7 @@ export const TrackList: FC<TrackListProps> = ({
                           )}
                         >
                           <TrackListItem
+                            isHost={isHost}
                             track={track}
                             onPlay={onPlay}
                             isPlaying={
