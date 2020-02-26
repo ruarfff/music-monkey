@@ -15,7 +15,7 @@ import { Suggestion } from 'request'
 import './TrackList.scss'
 
 interface TrackListProps {
-  isHost: boolean
+  isHost?: boolean
   tracks: Track[]
   suggestions?: DecoratedSuggestion[]
   votes?: Map<string, TrackVoteStatus>
@@ -43,7 +43,7 @@ const getItemStyle = (isDragging: any, draggableStyle: any) => {
 }
 
 export const TrackList: FC<TrackListProps> = ({
-  isHost,
+  isHost = false,
   tracks = [],
   suggestions = [],
   filterList = [],
