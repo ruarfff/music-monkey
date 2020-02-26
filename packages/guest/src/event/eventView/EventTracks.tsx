@@ -10,6 +10,7 @@ import {
   TrackList,
   Vote
 } from 'mm-shared'
+import NoEventTracks from './NoEventTracks'
 import './EventTracks.scss'
 
 interface IEventTracksProps {
@@ -49,18 +50,22 @@ const EventTracks: FunctionComponent<IEventTracksProps> = ({
     createVote(vote)
   }
 
+  if (isEmpty(event.playlist) || isEmpty(event.playlist!.tracks.items)) {
+    return <NoEventTracks />
+  }
+
   return (
     <div className="EventTracks-root">
-      {!isEmpty(event.playlist) && (
-        <TrackList
-          event={event}
-          tracks={event.playlist!.tracks.items.map(item => item.track)}
-          suggestions={suggestions}
-          options={{ showSummary: true, canVote: true }}
-          votes={votes}
-          onVote={handleTrackVote}
-        />
-      )}
+      <TrackList
+        isHost={false}
+        event={event}
+        tracks={event.playlist!.tracks.items.map(item => item.track)}
+        suggestions={suggestions}
+        options={{ showSummary: true, canVote: true }}
+        votes={votes}
+        onVote={handleTrackVote}
+      />
+      
     </div>
   )
 }

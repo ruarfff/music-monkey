@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
-import { Typography } from '@material-ui/core'
 import { isEmpty, uniqBy } from 'lodash'
 import { Event, User, DecoratedSuggestion, TrackList, Suggestion } from '../'
+import NoMaybeTracks from './NoMaybeTracks'
 import './MaybeTracks.scss'
 
 interface MaybeTracksProps {
@@ -53,6 +53,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
     <>
       {!isEmpty(maybeTracks) && (
         <TrackList
+          isHost={isHost}
           tracks={maybeTracks}
           suggestions={maybeSuggestions}
           options={{ canRequest: isHost, canRemove: isHost }}
@@ -60,11 +61,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
           onReject={onReject}
         />
       )}
-      {isEmpty(maybeTracks) && (
-        <Typography className="noTracks" variant="h6" gutterBottom>
-          No requests yet
-        </Typography>
-      )}
+      {isEmpty(maybeTracks) && <NoMaybeTracks isHost={isHost} />}
     </>
   )
 }
