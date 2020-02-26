@@ -12,6 +12,8 @@ import {
   formatDuration
 } from '../'
 import { Suggestion } from 'request'
+import './TrackList.scss'
+
 interface TrackListProps {
   isHost: boolean
   tracks: Track[]
@@ -123,9 +125,10 @@ export const TrackList: FC<TrackListProps> = ({
 
   return (
     <List
+      className="TrackList-root"
       subheader={
         options.showSummary && !isEmpty(tracks) ? (
-          <ListSubheader component="div">
+          <ListSubheader component="div" className="TrackList-subheader">
             {numTracks} tracks : {formatDuration(duration)}
           </ListSubheader>
         ) : (
