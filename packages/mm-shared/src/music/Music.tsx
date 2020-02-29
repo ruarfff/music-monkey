@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import { AppBar, Typography, Tab, Tabs } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
-import SwipeableViews from 'react-swipeable-views'
 import {
   Action,
   Track,
@@ -71,24 +70,22 @@ export const Music: FC<MusicProps> = ({
         </Tabs>
       </AppBar>
 
-      <SwipeableViews axis="x" index={tabIndex} onChangeIndex={handleTabChange}>
-        <Typography component="div" dir="0">
-          <Playlists
-            user={user}
-            playlists={userPlaylists}
-            playlistsEnabled={false}
-            onTrackSelected={onTrackSelected}
-            onPlaylistSelected={onPlaylistSelected}
-          />
-        </Typography>
-        <Typography component="div" dir="0">
-          <TrackList
-            tracks={isEmpty(likedTracks) ? [] : likedTracks.map(lt => lt.track)}
-            options={{ canRequest: true }}
-            onSelected={onTrackSelected}
-          />
-        </Typography>
-      </SwipeableViews>
+      <Typography component="div" dir="0" hidden={tabIndex !== 0}>
+        <Playlists
+          user={user}
+          playlists={userPlaylists}
+          playlistsEnabled={false}
+          onTrackSelected={onTrackSelected}
+          onPlaylistSelected={onPlaylistSelected}
+        />
+      </Typography>
+      <Typography component="div" dir="1" hidden={tabIndex !== 1}>
+        <TrackList
+          tracks={isEmpty(likedTracks) ? [] : likedTracks.map(lt => lt.track)}
+          options={{ canRequest: true }}
+          onSelected={onTrackSelected}
+        />
+      </Typography>
     </div>
   )
 }

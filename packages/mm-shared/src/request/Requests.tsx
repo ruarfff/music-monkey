@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { Tab, Tabs, Typography, Grid, AppBar } from '@material-ui/core'
-import SwipeableViews from 'react-swipeable-views'
 import { useSwipeTabsIndex, Suggestion } from '../'
 import { User } from 'user'
 import { Event } from 'event'
@@ -51,40 +50,34 @@ const Requests: FC<RequestsProps> = ({
         </AppBar>
       </Grid>
       <Grid item xs={12}>
-        <SwipeableViews
-          axis="x"
-          index={tabIndex}
-          onChangeIndex={handleTabChange}
-        >
-          <Typography component="div" dir="0">
-            <MaybeTracks
-              isHost={isHost}
-              user={user}
-              requests={pendingRequests}
-              event={event}
-              onAccept={onAccept}
-              onReject={onReject}
-            />
-          </Typography>
+        <Typography component="div" dir="0" hidden={tabIndex !== 0}>
+          <MaybeTracks
+            isHost={isHost}
+            user={user}
+            requests={pendingRequests}
+            event={event}
+            onAccept={onAccept}
+            onReject={onReject}
+          />
+        </Typography>
 
-          <Typography component="div" dir="1">
-            <AcceptedTracks
-              isHost={isHost}
-              user={user}
-              requests={acceptedRequests}
-              onReject={onReject}
-            />
-          </Typography>
+        <Typography component="div" dir="1" hidden={tabIndex !== 1}>
+          <AcceptedTracks
+            isHost={isHost}
+            user={user}
+            requests={acceptedRequests}
+            onReject={onReject}
+          />
+        </Typography>
 
-          <Typography component="div" dir="2">
-            <RejectedTracks
-              isHost={isHost}
-              user={user}
-              requests={rejectedRequests}
-              onAccept={onAccept}
-            />
-          </Typography>
-        </SwipeableViews>
+        <Typography component="div" dir="2" hidden={tabIndex !== 2}>
+          <RejectedTracks
+            isHost={isHost}
+            user={user}
+            requests={rejectedRequests}
+            onAccept={onAccept}
+          />
+        </Typography>
       </Grid>
     </Grid>
   )

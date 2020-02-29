@@ -150,7 +150,7 @@ const EventView: FC<EventViewProps> = ({
                 suggestions={suggestions}
               />
             </Typography>
-            <Typography component="div" dir="0" hidden={tabIndex !== 1}>
+            <Typography component="div" dir="1" hidden={tabIndex !== 1}>
               <MaybeTracks
                 isHost={isHost}
                 user={user}

@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Grid, AppBar, Tab, Tabs, Typography } from '@material-ui/core'
-import SwipeableViews from 'react-swipeable-views'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
@@ -98,33 +97,27 @@ const EventView: FC<EventViewProps> = ({
                 <Tab label="REQUESTS" />
               </Tabs>
             </AppBar>
-            <SwipeableViews
-              axis="x"
-              index={tabIndex}
-              onChangeIndex={handleTabChange}
-            >
-              <Typography component="div" dir="0">
-                <EventTracks
-                  user={user}
-                  createVote={createVote}
-                  deleteVote={deleteVote}
-                  votes={votes}
-                  event={event}
-                  suggestions={suggestions}
-                />
-              </Typography>
-              <Typography component="div" dir="0">
-                <MaybeTracks
-                  isHost={isHost}
-                  user={user}
-                  event={event}
-                  requests={pendingRequests}
-                  showAll={true}
-                  onAccept={(s: Suggestion) => {}}
-                  onReject={(s: Suggestion) => {}}
-                />
-              </Typography>
-            </SwipeableViews>
+            <Typography component="div" dir="0" hidden={tabIndex !== 0}>
+              <EventTracks
+                user={user}
+                createVote={createVote}
+                deleteVote={deleteVote}
+                votes={votes}
+                event={event}
+                suggestions={suggestions}
+              />
+            </Typography>
+            <Typography component="div" dir="1" hidden={tabIndex !== 1}>
+              <MaybeTracks
+                isHost={isHost}
+                user={user}
+                event={event}
+                requests={pendingRequests}
+                showAll={true}
+                onAccept={(s: Suggestion) => {}}
+                onReject={(s: Suggestion) => {}}
+              />
+            </Typography>
           </Grid>
         </Route>
       </Switch>

@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
-import SwipeableViews from 'react-swipeable-views'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import { Event, useSwipeTabsIndex } from 'mm-shared'
@@ -94,19 +93,17 @@ const EventList = ({
           <Tab label="Past" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <SwipeableViews axis="x" index={tabIndex} onChangeIndex={handleTabChange}>
-        <Typography component="div" dir="0">
-          {renderEvents(upcomingEvents, 'upcoming')}
-        </Typography>
+      <Typography component="div" dir="0" hidden={tabIndex !== 0}>
+        {renderEvents(upcomingEvents, 'upcoming')}
+      </Typography>
 
-        <Typography component="div" dir="0">
-          {renderEvents(liveEvents, 'live')}
-        </Typography>
+      <Typography component="div" dir="1" hidden={tabIndex !== 1}>
+        {renderEvents(liveEvents, 'live')}
+      </Typography>
 
-        <Typography component="div" dir="0">
-          {renderEvents(pastEvents, 'past')}
-        </Typography>
-      </SwipeableViews>
+      <Typography component="div" dir="2" hidden={tabIndex !== 2}>
+        {renderEvents(pastEvents, 'past')}
+      </Typography>
     </div>
   )
 }

@@ -98,11 +98,11 @@ const EventList = ({
         {renderEvents(upcomingEvents, 'upcoming')}
       </Typography>
 
-      <Typography component="div" dir="0" hidden={tabIndex !== 1}>
+      <Typography component="div" dir="1" hidden={tabIndex !== 1}>
         {renderEvents(liveEvents, 'live')}
       </Typography>
 
-      <Typography component="div" dir="0" hidden={tabIndex !== 2}>
+      <Typography component="div" dir="2" hidden={tabIndex !== 2}>
         {renderEvents(pastEvents, 'past')}
       </Typography>
     </div>

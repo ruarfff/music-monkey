@@ -11,6 +11,8 @@ import {
   Collapse,
   ListItemIcon
 } from '@material-ui/core'
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
 import { ChevronRight, KeyboardArrowDown, QueueMusic } from '@material-ui/icons'
 import isEmpty from 'lodash/isEmpty'
 import Img from 'react-image'
@@ -107,8 +109,8 @@ const Playlists: FC<PlaylistsProps> = ({
                 onClick={handlePlaylistClicked(playlist)}
               >
                 <IconButton edge="end" aria-label="delete" color="primary">
-                  {isEmpty(selectedPlaylist) && <ChevronRight />}
-                  {selectedPlaylist === playlist && <KeyboardArrowDown />}
+                  {isEmpty(selectedPlaylist) && <ExpandMore />}
+                  {selectedPlaylist === playlist && <ExpandLess />}
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
