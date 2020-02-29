@@ -7,10 +7,10 @@ import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
-import Collapse from '@material-ui/core/Collapse'
 import {
   Badge,
   List,
+  Collapse,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -19,7 +19,6 @@ import {
   Avatar,
   ListItemSecondaryAction
 } from '@material-ui/core'
-import isFunction from 'lodash/isFunction'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import {
@@ -120,17 +119,48 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   currentUserVoted,
   numberOfVotes,
   event,
-  options,
+  options = {},
   isPlaying = false,
   onPlay = () => {},
   onVote = () => {},
   onSelected = () => {},
   onRemoved = () => {}
 }) => {
+  const hasOptions = options.canRequest || options.canRemove
+  const [hidden, setHidden] = useState(false)
   const [expanded, setExpanded] = useState(false)
+  //const [trackId, setTrackId] = useState(!!track ? track.id : '')
+
+  useEffect(() => {
+    setHidden(false)
+    // console.log(track.id)
+    // console.log(expanded)
+    // if (!!track && trackId !== track.id) {
+    // }
+  }, [track])
+
   if (!track) {
     return <span />
   }
+
+  const handleSelected = () => {
+    setExpanded(false)
+    setHidden(true)
+    const actualSuggestion = !!suggestion
+      ? suggestion.suggestion
+      : ({} as Suggestion)
+    onSelected(track, actualSuggestion)
+  }
+
+  const handleRemove = () => {
+    setExpanded(false)
+    setHidden(true)
+    const actualSuggestion = !!suggestion
+      ? suggestion.suggestion
+      : ({} as Suggestion)
+    onRemoved(track, actualSuggestion)
+  }
+
   const user = !!suggestion ? suggestion.user : !!event ? event.hostData : null
   let initials: any = 'G'
 
@@ -140,20 +170,8 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const handleExpandToggle = () => {
-    if (isHost) {
+    if (hasOptions) {
       setExpanded(!expanded)
-    }
-  }
-
-  const handleTrackSelected = () => {
-    if (isFunction(onSelected)) {
-      onSelected(track, suggestion?.suggestion)
-    }
-  }
-
-  const handleRemoveTrack = (track: Track) => () => {
-    if (isFunction(onRemoved)) {
-      onRemoved(track, suggestion?.suggestion)
     }
   }
 
@@ -192,7 +210,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
         aria-label="remove"
         size="small"
         color="secondary"
-        onClick={handleRemoveTrack(track)}
+        onClick={handleRemove}
       >
         <Remove />
       </Fab>
@@ -206,7 +224,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
         color="primary"
         aria-label="add"
         size="small"
-        onClick={handleTrackSelected}
+        onClick={handleSelected}
       >
         <AddIcon />
       </Fab>
@@ -219,54 +237,56 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
   return (
     <>
-      <ListItem className="TrackListItem-root" alignItems="flex-start" button>
-        <ListItemIcon
-          onClick={() => {
-            onPlay(track)
-          }}
-        >
-          {!!user ? withBadge(trackImage) : trackImage}
-        </ListItemIcon>
+      <Collapse in={!hidden} timeout="auto" unmountOnExit>
+        <ListItem className="TrackListItem-root" alignItems="flex-start" button>
+          <ListItemIcon
+            onClick={() => {
+              onPlay(track)
+            }}
+          >
+            {!!user ? withBadge(trackImage) : trackImage}
+          </ListItemIcon>
 
-        <ListItemText
-          className="TrackListItem-content"
-          primary={track.name}
-          primaryTypographyProps={{ noWrap: true }}
-          secondary={
-            <span>
-              {track.artists[0].name}
-              <br />
-              {formatDuration(track.duration_ms)}
-            </span>
-          }
-          secondaryTypographyProps={{
-            variant: 'body2',
-            noWrap: true
-          }}
-        />
+          <ListItemText
+            className="TrackListItem-content"
+            primary={track.name}
+            primaryTypographyProps={{ noWrap: true }}
+            secondary={
+              <span>
+                {track.artists[0].name}
+                <br />
+                {formatDuration(track.duration_ms)}
+              </span>
+            }
+            secondaryTypographyProps={{
+              variant: 'body2',
+              noWrap: true
+            }}
+          />
 
-        <ListItemSecondaryAction
-          className="TrackListItem-actions"
-          onClick={handleExpandToggle}
-        >
-          {options.canVote && (
-            <VoteButton
-              onVote={onVote}
-              voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
-            />
-          )}
-          {isHost && expandIcon()}
-        </ListItemSecondaryAction>
-      </ListItem>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className="TrackListItem-nested">
-            <div className="TrackListItem-host-actions">
-              {addButton}
-              {deleteButton}
-            </div>
-          </ListItem>
-        </List>
+          <ListItemSecondaryAction
+            className="TrackListItem-actions"
+            onClick={handleExpandToggle}
+          >
+            {options.canVote && (
+              <VoteButton
+                onVote={onVote}
+                voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
+              />
+            )}
+            {hasOptions && expandIcon()}
+          </ListItemSecondaryAction>
+        </ListItem>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button className="TrackListItem-nested">
+              <div className="TrackListItem-host-actions">
+                {addButton}
+                {deleteButton}
+              </div>
+            </ListItem>
+          </List>
+        </Collapse>
       </Collapse>
       <Divider variant="inset" component="li" />
     </>

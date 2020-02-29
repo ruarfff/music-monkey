@@ -117,11 +117,13 @@ const Playlists: FC<PlaylistsProps> = ({
               timeout="auto"
               unmountOnExit
             >
-              <TrackList
-                tracks={playlist.tracks.items.map(t => t.track)}
-                onSelected={onTrackSelected}
-                options={{ canRequest: true }}
-              />
+              <div className="Playlists-tracks">
+                <TrackList
+                  tracks={playlist.tracks.items.map(t => t.track)}
+                  onSelected={onTrackSelected}
+                  options={{ canRequest: true }}
+                />
+              </div>
             </Collapse>
             <Divider variant="inset" component="li" />
           </Collapse>

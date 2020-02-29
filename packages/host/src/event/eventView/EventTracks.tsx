@@ -66,30 +66,28 @@ const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
   }
 
   return (
-    <div className="EventTracks-root">
-      <TrackList
-        isHost={true}
-        event={event}
-        tracks={tracks}
-        suggestions={suggestions}
-        votes={votes}
-        options={{
-          showSummary: true,
-          allowDragDrop: true,
-          canRemove: true,
-          canVote: true
-        }}
-        onDragEnd={(result: DropResult) => {
-          if (!result.destination) {
-            return
-          }
-          handleTrackMoved(result.source.index, result.destination.index)
-        }}
-        onRemoved={(track: Track) => {
-          handleTrackRemoved(track)
-        }}
-      />
-    </div>
+    <TrackList
+      isHost={true}
+      event={event}
+      tracks={tracks}
+      suggestions={suggestions}
+      votes={votes}
+      options={{
+        showSummary: true,
+        allowDragDrop: true,
+        canRemove: true,
+        canVote: true
+      }}
+      onDragEnd={(result: DropResult) => {
+        if (!result.destination) {
+          return
+        }
+        handleTrackMoved(result.source.index, result.destination.index)
+      }}
+      onRemoved={(track: Track) => {
+        handleTrackRemoved(track)
+      }}
+    />
   )
 }
 

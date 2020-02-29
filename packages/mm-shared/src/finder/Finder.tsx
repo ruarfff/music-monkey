@@ -83,7 +83,7 @@ const Finder: FC<FinderProps> = ({
   }
 
   return (
-    <Grid container className="Finder-root" spacing={2}>
+    <Grid container className="Finder-root">
       <Grid item xs={12}>
         <TrackSearch
           onSearchResult={(results: Track[]) => {
@@ -116,7 +116,6 @@ const Finder: FC<FinderProps> = ({
           >
             {!hideCurrentPlaylist && (
               <Tab
-                className="Finder-tab"
                 label={
                   !isEmpty(eventTracks) ? (
                     <Badge
@@ -138,10 +137,9 @@ const Finder: FC<FinderProps> = ({
               />
             )}
             <Tab
-              className="Finder-tab"
               label={isEmpty(searchResults) ? 'Suggested' : 'Search Results'}
             />
-            <Tab label="My Playlists" className="Finder-tab" />
+            <Tab label="My Playlists" />
           </Tabs>
         </AppBar>
       </Grid>
@@ -152,9 +150,12 @@ const Finder: FC<FinderProps> = ({
           </div>
         ) : (
           <>
-            {tabIndex === 0 &&
-              !hideCurrentPlaylist &&
-              (isEmpty(eventTracks) ? (
+            <Typography
+              component="div"
+              dir="0"
+              hidden={tabIndex !== 0 || hideCurrentPlaylist}
+            >
+              {isEmpty(eventTracks) ? (
                 <Paper className="Finder-no-tracks">
                   <Typography variant="h5" align="center" gutterBottom>
                     No tracks yet
@@ -181,9 +182,16 @@ const Finder: FC<FinderProps> = ({
                     onTrackRemoved(track)
                   }}
                 />
-              ))}
-            {((hideCurrentPlaylist && tabIndex === 0) ||
-              (!hideCurrentPlaylist && tabIndex === 1)) && (
+              )}
+            </Typography>
+            <Typography
+              component="div"
+              dir="0"
+              hidden={
+                (hideCurrentPlaylist && tabIndex !== 0) ||
+                (!hideCurrentPlaylist && tabIndex !== 1)
+              }
+            >
               <TrackList
                 options={{ canRequest: true }}
                 tracks={
@@ -192,9 +200,15 @@ const Finder: FC<FinderProps> = ({
                 filterList={eventTracks}
                 onSelected={onTrackSelected}
               />
-            )}
-            {((hideCurrentPlaylist && tabIndex === 1) ||
-              (!hideCurrentPlaylist && tabIndex === 2)) && (
+            </Typography>
+            <Typography
+              component="div"
+              dir="0"
+              hidden={
+                (hideCurrentPlaylist && tabIndex !== 1) ||
+                (!hideCurrentPlaylist && tabIndex !== 2)
+              }
+            >
               <Playlists
                 user={user}
                 playlists={userPlaylists}
@@ -202,7 +216,7 @@ const Finder: FC<FinderProps> = ({
                 onTrackSelected={onTrackSelected}
                 onPlaylistSelected={onPlaylistSelected}
               />
-            )}
+            </Typography>
           </>
         )}
       </Grid>

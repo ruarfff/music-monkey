@@ -49,20 +49,18 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
     'id'
   )
 
+  if (isEmpty(maybeTracks)) {
+    return <NoMaybeTracks isHost={isHost} />
+  }
   return (
-    <>
-      {!isEmpty(maybeTracks) && (
-        <TrackList
-          isHost={isHost}
-          tracks={maybeTracks}
-          suggestions={maybeSuggestions}
-          options={{ canRequest: isHost, canRemove: isHost }}
-          onAccept={onAccept}
-          onReject={onReject}
-        />
-      )}
-      {isEmpty(maybeTracks) && <NoMaybeTracks isHost={isHost} />}
-    </>
+    <TrackList
+      isHost={isHost}
+      tracks={maybeTracks}
+      suggestions={maybeSuggestions}
+      options={{ canRequest: isHost, canRemove: isHost }}
+      onAccept={onAccept}
+      onReject={onReject}
+    />
   )
 }
 
