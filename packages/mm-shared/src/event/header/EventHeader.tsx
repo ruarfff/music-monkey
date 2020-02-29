@@ -86,28 +86,7 @@ const EventHeader = ({
           </Link>
         </Grid>
 
-        <Grid item xs={4} className="EventHeader-settings">
-          <Link to={`/events/${event.eventId}/settings`}>
-            <Typography className="EventHeader-heading">Modes</Typography>
-            <ul>
-              <li>
-                {event.settings.autoAcceptSuggestionsEnabled
-                  ? 'Auto Accept On'
-                  : 'Auto Accept Off'}
-              </li>
-              <li>
-                {event.settings.dynamicVotingEnabled
-                  ? 'Dynamic Voting On'
-                  : 'Dynamic Voting Off'}
-              </li>
-              <li>
-                {event.settings.suggestingPlaylistsEnabled
-                  ? 'Request Playlists On'
-                  : 'Request Playlists Off'}
-              </li>
-            </ul>
-          </Link>
-        </Grid>
+        <Grid item xs={4}></Grid>
       </Grid>
 
       {!isHost && (

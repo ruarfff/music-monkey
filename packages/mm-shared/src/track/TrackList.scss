@@ -3,5 +3,17 @@
 .TrackList-root {
   .TrackList-subheader {
     color: $primary;
+
+    .TrackList-info {
+      width: 100%;
+      height: 100%;
+    }
+
+    .TrackList-settings {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row-reverse;
+    }
   }
 }

@@ -72,6 +72,7 @@ const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
       tracks={tracks}
       suggestions={suggestions}
       votes={votes}
+      showSettings={true}
       options={{
         showSummary: true,
         allowDragDrop: true,
