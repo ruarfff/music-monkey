@@ -1,6 +1,6 @@
 import React from 'react'
 import AddIcon from '@material-ui/icons/Add'
-import { AppBar, Toolbar, Fab } from '@material-ui/core'
+import { AppBar, Toolbar } from '@material-ui/core'
 import { ReactCookieProps } from 'react-cookie'
 import { RouteComponentProps, Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
@@ -33,14 +33,7 @@ const TopAppBar = ({ user, event, cookies, isHost, logout }: ITopBarProps) => {
         {isHost && (
           <div className="new-party">
             <Link to="/create-event">
-              <Fab
-                aria-label="New Party"
-                variant="extended"
-                color="secondary"
-                size="small"
-              >
-                <AddIcon />
-              </Fab>
+              <AddIcon color="secondary" fontSize="large" />
             </Link>
           </div>
         )}

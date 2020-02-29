@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import AddIcon from '@material-ui/icons/Add'
-import { Typography, Grid, Fab } from '@material-ui/core'
+import { Typography, Grid } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import partyPeople from 'assets/party-people.svg'
 
@@ -18,7 +18,7 @@ const NoEvents: FC<NoEventsProps> = ({ status = '' }) => {
       justify="center"
       alignItems="center"
       className="NoEvents-root"
-      spacing={4}
+      spacing={8}
     >
       <Grid item xs={12}>
         <Typography align={'center'} variant={'h6'}>
@@ -27,21 +27,14 @@ const NoEvents: FC<NoEventsProps> = ({ status = '' }) => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <div className="NoEvents-button">
-          <Link to="/create-event">
-            <Fab
-              aria-label="New Party"
-              variant="extended"
-              color="secondary"
-              size="large"
-            >
-              <AddIcon />
-            </Fab>
-          </Link>
-        </div>
+        <img src={partyPeople} alt="Party People" className="NoEvents-image" />
       </Grid>
       <Grid item xs={12}>
-        <img src={partyPeople} alt="Party People" className="NoEvents-image" />
+        <div className="NoEvents-button">
+          <Link to="/create-event">
+            <AddIcon color="secondary" style={{ fontSize: 100 }} />
+          </Link>
+        </div>
       </Grid>
     </Grid>
   )
