@@ -140,8 +140,9 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const handleExpandToggle = () => {
-    console.log('Expanded was: ' + expanded)
-    setExpanded(!expanded)
+    if (isHost) {
+      setExpanded(!expanded)
+    }
   }
 
   const handleTrackSelected = () => {
