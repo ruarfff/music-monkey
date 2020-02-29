@@ -35,14 +35,16 @@ const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
 
   const handleTrackMoved = (from: number, to: number) => {
     const oldTracks = [...tracks]
-    try {
-      let reorderedTracks = [...tracks]
-      arrayMove(reorderedTracks, from, to)
-      setTracks(reorderedTracks)
-      reOrderPlaylist(playlist, from, to)
-    } catch (err) {
-      setTracks(oldTracks)
-      showError('Error moving track')
+    if (from !== to) {
+      try {
+        let reorderedTracks = [...tracks]
+        arrayMove(reorderedTracks, from, to)
+        setTracks(reorderedTracks)
+        reOrderPlaylist(playlist, from, to)
+      } catch (err) {
+        setTracks(oldTracks)
+        showError('Error moving track')
+      }
     }
   }
 

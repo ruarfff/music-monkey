@@ -3,10 +3,14 @@ import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIconFill from '@material-ui/icons/Favorite'
 import AddIcon from '@material-ui/icons/Add'
 import Remove from '@material-ui/icons/Remove'
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
+import Collapse from '@material-ui/core/Collapse'
 import {
   Badge,
+  List,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -27,6 +31,7 @@ import {
   Suggestion
 } from '../'
 import { TrackConfig } from './TrackConfig'
+import { withStyles } from '@material-ui/core/styles'
 import './TrackListItem.scss'
 
 interface TrackListItemProps {
@@ -100,6 +105,14 @@ const VoteButton: FC<VoteButtonProps> = ({ voteDetails, onVote }) => {
   )
 }
 
+const SmallAvatar = withStyles(theme => ({
+  root: {
+    width: 22,
+    height: 22,
+    border: `2px solid`
+  }
+}))(Avatar)
+
 export const TrackListItem: FC<TrackListItemProps> = ({
   isHost,
   track,
@@ -114,16 +127,21 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   onSelected = () => {},
   onRemoved = () => {}
 }) => {
+  const [expanded, setExpanded] = useState(false)
   if (!track) {
     return <span />
   }
-
   const user = !!suggestion ? suggestion.user : !!event ? event.hostData : null
   let initials: any = 'G'
 
   if (!!user && user.displayName) {
     initials = user.displayName.match(/\b\w/g) || []
-    initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+    initials = (initials.shift() || '').toUpperCase()
+  }
+
+  const handleExpandToggle = () => {
+    console.log('Expanded was: ' + expanded)
+    setExpanded(!expanded)
   }
 
   const handleTrackSelected = () => {
@@ -138,6 +156,23 @@ export const TrackListItem: FC<TrackListItemProps> = ({
     }
   }
 
+  const withBadge = (child: any) => (
+    <Badge
+      overlap="circle"
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right'
+      }}
+      badgeContent={
+        <SmallAvatar alt="User avatar" src={!!user ? user.image : ''}>
+          {!user || !user.image ? initials : null}
+        </SmallAvatar>
+      }
+    >
+      {child}
+    </Badge>
+  )
+
   const trackImage = (
     <div className="TrackListItem-track-image">
       {isPlaying ? (
@@ -148,16 +183,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
       <Img src={[getTrackImage(track), backgroundImage]} alt={track.name} />
     </div>
   )
-
-  let avatar = <span />
-
-  if (!!user) {
-    avatar = user.image ? (
-      <Avatar alt="user avatar" src={user.image} className="avatar" />
-    ) : (
-      <Avatar className="EventGuests-avatar">{initials}</Avatar>
-    )
-  }
 
   let addButton = <span />
   if (options.canRemove) {
@@ -187,6 +212,10 @@ export const TrackListItem: FC<TrackListItemProps> = ({
     )
   }
 
+  const expandIcon = () => {
+    return expanded ? <ExpandLess /> : <ExpandMore />
+  }
+
   return (
     <>
       <ListItem className="TrackListItem-root" alignItems="flex-start" button>
@@ -195,8 +224,9 @@ export const TrackListItem: FC<TrackListItemProps> = ({
             onPlay(track)
           }}
         >
-          {trackImage}
+          {!!user ? withBadge(trackImage) : trackImage}
         </ListItemIcon>
+
         <ListItemText
           className="TrackListItem-content"
           primary={track.name}
@@ -214,18 +244,29 @@ export const TrackListItem: FC<TrackListItemProps> = ({
           }}
         />
 
-        <ListItemSecondaryAction className="TrackListItem-actions">
+        <ListItemSecondaryAction
+          className="TrackListItem-actions"
+          onClick={handleExpandToggle}
+        >
           {options.canVote && (
             <VoteButton
               onVote={onVote}
               voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
             />
           )}
-          {avatar}
-          {addButton}
-          {deleteButton}
+          {isHost && expandIcon()}
         </ListItemSecondaryAction>
       </ListItem>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className="TrackListItem-nested">
+            <div className="TrackListItem-host-actions">
+              {addButton}
+              {deleteButton}
+            </div>
+          </ListItem>
+        </List>
+      </Collapse>
       <Divider variant="inset" component="li" />
     </>
   )

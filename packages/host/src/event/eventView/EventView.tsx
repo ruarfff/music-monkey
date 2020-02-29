@@ -63,7 +63,6 @@ const EventView: FC<EventViewProps> = ({
 
   useEffect(() => {
     if (!event || event.eventId !== eventId) {
-      console.log('Here again: ' + event.eventId + ' ' + eventId)
       getEventById(eventId)
       fetchEventVotes(eventId)
       getEventSuggestions(eventId)

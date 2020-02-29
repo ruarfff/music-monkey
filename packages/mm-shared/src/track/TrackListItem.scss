@@ -27,18 +27,6 @@
 }
 .TrackListItem-actions {
   display: flex;
-  .MuiFab-secondary {
-    background-color: $danger-red;
-    opacity: 0.9;
-  }
-
-  .MuiFab-root {
-  }
-
-  .MuiFab-primary {
-    background-color: $nice-green;
-    opacity: 0.9;
-  }
 
   .MuiFab-colorInherit {
     background-color: $secondary-light;
@@ -54,5 +42,27 @@
     right: +18px;
     top: +18px;
     font-weight: 800;
+  }
+}
+
+.TrackListItem-nested {
+  padding-left: 6em;
+
+  .TrackListItem-host-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+
+    .MuiFab-root {
+      margin-left: 2em;
+    }
+    .MuiFab-secondary {
+      background-color: $danger-red;
+      opacity: 0.9;
+    }
+    .MuiFab-primary {
+      background-color: $nice-green;
+      opacity: 0.9;
+    }
   }
 }
