@@ -15,6 +15,7 @@ import { userIsAuthenticated, userIsNotAuthenticated } from 'routes/routes'
 import RouteContextProvider from 'routes/RouteContext'
 
 import AuthLoader from 'auth/AuthLoaderContainer'
+import InviteLoader from 'invite/components/InviteLoader'
 import Login from 'auth/LoginContainer'
 import SignUp from 'auth/SignUpContainer'
 import Invite from 'invite/components/InviteContainer'
@@ -69,7 +70,12 @@ const App = ({ store, history }: IAppProps) => (
                         component={userIsNotAuthenticated(SignUp)}
                         exact={true}
                       />
-                      <Route path="/" component={userIsAuthenticated(Layout)} />
+                      <InviteLoader>
+                        <Route
+                          path="/"
+                          component={userIsAuthenticated(Layout)}
+                        />
+                      </InviteLoader>
                     </Switch>
                   </RouteContextProvider>
                 </SubscriptionWrapper>

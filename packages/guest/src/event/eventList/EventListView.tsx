@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
-import { Redirect } from 'react-router'
-import {
-  Action,
-  Event,
-  MarvinLoader,
-  localStorage,
-  sortEvents
-} from 'mm-shared'
-import { inviteAnsweredKey, inviteIdKey } from 'invite/inviteConstants'
+import { Action, Event, MarvinLoader, sortEvents } from 'mm-shared'
 import EventList from './EventList'
-import './EventListView.scss'
 import NoEvents from './NoEvents'
+import './EventListView.scss'
 
 interface IEventListViewProps {
   event: Event
@@ -26,35 +18,12 @@ const EventListView = ({
   eventsLoading,
   deselectEvent
 }: IEventListViewProps) => {
-  const [redirect, setRedirect] = useState(false)
-  const [inviteId, setInviteId] = useState('')
-  const [inviteAnswered, setInviteAnswered] = useState(null)
-
   useEffect(() => {
     if (!isEmpty(event)) {
       deselectEvent()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [event])
-
-  useEffect(() => {
-    let storedInvite = localStorage.get(inviteIdKey, null)
-    if (storedInvite === 'undefined') {
-      storedInvite = null
-    }
-    setInviteId(storedInvite)
-    setInviteAnswered(localStorage.get(inviteAnsweredKey, null))
-  }, [])
-  useEffect(() => {
-    const shouldRedirect = !!(inviteId && inviteAnswered === 'false')
-    if (shouldRedirect !== redirect) {
-      setRedirect(shouldRedirect)
-    }
-  }, [inviteAnswered, inviteId, redirect])
-
-  if (redirect && inviteId) {
-    return <Redirect to={'/invite/' + inviteId} />
-  }
 
   if (eventsLoading) {
     return <MarvinLoader />

@@ -63,11 +63,13 @@ const EventView: FC<EventViewProps> = ({
 
   useEffect(() => {
     if (!event || event.eventId !== eventId) {
+      console.log('Here again: ' + event.eventId + ' ' + eventId)
       getEventById(eventId)
       fetchEventVotes(eventId)
       getEventSuggestions(eventId)
     }
-  }, [event, eventId, fetchEventVotes, getEventById, getEventSuggestions])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [event, eventId])
 
   const shouldShowEvent: boolean = !isEmpty(event)
 

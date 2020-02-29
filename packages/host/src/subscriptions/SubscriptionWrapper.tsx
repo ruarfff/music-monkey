@@ -37,34 +37,28 @@ const SubscriptionWrapper = ({
     const eventId = event && event.eventId ? event.eventId : ''
     const playlistId = event && event.playlist ? event.playlist.id : ''
 
-    const autoAcceptSuggestionsEnabled =
-      event && event.settings && event.settings.autoAcceptSuggestionsEnabled
-    const dynamicVotingEnabled =
-      event && event.settings && event.settings.dynamicVotingEnabled
-
     subscribeToSuggestionsModified(eventId, () => {
-      if (autoAcceptSuggestionsEnabled) {
-        getEventById(eventId)
-      }
+      console.log('Get event suggestions on sub: ' + eventId)
       getEventSuggestions(eventId)
     })
 
     subscribeToRSVPModified(eventId, () => {
+      console.log('Get event RSVP sub: ' + eventId)
       getEventById(eventId)
     })
 
     subscribeToVotesModified(eventId, () => {
+      console.log('Get event Votes sub: ' + eventId)
       fetchEventVotes(eventId)
-      if (dynamicVotingEnabled) {
-        getEventById(eventId)
-      }
     })
 
     subscribeToPlaylistModified(playlistId, () => {
+      console.log('Get event PlaylistMod sub: ' + eventId)
       getEventById(eventId)
     })
 
     subscribeToEventUpdated(eventId, () => {
+      console.log('Get event EventUpdated sub: ' + eventId)
       getEventById(eventId)
     })
 

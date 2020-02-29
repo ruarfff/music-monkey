@@ -12,8 +12,8 @@ import {
   unSubscribeToVotesModified,
   subscribeToVotesModified,
   unSubscribeToPlaylistModified,
-  unSubscribeToEventUpdated,
   subscribeToEventUpdated,
+  unSubscribeToEventUpdated,
   subscribeToPlaylistModified
 } from './pusherGateway'
 import { Action, Event } from 'mm-shared'
@@ -34,26 +34,31 @@ const SubscriptionWrapper = ({
   getEventSuggestions
 }: ISubscriptionWrapper) => {
   useEffect(() => {
-    const eventId = event ? event.eventId! : ''
+    const eventId = event && event.eventId ? event.eventId : ''
     const playlistId = event && event.playlist ? event.playlist.id : ''
 
     subscribeToSuggestionsModified(eventId, () => {
+      console.log('Get event suggestions on sub: ' + eventId)
       getEventSuggestions(eventId)
     })
 
     subscribeToRSVPModified(eventId, () => {
+      console.log('Get event RSVP sub: ' + eventId)
       getEvent(eventId)
     })
 
     subscribeToVotesModified(eventId, () => {
+      console.log('Get event Votes sub: ' + eventId)
       fetchEventVotes(eventId)
     })
 
     subscribeToPlaylistModified(playlistId, () => {
+      console.log('Get event PlaylistMod sub: ' + eventId)
       getEvent(eventId)
     })
 
     subscribeToEventUpdated(eventId, () => {
+      console.log('Get event EventUpdated sub: ' + eventId)
       getEvent(eventId)
     })
 
