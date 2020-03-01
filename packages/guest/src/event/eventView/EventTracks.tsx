@@ -59,13 +59,13 @@ const EventTracks: FunctionComponent<IEventTracksProps> = ({
       <TrackList
         isHost={false}
         event={event}
+        showSettings={true}
         tracks={event.playlist!.tracks.items.map(item => item.track)}
         suggestions={suggestions}
         options={{ showSummary: true, canVote: true }}
         votes={votes}
         onVote={handleTrackVote}
       />
-      
     </div>
   )
 }

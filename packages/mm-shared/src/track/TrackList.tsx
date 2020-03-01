@@ -1,14 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
-import {
-  List,
-  ListSubheader,
-  Grid,
-  ButtonGroup,
-  IconButton
-} from '@material-ui/core'
-import QueueMusicIcon from '@material-ui/icons/QueueMusic'
-import CheckIcon from '@material-ui/icons/Check'
-import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown'
+import { List, ListSubheader, Grid } from '@material-ui/core'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import isEmpty from 'lodash/isEmpty'
 import { TrackListItem } from './TrackListItem'
@@ -18,10 +9,11 @@ import {
   Track,
   TrackVoteStatus,
   DecoratedSuggestion,
-  formatDuration
+  formatDuration,
+  EventSettings
 } from '../'
 import { Suggestion } from 'request'
-import { Link } from 'react-router-dom'
+import PartySettings from './PartySettings'
 import './TrackList.scss'
 
 interface TrackListProps {
@@ -39,6 +31,7 @@ interface TrackListProps {
   onDragEnd?(result: any): void
   onRemoved?(track: Track): void
   onReject?(suggestion: Suggestion): void
+  onSettingsUpdated?(settings: EventSettings): void
 }
 
 const getItemStyle = (isDragging: any, draggableStyle: any) => {
@@ -73,7 +66,8 @@ export const TrackList: FC<TrackListProps> = ({
   onAccept = (s: Suggestion) => {},
   onDragEnd = (result: any) => {},
   onRemoved = (track: Track) => {},
-  onReject = (s: Suggestion) => {}
+  onReject = (s: Suggestion) => {},
+  onSettingsUpdated = (settings: EventSettings) => {}
 }) => {
   const [nowPlaying, setNowPlaying] = useState()
   const [trackPlaying, setTrackPlaying] = useState(false)
@@ -149,45 +143,11 @@ export const TrackList: FC<TrackListProps> = ({
               </Grid>
               {showSettings && !!event && (
                 <Grid item xs={6}>
-                  <Link to={`/events/${event.eventId}/settings`}>
-                    <ButtonGroup
-                      className="TrackList-settings"
-                      fullWidth
-                      color="primary"
-                      aria-label="event settings"
-                    >
-                      <IconButton
-                        aria-label="dynamic voting"
-                        color={
-                          event?.settings.dynamicVotingEnabled
-                            ? 'primary'
-                            : 'secondary'
-                        }
-                      >
-                        <ThumbsUpDownIcon />
-                      </IconButton>
-                      <IconButton
-                        aria-label="auto accept"
-                        color={
-                          event?.settings.autoAcceptSuggestionsEnabled
-                            ? 'primary'
-                            : 'secondary'
-                        }
-                      >
-                        <CheckIcon />
-                      </IconButton>
-                      <IconButton
-                        aria-label="allow playlists"
-                        color={
-                          event?.settings.suggestingPlaylistsEnabled
-                            ? 'primary'
-                            : 'secondary'
-                        }
-                      >
-                        <QueueMusicIcon />
-                      </IconButton>
-                    </ButtonGroup>
-                  </Link>
+                  <PartySettings
+                    isHost={isHost}
+                    event={event}
+                    onSettingsUpdated={onSettingsUpdated}
+                  />
                 </Grid>
               )}
             </Grid>

@@ -9,12 +9,14 @@ import {
   useSnackbarAlert,
   getPlaylistTracks,
   Track,
-  arrayMove
+  arrayMove,
+  EventSettings
 } from 'mm-shared'
 import {
   reOrderPlaylist,
   removeTrackFromPlaylist
 } from 'playlist/playlistClient'
+import { updateEvent } from 'event/eventClient'
 import NoEventTracks from './NoEventTracks'
 import './EventTracks.scss'
 
@@ -61,6 +63,15 @@ const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
     }
   }
 
+  const handleSettingsUpdate = async (settings: EventSettings) => {
+    try {
+      await updateEvent({ ...event, settings })
+      showSuccess('Setting changed')
+    } catch (err) {
+      showError('Error updating setting')
+    }
+  }
+
   if (isEmpty(event.playlist) || isEmpty(event.playlist!.tracks.items)) {
     return <NoEventTracks />
   }
@@ -79,6 +90,7 @@ const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
         canRemove: true,
         canVote: true
       }}
+      onSettingsUpdated={handleSettingsUpdate}
       onDragEnd={(result: DropResult) => {
         if (!result.destination) {
           return

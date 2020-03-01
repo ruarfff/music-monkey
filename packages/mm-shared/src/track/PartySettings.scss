@@ -1,0 +1,19 @@
+.PartySettings-root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.PartySettings-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .MuiDialog-root {
+    background-color: rgba(58, 158, 209, 0.7);
+  }
+
+  .PartySettings-dialog-content {
+    text-align: center;
+  }
+}
