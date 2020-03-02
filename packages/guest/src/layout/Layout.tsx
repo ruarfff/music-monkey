@@ -35,7 +35,13 @@ const Layout = ({
             <Content />
           </DesktopLayout>
         ) : (
-          <MainLayout event={event} user={user} logout={logout} isHost={false}>
+          <MainLayout
+            event={event}
+            user={user}
+            logout={logout}
+            isHost={false}
+            hasPartyNotification={false}
+          >
             <Content />
           </MainLayout>
         ))}

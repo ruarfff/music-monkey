@@ -1,5 +1,8 @@
 @import '../theme/main';
 
+.TrackListItem-highlight {
+  background-color: rgba(58, 158, 209, 0.3);
+}
 .TrackListItem-root {
   .TrackListItem-content {
     padding-left: 1em;

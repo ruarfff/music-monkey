@@ -43,6 +43,7 @@ interface TrackListItemProps {
   currentUserVoted: boolean
   options: TrackConfig
   isPlaying?: boolean
+  highlight: boolean
   onPlay?(track: Track): void
   onVote?(track: Track): void
   onSelected?(track: Track, suggestion: Suggestion): void
@@ -122,6 +123,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   currentUserVoted,
   numberOfVotes,
   event,
+  highlight,
   options = {},
   isPlaying = false,
   onPlay = () => {},
@@ -241,7 +243,15 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   return (
     <>
       <Collapse in={!hidden} timeout="auto" unmountOnExit>
-        <ListItem className="TrackListItem-root" alignItems="flex-start" button>
+        <ListItem
+          className={
+            highlight
+              ? 'TrackListItem-root TrackListItem-highlight'
+              : 'TrackListItem-root'
+          }
+          alignItems="flex-start"
+          button
+        >
           <ListItemIcon
             onClick={() => {
               onPlay(track)

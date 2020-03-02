@@ -186,6 +186,7 @@ const EventView: FC<EventViewProps> = ({
                 votes={votes}
                 event={event}
                 suggestions={suggestions}
+                acceptedTracks={acceptedTracks}
               />
             </Typography>
             <Typography component="div" dir="1" hidden={tabIndex !== 1}>

@@ -25,6 +25,7 @@ interface TrackListProps {
   options?: TrackConfig
   filterList?: Track[]
   showSettings?: boolean
+  tracksToHighlight?: string[]
   onVote?(track: Track): void
   onSelected?(track: Track): void
   onAccept?(suggestion: Suggestion): void
@@ -54,6 +55,7 @@ export const TrackList: FC<TrackListProps> = ({
   votes = new Map(),
   event,
   showSettings,
+  tracksToHighlight = [],
   options = {
     canRemove: false,
     canRequest: false,
@@ -195,6 +197,7 @@ export const TrackList: FC<TrackListProps> = ({
                             isHost={isHost}
                             track={track}
                             onPlay={onPlay}
+                            highlight={tracksToHighlight.includes(track.uri)}
                             isPlaying={
                               trackPlaying &&
                               nowPlaying &&

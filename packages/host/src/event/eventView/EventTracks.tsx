@@ -24,9 +24,15 @@ interface EventTracksProps {
   event: Event
   votes: Map<string, TrackVoteStatus>
   suggestions: DecoratedSuggestion[]
+  acceptedTracks: string[]
 }
 
-const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
+const EventTracks: FC<EventTracksProps> = ({
+  event,
+  votes,
+  suggestions,
+  acceptedTracks
+}) => {
   const { showSuccess, showError } = useSnackbarAlert()
   const playlist = event.playlist!
   const [tracks, setTracks] = useState([] as Track[])
@@ -82,6 +88,7 @@ const EventTracks: FC<EventTracksProps> = ({ event, votes, suggestions }) => {
       event={event}
       tracks={tracks}
       suggestions={suggestions}
+      tracksToHighlight={acceptedTracks}
       votes={votes}
       showSettings={true}
       options={{
