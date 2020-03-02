@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react'
-import { Grid, AppBar, Tab, Tabs, Typography } from '@material-ui/core'
+import React, { FC, useEffect, useState, useContext } from 'react'
+import { Grid, AppBar, Tab, Tabs, Typography, Badge } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
 import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
@@ -24,6 +24,7 @@ import EventFetchError from 'event/EventFetchError'
 import EventTracks from './EventTracks'
 import SaveEvent from 'event/saveEvent/SaveEventContainer'
 import EditEventView from 'event/saveEvent/EditEventViewContainer'
+import { NotificationContext } from 'subscriptions/NotificationContext'
 
 import './EventView.scss'
 
@@ -56,10 +57,32 @@ const EventView: FC<EventViewProps> = ({
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
   const { showSuccess } = useSnackbarAlert()
+  const [newTrackCount, setNewTrackCount] = useState(0)
+  const { acceptedTracks, updateAcceptedTracks } = useContext(
+    NotificationContext
+  )
 
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
   }
+
+  useEffect(() => {
+    if (!isEmpty(acceptedTracks)) {
+      console.log('Accepted tracks')
+      console.log(acceptedTracks)
+
+      const count = acceptedTracks.length
+      if (newTrackCount !== count) {
+        setNewTrackCount(count)
+      }
+    }
+    return () => {
+      if (!isEmpty(acceptedTracks)) {
+        updateAcceptedTracks([])
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acceptedTracks])
 
   useEffect(() => {
     if (!event || event.eventId !== eventId) {
@@ -138,7 +161,22 @@ const EventView: FC<EventViewProps> = ({
                 textColor="primary"
                 variant="fullWidth"
               >
-                <Tab label="PLAYLIST" />
+                <Tab
+                  label={
+                    <Badge
+                      color="secondary"
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      badgeContent={newTrackCount}
+                      invisible={newTrackCount < 1}
+                    >
+                      PLAYLIST
+                    </Badge>
+                  }
+                />
+
                 <Tab label="REQUESTS" />
               </Tabs>
             </AppBar>

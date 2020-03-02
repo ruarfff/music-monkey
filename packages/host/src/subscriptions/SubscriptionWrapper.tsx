@@ -3,7 +3,7 @@
  * Subscriptions are listening for asynchronous events sent from the backend.
  * Actions are sent to here to update app state. No inner components are aware of this.
  */
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import {
   subscribeToSuggestionsModified,
   unSubscribeToSuggestionsModified,
@@ -16,7 +16,8 @@ import {
   unSubscribeToEventUpdated,
   subscribeToPlaylistModified
 } from './pusherGateway'
-import { Action, Event } from 'mm-shared'
+import { Action, Event, Suggestion } from 'mm-shared'
+import { NotificationContext } from './NotificationContext'
 
 interface ISubscriptionWrapper {
   event: Event
@@ -33,14 +34,29 @@ const SubscriptionWrapper = ({
   fetchEventVotes,
   getEventSuggestions
 }: ISubscriptionWrapper) => {
+  const { acceptedTracks, updateAcceptedTracks } = useContext(
+    NotificationContext
+  )
   useEffect(() => {
     const eventId = event && event.eventId ? event.eventId : ''
     const playlistId = event && event.playlist ? event.playlist.id : ''
 
-    subscribeToSuggestionsModified(eventId, () => {
-      console.log('Get event suggestions on sub: ' + eventId)
-      getEventSuggestions(eventId)
-    })
+    subscribeToSuggestionsModified(
+      eventId,
+      (type: string, data: Suggestion[]) => {
+        console.log('Get event suggestions on sub: ' + eventId)
+        getEventSuggestions(eventId)
+        if (
+          type === 'accepted' &&
+          event.settings.autoAcceptSuggestionsEnabled
+        ) {
+          updateAcceptedTracks([
+            ...acceptedTracks,
+            ...data.map(s => s.trackUri)
+          ])
+        }
+      }
+    )
 
     subscribeToRSVPModified(eventId, () => {
       console.log('Get event RSVP sub: ' + eventId)

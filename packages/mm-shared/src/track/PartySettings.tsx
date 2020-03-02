@@ -5,6 +5,7 @@ import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown'
 import SettingsPowerIcon from '@material-ui/icons/SettingsPower'
 import {
   ButtonGroup,
+  Button,
   IconButton,
   Dialog,
   DialogTitle,
@@ -110,18 +111,19 @@ const PartySettings: FC<PartySettingsProps> = ({
       </Dialog>
 
       <ButtonGroup
+        fullWidth
         className="PartySettings-root"
         color="primary"
         aria-label="event settings"
       >
-        <IconButton
+        <Button
           aria-label="dynamic voting"
           color={event?.settings.dynamicVotingEnabled ? 'primary' : 'secondary'}
           onClick={handleOpen('vote')}
         >
           <ThumbsUpDownIcon />
-        </IconButton>
-        <IconButton
+        </Button>
+        <Button
           aria-label="auto accept"
           color={
             event?.settings.autoAcceptSuggestionsEnabled
@@ -131,8 +133,8 @@ const PartySettings: FC<PartySettingsProps> = ({
           onClick={handleOpen('autoAccept')}
         >
           <CheckIcon />
-        </IconButton>
-        <IconButton
+        </Button>
+        <Button
           aria-label="allow playlists"
           color={
             event?.settings.suggestingPlaylistsEnabled ? 'primary' : 'secondary'
@@ -140,7 +142,7 @@ const PartySettings: FC<PartySettingsProps> = ({
           onClick={handleOpen('playlist')}
         >
           <QueueMusicIcon />
-        </IconButton>
+        </Button>
       </ButtonGroup>
     </>
   )

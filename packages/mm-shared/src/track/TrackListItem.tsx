@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import isEqual from 'lodash/isEqual'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIconFill from '@material-ui/icons/Favorite'
 import AddIcon from '@material-ui/icons/Add'
@@ -68,8 +69,10 @@ const VoteButton: FC<VoteButtonProps> = ({ voteDetails, onVote }) => {
   })
 
   useEffect(() => {
-    setVote(voteDetails)
-  }, [voteDetails])
+    if (!isEqual(vote, voteDetails)) {
+      setVote(voteDetails)
+    }
+  }, [vote, voteDetails])
 
   const handleTrackVote = () => {
     if (!vote.isHost) {

@@ -6,6 +6,7 @@ interface MainLayoutProps {
   event: Event
   user: User
   isHost: boolean
+  hasPartyNotification: boolean
   logout(): void
 }
 
@@ -14,6 +15,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
   user,
   logout,
   isHost,
+  hasPartyNotification,
   children
 }) => {
   return (
@@ -25,7 +27,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
         {children}
       </main>
 
-      <BottomBar event={event} />
+      <BottomBar event={event} hasPartyNotification={hasPartyNotification} />
     </div>
   )
 }

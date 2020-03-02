@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
+import { Badge } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
 import ShowChartIcon from '@material-ui/icons/ShowChart'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -11,13 +12,14 @@ import './BottomBar.scss'
 
 interface IBottomBar extends RouteComponentProps<any> {
   event: Event
+  hasPartyNotification: boolean
 }
 
 const checkLocation = (pathname: string, path: string) => {
   return pathname === path ? 'highlighted' : ''
 }
 
-const BottomBar = ({ location, event }: IBottomBar) => {
+const BottomBar = ({ location, event, hasPartyNotification }: IBottomBar) => {
   const { pathname } = location
   const eventId = event && event.eventId ? event.eventId : null
   const eventsLink = eventId ? `/events/${eventId}` : '/'
@@ -31,10 +33,20 @@ const BottomBar = ({ location, event }: IBottomBar) => {
       <div className="BottomBar-navigation-left">
         <div
           className={`BottomBar-navigation-item
-          ${checkLocation(pathname, eventsLink)}`}
+            ${checkLocation(pathname, eventsLink)}`}
         >
           <Link to={eventsLink}>
-            <HomeIcon />
+            <Badge
+              color="secondary"
+              variant="dot"
+              overlap="circle"
+              invisible={
+                !hasPartyNotification ||
+                checkLocation(pathname, eventsLink) === 'highlighted'
+              }
+            >
+              <HomeIcon />
+            </Badge>
             <span>Parties</span>
           </Link>
         </div>

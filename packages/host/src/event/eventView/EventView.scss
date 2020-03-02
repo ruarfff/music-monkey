@@ -8,4 +8,11 @@
   .EventView-tabs {
     padding: 0.5em 1.5em;
   }
+
+  .MuiBadge-badge {
+    right: -5%;
+    @include media('>sm') {
+      right: -20%;
+    }
+  }
 }

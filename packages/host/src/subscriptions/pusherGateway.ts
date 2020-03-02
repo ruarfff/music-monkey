@@ -17,12 +17,22 @@ export const subscribeToSuggestionsModified = (
   if (subscribedToSuggestions !== eventId) {
     const channel = pusher.subscribe('mm-suggestions-' + eventId)
 
-    channel.bind('suggestion-saved', (data: any) => callback(data))
-    channel.bind('suggestions-accepted', (data: any) => callback('accepted'))
-    channel.bind('suggestions-rejected', (data: any) => callback(data))
-    channel.bind('suggestions-auto-accepted', (data: any) =>
+    channel.bind('suggestion-saved', (data: any) => {
+      console.log('SAVED')
+      console.log(data)
       callback('accepted')
-    )
+    })
+    channel.bind('suggestions-accepted', (data: any) => {
+      console.log('ACCEPTED')
+      console.log(data)
+      callback('accepted', data)
+    })
+    channel.bind('suggestions-rejected', callback)
+    channel.bind('suggestions-auto-accepted', (data: any) => {
+      console.log('AUTO')
+      console.log(data)
+      callback('accepted')
+    })
 
     subscribedToSuggestions = eventId
   }

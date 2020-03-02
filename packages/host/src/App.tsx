@@ -17,6 +17,7 @@ import Login from 'auth/LoginContainer'
 import { userIsAuthenticated, userIsNotAuthenticated } from 'routes/routes'
 import RouteContextProvider from 'routes/RouteContext'
 import AuthLoader from 'auth/AuthLoaderContainer'
+import NotificationContextProvider from 'subscriptions/NotificationContext'
 import './App.scss'
 
 interface IAppProps {
@@ -46,15 +47,20 @@ const App = ({ store, history }: IAppProps) => (
             <ConnectedRouter history={history}>
               <CookiesProvider>
                 <AuthLoader>
-                  <SubscriptionWrapper>
-                    <RouteContextProvider>
-                      <Route path="/" component={userIsAuthenticated(Layout)} />
-                      <Route
-                        path="/login"
-                        component={userIsNotAuthenticated(Login)}
-                      />
-                    </RouteContextProvider>
-                  </SubscriptionWrapper>
+                  <NotificationContextProvider>
+                    <SubscriptionWrapper>
+                      <RouteContextProvider>
+                        <Route
+                          path="/"
+                          component={userIsAuthenticated(Layout)}
+                        />
+                        <Route
+                          path="/login"
+                          component={userIsNotAuthenticated(Login)}
+                        />
+                      </RouteContextProvider>
+                    </SubscriptionWrapper>
+                  </NotificationContextProvider>
                 </AuthLoader>
               </CookiesProvider>
             </ConnectedRouter>
