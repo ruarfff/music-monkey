@@ -1,10 +1,16 @@
 import React, { useContext } from 'react'
 import isEmpty from 'lodash/isEmpty'
 import { Sizes } from 'react-sizes'
-import { User, Event, DesktopLayout, MainLayout, MarvinLoader } from 'mm-shared'
+import {
+  User,
+  Event,
+  DesktopLayout,
+  MainLayout,
+  MarvinLoader,
+  NotificationContext
+} from 'mm-shared'
 import LoginError from './LoginError'
 import Content from './ContentContainer'
-import { NotificationContext } from 'subscriptions/NotificationContext'
 
 interface ILayoutProps {
   user: User

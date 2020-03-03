@@ -16,6 +16,7 @@ export * from './search'
 export * from './recommendation'
 export * from './finder'
 export * from './upload'
+export * from './subscriptions'
 
 export { default as useMenuActive } from './menu/useMenuActive'
 export { default as Account } from './account/Account'

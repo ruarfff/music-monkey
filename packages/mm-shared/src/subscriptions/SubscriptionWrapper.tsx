@@ -17,7 +17,7 @@ import {
   subscribeToPlaylistModified
 } from './pusherGateway'
 import { Action, Event, Suggestion } from 'mm-shared'
-import { NotificationContext } from './NotificationContext'
+import { NotificationContext } from 'mm-shared'
 
 interface ISubscriptionWrapper {
   event: Event

@@ -18,6 +18,7 @@ interface IEventTracksProps {
   user: User
   votes: Map<string, TrackVoteStatus>
   suggestions: DecoratedSuggestion[]
+  acceptedTracks: string[]
   createVote(vote: Vote): Action
   deleteVote(voteId: string): Action
 }
@@ -27,6 +28,7 @@ const EventTracks: FunctionComponent<IEventTracksProps> = ({
   user,
   votes,
   suggestions,
+  acceptedTracks,
   createVote,
   deleteVote
 }) => {
@@ -63,6 +65,7 @@ const EventTracks: FunctionComponent<IEventTracksProps> = ({
         tracks={event.playlist!.tracks.items.map(item => item.track)}
         suggestions={suggestions}
         options={{ showSummary: true, canVote: true }}
+        tracksToHighlight={acceptedTracks}
         votes={votes}
         onVote={handleTrackVote}
       />

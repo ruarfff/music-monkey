@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
 import { getEventById } from 'event/eventActions'
-import { fetchEventVotes } from 'mm-shared'
+import { fetchEventVotes, SubscriptionWrapper } from 'mm-shared'
 import { getRequestsByEventId } from 'request/requestActions'
-import SubscriptionWrapper from './SubscriptionWrapper'
 
 const mapStateToProps = (state: IRootState) => ({
   event: state.event.event

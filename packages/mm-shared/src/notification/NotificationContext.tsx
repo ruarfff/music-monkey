@@ -19,7 +19,7 @@ interface NotificationContextProps {
   children: any
 }
 
-const NotificationContextProvider: FC<NotificationContextProps> = ({
+export const NotificationContextProvider: FC<NotificationContextProps> = ({
   children
 }) => {
   const updateAcceptedTracks = (tracks: string[]) => {
@@ -56,5 +56,3 @@ const NotificationContextProvider: FC<NotificationContextProps> = ({
     </NotificationContext.Provider>
   )
 }
-
-export default NotificationContextProvider

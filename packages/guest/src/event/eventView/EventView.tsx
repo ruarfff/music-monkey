@@ -1,6 +1,7 @@
-import React, { FC, useEffect, useState } from 'react'
-import { Grid, AppBar, Tab, Tabs, Typography } from '@material-ui/core'
+import React, { FC, useEffect, useState, useContext } from 'react'
+import { Grid, AppBar, Tab, Tabs, Typography, Badge } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
+import isEqual from 'lodash/isEqual'
 import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
   Action,
@@ -16,7 +17,8 @@ import {
   EventGuestView,
   EventSettingsView,
   MaybeTracks,
-  EventHeader
+  EventHeader,
+  NotificationContext
 } from 'mm-shared'
 import EventTracks from './EventTracks'
 import './EventView.scss'
@@ -47,13 +49,38 @@ const EventView: FC<EventViewProps> = ({
   updateRsvp,
   match
 }) => {
+  const { acceptedTracks, updateAcceptedTracks } = useContext(
+    NotificationContext
+  )
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
+  const [newTrackCount, setNewTrackCount] = useState(0)
+  const [newTracks, setNewTracks] = useState(acceptedTracks)
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
   }
 
-  // handleVotes
+  useEffect(() => {
+    if (!isEmpty(acceptedTracks)) {
+      console.log('Accepted tracks')
+      console.log(acceptedTracks)
+
+      const count = acceptedTracks.length
+      if (newTrackCount !== count) {
+        setNewTrackCount(count)
+      }
+      if (!isEqual(acceptedTracks, newTracks)) {
+        setNewTracks(acceptedTracks.sort())
+      }
+    }
+    return () => {
+      if (!isEmpty(acceptedTracks)) {
+        updateAcceptedTracks([])
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acceptedTracks])
+
   useEffect(() => {
     if (eventId !== event.eventId) setEventId(eventId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,7 +120,22 @@ const EventView: FC<EventViewProps> = ({
                 textColor="primary"
                 variant="fullWidth"
               >
-                <Tab label="PLAYLIST" />
+                <Tab
+                  label={
+                    <Badge
+                      color="secondary"
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      badgeContent={newTrackCount}
+                      invisible={newTrackCount < 1}
+                    >
+                      PLAYLIST
+                    </Badge>
+                  }
+                />
+
                 <Tab label="REQUESTS" />
               </Tabs>
             </AppBar>
@@ -105,6 +147,7 @@ const EventView: FC<EventViewProps> = ({
                 votes={votes}
                 event={event}
                 suggestions={suggestions}
+                acceptedTracks={newTracks}
               />
             </Typography>
             <Typography component="div" dir="1" hidden={tabIndex !== 1}>

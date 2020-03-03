@@ -13,7 +13,7 @@ import theme from 'theme/theme'
 import Layout from 'layout/LayoutContainer'
 import { userIsAuthenticated, userIsNotAuthenticated } from 'routes/routes'
 import RouteContextProvider from 'routes/RouteContext'
-
+import { NotificationContextProvider } from 'mm-shared'
 import AuthLoader from 'auth/AuthLoaderContainer'
 import InviteLoader from 'invite/components/InviteLoader'
 import Login from 'auth/LoginContainer'
@@ -48,6 +48,7 @@ const App = ({ store, history }: IAppProps) => (
           <ConnectedRouter history={history}>
             <CookiesProvider>
               <AuthLoader>
+                  <NotificationContextProvider>
                 <SubscriptionWrapper>
                   <RouteContextProvider>
                     <Switch>
@@ -79,6 +80,7 @@ const App = ({ store, history }: IAppProps) => (
                     </Switch>
                   </RouteContextProvider>
                 </SubscriptionWrapper>
+                  </NotificationContextProvider>
               </AuthLoader>
             </CookiesProvider>
           </ConnectedRouter>

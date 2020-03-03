@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, Suspense } from 'react'
+import React, { useContext, Suspense, useEffect } from 'react'
+import { Switch } from 'react-router'
 import { RouteContext } from 'routes/RouteContext'
 import { RouteWithSubRoutes } from 'routes/routes'
 import { Action, Event, MarvinLoader } from 'mm-shared'
 import isEmpty from 'lodash/isEmpty'
-import { Switch } from 'react-router'
 
 interface ContentProps {
   event: Event
@@ -12,7 +12,7 @@ interface ContentProps {
   eventId: string
   eventLoading: boolean
   getEvents(): Action
-  getEvent(eventId: string): Action
+  getEventById(eventId: string): Action
   getEventSuggestions(eventId: string): Action
   fetchEventVotes(eventId: string): Action
 }
@@ -24,7 +24,7 @@ const Content = ({
   eventId,
   eventLoading,
   getEvents,
-  getEvent,
+  getEventById,
   getEventSuggestions,
   fetchEventVotes
 }: ContentProps) => {
@@ -39,7 +39,7 @@ const Content = ({
   useEffect(() => {
     if (eventId && !eventLoading) {
       if (isEmpty(event) || event.eventId !== eventId) {
-        getEvent(eventId)
+        getEventById(eventId)
         getEventSuggestions(eventId)
         fetchEventVotes(eventId)
       }

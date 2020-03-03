@@ -17,14 +17,14 @@ import {
   Suggestion,
   acceptRequest,
   rejectRequest,
-  useSnackbarAlert
+  useSnackbarAlert,
+  NotificationContext
 } from 'mm-shared'
 import { updateEvent } from 'event/eventClient'
 import EventFetchError from 'event/EventFetchError'
 import EventTracks from './EventTracks'
 import SaveEvent from 'event/saveEvent/SaveEventContainer'
 import EditEventView from 'event/saveEvent/EditEventViewContainer'
-import { NotificationContext } from 'subscriptions/NotificationContext'
 
 import './EventView.scss'
 

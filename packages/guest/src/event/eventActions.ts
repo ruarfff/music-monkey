@@ -31,7 +31,7 @@ export const deselectEvent = (): Action => ({
   type: DESELECT_EVENT
 })
 
-export const getEvent = (eventId: string): Action => ({
+export const getEventById = (eventId: string): Action => ({
   payload: eventId,
   type: EVENT_FETCH_INITIATED
 })

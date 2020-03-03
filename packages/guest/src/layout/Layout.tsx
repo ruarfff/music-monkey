@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import isEmpty from 'lodash/isEmpty'
 import { Sizes } from 'react-sizes'
-import { User, Event, DesktopLayout, MainLayout, MarvinLoader } from 'mm-shared'
+import {
+  User,
+  Event,
+  DesktopLayout,
+  MainLayout,
+  MarvinLoader,
+  NotificationContext
+} from 'mm-shared'
 import LoginError from './LoginError'
 import Content from './ContentContainer'
 
@@ -22,8 +29,9 @@ const Layout = ({
   event,
   logout
 }: ILayoutProps & Sizes) => {
+  const { acceptedTracks } = useContext(NotificationContext)
   return (
-    <div>
+    <>
       {!isEmpty(user) &&
         (isDesktop ? (
           <DesktopLayout
@@ -40,14 +48,14 @@ const Layout = ({
             user={user}
             logout={logout}
             isHost={false}
-            hasPartyNotification={false}
+            hasPartyNotification={!isEmpty(acceptedTracks)}
           >
             <Content />
           </MainLayout>
         ))}
       {userLoading && <MarvinLoader />}
       {userError.message && <LoginError />}
-    </div>
+    </>
   )
 }
 
