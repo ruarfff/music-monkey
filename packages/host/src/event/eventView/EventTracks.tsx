@@ -31,7 +31,7 @@ const EventTracks: FC<EventTracksProps> = ({
   event,
   votes,
   suggestions,
-  acceptedTracks
+  acceptedTracks = []
 }) => {
   const { showSuccess, showError } = useSnackbarAlert()
   const playlist = event.playlist!

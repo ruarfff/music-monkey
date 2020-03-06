@@ -29,7 +29,7 @@ const Layout = ({
   event,
   logout
 }: ILayoutProps & Sizes) => {
-  const { acceptedTracks } = useContext(NotificationContext)
+  const { acceptedTracks, requestedTracks } = useContext(NotificationContext)
   return (
     <>
       {!isEmpty(user) &&
@@ -48,7 +48,9 @@ const Layout = ({
             user={user}
             logout={logout}
             isHost={false}
-            hasPartyNotification={!isEmpty(acceptedTracks)}
+            hasPartyNotification={
+              !isEmpty(acceptedTracks) || !isEmpty(requestedTracks)
+            }
           >
             <Content />
           </MainLayout>

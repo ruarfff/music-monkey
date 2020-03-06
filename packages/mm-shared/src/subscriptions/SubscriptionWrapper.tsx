@@ -16,8 +16,7 @@ import {
   unSubscribeToEventUpdated,
   subscribeToPlaylistModified
 } from './pusherGateway'
-import { Action, Event, Suggestion } from 'mm-shared'
-import { NotificationContext } from 'mm-shared'
+import { Action, Event, Suggestion, NotificationContext } from '../'
 
 interface ISubscriptionWrapper {
   event: Event
@@ -34,9 +33,12 @@ const SubscriptionWrapper = ({
   fetchEventVotes,
   getEventSuggestions
 }: ISubscriptionWrapper) => {
-  const { acceptedTracks, updateAcceptedTracks } = useContext(
-    NotificationContext
-  )
+  const {
+    acceptedTracks,
+    updateAcceptedTracks,
+    requestedTracks,
+    updateRequestedTracks
+  } = useContext(NotificationContext)
   useEffect(() => {
     const eventId = event && event.eventId ? event.eventId : ''
     const playlistId = event && event.playlist ? event.playlist.id : ''
@@ -46,14 +48,26 @@ const SubscriptionWrapper = ({
       (type: string, data: Suggestion[]) => {
         console.log('Get event suggestions on sub: ' + eventId)
         getEventSuggestions(eventId)
-        if (
-          type === 'accepted' &&
-          event.settings.autoAcceptSuggestionsEnabled
-        ) {
-          updateAcceptedTracks([
-            ...acceptedTracks,
-            ...data.map(s => s.trackUri)
-          ])
+        try {
+          if (
+            type === 'accepted' &&
+            event.settings.autoAcceptSuggestionsEnabled
+          ) {
+            updateAcceptedTracks([
+              ...acceptedTracks,
+              ...data.map(s => s.trackUri)
+            ])
+          } else if (
+            type === 'requested' &&
+            !event.settings.autoAcceptSuggestionsEnabled
+          ) {
+            updateRequestedTracks([
+              ...requestedTracks,
+              ...data.map(s => s.trackUri)
+            ])
+          }
+        } catch (err) {
+          console.error(err)
         }
       }
     )

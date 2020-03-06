@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState, useContext } from 'react'
 import { Grid, AppBar, Tab, Tabs, Typography, Badge } from '@material-ui/core'
 import isEmpty from 'lodash/isEmpty'
+import isEqual from 'lodash/isEqual'
 import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
 import {
   Action,
@@ -54,13 +55,19 @@ const EventView: FC<EventViewProps> = ({
   fetchEventVotes,
   getEventSuggestions
 }) => {
+  const {
+    acceptedTracks,
+    updateAcceptedTracks,
+    requestedTracks,
+    updateRequestedTracks
+  } = useContext(NotificationContext)
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
   const { showSuccess } = useSnackbarAlert()
   const [newTrackCount, setNewTrackCount] = useState(0)
-  const { acceptedTracks, updateAcceptedTracks } = useContext(
-    NotificationContext
-  )
+  const [requestedTrackCount, setRequestedTrackCount] = useState(0)
+  const [newTracks, setNewTracks] = useState(acceptedTracks)
+  const [newRequests, setNewRequests] = useState(requestedTracks)
 
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
@@ -68,12 +75,12 @@ const EventView: FC<EventViewProps> = ({
 
   useEffect(() => {
     if (!isEmpty(acceptedTracks)) {
-      console.log('Accepted tracks')
-      console.log(acceptedTracks)
-
       const count = acceptedTracks.length
       if (newTrackCount !== count) {
         setNewTrackCount(count)
+      }
+      if (!isEqual(acceptedTracks, newTracks)) {
+        setNewTracks(acceptedTracks.sort())
       }
     }
     return () => {
@@ -83,6 +90,25 @@ const EventView: FC<EventViewProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [acceptedTracks])
+  
+    useEffect(() => {
+    if (!isEmpty(requestedTracks)) {
+      const count = requestedTracks.length
+      if (requestedTrackCount !== count) {
+        setRequestedTrackCount(count)
+      }
+
+      if (!isEqual(requestedTracks, newRequests)) {
+        setNewRequests(requestedTracks.sort())
+      }
+    }
+    return () => {
+      if (!isEmpty(requestedTracks)) {
+        updateRequestedTracks([])
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedTracks])
 
   useEffect(() => {
     if (!event || event.eventId !== eventId) {
@@ -177,7 +203,21 @@ const EventView: FC<EventViewProps> = ({
                   }
                 />
 
-                <Tab label="REQUESTS" />
+                <Tab
+                  label={
+                    <Badge
+                      color="secondary"
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      badgeContent={requestedTrackCount}
+                      invisible={requestedTrackCount < 1}
+                    >
+                      REQUESTS
+                    </Badge>
+                  }
+                />
               </Tabs>
             </AppBar>
 
@@ -186,7 +226,7 @@ const EventView: FC<EventViewProps> = ({
                 votes={votes}
                 event={event}
                 suggestions={suggestions}
-                acceptedTracks={acceptedTracks}
+                acceptedTracks={newTracks}
               />
             </Typography>
             <Typography component="div" dir="1" hidden={tabIndex !== 1}>
@@ -195,6 +235,7 @@ const EventView: FC<EventViewProps> = ({
                 user={user}
                 event={event}
                 requests={pendingRequests}
+                newRequests={newRequests}
                 onAccept={handleAcceptRequest}
                 onReject={handleRejectRequest}
               />

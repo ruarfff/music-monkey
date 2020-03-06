@@ -49,22 +49,25 @@ const EventView: FC<EventViewProps> = ({
   updateRsvp,
   match
 }) => {
-  const { acceptedTracks, updateAcceptedTracks } = useContext(
-    NotificationContext
-  )
+  const {
+    acceptedTracks,
+    updateAcceptedTracks,
+    requestedTracks,
+    updateRequestedTracks
+  } = useContext(NotificationContext)
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
   const [newTrackCount, setNewTrackCount] = useState(0)
+  const [requestedTrackCount, setRequestedTrackCount] = useState(0)
   const [newTracks, setNewTracks] = useState(acceptedTracks)
+  const [newRequests, setNewRequests] = useState(requestedTracks)
+
   const handleTabChange = (e: any, value: any) => {
     setTabIndex(value)
   }
 
   useEffect(() => {
     if (!isEmpty(acceptedTracks)) {
-      console.log('Accepted tracks')
-      console.log(acceptedTracks)
-
       const count = acceptedTracks.length
       if (newTrackCount !== count) {
         setNewTrackCount(count)
@@ -80,6 +83,25 @@ const EventView: FC<EventViewProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [acceptedTracks])
+  
+    useEffect(() => {
+    if (!isEmpty(requestedTracks)) {
+      const count = requestedTracks.length
+      if (requestedTrackCount !== count) {
+        setRequestedTrackCount(count)
+      }
+
+      if (!isEqual(requestedTracks, newRequests)) {
+        setNewRequests(requestedTracks.sort())
+      }
+    }
+    return () => {
+      if (!isEmpty(requestedTracks)) {
+        updateRequestedTracks([])
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedTracks])
 
   useEffect(() => {
     if (eventId !== event.eventId) setEventId(eventId)
@@ -136,7 +158,21 @@ const EventView: FC<EventViewProps> = ({
                   }
                 />
 
-                <Tab label="REQUESTS" />
+                <Tab
+                  label={
+                    <Badge
+                      color="secondary"
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      badgeContent={requestedTrackCount}
+                      invisible={requestedTrackCount < 1}
+                    >
+                      REQUESTS
+                    </Badge>
+                  }
+                />
               </Tabs>
             </AppBar>
             <Typography component="div" dir="0" hidden={tabIndex !== 0}>
@@ -157,6 +193,7 @@ const EventView: FC<EventViewProps> = ({
                 event={event}
                 requests={pendingRequests}
                 showAll={true}
+		                newRequests={newRequests}
                 onAccept={(s: Suggestion) => {}}
                 onReject={(s: Suggestion) => {}}
               />

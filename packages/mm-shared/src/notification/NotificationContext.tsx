@@ -2,16 +2,16 @@ import React, { FC, createContext, useState } from 'react'
 
 interface Notifications {
   acceptedTracks: string[]
-  seenTracks: string[]
+  requestedTracks: string[]
   updateAcceptedTracks(tracks: string[]): void
-  updateSeenTracks(tracks: string[]): void
+  updateRequestedTracks(tracks: string[]): void
 }
 
 const initialState: Notifications = {
   acceptedTracks: [],
-  seenTracks: [],
+  requestedTracks: [],
   updateAcceptedTracks: (tracks: string[]) => {},
-  updateSeenTracks: (tracks: string[]) => {}
+  updateRequestedTracks: (tracks: string[]) => {}
 }
 export const NotificationContext = createContext(initialState)
 
@@ -31,11 +31,11 @@ export const NotificationContextProvider: FC<NotificationContextProps> = ({
     })
   }
 
-  const updateSeenTracks = (tracks: string[]) => {
+  const updateRequestedTracks = (tracks: string[]) => {
     setNotifications((prevState: Notifications) => {
       return {
         ...prevState,
-        seenTracks: tracks
+        requestedTracks: tracks
       }
     })
   }
@@ -43,7 +43,7 @@ export const NotificationContextProvider: FC<NotificationContextProps> = ({
   const notificationsState: Notifications = {
     ...initialState,
     updateAcceptedTracks,
-    updateSeenTracks
+    updateRequestedTracks
   }
 
   const [notifications, setNotifications] = useState<Notifications>(

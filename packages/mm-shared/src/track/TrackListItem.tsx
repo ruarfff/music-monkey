@@ -112,7 +112,8 @@ const SmallAvatar = withStyles(theme => ({
   root: {
     width: 22,
     height: 22,
-    border: `2px solid`
+    border: `2px solid`,
+    backgroundColor: '#af00ff'
   }
 }))(Avatar)
 
