@@ -78,7 +78,7 @@ const EventTracks: FC<EventTracksProps> = ({
     }
   }
 
-  if (isEmpty(event.playlist) || isEmpty(event.playlist!.tracks.items)) {
+  if (isEmpty(tracks)) {
     return <NoEventTracks />
   }
 
@@ -87,10 +87,10 @@ const EventTracks: FC<EventTracksProps> = ({
       isHost={true}
       event={event}
       tracks={tracks}
+      showSettings={true}
       suggestions={suggestions}
       tracksToHighlight={acceptedTracks}
       votes={votes}
-      showSettings={true}
       options={{
         showSummary: true,
         allowDragDrop: true,
