@@ -7,7 +7,7 @@ import {
   DesktopLayout,
   MainLayout,
   MarvinLoader,
-  NotificationContext
+  notificationContext
 } from 'mm-shared'
 import LoginError from './LoginError'
 import Content from './ContentContainer'
@@ -29,7 +29,9 @@ const Layout = ({
   event,
   logout
 }: ILayoutProps & Sizes) => {
-  const { acceptedTracks, requestedTracks } = useContext(NotificationContext)
+  const {
+    notification: { acceptedTracks, requestedTracks }
+  } = useContext(notificationContext)
   return (
     <>
       {!isEmpty(user) &&

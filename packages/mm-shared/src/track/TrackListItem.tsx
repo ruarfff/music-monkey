@@ -135,14 +135,9 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   const hasOptions = options.canRequest || options.canRemove
   const [hidden, setHidden] = useState(false)
   const [expanded, setExpanded] = useState(false)
-  //const [trackId, setTrackId] = useState(!!track ? track.id : '')
 
   useEffect(() => {
     setHidden(false)
-    // console.log(track.id)
-    // console.log(expanded)
-    // if (!!track && trackId !== track.id) {
-    // }
   }, [track])
 
   if (!track) {

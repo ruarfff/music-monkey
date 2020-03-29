@@ -16,7 +16,7 @@ import {
   unSubscribeToEventUpdated,
   subscribeToPlaylistModified
 } from './pusherGateway'
-import { Action, Event, Suggestion, NotificationContext } from '../'
+import { Action, Event, Suggestion, notificationContext } from '../'
 
 interface ISubscriptionWrapper {
   event: Event
@@ -33,38 +33,31 @@ const SubscriptionWrapper = ({
   fetchEventVotes,
   getEventSuggestions
 }: ISubscriptionWrapper) => {
-  const {
-    acceptedTracks,
-    updateAcceptedTracks,
-    requestedTracks,
-    updateRequestedTracks
-  } = useContext(NotificationContext)
+  const { notification, setNotification } = useContext(notificationContext)
+
   useEffect(() => {
     const eventId = event && event.eventId ? event.eventId : ''
     const playlistId = event && event.playlist ? event.playlist.id : ''
 
     subscribeToSuggestionsModified(
       eventId,
-      (type: string, data: Suggestion[]) => {
+      (type: string, data: Suggestion[] = []) => {
         console.log('Get event suggestions on sub: ' + eventId)
         getEventSuggestions(eventId)
         try {
-          if (
-            type === 'accepted' &&
-            event.settings.autoAcceptSuggestionsEnabled
-          ) {
-            updateAcceptedTracks([
-              ...acceptedTracks,
-              ...data.map(s => s.trackUri)
-            ])
+          const trackUris = data.map(s => s.trackUri)
+          if (type === 'accepted') {
+            if (event.settings.autoAcceptSuggestionsEnabled) {
+              setNotification({ type: 'accept', payload: trackUris })
+            } else {
+              console.log('Accept request')
+              setNotification({ type: 'acceptRequest', payload: trackUris })
+            }
           } else if (
             type === 'requested' &&
             !event.settings.autoAcceptSuggestionsEnabled
           ) {
-            updateRequestedTracks([
-              ...requestedTracks,
-              ...data.map(s => s.trackUri)
-            ])
+            setNotification({ type: 'request', payload: trackUris })
           }
         } catch (err) {
           console.error(err)

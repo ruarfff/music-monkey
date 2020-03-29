@@ -19,7 +19,7 @@ import {
   acceptRequest,
   rejectRequest,
   useSnackbarAlert,
-  NotificationContext
+  notificationContext
 } from 'mm-shared'
 import { updateEvent } from 'event/eventClient'
 import EventFetchError from 'event/EventFetchError'
@@ -53,14 +53,13 @@ const EventView: FC<EventViewProps> = ({
   pendingRequests,
   getEventById,
   fetchEventVotes,
-  getEventSuggestions
+  getEventSuggestions,
+  location
 }) => {
   const {
-    acceptedTracks,
-    updateAcceptedTracks,
-    requestedTracks,
-    updateRequestedTracks
-  } = useContext(NotificationContext)
+    notification: { acceptedTracks, requestedTracks },
+    setNotification
+  } = useContext(notificationContext)
   const eventId = match.params.eventId
   const [tabIndex, setTabIndex] = useState(0)
   const { showSuccess } = useSnackbarAlert()
@@ -74,41 +73,35 @@ const EventView: FC<EventViewProps> = ({
   }
 
   useEffect(() => {
+    const ntCount = acceptedTracks.length
+    if (newTrackCount !== ntCount) {
+      setNewTrackCount(ntCount)
+    }
     if (!isEmpty(acceptedTracks)) {
-      const count = acceptedTracks.length
-      if (newTrackCount !== count) {
-        setNewTrackCount(count)
-      }
       if (!isEqual(acceptedTracks, newTracks)) {
         setNewTracks(acceptedTracks.sort())
       }
     }
-    return () => {
-      if (!isEmpty(acceptedTracks)) {
-        updateAcceptedTracks([])
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [acceptedTracks])
-  
-    useEffect(() => {
-    if (!isEmpty(requestedTracks)) {
-      const count = requestedTracks.length
-      if (requestedTrackCount !== count) {
-        setRequestedTrackCount(count)
-      }
 
+    const rtCount = requestedTracks.length
+    if (requestedTrackCount !== rtCount) {
+      setRequestedTrackCount(rtCount)
+    }
+    if (!isEmpty(requestedTracks)) {
       if (!isEqual(requestedTracks, newRequests)) {
         setNewRequests(requestedTracks.sort())
       }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acceptedTracks, requestedTracks])
+
+  useEffect(() => {
     return () => {
-      if (!isEmpty(requestedTracks)) {
-        updateRequestedTracks([])
-      }
+      setNotification({ type: 'clear' })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requestedTracks])
+  }, [location])
 
   useEffect(() => {
     if (!event || event.eventId !== eventId) {
@@ -118,8 +111,6 @@ const EventView: FC<EventViewProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [event, eventId])
-
-  const shouldShowEvent: boolean = !isEmpty(event)
 
   const handleGetEvent = () => {
     getEventById(eventId)
@@ -135,7 +126,7 @@ const EventView: FC<EventViewProps> = ({
     acceptRequest(request)
   }
 
-  if (!shouldShowEvent) {
+  if (isEmpty(event)) {
     return <MarvinLoader />
   }
 

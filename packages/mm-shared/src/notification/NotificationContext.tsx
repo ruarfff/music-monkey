@@ -1,19 +1,56 @@
-import React, { FC, createContext, useState } from 'react'
+import React, { FC, createContext, useReducer } from 'react'
+import isEmpty from 'lodash/isEmpty'
 
-interface Notifications {
+export interface NotificationState {
   acceptedTracks: string[]
   requestedTracks: string[]
-  updateAcceptedTracks(tracks: string[]): void
-  updateRequestedTracks(tracks: string[]): void
 }
 
-const initialState: Notifications = {
-  acceptedTracks: [],
-  requestedTracks: [],
-  updateAcceptedTracks: (tracks: string[]) => {},
-  updateRequestedTracks: (tracks: string[]) => {}
+export interface NotificationContext {
+  notification: NotificationState
+  setNotification(notification: any): void
 }
-export const NotificationContext = createContext(initialState)
+
+const initialState: NotificationState = {
+  acceptedTracks: [],
+  requestedTracks: []
+}
+export const notificationContext = createContext<NotificationContext>({
+  notification: initialState,
+  setNotification: () => {}
+})
+
+let reducer = (
+  state: NotificationState,
+  action: { type: string; payload: any }
+) => {
+  switch (action.type) {
+    case 'clear':
+      if (!isEmpty(state.acceptedTracks) || !isEmpty(state.requestedTracks)) {
+        return { acceptedTracks: [], requestedTracks: [] }
+      }
+      return state
+    case 'accept':
+      return {
+        ...state,
+        acceptedTracks: [...state.acceptedTracks, ...action.payload]
+      }
+    case 'request':
+      return {
+        ...state,
+        requestedTracks: [...state.requestedTracks, ...action.payload]
+      }
+    case 'acceptRequest':
+      return {
+        ...state,
+        requestedTracks: state.requestedTracks.filter(
+          t => !action.payload.includes(t)
+        )
+      }
+    default:
+      return state
+  }
+}
 
 interface NotificationContextProps {
   children: any
@@ -22,37 +59,10 @@ interface NotificationContextProps {
 export const NotificationContextProvider: FC<NotificationContextProps> = ({
   children
 }) => {
-  const updateAcceptedTracks = (tracks: string[]) => {
-    setNotifications((prevState: Notifications) => {
-      return {
-        ...prevState,
-        acceptedTracks: tracks
-      }
-    })
-  }
-
-  const updateRequestedTracks = (tracks: string[]) => {
-    setNotifications((prevState: Notifications) => {
-      return {
-        ...prevState,
-        requestedTracks: tracks
-      }
-    })
-  }
-
-  const notificationsState: Notifications = {
-    ...initialState,
-    updateAcceptedTracks,
-    updateRequestedTracks
-  }
-
-  const [notifications, setNotifications] = useState<Notifications>(
-    notificationsState
-  )
-
+  const [notification, setNotification] = useReducer(reducer, initialState)
   return (
-    <NotificationContext.Provider value={notifications}>
+    <notificationContext.Provider value={{ notification, setNotification }}>
       {children}
-    </NotificationContext.Provider>
+    </notificationContext.Provider>
   )
 }
