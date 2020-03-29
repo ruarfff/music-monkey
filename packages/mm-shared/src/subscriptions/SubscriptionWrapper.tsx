@@ -33,7 +33,7 @@ const SubscriptionWrapper = ({
   fetchEventVotes,
   getEventSuggestions
 }: ISubscriptionWrapper) => {
-  const { notification, setNotification } = useContext(notificationContext)
+  const { setNotification } = useContext(notificationContext)
 
   useEffect(() => {
     const eventId = event && event.eventId ? event.eventId : ''
@@ -58,6 +58,8 @@ const SubscriptionWrapper = ({
             !event.settings.autoAcceptSuggestionsEnabled
           ) {
             setNotification({ type: 'request', payload: trackUris })
+          } else if (type === 'rejected') {
+            console.log(data)
           }
         } catch (err) {
           console.error(err)

@@ -38,7 +38,7 @@ const Marvin: FC<MarvinProps> = ({
     showSuccess('Track requested')
   }
 
-  const onPlaylistSelected = (playlist: Playlist) => () => {
+  const onPlaylistSelected = (playlist: Playlist) => {
     savePlaylistRequest({
       eventId: event.eventId,
       userId: user.userId,
