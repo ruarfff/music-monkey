@@ -16,9 +16,18 @@ import {
   unSubscribeToEventUpdated,
   subscribeToPlaylistModified
 } from './pusherGateway'
-import { Action, Event, Suggestion, notificationContext } from '../'
+import {
+  Action,
+  Event,
+  Suggestion,
+  User,
+  notificationContext,
+  useSnackbarAlert
+} from '../'
 
 interface ISubscriptionWrapper {
+  isHost: boolean
+  user: User
   event: Event
   children: any
   getEventById(eventId: string): Action
@@ -27,6 +36,8 @@ interface ISubscriptionWrapper {
 }
 
 const SubscriptionWrapper = ({
+  isHost,
+  user,
   event,
   children,
   getEventById,
@@ -34,6 +45,7 @@ const SubscriptionWrapper = ({
   getEventSuggestions
 }: ISubscriptionWrapper) => {
   const { setNotification } = useContext(notificationContext)
+  const { showError } = useSnackbarAlert()
 
   useEffect(() => {
     const eventId = event && event.eventId ? event.eventId : ''
@@ -42,6 +54,8 @@ const SubscriptionWrapper = ({
     subscribeToSuggestionsModified(
       eventId,
       (type: string, data: Suggestion[] = []) => {
+        console.log('SUB WRAP')
+        console.log(data)
         console.log('Get event suggestions on sub: ' + eventId)
         getEventSuggestions(eventId)
         try {
@@ -59,7 +73,11 @@ const SubscriptionWrapper = ({
           ) {
             setNotification({ type: 'request', payload: trackUris })
           } else if (type === 'rejected') {
-            console.log(data)
+            const rejectedTrack = data.find(a => a.userId === user.userId)
+            if (!isHost && rejectedTrack) {
+              showError('Track Declined')
+            }
+            setNotification({ type: 'rejectRequest', payload: trackUris })
           }
         } catch (err) {
           console.error(err)

@@ -47,6 +47,13 @@ let reducer = (
           t => !action.payload.includes(t)
         )
       }
+    case 'rejectRequest':
+      return {
+        ...state,
+        requestedTracks: state.requestedTracks.filter(
+          t => !action.payload.includes(t)
+        )
+      }
     default:
       return state
   }

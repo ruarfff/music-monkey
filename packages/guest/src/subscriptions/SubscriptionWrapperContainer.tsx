@@ -5,7 +5,9 @@ import { fetchEventVotes, SubscriptionWrapper } from 'mm-shared'
 import { getRequestsByEventId } from 'request/requestActions'
 
 const mapStateToProps = (state: IRootState) => ({
-  event: state.event.event
+  isHost: false,
+  event: state.event.event,
+  user: state.user.data
 })
 
 const mapDispatchToProps = {

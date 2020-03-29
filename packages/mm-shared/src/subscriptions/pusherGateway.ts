@@ -27,7 +27,11 @@ export const subscribeToSuggestionsModified = (
       console.log(data)
       callback('accepted', data)
     })
-    channel.bind('suggestions-rejected', callback)
+    channel.bind('suggestions-rejected', (data: any) => {
+      console.log('REJECTED')
+      console.log(data)
+      callback('rejected', data)
+    })
     channel.bind('suggestions-auto-accepted', (data: any) => {
       console.log('AUTO')
       console.log(data)
