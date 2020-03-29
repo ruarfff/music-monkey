@@ -1,19 +1,17 @@
 import React, { FC, useState } from 'react'
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import CheckIcon from '@material-ui/icons/Check'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown'
-import SettingsPowerIcon from '@material-ui/icons/SettingsPower'
 import {
   ButtonGroup,
   Button,
-  IconButton,
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
-  Typography
+  DialogContentText
 } from '@material-ui/core'
-import { Event, EventSettings } from '../'
+import { Event, EventSettings, IOSSwitch } from '../'
 import './PartySettings.scss'
 
 interface PartySettingsProps {
@@ -88,24 +86,24 @@ const PartySettings: FC<PartySettingsProps> = ({
             {setting.description}
           </DialogContentText>
           <DialogContent className="PartySettings-dialog-content">
-            {isHost && (
-              <IconButton
-                aria-label="toggle-setting"
-                color={event.settings[setting.type] ? 'primary' : 'secondary'}
-                onClick={() => {
-                  let updatedSettings = { ...event.settings }
-                  updatedSettings[setting.type] = !event.settings[setting.type]
-                  onSettingsUpdated(updatedSettings)
-                }}
-              >
-                <SettingsPowerIcon />
-              </IconButton>
-            )}
-            {!isHost && (
-              <Typography>
-                Currently {event.settings[setting.type] ? 'On' : 'Off'}
-              </Typography>
-            )}
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  value="Setting"
+                  checked={event.settings[setting.type]}
+                  onChange={() => {
+                    if (isHost) {
+                      let updatedSettings = { ...event.settings }
+                      updatedSettings[setting.type] = !event.settings[
+                        setting.type
+                      ]
+                      onSettingsUpdated(updatedSettings)
+                    }
+                  }}
+                />
+              }
+              label="Setting"
+            />
           </DialogContent>
         </DialogContent>
       </Dialog>

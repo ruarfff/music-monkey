@@ -30,5 +30,6 @@ export { default as ErrorNotification } from './util/ErrorNotification'
 export { default as TabContainer } from './util/TabContainer'
 export { default as useDebounce } from './util/useDebounce'
 export { default as useSwipeTabsIndex } from './util/useSwipeTabsIndex'
+export { default as IOSSwitch } from './util/IOSSwitch'
 
 export * from './util/TabPanel'
