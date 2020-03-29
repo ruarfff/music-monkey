@@ -22,7 +22,7 @@ const NoMaybeTracks: FC<NoMaybeTracksProps> = ({ isHost }) => {
     >
       <Grid item xs={12}>
         <Typography align={'center'} variant={'h6'}>
-          No requests right now. {!isHost && 'Make some-?'}
+          No requests right now. {!isHost && 'Make some?'}
         </Typography>
       </Grid>
       {!isHost && (
