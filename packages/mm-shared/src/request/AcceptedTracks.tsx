@@ -28,21 +28,21 @@ const AcceptedTracks: FC<AcceptedTracksProps> = ({
     )
   }
 
-  const acceptedTracks = uniqBy(
+  const tracks = uniqBy(
     acceptedSuggestions.map(s => s.track),
     'id'
   )
   return (
     <>
-      {!isEmpty(acceptedTracks) && (
+      {!isEmpty(tracks) && (
         <TrackList
-          tracks={acceptedTracks}
+          tracks={tracks}
           suggestions={acceptedSuggestions}
           options={{ canRemove: isHost }}
           onReject={onReject}
         />
       )}
-      {isEmpty(acceptedTracks) && (
+      {isEmpty(tracks) && (
         <Typography className="noTracks" variant="h6" gutterBottom>
           No accepted requests yet
         </Typography>

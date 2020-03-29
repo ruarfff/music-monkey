@@ -48,39 +48,39 @@ const App = ({ store, history }: IAppProps) => (
           <ConnectedRouter history={history}>
             <CookiesProvider>
               <AuthLoader>
-                  <NotificationContextProvider>
-                <SubscriptionWrapper>
-                  <RouteContextProvider>
-                    <Switch>
-                      <Route
-                        path="/invite/:inviteId"
-                        component={Invite}
-                        exact={true}
-                      />
-                      <Route
-                        path="/login"
-                        component={userIsNotAuthenticated(Login)}
-                        exact={true}
-                      />
-                      <Route
-                        path="/about"
-                        component={userIsNotAuthenticated(Stepper)}
-                      />
-                      <Route
-                        path="/signup"
-                        component={userIsNotAuthenticated(SignUp)}
-                        exact={true}
-                      />
-                      <InviteLoader>
+                <NotificationContextProvider>
+                  <SubscriptionWrapper>
+                    <RouteContextProvider>
+                      <Switch>
                         <Route
-                          path="/"
-                          component={userIsAuthenticated(Layout)}
+                          path="/invite/:inviteId"
+                          component={Invite}
+                          exact={true}
                         />
-                      </InviteLoader>
-                    </Switch>
-                  </RouteContextProvider>
-                </SubscriptionWrapper>
-                  </NotificationContextProvider>
+                        <Route
+                          path="/login"
+                          component={userIsNotAuthenticated(Login)}
+                          exact={true}
+                        />
+                        <Route
+                          path="/about"
+                          component={userIsNotAuthenticated(Stepper)}
+                        />
+                        <Route
+                          path="/signup"
+                          component={userIsNotAuthenticated(SignUp)}
+                          exact={true}
+                        />
+                        <InviteLoader>
+                          <Route
+                            path="/"
+                            component={userIsAuthenticated(Layout)}
+                          />
+                        </InviteLoader>
+                      </Switch>
+                    </RouteContextProvider>
+                  </SubscriptionWrapper>
+                </NotificationContextProvider>
               </AuthLoader>
             </CookiesProvider>
           </ConnectedRouter>

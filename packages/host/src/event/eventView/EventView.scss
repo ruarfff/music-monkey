@@ -1,18 +1,4 @@
-@import 'mm-shared/src/theme/main';
-
 .EventView-root {
   width: 100%;
   height: 100%;
-  margin: 0 auto;
-
-  .EventView-tabs {
-    padding: 0.5em 1.5em;
-  }
-
-  .MuiBadge-badge {
-    right: -5%;
-    @include media('>sm') {
-      right: -20%;
-    }
-  }
 }

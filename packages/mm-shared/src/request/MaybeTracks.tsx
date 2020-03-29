@@ -11,8 +11,8 @@ interface MaybeTracksProps {
   requests: DecoratedSuggestion[]
   showAll?: boolean
   newRequests?: string[]
-  onAccept(suggestion: Suggestion): void
-  onReject(suggestion: Suggestion): void
+  onAccept?(suggestion: Suggestion): void
+  onReject?(suggestion: Suggestion): void
 }
 
 const MaybeTracks: FC<MaybeTracksProps> = ({
@@ -22,8 +22,8 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
   isHost,
   showAll,
   newRequests = [],
-  onAccept,
-  onReject
+  onAccept = () => {},
+  onReject = () => {}
 }) => {
   const playlistTracks =
     !isEmpty(event) && !isEmpty(event.playlist)
