@@ -6,7 +6,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
 import {
-  Badge,
   List,
   Collapse,
   ListItem,
@@ -14,7 +13,6 @@ import {
   ListItemText,
   Fab,
   Divider,
-  Avatar,
   ListItemSecondaryAction
 } from '@material-ui/core'
 import Img from 'react-image'
@@ -28,8 +26,8 @@ import {
   Suggestion
 } from '../'
 import { TrackConfig } from './TrackConfig'
-import { withStyles } from '@material-ui/core/styles'
 import VoteButton from './VoteButton'
+import WithBadge from './WithBadge'
 import './TrackListItem.scss'
 
 interface TrackListItemProps {
@@ -47,15 +45,6 @@ interface TrackListItemProps {
   onSelected?(track: Track, suggestion: Suggestion): void
   onRemoved?(track: Track, suggestion: Suggestion): void
 }
-
-const SmallAvatar = withStyles((theme) => ({
-  root: {
-    width: 22,
-    height: 22,
-    border: `2px solid`,
-    backgroundColor: '#af00ff'
-  }
-}))(Avatar)
 
 export const TrackListItem: FC<TrackListItemProps> = ({
   isHost,
@@ -115,23 +104,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
       setExpanded(!expanded)
     }
   }
-
-  const withBadge = (child: any) => (
-    <Badge
-      overlap="circle"
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right'
-      }}
-      badgeContent={
-        <SmallAvatar alt="User avatar" src={!!user ? user.image : ''}>
-          {!user || !user.image ? initials : null}
-        </SmallAvatar>
-      }
-    >
-      {child}
-    </Badge>
-  )
 
   const trackImage = (
     <div className="TrackListItem-track-image">
@@ -193,7 +165,13 @@ export const TrackListItem: FC<TrackListItemProps> = ({
               onPlay(track)
             }}
           >
-            {!!user ? withBadge(trackImage) : trackImage}
+            {!!user ? (
+              <WithBadge user={user} initials={initials}>
+                {trackImage}
+              </WithBadge>
+            ) : (
+              trackImage
+            )}
           </ListItemIcon>
 
           <ListItemText
