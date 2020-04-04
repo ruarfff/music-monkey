@@ -1,6 +1,8 @@
 import React from 'react'
 import { Typography, Avatar, Tooltip, Grid } from '@material-ui/core'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
+import AccessTimeIcon from '@material-ui/icons/AccessTime'
+import RoomIcon from '@material-ui/icons/Room'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { isEmpty, take } from 'lodash'
@@ -34,19 +36,27 @@ const EventHeader = ({
 
       <EventTopMenu isHost={isHost} event={event} backTo="/" />
 
-      <Grid container className="EventHeader-actions">
-        <Grid item xs={4} className="EventHeader-details">
-          <Link to={`/events/${event.eventId}/details`}>
-            <Typography
-              variant="caption"
-              display="block"
-              gutterBottom
-              className="EventHeader-heading"
-            >{`${event.startDateTime.format('Do MMM, h:mm a')}`}</Typography>
-
-            <Typography variant="h5">{event.location.address}</Typography>
-          </Link>
+      <Grid container className="EventHeader-actions" spacing={0}>
+        <Grid
+          container
+          item
+          xs={4}
+          className="EventHeader-details"
+          direction="column"
+        >
+          <Grid item>
+            <Link to={`/events/${event.eventId}/details`}>
+              <AccessTimeIcon color="primary" fontSize="large" />
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to={`/events/${event.eventId}/details`}>
+              <RoomIcon color="primary" fontSize="large" />
+            </Link>
+          </Grid>
         </Grid>
+
+        <Grid item xs={4}></Grid>
 
         <Grid item xs={4} className="EventHeader-guests">
           <Link to={`/events/${event.eventId}/guests`}>
@@ -54,27 +64,27 @@ const EventHeader = ({
               container
               spacing={0}
               direction="column"
-              alignItems="center"
-              justify="center"
+              alignItems="flex-end"
+              justify="flex-end"
             >
               <Grid item xs={12}>
                 <Typography className="EventHeader-heading">Guests</Typography>
               </Grid>
               <Grid item xs={12}>
                 {!isEmpty(event.guests) ? (
-                  <AvatarGroup>
-                    {take(event.guests, 3).map(guest => (
+                  <AvatarGroup spacing="small" max={3}>
+                    {event.guests.map((guest) => (
                       <Avatar
                         key={guest.user.userId}
                         alt={guest.user.displayName || 'G'}
                         src={guest.user.image}
                       />
                     ))}
-                    {event.guests!.length > 3 && (
+                    {/* {event.guests!.length > 3 && (
                       <Tooltip title="Guests">
-                        <Avatar>+{event.guests!.length}</Avatar>
+                        <Avatar>+{(event.guests!.length = 3)}</Avatar>
                       </Tooltip>
-                    )}
+                    )} */}
                   </AvatarGroup>
                 ) : (
                   <Typography className="EventHeader-heading">
@@ -85,8 +95,6 @@ const EventHeader = ({
             </Grid>
           </Link>
         </Grid>
-
-        <Grid item xs={4}></Grid>
       </Grid>
 
       {!isHost && (
