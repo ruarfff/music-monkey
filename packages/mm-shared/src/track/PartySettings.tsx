@@ -116,7 +116,7 @@ const PartySettings: FC<PartySettingsProps> = ({
       >
         <Button
           aria-label="dynamic voting"
-          color={event?.settings.dynamicVotingEnabled ? 'primary' : 'secondary'}
+          color={event?.settings.dynamicVotingEnabled ? 'primary' : 'default'}
           onClick={handleOpen('vote')}
         >
           <ThumbsUpDownIcon />
@@ -124,9 +124,7 @@ const PartySettings: FC<PartySettingsProps> = ({
         <Button
           aria-label="auto accept"
           color={
-            event?.settings.autoAcceptSuggestionsEnabled
-              ? 'primary'
-              : 'secondary'
+            event?.settings.autoAcceptSuggestionsEnabled ? 'primary' : 'default'
           }
           onClick={handleOpen('autoAccept')}
         >
@@ -135,7 +133,7 @@ const PartySettings: FC<PartySettingsProps> = ({
         <Button
           aria-label="allow playlists"
           color={
-            event?.settings.suggestingPlaylistsEnabled ? 'primary' : 'secondary'
+            event?.settings.suggestingPlaylistsEnabled ? 'primary' : 'default'
           }
           onClick={handleOpen('playlist')}
         >
