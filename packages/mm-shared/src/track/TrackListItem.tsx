@@ -5,6 +5,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline'
+import ExplicitIcon from '@material-ui/icons/Explicit'
 import {
   List,
   Collapse,
@@ -185,9 +186,13 @@ export const TrackListItem: FC<TrackListItemProps> = ({
             primaryTypographyProps={{ noWrap: hasAnyActions }}
             secondary={
               <span>
-                {track.artists[0].name}
-                <br />
-                {formatDuration(track.duration_ms)}
+                <div>{track.artists[0].name}</div>
+                <div>
+                  {track.explicit && (
+                    <ExplicitIcon color="primary" className="explicit-icon" />
+                  )}
+                  {formatDuration(track.duration_ms)}
+                </div>
               </span>
             }
             secondaryTypographyProps={{
@@ -216,6 +221,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
         </ListItem>
         {options.canVote && (
           <TrackToolbar
+            track={track}
             onVote={onVote}
             voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
           />

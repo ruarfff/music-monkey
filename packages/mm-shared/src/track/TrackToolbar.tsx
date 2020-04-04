@@ -14,11 +14,16 @@ import VoteDetails from './VoteDetails'
 import './TrackToolbar.scss'
 
 interface TrackToolbarProps {
+  track: Track
   voteDetails: VoteDetails
   onVote(track: Track): void
 }
 
-const TrackToolbar: FC<TrackToolbarProps> = ({ voteDetails, onVote }) => {
+const TrackToolbar: FC<TrackToolbarProps> = ({
+  track,
+  voteDetails,
+  onVote
+}) => {
   const TrackLikes = () => (
     <Grid container spacing={0}>
       <Grid item xs={6} className="TrackToolbar-vote-icon">
