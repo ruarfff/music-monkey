@@ -15,7 +15,8 @@ import {
   Divider,
   ListItemSecondaryAction,
   ListItemAvatar,
-  IconButton
+  IconButton,
+  Typography
 } from '@material-ui/core'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
@@ -182,23 +183,25 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
           <ListItemText
             className="TrackListItem-content"
-            primary={track.name}
-            primaryTypographyProps={{ noWrap: hasAnyActions }}
+            disableTypography
+            primary={
+              <Typography noWrap={true} variant="body1">
+                {track.name}
+              </Typography>
+            }
             secondary={
-              <span>
-                <div>{track.artists[0].name}</div>
-                <div>
+              <Typography component="div">
+                <Typography variant="caption" noWrap={true}>
+                  {track.artists[0].name}
+                </Typography>
+                <Typography variant="body2" noWrap={true} gutterBottom>
                   {track.explicit && (
                     <ExplicitIcon color="primary" className="explicit-icon" />
                   )}
                   {formatDuration(track.duration_ms)}
-                </div>
-              </span>
+                </Typography>
+              </Typography>
             }
-            secondaryTypographyProps={{
-              variant: 'body2',
-              noWrap: hasAnyActions
-            }}
           />
           {hasAnyActions && (
             <ListItemSecondaryAction
@@ -219,13 +222,12 @@ export const TrackListItem: FC<TrackListItemProps> = ({
             </ListItemSecondaryAction>
           )}
         </ListItem>
-        {options.canVote && (
-          <TrackToolbar
-            track={track}
-            onVote={onVote}
-            voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
-          />
-        )}
+        <TrackToolbar
+          options={options}
+          track={track}
+          onVote={onVote}
+          voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
+        />
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className="TrackListItem-nested">
