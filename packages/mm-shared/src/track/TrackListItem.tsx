@@ -14,10 +14,8 @@ import {
   Fab,
   Divider,
   ListItemSecondaryAction,
-  ListItemAvatar,
-  Avatar
+  ListItemAvatar
 } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import {
@@ -29,9 +27,10 @@ import {
   Suggestion
 } from '../'
 import { TrackConfig } from './TrackConfig'
+import TrackAvatar from './TrackAvatar'
 //import VoteButton from './VoteButton'
-import './TrackListItem.scss'
 import TrackToolbar from './TrackToolbar'
+import './TrackListItem.scss'
 
 interface TrackListItemProps {
   isHost: boolean
@@ -64,7 +63,10 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   onSelected = () => {},
   onRemoved = () => {}
 }) => {
-  const hasOptions = options.canRequest || options.canRemove
+  const hasOnlyDelete = !options.canRequest && options.canRemove
+  const hasBothOptions = options.canRequest && options.canRemove
+  const hasAnyActions = options.canRequest || options.canRemove
+
   const [hidden, setHidden] = useState(false)
   const [expanded, setExpanded] = useState(false)
 
@@ -103,7 +105,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const handleExpandToggle = () => {
-    if (hasOptions) {
+    if (hasBothOptions) {
       setExpanded(!expanded)
     }
   }
@@ -119,39 +121,9 @@ export const TrackListItem: FC<TrackListItemProps> = ({
     </div>
   )
 
-  const UserAvatar = withStyles((theme) => ({
-    root: {
-      border: `2px solid`,
-      backgroundColor: '#af00ff'
-    }
-  }))(Avatar)
-
-  const trackAvatar = (
-    <UserAvatar
-      alt={!!user ? user.displayName : 'user avatar'}
-      src={!!user ? user.image : ''}
-    >
-      {!user || !user.image ? initials : null}
-    </UserAvatar>
-  )
-
-  const ListLeftSection = () => {
-    return options.showProfile ? (
-      <ListItemAvatar>{trackAvatar}</ListItemAvatar>
-    ) : (
-      <ListItemIcon
-        onClick={() => {
-          onPlay(track)
-        }}
-      >
-        {trackImage}
-      </ListItemIcon>
-    )
-  }
-
-  let addButton = <span />
+  let deleteButton = <span />
   if (options.canRemove) {
-    addButton = (
+    deleteButton = (
       <Fab
         aria-label="remove"
         size="small"
@@ -163,9 +135,9 @@ export const TrackListItem: FC<TrackListItemProps> = ({
     )
   }
 
-  let deleteButton = <span />
+  let addButton = <span />
   if (options.canRequest) {
-    deleteButton = (
+    addButton = (
       <Fab
         color="primary"
         aria-label="add"
@@ -183,7 +155,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
   return (
     <>
-      <Collapse in={!hidden} timeout="auto" unmountOnExit>
+      <Collapse in={!hidden} timeout="auto">
         <ListItem
           className={
             highlight
@@ -193,12 +165,24 @@ export const TrackListItem: FC<TrackListItemProps> = ({
           alignItems="flex-start"
           button
         >
-          <ListLeftSection />
+          {options.showProfile ? (
+            <ListItemAvatar>
+              <TrackAvatar user={user!} initials={initials} />
+            </ListItemAvatar>
+          ) : (
+            <ListItemIcon
+              onClick={() => {
+                onPlay(track)
+              }}
+            >
+              {trackImage}
+            </ListItemIcon>
+          )}
 
           <ListItemText
             className="TrackListItem-content"
             primary={track.name}
-            primaryTypographyProps={{ noWrap: true }}
+            primaryTypographyProps={{ noWrap: hasAnyActions }}
             secondary={
               <span>
                 {track.artists[0].name}
@@ -208,22 +192,27 @@ export const TrackListItem: FC<TrackListItemProps> = ({
             }
             secondaryTypographyProps={{
               variant: 'body2',
-              noWrap: true
+              noWrap: hasAnyActions
             }}
           />
-
-          <ListItemSecondaryAction
-            className="TrackListItem-actions"
-            onClick={handleExpandToggle}
-          >
-            {/* {options.canVote && (
+          {hasAnyActions && (
+            <ListItemSecondaryAction
+              className="TrackListItem-actions"
+              onClick={handleExpandToggle}
+            >
+              {/* {options.canVote && (
               <VoteButton
                 onVote={onVote}
                 voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
               />
             )} */}
-            {hasOptions && expandIcon()}
-          </ListItemSecondaryAction>
+              <div className="TrackListItem-host-actions">
+                {addButton}
+                {hasOnlyDelete && deleteButton}
+              </div>
+              {hasBothOptions && expandIcon()}
+            </ListItemSecondaryAction>
+          )}
         </ListItem>
         {options.canVote && (
           <TrackToolbar
@@ -234,10 +223,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className="TrackListItem-nested">
-              <div className="TrackListItem-host-actions">
-                {addButton}
-                {deleteButton}
-              </div>
+              <div className="TrackListItem-host-actions">{deleteButton}</div>
             </ListItem>
           </List>
         </Collapse>
