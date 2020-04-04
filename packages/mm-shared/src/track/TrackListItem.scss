@@ -31,7 +31,7 @@
 .TrackListItem-actions {
   display: flex;
 
-  .MuiFab-colorInherit {
+  .MuiIconButton-colorInherit {
     background-color: $secondary-light;
   }
 
@@ -54,16 +54,18 @@
     display: flex;
     flex-direction: row-reverse;
 
-    .MuiFab-root {
+    .MuiIconButton-root {
       margin-left: 2em;
-      margin-right: 2.6em;
+      margin-right: 2.18em;
     }
-    .MuiFab-secondary {
-      background-color: $danger-red;
+    .MuiIconButton-colorPrimary {
+      background-color: $nice-green;
+      color: white;
       opacity: 0.9;
     }
-    .MuiFab-primary {
-      background-color: $nice-green;
+    .MuiIconButton-colorSecondary {
+      background-color: $danger-red;
+      color: white;
       opacity: 0.9;
     }
   }
@@ -72,16 +74,18 @@
 .TrackListItem-host-actions {
   width: 100%;
 
-  .MuiFab-root {
+  .MuiIconButton-root {
     margin-left: 2em;
     margin-right: 0.8em;
   }
-  .MuiFab-secondary {
-    background-color: $danger-red;
+  .MuiIconButton-colorPrimary {
+    background-color: $nice-green;
+    color: white;
     opacity: 0.9;
   }
-  .MuiFab-primary {
-    background-color: $nice-green;
+  .MuiIconButton-colorSecondary {
+    background-color: $danger-red;
+    color: white;
     opacity: 0.9;
   }
 }

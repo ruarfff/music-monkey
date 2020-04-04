@@ -11,10 +11,10 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Fab,
   Divider,
   ListItemSecondaryAction,
-  ListItemAvatar
+  ListItemAvatar,
+  IconButton
 } from '@material-ui/core'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
@@ -124,28 +124,28 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   let deleteButton = <span />
   if (options.canRemove) {
     deleteButton = (
-      <Fab
+      <IconButton
         aria-label="remove"
         size="small"
         color="secondary"
         onClick={handleRemove}
       >
         <Remove />
-      </Fab>
+      </IconButton>
     )
   }
 
   let addButton = <span />
   if (options.canRequest) {
     addButton = (
-      <Fab
+      <IconButton
         color="primary"
         aria-label="add"
         size="small"
         onClick={handleSelected}
       >
         <AddIcon />
-      </Fab>
+      </IconButton>
     )
   }
 
