@@ -18,17 +18,15 @@ const RejectedTracks: FC<RejectedTracksProps> = ({
   onAccept
 }) => {
   let rejectedSuggestions =
-    !isEmpty(requests) && (isHost || !isEmpty(user))
-      ? requests.filter(s => s.suggestion && s.suggestion.rejected)
-      : []
+    !isEmpty(requests) && (isHost || !isEmpty(user)) ? requests : []
 
   if (!isHost) {
     rejectedSuggestions = rejectedSuggestions.filter(
-      s => s.suggestion.userId === user.userId
+      (s) => s.suggestion.userId === user.userId
     )
   }
   const rejectedTracks = uniqBy(
-    rejectedSuggestions.map(s => s.track),
+    rejectedSuggestions.map((s) => s.track),
     'id'
   )
 

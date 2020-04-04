@@ -27,27 +27,22 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
 }) => {
   const playlistTracks =
     !isEmpty(event) && !isEmpty(event.playlist)
-      ? event.playlist!.tracks.items.map(track => track.track.uri)
+      ? event.playlist!.tracks.items.map((track) => track.track.uri)
       : []
   let maybeSuggestions =
     !isEmpty(requests) && (isHost || !isEmpty(user))
-      ? requests
-          .filter(
-            s =>
-              s.suggestion && !s.suggestion.rejected && !s.suggestion.accepted
-          )
-          .filter(
-            suggestion => playlistTracks.indexOf(suggestion.track.uri) === -1
-          )
+      ? requests.filter(
+          (suggestion) => playlistTracks.indexOf(suggestion.track.uri) === -1
+        )
       : []
 
   if (!isHost && !showAll) {
     maybeSuggestions = maybeSuggestions.filter(
-      s => s.suggestion.userId === user.userId
+      (s) => s.suggestion.userId === user.userId
     )
   }
   const maybeTracks = uniqBy(
-    maybeSuggestions.map(s => s.track),
+    maybeSuggestions.map((s) => s.track),
     'id'
   )
 

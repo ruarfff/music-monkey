@@ -4,4 +4,5 @@ export interface TrackConfig {
   canVote?: boolean
   showSummary?: boolean
   allowDragDrop?: boolean
+  showProfile?: boolean
 }
