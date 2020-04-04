@@ -13,8 +13,11 @@ import {
   ListItemText,
   Fab,
   Divider,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
+  ListItemAvatar,
+  Avatar
 } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import {
@@ -27,7 +30,6 @@ import {
 } from '../'
 import { TrackConfig } from './TrackConfig'
 import VoteButton from './VoteButton'
-import WithBadge from './WithBadge'
 import './TrackListItem.scss'
 
 interface TrackListItemProps {
@@ -116,6 +118,36 @@ export const TrackListItem: FC<TrackListItemProps> = ({
     </div>
   )
 
+  const UserAvatar = withStyles((theme) => ({
+    root: {
+      border: `2px solid`,
+      backgroundColor: '#af00ff'
+    }
+  }))(Avatar)
+
+  const trackAvatar = (
+    <UserAvatar
+      alt={!!user ? user.displayName : 'user avatar'}
+      src={!!user ? user.image : ''}
+    >
+      {!user || !user.image ? initials : null}
+    </UserAvatar>
+  )
+
+  const ListLeftSection = () => {
+    return options.showProfile ? (
+      <ListItemAvatar>{trackAvatar}</ListItemAvatar>
+    ) : (
+      <ListItemIcon
+        onClick={() => {
+          onPlay(track)
+        }}
+      >
+        {trackImage}
+      </ListItemIcon>
+    )
+  }
+
   let addButton = <span />
   if (options.canRemove) {
     addButton = (
@@ -160,19 +192,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
           alignItems="flex-start"
           button
         >
-          <ListItemIcon
-            onClick={() => {
-              onPlay(track)
-            }}
-          >
-            {!!user ? (
-              <WithBadge user={user} initials={initials}>
-                {trackImage}
-              </WithBadge>
-            ) : (
-              trackImage
-            )}
-          </ListItemIcon>
+          <ListLeftSection />
 
           <ListItemText
             className="TrackListItem-content"

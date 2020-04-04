@@ -11,6 +11,7 @@ interface MaybeTracksProps {
   requests: DecoratedSuggestion[]
   showAll?: boolean
   newRequests?: string[]
+  profileMode?: boolean
   onAccept?(suggestion: Suggestion): void
   onReject?(suggestion: Suggestion): void
 }
@@ -21,6 +22,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
   event,
   isHost,
   showAll,
+  profileMode,
   newRequests = [],
   onAccept = () => {},
   onReject = () => {}
@@ -54,7 +56,11 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
       isHost={isHost}
       tracks={maybeTracks}
       suggestions={maybeSuggestions}
-      options={{ canRequest: isHost, canRemove: isHost, showProfile: isHost }}
+      options={{
+        canRequest: isHost,
+        canRemove: isHost,
+        showProfile: isHost || profileMode
+      }}
       tracksToHighlight={newRequests}
       onAccept={onAccept}
       onReject={onReject}

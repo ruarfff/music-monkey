@@ -186,6 +186,7 @@ const EventView: FC<EventViewProps> = ({
                 requests={pendingRequests}
                 newRequests={newRequests}
                 showAll={true}
+                profileMode={true}
               />
             </Typography>
           </Grid>

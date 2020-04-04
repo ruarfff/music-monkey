@@ -74,7 +74,7 @@ const EventTracks: FC<EventTracksProps> = ({
         suggestions={suggestions}
         tracksToHighlight={acceptedTracks}
         votes={votes}
-        options={{ showSummary: true, canVote: true }}
+        options={{ showSummary: true, canVote: true, showProfile: true }}
         onVote={handleTrackVote}
       />
     </div>
