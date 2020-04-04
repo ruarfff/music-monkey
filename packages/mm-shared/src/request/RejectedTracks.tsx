@@ -36,7 +36,7 @@ const RejectedTracks: FC<RejectedTracksProps> = ({
         <TrackList
           tracks={rejectedTracks}
           suggestions={rejectedSuggestions}
-          options={{ canRequest: isHost }}
+          options={{ canRequest: isHost, showProfile: isHost }}
           onAccept={onAccept}
         />
       )}

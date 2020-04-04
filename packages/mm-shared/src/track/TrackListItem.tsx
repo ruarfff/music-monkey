@@ -1,7 +1,4 @@
 import React, { FC, useState, useEffect } from 'react'
-import isEqual from 'lodash/isEqual'
-import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
-import FavoriteIconFill from '@material-ui/icons/Favorite'
 import AddIcon from '@material-ui/icons/Add'
 import Remove from '@material-ui/icons/Remove'
 import ExpandLess from '@material-ui/icons/ExpandLess'
@@ -32,6 +29,7 @@ import {
 } from '../'
 import { TrackConfig } from './TrackConfig'
 import { withStyles } from '@material-ui/core/styles'
+import VoteButton from './VoteButton'
 import './TrackListItem.scss'
 
 interface TrackListItemProps {
@@ -50,65 +48,7 @@ interface TrackListItemProps {
   onRemoved?(track: Track, suggestion: Suggestion): void
 }
 
-interface VoteDetails {
-  isHost: boolean
-  currentUserVoted: boolean
-  numberOfVotes: number
-  track: Track
-}
-
-interface VoteButtonProps {
-  voteDetails: VoteDetails
-  onVote(track: Track): void
-}
-const VoteButton: FC<VoteButtonProps> = ({ voteDetails, onVote }) => {
-  const [vote, setVote] = useState<VoteDetails>({
-    currentUserVoted: false,
-    numberOfVotes: 0,
-    isHost: false,
-    track: {} as Track
-  })
-
-  useEffect(() => {
-    if (!isEqual(vote, voteDetails)) {
-      setVote(voteDetails)
-    }
-  }, [vote, voteDetails])
-
-  const handleTrackVote = () => {
-    if (!vote.isHost) {
-      setVote({
-        isHost: vote.isHost,
-        track: vote.track,
-        currentUserVoted: !vote.currentUserVoted,
-        numberOfVotes: vote.currentUserVoted
-          ? vote.numberOfVotes - 1
-          : vote.numberOfVotes + 1
-      })
-      const doVote = async () => {
-        onVote(vote.track)
-      }
-
-      doVote()
-    }
-  }
-
-  return vote.currentUserVoted ? (
-    <div onClick={handleTrackVote}>
-      <Badge badgeContent={vote.numberOfVotes} className="current-user">
-        <FavoriteIconFill color="primary" fontSize="large" />
-      </Badge>
-    </div>
-  ) : (
-    <div onClick={handleTrackVote}>
-      <Badge badgeContent={vote.numberOfVotes}>
-        <FavouriteIcon fontSize="large" />
-      </Badge>
-    </div>
-  )
-}
-
-const SmallAvatar = withStyles(theme => ({
+const SmallAvatar = withStyles((theme) => ({
   root: {
     width: 22,
     height: 22,
