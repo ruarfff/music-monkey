@@ -2,17 +2,16 @@ import React, { FC, useState, useEffect } from 'react'
 import isEqual from 'lodash/isEqual'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIconFill from '@material-ui/icons/Favorite'
-import { Badge } from '@material-ui/core'
 import { Track } from 'music'
 import VoteDetails from './VoteDetails'
 
-import './VoteButton.scss'
+import './VoteButtonSmall.scss'
 
-interface VoteButtonProps {
+interface VoteButtonSmallProps {
   voteDetails: VoteDetails
   onVote(track: Track): void
 }
-const VoteButton: FC<VoteButtonProps> = ({ voteDetails, onVote }) => {
+const VoteButtonSmall: FC<VoteButtonSmallProps> = ({ voteDetails, onVote }) => {
   const [vote, setVote] = useState<VoteDetails>({
     currentUserVoted: false,
     numberOfVotes: 0,
@@ -45,18 +44,14 @@ const VoteButton: FC<VoteButtonProps> = ({ voteDetails, onVote }) => {
   }
 
   return (
-    <div onClick={handleTrackVote} className="VoteButton-root">
+    <div onClick={handleTrackVote} className="VoteButtonSmall-root">
       {vote.currentUserVoted ? (
-        <Badge badgeContent={vote.numberOfVotes} className="current-user">
-          <FavoriteIconFill color="primary" fontSize="large" />
-        </Badge>
+        <FavoriteIconFill color="primary" fontSize="small" />
       ) : (
-        <Badge badgeContent={vote.numberOfVotes}>
-          <FavouriteIcon fontSize="large" />
-        </Badge>
+        <FavouriteIcon fontSize="small" />
       )}
     </div>
   )
 }
 
-export default VoteButton
+export default VoteButtonSmall

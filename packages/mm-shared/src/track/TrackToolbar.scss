@@ -1,0 +1,21 @@
+@import '../theme/main';
+
+.TrackToolbar-root {
+  height: 2em;
+
+  .MuiFab-colorInherit {
+    background-color: $secondary-light;
+  }
+
+  .MuiSvgIcon-colorPrimary {
+    color: $secondary-light;
+  }
+
+  .TrackToolbar-vote-icon {
+    padding-left: 1.5em;
+  }
+
+  .TrackToolbar-vote-label {
+    padding-left: 0.5em;
+  }
+}

@@ -29,8 +29,9 @@ import {
   Suggestion
 } from '../'
 import { TrackConfig } from './TrackConfig'
-import VoteButton from './VoteButton'
+//import VoteButton from './VoteButton'
 import './TrackListItem.scss'
+import TrackToolbar from './TrackToolbar'
 
 interface TrackListItemProps {
   isHost: boolean
@@ -215,15 +216,21 @@ export const TrackListItem: FC<TrackListItemProps> = ({
             className="TrackListItem-actions"
             onClick={handleExpandToggle}
           >
-            {options.canVote && (
+            {/* {options.canVote && (
               <VoteButton
                 onVote={onVote}
                 voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
               />
-            )}
+            )} */}
             {hasOptions && expandIcon()}
           </ListItemSecondaryAction>
         </ListItem>
+        {options.canVote && (
+          <TrackToolbar
+            onVote={onVote}
+            voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
+          />
+        )}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className="TrackListItem-nested">
