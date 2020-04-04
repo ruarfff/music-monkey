@@ -191,10 +191,19 @@ export const TrackListItem: FC<TrackListItemProps> = ({
             }
             secondary={
               <Typography component="div">
-                <Typography variant="caption" noWrap={true}>
+                <Typography
+                  variant="caption"
+                  noWrap={true}
+                  className="MuiTypography-colorTextSecondary"
+                >
                   {track.artists[0].name}
                 </Typography>
-                <Typography variant="body2" noWrap={true} gutterBottom>
+                <Typography
+                  variant="body2"
+                  noWrap={true}
+                  gutterBottom
+                  className="MuiTypography-colorTextSecondary"
+                >
                   {track.explicit && (
                     <ExplicitIcon color="primary" className="explicit-icon" />
                   )}
