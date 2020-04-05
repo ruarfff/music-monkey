@@ -32,7 +32,7 @@ const StyledMenu = withStyles({
   />
 ))
 
-const StyledMenuItem = withStyles(theme => ({
+const StyledMenuItem = withStyles((theme) => ({
   root: {
     '&:focus': {
       backgroundColor: theme.palette.secondary.main,
@@ -57,7 +57,7 @@ const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {
   }
 
   const userStatus = event
-    ? find(event.guests, guest => guest.rsvp.userId === user.userId)
+    ? find(event.guests, (guest) => guest.rsvp.userId === user.userId)
     : ({ rsvp: { status: 'Pending' } } as EventGuest)
 
   const handleMenuItemClick = (option: string) => {
@@ -84,6 +84,7 @@ const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {
         color="secondary"
         onClick={handleClick}
         className="EventResponseMenu-button"
+        size="medium"
       >
         {selected}
         <ArrowDropDownIcon />
@@ -96,7 +97,7 @@ const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {options.map(option => (
+        {options.map((option) => (
           <StyledMenuItem
             className="EventResponseMenu-menu-item"
             key={option}

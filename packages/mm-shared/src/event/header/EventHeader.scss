@@ -34,14 +34,6 @@ $text-backdrop: rgba(58, 158, 209, 0.8);
       padding-right: 0.2em;
     }
 
-    .EventHeader-details {
-      margin-left: -1em;
-      padding-left: 0;
-    }
-
-    .EventHeader-guests {
-    }
-
     .EventHeader-settings {
       background: $text-backdrop;
       border-radius: 5px;
@@ -57,11 +49,5 @@ $text-backdrop: rgba(58, 158, 209, 0.8);
         font-weight: 600;
       }
     }
-  }
-
-  .EventHeader-response-menu {
-    position: absolute;
-    top: 160px;
-    width: 100%;
   }
 }
