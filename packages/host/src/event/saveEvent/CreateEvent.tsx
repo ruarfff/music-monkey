@@ -6,13 +6,7 @@ import createEventFlow from './createEventFlow'
 import EventInitializeDialog from './EventInitializeDialog'
 import CreateEventFormValues from './CreateEventFormValues'
 import SeedPlaylist from './SeedPlaylistContainer'
-import {
-  User,
-  Playlist,
-  MarvinLoader,
-  Action,
-  useSnackbarAlert
-} from 'mm-shared'
+import { User, Playlist, Action, useSnackbarAlert } from 'mm-shared'
 
 import './CreateEvent.scss'
 
@@ -60,11 +54,6 @@ const CreateEvent = ({ user, history, getEvents }: CreateEventProps) => {
       }: FormikProps<CreateEventFormValues>) => {
         return (
           <div className="CreateEvent-root">
-            {isSubmitting && (
-              <div className="CreateEvent-loading">
-                <MarvinLoader />
-              </div>
-            )}
             <EventInitializeDialog
               open={openInitDialog}
               isValid={!errors.eventName}
@@ -83,7 +72,7 @@ const CreateEvent = ({ user, history, getEvents }: CreateEventProps) => {
                     onPlaylistSelected={(playlist: Playlist) => {
                       setFieldValue(
                         'tracks',
-                        playlist.tracks.items.map(item => item.track)
+                        playlist.tracks.items.map((item) => item.track)
                       )
                       submitForm()
                       showSuccess('Event Saved')

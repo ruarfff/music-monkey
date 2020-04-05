@@ -1,11 +1,11 @@
 import React from 'react'
-import { Typography, Avatar, Tooltip, Grid } from '@material-ui/core'
+import { Typography, Avatar, Grid } from '@material-ui/core'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 import RoomIcon from '@material-ui/icons/Room'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { isEmpty, take } from 'lodash'
+import { isEmpty } from 'lodash'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
@@ -46,12 +46,12 @@ const EventHeader = ({
         >
           <Grid item>
             <Link to={`/events/${event.eventId}/details`}>
-              <AccessTimeIcon color="primary" fontSize="large" />
+              <AccessTimeIcon color="secondary" fontSize="large" />
             </Link>
           </Grid>
           <Grid item>
             <Link to={`/events/${event.eventId}/details`}>
-              <RoomIcon color="primary" fontSize="large" />
+              <RoomIcon color="secondary" fontSize="large" />
             </Link>
           </Grid>
         </Grid>
@@ -67,31 +67,26 @@ const EventHeader = ({
               alignItems="flex-end"
               justify="flex-end"
             >
-              <Grid item xs={12}>
-                <Typography className="EventHeader-heading">Guests</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                {!isEmpty(event.guests) ? (
-                  <AvatarGroup spacing="small" max={3}>
-                    {event.guests.map((guest) => (
-                      <Avatar
-                        key={guest.user.userId}
-                        alt={guest.user.displayName || 'G'}
-                        src={guest.user.image}
-                      />
-                    ))}
-                    {/* {event.guests!.length > 3 && (
-                      <Tooltip title="Guests">
-                        <Avatar>+{(event.guests!.length = 3)}</Avatar>
-                      </Tooltip>
-                    )} */}
-                  </AvatarGroup>
-                ) : (
-                  <Typography className="EventHeader-heading">
-                    No Guests Yet
-                  </Typography>
-                )}
-              </Grid>
+              {!isEmpty(event.guests) && (
+                <>
+                  <Grid item xs={12}>
+                    <Typography className="EventHeader-heading">
+                      Guests
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <AvatarGroup spacing="small" max={3}>
+                      {event.guests!.map((guest) => (
+                        <Avatar
+                          key={guest.user.userId}
+                          alt={guest.user.displayName || 'G'}
+                          src={guest.user.image}
+                        />
+                      ))}
+                    </AvatarGroup>
+                  </Grid>
+                </>
+              )}
             </Grid>
           </Link>
         </Grid>
