@@ -25,7 +25,7 @@
         window['_fs_host'] = 'fullstory.com'
         window['_fs_org'] = 'BRMJH'
         window['_fs_namespace'] = 'FS'
-        ;(function(m, n, e, t, l, o, g, y) {
+        ;(function (m, n, e, t, l, o, g, y) {
           if (e in m) {
             if (m.console && m.console.log) {
               m.console.log(
@@ -34,7 +34,7 @@
             }
             return
           }
-          g = m[e] = function(a, b) {
+          g = m[e] = function (a, b) {
             g.q ? g.q.push([a, b]) : g._api(a, b)
           }
           g.q = []
@@ -43,32 +43,32 @@
           o.src = 'https://' + _fs_host + '/s/fs.js'
           y = n.getElementsByTagName(t)[0]
           y.parentNode.insertBefore(o, y)
-          g.identify = function(i, v) {
+          g.identify = function (i, v) {
             g(l, { uid: i })
             if (v) g(l, v)
           }
-          g.setUserVars = function(v) {
+          g.setUserVars = function (v) {
             g(l, v)
           }
-          g.event = function(i, v) {
+          g.event = function (i, v) {
             g('event', { n: i, p: v })
           }
-          g.shutdown = function() {
+          g.shutdown = function () {
             g('rec', !1)
           }
-          g.restart = function() {
+          g.restart = function () {
             g('rec', !0)
           }
-          g.consent = function(a) {
+          g.consent = function (a) {
             g('consent', !arguments.length || a)
           }
-          g.identifyAccount = function(i, v) {
+          g.identifyAccount = function (i, v) {
             o = 'account'
             v = v || {}
             v.acctId = i
             g(o, v)
           }
-          g.clearUserCookie = function() {}
+          g.clearUserCookie = function () {}
         })(window, document, window['_fs_namespace'], 'script', 'user')
       }
     </script>
@@ -82,7 +82,7 @@
             environment: 'production'
           }
         }
-        !(function(r) {
+        !(function (r) {
           function o(n) {
             if (e[n]) return e[n].exports
             var t = (e[n] = { exports: {}, id: n, loaded: !1 })
@@ -93,7 +93,7 @@
           var e = {}
           return (o.m = r), (o.c = e), (o.p = ''), o(0)
         })([
-          function(r, o, e) {
+          function (r, o, e) {
             'use strict'
             var n = e(1),
               t = e(4)
@@ -114,10 +114,10 @@
                 l
               )
           },
-          function(r, o, e) {
+          function (r, o, e) {
             'use strict'
             function n(r) {
-              return function() {
+              return function () {
                 try {
                   return r.apply(this, arguments)
                 } catch (r) {
@@ -130,7 +130,7 @@
             function t(r, o) {
               ;(this.options = r), (this._rollbarOldOnError = null)
               var e = s++
-              ;(this.shimId = function() {
+              ;(this.shimId = function () {
                 return e
               }),
                 window &&
@@ -142,7 +142,7 @@
               if ('object' == typeof r[e]) return r[e]
               ;(r._rollbarShims = {}), (r._rollbarWrappedError = null)
               var t = new p(o)
-              return n(function() {
+              return n(function () {
                 o.captureUncaught &&
                   ((t._rollbarOldOnError = r.onerror),
                   i.captureUncaughtExceptions(r, t, !0),
@@ -166,7 +166,7 @@
               })()
             }
             function l(r) {
-              return n(function() {
+              return n(function () {
                 var o = this,
                   e = Array.prototype.slice.call(arguments, 0),
                   n = { shim: o, method: r, args: e, ts: new Date() }
@@ -176,12 +176,12 @@
             var i = e(2),
               s = 0,
               d = e(3),
-              c = function(r, o) {
+              c = function (r, o) {
                 return new t(r, o)
               },
               p = d.bind(null, c)
-            ;(t.prototype.loadFull = function(r, o, e, t, a) {
-              var l = function() {
+            ;(t.prototype.loadFull = function (r, o, e, t, a) {
+              var l = function () {
                   var o
                   if (void 0 === r._rollbarDidLoad) {
                     o = new Error('rollbar.js did not load')
@@ -202,7 +202,7 @@
               ;(s.crossOrigin = ''),
                 (s.src = t.rollbarJsUrl),
                 e || (s.async = !0),
-                (s.onload = s.onreadystatechange = n(function() {
+                (s.onload = s.onreadystatechange = n(function () {
                   if (
                     !(
                       i ||
@@ -220,14 +220,14 @@
                 })),
                 c.insertBefore(s, d)
             }),
-              (t.prototype.wrap = function(r, o, e) {
+              (t.prototype.wrap = function (r, o, e) {
                 try {
                   var n
                   if (
                     ((n =
                       'function' == typeof o
                         ? o
-                        : function() {
+                        : function () {
                             return o || {}
                           }),
                     'function' != typeof r)
@@ -236,17 +236,19 @@
                   if (r._isWrap) return r
                   if (
                     !r._rollbar_wrapped &&
-                    ((r._rollbar_wrapped = function() {
+                    ((r._rollbar_wrapped = function () {
                       e && 'function' == typeof e && e.apply(this, arguments)
                       try {
                         return r.apply(this, arguments)
                       } catch (e) {
                         var o = e
-                        throw ('string' == typeof o && (o = new String(o)),
-                        (o._rollbarContext = n() || {}),
-                        (o._rollbarContext._wrappedSource = r.toString()),
-                        (window._rollbarWrappedError = o),
-                        o)
+                        throw (
+                          ('string' == typeof o && (o = new String(o)),
+                          (o._rollbarContext = n() || {}),
+                          (o._rollbarContext._wrappedSource = r.toString()),
+                          (window._rollbarWrappedError = o),
+                          o)
+                        )
                       }
                     }),
                     (r._rollbar_wrapped._isWrap = !0),
@@ -270,7 +272,7 @@
               t.prototype[u[f]] = l(u[f])
             r.exports = { setupShim: a, Rollbar: p }
           },
-          function(r, o) {
+          function (r, o) {
             'use strict'
             function e(r, o, e) {
               if (r) {
@@ -280,7 +282,7 @@
                   : r.onerror &&
                     !r.onerror.belongsToShim &&
                     ((t = r.onerror), (o._rollbarOldOnError = t))
-                var a = function() {
+                var a = function () {
                   var e = Array.prototype.slice.call(arguments, 0)
                   n(r, o, t, e)
                 }
@@ -300,7 +302,7 @@
                 'function' == typeof r._rollbarURH &&
                   r._rollbarURH.belongsToShim &&
                   r.removeEventListener('unhandledrejection', r._rollbarURH)
-                var n = function(r) {
+                var n = function (r) {
                   var e = r.reason,
                     n = r.promise,
                     t = r.detail
@@ -333,7 +335,7 @@
 
                 )
                   n = n._rollbarOldAdd
-                var t = function(o, e, t) {
+                var t = function (o, e, t) {
                   n.call(this, o, r.wrap(e), t)
                 }
                 ;(t._rollbarOldAdd = n),
@@ -345,7 +347,7 @@
 
                 )
                   a = a._rollbarOldRemove
-                var l = function(r, o, e) {
+                var l = function (r, o, e) {
                   a.call(this, r, (o && o._rollbar_wrapped) || o, e)
                 }
                 ;(l._rollbarOldRemove = a),
@@ -359,15 +361,15 @@
               wrapGlobals: a
             }
           },
-          function(r, o) {
+          function (r, o) {
             'use strict'
             function e(r, o) {
               ;(this.impl = r(o, this)), (this.options = o), n(e.prototype)
             }
             function n(r) {
               for (
-                var o = function(r) {
-                    return function() {
+                var o = function (r) {
+                    return function () {
                       var o = Array.prototype.slice.call(arguments, 0)
                       if (this.impl[r]) return this.impl[r].apply(this.impl, o)
                     }
@@ -381,7 +383,7 @@
               )
                 r[e[n]] = o(e[n])
             }
-            ;(e.prototype._swapAndProcessMessages = function(r, o) {
+            ;(e.prototype._swapAndProcessMessages = function (r, o) {
               this.impl = r(this.options)
               for (var e, n, t; (e = o.shift()); )
                 (n = e.method),
@@ -395,10 +397,10 @@
             }),
               (r.exports = e)
           },
-          function(r, o) {
+          function (r, o) {
             'use strict'
-            r.exports = function(r) {
-              return function(o) {
+            r.exports = function (r) {
+              return function (o) {
                 if (!o && !window._rollbarInitialized) {
                   r = r || {}
                   for (
@@ -406,7 +408,7 @@
                       n,
                       t = r.globalAlias || 'Rollbar',
                       a = window.rollbar,
-                      l = function(r) {
+                      l = function (r) {
                         return new a(r)
                       },
                       i = 0;
@@ -463,5 +465,6 @@
       type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAW6WugUsDtlV9lImEB6cE5PtZqPtKSM3o&libraries=places"
     ></script>
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
   </body>
 </html>

@@ -19,7 +19,8 @@ import {
   acceptRequest,
   rejectRequest,
   useSnackbarAlert,
-  notificationContext
+  notificationContext,
+  TwitchView
 } from 'mm-shared'
 import { updateEvent } from 'event/eventClient'
 import EventFetchError from 'event/EventFetchError'
@@ -147,6 +148,9 @@ const EventView: FC<EventViewProps> = ({
             isHost={true}
             updateEvent={updateEvent}
           />
+        </Route>
+        <Route path={`/events/${event.eventId}/twitch`}>
+          <TwitchView user={user} event={event} isHost={true} />
         </Route>
         <Route path={`/events/${event.eventId}/guests`}>
           <EventGuestView user={user} event={event} isHost={true} />

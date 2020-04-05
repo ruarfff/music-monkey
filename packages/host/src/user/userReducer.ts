@@ -24,9 +24,9 @@ export default function user(state = emptyUser, { type, payload }: Action) {
     case FETCH_USER_ERROR:
       return { ...state, error: payload }
     case UPDATE_USER_REQUEST:
-      return { ...state, isUpdating: true}
+      return { ...state, isUpdating: true }
     case UPDATE_USER_SUCCESS:
-      return { ...state, data: payload.data}
+      return { ...state, data: payload, isLoading: false }
     case UPDATE_USER_FAILURE:
       return { ...state, error: payload }
     case LOGGED_OUT:

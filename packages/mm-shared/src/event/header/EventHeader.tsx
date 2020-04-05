@@ -11,6 +11,7 @@ import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
 import { User, Rsvp } from './../../'
 import { Event, EventTopMenu } from '../../event'
+import twitchIcon from '../../assets/twitch.svg'
 import './EventHeader.scss'
 
 interface IEventHeaderProps extends RouteComponentProps<any> {
@@ -94,7 +95,19 @@ const EventHeader = ({
         {/* End Middle Row */}
 
         {/* Bottom Row */}
-        <Grid item xs={4}></Grid>
+        <Grid item xs={4}>
+          {event.hostData && event.hostData.twitchId && (
+            <Link to={`/events/${event.eventId}/twitch`}>
+              <img
+                src={twitchIcon}
+                alt=""
+                width="24"
+                height="24"
+                className="twitch-icon"
+              />
+            </Link>
+          )}
+        </Grid>
 
         <Grid item xs={4}></Grid>
 

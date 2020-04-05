@@ -12006,6 +12006,13 @@ react-transition-group@^4.0.0, react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-twitch-embed-video@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-twitch-embed-video/-/react-twitch-embed-video-2.0.2.tgz#c87149d9c26f343df48c13ea09760810a5a23560"
+  integrity sha512-gFILWtsMWJPty3whi4P9Uk3XMOzVxuPVj6NxdOFZDl/5F2REVIQKKGjcB4Xb8P55jejRgmKFaOqcJzV+2Yg7uQ==
+  dependencies:
+    window-or-global "^1.0.1"
+
 react@16.11.0:
   version "16.11.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
@@ -14579,6 +14586,11 @@ wide-align@^1.1.0:
   integrity sha512-QGkOQc8XL6Bt5PwnsExKBPuMKBxnGxWWW3fU55Xt4feHozMUhdUMaBCk290qpm/wG5u/RSKzwdAC4i51YigihA==
   dependencies:
     string-width "^1.0.2 || 2"
+
+window-or-global@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/window-or-global/-/window-or-global-1.0.1.tgz#dbe45ba2a291aabc56d62cf66c45b7fa322946de"
+  integrity sha1-2+RboqKRqrxW1iz2bEW3+jIpRt4=
 
 windows-release@^3.1.0:
   version "3.2.0"

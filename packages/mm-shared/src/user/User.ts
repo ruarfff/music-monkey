@@ -6,6 +6,7 @@ export interface User {
   facebookId: string
   twitterId: string
   instagramId: string
+  twitchId: string
   email: string
   image: string
   userId: string

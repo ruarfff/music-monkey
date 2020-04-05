@@ -26,6 +26,10 @@ $text-backdrop: rgba(58, 158, 209, 0.8);
     top: 50px;
     text-align: center;
 
+    .twitch-icon {
+      color: $primary;
+    }
+
     .EventHeader-heading {
       background: $text-backdrop;
       border-radius: 5px;
