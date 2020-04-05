@@ -54,7 +54,7 @@ const TrackToolbar: FC<TrackToolbarProps> = ({
       <Grid item xs={3}>
         <Box component="fieldset" mb={1} borderColor="transparent">
           <Rating
-            name="popularity"
+            name={'popularity-' + track.id}
             defaultValue={Math.abs(track.popularity / 20)}
             max={5}
             size="small"
