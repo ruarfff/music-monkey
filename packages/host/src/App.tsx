@@ -10,6 +10,8 @@ import { Store } from 'redux'
 import Utils from '@date-io/moment'
 import { Route } from 'react-router'
 import { SnackbarProvider } from 'notistack'
+import CloseIcon from '@material-ui/icons/Close'
+import { IconButton } from '@material-ui/core'
 import SubscriptionWrapper from './subscriptions/SubscriptionWrapperContainer'
 import theme from 'theme/theme'
 import Layout from 'layout/LayoutContainer'
@@ -20,55 +22,71 @@ import AuthLoader from 'auth/AuthLoaderContainer'
 import { NotificationContextProvider } from 'mm-shared'
 import './App.scss'
 
-interface IAppProps {
+interface AppProps {
   store: Store
   history: History
 }
 
-const App = ({ store, history }: IAppProps) => (
-  <StylesProvider injectFirst>
-    <CssBaseline />
-    <ThemeProvider theme={theme}>
-      <MuiPickersUtilsProvider utils={Utils}>
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'center'
-          }}
-          maxSnack={3}
-          preventDuplicate={true}
-          autoHideDuration={1000}
-          classes={{
-            variantSuccess: 'alert-success-custom'
-          }}
-          dense={true}
-        >
-          <Provider store={store}>
-            <ConnectedRouter history={history}>
-              <CookiesProvider>
-                <AuthLoader>
-                  <NotificationContextProvider>
-                    <SubscriptionWrapper>
-                      <RouteContextProvider>
-                        <Route
-                          path="/"
-                          component={userIsAuthenticated(Layout)}
-                        />
-                        <Route
-                          path="/login"
-                          component={userIsNotAuthenticated(Login)}
-                        />
-                      </RouteContextProvider>
-                    </SubscriptionWrapper>
-                  </NotificationContextProvider>
-                </AuthLoader>
-              </CookiesProvider>
-            </ConnectedRouter>
-          </Provider>
-        </SnackbarProvider>
-      </MuiPickersUtilsProvider>
-    </ThemeProvider>
-  </StylesProvider>
-)
+const App = ({ store, history }: AppProps) => {
+  const notistackRef: any = React.createRef()
+  const onClickDismiss = (key: any) => () => {
+    try {
+      notistackRef!.current.closeSnackbar(key)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  return (
+    <StylesProvider injectFirst>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <MuiPickersUtilsProvider utils={Utils}>
+          <SnackbarProvider
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'center'
+            }}
+            maxSnack={3}
+            preventDuplicate={true}
+            classes={{
+              variantSuccess: 'alert-success-custom'
+            }}
+            dense={true}
+            ref={notistackRef}
+            action={(key) => (
+              <IconButton onClick={onClickDismiss(key)} aria-label="dismiss">
+                <CloseIcon />
+              </IconButton>
+            )}
+          >
+            <Provider store={store}>
+              <ConnectedRouter history={history}>
+                <CookiesProvider>
+                  <AuthLoader>
+                    <NotificationContextProvider>
+                      <SubscriptionWrapper>
+                        <RouteContextProvider>
+                          <Route
+                            path="/"
+                            component={userIsAuthenticated(Layout)}
+                          />
+                          <Route
+                            path="/login"
+                            component={userIsNotAuthenticated(Login)}
+                          />
+                        </RouteContextProvider>
+                      </SubscriptionWrapper>
+                    </NotificationContextProvider>
+                  </AuthLoader>
+                </CookiesProvider>
+              </ConnectedRouter>
+            </Provider>
+          </SnackbarProvider>
+        </MuiPickersUtilsProvider>
+      </ThemeProvider>
+    </StylesProvider>
+  )
+}
 
 export default App
