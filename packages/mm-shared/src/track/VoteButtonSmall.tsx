@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import isEqual from 'lodash/isEqual'
 import FavouriteIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIconFill from '@material-ui/icons/Favorite'
+import { Badge } from '@material-ui/core'
 import { Track } from 'music'
 import VoteDetails from './VoteDetails'
 
@@ -46,9 +47,13 @@ const VoteButtonSmall: FC<VoteButtonSmallProps> = ({ voteDetails, onVote }) => {
   return (
     <div onClick={handleTrackVote} className="VoteButtonSmall-root">
       {vote.currentUserVoted ? (
-        <FavoriteIconFill color="primary" fontSize="small" />
+        <Badge badgeContent={vote.numberOfVotes} className="current-user">
+          <FavoriteIconFill color="primary" fontSize="small" />
+        </Badge>
       ) : (
-        <FavouriteIcon fontSize="small" />
+        <Badge badgeContent={vote.numberOfVotes}>
+          <FavouriteIcon fontSize="small" />
+        </Badge>
       )}
     </div>
   )

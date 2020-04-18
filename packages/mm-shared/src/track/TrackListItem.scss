@@ -11,9 +11,33 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 
+    .TrackListItem-secondary-items {
+      display: flex;
+    }
+
     .explicit-icon {
       margin-bottom: -0.3em;
       margin-right: 0.3em;
+    }
+
+    .TrackListItem-votes {
+      margin-bottom: -0.3em;
+      margin-right: 0.3em;
+
+      .MuiFab-colorInherit {
+        background-color: $secondary-light;
+      }
+
+      .MuiSvgIcon-colorPrimary {
+        color: $secondary-light;
+      }
+
+      .MuiBadge-badge {
+        right: +10px;
+        top: +10px;
+        font-size: 0.5em;
+        font-weight: 800;
+      }
     }
   }
 

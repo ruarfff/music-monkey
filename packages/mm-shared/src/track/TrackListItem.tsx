@@ -16,9 +16,11 @@ import {
   ListItemSecondaryAction,
   ListItemAvatar,
   IconButton,
-  Typography
+  Typography,
+  Box
 } from '@material-ui/core'
 import Img from 'react-image'
+import Rating from '@material-ui/lab/Rating'
 import backgroundImage from 'assets/music-monkey.jpg'
 import {
   Event,
@@ -31,7 +33,7 @@ import {
 import { TrackConfig } from './TrackConfig'
 import TrackAvatar from './TrackAvatar'
 import VoteButton from './VoteButton'
-import TrackToolbar from './TrackToolbar'
+import VoteButtonSmall from './VoteButtonSmall'
 import './TrackListItem.scss'
 
 interface TrackListItemProps {
@@ -66,9 +68,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   onRemoved = () => {}
 }) => {
   const hasOnlyDelete = !options.canRequest && options.canRemove
-  const hasBothOptions = options.canRequest && options.canRemove
-  const hasAnyActions = options.canRequest || options.canRemove
-
   const [hidden, setHidden] = useState(false)
   const [expanded, setExpanded] = useState(false)
 
@@ -107,9 +106,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const handleExpandToggle = () => {
-    if (hasBothOptions) {
-      setExpanded(!expanded)
-    }
+    setExpanded(!expanded)
   }
 
   const trackImage = (
@@ -152,7 +149,11 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const expandIcon = () => {
-    return expanded ? <ExpandLess /> : <ExpandMore />
+    return expanded ? (
+      <ExpandLess onClick={handleExpandToggle} />
+    ) : (
+      <ExpandMore onClick={handleExpandToggle} />
+    )
   }
 
   return (
@@ -199,24 +200,38 @@ export const TrackListItem: FC<TrackListItemProps> = ({
                   {track.artists[0].name}
                 </Typography>
                 <Typography
+                  component="div"
                   variant="body2"
                   noWrap={true}
                   gutterBottom
                   className="MuiTypography-colorTextSecondary"
                 >
-                  {track.explicit && (
-                    <ExplicitIcon color="primary" className="explicit-icon" />
-                  )}
-                  {formatDuration(track.duration_ms)}
+                  <div className="TrackListItem-secondary-items">
+                    {options.canVote && isHost && (
+                      <div className="TrackListItem-votes">
+                        <VoteButtonSmall
+                          voteDetails={{
+                            currentUserVoted,
+                            numberOfVotes,
+                            track,
+                            isHost
+                          }}
+                          onVote={onVote}
+                        />
+                      </div>
+                    )}
+
+                    {track.explicit && (
+                      <ExplicitIcon color="primary" className="explicit-icon" />
+                    )}
+                    {formatDuration(track.duration_ms)}
+                  </div>
                 </Typography>
               </Typography>
             }
           />
 
-          <ListItemSecondaryAction
-            className="TrackListItem-actions"
-            onClick={handleExpandToggle}
-          >
+          <ListItemSecondaryAction className="TrackListItem-actions">
             <div className="TrackListItem-host-actions">
               {options.canVote && !isHost && (
                 <VoteButton
@@ -232,21 +247,24 @@ export const TrackListItem: FC<TrackListItemProps> = ({
               {addButton}
               {hasOnlyDelete && deleteButton}
             </div>
-            {hasBothOptions && expandIcon()}
+            {expandIcon()}
           </ListItemSecondaryAction>
         </ListItem>
-        {isHost && (
-          <TrackToolbar
-            options={options}
-            track={track}
-            onVote={onVote}
-            voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
-          />
-        )}
+
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className="TrackListItem-nested">
-              <div className="TrackListItem-host-actions">{deleteButton}</div>
+              <Box component="fieldset" mb={1} borderColor="transparent">
+                <Rating
+                  name={'popularity-' + track.id}
+                  defaultValue={Math.abs(track.popularity / 20)}
+                  max={5}
+                  size="small"
+                />
+              </Box>
+              <div className="TrackListItem-host-actions">
+                {!hasOnlyDelete && deleteButton}
+              </div>
             </ListItem>
           </List>
         </Collapse>
