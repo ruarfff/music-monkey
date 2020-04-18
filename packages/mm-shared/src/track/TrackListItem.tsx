@@ -253,6 +253,15 @@ export const TrackListItem: FC<TrackListItemProps> = ({
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className="TrackListItem-nested">
+              {options.showProfile && (
+                <ListItemIcon
+                  onClick={() => {
+                    onPlay(track)
+                  }}
+                >
+                  {trackImage}
+                </ListItemIcon>
+              )}
               <Box component="fieldset" mb={1} borderColor="transparent">
                 <Rating
                   name={'popularity-' + track.id}
