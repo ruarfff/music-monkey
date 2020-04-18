@@ -245,7 +245,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
                 />
               )}
               {addButton}
-              {hasOnlyDelete && deleteButton}
+              {deleteButton}
             </div>
             {expandIcon()}
           </ListItemSecondaryAction>
@@ -262,9 +262,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
                   size="small"
                 />
               </Box>
-              <div className="TrackListItem-host-actions">
-                {!hasOnlyDelete && deleteButton}
-              </div>
             </ListItem>
           </List>
         </Collapse>

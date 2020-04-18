@@ -77,35 +77,14 @@
 
 .TrackListItem-nested {
   padding-left: 6em;
-
-  .TrackListItem-host-actions {
-    width: 100%;
-    display: flex;
-    flex-direction: row-reverse;
-
-    .MuiIconButton-root {
-      margin-left: 2em;
-      margin-right: 2.18em;
-    }
-    .MuiIconButton-colorPrimary {
-      background-color: $nice-green;
-      color: white;
-      opacity: 0.9;
-    }
-    .MuiIconButton-colorSecondary {
-      background-color: $danger-red;
-      color: white;
-      opacity: 0.9;
-    }
-  }
 }
 
 .TrackListItem-host-actions {
   width: 100%;
 
   .MuiIconButton-root {
-    margin-left: 2em;
-    margin-right: 0.8em;
+    margin-left: 0.8em;
+    margin-right: 0.4em;
   }
   .MuiIconButton-colorPrimary {
     background-color: $nice-green;
