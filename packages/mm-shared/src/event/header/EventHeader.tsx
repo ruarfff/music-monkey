@@ -39,7 +39,7 @@ const EventHeader = ({
 
       <Grid container className="EventHeader-actions" spacing={2}>
         {/* Top Row */}
-        <Grid item xs={3} alignItems="center" justify="center">
+        <Grid container item xs={3} alignItems="center" justify="center">
           <Link to={`/events/${event.eventId}/details`}>
             <AccessTimeIcon color="primary" fontSize="large" />
           </Link>
@@ -47,7 +47,7 @@ const EventHeader = ({
 
         <Grid item xs={6}></Grid>
 
-        <Grid item xs={3} alignItems="center" justify="center">
+        <Grid container item xs={3} alignItems="center" justify="center">
           <Grid
             container
             spacing={0}
@@ -75,7 +75,7 @@ const EventHeader = ({
         {/* End Top Row */}
 
         {/* Middle Row */}
-        <Grid item xs={3} alignItems="center" justify="center">
+        <Grid container item xs={3} alignItems="center" justify="center">
           <Link to={`/events/${event.eventId}/details`}>
             <RoomIcon color="primary" fontSize="large" />
           </Link>
@@ -84,6 +84,7 @@ const EventHeader = ({
         <Grid item xs={6}></Grid>
 
         <Grid
+          container
           item
           xs={3}
           alignItems="center"
@@ -101,7 +102,7 @@ const EventHeader = ({
         {/* End Middle Row */}
 
         {/* Bottom Row */}
-        <Grid item xs={3} alignItems="center" justify="center">
+        <Grid container item xs={3} alignItems="center" justify="center">
           {event.hostData && event.hostData.twitchId && (
             <Link to={`/events/${event.eventId}/twitch`}>
               <img
@@ -117,7 +118,7 @@ const EventHeader = ({
 
         <Grid item xs={6}></Grid>
 
-        <Grid item xs={3} alignItems="center" justify="center">
+        <Grid container item xs={3} alignItems="center" justify="center">
           {!!event.hostData && (
             <Avatar
               key={event.hostData.userId}

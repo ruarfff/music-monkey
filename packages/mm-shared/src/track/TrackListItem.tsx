@@ -30,7 +30,7 @@ import {
 } from '../'
 import { TrackConfig } from './TrackConfig'
 import TrackAvatar from './TrackAvatar'
-//import VoteButton from './VoteButton'
+import VoteButton from './VoteButton'
 import TrackToolbar from './TrackToolbar'
 import './TrackListItem.scss'
 
@@ -212,31 +212,37 @@ export const TrackListItem: FC<TrackListItemProps> = ({
               </Typography>
             }
           />
-          {hasAnyActions && (
-            <ListItemSecondaryAction
-              className="TrackListItem-actions"
-              onClick={handleExpandToggle}
-            >
-              {/* {options.canVote && (
-              <VoteButton
-                onVote={onVote}
-                voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
-              />
-            )} */}
-              <div className="TrackListItem-host-actions">
-                {addButton}
-                {hasOnlyDelete && deleteButton}
-              </div>
-              {hasBothOptions && expandIcon()}
-            </ListItemSecondaryAction>
-          )}
+
+          <ListItemSecondaryAction
+            className="TrackListItem-actions"
+            onClick={handleExpandToggle}
+          >
+            <div className="TrackListItem-host-actions">
+              {options.canVote && !isHost && (
+                <VoteButton
+                  onVote={onVote}
+                  voteDetails={{
+                    currentUserVoted,
+                    numberOfVotes,
+                    track,
+                    isHost
+                  }}
+                />
+              )}
+              {addButton}
+              {hasOnlyDelete && deleteButton}
+            </div>
+            {hasBothOptions && expandIcon()}
+          </ListItemSecondaryAction>
         </ListItem>
-        <TrackToolbar
-          options={options}
-          track={track}
-          onVote={onVote}
-          voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
-        />
+        {isHost && (
+          <TrackToolbar
+            options={options}
+            track={track}
+            onVote={onVote}
+            voteDetails={{ currentUserVoted, numberOfVotes, track, isHost }}
+          />
+        )}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className="TrackListItem-nested">
