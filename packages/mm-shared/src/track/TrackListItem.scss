@@ -79,6 +79,19 @@
   padding-left: 6em;
 }
 
+.TrackListItem-actions-nested {
+  .MuiIconButton-colorPrimary {
+    background-color: $nice-green;
+    color: white;
+    opacity: 0.9;
+  }
+  .MuiIconButton-colorSecondary {
+    background-color: $danger-red;
+    color: white;
+    opacity: 0.9;
+  }
+}
+
 .TrackListItem-host-actions {
   width: 100%;
 

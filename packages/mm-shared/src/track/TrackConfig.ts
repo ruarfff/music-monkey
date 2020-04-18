@@ -5,4 +5,5 @@ export interface TrackConfig {
   showSummary?: boolean
   allowDragDrop?: boolean
   showProfile?: boolean
+  deleteSecondary?: boolean
 }

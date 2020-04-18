@@ -67,7 +67,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   onSelected = () => {},
   onRemoved = () => {}
 }) => {
-  const hasOnlyDelete = !options.canRequest && options.canRemove
   const [hidden, setHidden] = useState(false)
   const [expanded, setExpanded] = useState(false)
 
@@ -245,7 +244,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
                 />
               )}
               {addButton}
-              {deleteButton}
+              {!options.deleteSecondary && deleteButton}
             </div>
             {expandIcon()}
           </ListItemSecondaryAction>
@@ -262,6 +261,9 @@ export const TrackListItem: FC<TrackListItemProps> = ({
                   size="small"
                 />
               </Box>
+              <ListItemSecondaryAction className="TrackListItem-actions-nested">
+                {options.deleteSecondary && deleteButton}
+              </ListItemSecondaryAction>
             </ListItem>
           </List>
         </Collapse>

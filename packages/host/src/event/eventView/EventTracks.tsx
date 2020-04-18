@@ -96,7 +96,8 @@ const EventTracks: FC<EventTracksProps> = ({
         allowDragDrop: true,
         canRemove: true,
         canVote: true,
-        showProfile: true
+        showProfile: true,
+        deleteSecondary: true
       }}
       onSettingsUpdated={handleSettingsUpdate}
       onDragEnd={(result: DropResult) => {
