@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Avatar, Grid } from '@material-ui/core'
+import { Typography, Avatar, Grid, Box } from '@material-ui/core'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 import RoomIcon from '@material-ui/icons/Room'
@@ -83,7 +83,13 @@ const EventHeader = ({
 
         <Grid item xs={6}></Grid>
 
-        <Grid item xs={3} alignItems="center" justify="center">
+        <Grid
+          item
+          xs={3}
+          alignItems="center"
+          justify="center"
+          className="EventHeader-response-menu"
+        >
           {!isHost && (
             <EventResponseMenu
               event={event}

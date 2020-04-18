@@ -39,6 +39,8 @@ $text-backdrop: rgba(58, 158, 209, 0.8);
 
     .EventHeader-host {
       margin: 0 auto;
+      background-color: $primary;
+      border: 2px solid $primary;
     }
   }
 }
