@@ -76,9 +76,9 @@ export const TrackList: FC<TrackListProps> = ({
   const [trackTime, setTrackTime] = useState(0)
   const duration = isEmpty(tracks)
     ? 0
-    : tracks.map(track => track.duration_ms).reduce((acc, dur) => acc + dur)
+    : tracks.map((track) => track.duration_ms).reduce((acc, dur) => acc + dur)
   const numTracks = tracks.length
-  const existingTracks = filterList.map(track => track.uri)
+  const existingTracks = filterList.map((track) => track.uri)
   useEffect(() => {
     const audio = document.getElementById('TrackList-audio') as HTMLMediaElement
     const timeUpdater = () => {
@@ -161,10 +161,10 @@ export const TrackList: FC<TrackListProps> = ({
     >
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="track-list-droppable">
-          {provided => (
+          {(provided) => (
             <div ref={provided.innerRef}>
               {tracks
-                .filter(track => existingTracks.indexOf(track.uri) === -1)
+                .filter((track) => existingTracks.indexOf(track.uri) === -1)
                 .map((track, i) => {
                   const trackId = track.uri
                   let numberOfVotes = 0
@@ -178,7 +178,7 @@ export const TrackList: FC<TrackListProps> = ({
 
                   return (
                     <Draggable
-                      key={i}
+                      key={trackId}
                       draggableId={trackId + '-' + i}
                       index={i}
                       isDragDisabled={!options.allowDragDrop}
@@ -204,7 +204,7 @@ export const TrackList: FC<TrackListProps> = ({
                               nowPlaying.uri === track.uri
                             }
                             suggestion={suggestions.find(
-                              s => s.track.uri === trackId
+                              (s) => s.track.uri === trackId
                             )}
                             numberOfVotes={numberOfVotes}
                             event={event}
