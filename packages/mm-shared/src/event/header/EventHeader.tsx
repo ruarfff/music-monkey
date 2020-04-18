@@ -39,15 +39,15 @@ const EventHeader = ({
 
       <Grid container className="EventHeader-actions" spacing={2}>
         {/* Top Row */}
-        <Grid item xs={4}>
+        <Grid item xs={3} alignItems="center" justify="center">
           <Link to={`/events/${event.eventId}/details`}>
             <AccessTimeIcon color="primary" fontSize="large" />
           </Link>
         </Grid>
 
-        <Grid item xs={4}></Grid>
+        <Grid item xs={6}></Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={3} alignItems="center" justify="center">
           <Grid
             container
             spacing={0}
@@ -58,7 +58,7 @@ const EventHeader = ({
             {!isEmpty(event.guests) && (
               <Link to={`/events/${event.eventId}/guests`}>
                 <Grid item xs={12}>
-                  <AvatarGroup spacing="small" max={3}>
+                  <AvatarGroup spacing={24} max={3}>
                     {event.guests!.map((guest) => (
                       <Avatar
                         key={guest.user.userId}
@@ -75,15 +75,15 @@ const EventHeader = ({
         {/* End Top Row */}
 
         {/* Middle Row */}
-        <Grid item xs={4}>
+        <Grid item xs={3} alignItems="center" justify="center">
           <Link to={`/events/${event.eventId}/details`}>
             <RoomIcon color="primary" fontSize="large" />
           </Link>
         </Grid>
 
-        <Grid item xs={4}></Grid>
+        <Grid item xs={6}></Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={3} alignItems="center" justify="center">
           {!isHost && (
             <EventResponseMenu
               event={event}
@@ -95,7 +95,7 @@ const EventHeader = ({
         {/* End Middle Row */}
 
         {/* Bottom Row */}
-        <Grid item xs={4}>
+        <Grid item xs={3} alignItems="center" justify="center">
           {event.hostData && event.hostData.twitchId && (
             <Link to={`/events/${event.eventId}/twitch`}>
               <img
@@ -109,22 +109,16 @@ const EventHeader = ({
           )}
         </Grid>
 
-        <Grid item xs={4}></Grid>
+        <Grid item xs={6}></Grid>
 
-        <Grid item xs={4}>
+        <Grid item xs={3} alignItems="center" justify="center">
           {!!event.hostData && (
-            <Grid container spacing={0} alignItems="center" justify="flex-end">
-              <Grid item xs={6}>
-                <Typography className="EventHeader-heading">Host</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Avatar
-                  key={event.hostData.userId}
-                  alt={event.hostData.displayName || 'H'}
-                  src={event.hostData.image}
-                />
-              </Grid>
-            </Grid>
+            <Avatar
+              key={event.hostData.userId}
+              alt={event.hostData.displayName || 'H'}
+              src={event.hostData.image}
+              className="EventHeader-host"
+            />
           )}
         </Grid>
         {/* End Bottom Row */}
