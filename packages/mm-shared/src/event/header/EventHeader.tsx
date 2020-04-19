@@ -1,5 +1,5 @@
-import React from 'react'
-import { Typography, Avatar, Grid, Box } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Avatar, Grid } from '@material-ui/core'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 import RoomIcon from '@material-ui/icons/Room'
@@ -12,6 +12,9 @@ import EventResponseMenu from './EventResponseMenu'
 import { User, Rsvp } from './../../'
 import { Event, EventTopMenu } from '../../event'
 import twitchIcon from '../../assets/twitch.svg'
+import LocationDialog from './LocationDialog'
+import DateTimeDialog from './DateTimeDialog'
+import HostDialog from './HostDialog'
 import './EventHeader.scss'
 
 interface IEventHeaderProps extends RouteComponentProps<any> {
@@ -27,8 +30,48 @@ const EventHeader = ({
   event,
   updateRsvp = () => {}
 }: IEventHeaderProps) => {
+  const [locationOpen, setLocationOpen] = useState(false)
+  const [dateTimeOpen, setDateTimeOpen] = useState(false)
+  const [hostOpen, setHostOpen] = useState(false)
+
+  const handleLocationOpen = () => {
+    setLocationOpen(true)
+  }
+
+  const handleLocationClose = () => {
+    setLocationOpen(false)
+  }
+
+  const handleDateTimeOpen = () => {
+    setDateTimeOpen(true)
+  }
+
+  const handleDateTimeClose = () => {
+    setDateTimeOpen(false)
+  }
+
+  const handleHostOpen = () => {
+    setHostOpen(true)
+  }
+
+  const handleHostClose = () => {
+    setHostOpen(false)
+  }
+
   return (
     <div className="EventHeader-container">
+      <LocationDialog
+        event={event}
+        open={locationOpen}
+        onClose={handleLocationClose}
+      />
+      <DateTimeDialog
+        event={event}
+        open={dateTimeOpen}
+        onClose={handleDateTimeClose}
+      />
+      <HostDialog event={event} open={hostOpen} onClose={handleHostClose} />
+
       <Img
         src={[event.imageUrl, backgroundImage]}
         alt="Event banner"
@@ -40,9 +83,11 @@ const EventHeader = ({
       <Grid container className="EventHeader-actions" spacing={2}>
         {/* Top Row */}
         <Grid container item xs={3} alignItems="center" justify="center">
-          <Link to={`/events/${event.eventId}/details`}>
-            <AccessTimeIcon color="primary" fontSize="large" />
-          </Link>
+          <AccessTimeIcon
+            color="primary"
+            fontSize="large"
+            onClick={handleDateTimeOpen}
+          />
         </Grid>
 
         <Grid item xs={6}></Grid>
@@ -76,9 +121,11 @@ const EventHeader = ({
 
         {/* Middle Row */}
         <Grid container item xs={3} alignItems="center" justify="center">
-          <Link to={`/events/${event.eventId}/details`}>
-            <RoomIcon color="primary" fontSize="large" />
-          </Link>
+          <RoomIcon
+            color="primary"
+            fontSize="large"
+            onClick={handleLocationOpen}
+          />
         </Grid>
 
         <Grid item xs={6}></Grid>
@@ -125,6 +172,7 @@ const EventHeader = ({
               alt={event.hostData.displayName || 'H'}
               src={event.hostData.image}
               className="EventHeader-host"
+              onClick={handleHostOpen}
             />
           )}
         </Grid>
