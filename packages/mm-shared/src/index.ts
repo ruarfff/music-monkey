@@ -24,6 +24,8 @@ export { default as localStorage } from './storage/localStorage'
 
 export * from './util/LinkButton'
 export * from './util/formatDuration'
+export * from './util/formatDuration'
+export * from './util/getInitials'
 
 export { default as arrayMove } from './util/arrayMove'
 export { default as ErrorNotification } from './util/ErrorNotification'

@@ -17,6 +17,7 @@ import {
   EventSettingsView,
   MaybeTracks,
   EventHeader,
+  TwitchView,
   notificationContext
 } from 'mm-shared'
 import EventTracks from './EventTracks'
@@ -109,6 +110,9 @@ const EventView: FC<EventViewProps> = ({
       <Switch>
         <Route path={`/events/${event.eventId}/details`}>
           <EventDetailsView user={user} event={event} isHost={false} />
+        </Route>
+        <Route path={`/events/${event.eventId}/twitch`}>
+          <TwitchView user={user} event={event} isHost={true} />
         </Route>
         <Route path={`/events/${event.eventId}/guests`}>
           <EventGuestView user={user} event={event} isHost={false} />

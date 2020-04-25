@@ -3,13 +3,15 @@ import { Avatar, Grid } from '@material-ui/core'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 import RoomIcon from '@material-ui/icons/Room'
+import { grey } from '@material-ui/core/colors'
+import ShareIcon from '@material-ui/icons/Share'
 import { Link } from 'react-router-dom'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { isEmpty } from 'lodash'
 import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
-import { User, Rsvp } from './../../'
+import { User, Rsvp, getInitials } from './../../'
 import { Event, EventTopMenu } from '../../event'
 import twitchIcon from '../../assets/twitch.svg'
 import LocationDialog from './LocationDialog'
@@ -84,7 +86,7 @@ const EventHeader = ({
         {/* Top Row */}
         <Grid container item xs={3} alignItems="center" justify="center">
           <AccessTimeIcon
-            color="primary"
+            style={{ color: grey[900] }}
             fontSize="large"
             onClick={handleDateTimeOpen}
           />
@@ -109,7 +111,11 @@ const EventHeader = ({
                         key={guest.user.userId}
                         alt={guest.user.displayName || 'G'}
                         src={guest.user.image}
-                      />
+                      >
+                        {!guest.user.image
+                          ? getInitials(guest.user.displayName)
+                          : null}
+                      </Avatar>
                     ))}
                   </AvatarGroup>
                 </Grid>
@@ -122,7 +128,7 @@ const EventHeader = ({
         {/* Middle Row */}
         <Grid container item xs={3} alignItems="center" justify="center">
           <RoomIcon
-            color="primary"
+            style={{ color: grey[900] }}
             fontSize="large"
             onClick={handleLocationOpen}
           />
@@ -144,6 +150,11 @@ const EventHeader = ({
               user={user}
               updateRsvp={updateRsvp}
             />
+          )}
+          {isHost && (
+            <Link to={`/events/${event.eventId}/guests`}>
+              <ShareIcon color="secondary" fontSize="large" />
+            </Link>
           )}
         </Grid>
         {/* End Middle Row */}
@@ -173,7 +184,11 @@ const EventHeader = ({
               src={event.hostData.image}
               className="EventHeader-host"
               onClick={handleHostOpen}
-            />
+            >
+              {!event.hostData.image
+                ? getInitials(event.hostData.displayName)
+                : null}
+            </Avatar>
           )}
         </Grid>
         {/* End Bottom Row */}
