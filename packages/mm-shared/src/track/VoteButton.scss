@@ -1,4 +1,9 @@
 .VoteButton-root {
+  .MuiBadge-badge {
+    right: +10px;
+    top: +10px;
+    font-weight: 800;
+  }
   .current-user .MuiBadge-badge {
     color: white;
   }

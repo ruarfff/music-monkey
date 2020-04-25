@@ -1,4 +1,10 @@
 .VoteButtonSmall-root {
+  .MuiBadge-badge {
+    right: +13px;
+    top: +13px;
+    font-size: 0.6em;
+    font-weight: 900;
+  }
   .current-user .MuiBadge-badge {
     color: white;
   }

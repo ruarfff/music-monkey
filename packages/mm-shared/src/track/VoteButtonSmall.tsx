@@ -44,15 +44,29 @@ const VoteButtonSmall: FC<VoteButtonSmallProps> = ({ voteDetails, onVote }) => {
     }
   }
 
+  function kFormatter(num: number): any {
+    if (Math.abs(num) < 1000) {
+      return num
+    }
+    const x: any = (Math.abs(num) / 1000).toFixed(1)
+    const y = Math.sign(num) * x
+    return `${y}k`
+  }
+
+  const size = 26
+
   return (
     <div onClick={handleTrackVote} className="VoteButtonSmall-root">
       {vote.currentUserVoted ? (
-        <Badge badgeContent={vote.numberOfVotes} className="current-user">
-          <FavoriteIconFill color="primary" fontSize="small" />
+        <Badge
+          badgeContent={kFormatter(vote.numberOfVotes)}
+          className="current-user"
+        >
+          <FavoriteIconFill color="primary" style={{ fontSize: size }} />
         </Badge>
       ) : (
-        <Badge badgeContent={vote.numberOfVotes}>
-          <FavouriteIcon fontSize="small" />
+        <Badge badgeContent={kFormatter(vote.numberOfVotes)}>
+          <FavouriteIcon style={{ fontSize: size }} />
         </Badge>
       )}
     </div>

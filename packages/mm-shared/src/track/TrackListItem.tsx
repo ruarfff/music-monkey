@@ -16,11 +16,9 @@ import {
   ListItemSecondaryAction,
   ListItemAvatar,
   IconButton,
-  Typography,
-  Box
+  Typography
 } from '@material-ui/core'
 import Img from 'react-image'
-import Rating from '@material-ui/lab/Rating'
 import backgroundImage from 'assets/music-monkey.jpg'
 import {
   Event,
@@ -223,7 +221,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
                     {track.explicit && (
                       <ExplicitIcon color="primary" className="explicit-icon" />
                     )}
-                    {formatDuration(track.duration_ms)}
                   </div>
                 </Typography>
               </Typography>
@@ -255,6 +252,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
             <ListItem button className="TrackListItem-nested">
               {options.showProfile && (
                 <ListItemIcon
+                  className="TrackListItem-nested-track-icon"
                   onClick={() => {
                     onPlay(track)
                   }}
@@ -262,14 +260,15 @@ export const TrackListItem: FC<TrackListItemProps> = ({
                   {trackImage}
                 </ListItemIcon>
               )}
-              <Box component="fieldset" mb={1} borderColor="transparent">
+              {/* <Box component="fieldset" mb={1} borderColor="transparent">
                 <Rating
                   name={'popularity-' + track.id}
                   defaultValue={Math.abs(track.popularity / 20)}
                   max={5}
                   size="small"
                 />
-              </Box>
+              </Box> */}
+              <ListItemText secondary={formatDuration(track.duration_ms)} />
               <ListItemSecondaryAction className="TrackListItem-actions-nested">
                 {options.deleteSecondary && deleteButton}
               </ListItemSecondaryAction>
