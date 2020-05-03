@@ -50,7 +50,6 @@ const App = ({ store, history }: AppProps) => {
           }}
           maxSnack={3}
           preventDuplicate={true}
-          autoHideDuration={1000}
           classes={{
             variantSuccess: 'alert-success-custom'
           }}
