@@ -1,19 +1,13 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
-import { Action, EventSettings, arrayMove } from 'mm-shared'
+import { Action, arrayMove } from 'mm-shared'
 import {
   EVENT_FETCHED_BY_ID,
-  TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
-  TOGGLE_DYNAMIC_VOTING,
-  TOGGLE_SUGGESTING_PLAYLISTS,
   EVENT_DELETE_SUCCESSFUL,
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
   EVENT_FETCH_BY_ID_INITIATED,
   EVENT_FETCH_BY_ID_ERROR,
-  TOGGLE_DYNAMIC_VOTING_ERROR,
-  TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
-  TOGGLE_SUGGESTING_PLAYLISTS_ERROR,
   MOVE_ITEM_IN_EVENT_PLAYLIST,
   PLAYLIST_SORTED_BY_VOTES_DESCENDING,
   EVENT_SELECTED
@@ -41,7 +35,7 @@ export default function event(
     case EVENT_DELETE_SUCCESSFUL:
       return {
         ...state,
-        events: state.events.filter(item => item.eventId !== payload)
+        events: state.events.filter((item) => item.eventId !== payload)
       }
     case EVENTS_FETCH_INITIATED:
       return {
@@ -78,18 +72,6 @@ export default function event(
         ...state,
         fetchError: payload
       }
-    case TOGGLE_DYNAMIC_VOTING:
-      return toggleDynamicVoting(state)
-    case TOGGLE_DYNAMIC_VOTING_ERROR:
-      return toggleDynamicVoting(state)
-    case TOGGLE_AUTO_ACCEPT_SUGGESTIONS:
-      return toggleAutoAcceptSuggestions(state)
-    case TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR:
-      return toggleAutoAcceptSuggestions(state)
-    case TOGGLE_SUGGESTING_PLAYLISTS:
-      return toggleSuggestPlaylists(state)
-    case TOGGLE_SUGGESTING_PLAYLISTS_ERROR:
-      return toggleSuggestPlaylists(state)
     case ADD_TRACK_SUCCESS:
       const newPlaylist = cloneDeep(state.event.playlist!)
       newPlaylist.tracks.items.unshift({
@@ -143,60 +125,5 @@ export default function event(
     }
     default:
       return state
-  }
-}
-
-function toggleSuggestPlaylists(state: IEventState) {
-  const { event } = state
-  if (event) {
-    return {
-      ...state,
-      event: {
-        ...event,
-        settings: {
-          ...event.settings,
-          suggestingPlaylistsEnabled: !event.settings.suggestingPlaylistsEnabled
-        } as EventSettings
-      }
-    }
-  } else {
-    return state
-  }
-}
-
-function toggleAutoAcceptSuggestions(state: IEventState) {
-  const { event } = state
-  if (event) {
-    return {
-      ...state,
-      event: {
-        ...event,
-        settings: {
-          ...event.settings,
-          autoAcceptSuggestionsEnabled: !event.settings
-            .autoAcceptSuggestionsEnabled
-        } as EventSettings
-      }
-    }
-  } else {
-    return state
-  }
-}
-
-function toggleDynamicVoting(state: IEventState) {
-  const { event } = state
-  if (event) {
-    return {
-      ...state,
-      event: {
-        ...event,
-        settings: {
-          ...event.settings,
-          dynamicVotingEnabled: !event.settings.dynamicVotingEnabled
-        } as EventSettings
-      }
-    }
-  } else {
-    return state
   }
 }

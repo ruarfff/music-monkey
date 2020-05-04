@@ -5,10 +5,7 @@ import {
   watchSortPlaylistByVotesDescending,
   watchFetchEvents,
   watchDeleteEvent,
-  watchFetchEventById,
-  watchToggleAutoAcceptSuggestions,
-  watchToggleDynamicVoting,
-  watchToggleSuggestingPlaylists
+  watchFetchEventById
 } from 'event/eventSaga'
 import {
   watchFetchAddTrackToPlaylist,
@@ -36,9 +33,6 @@ export default function* rootSaga() {
     watchFetchEventVotes(),
     watchMoveItemInEventPlaylist(),
     watchSortPlaylistByVotesDescending(),
-    watchToggleDynamicVoting(),
-    watchToggleAutoAcceptSuggestions(),
-    watchToggleSuggestingPlaylists(),
     watchUpdateUserFlow(),
     watchFetchRemoveTrackFromPlaylist(),
     watchFetchSearchTracks(),

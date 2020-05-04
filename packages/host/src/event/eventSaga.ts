@@ -6,7 +6,7 @@ import {
   PlaylistItem,
   TrackVoteStatus
 } from 'mm-shared'
-import { deleteEvent, getEventById, updateEvent } from 'event/eventClient'
+import { deleteEvent, getEventById } from 'event/eventClient'
 import {
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
@@ -16,11 +16,6 @@ import {
   EVENT_FETCH_BY_ID_ERROR,
   EVENT_FETCH_BY_ID_INITIATED,
   EVENT_FETCHED_BY_ID,
-  TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
-  TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR,
-  TOGGLE_DYNAMIC_VOTING,
-  TOGGLE_DYNAMIC_VOTING_ERROR,
-  TOGGLE_SUGGESTING_PLAYLISTS,
   MOVE_ITEM_IN_EVENT_PLAYLIST,
   PLAYLIST_SORTED_BY_VOTES_DESCENDING,
   SORT_PLAYLIST_BY_VOTES_DESCENDING
@@ -72,64 +67,6 @@ function* deleteEventFlow(action: Action) {
 
 export function* watchDeleteEvent() {
   yield takeEvery(EVENT_DELETE_INITIATED, deleteEventFlow)
-}
-
-function* toggleDynamicVotingFlow(action: Action) {
-  try {
-    const event = action.payload
-    yield call(updateEvent, {
-      ...event,
-      settings: {
-        ...event.settings,
-        dynamicVotingEnabled: !event.settings.dynamicVotingEnabled
-      } as EventSettings
-    })
-  } catch (err) {
-    yield put({ type: TOGGLE_DYNAMIC_VOTING_ERROR })
-  }
-}
-
-export function* watchToggleDynamicVoting() {
-  yield takeEvery(TOGGLE_DYNAMIC_VOTING, toggleDynamicVotingFlow)
-}
-
-function* toggleAutoAcceptSuggestions(action: Action) {
-  try {
-    const event = action.payload
-    yield call(updateEvent, {
-      ...event,
-      settings: {
-        ...event.settings,
-        autoAcceptSuggestionsEnabled: !event.settings
-          .autoAcceptSuggestionsEnabled
-      } as EventSettings
-    })
-  } catch (err) {
-    yield put({ type: TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR })
-  }
-}
-
-export function* watchToggleAutoAcceptSuggestions() {
-  yield takeEvery(TOGGLE_AUTO_ACCEPT_SUGGESTIONS, toggleAutoAcceptSuggestions)
-}
-
-function* toggleSuggestingPlaylists(action: Action) {
-  try {
-    const event = action.payload
-    yield call(updateEvent, {
-      ...event,
-      settings: {
-        ...event.settings,
-        suggestingPlaylistsEnabled: !event.settings.suggestingPlaylistsEnabled
-      } as EventSettings
-    })
-  } catch (err) {
-    yield put({ type: TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR })
-  }
-}
-
-export function* watchToggleSuggestingPlaylists() {
-  yield takeEvery(TOGGLE_SUGGESTING_PLAYLISTS, toggleSuggestingPlaylists)
 }
 
 function moveItemInEventPlaylistFlow(action: Action) {

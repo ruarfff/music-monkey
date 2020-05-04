@@ -13,15 +13,6 @@ export const EVENT_FETCH_BY_ID_ERROR = 'EVENT_FETCH_BY_ID_ERROR'
 export const EVENT_DELETE_INITIATED = 'EVENT_DELETE_INITIATED'
 export const EVENT_DELETE_SUCCESSFUL = 'EVENT_DELETE_SUCCESSFUL'
 
-export const TOGGLE_DYNAMIC_VOTING = 'TOGGLE_DYNAMIC_VOTING'
-export const TOGGLE_DYNAMIC_VOTING_ERROR = 'TOGGLE_DYNAMIC_VOTING_ERROR'
-export const TOGGLE_AUTO_ACCEPT_SUGGESTIONS = 'TOGGLE_AUTO_ACCEPT_SUGGESTIONS'
-export const TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR =
-  'TOGGLE_AUTO_ACCEPT_SUGGESTIONS_ERROR'
-export const TOGGLE_SUGGESTING_PLAYLISTS = 'TOGGLE_SUGGESTING_PLAYLISTS'
-export const TOGGLE_SUGGESTING_PLAYLISTS_ERROR =
-  'TOGGLE_SUGGESTING_PLAYLISTS_ERROR'
-
 export const MOVE_ITEM_IN_EVENT_PLAYLIST = 'MOVE_ITEM_IN_EVENT_PLAYLIST'
 
 export const SORT_PLAYLIST_BY_VOTES_DESCENDING =
@@ -46,21 +37,6 @@ export const getEventById = (eventId: string): Action => ({
 export const deleteEvent = (eventId: string): Action => ({
   type: EVENT_DELETE_INITIATED,
   payload: eventId
-})
-
-export const toggleDynamicVoting = (event: Event): Action => ({
-  type: TOGGLE_DYNAMIC_VOTING,
-  payload: event
-})
-
-export const toggleAutoAcceptSuggestions = (event: Event): Action => ({
-  type: TOGGLE_AUTO_ACCEPT_SUGGESTIONS,
-  payload: event
-})
-
-export const toggleSuggestingPlaylists = (event: Event): Action => ({
-  type: TOGGLE_SUGGESTING_PLAYLISTS,
-  payload: event
 })
 
 export const getEvents = (): Action => ({

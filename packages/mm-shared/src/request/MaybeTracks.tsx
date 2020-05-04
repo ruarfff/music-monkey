@@ -59,7 +59,8 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
       options={{
         canRequest: isHost,
         canRemove: isHost,
-        showProfile: isHost || profileMode
+        showProfile: isHost || profileMode,
+        canVote: true
       }}
       tracksToHighlight={newRequests}
       onAccept={onAccept}
