@@ -6,7 +6,8 @@ import {
   DecoratedSuggestion,
   TrackList,
   Suggestion,
-  TrackVoteStatus
+  TrackVoteStatus,
+  getPlaylistTracks
 } from '../'
 import NoMaybeTracks from './NoMaybeTracks'
 import './MaybeTracks.scss'
@@ -36,14 +37,13 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
   onAccept = () => {},
   onReject = () => {}
 }) => {
-  const playlistTracks =
-    !isEmpty(event) && !isEmpty(event.playlist)
-      ? event.playlist!.tracks.items.map((track) => track.track.uri)
-      : []
+  const playlist = event.playlist
+  const playlistTracks = getPlaylistTracks(playlist!).map((track) => track.uri)
+
   let maybeSuggestions =
-    !isEmpty(requests) && (isHost || !isEmpty(user))
+    isHost || !isEmpty(user)
       ? requests.filter(
-          (suggestion) => playlistTracks.indexOf(suggestion.track.uri) === -1
+          (request) => playlistTracks.indexOf(request.track.uri) === -1
         )
       : []
 
@@ -69,7 +69,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
         canRequest: isHost,
         canRemove: isHost,
         showProfile: isHost || profileMode,
-        canVote: true
+        canVote: isHost
       }}
       votes={votes}
       tracksToHighlight={newRequests}
