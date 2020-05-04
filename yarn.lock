@@ -4283,7 +4283,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5, classnames@^2.2.6:
+classnames@^2.2.5:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -4380,7 +4380,7 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-clsx@^1.0.2, clsx@^1.0.4:
+clsx@^1.0.2, clsx@^1.0.4, clsx@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.0.tgz#62937c6adfea771247c34b54d320fb99624f5702"
   integrity sha512-3avwM37fSK5oP6M5rQ9CNe99lwxhXDOeSWVPAOYF6OazUTgZCMb0yWlJpmdD74REy1gkEaFiub2ULv4fq9GUhA==
@@ -9823,12 +9823,12 @@ normalize-url@^3.0.0, normalize-url@^3.3.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
-notistack@0.9.10:
-  version "0.9.10"
-  resolved "https://registry.yarnpkg.com/notistack/-/notistack-0.9.10.tgz#f662cdd46f0a7ce7f26ff1a5d9515d38d8279164"
-  integrity sha512-Pm2lrbEUdAy7HF2o7nlrzkere3611xlPj+ggpfhs1ahD0b0ryY4nPtZPsD4sI9o0Efa2k/P9YMBfbLB0LDGklg==
+notistack@0.9.11:
+  version "0.9.11"
+  resolved "https://registry.yarnpkg.com/notistack/-/notistack-0.9.11.tgz#8ad61e5fc5bf29da3455fe3f2f809c1c421713e7"
+  integrity sha512-652+nnce7MC7eAgl6B4vPmo1wNOiFM9QBpIkH+b36rz0iMSjN/RTc9OL2xlRW4z/bzduLo5n9tnmXqD7MkAEJw==
   dependencies:
-    classnames "^2.2.6"
+    clsx "^1.1.0"
     hoist-non-react-statics "^3.3.0"
     react-is "^16.8.6"
 
@@ -11728,7 +11728,7 @@ react-display-name@^0.2.4:
   resolved "https://registry.yarnpkg.com/react-display-name/-/react-display-name-0.2.5.tgz#304c7cbfb59ee40389d436e1a822c17fe27936c6"
   integrity sha512-I+vcaK9t4+kypiSgaiVWAipqHRXYmZIuAiS8vzFvXHHXVigg/sMKwlRgLy6LH2i3rmP+0Vzfl5lFsFRwF1r3pg==
 
-react-dom@16.13.11:
+react-dom@16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
   integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
@@ -12034,7 +12034,7 @@ react-twitch-embed-video@^2.0.2:
   dependencies:
     window-or-global "^1.0.1"
 
-react@16.13.11:
+react@16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==

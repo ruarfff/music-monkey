@@ -9,11 +9,7 @@
     "test": "react-app-rewired test --env=jsdom --coverage",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
-  "peerDependencies": {
-    "mm-shared": "*",
-    "mm-client": "*"
-  },
-  "devDependencies": {
+  "dependencies": {
     "mm-shared": "*",
     "mm-client": "*"
   }
