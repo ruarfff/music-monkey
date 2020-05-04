@@ -107,9 +107,11 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   }
 
   const trackImage = (
-    <div className="TrackListItem-track-image">
-      <Img src={[getTrackImage(track), backgroundImage]} alt={track.name} />
-    </div>
+    <Img
+      src={[getTrackImage(track), backgroundImage]}
+      alt={track.name}
+      className="TrackListItem-track-image"
+    />
   )
 
   let deleteButton = <span />

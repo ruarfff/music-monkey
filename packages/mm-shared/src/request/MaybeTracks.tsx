@@ -1,6 +1,13 @@
 import React, { FC } from 'react'
 import { isEmpty, uniqBy } from 'lodash'
-import { Event, User, DecoratedSuggestion, TrackList, Suggestion } from '../'
+import {
+  Event,
+  User,
+  DecoratedSuggestion,
+  TrackList,
+  Suggestion,
+  TrackVoteStatus
+} from '../'
 import NoMaybeTracks from './NoMaybeTracks'
 import './MaybeTracks.scss'
 
@@ -12,6 +19,7 @@ interface MaybeTracksProps {
   showAll?: boolean
   newRequests?: string[]
   profileMode?: boolean
+  votes?: Map<string, TrackVoteStatus>
   onAccept?(suggestion: Suggestion): void
   onReject?(suggestion: Suggestion): void
 }
@@ -24,6 +32,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
   showAll,
   profileMode,
   newRequests = [],
+  votes,
   onAccept = () => {},
   onReject = () => {}
 }) => {
@@ -62,6 +71,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
         showProfile: isHost || profileMode,
         canVote: true
       }}
+      votes={votes}
       tracksToHighlight={newRequests}
       onAccept={onAccept}
       onReject={onReject}

@@ -231,6 +231,7 @@ const EventView: FC<EventViewProps> = ({
                 event={event}
                 requests={pendingRequests}
                 newRequests={newRequests}
+                votes={votes}
                 onAccept={handleAcceptRequest}
                 onReject={handleRejectRequest}
               />
