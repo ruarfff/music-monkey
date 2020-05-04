@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import moment from 'moment'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
@@ -27,8 +28,8 @@ const DateTimeDialog: FC<DateTimeDialogProps> = ({ event, open, onClose }) => (
     </DialogTitle>
     <DialogContent>
       <DialogContentText id="date-time-dialog-description" align="center">
-        {event.startDateTime.format(' Do MMMM, YYYY')} to{' '}
-        {event.endDateTime.format(' Do MMMM, YYYY')}
+        {event.startDateTime.format('MMMM Do YYYY, h:mm a')} to{' '}
+        {event.endDateTime.format('MMMM Do YYYY, h:mm a')}
       </DialogContentText>
     </DialogContent>
   </Dialog>
