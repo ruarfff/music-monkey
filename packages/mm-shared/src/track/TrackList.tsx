@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { List, ListSubheader, Grid } from '@material-ui/core'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import isEmpty from 'lodash/isEmpty'
+import uniqBy from 'lodash/uniqBy'
 import { TrackListItem } from './TrackListItem'
 import { TrackConfig } from './TrackConfig'
 import {
@@ -163,7 +164,7 @@ export const TrackList: FC<TrackListProps> = ({
         <Droppable droppableId="track-list-droppable">
           {(provided) => (
             <div ref={provided.innerRef}>
-              {tracks
+              {uniqBy(tracks, 'uri')
                 .filter((track) => existingTracks.indexOf(track.uri) === -1)
                 .map((track, i) => {
                   const trackId = track.uri

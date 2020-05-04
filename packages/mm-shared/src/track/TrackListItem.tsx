@@ -108,11 +108,6 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 
   const trackImage = (
     <div className="TrackListItem-track-image">
-      {isPlaying ? (
-        <PauseCircleOutlineIcon className="content-overlay" />
-      ) : (
-        <PlayCircleOutlineIcon className="content-overlay" />
-      )}
       <Img src={[getTrackImage(track), backgroundImage]} alt={track.name} />
     </div>
   )
@@ -170,13 +165,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
               <TrackAvatar user={user!} initials={initials} />
             </ListItemAvatar>
           ) : (
-            <ListItemIcon
-              onClick={() => {
-                onPlay(track)
-              }}
-            >
-              {trackImage}
-            </ListItemIcon>
+            <ListItemIcon>{trackImage}</ListItemIcon>
           )}
 
           <ListItemText
@@ -251,23 +240,25 @@ export const TrackListItem: FC<TrackListItemProps> = ({
           <List component="div" disablePadding>
             <ListItem button className="TrackListItem-nested">
               {options.showProfile && (
-                <ListItemIcon
-                  className="TrackListItem-nested-track-icon"
-                  onClick={() => {
-                    onPlay(track)
-                  }}
-                >
+                <ListItemIcon className="TrackListItem-nested-track-icon">
                   {trackImage}
                 </ListItemIcon>
               )}
-              {/* <Box component="fieldset" mb={1} borderColor="transparent">
-                <Rating
-                  name={'popularity-' + track.id}
-                  defaultValue={Math.abs(track.popularity / 20)}
-                  max={5}
-                  size="small"
+              {isPlaying ? (
+                <PauseCircleOutlineIcon
+                  className="content-overlay"
+                  onClick={() => {
+                    onPlay(track)
+                  }}
                 />
-              </Box> */}
+              ) : (
+                <PlayCircleOutlineIcon
+                  className="content-overlay"
+                  onClick={() => {
+                    onPlay(track)
+                  }}
+                />
+              )}
               <ListItemText secondary={formatDuration(track.duration_ms)} />
               <ListItemSecondaryAction className="TrackListItem-actions-nested">
                 {options.deleteSecondary && deleteButton}
