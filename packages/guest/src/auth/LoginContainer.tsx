@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import IRootState from '../rootState'
-import { clearAuthError, loginAsGuest, loginWithPassword, login } from './authActions'
+import { clearAuthError, loginAsGuest } from './authActions'
 import Login from './Login'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -10,14 +10,9 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   clearAuthError,
-  login,
-  loginAsGuest,
-  loginWithPassword
+  loginAsGuest
 }
 
-const LoginContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login)
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login)
 
 export default LoginContainer
