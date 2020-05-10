@@ -191,6 +191,9 @@ const EventView: FC<EventViewProps> = ({
                 newRequests={newRequests}
                 showAll={true}
                 profileMode={true}
+                votes={votes}
+                createVote={createVote}
+                deleteVote={deleteVote}
               />
             </Typography>
           </Grid>

@@ -195,7 +195,7 @@ export const TrackListItem: FC<TrackListItemProps> = ({
                   className="MuiTypography-colorTextSecondary"
                 >
                   <div className="TrackListItem-secondary-items">
-                    {options.canVote && isHost && (
+                    {((options.canVote && isHost) || options.requestVote) && (
                       <div className="TrackListItem-votes">
                         <VoteButtonSmall
                           voteDetails={{

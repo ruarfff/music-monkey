@@ -6,4 +6,5 @@ export interface TrackConfig {
   allowDragDrop?: boolean
   showProfile?: boolean
   deleteSecondary?: boolean
+  requestVote?: boolean
 }
