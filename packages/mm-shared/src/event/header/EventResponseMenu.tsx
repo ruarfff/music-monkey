@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import find from 'lodash/find'
 import { Button, MenuItem, MenuProps, Menu } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
@@ -65,15 +65,19 @@ const EventResponseMenu = ({ event, user, updateRsvp }: IEventResponseMenu) => {
       updateRsvp({ ...userStatus.rsvp, status: option })
     }
     selectOption(option)
+    handleClose()
   }
 
-  if (
-    userStatus &&
-    userStatus.rsvp.status !== 'Pending' &&
-    userStatus.rsvp.status !== selected
-  ) {
-    selectOption(userStatus.rsvp.status)
-  }
+  useEffect(() => {
+    if (
+      userStatus &&
+      userStatus.rsvp.status !== 'Pending' &&
+      userStatus.rsvp.status !== selected
+    ) {
+      selectOption(userStatus.rsvp.status)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userStatus])
 
   return (
     <div>
