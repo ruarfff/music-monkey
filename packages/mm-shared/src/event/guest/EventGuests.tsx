@@ -5,7 +5,8 @@ import {
   ListItem,
   ListItemText,
   List,
-  Typography
+  Typography,
+  ListItemAvatar
 } from '@material-ui/core'
 import { Event } from 'mm-shared'
 import './EventGuests.scss'
@@ -30,19 +31,20 @@ const EventGuests = ({ event }: IEventGuestsProps) => {
         return (
           <React.Fragment key={index}>
             <ListItem>
-              {user.image && (
-                <Avatar className="EventGuests-avatar" src={user.image} />
-              )}
-              {!user.image && (
-                <Avatar className="EventGuests-avatar">{initials}</Avatar>
-              )}
+              <ListItemAvatar>
+                {user.image && (
+                  <Avatar className="EventGuests-avatar" src={user.image} />
+                )}
+                {!user.image && (
+                  <Avatar className="EventGuests-avatar">{initials}</Avatar>
+                )}
+              </ListItemAvatar>
 
               <ListItemText
                 primary={user.displayName || 'Guest'}
                 secondary={
                   <React.Fragment>
                     <Typography
-                      component="span"
                       variant="body2"
                       className="EventGuests-inline"
                       color="textPrimary"
