@@ -7,7 +7,9 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
+import sortBy from 'lodash/sortBy'
 import { Action, Event } from '../..'
+import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 
 import './EventPicker.scss'
@@ -26,16 +28,17 @@ const EventPicker = ({
   selectEvent,
   getRequestsByEventId,
   onClose
-}: IEventPickerProps) => {
-  return (
-    <Dialog open={isOpen} onClose={onClose}>
-      <div className="EventPicker-modal">
-        <DialogTitle className="EventPicker-modal-title">
-          Select Event for Requests
-        </DialogTitle>
-        <div className="EventPicker-events">
-          <List>
-            {events.map((event, index) => (
+}: IEventPickerProps) => (
+  <Dialog open={isOpen} onClose={onClose}>
+    <div className="EventPicker-modal">
+      <DialogTitle className="EventPicker-modal-title">
+        Select Party
+      </DialogTitle>
+      <div className="EventPicker-events">
+        <List>
+          {sortBy(events, 'endDateTime')
+            .reverse()
+            .map((event, index) => (
               <div className="EventPicker-item" key={index}>
                 <ListItem
                   button={true}
@@ -45,9 +48,9 @@ const EventPicker = ({
                     onClose()
                   }}
                 >
-                  <img
+                  <Img
+                    src={[event.imageUrl, backgroundImage]}
                     alt={event.name}
-                    src={event.imageUrl || backgroundImage}
                     className="EventPicker-event-image"
                   />
 
@@ -66,12 +69,11 @@ const EventPicker = ({
                 </li>
               </div>
             ))}
-            <div className="EventPicker-stopper-block" />
-          </List>
-        </div>
+          <div className="EventPicker-stopper-block" />
+        </List>
       </div>
-    </Dialog>
-  )
-}
+    </div>
+  </Dialog>
+)
 
 export default EventPicker
