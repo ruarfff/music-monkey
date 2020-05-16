@@ -14,7 +14,7 @@ const NavMenu: FunctionComponent<NavMenuProps> = ({ isHost }) => {
     <List>
       {isHost ? <CreateEventMenuButton /> : <FinderButton />}
 
-      <NavMenuItem text="Events" pathName="/" />
+      <NavMenuItem text="Parties" pathName="/" />
       <NavMenuItem text="Requests" pathName="/requests" />
       <Divider />
       <NavMenuItem text="Music" pathName="/music" />
