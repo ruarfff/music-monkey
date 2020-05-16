@@ -7,7 +7,7 @@ import {
   MenuItem
 } from '@material-ui/core'
 import ShowChartIcon from '@material-ui/icons/ShowChart'
-import EventIcon from '@material-ui/icons/Event'
+import HomeIcon from '@material-ui/icons/Home'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import SearchIcon from '@material-ui/icons/Search'
@@ -35,8 +35,8 @@ const SideMenu = ({ user, location, event, isHost }: ISideMenuProps) => {
   const eventsLink = eventId ? `/events/${eventId}` : '/'
   const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
   const finderLink = eventId ? `/finder/${eventId}` : '/finder'
-  const insightsLink = '/insights'
-  const musicLink = '/music'
+  const musicLink = eventId ? `/music/${eventId}` : '/music'
+  const insightsLink = eventId ? `/insights/${eventId}` : '/insights'
   const createLink = '/create-event'
   const [menuLink, handleMenuOpen, handleMenuClose] = useMenuActive()
   return (
@@ -85,7 +85,7 @@ const SideMenu = ({ user, location, event, isHost }: ISideMenuProps) => {
           <MenuItem
             className={`SideMenu-item ${checkLocation(pathname, eventsLink)}`}
           >
-            <EventIcon />
+            <HomeIcon />
             <span>Parties</span>
           </MenuItem>
         </Link>

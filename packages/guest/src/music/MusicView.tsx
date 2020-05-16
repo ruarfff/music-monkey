@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import EventSelect from 'event/select/EventSelectContainer'
 import { Grid } from '@material-ui/core'
+import { RouteComponentProps, withRouter } from 'react-router'
 import Music from './MusicContainer'
 import {
   useSnackbarAlert,
@@ -12,19 +13,23 @@ import {
   PlaylistRequest
 } from 'mm-shared'
 
-interface MusicViewProps {
+interface MusicViewProps extends RouteComponentProps<any> {
   user: User
   event: Event
   saveTrackRequest(request: TrackRequest): any
   savePlaylistRequest(request: PlaylistRequest): any
+  setEventId(eventId: string): any
 }
 
 const MusicView: FC<MusicViewProps> = ({
   event,
   user,
+  match,
   saveTrackRequest,
-  savePlaylistRequest
+  savePlaylistRequest,
+  setEventId
 }) => {
+  const eventId = match.params.eventId
   const { showSuccess } = useSnackbarAlert()
   const onTrackSelected = (track: Track) => {
     saveTrackRequest({
@@ -40,10 +45,15 @@ const MusicView: FC<MusicViewProps> = ({
       eventId: event.eventId,
       userId: user.userId,
       playlistUri: playlist.uri,
-      trackUris: playlist.tracks.items.map(t => t.track.uri)
+      trackUris: playlist.tracks.items.map((t) => t.track.uri)
     } as PlaylistRequest)
     showSuccess('Playlist requested')
   }
+
+  useEffect(() => {
+    if (eventId !== event.eventId) setEventId(eventId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eventId])
 
   return (
     <Grid container spacing={2}>
@@ -60,4 +70,4 @@ const MusicView: FC<MusicViewProps> = ({
   )
 }
 
-export default MusicView
+export default withRouter(MusicView)

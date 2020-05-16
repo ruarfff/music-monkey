@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import IRootState from 'rootState'
 import { savePlaylistRequest, saveTrackRequest } from 'request/requestActions'
+import { setEventId } from 'event/eventActions'
 import MusicView from './MusicView'
 
 const mapStateToProps = (state: IRootState) => ({
@@ -10,7 +11,8 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = {
   saveTrackRequest,
-  savePlaylistRequest
+  savePlaylistRequest,
+  setEventId
 }
 
 const MusicViewContainer = connect(

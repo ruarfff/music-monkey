@@ -25,8 +25,8 @@ const BottomBar = ({ location, event, hasPartyNotification }: IBottomBar) => {
   const eventsLink = eventId ? `/events/${eventId}` : '/'
   const requestsLink = eventId ? `/requests/${eventId}` : '/requests'
   const finderLink = eventId ? `/finder/${eventId}` : '/finder'
-  const insightsLink = '/insights'
-  const musicLink = '/music'
+  const musicLink = eventId ? `/music/${eventId}` : '/music'
+  const insightsLink = eventId ? `/insights/${eventId}` : '/insights'
 
   return (
     <div className="BottomBar-navigation">

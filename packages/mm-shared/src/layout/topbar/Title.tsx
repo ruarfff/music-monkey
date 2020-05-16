@@ -6,6 +6,7 @@ import './Title.scss'
 
 const pathToTitle = {
   '/': 'Parties',
+  '/requests': 'Requests',
   '/music': 'Music',
   '/create-event': 'Create Party',
   '/create-event/playlist': 'Seed Playlist',
@@ -21,11 +22,18 @@ interface ITitleProps extends RouteComponentProps {
 
 const Title = ({ location, event }: ITitleProps) => {
   const path = location.pathname
-  let title = ''
-  if (event && path.startsWith('/events/' + event.eventId)) {
-    title = event.name
-  } else {
-    title = pathToTitle[path] || 'MusicMonkey'
+  const mm = 'MusicMonkey'
+  let title = pathToTitle[path] || mm
+  if (event && title === mm) {
+    if (path.startsWith('/requests/' + event.eventId)) {
+      title = 'Requests'
+    } else if (path.startsWith('/music/' + event.eventId)) {
+      title = 'Music'
+    } else if (path.startsWith('/insights/' + event.eventId)) {
+      title = 'Insights'
+    } else {
+      title = event.name
+    }
   }
   return (
     <Typography variant="h3" color="inherit" className="Title" noWrap={true}>

@@ -79,7 +79,13 @@ export const routes = [
     exact: true,
     path: '/insights'
   },
-  { component: MusicView, exact: true, path: '/music' }
+  {
+    component: Insights,
+    exact: true,
+    path: '/insights/:eventId'
+  },
+  { component: MusicView, exact: true, path: '/music' },
+  { component: MusicView, exact: true, path: '/music/:eventId' }
 ]
 
 const renderSubRoutes = (route: any) => (props: any) => (
