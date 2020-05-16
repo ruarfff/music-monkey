@@ -5,12 +5,7 @@ import {
   watchDeleteEvent,
   watchFetchEventById
 } from 'event/eventSaga'
-import {
-  watchFetchMorePlaylistsFlow,
-  watchFetchPlaylistEditDetails,
-  watchFetchPlaylists,
-  watchFetchSearchTracks
-} from 'playlist/playlistSaga'
+import { watchFetchPlaylists } from 'playlist/playlistSaga'
 import { watchFetchRecommendation } from 'recommendation/recommendationSaga'
 import { watchFetchSuggestions } from 'request/requestSaga'
 import { watchUpdateUserFlow } from 'user/userSaga'
@@ -27,9 +22,6 @@ export default function* rootSaga() {
     watchFetchSuggestions(),
     watchFetchEventVotes(),
     watchUpdateUserFlow(),
-    watchFetchSearchTracks(),
-    watchFetchRecommendation(),
-    watchFetchMorePlaylistsFlow(),
-    watchFetchPlaylistEditDetails()
+    watchFetchRecommendation()
   ])
 }

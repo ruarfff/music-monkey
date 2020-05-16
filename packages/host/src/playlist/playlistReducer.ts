@@ -1,16 +1,11 @@
 import { LOCATION_CHANGE } from 'connected-react-router'
-import { cloneDeep } from 'lodash'
 import { Action } from 'mm-shared'
 import {
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
-  LOAD_MORE_PLAYLISTS_REQUEST,
-  LOAD_MORE_PLAYLISTS_SUCCESS,
   PLAYLIST_DESELECTED,
-  PLAYLIST_SELECTED,
-  SEARCH_TRACKS_FAILURE,
-  SEARCH_TRACKS_SUCCESS
+  PLAYLIST_SELECTED
 } from './playlistActions'
 import initialState from './playlistInitialState'
 
@@ -24,23 +19,6 @@ export default function playlists(
         ...state,
         searchResult: {}
       }
-    case SEARCH_TRACKS_SUCCESS:
-      return { ...state, searchResult: payload.tracks }
-    case SEARCH_TRACKS_FAILURE:
-      return state
-    case LOAD_MORE_PLAYLISTS_REQUEST:
-      return {
-        ...state,
-        isLoading: true
-      }
-    case LOAD_MORE_PLAYLISTS_SUCCESS: {
-      const playlists = cloneDeep(state.data).concat(payload)
-      return {
-        ...state,
-        data: playlists,
-        isLoading: false
-      }
-    }
     case FETCH_PLAYLISTS:
       return { ...state, isLoading: true }
     case FETCH_PLAYLISTS_SUCCESS:
