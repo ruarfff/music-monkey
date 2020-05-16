@@ -1,11 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import {
-  Action,
-  EventSettings,
-  Playlist,
-  PlaylistItem,
-  TrackVoteStatus
-} from 'mm-shared'
+import { Action, EventSettings } from 'mm-shared'
 import { deleteEvent, getEventById } from 'event/eventClient'
 import {
   EVENTS_FETCH_ERROR,
@@ -15,16 +9,9 @@ import {
   EVENT_DELETE_SUCCESSFUL,
   EVENT_FETCH_BY_ID_ERROR,
   EVENT_FETCH_BY_ID_INITIATED,
-  EVENT_FETCHED_BY_ID,
-  MOVE_ITEM_IN_EVENT_PLAYLIST,
-  PLAYLIST_SORTED_BY_VOTES_DESCENDING,
-  SORT_PLAYLIST_BY_VOTES_DESCENDING
+  EVENT_FETCHED_BY_ID
 } from './eventActions'
 import { getEvents } from './eventClient'
-import {
-  reOrderPlaylist,
-  replaceTracksInPlaylist
-} from 'playlist/playlistClient'
 
 function* fetchEventsFlow() {
   try {
@@ -67,69 +54,4 @@ function* deleteEventFlow(action: Action) {
 
 export function* watchDeleteEvent() {
   yield takeEvery(EVENT_DELETE_INITIATED, deleteEventFlow)
-}
-
-function moveItemInEventPlaylistFlow(action: Action) {
-  try {
-    const { playlist, fromIndex, toIndex } = action.payload
-    reOrderPlaylist(playlist, fromIndex, toIndex)
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-export function* watchMoveItemInEventPlaylist() {
-  yield takeEvery(MOVE_ITEM_IN_EVENT_PLAYLIST, moveItemInEventPlaylistFlow)
-}
-
-function sortPlaylistByVotesDescending(
-  playlist: Playlist,
-  votes: Map<string, TrackVoteStatus>
-) {
-  const playlistItems = [...playlist.tracks.items]
-  playlistItems.sort((a: any, b: any) => {
-    let numA = 0
-    let numB = 0
-    if (votes.has(a.track.uri)) {
-      numA = votes.get(a.track.uri)!.numberOfVotes
-    }
-    if (votes.has(b.track.uri)) {
-      numB = votes.get(b.track.uri)!.numberOfVotes
-    }
-    if (numA < numB) {
-      return 1
-    }
-    if (numA > numB) {
-      return -1
-    }
-
-    return 0
-  })
-  return {
-    ...playlist,
-    tracks: { ...playlist.tracks, items: playlistItems }
-  }
-}
-
-function* sortPlaylistByVotesDescendingFlow({ payload }: Action) {
-  const { playlist, votes } = payload
-  const sortedPlaylist: Playlist = sortPlaylistByVotesDescending(
-    playlist,
-    votes
-  )
-  const trackIUris = sortedPlaylist.tracks.items.map(
-    (p: PlaylistItem) => p.track.uri
-  )
-  yield call(replaceTracksInPlaylist, sortedPlaylist.id, trackIUris)
-  yield put({
-    type: PLAYLIST_SORTED_BY_VOTES_DESCENDING,
-    payload: sortedPlaylist
-  })
-}
-
-export function* watchSortPlaylistByVotesDescending() {
-  yield takeEvery(
-    SORT_PLAYLIST_BY_VOTES_DESCENDING,
-    sortPlaylistByVotesDescendingFlow
-  )
 }

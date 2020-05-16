@@ -1,8 +1,6 @@
 import { all } from 'redux-saga/effects'
 import { watchLogin, watchLogout } from 'auth/authSaga'
 import {
-  watchMoveItemInEventPlaylist,
-  watchSortPlaylistByVotesDescending,
   watchFetchEvents,
   watchDeleteEvent,
   watchFetchEventById
@@ -28,8 +26,6 @@ export default function* rootSaga() {
     watchDeleteEvent(),
     watchFetchSuggestions(),
     watchFetchEventVotes(),
-    watchMoveItemInEventPlaylist(),
-    watchSortPlaylistByVotesDescending(),
     watchUpdateUserFlow(),
     watchFetchSearchTracks(),
     watchFetchRecommendation(),

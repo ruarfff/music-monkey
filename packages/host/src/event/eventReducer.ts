@@ -1,4 +1,4 @@
-import { Action, arrayMove } from 'mm-shared'
+import { Action } from 'mm-shared'
 import {
   EVENT_FETCHED_BY_ID,
   EVENT_DELETE_SUCCESSFUL,
@@ -7,8 +7,6 @@ import {
   EVENTS_FETCHED,
   EVENT_FETCH_BY_ID_INITIATED,
   EVENT_FETCH_BY_ID_ERROR,
-  MOVE_ITEM_IN_EVENT_PLAYLIST,
-  PLAYLIST_SORTED_BY_VOTES_DESCENDING,
   EVENT_SELECTED
 } from './eventActions'
 import initialState from './eventInitialState'
@@ -59,33 +57,6 @@ export default function event(
         ...state,
         fetchError: payload
       }
-    case MOVE_ITEM_IN_EVENT_PLAYLIST: {
-      try {
-        const { fromIndex, toIndex } = payload
-        const playlist = { ...payload.playlist }
-        const playlistItems = [...playlist.tracks.items]
-        arrayMove(playlistItems, fromIndex, toIndex)
-        return {
-          ...state,
-          event: {
-            ...state.event,
-            playlist: {
-              ...playlist,
-              tracks: { ...playlist.tracks, items: playlistItems }
-            }
-          }
-        }
-      } catch (err) {
-        console.error(err)
-        return state
-      }
-    }
-    case PLAYLIST_SORTED_BY_VOTES_DESCENDING: {
-      return {
-        ...state,
-        playlist: payload
-      }
-    }
     case EVENT_SELECTED: {
       return {
         ...state,

@@ -1,12 +1,5 @@
+import { Action, Event } from 'mm-shared'
 import {
-  Action,
-  Event,
-  Playlist,
-  PlaylistItem,
-  PlaylistTracks
-} from 'mm-shared'
-import {
-  moveItemInEventPlaylist,
   EVENTS_FETCH_ERROR,
   EVENTS_FETCH_INITIATED,
   EVENTS_FETCHED,
@@ -105,31 +98,5 @@ describe('eventReducer', () => {
 
   it('should return the initial state when no action matches', () => {
     expect(event(undefined, {} as Action)).toEqual(initialState)
-  })
-
-  it('should handle MOVE_ITEM_IN_EVENT_PLAYLIST', () => {
-    const item1 = { track: { uri: 'item:1' } } as PlaylistItem
-    const item2 = { track: { uri: 'item:2' } } as PlaylistItem
-    const item3 = { track: { uri: 'item:3' } } as PlaylistItem
-
-    const tracks = { items: [item1, item2, item3] } as PlaylistTracks
-    const originalPlaylist = { id: 'playlist-id', tracks } as Playlist
-    const reOrderedTracks = { items: [item2, item1, item3] } as PlaylistTracks
-    const reOrderedPlaylist = {
-      id: 'playlist-id',
-      tracks: reOrderedTracks
-    } as Playlist
-    expect(
-      event(
-        {
-          ...initialState,
-          event: { ...initialState.event, playlist: originalPlaylist }
-        },
-        moveItemInEventPlaylist(originalPlaylist, 0, 1)
-      )
-    ).toEqual({
-      ...initialState,
-      event: { ...initialState.event, playlist: reOrderedPlaylist }
-    })
   })
 })
