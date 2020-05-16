@@ -8,13 +8,10 @@ import {
   watchFetchEventById
 } from 'event/eventSaga'
 import {
-  watchFetchAddTrackToPlaylist,
   watchFetchMorePlaylistsFlow,
   watchFetchPlaylistEditDetails,
   watchFetchPlaylists,
-  watchFetchRemoveTrackFromPlaylist,
-  watchFetchSearchTracks,
-  watchFetchTrackFeatures
+  watchFetchSearchTracks
 } from 'playlist/playlistSaga'
 import { watchFetchRecommendation } from 'recommendation/recommendationSaga'
 import { watchFetchSuggestions } from 'request/requestSaga'
@@ -34,10 +31,7 @@ export default function* rootSaga() {
     watchMoveItemInEventPlaylist(),
     watchSortPlaylistByVotesDescending(),
     watchUpdateUserFlow(),
-    watchFetchRemoveTrackFromPlaylist(),
     watchFetchSearchTracks(),
-    watchFetchAddTrackToPlaylist(),
-    watchFetchTrackFeatures(),
     watchFetchRecommendation(),
     watchFetchMorePlaylistsFlow(),
     watchFetchPlaylistEditDetails()

@@ -2,9 +2,6 @@ import { LOCATION_CHANGE } from 'connected-react-router'
 import { cloneDeep } from 'lodash'
 import { Action } from 'mm-shared'
 import {
-  ADD_TRACK_FAILURE,
-  ADD_TRACK_SUCCESS,
-  CLEAR_JUST_CREATED_PLAYLISTS,
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
@@ -12,12 +9,8 @@ import {
   LOAD_MORE_PLAYLISTS_SUCCESS,
   PLAYLIST_DESELECTED,
   PLAYLIST_SELECTED,
-  REMOVE_TRACK_FAILURE,
-  REMOVE_TRACK_SUCCESS,
   SEARCH_TRACKS_FAILURE,
-  SEARCH_TRACKS_SUCCESS,
-  TRACK_FEATURES_FAILURE,
-  TRACK_FEATURES_SUCCESS
+  SEARCH_TRACKS_SUCCESS
 } from './playlistActions'
 import initialState from './playlistInitialState'
 
@@ -30,39 +23,6 @@ export default function playlists(
       return {
         ...state,
         searchResult: {}
-      }
-    case CLEAR_JUST_CREATED_PLAYLISTS:
-      return {
-        ...state,
-        createdPlaylists: []
-      }
-    case TRACK_FEATURES_SUCCESS:
-      return {
-        ...state,
-        tracksWithFeatures: payload.audio_features
-      }
-    case TRACK_FEATURES_FAILURE:
-      return state
-    case REMOVE_TRACK_SUCCESS:
-      return {
-        ...state,
-        notification: 'Track successfully removed'
-      }
-    case REMOVE_TRACK_FAILURE:
-      return {
-        ...state,
-        notification: 'Error. Retry remove track later'
-      }
-    case ADD_TRACK_SUCCESS:
-      return {
-        ...state,
-        notification: 'Track successfully added',
-        searchResult: {}
-      }
-    case ADD_TRACK_FAILURE:
-      return {
-        ...state,
-        notification: 'Error. Retry add track later'
       }
     case SEARCH_TRACKS_SUCCESS:
       return { ...state, searchResult: payload.tracks }
