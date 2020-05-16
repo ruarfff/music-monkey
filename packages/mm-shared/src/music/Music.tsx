@@ -49,11 +49,9 @@ export const Music: FC<MusicProps> = ({
       }
     }
 
-    if (isEmpty(likedTracks)) {
-      getLikedTracks()
-    }
+    getLikedTracks()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [])
 
   return (
     <div>
@@ -81,7 +79,7 @@ export const Music: FC<MusicProps> = ({
       </Typography>
       <Typography component="div" dir="1" hidden={tabIndex !== 1}>
         <TrackList
-          tracks={isEmpty(likedTracks) ? [] : likedTracks.map(lt => lt.track)}
+          tracks={isEmpty(likedTracks) ? [] : likedTracks.map((lt) => lt.track)}
           options={{ canRequest: true }}
           onSelected={onTrackSelected}
         />
