@@ -10,7 +10,8 @@ const mapStateToProps = (state: IRootState) => ({
   events: state.event.events,
   userPlaylists: state.playlist.data,
   recommendations: state.recommendation.tracks,
-  hideCurrentPlaylist: true
+  hideCurrentPlaylist: true,
+  playlistsLoading: state.playlist.isLoading
 })
 
 const mapDispatchToProps = {

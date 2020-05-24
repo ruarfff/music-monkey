@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import {
   Typography,
   List,
@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-import { ChevronRight, KeyboardArrowDown, QueueMusic } from '@material-ui/icons'
+import { QueueMusic } from '@material-ui/icons'
 import isEmpty from 'lodash/isEmpty'
 import Img from 'react-image'
 import {
@@ -23,7 +23,8 @@ import {
   User,
   getFormattedPlaylistDuration,
   getNumberOfPlaylistTracks,
-  getPlaylistImage
+  getPlaylistImage,
+  MarvinLoader
 } from '..'
 import backgroundImage from 'assets/music-monkey.jpg'
 import './Playlists.scss'
@@ -32,16 +33,20 @@ interface PlaylistsProps {
   user: User
   playlists: Playlist[]
   playlistsEnabled: boolean
+  playlistsLoading: boolean
   onTrackSelected(track: Track): any
   onPlaylistSelected(suggestions: Playlist): any
+  fetchPlaylists(user: User): any
 }
 
 const Playlists: FC<PlaylistsProps> = ({
   user,
   playlists = [],
   playlistsEnabled,
+  playlistsLoading,
   onTrackSelected,
-  onPlaylistSelected
+  onPlaylistSelected,
+  fetchPlaylists
 }) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState({} as Playlist)
   const handlePlaylistClicked = (playlist: Playlist) => () => {
@@ -50,6 +55,17 @@ const Playlists: FC<PlaylistsProps> = ({
     } else {
       setSelectedPlaylist(playlist)
     }
+  }
+
+  useEffect(() => {
+    if (!isEmpty(user) && isEmpty(playlists)) {
+      fetchPlaylists(user)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (playlistsLoading) {
+    return <MarvinLoader />
   }
 
   return (
@@ -121,7 +137,7 @@ const Playlists: FC<PlaylistsProps> = ({
             >
               <div className="Playlists-tracks">
                 <TrackList
-                  tracks={playlist.tracks.items.map(t => t.track)}
+                  tracks={playlist.tracks.items.map((t) => t.track)}
                   onSelected={onTrackSelected}
                   options={{ canRequest: true }}
                 />

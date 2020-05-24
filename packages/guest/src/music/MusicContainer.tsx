@@ -8,7 +8,8 @@ const mapStateToProps = (state: IRootState) => ({
   isHost: true,
   user: state.user.data,
   userPlaylists: state.playlist.data,
-  likedTracks: state.music.likedTracks
+  likedTracks: state.music.likedTracks,
+  playlistsLoading: state.playlist.isLoading
 })
 
 const mapDispatchToProps = {

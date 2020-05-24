@@ -35,6 +35,7 @@ interface FinderProps {
   recommendations: Track[]
   allowSuggestPlaylist?: boolean
   hideCurrentPlaylist?: boolean
+  playlistsLoading: boolean
   getRecommendations(): Action
   fetchPlaylists(user: User): Action
   onTrackSelected?(track: Track): any
@@ -50,20 +51,17 @@ const Finder: FC<FinderProps> = ({
   events,
   userPlaylists,
   recommendations = [],
-  getRecommendations,
-  fetchPlaylists,
   allowSuggestPlaylist = false,
   hideCurrentPlaylist = false,
+  playlistsLoading,
+  getRecommendations,
+  fetchPlaylists,
   onTrackSelected = () => {},
   onPlaylistSelected = () => {},
   onTrackRemoved = () => {},
   onTrackMoved = () => {}
 }) => {
   useEffect(() => {
-    if (!isEmpty(user) && isEmpty(userPlaylists)) {
-      fetchPlaylists(user)
-    }
-
     if (isEmpty(recommendations)) {
       getRecommendations()
     }
@@ -90,8 +88,8 @@ const Finder: FC<FinderProps> = ({
             if (!isEqual(searchResults, results))
               setSearchResults(
                 results.filter(
-                  searchedTrack =>
-                    eventTracks.map(t => t.uri).indexOf(searchedTrack.uri) ===
+                  (searchedTrack) =>
+                    eventTracks.map((t) => t.uri).indexOf(searchedTrack.uri) ===
                     -1
                 )
               )
@@ -213,8 +211,10 @@ const Finder: FC<FinderProps> = ({
                 user={user}
                 playlists={userPlaylists}
                 playlistsEnabled={allowSuggestPlaylist || isHost}
+                playlistsLoading={playlistsLoading}
                 onTrackSelected={onTrackSelected}
                 onPlaylistSelected={onPlaylistSelected}
+                fetchPlaylists={fetchPlaylists}
               />
             </Typography>
           </>

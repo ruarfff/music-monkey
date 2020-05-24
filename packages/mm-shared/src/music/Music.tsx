@@ -17,6 +17,7 @@ interface MusicProps {
   user: User
   userPlaylists: Playlist[]
   likedTracks: { track: Track }[]
+  playlistsLoading: boolean
   fetchPlaylists(user: User): Action
   onTrackSelected(track: Track): any
   onPlaylistSelected(playlist: Playlist): any
@@ -28,6 +29,7 @@ export const Music: FC<MusicProps> = ({
   isHost,
   userPlaylists,
   likedTracks,
+  playlistsLoading,
   fetchPlaylists,
   onTrackSelected,
   onPlaylistSelected,
@@ -36,10 +38,6 @@ export const Music: FC<MusicProps> = ({
   const [tabIndex, handleTabChange] = useSwipeTabsIndex()
 
   useEffect(() => {
-    if (!isEmpty(user) && isEmpty(userPlaylists)) {
-      fetchPlaylists(user)
-    }
-
     const getLikedTracks = async () => {
       try {
         const usersLikedTracks = await getUserVotesWithTracks()
@@ -73,8 +71,10 @@ export const Music: FC<MusicProps> = ({
           user={user}
           playlists={userPlaylists}
           playlistsEnabled={false}
+          playlistsLoading={playlistsLoading}
           onTrackSelected={onTrackSelected}
           onPlaylistSelected={onPlaylistSelected}
+          fetchPlaylists={fetchPlaylists}
         />
       </Typography>
       <Typography component="div" dir="1" hidden={tabIndex !== 1}>

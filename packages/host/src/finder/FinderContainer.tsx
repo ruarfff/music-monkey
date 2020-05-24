@@ -9,6 +9,7 @@ const mapStateToProps = (state: IRootState) => ({
   event: state.event.event,
   events: state.event.events,
   userPlaylists: state.playlist.data,
+  playlistsLoading: state.playlist.isLoading,
   recommendations: state.recommendation.tracks
 })
 
