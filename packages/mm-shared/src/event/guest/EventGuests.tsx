@@ -32,10 +32,9 @@ const EventGuests = ({ event }: IEventGuestsProps) => {
           <React.Fragment key={index}>
             <ListItem>
               <ListItemAvatar>
-                {user.image && (
+                {user.image ? (
                   <Avatar className="EventGuests-avatar" src={user.image} />
-                )}
-                {!user.image && (
+                ) : (
                   <Avatar className="EventGuests-avatar">{initials}</Avatar>
                 )}
               </ListItemAvatar>

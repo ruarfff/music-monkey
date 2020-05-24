@@ -43,6 +43,13 @@ interface LoginInviteProps {
 
 const LoginInvite: FC<LoginInviteProps> = ({ event }) => {
   const classes = useStyles()
+  let initials = ''
+  if (event.hostData && event.hostData.displayName) {
+    const initialsMatch = event.hostData.displayName.match(/\b\w/g) || []
+    initials = (
+      (initialsMatch.shift() || '') + (initialsMatch.pop() || '')
+    ).toUpperCase()
+  }
 
   return (
     <Card className={classes.root}>
@@ -63,10 +70,10 @@ const LoginInvite: FC<LoginInviteProps> = ({ event }) => {
                 <Avatar
                   className={classes.avatar}
                   key={event.hostData.userId}
-                  alt={event.hostData.displayName || 'H'}
+                  alt={initials || 'H'}
                   src={event.hostData.image}
                 >
-                  {!event.hostData.image ? event.hostData.displayName : null}
+                  {!event.hostData.image ? initials : null}
                 </Avatar>
               )}
             </Grid>
