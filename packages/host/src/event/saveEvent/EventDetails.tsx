@@ -54,6 +54,7 @@ const EventDetails: FC<EventDetailsProps> = ({ showDetails = false }) => {
                   setFieldValue('startDateTime', startDateTime)
                 }}
                 label="Starting At"
+                disablePast={true}
               />
             )
           }}
@@ -69,11 +70,12 @@ const EventDetails: FC<EventDetailsProps> = ({ showDetails = false }) => {
             <EventDateTimePicker
               value={value}
               onChange={(endDateTime: Date) => {
-                if (endDateTime < values.startDateTime) {
-                  setFieldValue('startDateTime', endDateTime)
+                if (endDateTime > values.startDateTime) {
+                  setFieldValue('endDateTime', endDateTime)
                 }
-                setFieldValue('endDateTime', endDateTime)
               }}
+              minDate={values.startDateTime}
+              disablePast={true}
               label="Finishing At"
             />
           )}
