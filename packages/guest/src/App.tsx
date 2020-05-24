@@ -44,6 +44,7 @@ const App = ({ store, history }: AppProps) => {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <SnackbarProvider
+          autoHideDuration={2000}
           anchorOrigin={{
             vertical: 'top',
             horizontal: 'center'

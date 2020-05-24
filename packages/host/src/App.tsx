@@ -43,6 +43,7 @@ const App = ({ store, history }: AppProps) => {
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={Utils}>
           <SnackbarProvider
+            autoHideDuration={2000}
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'center'
