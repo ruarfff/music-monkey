@@ -7,14 +7,36 @@ import {
   ButtonGroup,
   Button,
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogContentText
 } from '@material-ui/core'
+import {
+  createStyles,
+  Theme,
+  withStyles,
+  WithStyles
+} from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
+import MuiDialogTitle from '@material-ui/core/DialogTitle'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 import { Event, EventSettings, IOSSwitch } from '../'
 import './PartySettings.scss'
 
-interface PartySettingsProps {
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      margin: 0,
+      padding: theme.spacing(2)
+    },
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: theme.palette.grey[500]
+    }
+  })
+interface PartySettingsProps extends WithStyles<typeof styles> {
   isHost: boolean
   event: Event
   onSettingsUpdated(settings: EventSettings): void
@@ -30,6 +52,7 @@ interface Setting {
 const PartySettings: FC<PartySettingsProps> = ({
   isHost,
   event,
+  classes,
   onSettingsUpdated
 }) => {
   const settings = {
@@ -75,12 +98,24 @@ const PartySettings: FC<PartySettingsProps> = ({
         className="PartySettings-dialog"
         open={open}
       >
-        <DialogTitle
+        <MuiDialogTitle
+          disableTypography
           id="party-settings-dialog-title"
           className="PartySettings-dialog-content"
         >
-          {setting.title} {setting.icon}
-        </DialogTitle>
+          <Typography variant="h6">
+            {' '}
+            {setting.title} {setting.icon}
+          </Typography>
+
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            className={classes.closeButton}
+          >
+            <CloseIcon />
+          </IconButton>
+        </MuiDialogTitle>
         <DialogContent className="PartySettings-dialog-content">
           <DialogContentText id="party-settings-dialog-description">
             {setting.description}
@@ -144,4 +179,4 @@ const PartySettings: FC<PartySettingsProps> = ({
   )
 }
 
-export default PartySettings
+export default withStyles(styles)(PartySettings)

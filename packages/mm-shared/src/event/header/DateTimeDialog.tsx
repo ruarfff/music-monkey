@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import moment from 'moment'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
