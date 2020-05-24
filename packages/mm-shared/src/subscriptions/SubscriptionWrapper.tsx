@@ -59,12 +59,13 @@ const SubscriptionWrapper = ({
         console.log('Get event suggestions on sub: ' + eventId)
         getEventSuggestions(eventId)
         try {
-          const trackUris = data.map(s => s.trackUri)
+          const trackUris = data.map((s) => s.trackUri)
           if (type === 'accepted') {
             if (event.settings.autoAcceptSuggestionsEnabled) {
               setNotification({ type: 'accept', payload: trackUris })
             } else {
               console.log('Accept request')
+              setNotification({ type: 'accept', payload: trackUris })
               setNotification({ type: 'acceptRequest', payload: trackUris })
             }
           } else if (
@@ -73,7 +74,7 @@ const SubscriptionWrapper = ({
           ) {
             setNotification({ type: 'request', payload: trackUris })
           } else if (type === 'rejected') {
-            const rejectedTrack = data.find(a => a.userId === user.userId)
+            const rejectedTrack = data.find((a) => a.userId === user.userId)
             if (!isHost && rejectedTrack) {
               showError('Track Declined')
             }
