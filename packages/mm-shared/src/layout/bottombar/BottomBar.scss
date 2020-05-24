@@ -15,13 +15,14 @@
 
   .BottomBar-finder {
     background: url('../../assets/bottom-menu-bg.svg') center center no-repeat;
-    width: 88px;
+    width: 90px;
     display: flex;
     justify-content: center;
 
-    img {
+    .BottomBar-finder-button-icon {
       width: 50px;
       height: 30px;
+      color: white;
     }
     .BottomBar-finder-button {
       position: fixed;

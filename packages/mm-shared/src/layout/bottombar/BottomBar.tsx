@@ -7,6 +7,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import { withRouter } from 'react-router'
 import { Event } from 'event'
+import AddIcon from '@material-ui/icons/Add'
 import Monkey from 'assets/finder-logo.png'
 import './BottomBar.scss'
 
@@ -64,7 +65,7 @@ const BottomBar = ({ location, event, hasPartyNotification }: IBottomBar) => {
       <div className="BottomBar-finder">
         <div className="BottomBar-finder-button">
           <Link to={finderLink} className="BottomBar-finder-button-link">
-            <img alt="finder" src={Monkey} />
+            <AddIcon className="BottomBar-finder-button-icon"/>
           </Link>
         </div>
       </div>
