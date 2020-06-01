@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import isEmpty from 'lodash/isEmpty'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { Playlist, PageObject } from 'mm-shared'
 import {
   Grid,
@@ -35,13 +36,21 @@ interface PlaylistsProps {
   user: User
   playlistsPage: PageObject<Playlist>
   playlistsLoading: boolean
-  fetchPlaylists(user: User): Action
+  fetchPlaylists(user: User, page: PageObject<Playlist>): Action
   onPlaylistSelected(playlist: Playlist): void
 }
 
 const SeedPlaylist = ({
   user,
-  playlistsPage,
+  playlistsPage = {
+    items: [],
+    total: 0,
+    limit: 30,
+    offset: 0,
+    href: '',
+    next: '',
+    previous: ''
+  },
   playlistsLoading,
   fetchPlaylists,
   onPlaylistSelected
@@ -50,11 +59,21 @@ const SeedPlaylist = ({
     tracks: { items: [] }
   } as unknown) as Playlist
   const [selectedPlaylist, setSelectedPlaylist] = useState()
+  const withTracks = playlistsPage.items.filter(
+    (playlist: Playlist) => playlist.tracks.total > 0
+  )
+
   useEffect(() => {
     if (isEmpty(playlistsPage.items) && !playlistsLoading) {
-      fetchPlaylists(user)
+      fetchPlaylists(user, playlistsPage)
     }
-  }, [fetchPlaylists, playlistsLoading, playlistsPage.items, user])
+  }, [
+    fetchPlaylists,
+    playlistsLoading,
+    playlistsPage,
+    playlistsPage.items,
+    user
+  ])
 
   const handlePlaylistClicked = (playlist: Playlist) => () => {
     if (selectedPlaylist === playlist) {
@@ -119,9 +138,22 @@ const SeedPlaylist = ({
               </ListItemSecondaryAction>
             </ListItem>
           </Collapse>
-          {playlistsPage.items
-            .filter((playlist: Playlist) => playlist.tracks.total > 0)
-            .map((playlist: Playlist, index: number) => (
+          <InfiniteScroll
+            dataLength={withTracks.length}
+            next={() => {
+              if (!isEmpty(user) && !!playlistsPage.next) {
+                console.log('Loading more!')
+                const page = {
+                  ...playlistsPage,
+                  offset: playlistsPage.items.length
+                }
+                fetchPlaylists(user, page)
+              }
+            }}
+            hasMore={!!playlistsPage.next}
+            loader={<MarvinLoader />}
+          >
+            {withTracks.map((playlist: Playlist, index: number) => (
               <React.Fragment key={playlist.id + '-' + index}>
                 <Collapse
                   in={
@@ -227,6 +259,7 @@ const SeedPlaylist = ({
                 </Collapse>
               </React.Fragment>
             ))}
+          </InfiniteScroll>
         </List>
       </Grid>
     </Grid>

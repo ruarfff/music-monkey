@@ -1,4 +1,4 @@
-import { Action, User, Playlist } from 'mm-shared'
+import { Action, User, Playlist, PageObject } from 'mm-shared'
 
 export const FETCH_PLAYLISTS = 'FETCH_PLAYLISTS'
 export const FETCH_PLAYLISTS_SUCCESS = 'FETCH_PLAYLISTS_SUCCESS'
@@ -6,9 +6,12 @@ export const FETCH_PLAYLISTS_ERROR = 'FETCH_PLAYLISTS_ERROR'
 
 export const PLAYLIST_CLEAR = 'PLAYLIST_CLEAR'
 
-export const fetchPlaylists = (user: User): Action => ({
+export const fetchPlaylists = (
+  user: User,
+  page: PageObject<Playlist>
+): Action => ({
   type: FETCH_PLAYLISTS,
-  payload: user
+  payload: { user, page }
 })
 
 export const fetchPlaylistsSuccess = (data: Playlist): Action => ({

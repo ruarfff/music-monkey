@@ -11,14 +11,14 @@ it('should return the initial state when no action matches', () => {
   expect(playlist(undefined, {} as Action)).toEqual(initialState)
 })
 
-it('should handle FETCH_PLAYLIST', () => {
+it('should handle FETCH_PLAYLISTS', () => {
   expect(playlist(initialState, { type: FETCH_PLAYLISTS })).toEqual({
     ...initialState,
     isLoading: true
   })
 })
 
-it('should handle FETCH_PLAYLIST_SUCCESS', () => {
+it('should handle FETCH_PLAYLISTS_SUCCESS', () => {
   expect(
     playlist(
       { ...initialState, isLoading: true },

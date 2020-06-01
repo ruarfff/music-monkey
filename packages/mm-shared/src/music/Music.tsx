@@ -19,7 +19,7 @@ interface MusicProps {
   playlistsPage: PageObject<Playlist>
   likedTracks: { track: Track }[]
   playlistsLoading: boolean
-  fetchPlaylists(user: User): Action
+  fetchPlaylists(user: User, page: PageObject<Playlist>): Action
   onTrackSelected(track: Track): any
   onPlaylistSelected(playlist: Playlist): any
   addLikedTracks(tracks: Track[]): any
@@ -70,7 +70,7 @@ export const Music: FC<MusicProps> = ({
       <Typography component="div" dir="0" hidden={tabIndex !== 0}>
         <Playlists
           user={user}
-          playlists={playlistsPage.items}
+          playlistsPage={playlistsPage}
           playlistsEnabled={false}
           playlistsLoading={playlistsLoading}
           onTrackSelected={onTrackSelected}

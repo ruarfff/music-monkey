@@ -38,7 +38,7 @@ interface FinderProps {
   hideCurrentPlaylist?: boolean
   playlistsLoading: boolean
   getRecommendations(): Action
-  fetchPlaylists(user: User): Action
+  fetchPlaylists(user: User, page: PageObject<Playlist>): Action
   onTrackSelected?(track: Track): any
   onPlaylistSelected?(playlist: Playlist): any
   onTrackRemoved?(track: Track): any
@@ -210,7 +210,7 @@ const Finder: FC<FinderProps> = ({
             >
               <Playlists
                 user={user}
-                playlists={playlistsPage.items}
+                playlistsPage={playlistsPage}
                 playlistsEnabled={allowSuggestPlaylist || isHost}
                 playlistsLoading={playlistsLoading}
                 onTrackSelected={onTrackSelected}

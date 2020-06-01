@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
 import {
   Typography,
   List,
@@ -24,24 +25,33 @@ import {
   getFormattedPlaylistDuration,
   getNumberOfPlaylistTracks,
   getPlaylistImage,
-  MarvinLoader
+  MarvinLoader,
+  PageObject
 } from '..'
 import backgroundImage from 'assets/music-monkey.jpg'
 import './Playlists.scss'
 
 interface PlaylistsProps {
   user: User
-  playlists: Playlist[]
+  playlistsPage: PageObject<Playlist>
   playlistsEnabled: boolean
   playlistsLoading: boolean
   onTrackSelected(track: Track): any
   onPlaylistSelected(suggestions: Playlist): any
-  fetchPlaylists(user: User): any
+  fetchPlaylists(user: User, page: PageObject<Playlist>): any
 }
 
 const Playlists: FC<PlaylistsProps> = ({
   user,
-  playlists = [],
+  playlistsPage = {
+    items: [],
+    total: 0,
+    limit: 30,
+    offset: 0,
+    href: '',
+    next: '',
+    previous: ''
+  },
   playlistsEnabled,
   playlistsLoading,
   onTrackSelected,
@@ -56,10 +66,13 @@ const Playlists: FC<PlaylistsProps> = ({
       setSelectedPlaylist(playlist)
     }
   }
+  const withTracks = playlistsPage.items.filter(
+    (playlist: Playlist) => playlist.tracks.total > 0
+  )
 
   useEffect(() => {
-    if (!isEmpty(user) && isEmpty(playlists)) {
-      fetchPlaylists(user)
+    if (!playlistsLoading && !isEmpty(user) && isEmpty(playlistsPage.items)) {
+      fetchPlaylists(user, playlistsPage)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -70,9 +83,22 @@ const Playlists: FC<PlaylistsProps> = ({
 
   return (
     <List className="Playlists-root">
-      {playlists
-        .filter((playlist: Playlist) => playlist.tracks.total > 0)
-        .map((playlist: Playlist, index: number) => (
+      <InfiniteScroll
+        dataLength={withTracks.length}
+        next={() => {
+          if (!isEmpty(user) && !!playlistsPage.next) {
+            console.log('Loading more!')
+            const page = {
+              ...playlistsPage,
+              offset: playlistsPage.items.length
+            }
+            fetchPlaylists(user, page)
+          }
+        }}
+        hasMore={!!playlistsPage.next}
+        loader={<MarvinLoader />}
+      >
+        {withTracks.map((playlist: Playlist, index: number) => (
           <Collapse
             in={isEmpty(selectedPlaylist) || playlist === selectedPlaylist}
             key={playlist.id + '-' + index}
@@ -146,6 +172,7 @@ const Playlists: FC<PlaylistsProps> = ({
             <Divider variant="inset" component="li" />
           </Collapse>
         ))}
+      </InfiniteScroll>
     </List>
   )
 }

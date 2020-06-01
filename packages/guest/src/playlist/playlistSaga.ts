@@ -9,12 +9,19 @@ import { fetchUsersPlaylists } from './playlistClient'
 
 function* fetchPlaylistsFlow(action: Action) {
   try {
-    const page: PageObject<Playlist> = yield call(fetchUsersPlaylists, {
-      user: action.payload,
-      limit: 50,
-      offset: 0
-    })
-    yield put({ type: FETCH_PLAYLISTS_SUCCESS, payload: page })
+    const { user, page } = action.payload
+    console.log(page)
+    const playlistsPage: PageObject<Playlist> = yield call(
+      fetchUsersPlaylists,
+      {
+        user,
+        limit: page.limit,
+        offset: page.offset
+      }
+    )
+    playlistsPage.items = [...page.items, ...playlistsPage.items]
+    console.log(playlistsPage)
+    yield put({ type: FETCH_PLAYLISTS_SUCCESS, payload: playlistsPage })
   } catch (error) {
     yield put({ type: FETCH_PLAYLISTS_ERROR, payload: error })
   }
