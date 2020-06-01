@@ -9,13 +9,14 @@ import {
   Playlist,
   Playlists,
   getUserVotesWithTracks,
-  TrackList
+  TrackList,
+  PageObject
 } from '../'
 
 interface MusicProps {
   isHost: boolean
   user: User
-  userPlaylists: Playlist[]
+  playlistsPage: PageObject<Playlist>
   likedTracks: { track: Track }[]
   playlistsLoading: boolean
   fetchPlaylists(user: User): Action
@@ -27,7 +28,7 @@ interface MusicProps {
 export const Music: FC<MusicProps> = ({
   user,
   isHost,
-  userPlaylists,
+  playlistsPage,
   likedTracks,
   playlistsLoading,
   fetchPlaylists,
@@ -69,7 +70,7 @@ export const Music: FC<MusicProps> = ({
       <Typography component="div" dir="0" hidden={tabIndex !== 0}>
         <Playlists
           user={user}
-          playlists={userPlaylists}
+          playlists={playlistsPage.items}
           playlistsEnabled={false}
           playlistsLoading={playlistsLoading}
           onTrackSelected={onTrackSelected}

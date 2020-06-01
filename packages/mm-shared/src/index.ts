@@ -26,6 +26,7 @@ export * from './util/LinkButton'
 export * from './util/formatDuration'
 export * from './util/formatDuration'
 export * from './util/getInitials'
+export * from './util/PageObject'
 
 export { default as arrayMove } from './util/arrayMove'
 export { default as ErrorNotification } from './util/ErrorNotification'

@@ -16,7 +16,11 @@ export default function playlist(
     case FETCH_PLAYLISTS_ERROR:
       return { ...state, error: payload }
     case PLAYLIST_CLEAR:
-      return { ...state, data: [], isLoading: false }
+      return {
+        ...state,
+        data: initialState.data,
+        isLoading: false
+      }
     default:
       return state
   }

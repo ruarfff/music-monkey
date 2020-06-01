@@ -21,7 +21,8 @@ import {
   useSwipeTabsIndex,
   TrackList,
   Playlist,
-  Playlists
+  Playlists,
+  PageObject
 } from '../'
 
 import './Finder.scss'
@@ -31,7 +32,7 @@ interface FinderProps {
   user: User
   eventTracks: Track[]
   events: Event[]
-  userPlaylists: Playlist[]
+  playlistsPage: PageObject<Playlist>
   recommendations: Track[]
   allowSuggestPlaylist?: boolean
   hideCurrentPlaylist?: boolean
@@ -49,7 +50,7 @@ const Finder: FC<FinderProps> = ({
   user,
   eventTracks,
   events,
-  userPlaylists,
+  playlistsPage,
   recommendations = [],
   allowSuggestPlaylist = false,
   hideCurrentPlaylist = false,
@@ -209,7 +210,7 @@ const Finder: FC<FinderProps> = ({
             >
               <Playlists
                 user={user}
-                playlists={userPlaylists}
+                playlists={playlistsPage.items}
                 playlistsEnabled={allowSuggestPlaylist || isHost}
                 playlistsLoading={playlistsLoading}
                 onTrackSelected={onTrackSelected}

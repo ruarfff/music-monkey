@@ -1,12 +1,11 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { Action, Playlist } from 'mm-shared'
+import { Action, Playlist, PageObject } from 'mm-shared'
 import {
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS
 } from './playlistActions'
 import { fetchUsersPlaylists } from './playlistClient'
-import PageObject from './PageObject'
 
 function* fetchPlaylistsFlow(action: Action) {
   try {
@@ -15,7 +14,7 @@ function* fetchPlaylistsFlow(action: Action) {
       limit: 50,
       offset: 0
     })
-    yield put({ type: FETCH_PLAYLISTS_SUCCESS, payload: page.items })
+    yield put({ type: FETCH_PLAYLISTS_SUCCESS, payload: page })
   } catch (error) {
     yield put({ type: FETCH_PLAYLISTS_ERROR, payload: error })
   }

@@ -1,4 +1,4 @@
-export default interface PageObject<T> {
+export interface PageObject<T> {
   href: string
   items: T[]
   limit: number

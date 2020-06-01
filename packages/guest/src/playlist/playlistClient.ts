@@ -1,7 +1,6 @@
 import client from 'mm-client'
-import { Playlist } from 'mm-shared'
+import { Playlist, PageObject } from 'mm-shared'
 import UserPlaylistRequest from './UserPlaylistRequest'
-import PageObject from './PageObject'
 
 export const fetchUsersPlaylists = async (
   request: UserPlaylistRequest

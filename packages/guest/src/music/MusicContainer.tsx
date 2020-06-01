@@ -7,7 +7,7 @@ import { addLikedTracks } from './musicActions'
 const mapStateToProps = (state: IRootState) => ({
   isHost: true,
   user: state.user.data,
-  userPlaylists: state.playlist.data,
+  playlistsPage: state.playlist.data,
   likedTracks: state.music.likedTracks,
   playlistsLoading: state.playlist.isLoading
 })

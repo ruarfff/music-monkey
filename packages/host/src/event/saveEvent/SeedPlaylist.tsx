@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import isEmpty from 'lodash/isEmpty'
-import { Playlist } from 'mm-shared'
+import { Playlist, PageObject } from 'mm-shared'
 import {
   Grid,
   List,
@@ -33,7 +33,7 @@ import './SeedPlaylist.scss'
 
 interface PlaylistsProps {
   user: User
-  playlists: Playlist[]
+  playlistsPage: PageObject<Playlist>
   playlistsLoading: boolean
   fetchPlaylists(user: User): Action
   onPlaylistSelected(playlist: Playlist): void
@@ -41,7 +41,7 @@ interface PlaylistsProps {
 
 const SeedPlaylist = ({
   user,
-  playlists,
+  playlistsPage,
   playlistsLoading,
   fetchPlaylists,
   onPlaylistSelected
@@ -51,10 +51,10 @@ const SeedPlaylist = ({
   } as unknown) as Playlist
   const [selectedPlaylist, setSelectedPlaylist] = useState()
   useEffect(() => {
-    if (isEmpty(playlists) && !playlistsLoading) {
+    if (isEmpty(playlistsPage.items) && !playlistsLoading) {
       fetchPlaylists(user)
     }
-  }, [fetchPlaylists, playlists, playlistsLoading, user])
+  }, [fetchPlaylists, playlistsLoading, playlistsPage.items, user])
 
   const handlePlaylistClicked = (playlist: Playlist) => () => {
     if (selectedPlaylist === playlist) {
@@ -119,7 +119,7 @@ const SeedPlaylist = ({
               </ListItemSecondaryAction>
             </ListItem>
           </Collapse>
-          {playlists
+          {playlistsPage.items
             .filter((playlist: Playlist) => playlist.tracks.total > 0)
             .map((playlist: Playlist, index: number) => (
               <React.Fragment key={playlist.id + '-' + index}>
@@ -193,8 +193,8 @@ const SeedPlaylist = ({
                     </List>
                     <List>
                       {playlist.tracks.items
-                        .map(item => item.track)
-                        .map(track => (
+                        .map((item) => item.track)
+                        .map((track) => (
                           <React.Fragment key={track.id}>
                             <ListItem
                               alignItems="flex-start"

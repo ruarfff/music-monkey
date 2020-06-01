@@ -1,8 +1,7 @@
-import { Playlist } from 'mm-shared'
+import { Playlist, PageObject } from 'mm-shared'
 
 export default interface IPlaylistState {
-  data: Playlist[]
+  data: PageObject<Playlist>
   error?: Error
   isLoading: boolean
-  offset: number
 }

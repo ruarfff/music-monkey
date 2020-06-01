@@ -5,7 +5,7 @@ import SeedPlaylist from './SeedPlaylist'
 
 const mapStateToProps = (state: IRootState) => ({
   user: state.user.data,
-  playlists: state.playlist.data,
+  playlistsPage: state.playlist.data,
   playlistsLoading: state.playlist.isLoading
 })
 
