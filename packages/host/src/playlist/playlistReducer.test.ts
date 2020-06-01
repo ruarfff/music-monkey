@@ -1,11 +1,8 @@
 import { Action } from 'mm-shared'
-import { Playlist } from 'mm-shared'
 import {
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
-  FETCH_PLAYLISTS_SUCCESS,
-  PLAYLIST_DESELECTED,
-  PLAYLIST_SELECTED
+  FETCH_PLAYLISTS_SUCCESS
 } from './playlistActions'
 import initialState from './playlistInitialState'
 import playlist from './playlistReducer'
@@ -46,24 +43,4 @@ it('should handle FETCH_PLAYLIST_ERROR', () => {
       type: FETCH_PLAYLISTS_ERROR
     })
   ).toEqual({ ...initialState, error: new Error('Oh dear :(') })
-})
-
-it('should handle PLAYLIST_SELECTED', () => {
-  expect(
-    playlist(initialState, {
-      payload: {} as Playlist,
-      type: PLAYLIST_SELECTED
-    })
-  ).toEqual({ ...initialState, selectedPlaylist: {} as Playlist })
-})
-
-it('should handle PLAYLIST_DESELECTED', () => {
-  expect(
-    playlist(
-      { ...initialState, selectedPlaylist: {} as Playlist },
-      {
-        type: PLAYLIST_DESELECTED
-      }
-    )
-  ).toEqual(initialState)
 })

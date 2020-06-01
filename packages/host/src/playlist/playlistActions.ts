@@ -1,10 +1,8 @@
-import { User, Action, Playlist } from 'mm-shared'
+import { Action, User, Playlist } from 'mm-shared'
 
 export const FETCH_PLAYLISTS = 'FETCH_PLAYLISTS'
 export const FETCH_PLAYLISTS_SUCCESS = 'FETCH_PLAYLISTS_SUCCESS'
 export const FETCH_PLAYLISTS_ERROR = 'FETCH_PLAYLISTS_ERROR'
-export const PLAYLIST_SELECTED = 'PLAYLIST_SELECTED'
-export const PLAYLIST_DESELECTED = 'PLAYLIST_DESELECTED'
 
 export const fetchPlaylists = (user: User): Action => ({
   type: FETCH_PLAYLISTS,

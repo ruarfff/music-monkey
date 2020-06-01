@@ -8,10 +8,7 @@ import {
 } from './auth/authSaga'
 import { watchFetchEvent, watchFetchUsersEvents } from './event/eventSaga'
 import { watchFetchInvite } from './invite/inviteSaga'
-import {
-  watchFetchMorePlaylistsFlow,
-  watchFetchPlaylists
-} from './playlist/playlistSaga'
+import { watchFetchPlaylists } from './playlist/playlistSaga'
 import { watchFetchRecommendation } from './recommendation/recommendationSaga'
 import { watchFetchOrCreateRsvp, watchFetchUpdateRsvp } from './rsvp/rsvpSaga'
 import {
@@ -46,7 +43,6 @@ export default function* rootSaga() {
     watchFetchUsersEvents(),
     watchFetchInvite(),
     watchUpdateUserFlow(),
-    watchFetchUpdateRsvp(),
-    watchFetchMorePlaylistsFlow()
+    watchFetchUpdateRsvp()
   ])
 }

@@ -1,8 +1,6 @@
-import { Track } from 'mm-shared'
-
-export default interface ISearch {
+export default interface PageObject<T> {
   href: string
-  items: Track[]
+  items: T[]
   limit: number
   next: string
   offset: number

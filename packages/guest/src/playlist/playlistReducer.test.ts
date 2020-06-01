@@ -1,6 +1,5 @@
 import { Action } from 'mm-shared'
 import {
-  EVENT_PLAYLISTS_LOADED,
   FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS
@@ -44,20 +43,4 @@ it('should handle FETCH_PLAYLIST_ERROR', () => {
       type: FETCH_PLAYLISTS_ERROR
     })
   ).toEqual({ ...initialState, error: new Error('Oh dear :(') })
-})
-
-it('should handle EVENT_PLAYLISTS_LOADED', () => {
-  const events = [
-    { eventId: 'event-1', playlistUrl: '1', playlist: { id: 'playlist-1' } },
-    { eventId: 'event-2', playlistUrl: '2', playlist: { id: 'playlist-2' } }
-  ]
-  expect(
-    playlist(initialState, { payload: events, type: EVENT_PLAYLISTS_LOADED })
-  ).toEqual({
-    ...initialState,
-    eventPlaylists: [
-      { id: 'playlist-1', eventId: 'event-1' },
-      { id: 'playlist-2', eventId: 'event-2' }
-    ]
-  })
 })

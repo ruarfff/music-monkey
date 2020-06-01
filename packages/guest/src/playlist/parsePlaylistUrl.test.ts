@@ -16,7 +16,8 @@ describe('parsePlaylistUrl', () => {
   })
 
   it('should handle url decoding', () => {
-    const encodedUrl = 'https://open.spotify.com/user/willpmartin%21/playlists/6ADJbaA9dAJ88VvjuQoZPt'
+    const encodedUrl =
+      'https://open.spotify.com/user/willpmartin%21/playlists/6ADJbaA9dAJ88VvjuQoZPt'
     expect(parsePlaylistUrl(encodedUrl)).toEqual({
       userName: 'willpmartin!',
       playlistId: '6ADJbaA9dAJ88VvjuQoZPt'

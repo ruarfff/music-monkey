@@ -1,10 +1,5 @@
-import { cloneDeep } from 'lodash'
-import { Action, Event } from 'mm-shared'
+import { Action } from 'mm-shared'
 import {
-  EVENT_PLAYLISTS_LOADED,
-  FETCH_MORE_PLAYLISTS_REQUEST,
-  FETCH_MORE_PLAYLISTS_SUCCESS,
-  FETCH_PLAYLISTS,
   FETCH_PLAYLISTS_ERROR,
   FETCH_PLAYLISTS_SUCCESS,
   PLAYLIST_CLEAR
@@ -16,32 +11,12 @@ export default function playlist(
   { type, payload }: Action
 ) {
   switch (type) {
-    case FETCH_MORE_PLAYLISTS_REQUEST:
-    case FETCH_PLAYLISTS:
-      return { ...state, isLoading: true }
-    case FETCH_MORE_PLAYLISTS_SUCCESS:
-      const newData = cloneDeep(state.data).concat(payload)
-      return {
-        ...state,
-        data: newData,
-        isLoading: false,
-        offset: state.offset + 50
-      }
     case FETCH_PLAYLISTS_SUCCESS:
       return { ...state, data: payload, isLoading: false }
-    case PLAYLIST_CLEAR:
-      return { ...state, data: [], isLoading: false }
     case FETCH_PLAYLISTS_ERROR:
       return { ...state, error: payload }
-    case EVENT_PLAYLISTS_LOADED:
-      const filteredEvents = payload.filter((event: Event) => event.playlistUrl)
-      return {
-        ...state,
-        eventPlaylists: filteredEvents.map((event: Event) => ({
-          ...event.playlist,
-          eventId: event.eventId
-        }))
-      }
+    case PLAYLIST_CLEAR:
+      return { ...state, data: [], isLoading: false }
     default:
       return state
   }

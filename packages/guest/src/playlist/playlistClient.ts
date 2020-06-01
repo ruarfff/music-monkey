@@ -1,22 +1,16 @@
 import client from 'mm-client'
-import { User } from 'mm-shared'
+import { Playlist } from 'mm-shared'
+import UserPlaylistRequest from './UserPlaylistRequest'
+import PageObject from './PageObject'
 
-export const fetchUsersPlaylists = async (user: User) => {
+export const fetchUsersPlaylists = async (
+  request: UserPlaylistRequest
+): Promise<PageObject<Playlist>> => {
   const response = await client.get(
-    '/users/' + user.userId + '/playlists?limit=50',
+    `/users/${request.user.userId}/playlists?limit=${request.limit}&offset=${request.offset}`,
     {
       withCredentials: true
     }
   )
   return response.data
-}
-
-export const fetchMoreUsersPlaylists = async (user: User, offset: number) => {
-  const res = await client.get(
-    `/users/${user.userId}/playlists?limit=50&offset=${offset}`,
-    {
-      withCredentials: true
-    }
-  )
-  return res.data
 }
