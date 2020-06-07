@@ -222,6 +222,7 @@ const EventView: FC<EventViewProps> = ({
                 event={event}
                 suggestions={suggestions}
                 acceptedTracks={newTracks}
+                onReject={rejectRequest}
               />
             </Typography>
             <Typography component="div" dir="1" hidden={tabIndex !== 1}>

@@ -10,7 +10,8 @@ import {
   getPlaylistTracks,
   Track,
   arrayMove,
-  EventSettings
+  EventSettings,
+  Suggestion
 } from 'mm-shared'
 import {
   reOrderPlaylist,
@@ -25,13 +26,15 @@ interface EventTracksProps {
   votes: Map<string, TrackVoteStatus>
   suggestions: DecoratedSuggestion[]
   acceptedTracks: string[]
+  onReject(request: Suggestion): any
 }
 
 const EventTracks: FC<EventTracksProps> = ({
   event,
   votes,
   suggestions,
-  acceptedTracks = []
+  acceptedTracks = [],
+  onReject
 }) => {
   const { showSuccess, showError } = useSnackbarAlert()
   const playlist = event.playlist!
@@ -109,6 +112,7 @@ const EventTracks: FC<EventTracksProps> = ({
       onRemoved={(track: Track) => {
         handleTrackRemoved(track)
       }}
+      onReject={onReject}
     />
   )
 }
