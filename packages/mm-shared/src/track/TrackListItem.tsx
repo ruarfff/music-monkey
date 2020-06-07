@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import sortBy from 'lodash/sortBy'
 import AddIcon from '@material-ui/icons/Add'
 import Remove from '@material-ui/icons/Remove'
 import ExpandLess from '@material-ui/icons/ExpandLess'
@@ -33,11 +34,12 @@ import TrackAvatar from './TrackAvatar'
 import VoteButton from './VoteButton'
 import VoteButtonSmall from './VoteButtonSmall'
 import './TrackListItem.scss'
+import isEmpty from 'lodash/isEmpty'
 
 interface TrackListItemProps {
   isHost: boolean
   track: Track
-  suggestion?: DecoratedSuggestion
+  suggestions?: DecoratedSuggestion[]
   numberOfVotes: number
   event?: Event
   currentUserVoted: boolean
@@ -47,13 +49,13 @@ interface TrackListItemProps {
   onPlay?(track: Track): void
   onVote?(track: Track): void
   onSelected?(track: Track, suggestion: Suggestion): void
-  onRemoved?(track: Track, suggestion: Suggestion): void
+  onRemoved?(track: Track, suggestions: Suggestion[]): void
 }
 
 export const TrackListItem: FC<TrackListItemProps> = ({
   isHost,
   track,
-  suggestion,
+  suggestions = [],
   currentUserVoted,
   numberOfVotes,
   event,
@@ -67,6 +69,11 @@ export const TrackListItem: FC<TrackListItemProps> = ({
 }) => {
   const [hidden, setHidden] = useState(false)
   const [expanded, setExpanded] = useState(false)
+  const sortedSuggestions = sortBy(suggestions, 'suggestion.createdAt')
+  let suggestion: any = null
+  if (!isEmpty(sortedSuggestions)) {
+    suggestion = sortedSuggestions[0]
+  }
 
   useEffect(() => {
     setHidden(false)
@@ -88,10 +95,10 @@ export const TrackListItem: FC<TrackListItemProps> = ({
   const handleRemove = () => {
     setExpanded(false)
     setHidden(true)
-    const actualSuggestion = !!suggestion
-      ? suggestion.suggestion
-      : ({} as Suggestion)
-    onRemoved(track, actualSuggestion)
+    const actualSuggestions = !!suggestions
+      ? suggestions.map((s) => s.suggestion)
+      : ([] as Suggestion[])
+    onRemoved(track, actualSuggestions)
   }
 
   const user = !!suggestion ? suggestion.user : !!event ? event.hostData : null

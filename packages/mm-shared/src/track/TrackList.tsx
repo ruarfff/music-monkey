@@ -125,10 +125,12 @@ export const TrackList: FC<TrackListProps> = ({
     }
   }
 
-  const handleRemove = (track: Track, suggestion: Suggestion) => {
+  const handleRemove = (track: Track, suggestions: Suggestion[]) => {
     onRemoved(track)
-    if (suggestion) {
-      onReject(suggestion)
+    if (suggestions) {
+      suggestions.forEach((s) => {
+        onReject(s)
+      })
     }
   }
 
@@ -204,7 +206,7 @@ export const TrackList: FC<TrackListProps> = ({
                               nowPlaying &&
                               nowPlaying.uri === track.uri
                             }
-                            suggestion={suggestions.find(
+                            suggestions={suggestions.filter(
                               (s) => s.track.uri === trackId
                             )}
                             numberOfVotes={numberOfVotes}
