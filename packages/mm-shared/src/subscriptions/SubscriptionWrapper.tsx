@@ -54,9 +54,6 @@ const SubscriptionWrapper = ({
     subscribeToSuggestionsModified(
       eventId,
       (type: string, data: Suggestion[] = []) => {
-        console.log('SUB WRAP')
-        console.log(data)
-        console.log('Get event suggestions on sub: ' + eventId)
         getEventSuggestions(eventId)
         try {
           const trackUris = data.map((s) => s.trackUri)
@@ -64,7 +61,6 @@ const SubscriptionWrapper = ({
             if (event.settings.autoAcceptSuggestionsEnabled) {
               setNotification({ type: 'accept', payload: trackUris })
             } else {
-              console.log('Accept request')
               setNotification({ type: 'accept', payload: trackUris })
               setNotification({ type: 'acceptRequest', payload: trackUris })
             }
@@ -87,22 +83,18 @@ const SubscriptionWrapper = ({
     )
 
     subscribeToRSVPModified(eventId, () => {
-      console.log('Get event RSVP sub: ' + eventId)
       getEventById(eventId)
     })
 
     subscribeToVotesModified(eventId, () => {
-      console.log('Get event Votes sub: ' + eventId)
       fetchEventVotes(eventId)
     })
 
     subscribeToPlaylistModified(playlistId, () => {
-      console.log('Get event PlaylistMod sub: ' + eventId)
       getEventById(eventId)
     })
 
     subscribeToEventUpdated(eventId, () => {
-      console.log('Get event EventUpdated sub: ' + eventId)
       getEventById(eventId)
     })
 

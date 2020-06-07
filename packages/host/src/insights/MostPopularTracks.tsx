@@ -16,9 +16,9 @@ class MostPopularTracks extends React.Component<IMostPopularTracksProps> {
     const popularTracks = _.sortBy(
       _.uniqBy(
         _.flattenDeep<Track>(
-          events.map(event =>
+          events.map((event) =>
             event.playlist
-              ? event.playlist.tracks.items.map(track => track.track)
+              ? event.playlist.tracks.items.map((track) => track.track)
               : []
           )
         ),
@@ -49,7 +49,7 @@ class MostPopularTracks extends React.Component<IMostPopularTracksProps> {
                     <div className="nameSection">
                       <span>{track.name}</span>
                       <span className="artistName">
-                        {track.album.artists[0].name}
+                        {track.artists[0].name}
                       </span>
                     </div>
                   </div>

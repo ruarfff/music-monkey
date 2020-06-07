@@ -83,16 +83,6 @@ const SeedPlaylist = ({
     }
   }
 
-  if (playlistsLoading) {
-    return (
-      <div className="SeedPlaylist-root">
-        <div className="SeedPlaylist-loading-area">
-          <MarvinLoader />
-        </div>
-      </div>
-    )
-  }
-
   return (
     <Grid container className="SeedPlaylist-root">
       <Grid item xs={12}>
@@ -142,7 +132,6 @@ const SeedPlaylist = ({
             dataLength={withTracks.length}
             next={() => {
               if (!isEmpty(user) && !!playlistsPage.next) {
-                console.log('Loading more!')
                 const page = {
                   ...playlistsPage,
                   offset: playlistsPage.items.length
@@ -243,7 +232,7 @@ const SeedPlaylist = ({
                                 className="SeedPlaylist-track-content"
                                 primary={track.name}
                                 primaryTypographyProps={{ noWrap: true }}
-                                secondary={track.album.artists[0].name}
+                                secondary={track.artists[0].name}
                                 secondaryTypographyProps={{
                                   variant: 'body2',
                                   noWrap: true

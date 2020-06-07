@@ -77,17 +77,12 @@ const Playlists: FC<PlaylistsProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (playlistsLoading) {
-    return <MarvinLoader />
-  }
-
   return (
     <List className="Playlists-root">
       <InfiniteScroll
         dataLength={withTracks.length}
         next={() => {
           if (!isEmpty(user) && !!playlistsPage.next) {
-            console.log('Loading more!')
             const page = {
               ...playlistsPage,
               offset: playlistsPage.items.length

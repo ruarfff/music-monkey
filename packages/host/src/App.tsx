@@ -38,32 +38,35 @@ const App = ({ store, history }: AppProps) => {
   }
 
   return (
-    <StylesProvider injectFirst>
-      <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <MuiPickersUtilsProvider utils={Utils}>
-          <SnackbarProvider
-            autoHideDuration={2000}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'center'
-            }}
-            maxSnack={3}
-            preventDuplicate={true}
-            classes={{
-              variantSuccess: 'alert-success-custom'
-            }}
-            dense={true}
-            ref={notistackRef}
-            action={(key) => (
-              <IconButton onClick={onClickDismiss(key)} aria-label="dismiss">
-                <CloseIcon />
-              </IconButton>
-            )}
-          >
-            <Provider store={store}>
-              <ConnectedRouter history={history}>
-                <CookiesProvider>
+    <Provider store={store}>
+      <CookiesProvider>
+        <StylesProvider injectFirst>
+          <CssBaseline />
+          <ThemeProvider theme={theme}>
+            <MuiPickersUtilsProvider utils={Utils}>
+              <SnackbarProvider
+                autoHideDuration={2000}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center'
+                }}
+                maxSnack={3}
+                preventDuplicate={true}
+                classes={{
+                  variantSuccess: 'alert-success-custom'
+                }}
+                dense={true}
+                ref={notistackRef}
+                action={(key) => (
+                  <IconButton
+                    onClick={onClickDismiss(key)}
+                    aria-label="dismiss"
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                )}
+              >
+                <ConnectedRouter history={history}>
                   <AuthLoader>
                     <NotificationContextProvider>
                       <SubscriptionWrapper>
@@ -80,13 +83,13 @@ const App = ({ store, history }: AppProps) => {
                       </SubscriptionWrapper>
                     </NotificationContextProvider>
                   </AuthLoader>
-                </CookiesProvider>
-              </ConnectedRouter>
-            </Provider>
-          </SnackbarProvider>
-        </MuiPickersUtilsProvider>
-      </ThemeProvider>
-    </StylesProvider>
+                </ConnectedRouter>
+              </SnackbarProvider>
+            </MuiPickersUtilsProvider>
+          </ThemeProvider>
+        </StylesProvider>
+      </CookiesProvider>
+    </Provider>
   )
 }
 

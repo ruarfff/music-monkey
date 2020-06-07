@@ -12,7 +12,6 @@ interface TwitchViewProps extends RouteComponentProps<any> {
 }
 
 const TwitchView = ({ isHost, event }: TwitchViewProps) => {
-  console.log(event.hostData)
   return (
     <div className="TwitchView-root">
       <EventTopMenu isHost={isHost} event={event} />

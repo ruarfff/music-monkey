@@ -18,23 +18,15 @@ export const subscribeToSuggestionsModified = (
     const channel = pusher.subscribe('mm-suggestions-' + eventId)
 
     channel.bind('suggestion-saved', (data: any) => {
-      console.log('REQUESTED')
-      console.log(data)
       callback('requested', data)
     })
     channel.bind('suggestions-accepted', (data: any) => {
-      console.log('ACCEPTED')
-      console.log(data)
       callback('accepted', data)
     })
     channel.bind('suggestions-rejected', (data: any) => {
-      console.log('REJECTED')
-      console.log(data)
       callback('rejected', data)
     })
     channel.bind('suggestions-auto-accepted', (data: any) => {
-      console.log('AUTO')
-      console.log(data)
       callback('accepted')
     })
 

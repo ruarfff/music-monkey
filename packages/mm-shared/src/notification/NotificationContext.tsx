@@ -1,5 +1,6 @@
 import React, { FC, createContext, useReducer } from 'react'
 import isEmpty from 'lodash/isEmpty'
+//import uniqBy from 'lodash/uniqBy'
 
 export interface NotificationState {
   acceptedTracks: string[]
@@ -44,14 +45,14 @@ let reducer = (
       return {
         ...state,
         requestedTracks: state.requestedTracks.filter(
-          t => !action.payload.includes(t)
+          (t) => !action.payload.includes(t)
         )
       }
     case 'rejectRequest':
       return {
         ...state,
         requestedTracks: state.requestedTracks.filter(
-          t => !action.payload.includes(t)
+          (t) => !action.payload.includes(t)
         )
       }
     default:
