@@ -5,7 +5,8 @@ const serviceUrl = process.env.REACT_APP_MM_API_URL
 
 const client = axios.create({
   baseURL: serviceUrl,
-  headers: { 'Cache-Control': 'no-cache' }
+  headers: { 'Cache-Control': 'no-cache' },
+  timeout: 10000
 })
 
 axiosRetry(client, { retryDelay: exponentialDelay })
