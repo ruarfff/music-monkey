@@ -12,6 +12,8 @@ import {
 import LoginError from './LoginError'
 import Content from './ContentContainer'
 
+declare var FS: any
+
 interface ILayoutProps {
   user: User
   userLoading: boolean
@@ -32,6 +34,18 @@ const Layout = ({
   const {
     notification: { acceptedTracks, requestedTracks }
   } = useContext(notificationContext)
+
+  if (!isEmpty(user)) {
+    try {
+      FS.identify(user.userId, {
+        displayName: user.displayName,
+        email: user.email
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   return (
     <>
       {!isEmpty(user) &&
