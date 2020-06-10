@@ -95,8 +95,7 @@ const MaybeTracks: FC<MaybeTracksProps> = ({
         canRequest: isHost,
         canRemove: isHost,
         showProfile: isHost || profileMode,
-        canVote: isHost,
-        requestVote: !isHost
+        canVote: true
       }}
       votes={votes}
       onVote={handleTrackVote}
