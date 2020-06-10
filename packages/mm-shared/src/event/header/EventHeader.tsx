@@ -3,6 +3,7 @@ import { Avatar, Grid } from '@material-ui/core'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 import RoomIcon from '@material-ui/icons/Room'
+import EditIcon from '@material-ui/icons/Edit'
 import { grey } from '@material-ui/core/colors'
 import ShareIcon from '@material-ui/icons/Share'
 import { Link } from 'react-router-dom'
@@ -12,7 +13,7 @@ import Img from 'react-image'
 import backgroundImage from 'assets/music-monkey.jpg'
 import EventResponseMenu from './EventResponseMenu'
 import { User, Rsvp, getInitials } from './../../'
-import { Event, EventTopMenu } from '../../event'
+import { Event } from '../../event'
 import twitchIcon from '../../assets/twitch.svg'
 import LocationDialog from './LocationDialog'
 import DateTimeDialog from './DateTimeDialog'
@@ -79,8 +80,6 @@ const EventHeader = ({
         alt="Event banner"
         className="EventHeader-background"
       />
-
-      <EventTopMenu isHost={isHost} event={event} backTo="/" />
 
       <Grid container className="EventHeader-actions" spacing={2}>
         {/* Top Row */}
@@ -177,7 +176,16 @@ const EventHeader = ({
         <Grid item xs={6}></Grid>
 
         <Grid container item xs={3} alignItems="center" justify="center">
-          {!!event.hostData && (
+          {isHost && (
+            <Link to={`/events/${event.eventId}/edit`}>
+              <EditIcon
+                className="EventTopMenu-edit"
+                color="secondary"
+                fontSize="large"
+              />
+            </Link>
+          )}
+          {!isHost && !!event.hostData && (
             <Avatar
               key={event.hostData.userId}
               alt={event.hostData.displayName || 'H'}

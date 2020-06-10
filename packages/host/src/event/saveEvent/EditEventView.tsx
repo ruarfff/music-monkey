@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Formik, FormikHelpers, useFormikContext, Form } from 'formik'
 import debounce from 'just-debounce-it'
 import SaveEventFormValues from './SaveEventFormValues'
-import { User, Event, useSnackbarAlert, EventTopMenu } from 'mm-shared'
+import { User, Event, useSnackbarAlert } from 'mm-shared'
 import EventDetails from './EventDetails'
 import eventWillBeModified from './eventWillBeModified'
 import updateEventFlow from './updateEventFlow'
@@ -23,13 +23,13 @@ const EditEventView: FC<EditEventViewProps> = ({ user, event }) => {
     values: SaveEventFormValues,
     { setSubmitting }: FormikHelpers<SaveEventFormValues>
   ) => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (eventWillBeModified(event, values)) {
         updateEventFlow(event, values)
-          .then(event => {
+          .then((event) => {
             showSuccess('Event Saved')
           })
-          .catch(err => {
+          .catch((err) => {
             showError('Could not save event')
             console.error(err)
           })
@@ -63,7 +63,6 @@ const EditEventView: FC<EditEventViewProps> = ({ user, event }) => {
 
   return (
     <div className="EditEventView-root">
-      <EventTopMenu event={event} />
       <Formik
         enableReinitialize
         initialValues={saveEventInitialFormValues(user, event)}
