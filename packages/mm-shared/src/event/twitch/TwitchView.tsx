@@ -1,7 +1,7 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { User } from 'user'
-import { Event, EventTopMenu } from '..'
+import { Event } from '..'
 import Twitch from './Twitch'
 import './TwitchView.scss'
 
@@ -14,7 +14,6 @@ interface TwitchViewProps extends RouteComponentProps<any> {
 const TwitchView = ({ isHost, event }: TwitchViewProps) => {
   return (
     <div className="TwitchView-root">
-      <EventTopMenu isHost={isHost} event={event} />
       <div className="TwitchView-content">
         {event.hostData && event.hostData.twitchId && <Twitch event={event} />}
       </div>

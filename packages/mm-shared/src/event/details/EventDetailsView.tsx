@@ -1,7 +1,7 @@
 import React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import { User } from 'user'
-import { Event, EventTopMenu } from '../../event'
+import { Event } from '../../event'
 import EventLocation from './EventLocation'
 import './EventDetailsView.scss'
 
@@ -18,7 +18,6 @@ const EventDetailsView = ({
   updateEvent = () => {}
 }: EventDetailsViewProps) => (
   <div className="EventDetailsView-root">
-    <EventTopMenu isHost={isHost} event={event} />
     <div className="EventDetailsView-content">
       <EventLocation isHost={isHost} event={event} updateEvent={updateEvent} />
     </div>

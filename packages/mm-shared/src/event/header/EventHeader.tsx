@@ -179,11 +179,7 @@ const EventHeader = ({
         <Grid container item xs={3} alignItems="center" justify="center">
           {isHost && (
             <Link to={`/events/${event.eventId}/edit`}>
-              <EditIcon
-                className="EventTopMenu-edit"
-                color="secondary"
-                fontSize="large"
-              />
+              <EditIcon color="secondary" fontSize="large" />
             </Link>
           )}
           {!isHost && !!event.hostData && (

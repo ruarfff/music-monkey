@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState, useContext } from 'react'
 import { Grid, AppBar, Tab, Tabs, Typography, Badge } from '@material-ui/core'
+import sortedUniq from 'lodash/sortedUniq'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
 import { RouteComponentProps, Route, Switch, withRouter } from 'react-router'
@@ -74,23 +75,27 @@ const EventView: FC<EventViewProps> = ({
   }
 
   useEffect(() => {
-    const ntCount = acceptedTracks.length
+    const accepted = sortedUniq(acceptedTracks.sort())
+    console.log(accepted)
+    const ntCount = accepted.length
     if (newTrackCount !== ntCount) {
       setNewTrackCount(ntCount)
     }
-    if (!isEmpty(acceptedTracks)) {
-      if (!isEqual(acceptedTracks, newTracks)) {
-        setNewTracks(acceptedTracks.sort())
+    if (!isEmpty(accepted)) {
+      if (!isEqual(accepted, newTracks)) {
+        setNewTracks(accepted)
       }
     }
 
-    const rtCount = requestedTracks.length
+    const requested = sortedUniq(requestedTracks.sort())
+    console.log(requested)
+    const rtCount = requested.length
     if (requestedTrackCount !== rtCount) {
       setRequestedTrackCount(rtCount)
     }
-    if (!isEmpty(requestedTracks)) {
-      if (!isEqual(requestedTracks, newRequests)) {
-        setNewRequests(requestedTracks.sort())
+    if (!isEmpty(requested)) {
+      if (!isEqual(requested, newRequests)) {
+        setNewRequests(requested)
       }
     }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { User } from 'user'
-import { Event, EventTopMenu } from '../../event'
+import { Event } from '../../event'
 import EventSettings from './EventSettings'
 import './EventSettingsView.scss'
 
@@ -17,11 +17,10 @@ const EventSettingsView = ({
   updateEvent = () => {}
 }: EventSettingsViewProps) => (
   <div className="EventSettingsView-root">
-    <EventTopMenu isHost={isHost} event={event} />
     <div className="EventSettingsView-content">
       <EventSettings
         event={event}
-        onChange={settings => {
+        onChange={(settings) => {
           updateEvent({ ...event, settings })
         }}
         isHost={isHost}

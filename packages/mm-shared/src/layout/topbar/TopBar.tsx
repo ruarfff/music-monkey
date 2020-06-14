@@ -34,7 +34,6 @@ const TopAppBar = ({ user, event, cookies, isHost, logout }: ITopBarProps) => {
       <Toolbar variant="dense">
         {history.length > 0 && !atHome && (
           <ChevronLeft
-            className="EventTopMenu-back-arrow"
             onClick={() => {
               history.goBack()
             }}

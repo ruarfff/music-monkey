@@ -42,7 +42,7 @@ const EventGuests = ({ event }: IEventGuestsProps) => {
               <ListItemText
                 primary={user.displayName || 'Guest'}
                 secondary={
-                  <React.Fragment>
+                  <Typography component="div">
                     <Typography
                       variant="body2"
                       className="EventGuests-inline"
@@ -51,7 +51,7 @@ const EventGuests = ({ event }: IEventGuestsProps) => {
                       {rsvp.status}
                     </Typography>
                     {user.userId === event.userId && ' — Host'}
-                  </React.Fragment>
+                  </Typography>
                 }
               />
             </ListItem>
