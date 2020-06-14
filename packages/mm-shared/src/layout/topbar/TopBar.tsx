@@ -1,13 +1,12 @@
 import React from 'react'
-import AddIcon from '@material-ui/icons/Add'
 import { AppBar, Toolbar } from '@material-ui/core'
+import { ChevronLeft, Home } from '@material-ui/icons'
 import { ReactCookieProps } from 'react-cookie'
 import { useHistory, RouteComponentProps, Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { User, Event } from '../../'
+import { User, Event, LinkButton } from '../../'
 import UserMenu from './UserMenu'
 import Title from './Title'
-import { ChevronLeft } from '@material-ui/icons'
 import './TopBar.scss'
 
 interface ITopBarProps extends RouteComponentProps<any>, ReactCookieProps {
@@ -27,10 +26,13 @@ const TopAppBar = ({ user, event, cookies, isHost, logout }: ITopBarProps) => {
 
   const history = useHistory()
 
+  const atHome = history.location.pathname === '/'
+  const inCreate = history.location.pathname.includes('create-event')
+
   return (
     <AppBar position="fixed" className="top-appBar">
       <Toolbar variant="dense">
-        {history.length > 0 && history.location.pathname !== '/' && (
+        {history.length > 0 && !atHome && (
           <ChevronLeft
             className="EventTopMenu-back-arrow"
             onClick={() => {
@@ -40,10 +42,22 @@ const TopAppBar = ({ user, event, cookies, isHost, logout }: ITopBarProps) => {
         )}
 
         <Title event={event} />
-        {isHost && (
-          <div className="new-party">
-            <Link to="/create-event">
-              <AddIcon color="secondary" fontSize="large" />
+        {isHost && !inCreate && (
+          <div className={atHome ? 'new-party-lft' : 'new-party'}>
+            <LinkButton
+              to="/create-event"
+              variant="outlined"
+              color="secondary"
+              size="small"
+            >
+              Create Party
+            </LinkButton>
+          </div>
+        )}
+        {!atHome && (
+          <div className="home">
+            <Link to="/">
+              <Home color="secondary" fontSize="large" />
             </Link>
           </div>
         )}
