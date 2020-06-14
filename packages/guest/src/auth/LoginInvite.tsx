@@ -44,7 +44,9 @@ interface LoginInviteProps {
 const LoginInvite: FC<LoginInviteProps> = ({ event }) => {
   const classes = useStyles()
   let initials = ''
+  let hostName = ''
   if (event.hostData && event.hostData.displayName) {
+    hostName = event.hostData.displayName
     const initialsMatch = event.hostData.displayName.match(/\b\w/g) || []
     initials = (
       (initialsMatch.shift() || '') + (initialsMatch.pop() || '')
@@ -78,9 +80,7 @@ const LoginInvite: FC<LoginInviteProps> = ({ event }) => {
               )}
             </Grid>
             <Grid item xs={6}>
-              <Typography className={classes.hostText}>
-                {event.hostData.displayName}
-              </Typography>
+              <Typography className={classes.hostText}>{hostName}</Typography>
               <Typography className={classes.hostText}>Host</Typography>
             </Grid>
           </Grid>
