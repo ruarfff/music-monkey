@@ -15,15 +15,27 @@ $text-backdrop: rgba(58, 158, 209, 0.8);
     text-decoration: none;
     color: white;
   }
+  .EventHeader-background-helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
 
   .EventHeader-background {
+    vertical-align: middle;
+    object-fit: cover;
     height: 100%;
-    margin: auto;
+    max-width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
   }
 
   .EventHeader-actions {
     position: absolute;
-    top: 50px;
+    top: 2em;
 
     .twitch-icon {
       color: $primary;

@@ -75,6 +75,7 @@ const EventHeader = ({
       />
       <HostDialog event={event} open={hostOpen} onClose={handleHostClose} />
 
+      <span className="EventHeader-background-helper"></span>
       <Img
         src={[event.imageUrl, backgroundImage]}
         alt="Event banner"

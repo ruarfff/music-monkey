@@ -41,9 +41,7 @@ const Layout = ({
         displayName: user.displayName,
         email: user.email
       })
-    } catch (err) {
-      console.error(err)
-    }
+    } catch {}
   }
 
   return (
