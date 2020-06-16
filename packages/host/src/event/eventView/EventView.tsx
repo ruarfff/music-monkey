@@ -76,7 +76,6 @@ const EventView: FC<EventViewProps> = ({
 
   useEffect(() => {
     const accepted = sortedUniq(acceptedTracks.sort())
-    console.log(accepted)
     const ntCount = accepted.length
     if (newTrackCount !== ntCount) {
       setNewTrackCount(ntCount)
@@ -88,7 +87,7 @@ const EventView: FC<EventViewProps> = ({
     }
 
     const requested = sortedUniq(requestedTracks.sort())
-    console.log(requested)
+
     const rtCount = requested.length
     if (requestedTrackCount !== rtCount) {
       setRequestedTrackCount(rtCount)
