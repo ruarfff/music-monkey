@@ -5,13 +5,26 @@
   margin: 0 auto;
   width: 100%;
 
+  .EventPreview-img-helper {
+    display: inline-block;
+
+    vertical-align: middle;
+  }
+
+  .EventPreview-img {
+    vertical-align: middle;
+    object-fit: cover;
+    max-width: 220px;
+    max-height: 400px;
+    width: auto;
+    height: auto;
+  }
+
   .EmailPreview-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    height: 365px;
-    padding: 20px;
 
     .EmailPreview-logo {
       img {
@@ -20,14 +33,12 @@
     }
 
     .EmailPreview-link {
-      color: $mm-white;
       text-decoration: underline;
       font-size: 14px;
     }
 
     .EmailPreview-event-name {
       font-size: 26px;
-      color: $mm-white;
     }
 
     .EmailPreview-date-wrapper {

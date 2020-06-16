@@ -31,7 +31,7 @@ const ShareEvent = ({ event }: ShareEventProps) => {
           aria-label="event edit actions"
           className="SaveEvent-actions"
         >
-          <LinkButton to={`/events/${event.eventId}`}>Go to event</LinkButton>
+          <LinkButton to={`/events/${event.eventId}`}>Preview Party</LinkButton>
         </ButtonGroup>
       </Grid>
       <Grid item={true} xs={12}>
@@ -49,7 +49,7 @@ const ShareEvent = ({ event }: ShareEventProps) => {
               const types = ['image/png', 'image/jpeg', 'image/gif']
               const file = files[0]
 
-              if (types.every(type => file.type !== type)) {
+              if (types.every((type) => file.type !== type)) {
                 showError(`'${file.type}' is not a supported format`)
                 return
               }
@@ -89,6 +89,27 @@ const ShareEvent = ({ event }: ShareEventProps) => {
         <EmailPreview event={event} />
       </Grid>
       <Grid item={true} xs={12}>
+        <CopyToClipboard text={inviteUrl} onCopy={() => showSuccess('Copied')}>
+          <div className="resp-sharing-button__link">
+            <div className="resp-sharing-button resp-sharing-button--email resp-sharing-button--large">
+              <div
+                aria-hidden="true"
+                className="resp-sharing-button__icon resp-sharing-button__icon--solid"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 561 561">
+                  <path
+                    d="M395.25,0h-306c-28.05,0-51,22.95-51,51v357h51V51h306V0z M471.75,102h-280.5c-28.05,0-51,22.95-51,51v357
+			c0,28.05,22.95,51,51,51h280.5c28.05,0,51-22.95,51-51V153C522.75,124.95,499.8,102,471.75,102z M471.75,510h-280.5V153h280.5V510
+			z"
+                  />
+                </svg>
+              </div>
+              Copy Link
+            </div>
+          </div>
+        </CopyToClipboard>
+      </Grid>
+      <Grid item={true} xs={12}>
         <a
           className="resp-sharing-button__link"
           href={`https://www.facebook.com/sharer/sharer.php?u=${inviteUrl}&t="${eventName}"`}
@@ -112,7 +133,7 @@ const ShareEvent = ({ event }: ShareEventProps) => {
       <Grid item={true} xs={12}>
         <a
           className="resp-sharing-button__link"
-          href={`https://twitter.com/intent/tweet/?text=${eventName}&amp;url=${inviteUrl}`}
+          href={`https://twitter.com/intent/tweet?url=${inviteUrl}&text=Join me at ${eventName} on MusicMonkey&hashtags=MusicMonkey%2Cparty`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Share on Twitter"
@@ -150,27 +171,6 @@ const ShareEvent = ({ event }: ShareEventProps) => {
             Share by E-Mail
           </div>
         </a>
-      </Grid>
-      <Grid item={true} xs={12}>
-        <CopyToClipboard text={inviteUrl} onCopy={() => showSuccess('Copied')}>
-          <div className="resp-sharing-button__link">
-            <div className="resp-sharing-button resp-sharing-button--email resp-sharing-button--large">
-              <div
-                aria-hidden="true"
-                className="resp-sharing-button__icon resp-sharing-button__icon--solid"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 561 561">
-                  <path
-                    d="M395.25,0h-306c-28.05,0-51,22.95-51,51v357h51V51h306V0z M471.75,102h-280.5c-28.05,0-51,22.95-51,51v357
-			c0,28.05,22.95,51,51,51h280.5c28.05,0,51-22.95,51-51V153C522.75,124.95,499.8,102,471.75,102z M471.75,510h-280.5V153h280.5V510
-			z"
-                  />
-                </svg>
-              </div>
-              Copy Link
-            </div>
-          </div>
-        </CopyToClipboard>
       </Grid>
     </Grid>
   )

@@ -1,7 +1,10 @@
 import React from 'react'
-import logo from 'assets/marvin.png'
 import { Event } from 'mm-shared'
 import { isEmpty } from 'lodash'
+import { Grid } from '@material-ui/core'
+import Img from 'react-image'
+import logo from 'assets/logo-home.png'
+import backgroundImage from 'assets/music-monkey.jpg'
 import './EmailPreview.scss'
 
 interface IEmailPreviewProps {
@@ -9,36 +12,40 @@ interface IEmailPreviewProps {
 }
 
 const EmailPreview = ({ event }: IEmailPreviewProps) => {
-  const bgStyle = `no-repeat url('${event.imageUrl ||
-    'https://musicmonkey.io/img/music-monkey.jpg'}') center`
   if (isEmpty(event)) {
     return null
   }
   return (
-    <div
-      className="EmailPreview-root"
-      style={{
-        background: bgStyle,
-        backgroundSize: 'cover'
-      }}
-    >
-      <div className="EmailPreview-content">
-        <div className="EmailPreview-logo">
-          <img src={logo} alt="monkey logo" />
-        </div>
-        <div className="EmailPreview-link">click here for more details</div>
-        <div className="EmailPreview-event-name">{event.name}</div>
-        <div className="EmailPreview-date-wrapper">
-          <div className="EmailPreview-date-top">
-            {event.startDateTime.format('MMM')}
+    <Grid container className="EmailPreview-root">
+      <Grid item xs={6}>
+        <div className="EmailPreview-content">
+          <div className="EmailPreview-logo">
+            <img src={logo} alt="monkey logo" />
           </div>
-          <div className="EmailPreview-date-bot">
-            {event.startDateTime.format('D')}
+          <div className="EmailPreview-link">click here for more details</div>
+          <div className="EmailPreview-event-name">{event.name}</div>
+          <div className="EmailPreview-date-wrapper">
+            <div className="EmailPreview-date-top">
+              {event.startDateTime.format('MMM')}{' '}
+              {event.startDateTime.format('D')}{' '}
+              {event.startDateTime.format('YYYY')}
+            </div>
+            <div className="EmailPreview-date-bot">
+              {event.location.address}
+            </div>
           </div>
+          <div className="EmailPreview-text">{event.description}</div>
         </div>
-        <div className="EmailPreview-text">{event.description}</div>
-      </div>
-    </div>
+      </Grid>
+      <Grid item xs={6}>
+        <span className="EventPreview-img-helper" />
+        <Img
+          className="EventPreview-img"
+          alt={event.name}
+          src={[event.imageUrl, backgroundImage]}
+        />
+      </Grid>
+    </Grid>
   )
 }
 
