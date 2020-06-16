@@ -14,10 +14,11 @@
   .EventPreview-img {
     vertical-align: middle;
     object-fit: cover;
-    max-width: 220px;
+    max-width: 190px;
     max-height: 400px;
     width: auto;
     height: auto;
+    padding-right: 1em;
   }
 
   .EmailPreview-content {

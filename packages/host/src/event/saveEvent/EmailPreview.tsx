@@ -16,7 +16,7 @@ const EmailPreview = ({ event }: IEmailPreviewProps) => {
     return null
   }
   return (
-    <Grid container className="EmailPreview-root">
+    <Grid container className="EmailPreview-root" spacing={2}>
       <Grid item xs={6}>
         <div className="EmailPreview-content">
           <div className="EmailPreview-logo">
